@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/who-iris/skill/iris-oxigraph.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/who-iris/skill/iris-oxigraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "iris-oxigraph",
+      "title": "Oxigraph Multi-Graph Search & Discovery for WHO IRIS",
+      "description": "How to compile, validate, distribute, and query WHO IRIS catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly and CLI pipelines. Enables combined complex queries, multi-dimensional faceted rollups, and lazy-loaded named subgraphs on the static edge.",
+      "instructionsPath": "skills/iris-oxigraph.md",
+      "instructionLines": 177,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/who-iris/directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph"
+    }
+  ]
+}

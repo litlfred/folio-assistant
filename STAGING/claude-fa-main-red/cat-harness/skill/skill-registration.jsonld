@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/skill-registration.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/skill-registration",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "skill-registration",
+      "title": "Adding a skill",
+      "description": "Adding a skill is never a one-file change. What a new skill file owes, the one command that performs the derived half, the one declaration it deliberately leaves to you, why running it once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/skill-registration.md",
+      "instructionLines": 204,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/skill-registration"
+    }
+  ]
+}

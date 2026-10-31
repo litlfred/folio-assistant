@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness-tools/asset/agent-instructions.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/asset/agent-instructions.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — cat-harness-tools",
+      "description": "Cold start for work in this layer: what belongs here, what does not, and which way the dependencies run."
+    }
+  ]
+}

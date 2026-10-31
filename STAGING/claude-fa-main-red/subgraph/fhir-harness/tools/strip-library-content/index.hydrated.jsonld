@@ -1,0 +1,53 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/strip-library-content/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/strip-library-content.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Replace inline CQL/ELM in `Library` resources with a URL reference to the published copy.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "python3 fhir-harness/scripts/library-strip/strip_library_content.py <igOutput>"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "igOutput",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "rewritten",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+          },
+          {
+            "description": "The base the replacement references resolve against. If it is wrong, every rewritten Library points at nothing and the resource still validates.",
+            "name": "references",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+          }
+        ]
+      },
+      "name": "strip-library-content",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "python3"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline",
+      "title": "Replace inline Library content with URL references"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/strip-library-content",
+  "path": "tools/strip-library-content/"
+}

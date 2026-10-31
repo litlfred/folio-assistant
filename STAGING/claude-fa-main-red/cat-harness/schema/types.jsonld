@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/schema/types.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/schema/types",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "types",
+      "title": "types",
+      "summary": "ALL types are inferred from Zod schemas in constraints.ts, which is the",
+      "module": "schemas/types.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/types"
+    }
+  ]
+}

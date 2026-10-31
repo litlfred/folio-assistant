@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/data-modelling.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/data-modelling",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "data-modelling",
+      "title": "Data modelling — the entities, before the fields",
+      "description": "Build a data model: identify the entities a body of work is actually about, the relations between them, and the cardinalities — then declare it where the tools can read it. Process-agnostic technique; the CRDM phase that invokes it is `crdm-data-model`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/data-modelling.md",
+      "instructionLines": 267,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/data-modelling"
+    }
+  ]
+}

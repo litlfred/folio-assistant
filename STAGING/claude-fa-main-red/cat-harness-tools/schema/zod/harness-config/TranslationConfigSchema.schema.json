@@ -1,0 +1,45 @@
+{
+  "$ref": "#/definitions/TranslationConfig",
+  "definitions": {
+    "TranslationConfig": {
+      "type": "object",
+      "properties": {
+        "defaultLocale": {
+          "default": "en",
+          "type": "string"
+        },
+        "supportedLocales": {
+          "default": [
+            "ar",
+            "zh",
+            "en",
+            "fr",
+            "ru",
+            "es"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "translationDir": {
+          "default": "translations",
+          "type": "string"
+        },
+        "officialOnly": {
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/TranslationConfigSchema.schema.json",
+  "title": "TranslationConfigSchema",
+  "description": "Generated from `TranslationConfigSchema` in schemas/kg/harness-config.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  }
+}

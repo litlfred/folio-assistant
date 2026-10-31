@@ -1,0 +1,753 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2508.05192v2",
+  "title": "AI-assisted JSON Schema Creation and Mapping",
+  "variant": "pdf",
+  "pages": 5,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "Introduction",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-001-introduction"
+    },
+    {
+      "level": 1,
+      "title": "Background and Related Work",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-002-background-and-related-work"
+    },
+    {
+      "level": 2,
+      "title": "JSON and JSON Schema",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-003-json-and-json-schema"
+    },
+    {
+      "level": 2,
+      "title": "JSON Schema Creation",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-json-schema-creation"
+    },
+    {
+      "level": 2,
+      "title": "Schema Matching and Mapping",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-004-schema-matching-and-mapping"
+    },
+    {
+      "level": 2,
+      "title": "Large Language Models (LLMs) and Prompt Engineering",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-005-large-language-models-llms-and-prompt-engineerin"
+    },
+    {
+      "level": 1,
+      "title": "Design and Implementation",
+      "number": null,
+      "page": 2,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-006-design-and-implementation"
+    },
+    {
+      "level": 2,
+      "title": "AI-assisted JSON Schema Creation",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-007-ai-assisted-json-schema-creation"
+    },
+    {
+      "level": 2,
+      "title": "AI-assisted Schema Matching and Mapping",
+      "number": null,
+      "page": 3,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-008-ai-assisted-schema-matching-and-mapping"
+    },
+    {
+      "level": 1,
+      "title": "Application Example",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-009-application-example"
+    },
+    {
+      "level": 1,
+      "title": "Conclusion",
+      "number": null,
+      "page": 4,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-010-conclusion"
+    },
+    {
+      "level": 1,
+      "title": "References",
+      "number": null,
+      "page": 5,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-011-references"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-000-json-schema-creation",
+      "number": null,
+      "title": "JSON Schema Creation",
+      "level": 2,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 233,
+      "summary": {
+        "text": "Authors and abstract: Felix Neubauer and Benjamin Uekermann (Institute for Parallel and Distributed Systems) and Jürgen Pleiss (Institute of Biochemistry and Technical Biochemistry), University of Stuttgart. In model-driven engineering (MDE), research-data models are usually schemas, and many domains lack standard ones that non-experts can create. The authors combine large language models (LLMs) with deterministic techniques for creating and modifying JSON Schemas and for schema mapping from natural-language input, built into the open-source tool MetaConfigurator, which already offers visual editing, validation, code generation and form generation. LLMs generate mapping rules from heterogeneous JSON, CSV, XML and YAML data, and the rules are executed deterministically for scalability and reliability. A chemistry example demonstrates the approach. The block is headed \"JSON Schema Creation\" but holds the front matter, abstract and index terms.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "stuttgart",
+          "heading": false
+        },
+        {
+          "term": "schema",
+          "heading": true
+        },
+        {
+          "term": "json",
+          "heading": true
+        },
+        {
+          "term": "data integration",
+          "heading": false
+        },
+        {
+          "term": "biochemistry",
+          "heading": false
+        },
+        {
+          "term": "neubauer",
+          "heading": false
+        },
+        {
+          "term": "pleiss",
+          "heading": false
+        },
+        {
+          "term": "uekermann",
+          "heading": false
+        }
+      ],
+      "extract": "1st Felix Neubauer , 3rd Benjamin Uekermann Institute for Parallel and Distributed Systems University of Stuttgart Stuttgart, Germany Felix.Neubauer@ipvs.uni-stuttgart.de, Benjamin.Uekermann@ipvs.uni-stuttgart.de 2nd J¨urgen Pleiss Institute of Biochemistry and Technical Biochemistry University of Stuttgart Stuttgart, Germany Juergen.Pleiss@itb.uni-stuttgart.de Abstract—Model-Driven Engineering (MDE) places models",
+      "extractCut": true
+    },
+    {
+      "id": "sec-001-introduction",
+      "number": null,
+      "title": "Introduction",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 1,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 432,
+      "summary": {
+        "text": "Introduction. Schemas enable validation, transformation, code generation and visualization and underpin data quality and interoperability, yet fields such as chemistry often keep data in electronic lab notebooks or spreadsheets with implicit meaning, and flat CSV cannot express relationships or constraints. LLMs can turn natural-language descriptions into models, but used alone they give no guarantee of validity, produce hard-to-interpret plain text, struggle with large datasets and need well-crafted prompts. The authors therefore extend MetaConfigurator with LLM-based schema creation, modification and querying guarded by prompt engineering, context management, post-processing and validation (Section III-A), and with data integration in which LLMs write human-readable mapping rules from JSON, YAML, XML or CSV to a target schema that are then executed deterministically (Section III-B). Section IV applies this to chemistry Excel data. The block also carries the DFG funding numbers (528693298, 358283783, 390740016).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "model-driven",
+          "heading": false
+        },
+        {
+          "term": "data models",
+          "heading": false
+        },
+        {
+          "term": "natural language",
+          "heading": false
+        },
+        {
+          "term": "mde",
+          "heading": false
+        },
+        {
+          "term": "safeguards",
+          "heading": false
+        },
+        {
+          "term": "metaconfigurator",
+          "heading": false
+        },
+        {
+          "term": "csv",
+          "heading": false
+        },
+        {
+          "term": "post-processing",
+          "heading": false
+        }
+      ],
+      "extract": "Model-Driven Engineering (MDE) emphasizes the central role of models in the design, development, and operation of systems [1]. In the context of research data management [2]– [4], models are typically expressed as schemas, which define the structure and semantics of datasets. These models enable key functionalities such as instance validation, transformation, code generation, and visualization, and are essential for",
+      "extractCut": true
+    },
+    {
+      "id": "sec-002-background-and-related-work",
+      "number": null,
+      "title": "Background and Related Work",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 27,
+      "summary": {
+        "text": "A one-sentence opening of Section II, saying it introduces JSON, JSON Schema, and related work on schema creation, schema mapping, LLMs and prompt engineering, followed by the footnote with MetaConfigurator's GitHub address and the arXiv identifier (cs.SE, 16 January 2026).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "This section introduces JSON, JSON Schema and work related to schema creation, schema mapping, large language models (LLMs) and prompt engineering. 1https://github.com/MetaConfigurator/meta-configurator arXiv:2508.05192v2 [cs.SE] 16 Jan 2026",
+      "extractCut": false
+    },
+    {
+      "id": "sec-003-json-and-json-schema",
+      "number": null,
+      "title": "JSON and JSON Schema",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 360,
+      "summary": {
+        "text": "Sections II-A and II-B. JSON is widely used for web-service exchange, NoSQL documents, APIs and configuration files, and JSON Schema, the de facto standard for describing JSON structure and constraints, can be read as a modelling language much like class diagrams in MDE. Existing schema editors (MetaConfigurator, Adamant, the paid Liquid Studio editor) all need some understanding of JSON Schema. The authors build on MetaConfigurator because of its modular architecture, its code generation in 17 languages and documentation generation, and because it is open source, free, available as a web service and familiar to them. Schema inference or discovery derives a schema from instances. Chat services such as ChatGPT can write schemas but do not validate or visualize them, and LLMs are distracted by irrelevant context, lose accuracy on low-probability inputs and reason worse on longer inputs; Mior fine-tuned an LLM for schema tasks that clearly outperformed Code Llama.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "json schema",
+          "heading": true
+        },
+        {
+          "term": "schema editor",
+          "heading": false
+        },
+        {
+          "term": "generate schema",
+          "heading": false
+        },
+        {
+          "term": "programming languages",
+          "heading": false
+        },
+        {
+          "term": "metaconfigurator",
+          "heading": false
+        },
+        {
+          "term": "furthermore",
+          "heading": false
+        },
+        {
+          "term": "services",
+          "heading": false
+        },
+        {
+          "term": "exist",
+          "heading": false
+        }
+      ],
+      "extract": "JSON is a widespread data format for exchanging infor- mation with web services, storing semi-structured documents in NoSQL databases [9], and representing structured content in APIs and configuration files. Its simplicity and human- readability, combined with wide support across programming languages, make it a natural fit for data interchange and machine learning pipelines. JSON Schema, the de-facto standard for",
+      "extractCut": true
+    },
+    {
+      "id": "sec-004-schema-matching-and-mapping",
+      "number": null,
+      "title": "Schema Matching and Mapping",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 238,
+      "summary": {
+        "text": "Section II-C, schema matching and mapping. The paper studies schema mapping, converting an instance of one JSON Schema into another, which may involve simple property correspondences or richer logic. Tools include the Java library Jolt, the TypeScript library JSONata and the query language jq, which the authors judge unsuited to large documents because it processes in memory with little streaming or parallel support. Schema matching, identifying corresponding elements, has automated approaches surveyed by Rahm and Bernstein for relational databases; Stanek and Killough generate JSON-to-JSON conversion code; and Buss and colleagues use LLMs for relational schema mapping and argue that data integration needs a human in the loop.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "schema mapping",
+          "heading": true
+        },
+        {
+          "term": "schema matching",
+          "heading": true
+        },
+        {
+          "term": "transform json",
+          "heading": false
+        },
+        {
+          "term": "json documents",
+          "heading": false
+        },
+        {
+          "term": "acc",
+          "heading": false
+        },
+        {
+          "term": "transformation",
+          "heading": false
+        },
+        {
+          "term": "databases",
+          "heading": false
+        },
+        {
+          "term": "another",
+          "heading": false
+        }
+      ],
+      "extract": "Integrating data from various sources and in different for- mats poses a significant challenge [20]–[22]. In this work, we study the task of schema mapping: converting an instance from one JSON schema to another. A schema mapping can contain simple property-to-property correspondences or also more expressive logics. JSON to JSON transformation (Jolt)3, is a Java library to transform JSON documents. JSONata4,",
+      "extractCut": true
+    },
+    {
+      "id": "sec-005-large-language-models-llms-and-prompt-engineerin",
+      "number": null,
+      "title": "Large Language Models (LLMs) and Prompt Engineering",
+      "level": 2,
+      "pageStart": 2,
+      "pageEnd": 2,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 142,
+      "summary": {
+        "text": "Section II-D, LLMs and prompt engineering. Prompt engineering optimizes an LLM's input, and a survey by Sahoo and colleagues is cited. Few-shot examples help on complex new tasks but cost tokens and can bias results; assigning a role or persona can improve performance; splitting long instructional prompts into smaller subtasks helps; and detailed natural-language instructions outperform implicit task formulation.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "prompt engineering",
+          "heading": true
+        },
+        {
+          "term": "subtasks",
+          "heading": false
+        },
+        {
+          "term": "llms",
+          "heading": true
+        },
+        {
+          "term": "input-output",
+          "heading": false
+        },
+        {
+          "term": "persona",
+          "heading": false
+        }
+      ],
+      "extract": "LLMs are powerful deep learning models trained on large corpora of text to perform a wide range of natural language processing tasks [27]–[29]. Prompt engineering is the task of optimizing the input prompt for an LLM to get the best results from it. Sahoo et al. [30] performed a systematic survey of prompt engineering techniques. For example, for new tasks without extensive prior training, few-shot training",
+      "extractCut": true
+    },
+    {
+      "id": "sec-006-design-and-implementation",
+      "number": null,
+      "title": "Design and Implementation",
+      "level": 1,
+      "pageStart": 2,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 144,
+      "summary": {
+        "text": "Opening of Section III, design and implementation. The system talks to LLMs through a configurable endpoint that follows the OpenAI API; users choose the model in settings and must supply their own API key, since none is provided. Prompts are built programmatically and the outputs parsed automatically. All interactions and evaluations in the paper used gpt-4o-mini, chosen for its cost-efficiency and its proficiency with JSON Schema tasks.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "acc",
+          "heading": false
+        },
+        {
+          "term": "api",
+          "heading": false
+        },
+        {
+          "term": "cost-efficiency",
+          "heading": false
+        },
+        {
+          "term": "iii-a",
+          "heading": false
+        },
+        {
+          "term": "iii-b",
+          "heading": false
+        }
+      ],
+      "extract": "In this section, we describe the design and implementation of our AI-assisted schema creation (Section III-A) and schema matching (Section III-B) approaches. Our system communicates with LLMs via a configurable endpoint that follows the OpenAI API6. Users may select the desired model via the application’s settings. Prompts are programmatically constructed and transmitted to the API, and the resulting textual outputs",
+      "extractCut": true
+    },
+    {
+      "id": "sec-007-ai-assisted-json-schema-creation",
+      "number": null,
+      "title": "AI-assisted JSON Schema Creation",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 3,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 280,
+      "summary": {
+        "text": "Section III-A, AI-assisted JSON Schema creation. A new chat-like AI assistance view lets users create and modify schemas in natural language. The hybrid method's five claimed advantages: the tool builds the prompt (setting a role such as \"You are a JSON Schema expert\", adding the description and the expected output format, and for modifications only the selected part of the schema); the result is validated at once and shown in the schema editor; sending only the selected sub-schema avoids errors on large schemas; formatting artefacts such as code fences are removed automatically; and when the output is incomplete or wrong the user sees the raw response and can fix it before accepting or discarding the change. Figure 1 shows a description turned into a schema and Figure 2 a modification; the same interface can query schemas and create, edit and query instances.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "schema creation",
+          "heading": true
+        },
+        {
+          "term": "metaconfigurator",
+          "heading": false
+        },
+        {
+          "term": "natural language",
+          "heading": false
+        },
+        {
+          "term": "visualized",
+          "heading": false
+        },
+        {
+          "term": "modifications",
+          "heading": false
+        },
+        {
+          "term": "editing",
+          "heading": false
+        },
+        {
+          "term": "modular",
+          "heading": false
+        },
+        {
+          "term": "prompt",
+          "heading": false
+        }
+      ],
+      "extract": "MetaConfigurator’s modular and extensible architecture en- ables the integration of a new AI assistance view. To enable schema creation and modifications via natural language, we introduce a conversational, chat-like interface. Our hybrid method offers several advantages over pure LLM-based so- lutions: 1) Prompt construction and context management: The tool handles all aspects of prompt engineering. For schema",
+      "extractCut": true
+    },
+    {
+      "id": "sec-008-ai-assisted-schema-matching-and-mapping",
+      "number": null,
+      "title": "AI-assisted Schema Matching and Mapping",
+      "level": 2,
+      "pageStart": 3,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 651,
+      "summary": {
+        "text": "Section III-B, AI-assisted schema matching and mapping, with the prompts of Figures 1 and 2. A JSON document is transformed to fit a target schema by having an LLM generate mapping rules that are then executed deterministically; YAML, XML and imported CSV are supported through conversion. The mapping language is JSONata. The pipeline infers a source schema from the input with jsonhero/schema-infer, then builds a prompt of instructions (persona, task, detailed rules and a JSONata specification), an input-output example and the user input. Large inputs are shortened by recursively trimming arrays to n items and object properties to 8n, with n starting at 64 and halving until the document is under 64 KB or n reaches 2; the schema inferred from the full document is included to limit information loss, which also caps the document complexity supported. The response is stripped of code fences, checked for syntax (not semantics) with the JSONata library, shown in an editor, and can be applied only once valid; Figure 3 gives an example.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "schema mapping",
+          "heading": true
+        },
+        {
+          "term": "metal salt",
+          "heading": false
+        },
+        {
+          "term": "generated jsonata",
+          "heading": false
+        },
+        {
+          "term": "json schema",
+          "heading": false
+        },
+        {
+          "term": "ligand both",
+          "heading": false
+        },
+        {
+          "term": "mapping rules",
+          "heading": false
+        },
+        {
+          "term": "json document",
+          "heading": false
+        },
+        {
+          "term": "input json",
+          "heading": false
+        }
+      ],
+      "extract": "Schema mapping is performed using human-defined map- ping rules or scripts, traditional automated approaches [23], [25] and recently also using LLMs [26]. We propose and im- plement a new approach, which transforms a JSON document to satisfy a given target schema by first generating schema mapping rules with the help of a LLM and then executing these deterministically. Aside from JSON, MetaConfigurator supports the",
+      "extractCut": true
+    },
+    {
+      "id": "sec-009-application-example",
+      "number": null,
+      "title": "Application Example",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 4,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 469,
+      "summary": {
+        "text": "Section IV, the chemistry application example, with the text of Figure 3. Chemists' synthesis experiments kept in an Excel table are converted to JSON with an inferred schema, which is of poor quality: product_purity values \"yes\" and \"no\" are typed as strings, and ligand and metal_salt properties sit flat on each experiment. The chat interface produces a better schema (Figures 1–2), and automated mapping converts yes/no to booleans and flat paths to nested ones. Figure 3's example maps a document with mof_id and a reagents list to a target with materialId, metal and linkers using an LLM-generated JSONata expression, producing \"ZrCl4\" as the metal and [\"BDC\", \"DABCO\"] as linkers. To target the Chemical Description Language XDL 2.0, which has documentation but no formal schema, the authors paste its documentation into the schema-creation prompt, then, since JSONata cannot map such different structures, generate Python classes for both schemas and write the conversion code themselves.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "metal salt",
+          "heading": false
+        },
+        {
+          "term": "schema mapping",
+          "heading": false
+        },
+        {
+          "term": "target schema",
+          "heading": false
+        },
+        {
+          "term": "mof",
+          "heading": false
+        },
+        {
+          "term": "json document",
+          "heading": false
+        },
+        {
+          "term": "linker",
+          "heading": false
+        },
+        {
+          "term": "input json",
+          "heading": false
+        },
+        {
+          "term": "excel table",
+          "heading": false
+        }
+      ],
+      "extract": "Chemists have performed chemical synthesis experiments and tracked their inputs and results in an Excel table. They want to apply machine learning and other algorithms on their data, but it is not yet in a suitable format10. MetaConfigurator is used to convert the excel table into a JSON document and automatically infer the corresponding schema. The JSON document and schema, however, are not yet of sufficient",
+      "extractCut": true
+    },
+    {
+      "id": "sec-010-conclusion",
+      "number": null,
+      "title": "Conclusion",
+      "level": 1,
+      "pageStart": 4,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 189,
+      "summary": {
+        "text": "Conclusion and acknowledgment. The authors summarise a hybrid approach to schema creation, editing and instance transformation in MetaConfigurator that combines modular prompt engineering, targeted context, human-in-the-loop refinement and post-processing safeguards, with LLM-generated mapping rules applied deterministically so that large documents can be transformed. They argue the chemistry example shows support for FAIR data practices and model-driven workflows, note that the tool also supports validation, code and documentation generation, mapping discovery and form generation, and plan model-to-model transformations such as XSD to JSON Schema. Esengül Ciftci and Kenichi Endo are thanked for inspiring the example, and ChatGPT-4 is acknowledged for editorial suggestions.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "stuttgart",
+          "heading": false
+        },
+        {
+          "term": "instance transformation",
+          "heading": false
+        },
+        {
+          "term": "chemistry",
+          "heading": false
+        },
+        {
+          "term": "germany",
+          "heading": false
+        },
+        {
+          "term": "schema",
+          "heading": false
+        },
+        {
+          "term": "editing",
+          "heading": false
+        },
+        {
+          "term": "mapping",
+          "heading": false
+        }
+      ],
+      "extract": "We presented a hybrid approach for schema creation, editing, and instance transformation using large language models, integrated into the open-source tool MetaConfigu- rator. Our method combines modular prompt engineering, targeted context scoping, human-in-the-loop refinement, and post-processing safeguards to enable intuitive and controlled schema modeling. To enable transforming also large document instances to",
+      "extractCut": true
+    },
+    {
+      "id": "sec-011-references",
+      "number": null,
+      "title": "References",
+      "level": 1,
+      "pageStart": 5,
+      "pageEnd": 5,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1117,
+      "summary": {
+        "text": "The reference list, 38 entries: model-driven engineering and research data management (including the German NFDI), the authors' earlier MetaConfigurator papers, the JSON, YAML and XML specifications, JSON Schema studies, the Adamant editor, schema inference and discovery, LLM limitations (distraction by irrelevant context, low-probability inputs, input length), LLM-based schema discovery, Code Llama, data-integration surveys, schema matching and mapping (Rahm and Bernstein; Stanek and Killough; Buss and colleagues), GPT-3, GPT-4 and LLaMA, prompt-engineering and instruction-tuning papers, Chemspyd, the XDL chemical description language, and the FAIR principles.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "arxiv preprint",
+          "heading": false
+        },
+        {
+          "term": "unpublished",
+          "heading": false
+        },
+        {
+          "term": "json schema",
+          "heading": false
+        },
+        {
+          "term": "vldb journal",
+          "heading": false
+        },
+        {
+          "term": "language models",
+          "heading": false
+        },
+        {
+          "term": "doi",
+          "heading": false
+        },
+        {
+          "term": "markup language",
+          "heading": false
+        },
+        {
+          "term": "schema discovery",
+          "heading": false
+        }
+      ],
+      "extract": "[1] Douglas C. Schmidt, “Guest editor’s introduction: Model-driven engineering,” Computer, vol. 39, no. 2, pp. 25–31, 2006, doi: 10.1109/MC.2006.58. [2] G. Pryor, “Managing research data,” Facet Publishing, 2012, doi: 10.29085/9781856048910. [3] S. Wall, “Data management for researchers: Organize, maintain and share your data for research success,” Archives and Manuscripts, vol. 45, no. 1, pp. 53–55, 2017, doi:",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "json schema",
+      "heading": true
+    },
+    {
+      "term": "schema mapping",
+      "heading": true
+    },
+    {
+      "term": "schema creation",
+      "heading": true
+    },
+    {
+      "term": "schema validation",
+      "heading": false
+    },
+    {
+      "term": "schema editor",
+      "heading": false
+    },
+    {
+      "term": "automated schema",
+      "heading": false
+    },
+    {
+      "term": "target schema",
+      "heading": false
+    },
+    {
+      "term": "generate schema",
+      "heading": false
+    },
+    {
+      "term": "schema matching",
+      "heading": true
+    },
+    {
+      "term": "schema discovery",
+      "heading": false
+    },
+    {
+      "term": "create schema",
+      "heading": false
+    },
+    {
+      "term": "schema inference",
+      "heading": false
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "library/arxiv-2508.05192v2"
+  }
+}

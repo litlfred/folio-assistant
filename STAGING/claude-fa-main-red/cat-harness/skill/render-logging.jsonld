@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/render-logging.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/render-logging",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "render-logging",
+      "title": "Render logging — the publish branch keeps its own history",
+      "description": "Log every render to the publish branch — what was published, removed, restored or deliberately retained — to an append-only log that lives beside what it describes. Use when adding or removing anything on `gh-pages`, when asking \"what happened to this preview\", or before writing a workflow step that deletes a published artefact.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/render-logging.md",
+      "instructionLines": 220,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-logging"
+    }
+  ]
+}

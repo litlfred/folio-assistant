@@ -1,0 +1,434 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(38)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(127) > ul > li:nth-child(38) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(127) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(127) > ul > li:nth-child(38) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(127) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(127) > ul.nav-list > li.nav-list-item:nth-child(38) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../assets/js/vendor/lunr.min.js"></script><script src="../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Test plans, FHIR TestPlan and the ITB — one model, several exports | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Test plans, FHIR TestPlan and the ITB — one model, several exports" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Test plans, FHIR TestPlan and the ITB — one model, several exports" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "proposals-test-interop-itb-fhir-testplan-2026-10-24",
+    "src": "../assets/qa/proposals-test-interop-itb-fhir-testplan-2026-10-24/page.translation.json",
+    "index": "../assets/qa/proposals-test-interop-itb-fhir-testplan-2026-10-24/qa-index.json",
+    "list": "../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../folio-assistant-core/","jsonld":"../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../assets/harness/site.json"><meta name="fa-todo-src" content="../assets/todos/index.json"><meta name="fa-todo-graph" content="../todos.jsonld"><meta name="fa-zoom-src" content="../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content=".."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../assets/beans/index.json"><meta name="fa-processes-src" content="../subgraph/index.jsonld"><meta name="fa-build-src" content="../build.json"><meta name="fa-fsh-guts-src" content="../fsh-guts.json"><link rel="stylesheet" href="../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../assets/js/harness-data.js" defer></script><script src="../assets/js/vendor/qrcode.js" defer></script><script src="../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../assets/js/kg-render.js" defer></script><script src="../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../assets/js/docs-ui.js?v=59c1d8d3ff0a" defer></script><script src="../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../assets/js/work-plan.js" defer></script><script src="../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-giobbw31pa","here":"/proposals/test-interop-itb-fhir-testplan-2026-10-24.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#1-what-exists-today","label":"What exists today","icon":"1","children":[{"href":"#in-the-platform-cat-harness-on-main","label":"In the platform (cat-harness, on main)","depth":1},{"href":"#in-smart-trust-tools","label":"In smart-trust-tools","depth":1},{"href":"#in-opentestbed-read-only-an-outside-organisation","label":"In OpenTestBed (read only; an outside organisation)","depth":1}],"fold":"3 sub-sections"},{"href":"#2-how-they-fit-together","label":"How they fit together","icon":"2","children":[{"href":"#the-options","label":"The options","depth":1},{"href":"#can-fhir-testplan-be-downstream-of-the-itb","label":"Can FHIR TestPlan be downstream of the ITB?","depth":1},{"href":"#two-routes-to-the-itb","label":"Two routes to the ITB","depth":1},{"href":"#results-coming-back","label":"Results coming back","depth":1},{"href":"#where-the-code-lives","label":"Where the code lives","depth":1}],"fold":"5 sub-sections"},{"href":"#3-the-system-under-test","label":"The system under test","icon":"3","children":[{"href":"#what-it-has-to-say","label":"What it has to say","depth":1},{"href":"#the-options-1","label":"The options","depth":1},{"href":"#the-shape-sketch","label":"The shape (sketch)","depth":1}],"fold":"3 sub-sections"},{"href":"#4-a-formal-plan-for-smart-trust-tools-attached-to-skills","label":"A formal plan for smart-trust-tools, attached to skills","icon":"4","children":[{"href":"#what-is-added","label":"What is added","depth":1},{"href":"#the-mcp-server","label":"The MCP server","depth":1},{"href":"#the-agent-that-uses-it","label":"The agent that uses it","depth":1},{"href":"#release-review-criteria","label":"Release-review criteria","depth":1},{"href":"#the-who-itb-agreement-plan","label":"The WHO-ITB agreement plan","depth":1}],"fold":"5 sub-sections"},{"href":"#5-machine-qa-and-the-benchmark","label":"Machine QA and the benchmark","icon":"5"},{"href":"#6-phasing","label":"Phasing","icon":"6"},{"href":"#7-decisions-for-the-owner","label":"Decisions for the owner","icon":"7"},{"href":"#sources","label":"Sources"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../proposals/">Proposals</a></li><li class="breadcrumb-nav-list-item"><span>Test plans, FHIR TestPlan and the ITB — one model, several exports</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 id="test-plans-fhir-testplan-and-the-itb-one-model-several-exports"><a href="#test-plans-fhir-testplan-and-the-itb-one-model-several-exports" class="anchor-heading" aria-labelledby="test-plans-fhir-testplan-and-the-itb-one-model-several-exports"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Test plans, FHIR TestPlan and the ITB: one model, several exports
+  
+  
+</h1><p><strong>Draft, 2026-10-24. Not built.</strong></p><p><strong>Owner decisions, 2026-10-24 (all five answered):</strong></p><ul><li><strong>D1 = S2.</strong> The system under test is a <code class="language-plaintext highlighter-rouge">system/v1</code> record, and runs point at it.</li><li><strong>D2 = B7 → B5</strong>, an option added after the first draft. Each test is tagged in its own code with the assertions it verifies (for example <code class="language-plaintext highlighter-rouge">@verifies("req:stt-ver-001#statement/test")</code>). A Tool reads the tags and writes the assertion-to-test map onto each <code class="language-plaintext highlighter-rouge">system/v1</code> record, and CI fails when the map is stale. There is no separate <code class="language-plaintext highlighter-rouge">test-binding/v1</code> node, and the plan never names an implementation. Where section 4 below says <code class="language-plaintext highlighter-rouge">test-binding/v1</code>, read “the bindings on the <code class="language-plaintext highlighter-rouge">system/v1</code> record”.</li><li><strong>D3: cat-harness-tools.</strong> The ITB export and the TAR import live in the tools layer.</li><li><strong>D4 = I1.</strong> Plans reach the ITB through OpenTestBed Gherkin.</li><li><strong>D5 = P3 first.</strong> smart-trust-tools tries the fields locally first. The schemas move into cat-harness once they are proven there.</li></ul><p>It answers four owner questions of
+2026-10-24:</p><ol><li>How do <code class="language-plaintext highlighter-rouge">test-plan/v1</code>, FHIR R5 TestPlan and the Interoperability Test Bed
+(ITB, GITB TDL) fit together? Can FHIR TestPlan sit downstream of the ITB?
+And what does the OpenTestBed organisation already provide?</li><li>What are the options for the “system under test” schema?</li><li>smart-trust-tools has a test plan that is partly narrative. What formal
+schema captures it, attached to skills such as <code class="language-plaintext highlighter-rouge">hcert-verify</code>, including
+the Rust library exposed as an MCP service?</li><li>Where do machine QA results and the model benchmark fit
+(model swarm and benchmark, <a href="https://github.com/litlfred/cat-harness/pull/500">PR #500</a>)?</li></ol><p>The short answers:</p><ul><li><strong>One model, several exports.</strong> <code class="language-plaintext highlighter-rouge">test-plan/v1</code> stays the one place a plan is
+written. FHIR TestPlan and GITB TDL are both generated from it, as
+siblings. That is what OpenTestBed’s own compiler already does from Gherkin.</li><li><strong>FHIR TestPlan can sit downstream of the ITB, by reference.</strong> A TestPlan’s
+<code class="language-plaintext highlighter-rouge">testCase.testRun.script</code> can point at the GITB test case that executes it.
+The ITB then runs the plan, and the TestPlan describes it. Converting TDL
+into TestPlan is lossy and is not recommended.</li><li><strong>The system under test becomes a node</strong> (<code class="language-plaintext highlighter-rouge">system/v1</code>): a system, its
+versions, the actors it plays and the surfaces it exposes (library, WIT
+component, MCP server, CLI, HTTP). A run names the system, version, actor,
+surface, target and, for agents, model and configuration. This is the ITB’s
+own model (a system playing an actor in a conformance statement), so the
+ITB export is a mapping, not a translation.</li><li><strong>smart-trust-tools is already mostly formal.</strong> Its two plans are
+<code class="language-plaintext highlighter-rouge">test-plan/v1</code> nodes generated from the skills and the requirements’
+success criteria. What is still prose is: the test level of each case, the
+implementations and targets each case runs on, and the named test that
+stands for each assertion in each implementation. Three additive fields and
+one new node, <code class="language-plaintext highlighter-rouge">test-binding/v1</code>, make all of it checkable. An MCP server is
+then one more binding of the same plan.</li><li><strong>Machine QA and the benchmark reuse the same plan and run records.</strong> A
+machine QA criterion is an assertion id, a fixed finding becomes a
+regression case, and a benchmark is several runs of one plan against
+several systems under test.</li></ul><h2 id="1-what-exists-today"><a href="#1-what-exists-today" class="anchor-heading" aria-labelledby="1-what-exists-today"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. What exists today
+  
+  
+</h2><h3 id="in-the-platform-cat-harness-on-main"><a href="#in-the-platform-cat-harness-on-main" class="anchor-heading" aria-labelledby="in-the-platform-cat-harness-on-main"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> In the platform (cat-harness, on main)
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>Piece</th><th>Where</th><th>What it holds</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">test-plan/v1</code></td><td><code class="language-plaintext highlighter-rouge">schemas/test-plan.ts</code> (bean <code class="language-plaintext highlighter-rouge">ygzh</code>)</td><td>Shaped after FHIR R5 TestPlan: <code class="language-plaintext highlighter-rouge">scope</code> (<code class="language-plaintext highlighter-rouge">kind</code> ∈ skill, agent, tool, machine, ig, process; <code class="language-plaintext highlighter-rouge">target</code>; <code class="language-plaintext highlighter-rouge">versionRange</code>), <code class="language-plaintext highlighter-rouge">requirements[]</code> (<code class="language-plaintext highlighter-rouge">req:</code> refs, at least one), <code class="language-plaintext highlighter-rouge">testCases[]</code> with <code class="language-plaintext highlighter-rouge">assertions[]</code> (required or informative), <code class="language-plaintext highlighter-rouge">testData[]</code> (fixed with a reviewer, or generated with a seed), <code class="language-plaintext highlighter-rouge">dependsOn</code>, <code class="language-plaintext highlighter-rouge">dependencies[]</code> with a <code class="language-plaintext highlighter-rouge">predecessor</code> plan, and <code class="language-plaintext highlighter-rouge">exitCriteria</code> as a DMN reference.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-test-run/v1</code></td><td><code class="language-plaintext highlighter-rouge">schemas/test-run.ts</code></td><td>A run of a skill or plan: data and process hashes, <code class="language-plaintext highlighter-rouge">plan</code> (id and version), <code class="language-plaintext highlighter-rouge">sut</code>. <code class="language-plaintext highlighter-rouge">sut</code> is <code class="language-plaintext highlighter-rouge">{actor, version, reach}</code> today, and a run that names a plan must name it.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">test-report/v1</code></td><td><code class="language-plaintext highlighter-rouge">qa-reports</code> branch, <code class="language-plaintext highlighter-rouge">tests/&lt;plan&gt;/&lt;sut&gt;/&lt;run&gt;/</code></td><td>The certifier’s report.</td></tr><tr><td>Test process</td><td><code class="language-plaintext highlighter-rouge">processes/sdlc/test-plan-execution.bpmn</code>, <code class="language-plaintext highlighter-rouge">decisions/test-certification.dmn</code> (beans <code class="language-plaintext highlighter-rouge">3o5b</code>, <code class="language-plaintext highlighter-rouge">4iey</code>)</td><td>Tester and certifier roles, the execution loop, the exit rule.</td></tr><tr><td>Certification attestations</td><td><code class="language-plaintext highlighter-rouge">qa-attestations/v1</code>, family <code class="language-plaintext highlighter-rouge">certification</code> (bean <code class="language-plaintext highlighter-rouge">zaui</code>)</td><td>What a certified run attests to.</td></tr><tr><td>The first plan</td><td><code class="language-plaintext highlighter-rouge">test/plans/crdm-detect-evaluation.test-plan.json</code> (bean <code class="language-plaintext highlighter-rouge">ff09</code>)</td><td>Certifies the <code class="language-plaintext highlighter-rouge">crdm-detect</code> skill.</td></tr></tbody></table></div><p>Open beans on this side:</p><ul><li><code class="language-plaintext highlighter-rouge">18p1</code> (draft): export <code class="language-plaintext highlighter-rouge">test-plan/v1</code> to FHIR R5 TestPlan, in fhir-harness.
+The owner’s ruling there is that FHIR TestPlan is a <strong>downstream target</strong>,
+and that the platform stays FHIR-free.</li><li><code class="language-plaintext highlighter-rouge">y4uj</code>: the GITB and ITB sources are held in <code class="language-plaintext highlighter-rouge">fhir-harness/library</code>. CWA
+16408 could not be obtained.</li><li><a href="../proposals/tool-releases-2026-10-07.html">Tool releases</a>, decision C2, unanswered, so
+its default (a) stands: <strong>the ITB is an export</strong>. A GITB TAR is generated
+from <code class="language-plaintext highlighter-rouge">folio-test-run</code> by <code class="language-plaintext highlighter-rouge">test:itb-export</code>.</li></ul><h3 id="in-smart-trust-tools"><a href="#in-smart-trust-tools" class="anchor-heading" aria-labelledby="in-smart-trust-tools"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> In smart-trust-tools
+  
+  
+</h3><p>The plan is more formal than “narrative” suggests:</p><ul><li><code class="language-plaintext highlighter-rouge">test/plans/hcert-library-conformance.test-plan.json</code> is a <code class="language-plaintext highlighter-rouge">test-plan/v1</code>
+node with 15 cases, one per skill (<code class="language-plaintext highlighter-rouge">hcert-verify</code>, <code class="language-plaintext highlighter-rouge">hcert-sign-cose</code>,
+<code class="language-plaintext highlighter-rouge">vhl-share</code>, …). It is <strong>generated</strong> by the <code class="language-plaintext highlighter-rouge">test-plan</code> Tool
+(<code class="language-plaintext highlighter-rouge">tools/test-plan/make_test_plan.py</code>) from the skills’ <code class="language-plaintext highlighter-rouge">satisfies</code> lists
+and the requirements’ success criteria, and CI fails if it is stale.</li><li>Each assertion id is a success-criterion address,
+<code class="language-plaintext highlighter-rouge">req:&lt;id&gt;#&lt;statement&gt;/&lt;criterion&gt;</code> (for example
+<code class="language-plaintext highlighter-rouge">req:stt-tst-009#statement/verify</code>). A verdict on an assertion is therefore
+a verdict on a criterion.</li><li><code class="language-plaintext highlighter-rouge">test/plans/who-itb-agreement.test-plan.json</code> compares the library with
+WHO-ITB’s three HCERT tracks. It has the first plan as its <code class="language-plaintext highlighter-rouge">predecessor</code>.</li><li><code class="language-plaintext highlighter-rouge">check:req-nodes</code> checks that each assertion names a criterion, each data
+path exists, and each predecessor names a plan.</li></ul><p>What is still prose, in <code class="language-plaintext highlighter-rouge">test/plans/README.md</code> and in the assertions’
+<code class="language-plaintext highlighter-rouge">expectation</code> text:</p><ol><li><strong>The test level of each case</strong>: skill tests, conformance vectors,
+negative vectors, fuzzing, coverage floor, targets, cross-implementation,
+one TypeScript suite, schema checks, WHO-ITB agreement. This is a table in
+the README.</li><li><strong>Which implementations and targets a case runs on</strong>: Kotlin on JVM and
+Node, Rust on native and wasm32, and Android, which is named but not run.
+The assertions read “passes in each implementation’s suite”.</li><li><strong>Which test stands for an assertion</strong>: the convention that a test is
+named after its requirement (<code class="language-plaintext highlighter-rouge">STT-PAY-001 …</code>), with the Kotlin test names
+pasted into the <code class="language-plaintext highlighter-rouge">expectation</code> string. Nothing checks that the named test
+exists or that each implementation has one.</li><li><strong>The library’s interface</strong>: the operations a skill uses are listed in
+each skill page (<code class="language-plaintext highlighter-rouge">verifier.verify</code>, <code class="language-plaintext highlighter-rouge">trust.trust-store</code>, …, from
+<code class="language-plaintext highlighter-rouge">api/wit/</code>). The plan does not say which interface it tests, so it cannot
+say that an MCP server exposing the same operations can run it.</li><li><strong>Release-review criteria</strong> (verification <code class="language-plaintext highlighter-rouge">inspection</code> or <code class="language-plaintext highlighter-rouge">review</code>) are
+left out of the plan “to be judged at release” (bean <code class="language-plaintext highlighter-rouge">oi32</code>). Nothing
+records the judgement yet.</li></ol><h3 id="in-opentestbed-read-only-an-outside-organisation"><a href="#in-opentestbed-read-only-an-outside-organisation" class="anchor-heading" aria-labelledby="in-opentestbed-read-only-an-outside-organisation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> In OpenTestBed (read only; an outside organisation)
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>Repository</th><th>What it is</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">itb-cli</code></td><td>Authoring and packaging. <code class="language-plaintext highlighter-rouge">@opentestbed/otb-gherkin</code> and its dialects compile Gherkin features into GITB TDL test suites for the ITB. <code class="language-plaintext highlighter-rouge">build-test-ig.mjs</code> packages the same plans as a FHIR IG, one TestPlan FSH file per plan, built with SUSHI. It also has a “WHO-ITB-style” package layout.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">itb-manager</code></td><td>Deploys and drives an ITB instance.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">itb-plugin-authoring</code></td><td>How to write an ITB plugin (a GITB processing or validation service).</td></tr><tr><td><code class="language-plaintext highlighter-rouge">itb-plugin-fhir-validator</code>, <code class="language-plaintext highlighter-rouge">itb-plugin-jwt</code>, <code class="language-plaintext highlighter-rouge">itb-plugin-oauth</code></td><td>Validators and processors as ITB services.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">itb-plugin-hcert-decoder</code></td><td>An HCERT decoder as an ITB service. This is the same job as smart-trust-tools’ <code class="language-plaintext highlighter-rouge">hcert-verify</code> skill.</td></tr></tbody></table></div><p>The ITB’s data model: <strong>domains → specifications → actors → test suites</strong>, on
+one side. <strong>Communities → organisations → systems</strong>, on the other. A
+<strong>conformance statement</strong> is one system against one actor of one
+specification, and test results accumulate against it.</p><p>The fact that decides the architecture: <strong>OpenTestBed treats FHIR TestPlan
+and GITB TDL as siblings compiled from one source</strong> (Gherkin plus a plan
+config). It does not derive one from the other.</p><h2 id="2-how-they-fit-together"><a href="#2-how-they-fit-together" class="anchor-heading" aria-labelledby="2-how-they-fit-together"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. How they fit together
+  
+  
+</h2><h3 id="the-options"><a href="#the-options" class="anchor-heading" aria-labelledby="the-options"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The options
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th></th><th>Source of truth</th><th>FHIR TestPlan</th><th>GITB TDL</th><th>Fits the platform rules?</th></tr></thead><tbody><tr><td><strong>H1</strong></td><td><code class="language-plaintext highlighter-rouge">test-plan/v1</code></td><td>generated (bean <code class="language-plaintext highlighter-rouge">18p1</code>)</td><td>generated</td><td>Yes. The platform stays FHIR-free and ITB-free, and both exports live outside the core.</td></tr><tr><td><strong>H2</strong></td><td>OTB Gherkin plus plan config</td><td>compiled by OTB</td><td>compiled by OTB</td><td>Partly. Gherkin has no <code class="language-plaintext highlighter-rouge">req:</code> links, success criteria, DMN exit rule or data hashes, so <code class="language-plaintext highlighter-rouge">test-plan/v1</code> would still be needed beside it and the two would drift.</td></tr><tr><td><strong>H3</strong></td><td>FHIR TestPlan</td><td>the store</td><td>generated from it</td><td>No. It breaks the FHIR-free rule (<code class="language-plaintext highlighter-rouge">18p1</code>).</td></tr><tr><td><strong>H4</strong></td><td>GITB TDL</td><td>derived from TDL</td><td>the store</td><td>No. TDL is an executable step language. Requirements, assertions as criteria and exit rules do not survive into it, so nothing can be derived back.</td></tr></tbody></table></div><p><strong>Recommended: H1, with OTB as the ITB backend.</strong></p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                         test-plan/v1  (the one written plan)
+                        /       |       \
+     fhir-harness export        |        ITB export
+     (bean 18p1)                |        (two routes, below)
+            |                   |              |
+  FHIR R5 TestPlan    folio-test-run/v1   GITB TDL suite in a TAR-ready package
+  testRun.script ──────────────────────────► (the ITB test case that executes it)
+            |                   ▲              |
+  FHIR R5 TestReport ◄──────────┴──── GITB TAR results (import)
+</code></pre></div></div><h3 id="can-fhir-testplan-be-downstream-of-the-itb"><a href="#can-fhir-testplan-be-downstream-of-the-itb" class="anchor-heading" aria-labelledby="can-fhir-testplan-be-downstream-of-the-itb"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Can FHIR TestPlan be downstream of the ITB?
+  
+  
+</h3><p>Yes, in one precise sense, and no in another.</p><ul><li><strong>Yes, by reference.</strong> FHIR R5 <code class="language-plaintext highlighter-rouge">TestPlan.testCase.testRun.script</code> names the
+script that executes a case: <code class="language-plaintext highlighter-rouge">language</code> and <code class="language-plaintext highlighter-rouge">source[x]</code>, which can be a
+canonical, a URL or a reference. The export can set it to the GITB test
+case that the ITB export generated (language <code class="language-plaintext highlighter-rouge">GITB-TDL</code>, a URL into the
+ITB package). The TestPlan then <em>describes</em> a plan that the ITB <em>executes</em>.
+That is downstream in the sense that matters: the TestPlan points at the
+ITB, and the ITB does not need the TestPlan.</li><li><strong>No, by conversion.</strong> Generating a TestPlan from TDL would lose the
+requirements, the criteria and the exit rule, which TDL never held.
+OpenTestBed does not do it either.</li></ul><p>So the export order is: <code class="language-plaintext highlighter-rouge">test-plan/v1</code> → GITB TDL first, then FHIR TestPlan,
+with <code class="language-plaintext highlighter-rouge">testRun.script</code> pointing at the TDL. When a plan has no ITB route, the
+TestPlan’s <code class="language-plaintext highlighter-rouge">testRun.narrative</code> says how it is run instead.</p><h3 id="two-routes-to-the-itb"><a href="#two-routes-to-the-itb" class="anchor-heading" aria-labelledby="two-routes-to-the-itb"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two routes to the ITB
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th></th><th>Route</th><th>Gains</th><th>Costs</th></tr></thead><tbody><tr><td><strong>I1</strong></td><td>Emit Gherkin features and an OTB plan config from <code class="language-plaintext highlighter-rouge">test-plan/v1</code>, and let <code class="language-plaintext highlighter-rouge">otb-gherkin</code> compile them to TDL.</td><td>Reuses OTB’s compiler, dialects and plugins (<code class="language-plaintext highlighter-rouge">hcert-decoder</code>, <code class="language-plaintext highlighter-rouge">fhir-validator</code>, <code class="language-plaintext highlighter-rouge">jwt</code>, <code class="language-plaintext highlighter-rouge">oauth</code>). Output matches what WHO-ITB users already deploy.</td><td>Each assertion needs a Gherkin step that a dialect implements. Where no dialect fits, the case cannot go to the ITB.</td></tr><tr><td><strong>I2</strong></td><td>Emit GITB TDL directly.</td><td>No dependency on OTB’s toolchain.</td><td>We would write and maintain a TDL emitter and our own ITB services.</td></tr></tbody></table></div><p><strong>Recommended: I1.</strong> It is the route WHO-ITB’s own community uses, and the
+HCERT plugin already exists. A case with no dialect stays in-house: its run
+is a <code class="language-plaintext highlighter-rouge">folio-test-run</code>, and the export marks it “not exported: no OTB
+dialect” rather than leaving it out silently.</p><h3 id="results-coming-back"><a href="#results-coming-back" class="anchor-heading" aria-labelledby="results-coming-back"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Results coming back
+  
+  
+</h3><p>C2’s default treats the ITB as an export of <em>runs</em>. This proposal adds the
+reverse direction for runs the ITB executes: <strong>import a GITB TAR into
+<code class="language-plaintext highlighter-rouge">folio-test-run/v1</code></strong>, keyed by the conformance statement (system × actor).
+The certifier then judges an ITB run with the same DMN as an in-house run.
+A FHIR TestReport is generated from the run, not stored.</p><h3 id="where-the-code-lives"><a href="#where-the-code-lives" class="anchor-heading" aria-labelledby="where-the-code-lives"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the code lives
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>Piece</th><th>Layer</th><th>Why</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">test-plan/v1</code>, <code class="language-plaintext highlighter-rouge">folio-test-run/v1</code>, <code class="language-plaintext highlighter-rouge">system/v1</code>, <code class="language-plaintext highlighter-rouge">test-binding/v1</code></td><td>cat-harness</td><td>Definitions, as today.</td></tr><tr><td>FHIR TestPlan and TestReport export</td><td>fhir-harness</td><td>FHIR knowledge stays there (<code class="language-plaintext highlighter-rouge">18p1</code>).</td></tr><tr><td>GITB export (Gherkin plus config) and TAR import</td><td>Decision D3 below: cat-harness-tools, or fhir-harness beside the held GITB sources (<code class="language-plaintext highlighter-rouge">y4uj</code>). GITB is not FHIR, so the tools layer fits better.</td><td></td></tr><tr><td>HCERT bindings, dialect mapping, the MCP server</td><td>smart-trust-tools</td><td>They name its implementations.</td></tr><tr><td>OpenTestBed packages</td><td>used as pinned dependencies, never changed</td><td>An outside organisation.</td></tr></tbody></table></div><h2 id="3-the-system-under-test"><a href="#3-the-system-under-test" class="anchor-heading" aria-labelledby="3-the-system-under-test"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. The system under test
+  
+  
+</h2><h3 id="what-it-has-to-say"><a href="#what-it-has-to-say" class="anchor-heading" aria-labelledby="what-it-has-to-say"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What it has to say
+  
+  
+</h3><p>Each run has to name everything a verdict depends on. For smart-trust-tools
+that means <em>which implementation</em> (Kotlin or Rust), <em>which target</em> (JVM,
+Node, native, wasm32, Android), <em>which surface</em> (direct library call, WIT
+component through jco, MCP tool call), and <em>which version</em>. For an agent it
+also means <em>which model</em> and <em>which configuration</em> (benchmark gap 1 in
+PR #500).</p><h3 id="the-options-1"><a href="#the-options-1" class="anchor-heading" aria-labelledby="the-options-1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The options
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th></th><th>Shape</th><th>Gains</th><th>Costs</th></tr></thead><tbody><tr><td><strong>S1</strong></td><td>Widen <code class="language-plaintext highlighter-rouge">SutRefSchema</code> in place: optional <code class="language-plaintext highlighter-rouge">implementation</code>, <code class="language-plaintext highlighter-rouge">target</code>, <code class="language-plaintext highlighter-rouge">surface</code>, <code class="language-plaintext highlighter-rouge">model</code>, <code class="language-plaintext highlighter-rouge">configuration</code> (a hash plus a short map).</td><td>Smallest change, and backward compatible.</td><td>Every run repeats the system’s description. Nothing says which systems exist, so “certified on every target” cannot be checked.</td></tr><tr><td><strong>S2</strong></td><td><strong>A <code class="language-plaintext highlighter-rouge">system/v1</code> node</strong>, plus a run reference to it. The node declares the system’s versions, the actors it can play, its surfaces and its targets. The run says which of each it used.</td><td>This is the ITB’s model (system, actor, conformance statement), so the export maps one to one. It also lets a check say that a plan has a run for every declared target, which is the claim the smart-trust-tools README makes in prose.</td><td>One more node kind, and every SUT needs a declaration before it can be certified.</td></tr><tr><td><strong>S3</strong></td><td>Reuse FHIR <code class="language-plaintext highlighter-rouge">Device</code> or <code class="language-plaintext highlighter-rouge">TestReport.participant</code>.</td><td>Nothing to design.</td><td>Breaks the FHIR-free rule. It stays an export target only.</td></tr><tr><td><strong>S4</strong></td><td>Reuse the deployment description’s placements (<a href="../proposals/deployment-descriptions.html">deployment descriptions</a>, bean <code class="language-plaintext highlighter-rouge">o1by</code>).</td><td>One registry for “what runs where”.</td><td>A placement says where something runs, not what it is, so it answers a different question. A <code class="language-plaintext highlighter-rouge">system/v1</code> should <em>reference</em> a placement, not replace one.</td></tr></tbody></table></div><p><strong>Recommended: S2, with S1’s fields as the run’s reference to it.</strong></p><h3 id="the-shape-sketch"><a href="#the-shape-sketch" class="anchor-heading" aria-labelledby="the-shape-sketch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The shape (sketch)
+  
+  
+</h3><div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// schemas/system.ts (cat-harness): what can be tested</span>
+<span class="nx">SystemSchema</span> <span class="o">=</span> <span class="nx">z</span><span class="p">.</span><span class="nf">strictObject</span><span class="p">({</span>
+  <span class="na">$schema</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">literal</span><span class="p">(</span><span class="dl">"</span><span class="s2">system/v1</span><span class="dl">"</span><span class="p">),</span>
+  <span class="na">id</span><span class="p">:</span> <span class="nx">SLUG</span><span class="p">,</span>                                   <span class="c1">// "hcert-rust"</span>
+  <span class="na">title</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">string</span><span class="p">(),</span>
+  <span class="na">kind</span><span class="p">:</span> <span class="nx">SutKindSchema</span><span class="p">,</span>                        <span class="c1">// skill | agent | tool | machine | ig | process</span>
+  <span class="na">implements</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="nx">InterfaceRefSchema</span><span class="p">),</span>    <span class="c1">// e.g. "smart-trust-tools:api/wit/worlds.wit#hcert"</span>
+  <span class="na">actors</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="nx">z</span><span class="p">.</span><span class="nf">string</span><span class="p">()).</span><span class="nf">min</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>         <span class="c1">// roles it can play: "verifier", "issuer"</span>
+  <span class="na">surfaces</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="nx">z</span><span class="p">.</span><span class="nf">strictObject</span><span class="p">({</span>
+    <span class="na">id</span><span class="p">:</span> <span class="nx">SLUG</span><span class="p">,</span>                                 <span class="c1">// "library" | "wit-component" | "mcp" | "cli" | "http"</span>
+    <span class="na">kind</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">enum</span><span class="p">([</span><span class="dl">"</span><span class="s2">library</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">component</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">mcp</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">cli</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">http</span><span class="dl">"</span><span class="p">]),</span>
+    <span class="na">entry</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">string</span><span class="p">().</span><span class="nf">optional</span><span class="p">(),</span>             <span class="c1">// package, MCP server id, CLI, URL template</span>
+  <span class="p">})).</span><span class="nf">min</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+  <span class="na">targets</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="nx">SLUG</span><span class="p">).</span><span class="k">default</span><span class="p">([]),</span>         <span class="c1">// "native", "wasm32", "jvm", "node", "android"</span>
+  <span class="na">placement</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">string</span><span class="p">().</span><span class="nf">optional</span><span class="p">(),</span>           <span class="c1">// a deployment placement, when one exists</span>
+<span class="p">});</span>
+
+<span class="c1">// folio-test-run/v1: sut widens to a reference (S1's fields, all named by the node)</span>
+<span class="nx">SutRefSchema</span> <span class="o">=</span> <span class="nx">z</span><span class="p">.</span><span class="nf">strictObject</span><span class="p">({</span>
+  <span class="na">system</span><span class="p">:</span> <span class="nx">SLUG</span><span class="p">,</span>            <span class="c1">// a system/v1 id</span>
+  <span class="na">version</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">string</span><span class="p">(),</span>     <span class="c1">// the system version, or a commit</span>
+  <span class="na">actor</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">string</span><span class="p">(),</span>       <span class="c1">// one of the system's actors</span>
+  <span class="na">surface</span><span class="p">:</span> <span class="nx">SLUG</span><span class="p">,</span>           <span class="c1">// one of its surfaces</span>
+  <span class="na">target</span><span class="p">:</span> <span class="nx">SLUG</span><span class="p">.</span><span class="nf">optional</span><span class="p">(),</span> <span class="c1">// one of its targets</span>
+  <span class="na">model</span><span class="p">:</span> <span class="nx">ModelIdSchema</span><span class="p">.</span><span class="nf">optional</span><span class="p">(),</span>                  <span class="c1">// agents only (bootstrap/models)</span>
+  <span class="na">configuration</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">strictObject</span><span class="p">({</span> <span class="na">sha256</span><span class="p">:</span> <span class="nx">HEX64</span><span class="p">,</span> <span class="na">summary</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">record</span><span class="p">(</span><span class="nx">z</span><span class="p">.</span><span class="nf">string</span><span class="p">(),</span> <span class="nx">z</span><span class="p">.</span><span class="nf">string</span><span class="p">())</span> <span class="p">}).</span><span class="nf">optional</span><span class="p">(),</span>
+  <span class="na">reach</span><span class="p">:</span> <span class="nx">z</span><span class="p">.</span><span class="nf">enum</span><span class="p">([...</span><span class="nx">NETWORK_REACHES</span><span class="p">,</span> <span class="nx">REACH_UNKNOWN</span><span class="p">]),</span>
+<span class="p">});</span>
+</code></pre></div></div><p>The current <code class="language-plaintext highlighter-rouge">{actor, version, reach}</code> runs migrate by adding <code class="language-plaintext highlighter-rouge">system</code> and
+<code class="language-plaintext highlighter-rouge">surface</code>. A converter can fill them in, because today’s <code class="language-plaintext highlighter-rouge">actor</code> is always a
+skill or agent name.</p><p>ITB mapping: <code class="language-plaintext highlighter-rouge">system/v1</code> → ITB system; <code class="language-plaintext highlighter-rouge">actors[]</code> → specification actors;
+(system, actor, plan) → conformance statement; a run → a test session result
+against it.</p><h2 id="4-a-formal-plan-for-smart-trust-tools-attached-to-skills"><a href="#4-a-formal-plan-for-smart-trust-tools-attached-to-skills" class="anchor-heading" aria-labelledby="4-a-formal-plan-for-smart-trust-tools-attached-to-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. A formal plan for smart-trust-tools, attached to skills
+  
+  
+</h2><h3 id="what-is-added"><a href="#what-is-added" class="anchor-heading" aria-labelledby="what-is-added"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is added
+  
+  
+</h3><p>Three optional fields on <code class="language-plaintext highlighter-rouge">test-plan/v1</code>, and one new node.</p><div class="table-wrapper"><table><thead><tr><th>Addition</th><th>On</th><th>What it replaces</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">skill</code></td><td>each test case</td><td>The convention that the case id equals the skill name. <code class="language-plaintext highlighter-rouge">kg-audit</code> can then check that every skill with <code class="language-plaintext highlighter-rouge">satisfies</code> has a case, and that the case’s assertions cover those criteria.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">level</code></td><td>each test case</td><td>The README’s test-level table. Values: <code class="language-plaintext highlighter-rouge">skill</code>, <code class="language-plaintext highlighter-rouge">vector</code>, <code class="language-plaintext highlighter-rouge">negative</code>, <code class="language-plaintext highlighter-rouge">fuzz</code>, <code class="language-plaintext highlighter-rouge">coverage</code>, <code class="language-plaintext highlighter-rouge">target</code>, <code class="language-plaintext highlighter-rouge">cross-implementation</code>, <code class="language-plaintext highlighter-rouge">interface-suite</code>, <code class="language-plaintext highlighter-rouge">schema</code>, <code class="language-plaintext highlighter-rouge">agreement</code>, <code class="language-plaintext highlighter-rouge">review</code>.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">interface</code></td><td>the plan’s <code class="language-plaintext highlighter-rouge">scope</code></td><td>“The library”, in prose. It names the contract the plan tests (the WIT world <code class="language-plaintext highlighter-rouge">hcert</code>, its operations), so any system that <code class="language-plaintext highlighter-rouge">implements</code> that interface can run the plan, MCP servers included.</td></tr><tr><td><strong><code class="language-plaintext highlighter-rouge">test-binding/v1</code></strong></td><td>a node per system</td><td>The test names pasted into <code class="language-plaintext highlighter-rouge">expectation</code>. It maps each assertion id to the selector that runs it in that system, per surface and target.</td></tr></tbody></table></div><p>A sketch of the binding:</p><div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test-binding/v1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"plan"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hcert-library-conformance"</span><span class="p">,</span><span class="w"> </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"system"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hcert-rust"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"runner"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">                                   </span><span class="c1">// how this system's suite runs</span><span class="w">
+    </span><span class="nl">"native"</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"shell"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cargo test --manifest-path tools/hcert-rust/Cargo.toml"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"wasm32"</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nl">"shell"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node tools/conformance-ts/run.mjs rust $COMPONENT_DIR"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"mcp"</span><span class="p">:</span><span class="w">     </span><span class="p">{</span><span class="w"> </span><span class="nl">"shell"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node tools/conformance-ts/run.mjs mcp $MCP_SERVER"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"bindings"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"assertion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"req:stt-ver-001#statement/test"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"case"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hcert-verify"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"library"</span><span class="p">,</span><span class="w">       </span><span class="nl">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"native"</span><span class="p">,</span><span class="w"> </span><span class="nl">"selector"</span><span class="p">:</span><span class="w"> </span><span class="s2">"verify::stt_ver_001_valid_signature_verifies"</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wit-component"</span><span class="p">,</span><span class="w"> </span><span class="nl">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wasm32"</span><span class="p">,</span><span class="w"> </span><span class="nl">"selector"</span><span class="p">:</span><span class="w"> </span><span class="s2">"conformance-ts:STT-VER-001"</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w"> </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mcp"</span><span class="p">,</span><span class="w">                               </span><span class="nl">"selector"</span><span class="p">:</span><span class="w"> </span><span class="s2">"conformance-ts:STT-VER-001"</span><span class="w"> </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"unbound"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">                                  </span><span class="c1">// said out loud, never left out</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"assertion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"req:stt-gen-004#statement/test"</span><span class="p">,</span><span class="w"> </span><span class="nl">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"android"</span><span class="p">,</span><span class="w"> </span><span class="nl">"reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no Android runtime in CI"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p>What becomes checkable that is prose today:</p><ul><li>Every required assertion has a binding in every system that claims the
+plan’s interface, or an <code class="language-plaintext highlighter-rouge">unbound</code> entry with a reason. (Today: “87 of 94”
+is counted by hand in bean <code class="language-plaintext highlighter-rouge">oi32</code>.)</li><li>Every selector exists in that system’s suite. A Tool lists the test names
+(<code class="language-plaintext highlighter-rouge">cargo test -- --list</code>, the JUnit report, the TypeScript suite’s
+manifest) and compares.</li><li>The run records verdicts per (assertion, surface, target), so “passes on
+every target” is computed, not asserted.</li><li>The <code class="language-plaintext highlighter-rouge">test-plan</code> Tool keeps generating the plan, and gains a
+<code class="language-plaintext highlighter-rouge">--bindings</code> step that writes each system’s binding from the skills’
+<code class="language-plaintext highlighter-rouge">tested-by</code> lists and the test names. CI fails if a binding is stale, the
+same as the plan today.</li></ul><h3 id="the-mcp-server"><a href="#the-mcp-server" class="anchor-heading" aria-labelledby="the-mcp-server"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The MCP server
+  
+  
+</h3><p>An MCP server that exposes the Rust library (for example <code class="language-plaintext highlighter-rouge">verifier.verify</code>
+as an MCP tool) is <strong>one more surface of the <code class="language-plaintext highlighter-rouge">hcert-rust</code> system</strong>: a
+<code class="language-plaintext highlighter-rouge">surfaces</code> entry of kind <code class="language-plaintext highlighter-rouge">mcp</code>, and a third runner in the binding. The
+TypeScript conformance suite already drives two packages through
+<code class="language-plaintext highlighter-rouge">api/generated/ts</code>. A third adapter in that suite calls the MCP tools, so the
+same 45 checks run through MCP with no new test text. The plan does not
+change, because it tests the interface, not the transport.</p><h3 id="the-agent-that-uses-it"><a href="#the-agent-that-uses-it" class="anchor-heading" aria-labelledby="the-agent-that-uses-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The agent that uses it
+  
+  
+</h3><p>“Verify HCERT” is also something an <em>agent</em> can be asked to do, using that
+MCP tool. That is a different system under test (kind <code class="language-plaintext highlighter-rouge">agent</code>, with a model
+and a configuration), against a different plan: does the agent call the
+tool rather than decode by hand, report the tool’s reason faithfully, and
+refuse to call an unverified certificate valid? That plan’s cases name the
+same skill (<code class="language-plaintext highlighter-rouge">skill: hcert-verify</code>) and reuse the vectors as test data. It is
+also where the benchmark of PR #500 gets its first smart-* task (section 5).</p><h3 id="release-review-criteria"><a href="#release-review-criteria" class="anchor-heading" aria-labelledby="release-review-criteria"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Release-review criteria
+  
+  
+</h3><p>Criteria verified by <code class="language-plaintext highlighter-rouge">inspection</code> or <code class="language-plaintext highlighter-rouge">review</code> become cases of <code class="language-plaintext highlighter-rouge">level:
+review</code>, in a separate plan run at release, whose witness kind is <code class="language-plaintext highlighter-rouge">human</code>.
+The certifier’s DMN treats a missing review verdict as undetermined, which
+is the existing rule. This closes the last part of bean <code class="language-plaintext highlighter-rouge">oi32</code>.</p><h3 id="the-who-itb-agreement-plan"><a href="#the-who-itb-agreement-plan" class="anchor-heading" aria-labelledby="the-who-itb-agreement-plan"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The WHO-ITB agreement plan
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">who-itb-agreement</code> is the first plan that would use the ITB route (I1):
+its three tracks are already ITB test cases (<code class="language-plaintext highlighter-rouge">tc-vhl-001</code>, <code class="language-plaintext highlighter-rouge">tc-icvp-001</code>,
+<code class="language-plaintext highlighter-rouge">tc-ph4h-qr-001</code>). Once the data is usable (bean OI-33: no licence file yet,
+no pinned QR reader, the DEV trust list not reachable from CI), a tester
+runs the ITB and the TAR import records the result against the plan.
+Nothing in WHO-ITB or any WHO repository is changed.</p><h2 id="5-machine-qa-and-the-benchmark"><a href="#5-machine-qa-and-the-benchmark" class="anchor-heading" aria-labelledby="5-machine-qa-and-the-benchmark"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Machine QA and the benchmark
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>Thing</th><th>Becomes</th></tr></thead><tbody><tr><td>A machine QA criterion (a <code class="language-plaintext highlighter-rouge">QaWitness</code> of kind <code class="language-plaintext highlighter-rouge">script</code>)</td><td>An assertion id, so a QA verdict and a test verdict are the same kind of record.</td></tr><tr><td>A fixed machine finding</td><td>A regression case, generated with the finding’s input as fixed test data (benchmark gap 4; it overlaps bean <code class="language-plaintext highlighter-rouge">vm6m</code>).</td></tr><tr><td>A spec-kit success criterion</td><td>An assertion id of the form <code class="language-plaintext highlighter-rouge">req:&lt;id&gt;#&lt;statement&gt;/&lt;key&gt;</code>, exactly as smart-trust-tools already does (benchmark gap 5).</td></tr><tr><td>A benchmark</td><td>One plan, several runs, each with a different <code class="language-plaintext highlighter-rouge">system/v1</code> reference (model, configuration). The side-by-side view groups runs by plan version and data hash (benchmark gaps 1 and 2).</td></tr><tr><td>Cost and tokens</td><td>Optional fields on the run (benchmark gap 3).</td></tr></tbody></table></div><p>The first shared task for the benchmark: <strong>an agent verifies an HCERT
+through the MCP tool</strong>, scored against the smart-trust-tools vectors. It
+has fixed data, known right answers, negative cases with named reasons, and
+no WHO repository to change.</p><h2 id="6-phasing"><a href="#6-phasing" class="anchor-heading" aria-labelledby="6-phasing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Phasing
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>Step</th><th>What</th><th>Where</th><th>Depends on</th></tr></thead><tbody><tr><td>P1</td><td><code class="language-plaintext highlighter-rouge">system/v1</code> and the widened <code class="language-plaintext highlighter-rouge">SutRefSchema</code>, with a converter for existing runs</td><td>cat-harness</td><td>D1</td></tr><tr><td>P2</td><td><code class="language-plaintext highlighter-rouge">skill</code>, <code class="language-plaintext highlighter-rouge">level</code> and <code class="language-plaintext highlighter-rouge">scope.interface</code> on <code class="language-plaintext highlighter-rouge">test-plan/v1</code>; <code class="language-plaintext highlighter-rouge">test-binding/v1</code></td><td>cat-harness</td><td>D2</td></tr><tr><td>P3</td><td>smart-trust-tools adopts: systems <code class="language-plaintext highlighter-rouge">hcert-kotlin</code> and <code class="language-plaintext highlighter-rouge">hcert-rust</code>, generated bindings, <code class="language-plaintext highlighter-rouge">check:req-nodes</code> checks them</td><td>smart-trust-tools</td><td>P1, P2</td></tr><tr><td>P4</td><td>The MCP surface: a server over the Rust library and a third adapter in <code class="language-plaintext highlighter-rouge">tools/conformance-ts</code></td><td>smart-trust-tools</td><td>P3</td></tr><tr><td>P5</td><td>FHIR TestPlan export, with <code class="language-plaintext highlighter-rouge">testRun.script</code> pointing at the ITB case where there is one (bean <code class="language-plaintext highlighter-rouge">18p1</code>)</td><td>fhir-harness</td><td>P2</td></tr><tr><td>P6</td><td>ITB route I1 (Gherkin plus OTB config) and TAR import</td><td>D3</td><td>P1, P2</td></tr><tr><td>P7</td><td>The agent plan for “Verify HCERT”, and the first benchmark runs</td><td>smart-trust-tools, cat-harness</td><td>P4, PR #500</td></tr></tbody></table></div><p>Each step is a draft PR with its own issue, and is useful on its own. P3 and
+P4 alone close what bean <code class="language-plaintext highlighter-rouge">oi32</code> counts by hand.</p><h2 id="7-decisions-for-the-owner"><a href="#7-decisions-for-the-owner" class="anchor-heading" aria-labelledby="7-decisions-for-the-owner"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. Decisions for the owner
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th></th><th>Question</th><th>Options</th><th>Recommended</th></tr></thead><tbody><tr><td><strong>D1</strong></td><td>System-under-test shape</td><td>S1 widen the run’s field · S2 a <code class="language-plaintext highlighter-rouge">system/v1</code> node · S3 FHIR Device (export only)</td><td><strong>S2</strong></td></tr><tr><td><strong>D2</strong></td><td>Where the assertion-to-test mapping lives</td><td>B1 a <code class="language-plaintext highlighter-rouge">test-binding/v1</code> node per system · B2 inside the plan, per assertion · B3 keep the naming convention and only check it</td><td><strong>B1</strong>: the plan stays implementation-free, so Rust, Kotlin and MCP share one plan</td></tr><tr><td><strong>D3</strong></td><td>Where the ITB export and TAR import live</td><td>cat-harness-tools · fhir-harness, beside the GITB sources</td><td><strong>cat-harness-tools</strong>: GITB is not FHIR</td></tr><tr><td><strong>D4</strong></td><td>ITB route</td><td>I1 through OTB Gherkin · I2 emit TDL directly</td><td><strong>I1</strong></td></tr><tr><td><strong>D5</strong></td><td>First step</td><td>P1+P2 (schemas) · P3 (smart-trust-tools adopts, schemas proved there first)</td><td><strong>P1+P2</strong> first, then P3 straight after</td></tr></tbody></table></div><p>The tool-releases decision C2 (the ITB is an export) stays as it is. This
+proposal only adds the TAR import beside it.</p><h2 id="sources"><a href="#sources" class="anchor-heading" aria-labelledby="sources"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sources
+  
+  
+</h2><ul><li>cat-harness <code class="language-plaintext highlighter-rouge">schemas/test-plan.ts</code>, <code class="language-plaintext highlighter-rouge">schemas/test-run.ts</code>,
+<code class="language-plaintext highlighter-rouge">processes/sdlc/test-plan-execution.bpmn</code>; beans <code class="language-plaintext highlighter-rouge">ygzh</code>, <code class="language-plaintext highlighter-rouge">3o5b</code>, <code class="language-plaintext highlighter-rouge">4iey</code>,
+<code class="language-plaintext highlighter-rouge">ff09</code>, <code class="language-plaintext highlighter-rouge">zaui</code>, <code class="language-plaintext highlighter-rouge">18p1</code>, <code class="language-plaintext highlighter-rouge">y4uj</code>, <code class="language-plaintext highlighter-rouge">3fva</code>.</li><li>litlfred/smart-trust-tools at <code class="language-plaintext highlighter-rouge">ae4eb269</code>: <code class="language-plaintext highlighter-rouge">test/plans/</code>,
+<code class="language-plaintext highlighter-rouge">tools/test-plan/</code>, <code class="language-plaintext highlighter-rouge">skills/hcert/hcert-verify.md</code>,
+<code class="language-plaintext highlighter-rouge">skills/hcert-library/hcert-conformance-testing.md</code>,
+<code class="language-plaintext highlighter-rouge">skills/requirements/stt-*.json</code>, bean <code class="language-plaintext highlighter-rouge">oi32</code>.</li><li>github.com/OpenTestBed: <code class="language-plaintext highlighter-rouge">itb-cli</code> (<code class="language-plaintext highlighter-rouge">otb-gherkin</code>, <code class="language-plaintext highlighter-rouge">build-test-ig.mjs</code>),
+<code class="language-plaintext highlighter-rouge">itb-manager</code>, <code class="language-plaintext highlighter-rouge">itb-plugin-authoring</code>, <code class="language-plaintext highlighter-rouge">itb-plugin-fhir-validator</code>,
+<code class="language-plaintext highlighter-rouge">itb-plugin-jwt</code>, <code class="language-plaintext highlighter-rouge">itb-plugin-oauth</code>, <code class="language-plaintext highlighter-rouge">itb-plugin-hcert-decoder</code> (READMEs,
+read 2026-10-24).</li><li>HL7 FHIR R5 TestPlan (<code class="language-plaintext highlighter-rouge">testCase.testRun.script</code>, <code class="language-plaintext highlighter-rouge">testRun.narrative</code>) and
+TestReport.</li><li><a href="../proposals/tool-releases-2026-10-07.html">Tool releases</a> decision C2;
+<a href="https://github.com/litlfred/cat-harness/pull/500">model swarm and benchmark</a>
+(PR #500); <a href="../proposals/deployment-descriptions.html">deployment descriptions</a>.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

@@ -1,0 +1,39 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_LogMessage",
+ "tasks": {
+  "A_Compose": {
+   "id": "A_Compose",
+   "name": "Compose the message",
+   "type": "bpmn:Task",
+   "lane": "Actor",
+   "skills": [
+    {
+     "name": "log-message"
+    }
+   ],
+   "binding": "variable"
+  },
+  "A_Record": {
+   "id": "A_Record",
+   "name": "Record it where a person can read it",
+   "type": "bpmn:Task",
+   "lane": "Logger",
+   "skills": [
+    {
+     "name": "logger"
+    }
+   ],
+   "role": {
+    "name": "logger",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-logger",
+    "title": "Logger",
+    "skills": [
+     {
+      "name": "logger"
+     }
+    ]
+   }
+  }
+ }
+}

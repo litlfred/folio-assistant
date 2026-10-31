@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/process/Process_KgSeparation/node/GW_SeedReady.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/process/Process_KgSeparation/node/GW_SeedReady",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Ready to seed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/process/Process_KgSeparation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/process/Process_KgSeparation/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/seed-readiness-gate.dmn#Decision_SeedReadiness",
+      "decidedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/decision/seed-readiness-gate/Decision_SeedReadiness",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/process/Process_KgSeparation#flow/F21",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/process/Process_KgSeparation#flow/F28"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/process/Process_KgSeparation#flow/F27",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/process/Process_KgSeparation#flow/F29",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/process/Process_KgSeparation#flow/F30"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/GW_SeedReady"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/asset/unkinded-baseline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/asset/unkinded-baseline",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "name": "unkinded-baseline",
+      "path": "node-kinds.baseline.json",
+      "assetRole": "unkinded-baseline",
+      "title": "Unkinded families — folio-assistant-core",
+      "description": "The families whose typology THIS instance declares (in its typologies/ graph) that predate node kinds and may stay unkinded; `node-kinds:check` fails on any other. Owner, 2026-10-15: split out of cat-harness's docs/_data/node-kinds.json, which spanned every layer and is now built at publish, so this layer's families are judged by its own commit. Written by `bun run cat node-kinds`, which only shrinks it; `--accept-unkinded` grows it deliberately.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/asset/unkinded-baseline"
+    }
+  ]
+}

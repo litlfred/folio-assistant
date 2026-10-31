@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_ReadLocation.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_ReadLocation",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Read what each location already is",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/skill/bootstrap-kg-navigation"
+    }
+  ]
+}

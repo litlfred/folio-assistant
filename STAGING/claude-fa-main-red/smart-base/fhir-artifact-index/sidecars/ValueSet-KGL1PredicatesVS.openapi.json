@@ -1,0 +1,81 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Knowledge graph L1: predicates Schema API",
+    "description": "JSON Schema for Knowledge graph L1: predicates ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-KGL1PredicatesVS.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-KGL1PredicatesVS",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-KGL1PredicatesVS.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-KGL1PredicatesVS",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-KGL1PredicatesVS.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-KGL1PredicatesVS": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-KGL1PredicatesVS.schema.json",
+        "title": "Knowledge graph L1: predicates Schema",
+        "description": "JSON Schema for Knowledge graph L1: predicates ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://smart.who.int/base/CodeSystem/KGL1Predicates"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "contains",
+              "hasSupplement",
+              "supersedes",
+              "refines",
+              "partOf",
+              "definedIn",
+              "presentedIn",
+              "answers",
+              "addresses",
+              "hasOutcome",
+              "forOutcome",
+              "aboutIntervention",
+              "supportedBy",
+              "hasRemark",
+              "recommends",
+              "measures",
+              "justifiedBy",
+              "crossReferences",
+              "classifiedAs",
+              "numberedAs",
+              "resolvesTo"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the Knowledge graph L1: predicates ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-KGL1PredicatesVS.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-KGL1PredicatesVS.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/KGL1PredicatesVS",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-10-20T16:07:30+00:00"
+      }
+    }
+  }
+}

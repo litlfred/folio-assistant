@@ -1,0 +1,1975 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-tools",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "The science layer's Tool nodes. Declared 2026-10-04 with the first two, `paper-feature-build` and `tex-install`, the iterative paper-build loop (issue #2117). Reached by the harness through tool auto-discovery (cat-harness/tools/discover.ts), never by an import.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-tools",
+      "name": "sci-tools",
+      "path": "tools/",
+      "readmePath": "tools/README.md"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/check-dependencies/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/check-dependencies.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Report which of the harness's optional and required dependencies are present on this machine, and what each unmet one blocks.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "inProcess": {
+              "module": "adapters/paper/tools/check-deps.ts"
+            },
+            "mcp": {
+              "tool": "check_dependencies"
+            },
+            "shell": "bun run cat check-deps"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--required-only"
+                },
+                "description": "Report only the dependencies without which the harness cannot run.",
+                "name": "required_only",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Per-dependency: present, absent, or could not be determined.",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              }
+            ]
+          },
+          "name": "check-dependencies",
+          "requirements": {
+            "network": false
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/verify-local-substrate",
+          "title": "Dependency probe"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/check-dependencies",
+      "path": "tools/check-dependencies/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/content-manifest-validate/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/content-manifest-validate.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat content:validate"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "A paper or chapter directory; absent, every paper the folio declares.",
+                "name": "targetPath",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--strict"
+                },
+                "description": "Treat warnings as errors.",
+                "name": "strict",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "One line per issue, with its block and file. Exit 2 means NO FOLIO WAS FOUND — could-not-determine, never valid.",
+                "name": "issues",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "content-manifest-validate",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/content-validation"
+          ],
+          "title": "Content manifest validation"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/content-manifest-validate",
+      "path": "tools/content-manifest-validate/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/headless-render-qc/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/headless-render-qc.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat render:headless-qc"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--screenshot"
+                },
+                "description": "Save the screenshots as well as the verdict — which is the point when the reader is a person rather than a gate.",
+                "name": "screenshot",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Per block: rendered, or the failure. Needs a FOLIO's `build/viewer/paper.json` and its `folio-assistant/ui`, so it exits 2 with `No paper.json found` in the platform (could-not-determine).",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "headless-render-qc",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun",
+              "chromium"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-verification",
+          "title": "Headless render QC (Playwright)"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/headless-render-qc",
+      "path": "tools/headless-render-qc/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/latex-image/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-image.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Compile a rendered paper's `main.tex` with latexmk inside a TeX Live (full) image, for a host with Docker but no TeX engine. The image carries TeX Live, latexmk, Pandoc, latexdiff, graphviz and poppler-utils; it does not run the content pipeline, which renders the chapters on the host first.",
+          "install": {
+            "container": "docker build -t folio-latex -f folio-assistant-sci/scripts/docker-latex-build/Dockerfile folio-assistant-sci/scripts/docker-latex-build"
+          },
+          "invoke": {
+            "container": "docker run --rm -v .:/workspace -w /workspace folio-latex latexmk -pdf -interaction=nonstopmode"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The rendered paper's top-level `.tex`, relative to the checkout.",
+                "name": "mainTex",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The compiled PDF beside the input.",
+                "name": "pdf",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "latex-image",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "docker"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-build-cache",
+          "title": "Compile LaTeX in a container"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/latex-image",
+      "path": "tools/latex-image/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/latex-overfull/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-overfull.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Turn a pdflatex log's Overfull \\hbox warnings into a located, actionable report, with a threshold so a long tail of trivial overruns does not bury the real ones.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat latex:overfull"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The pdflatex log to read. Nothing to read means no answer, not a pass.",
+                "name": "log",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--min"
+                },
+                "description": "Ignore overruns below this size — the long tail is noise, and reporting it hides the rest.",
+                "name": "min",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Dpi"
+              },
+              {
+                "arg": {
+                  "flag": "--max"
+                },
+                "description": "Fail above this count, for use as a gate.",
+                "name": "max",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Dpi"
+              },
+              {
+                "arg": {
+                  "flag": "--json"
+                },
+                "name": "json",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Located overfull boxes. Requires a build log: with no log there is nothing to read, which is could-not-determine rather than clean.",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "latex-overfull",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-validation",
+          "title": "LaTeX overfull-box report"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/latex-overfull",
+      "path": "tools/latex-overfull/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/latex-preflight/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-preflight.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-sci/pipeline/latex-preflight.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--json"
+                },
+                "name": "json",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--warn"
+                },
+                "description": "Report without failing — for a corpus not yet clean.",
+                "name": "warn",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Compile-breaking hazards, located. A clean run here is not a successful compile; it is the absence of these classes.",
+                "name": "findings",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "latex-preflight",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-validation",
+          "title": "LaTeX preflight"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/latex-preflight",
+      "path": "tools/latex-preflight/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/latexmk-compile/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latexmk-compile.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Compile LaTeX source documents into PDF using latexmk with safe shell-escape isolation across CI events.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat latex:compile"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The TeX source file to compile (e.g. main.tex).",
+                "name": "tex",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Additional arguments to forward to latexmk.",
+                "name": "args",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The compiled PDF document. Exits 2 if the source file is missing (could-not-determine).",
+                "name": "pdf",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "latexmk-compile",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bash",
+              "latexmk",
+              "pdflatex"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-compilation",
+          "title": "LaTeX compilation (latexmk)"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/latexmk-compile",
+      "path": "tools/latexmk-compile/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-audit/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-audit.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Inspect Lean declarations chapter by chapter for proofs that type-check, are sorry-free and axiom-clean, and still carry no mathematical content — assuming what they claim, concluding something trivially true, or resting on a false premise.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-sci/scripts/lean-audit.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--chapter"
+                },
+                "description": "One chapter instead of the whole corpus.",
+                "name": "chapter",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "flag": "--strict"
+                },
+                "name": "strict",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--check-axioms"
+                },
+                "description": "Axiom-cleanliness is a separate question from vacuity: a proof can be axiom-clean and still assume its conclusion.",
+                "name": "checkAxioms",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--json"
+                },
+                "name": "json",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Sorry inventory and trivial-truth detections. Sibling of `lean-coverage`, not an alternative to it: that one COUNTS what is proved, this one asks whether a proof says anything.",
+                "name": "findings",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "lean-audit",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-proof-vacuity-audit",
+          "title": "Lean vacuity audit"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/lean-audit",
+      "path": "tools/lean-audit/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-build/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-build.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Build every Lean project in the workspace from the root Lake manifest, so cross-package dependencies resolve against it rather than a possibly-stale per-paper manifest. Writes a committable build-status sidecar every run.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat lean:build-all"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--paper"
+                },
+                "description": "Build one paper instead of all of them.",
+                "name": "paper",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "flag": "--cache"
+                },
+                "description": "Fetch the Mathlib cache first. A from-source Mathlib build is 30–60 minutes against ~2 for a restore.",
+                "name": "cache",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--update"
+                },
+                "description": "Run `lake update` before building.",
+                "name": "update",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--log-dir"
+                },
+                "description": "Where logs and the status sidecar go.",
+                "name": "logDir",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`lean-build-status.json` — committable, so a green build is distinguishable from one nobody ran.",
+                "name": "status",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "lean-build",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bash",
+              "lean",
+              "lake"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-build-fix",
+          "title": "Lean build"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/lean-build",
+      "path": "tools/lean-build/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-cache/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-cache.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Restore, verify, seed and diagnose the prebuilt `.lake/` artefacts for a Lean package. Always try `restore` first: a from-source Mathlib build is 30–60 minutes, a restore about two.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "folio-assistant-sci/scripts/lake-cache.sh"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
+                "name": "action",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/LakeCacheAction"
+              },
+              {
+                "arg": {
+                  "flag": "--lake-root"
+                },
+                "description": "The package whose `.lake/` is acted on.",
+                "name": "lakeRoot",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--package"
+                },
+                "name": "package",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "A real hit, a miss, or a diagnosis — never a miss that reads as a hit.",
+                "name": "result",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "lean-cache",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bash",
+              "git",
+              "lake"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-cache-restore",
+          "title": "Lake olean cache"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/lean-cache",
+      "path": "tools/lean-cache/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-coverage/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-coverage.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Count how many provable blocks — theorem, lemma, proposition, corollary — carry a full Lean proof rather than a sorry, per paper. The completeness half of the Lean audit: what is formalised, and what is still a gap.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-sci/scripts/lean-coverage.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--paper"
+                },
+                "description": "One paper instead of all.",
+                "name": "paper",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "flag": "--content-root"
+                },
+                "description": "Where content blocks live. NOT a Lean project root — see the note above this node.",
+                "name": "contentRoot",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--json"
+                },
+                "name": "json",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Provable blocks, and how many are sorry-free. A count, not a verdict: a sorry-free proof can still be vacuous, which is the sibling node's question.",
+                "name": "coverage",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "lean-coverage",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-completeness-audit",
+          "title": "Lean coverage"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/lean-coverage",
+      "path": "tools/lean-coverage/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-formal-edges/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-formal-edges.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations (LeanArchitect's rule over the folio's own lean.ref set). Needs a Lean toolchain and a built Lake project. Tagged declarations missing from the build are reported, never recorded as dependency-free; with ingest the result is recorded in the formal cache as source \"elaborated\".",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "inProcess": {
+              "module": "pipeline/formal-edges-mcp.ts"
+            },
+            "mcp": {
+              "tool": "lean_formal_edges"
+            }
+          },
+          "io": {
+            "inputs": [
+              {
+                "description": "The folio's Lake project directory (holds lakefile.* and .lake/).",
+                "name": "lake_dir",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Content root to collect lean.ref targets from (default: the folio's declared one).",
+                "name": "root",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "Record the result in the formal cache as source \"elaborated\".",
+                "name": "ingest",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The extracted edges, or why they could not be determined — never an empty edge set in place of a failure.",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              }
+            ]
+          },
+          "name": "lean-formal-edges",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun",
+              "lake"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-formal-edges",
+          "title": "Formal edges from the Lean build"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/lean-formal-edges",
+      "path": "tools/lean-formal-edges/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-html-docs/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-html-docs.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Build the doc-gen4 HTML render of a folio's Lake package — the visualiser of a declared `lean` directory — with `lake -R -Kenv=dev build <Lib>:docs`, cache-aware: refuses while another lake/lean process holds `.lake/`, refuses on a restored tree that carries no traces (a Lake build there EVICTS the cache), checks or restores the warm cache first, and enables a sentinel-commented doc-gen4 `[[require]]` for this build only, restoring the lakefile on exit. Never runs `lake update`. Output: `<lake-root>/.lake/build/doc`.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bash folio-assistant-sci/adapters/paper/lean/lean-docs-build.sh"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--lake-root"
+                },
+                "description": "The Lake package directory whose lakefile requires (or sentinel-comments) doc-gen4, e.g. `folio/quantum-observable-universe/lean`.",
+                "name": "lakeRoot",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--lib"
+                },
+                "description": "The `lean_lib` to document, e.g. `QOU` (a Lean library name: alphanumerics, dot, underscore, hyphen). Repeat for several.",
+                "name": "lib",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
+              },
+              {
+                "arg": {
+                  "flag": "--platform"
+                },
+                "description": "The index checkout holding `lake-cache.sh`. Default `$FOLIO_ASSISTANT_ROOT`.",
+                "name": "platform",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--restore"
+                },
+                "description": "Restore the warm cache first (about 2 minutes) instead of only checking it.",
+                "name": "restore",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--allow-cold"
+                },
+                "description": "Build without a warm cache: Mathlib from source, 30-60 minutes before doc-gen4 starts.",
+                "name": "allowCold",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--dry-run"
+                },
+                "description": "Run every guard, print the build command, build nothing.",
+                "name": "dryRun",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`<lake-root>/.lake/build/doc`, doc-gen4's output, printed as the last line. Feed it to `lean-render-publish`.",
+                "name": "render",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "lean-html-docs",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bash",
+              "git",
+              "lake"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs",
+          "title": "Build a Lean package's HTML docs (doc-gen4)"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/lean-html-docs",
+      "path": "tools/lean-html-docs/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-kg-publish/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-kg-publish.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Ingest doc-gen4's per-module declaration data (`.lake/build/doc-data/declaration-data-<Module>.bmp`) into JSON-LD shards — one per module, with declaration nodes, `imports` edges and `formalizes` edges to the content blocks whose `lean.ref` names each declaration — and publish them under the folio's site with a single viewer page that loads modules, signature chunks and the search list on demand. Signatures are chunked 500 declarations per file so a 12,804-declaration module stays usable. With `--base` it writes a STAGING overlay: only modules whose content hash differs from the published base, plus `overlay.json`; the viewer loads the rest from the base. Rails the viewer page with the same pass as `lean-render-publish`.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-sci/adapters/paper/lean/lean-kg-publish.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--doc-data"
+                },
+                "description": "doc-gen4's `.lake/build/doc-data` from `lean-html-docs`.",
+                "name": "docData",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--site"
+                },
+                "description": "The folio's built site.",
+                "name": "site",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--route"
+                },
+                "description": "Where under the site. Default `lean`.",
+                "name": "route",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "flag": "--module"
+                },
+                "description": "A module root to keep (`qou` keeps `QOU`). Repeat for several.",
+                "name": "module",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName"
+              },
+              {
+                "arg": {
+                  "flag": "--content-root"
+                },
+                "description": "Content tree whose blocks' `lean.ref` become `formalizes` edges.",
+                "name": "contentRoot",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "`owner/repo` for block links.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--ref"
+                },
+                "description": "Branch or sha for block links.",
+                "name": "ref",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              },
+              {
+                "arg": {
+                  "flag": "--content-prefix"
+                },
+                "description": "Path of the content root inside the repo, for block links.",
+                "name": "contentPrefix",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--base"
+                },
+                "description": "Published `data/` of the base graph; enables the STAGING overlay.",
+                "name": "base",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              },
+              {
+                "arg": {
+                  "flag": "--external-base"
+                },
+                "description": "Where links into pruned modules go. Default the community mathlib4 docs.",
+                "name": "externalBase",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              },
+              {
+                "arg": {
+                  "flag": "--home-label"
+                },
+                "description": "The rail's home row.",
+                "name": "homeLabel",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
+              },
+              {
+                "arg": {
+                  "flag": "--instance"
+                },
+                "description": "As rail-standalone-pages.ts --instance.",
+                "name": "instance",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
+              },
+              {
+                "arg": {
+                  "flag": "--platform"
+                },
+                "description": "The index checkout holding the rail pass.",
+                "name": "platform",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--no-rail"
+                },
+                "description": "Publish only; the caller rails the site.",
+                "name": "noRail",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`<site>/<route>/`: index.html, viewer.js/css, extracted signature styles, config.json and `data/` (index.json, names.json, m/<Module>.jsonld, m/<Module>.<k>.sig.json, overlay.json).",
+                "name": "viewer",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "lean-kg-publish",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs",
+          "title": "Publish the dynamic Lean viewer: doc-gen4 declaration data as knowledge-graph shards"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/lean-kg-publish",
+      "path": "tools/lean-kg-publish/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-render-publish/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-render-publish.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Stage a doc-gen4 render under a folio's built site (`<site>/<route>/`, default `lean/`) and give every page the harness navbar and rail by running `cat-harness/scripts/rail-standalone-pages.ts --foreign-site` over the site — the same rail `stage-folio-local.ts` applies to the folio's own pages. Leaves out Lake's `.hash`/`.trace` bookkeeping, marks doc-gen4's iframe navbar and `find/` redirect `folio-navbar: none` so no rail is drawn inside the sidebar, adds a layout shim so the rail does not cover doc-gen4's fixed sidebar, and with `--modules` prunes to the folio's own modules, repointing links into dropped ones to the community docs. Then asserts every staged page is railed or declined.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-sci/adapters/paper/lean/lean-render.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--docs"
+                },
+                "description": "The doc-gen4 render, `lean-html-docs`'s output.",
+                "name": "docs",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--site"
+                },
+                "description": "The folio's built site (`_site` from build-folio-site.ts).",
+                "name": "site",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--route"
+                },
+                "description": "Where under the site. Default `lean`.",
+                "name": "route",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "flag": "--module"
+                },
+                "description": "A Lake package whose module root to keep (`qou` keeps `QOU/`, matched case-insensitively). Repeat for several. Default: keep everything.",
+                "name": "module",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName"
+              },
+              {
+                "arg": {
+                  "flag": "--external-base"
+                },
+                "description": "Where links into pruned modules go. Default the community mathlib4 docs.",
+                "name": "externalBase",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              },
+              {
+                "arg": {
+                  "flag": "--home-label"
+                },
+                "description": "The rail's home row: the folio's instance name, e.g. `qou`.",
+                "name": "homeLabel",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
+              },
+              {
+                "arg": {
+                  "flag": "--instance"
+                },
+                "description": "Rail as this instance's own site (its name, mark and graphs), as rail-standalone-pages.ts --instance.",
+                "name": "instance",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
+              },
+              {
+                "arg": {
+                  "flag": "--platform"
+                },
+                "description": "The index checkout holding the rail pass. Default `$FOLIO_ASSISTANT_ROOT`, then the nearest ancestor that has it.",
+                "name": "platform",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--no-rail"
+                },
+                "description": "Stage only; the caller rails the site itself.",
+                "name": "noRail",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`<site>/<route>/`, railed, plus the rail's shared data under `<site>/assets/navbar/`.",
+                "name": "pages",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "lean-render-publish",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs",
+          "title": "Publish a Lean render under a folio site, with the harness rail"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/lean-render-publish",
+      "path": "tools/lean-render-publish/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/lean-toolchain-setup/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/lean-toolchain-setup.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading.",
+          "install": {
+            "cli": "folio-assistant-sci/scripts/setup-lean-toolchain.sh"
+          },
+          "invoke": {
+            "shell": "folio-assistant-sci/scripts/setup-lean-toolchain.sh"
+          },
+          "io": {
+            "inputs": [],
+            "outputs": [
+              {
+                "description": "The linked toolchain name, and the per-repo override that selects it.",
+                "name": "toolchain",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "lean-toolchain-setup",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bash",
+              "curl",
+              "elan"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-environment-setup",
+          "title": "Lean toolchain install"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/lean-toolchain-setup",
+      "path": "tools/lean-toolchain-setup/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/paper-feature-build/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-feature-build.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. Margin notes are off by default (`FAST_PREVIEW=1`, about 2x). Cross-references to chapters outside the build print as '??'. A preview, never a publish build. Run from the folio. Without a TeX engine the render still runs and the compile steps are skipped with a message.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bash folio-assistant-sci/adapters/paper/latex/feature-build.sh"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--base"
+                },
+                "description": "The ref to diff against. Default `origin/main`.",
+                "name": "base",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              },
+              {
+                "arg": {
+                  "flag": "--chapters"
+                },
+                "description": "Chapter slugs, comma-separated. Default: the chapters whose sources changed against `base`.",
+                "name": "chapters",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "flag": "--paper"
+                },
+                "description": "The paper's slug. Default: the folio's only paper; with several, the tool refuses and names them.",
+                "name": "paper",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Output directory, which the folio should gitignore. Default `build-feature`.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--notation"
+                },
+                "description": "The folio's notation fragment, appended after the template. Default `<paper dir>/latex/notation-preamble.tex` when present.",
+                "name": "notation",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--preload"
+                },
+                "description": "Bun preload that configures the platform's injected registries (values, Lean packages). Default `scripts/preload-registry.ts` when present. It must import the same platform checkout as this tool.",
+                "name": "preload",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`<out>/changed.pdf`, `<out>/<chapter>.diff-color.pdf` and `.diff-plain.pdf`, with the logs and `<out>/build.log` beside them. The render also rewrites the folio's `chapters/` and `main.tex`.",
+                "name": "preview",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "paper-feature-build",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun",
+              "git",
+              "bash"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-build-cache",
+          "title": "Paper feature build (changed chapters + latexdiff)"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/paper-feature-build",
+      "path": "tools/paper-feature-build/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/paper-latex-build/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-latex-build.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Render a paper's content objects to LaTeX chapters: load the paper manifest, resolve its chapters and blocks, render, validate the LaTeX AST, and write the chapter files. With no manifest it builds the folio's only paper, and refuses — naming them — when there are several or none.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat content:build"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The paper's `<paper>.ts` manifest; absent, the folio's single paper.",
+                "name": "paperManifest",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out-dir"
+                },
+                "description": "Where to write the chapters; absent, `chapters/` at the content root.",
+                "name": "outDir",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "One `.tex` per chapter under the output directory.",
+                "name": "chapters",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "paper-latex-build",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/content-validation",
+          "title": "Paper build to LaTeX chapters"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/paper-latex-build",
+      "path": "tools/paper-latex-build/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/paper-preferences/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-preferences.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "inProcess": {
+              "module": "adapters/paper/tools/preferences.ts"
+            },
+            "mcp": {
+              "tool": "paper_preferences"
+            }
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--action"
+                },
+                "name": "action",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PreferenceAction"
+              },
+              {
+                "arg": {
+                  "flag": "--render-format"
+                },
+                "name": "render_format",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RenderFormat"
+              },
+              {
+                "arg": {
+                  "flag": "--render-scope"
+                },
+                "name": "render_scope",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RenderScope"
+              },
+              {
+                "arg": {
+                  "flag": "--latex-engine"
+                },
+                "name": "latex_engine",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/LatexEngine"
+              },
+              {
+                "arg": {
+                  "flag": "--math-renderer"
+                },
+                "name": "math_renderer",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/MathRenderer"
+              },
+              {
+                "arg": {
+                  "flag": "--auto-preview"
+                },
+                "name": "auto_preview",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--formula-dpi"
+                },
+                "name": "formula_dpi",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Dpi"
+              },
+              {
+                "arg": {
+                  "flag": "--default-chapter"
+                },
+                "name": "default_chapter",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--print-mode"
+                },
+                "name": "print_mode",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PrintMode"
+              },
+              {
+                "arg": {
+                  "flag": "--compact-inline-refs"
+                },
+                "name": "compact_inline_refs",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The preferences after the call.",
+                "name": "preferences",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              }
+            ]
+          },
+          "name": "paper-preferences",
+          "requirements": {
+            "network": false
+          },
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-pdf",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-docs"
+          ],
+          "title": "Rendering preferences"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/paper-preferences",
+      "path": "tools/paper-preferences/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/paper-preview/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-preview.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "inProcess": {
+              "module": "adapters/paper/tools/preview.ts"
+            },
+            "mcp": {
+              "tool": "paper_preview"
+            }
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "name": "file",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--format"
+                },
+                "name": "format",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PreviewFormat"
+              },
+              {
+                "arg": {
+                  "flag": "--list"
+                },
+                "name": "list",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "What was opened, or the list of candidates.",
+                "name": "opened",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              }
+            ]
+          },
+          "name": "paper-preview",
+          "requirements": {
+            "network": false
+          },
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/rendering-auditor",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review"
+          ],
+          "title": "Open a render"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/paper-preview",
+      "path": "tools/paper-preview/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/proof-dependency-graph/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-dependency-graph.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 .github/scripts/generate_dependency_graph.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--manifest"
+                },
+                "description": "The proof-objects.json to read.",
+                "name": "manifest",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--output"
+                },
+                "description": "Where to write the SVG.",
+                "name": "output",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--pdf-base-url"
+                },
+                "description": "The published PDF, for the anchor links.",
+                "name": "pdfBaseUrl",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+              },
+              {
+                "arg": {
+                  "flag": "--dot-only"
+                },
+                "description": "Write DOT source instead of rendering.",
+                "name": "dotOnly",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The SVG, or DOT with `--dot-only`.",
+                "name": "graph",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "proof-dependency-graph",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-status-tracking"
+          ],
+          "title": "Proof dependency graph"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/proof-dependency-graph",
+      "path": "tools/proof-dependency-graph/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/proof-objects-extract/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-objects-extract.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 .github/scripts/extract_proof_objects.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--output"
+                },
+                "description": "Where to write proof-objects.json.",
+                "name": "output",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "proof-objects.json. A chapter file that is missing is skipped with a warning, not treated as empty.",
+                "name": "manifest",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "proof-objects-extract",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-status-tracking",
+          "title": "Proof-object extraction"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/proof-objects-extract",
+      "path": "tools/proof-objects-extract/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/proof-status-update/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/proof-status-update.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Update each proof object's status in `proof-objects.json` from a Lean build log — which objects built, which carry `sorry`, which failed. Exits 1 on a manifest with no objects rather than writing an empty status.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "python3 .github/scripts/update_proof_status.py"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--manifest"
+                },
+                "description": "The proof-objects.json to update.",
+                "name": "manifest",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--build-log"
+                },
+                "description": "The Lean build log; stdin when absent.",
+                "name": "buildLog",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "proof-objects.json with statuses updated in place.",
+                "name": "manifest",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "proof-status-update",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "python3"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-status-tracking",
+          "title": "Proof status from a Lean build"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/proof-status-update",
+      "path": "tools/proof-status-update/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/tex-install/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-install.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. About 5 GB and 10-20 minutes, so run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal).",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bash cat-harness-tools/scripts/install-tex.sh"
+          },
+          "io": {
+            "inputs": [],
+            "outputs": [
+              {
+                "description": "A `pdflatex --version` line on success. The installed packages are system-wide.",
+                "name": "engine",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "tex-install",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bash",
+              "apt-get",
+              "sudo"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-build-cache",
+          "title": "Install TeX Live in a sandbox"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/tex-install",
+      "path": "tools/tex-install/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/tex-snippet-validate/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-snippet-validate.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat latex:validate"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--paper"
+                },
+                "description": "One folio by slug. Absent, every folio the content root holds.",
+                "name": "paper",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "flag": "--file"
+                },
+                "description": "A single `.md` block, for the narrow case.",
+                "name": "file",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--compile"
+                },
+                "description": "Also compile each snippet with pdflatex — needs a TeX distribution, which the base `requires` does NOT claim.",
+                "name": "compile",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--json"
+                },
+                "name": "json",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--warnings-log"
+                },
+                "description": "Write a QA-compatible log to this path.",
+                "name": "warningsLog",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 2 — could-not-determine (this repository carries no folio, so there was nothing to scan). Read the scanned count before reading the verdict.",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "tex-snippet-validate",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-validation",
+          "title": "TeX snippet validation (AST)"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/tex-snippet-validate",
+      "path": "tools/tex-snippet-validate/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/tex-source-audit/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-source-audit.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat latex:audit-source"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--strict"
+                },
+                "description": "Exit 1 on any finding, for use as a gate.",
+                "name": "strict",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Hazards with file and line, plus a committed sidecar. Run where no folio exists it says `No .md files found … refusing to report success. This audits a FOLIO's content; folio-assistant is the platform.` and exits 2 (could-not-determine).",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "tex-source-audit",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-validation",
+          "title": "TeX-source hazard audit"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/tex-source-audit",
+      "path": "tools/tex-source-audit/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools",
+  "path": "tools/"
+}

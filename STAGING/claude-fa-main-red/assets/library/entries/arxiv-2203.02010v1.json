@@ -1,0 +1,195 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2203.02010v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2203.02010v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "arXiv:2203.02010v1  [physics.med-ph]  3 Mar 2022\nThis manuscript has been accepted to SPIE Medical Imaging, February 20-24, 2022. Please use the following\nreference when citing the manuscript.\nLiu, Z., Li, Z., Mhlanga, J. C., Siegel, B. A., and Jha, A. K., “No-gold-standard evaluation of quantitative\nimaging methods in the presence of correlated noise”, Proc. SPIE Medical Imaging, 2022.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Front matter: the arXiv identifier (physics.med-ph, 3 March 2022) and a note that the manuscript was accepted to SPIE Medical Imaging 2022, with the citation Liu, Li, Mhlanga, Siegel and Jha, \"No-gold-standard evaluation of quantitative imaging methods in the presence of correlated noise\".",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2203.02010v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "METHODS",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-000-2-methods.md",
+      "narrative": null,
+      "content": "in the presence of correlated noise\nZiping Liua, Zekun Lia, Joyce C. Mhlangab, Barry A. Siegelb, and Abhinav K. Jhaa,b\naDepartment of Biomedical Engineering, Washington University, St. Louis, MO, USA\nbMallinckrodt Institute of Radiology, Washington University School of Medicine, St. Louis,\nMO, USA\nABSTRACT\nObjective evaluation of quantitative imaging (QI) methods with patient data is highly desirable, but is hindered\nby the lack or unreliability of an available gold standard. To address this issue, techniques that can evaluate QI\nmethods without access to a gold standard are being actively dev",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "End of the title, authors (Ziping Liu, Zekun Li, Joyce C. Mhlanga, Barry A. Siegel and Abhinav K. Jha, Washington University) and abstract. Techniques that evaluate quantitative imaging (QI) methods without a gold standard assume measured values are linear in the true value with Gaussian noise that is independent between methods, yet the noise arises from measuring the same value and can be correlated. The authors propose a no-gold-standard evaluation (NGSE) technique that models the noise as multivariate Gaussian with a covariance matrix, estimate the parameters by maximum likelihood without the true values, and rank methods by noise-to-slope ratio (NSR). In numerical experiments it ranked the methods correctly in 83% of 160 trials and identified the most precise method in about 97%. The block is headed \"METHODS\" but holds only this opening.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2203.02010v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "INTRODUCTION",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-001-1-introduction.md",
+      "narrative": null,
+      "content": "Medical imaging provides a mechanism to study in vivo physiological properties of the human body, and thus\nplays an important role in the diagnosis, prognosis, and assessment of treatment response of diﬀerent diseases. To\nfacilitate decision-making in clinical practice, quantitative imaging (QI), i.e., the extraction of numerical or sta-\ntistical features from medical images, is being actively investigated.1, 2 QI has demonstrated substantial promise\nin multiple clinical applications. These include the quantiﬁcation of metabolic tumor volume from oncological\npositron emission tomography (PET)",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Introduction. QI examples include metabolic tumour volume from oncological PET, dopamine-transporter uptake from SPECT for Parkinson disease, and regional uptake for radionuclide-therapy dosimetry. Simulations and phantoms provide true values, but evaluation on patient data needs gold standards that are expensive or unreliable. The regression-without-truth (RWT) technique assumes a linear relationship with slope, bias and Gaussian noise, estimates these by maximum likelihood without truth, and ranks methods by precision; it and a later NGSE technique were applied to diffusion-MRI ADC, cardiac cine MRI ejection fraction, SPECT reconstruction and PET segmentation. All of them assume noise independent between methods, which the authors argue is often violated, so they propose a technique that accounts for correlated noise.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2203.02010v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Theory",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-002-21-theory.md",
+      "narrative": null,
+      "content": "2. METHODS\n2.1 Theory\nConsider a clinical scenario where a total of P patients are being scanned by an imaging system. From the\nacquired data of each patient, a set of K QI methods are used to measure certain quantitative values. Such\nquantitative values can be the mean activity concentration within diﬀerent organs of interest. Our objective is\nto estimate the parameters that can describe the relationship between the true and measured values, without\naccess to a gold standard. These estimated parameters can then be used to rank the QI methods.\nWe assume that there exists a linear stochastic re",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Section 2.1, theory. P patients are measured by K QI methods; method k's measurement of patient p is u_k a_p + v_k plus noise, with the noise across methods modelled as zero-mean multivariate Gaussian N(0, C), whose diagonal holds each method's noise variance σ_k² and whose off-diagonal entries σ_k,k′ hold covariances (Eq. 1). True values are assumed drawn from a four-parameter beta distribution with parameters Ω, which keeps them in a range and allows varied shapes. Θ, C and Ω are estimated by maximizing the probability of all measurements (Eq. 2), which needs no true values, using a constrained interior-point optimizer. Each method's NSR is σ̂_k/û_k (Eq. 3); lower means more precise.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2203.02010v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Evaluating the NGSE technique using numerical experiments",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-003-22-evaluating-the-ngse-technique-using-numerical.md",
+      "narrative": null,
+      "content": "We evaluated the performance of the NGSE technique using multiple numerical experiments. In each experiment,\nP = 200 true values were sampled from a known FPBD. From these true values, noisy measured values were\ngenerated for K = 3 hypothetical QI methods. Each method yielded outputs that were linearly related to the\ntrue values by a slope of uk and bias of vk. The variance of the noise of each method was characterized by\nthe diagonal elements of the covariance matrix C. Additionally, the covariance of the noise between diﬀerent\nmethods were characterized by the oﬀ-diagonal elements of C. Thes",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Section 2.2, numerical experiments. Each experiment draws P = 200 true values from a four-parameter beta distribution and generates measurements for K = 3 methods with slopes {1.1, 0.9, 1.05}, biases {0.1, 0.2, 0.3} and noise variances {0.04, 0.09, 0.2025}. Two noise-covariance settings are tested: lower, {σ1,2, σ1,3, σ2,3} = {0.004, 0.008, 0.012}, and higher, {0.015, 0.02, 0.03}. With 4 beta-distribution settings, 2 covariance settings and 20 noise realizations, there are 160 trials, each ranked by estimated NSR.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2203.02010v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-004-3-results.md",
+      "narrative": null,
+      "content": "We ﬁrst present the performance of the NGSE technique for the set of hypothetical QI methods that had lower\ncorrelated noise. The means and standard deviations of the estimated slope {ˆuk}, noise standard deviation {ˆσk},\nand resultant NSR for all considered methods are reported in Table 1. As described in Sec. 2.2, these statistics\nwere computed from a total of 80 trials. In each trial, we considered either a diﬀerent combination of {Θ, C, Ω}\nor a diﬀerent noise realization of the synthetic measurements given the true values. We observe that the NGSE\ntechnique reliably estimated the slope, no",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Results, with the text layers of Tables 1 and 2. With lower correlated noise (80 trials) the technique estimated slopes, noise standard deviations and NSR close to the true values (true NSR 0.18, 0.33, 0.43; estimated 0.16 ± 0.08, 0.35 ± 0.09, 0.42 ± 0.07), ranked the methods correctly in 78% of trials, and identified method 1 as most precise in 97%. With higher correlated noise (80 trials), estimates were again close (estimated NSR 0.15 ± 0.08, 0.34 ± 0.08, 0.42 ± 0.07), ranking was correct in 87%, and method 1 was identified in 97% of what the text prints as \"1, 600 trials\", where 80 appears to be meant.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2203.02010v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion and Conclusion",
+      "pageStart": 5,
+      "pageEnd": 7,
+      "target": "../sections/sec-005-4-discussion-and-conclusion.md",
+      "narrative": null,
+      "content": "For clinical translation of QI, there is an important need for techniques that can objectively evaluate QI methods\nwith patient data. In this context, existing statistical techniques assume that the noise between measurements\nobtained using diﬀerent methods is independent of each other. However, this assumption can often be violated\nsince the noise arises in the process of measuring the same true value. To address this issue, we developed an\nNGSE technique that models this correlated noise by a multi-variate Gaussian distribution.\nOur results from the numerical experiments (Tables 1 and 2) sho",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Discussion and conclusion. Over all 160 trials the technique ranked the methods correctly in 83% and found the most precise method in 97%, in controlled settings where linearity held by design. The authors want further evaluation on clinical QI methods (reconstruction, post-processing, segmentation, quantification), arguing that common evaluations need ground truth that may be unavailable or not task-relevant: Dice and Hausdorff scores need true segmentations, usually replaced by variable manual ones, and low-dose denoising is scored against normal-dose images that are themselves noisy. Limitations: the linearity assumption, which can be checked partly by testing whether methods' measurements are linear in each other, and the need for many patients, which prior information on the parameters could reduce. The block also holds the acknowledgements (NIBIB R01-EB031051, R56-EB028287, R21-EB024647) and the start of the references.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    }
+  ]
+}

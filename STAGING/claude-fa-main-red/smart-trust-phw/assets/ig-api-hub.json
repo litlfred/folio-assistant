@@ -1,0 +1,473 @@
+{
+  "@context": {
+    "schema": "https://schema.org/"
+  },
+  "@id": "assets/ig-api-hub.json",
+  "@type": "schema:WebAPI",
+  "schema:name": "DAK API",
+  "schema:hasPart": [
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVC.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVC.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVC.html",
+        "schema:identifier": "StructureDefinition/DVC"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVC.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVC.schema.json",
+      "schema:url": "artifact/StructureDefinition-DVC.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVC.html",
+        "schema:identifier": "StructureDefinition/DVC"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCMin.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCMin.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCMin.html",
+        "schema:identifier": "StructureDefinition/DVCMin"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCMin.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCMin.schema.json",
+      "schema:url": "artifact/StructureDefinition-DVCMin.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCMin.html",
+        "schema:identifier": "StructureDefinition/DVCMin"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCMinPreQual.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCMinPreQual.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCMinPreQual.html",
+        "schema:identifier": "StructureDefinition/DVCMinPreQual"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCMinPreQual.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCMinPreQual.schema.json",
+      "schema:url": "artifact/StructureDefinition-DVCMinPreQual.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCMinPreQual.html",
+        "schema:identifier": "StructureDefinition/DVCMinPreQual"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCMinVaccineDetails.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCMinVaccineDetails.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCMinVaccineDetails.html",
+        "schema:identifier": "StructureDefinition/DVCMinVaccineDetails"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCMinVaccineDetails.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCMinVaccineDetails.schema.json",
+      "schema:url": "artifact/StructureDefinition-DVCMinVaccineDetails.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCMinVaccineDetails.html",
+        "schema:identifier": "StructureDefinition/DVCMinVaccineDetails"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCMinVaccineDetailsPreQual.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCMinVaccineDetailsPreQual.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCMinVaccineDetailsPreQual.html",
+        "schema:identifier": "StructureDefinition/DVCMinVaccineDetailsPreQual"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCMinVaccineDetailsPreQual.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCMinVaccineDetailsPreQual.schema.json",
+      "schema:url": "artifact/StructureDefinition-DVCMinVaccineDetailsPreQual.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCMinVaccineDetailsPreQual.html",
+        "schema:identifier": "StructureDefinition/DVCMinVaccineDetailsPreQual"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCPreQual.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCPreQual.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCPreQual.html",
+        "schema:identifier": "StructureDefinition/DVCPreQual"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCPreQual.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCPreQual.schema.json",
+      "schema:url": "artifact/StructureDefinition-DVCPreQual.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCPreQual.html",
+        "schema:identifier": "StructureDefinition/DVCPreQual"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCSD.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCSD.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCSD.html",
+        "schema:identifier": "StructureDefinition/DVCSD"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCSD.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCSD.schema.json",
+      "schema:url": "artifact/StructureDefinition-DVCSD.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCSD.html",
+        "schema:identifier": "StructureDefinition/DVCSD"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCVaccineDetails.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCVaccineDetails.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCVaccineDetails.html",
+        "schema:identifier": "StructureDefinition/DVCVaccineDetails"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCVaccineDetails.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCVaccineDetails.schema.json",
+      "schema:url": "artifact/StructureDefinition-DVCVaccineDetails.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCVaccineDetails.html",
+        "schema:identifier": "StructureDefinition/DVCVaccineDetails"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCVaccineDetailsPreQual.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCVaccineDetailsPreQual.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCVaccineDetailsPreQual.html",
+        "schema:identifier": "StructureDefinition/DVCVaccineDetailsPreQual"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-DVCVaccineDetailsPreQual.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-DVCVaccineDetailsPreQual.schema.json",
+      "schema:url": "artifact/StructureDefinition-DVCVaccineDetailsPreQual.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-DVCVaccineDetailsPreQual.html",
+        "schema:identifier": "StructureDefinition/DVCVaccineDetailsPreQual"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-HealthLinkPayload.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-HealthLinkPayload.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-HealthLinkPayload.html",
+        "schema:identifier": "StructureDefinition/HealthLinkPayload"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-HealthLinkPayload.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-HealthLinkPayload.schema.json",
+      "schema:url": "artifact/StructureDefinition-HealthLinkPayload.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-HealthLinkPayload.html",
+        "schema:identifier": "StructureDefinition/HealthLinkPayload"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-SmartHealthLink.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-SmartHealthLink.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-SmartHealthLink.html",
+        "schema:identifier": "StructureDefinition/SmartHealthLink"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-SmartHealthLink.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-SmartHealthLink.schema.json",
+      "schema:url": "artifact/StructureDefinition-SmartHealthLink.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-SmartHealthLink.html",
+        "schema:identifier": "StructureDefinition/SmartHealthLink"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-SMARTHealthLinkPayload.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-SMARTHealthLinkPayload.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-SMARTHealthLinkPayload.html",
+        "schema:identifier": "StructureDefinition/SMARTHealthLinkPayload"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-SMARTHealthLinkPayload.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-SMARTHealthLinkPayload.schema.json",
+      "schema:url": "artifact/StructureDefinition-SMARTHealthLinkPayload.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-SMARTHealthLinkPayload.html",
+        "schema:identifier": "StructureDefinition/SMARTHealthLinkPayload"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-VaccineDetailsSD.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-VaccineDetailsSD.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-VaccineDetailsSD.html",
+        "schema:identifier": "StructureDefinition/VaccineDetailsSD"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-VaccineDetailsSD.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-VaccineDetailsSD.schema.json",
+      "schema:url": "artifact/StructureDefinition-VaccineDetailsSD.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-VaccineDetailsSD.html",
+        "schema:identifier": "StructureDefinition/VaccineDetailsSD"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-VerifiableHealthLinkPayload.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-VerifiableHealthLinkPayload.openapi.json",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-VerifiableHealthLinkPayload.html",
+        "schema:identifier": "StructureDefinition/VerifiableHealthLinkPayload"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "StructureDefinition-VerifiableHealthLinkPayload.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/StructureDefinition-VerifiableHealthLinkPayload.schema.json",
+      "schema:url": "artifact/StructureDefinition-VerifiableHealthLinkPayload.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/StructureDefinition-VerifiableHealthLinkPayload.html",
+        "schema:identifier": "StructureDefinition/VerifiableHealthLinkPayload"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DisclosureStatements.displays.json",
+      "schema:additionalType": "Displays",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DisclosureStatements.displays.json",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DisclosureStatements.html",
+        "schema:identifier": "ValueSet/DisclosureStatements"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DisclosureStatements.jsonld",
+      "schema:additionalType": "JSON-LD",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DisclosureStatements.jsonld",
+      "schema:url": "artifact/ValueSet-DisclosureStatements.jsonld.html",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DisclosureStatements.html",
+        "schema:identifier": "ValueSet/DisclosureStatements"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DisclosureStatements.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DisclosureStatements.openapi.json",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DisclosureStatements.html",
+        "schema:identifier": "ValueSet/DisclosureStatements"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DisclosureStatements.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DisclosureStatements.schema.json",
+      "schema:url": "artifact/ValueSet-DisclosureStatements.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DisclosureStatements.html",
+        "schema:identifier": "ValueSet/DisclosureStatements"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DVCRelationshipStatus.displays.json",
+      "schema:additionalType": "Displays",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DVCRelationshipStatus.displays.json",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DVCRelationshipStatus.html",
+        "schema:identifier": "ValueSet/DVCRelationshipStatus"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DVCRelationshipStatus.jsonld",
+      "schema:additionalType": "JSON-LD",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DVCRelationshipStatus.jsonld",
+      "schema:url": "artifact/ValueSet-DVCRelationshipStatus.jsonld.html",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DVCRelationshipStatus.html",
+        "schema:identifier": "ValueSet/DVCRelationshipStatus"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DVCRelationshipStatus.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DVCRelationshipStatus.openapi.json",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DVCRelationshipStatus.html",
+        "schema:identifier": "ValueSet/DVCRelationshipStatus"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DVCRelationshipStatus.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DVCRelationshipStatus.schema.json",
+      "schema:url": "artifact/ValueSet-DVCRelationshipStatus.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DVCRelationshipStatus.html",
+        "schema:identifier": "ValueSet/DVCRelationshipStatus"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DVCVaccines.displays.json",
+      "schema:additionalType": "Displays",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DVCVaccines.displays.json",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DVCVaccines.html",
+        "schema:identifier": "ValueSet/DVCVaccines"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DVCVaccines.jsonld",
+      "schema:additionalType": "JSON-LD",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DVCVaccines.jsonld",
+      "schema:url": "artifact/ValueSet-DVCVaccines.jsonld.html",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DVCVaccines.html",
+        "schema:identifier": "ValueSet/DVCVaccines"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DVCVaccines.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DVCVaccines.openapi.json",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DVCVaccines.html",
+        "schema:identifier": "ValueSet/DVCVaccines"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-DVCVaccines.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-DVCVaccines.schema.json",
+      "schema:url": "artifact/ValueSet-DVCVaccines.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/ValueSet-DVCVaccines.html",
+        "schema:identifier": "ValueSet/DVCVaccines"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-HL.TYPE.displays.json",
+      "schema:additionalType": "Displays",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-HL.TYPE.displays.json",
+      "schema:about": {
+        "@id": "artifact/ValueSet-HL.TYPE.html",
+        "schema:identifier": "ValueSet/HL.TYPE"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-HL.TYPE.jsonld",
+      "schema:additionalType": "JSON-LD",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-HL.TYPE.jsonld",
+      "schema:url": "artifact/ValueSet-HL.TYPE.jsonld.html",
+      "schema:about": {
+        "@id": "artifact/ValueSet-HL.TYPE.html",
+        "schema:identifier": "ValueSet/HL.TYPE"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-HL.TYPE.openapi.json",
+      "schema:additionalType": "OpenAPI",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-HL.TYPE.openapi.json",
+      "schema:about": {
+        "@id": "artifact/ValueSet-HL.TYPE.html",
+        "schema:identifier": "ValueSet/HL.TYPE"
+      }
+    },
+    {
+      "@type": "schema:DigitalDocument",
+      "schema:name": "ValueSet-HL.TYPE.schema.json",
+      "schema:additionalType": "JSON Schema",
+      "schema:contentUrl": "fhir-artifact-index/sidecars/ValueSet-HL.TYPE.schema.json",
+      "schema:url": "artifact/ValueSet-HL.TYPE.schema.json.html",
+      "schema:about": {
+        "@id": "artifact/ValueSet-HL.TYPE.html",
+        "schema:identifier": "ValueSet/HL.TYPE"
+      }
+    }
+  ],
+  "schema:workExample": []
+}

@@ -1,0 +1,185 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2403.16873v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methods",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-methods.md",
+      "narrative": null,
+      "content": "without ground truth: An upper bound on no-gold-standard\nevaluation\nYan Liua,b and Abhinav K. Jhaa,b\naDepartment of Biomedical Engineering, Washington University in St. Louis, St. Louis, MO,\nUSA\nbMallinckrodt Institute of Radiology, Washington University in St. Louis, St. Louis, MO, USA\nABSTRACT\nObjective evaluation of quantitative imaging (QI) methods with patient data, while important, is typically\nhindered by the lack of gold standards. To address this challenge, no-gold-standard evaluation (NGSE) techniques\nhave been proposed. These techniques have demonstrated efficacy in accurately ranki",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Title, authors and abstract of Liu and Jha, \"How accurately can quantitative imaging methods be ranked without ground truth: an upper bound on no-gold-standard evaluation\" (Washington University in St. Louis); the first words of the title fall in the preceding front matter. Evaluating quantitative imaging (QI) methods on patient data is usually blocked by the lack of a gold standard, and no-gold-standard evaluation (NGSE) techniques have been proposed to rank methods anyway. The authors ask how accurately QI methods can be ranked without ground truth, and answer with a Cramér–Rao bound (CRB) framework that gives an upper bound on ranking accuracy. They apply it to the regression-without-truth (RWT) technique for different numbers of patients. The block is headed \"Methods\" but holds only this front matter and abstract.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "INTRODUCTION",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-introduction.md",
+      "narrative": null,
+      "content": "Quantitative imaging (QI), the extraction of quantifiable features from medical images, is being actively investi-\ngated to facilitate clinical decision-making.1,2 For example, the use of metabolic tumor volume (MTV) obtained\nfrom 18F-fluoro-deoxyglucose positron emission tomography (PET) to predict treatment response,3 apparent\ndiffusion coefficient measured using diffusion magnetic resonance imaging (MRI) to monitor cancer therapy\nresponse,4 and radiotracer uptake in organ and tumor measured using quantitative single-photon emission com-\nputed tomography (SPECT) for dosimetry of radiopharmac",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Introduction. QI examples include metabolic tumour volume from FDG-PET to predict treatment response, the apparent diffusion coefficient from diffusion MRI, and organ and tumour uptake from quantitative SPECT for dosimetry. Gold standards for evaluating QI methods on patients are expensive, slow or impossible to get, which motivates NGSE techniques. The seminal RWT technique assumes measured values are linear in the true value (slope, bias, uncorrelated Gaussian noise) and that true values come from a bounded parametric distribution, estimates these parameters by maximum likelihood without the true values, and ranks methods by a precision figure of merit. Later work relaxed the known-bounds and independent-noise assumptions and found the technique fairly insensitive to some other violations. Because NGSE performance drops with fewer patients, the authors want to know the best achievable performance for a given dataset, and they develop a framework for NGSE techniques whose statistical relationship between true and measured values can be estimated without the true values.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Theory",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-002-theory.md",
+      "narrative": null,
+      "content": "2. METHODS\n2.1 Theory\nConsider a set of K QI methods that are used to measure certain quantitative values from a patient population\nconsisting of P patients. Denote the true quantitative value for pth patient as ap and the corresponding mea-\nsurement given by kth QI method as ˆap,k. Existing NGSE techniques assume a linear relationship between the\nmeasured and true values characterized by a slope, bias and zero-mean Gaussian distributed noise term. For kth\nQI method, denote the slope and bias as uk and vk, respectively. The noise term is denoted as N (0, Σ), where\nΣ denotes the covariance matr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Section 2.1, theory. K QI methods measure a value for P patients; method k's measurement of patient p is modelled as u_k a_p + v_k plus zero-mean Gaussian noise with covariance Σ (Eq. 1). Since the likelihood depends on the unknown true values, these are assumed drawn from a parametric distribution pr(a_p | Ω), and with patients independent the log-likelihood of all measurements integrates over a_p (Eq. 2). The inverse Fisher information of all parameters Γ = {Θ, Σ, Ω} gives CRB(Γ). The figure of merit for ranking is usually the noise-to-slope ratio (NSR); with J the Jacobian from Γ to the figures of merit γ, CRB(γ) = J CRB(Γ) Jᵀ (Eq. 3). For an unbiased estimator that attains the bound, the estimated figures of merit are taken as approximately N(γ, CRB(γ)) (Eq. 4), so the probability of the correct order, for example γ̂1 < γ̂2 < γ̂3 for three methods, gives an upper bound U_cr on correct ranking (Eq. 5). A similar bound is given for identifying the best method.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Demonstrating utility of the proposed framework",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-demonstrating-utility-of-the-proposed-framework.md",
+      "narrative": null,
+      "content": "We applied the framework to guide the use of the RWT technique for evaluation of QI methods without gold\nstandards. Note that the RWT technique assumes a linear relationship between the measured quantitative values\nand the true values, and the noise yielded by different QI methods is uncorrelated. The technique then uses\nestimated noise-to-slope ratio to rank the different QI methods on the task of precisely estimating the underlying\nquantitative value.7\nWe considered three hypothetical QI methods, in each of which, there was a linear relationship between the\ntrue and measured values. More spe",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Section 2.2, the numerical study. The framework is applied to RWT, which assumes linear relationships and uncorrelated noise and ranks methods by estimated NSR. Three hypothetical QI methods have slopes {0.6, 0.7, 0.8}, biases {−0.1, 0, 0.1} and noise standard deviations {0.03, 0.05, 0.08}; true values come from a beta distribution with {α, β} = {1.5, 2}. The CRB upper bound on correct ranking is computed for 5 to 400 patients. For comparison, synthetic measurements are generated from sampled true values, given to RWT, and the resulting NSR ranking is scored over 100 noise realizations per patient count.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-004-results.md",
+      "narrative": null,
+      "content": "3. RESULTS\nFig.1 presents the comparison of the upper bounds with the experimentally derived accuracy of the RWT\ntechnique in correctly ranking the QI methods and identifying the QI method that yields the most precise\nmeasurements. We observe a good match between the framework-predicted upper bound and the experimentally\nderived performance of the RWT technique. Further, we observe that the use of these upper bounds can predict\nthe number of patients required to achieve a specific accuracy in ranking the methods (Fig. 1A) and in correctly\nidentifying the most precise method (Fig. 1B). For exam",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Results (Figure 1). The CRB upper bound (solid lines) matches the experimental accuracy of RWT (dashed lines) well, both for ranking all methods (Fig. 1A) and for identifying the most precise one (Fig. 1B), so the bound can predict how many patients a given accuracy needs. In the authors' example, with 300 patients the best RWT ranking accuracy is 100%; with 100 patients it is at best 90% for full ranking but can reach 100% for identifying the most precise method. The block ends with the caption of Figure 1.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/figure-img-p004-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../images/img-p004-1.png",
+      "narrative": "draft",
+      "content": "Figure 1 shows the CRB-derived upper bound (solid lines) and RWT empirical accuracy (dashed lines) as a function of patient sample size P.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2403.16873v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion and Conclusion",
+      "pageStart": 4,
+      "pageEnd": 6,
+      "target": "../sections/sec-005-discussion-and-conclusion.md",
+      "narrative": null,
+      "content": "To answer the question of how accurately can QI methods be ranked without gold standards, we proposed a\nCram´er–Rao bound-based framework. This framework quantifies the upper bound of correctly ranking the QI\nmethods in the absence of gold standards. We then presented an application of the framework in guiding the use\nof the RWT technique. The results demonstrated the utility of this framework in quantifying the upper bound\nof the performance of no-gold-standard evaluation for different number of patients input to the technique.\nThis upper bound provides a principled approach to guide the use",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Discussion and conclusion. The CRB framework bounds how well QI methods can be ranked without a gold standard and, in the RWT application, shows how that bound changes with patient numbers; a low bound is a reason for caution. Proposed further uses: assessing ranking of methods whose figures of merit differ by varying amounts, and comparing evaluation with and without a gold standard (for example resected tumours as ground truth for metabolic tumour volume), since even with a gold standard the figures of merit are estimated, for instance by least squares. Limitations: the framework assumes unbiased estimates, whereas a maximum-a-posteriori NGSE technique, proposed to need fewer patients, can be biased; and the NGSE assumptions, such as linearity, may fail clinically. The block also holds the acknowledgments (NIBIB grants R01-EB031051, R01-EB031051-S1, R01-EB031962) and the start of the reference list.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    }
+  ]
+}

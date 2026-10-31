@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/role/programme-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/role/programme-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Programme manager",
+      "title": "Programme manager",
+      "notation": "programme-manager",
+      "description": "Owns what gets worked on and holds release authority. The lane that authorises, and the one step no policy may relax.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/content-plan",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/content-retire",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/methodology-adoption",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/release-epic-planning",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/release-lifecycle",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/decision-methodology-selector"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager"
+    }
+  ]
+}

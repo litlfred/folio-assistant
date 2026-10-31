@@ -1,0 +1,88 @@
+{
+  "$ref": "#/definitions/SectionVerdictFile",
+  "definitions": {
+    "SectionVerdictFile": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-section-verdicts/v1"
+        },
+        "_comment": {
+          "type": "string"
+        },
+        "inspected_by": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "agent",
+                "human"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "id"
+          ],
+          "additionalProperties": {}
+        },
+        "inspected_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verdicts": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "specimen"
+                  ]
+                },
+                "saw": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "role",
+                "saw"
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "inspected_by",
+        "inspected_at",
+        "verdicts"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/section-verdicts/SectionVerdictFileSchema.schema.json",
+  "title": "SectionVerdictFileSchema",
+  "description": "Generated from `SectionVerdictFileSchema` in schemas/content/section-verdicts.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  }
+}

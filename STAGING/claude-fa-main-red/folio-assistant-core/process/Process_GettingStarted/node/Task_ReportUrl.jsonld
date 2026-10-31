@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportUrl.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportUrl",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Hand over the live link",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/process/Process_GettingStarted",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/role/publish-target",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/skill/getting-started"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/process/Process_GettingStarted#flow/Flow_live"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/process/Process_GettingStarted#flow/Flow_done1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportUrl"
+    }
+  ]
+}

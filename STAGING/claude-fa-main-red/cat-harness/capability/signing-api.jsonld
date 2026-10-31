@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/capability/signing-api.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/capability/signing-api",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "signing-api",
+      "name": "Signing API",
+      "description": "An attestation endpoint that will sign a QA report's run hashes. Probed by configuration, not by calling it: a probe that made a live request would be indistinguishable from an outage on the one machine this matters for, and would call an external service just to answer a question about setup.",
+      "detection": {
+        "method": "env-var",
+        "variable": "FOLIO_SIGNING_ENDPOINT"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/signing-api"
+    }
+  ]
+}

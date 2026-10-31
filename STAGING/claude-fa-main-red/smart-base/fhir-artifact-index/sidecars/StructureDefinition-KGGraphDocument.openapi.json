@@ -1,0 +1,120 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Knowledge graph L1: graph document API",
+    "description": "One L1 knowledge-graph document: typed nodes and reified edges, provenance-pinned to the sources it was extracted from. In JSON the context element is written @context.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-KGGraphDocument.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-KGGraphDocument",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-KGGraphDocument.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-KGGraphDocument",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-KGGraphDocument.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-KGGraphDocument": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/StructureDefinition-KGGraphDocument.schema.json",
+        "title": "Knowledge graph L1: graph document",
+        "description": "One L1 knowledge-graph document: typed nodes and reified edges, provenance-pinned to the sources it was extracted from. In JSON the context element is written @context.",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "KGGraphDocument",
+            "description": "Resource type identifier for KGGraphDocument logical model"
+          },
+          "context": {
+            "type": "string",
+            "format": "uri",
+            "description": "The JSON-LD context (written @context in JSON)."
+          },
+          "id": {
+            "type": "string",
+            "description": "IRI of this graph document."
+          },
+          "type": {
+            "type": "string",
+            "description": "Always Entity (prov:Entity)."
+          },
+          "ontologyVersion": {
+            "type": "string",
+            "description": "schemaVersion of the ontology this graph was built against."
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the document was generated."
+          },
+          "wasDerivedFrom": {
+            "type": "array",
+            "items": {
+              "$ref": "StructureDefinition-KGProvenanceSource.schema.json"
+            },
+            "description": "The sources this graph was extracted from, each pinned by hash."
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "$ref": "StructureDefinition-KGNode.schema.json"
+            },
+            "description": "The nodes."
+          },
+          "edges": {
+            "type": "array",
+            "items": {
+              "$ref": "StructureDefinition-KGEdge.schema.json"
+            },
+            "description": "The edges."
+          },
+          "dak": {
+            "type": "object",
+            "description": "The DAK envelope: the fields of the DAK logical model."
+          }
+        },
+        "required": [
+          "resourceType",
+          "context",
+          "id",
+          "type",
+          "ontologyVersion",
+          "generatedAt"
+        ],
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/base/StructureDefinition/KGGraphDocument"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://hl7.org/fhir/StructureDefinition/Base"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

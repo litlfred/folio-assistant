@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skills/staging-review/input.schema.json",
+  "title": "Staging Review Input",
+  "description": "What the reader wants to look at, in their own words (kept verbatim; it narrows, never adds), and the branch or pull request whose preview to list.",
+  "type": "object",
+  "properties": {
+    "ask": {
+      "type": "string",
+      "description": "What the reader wants to look at, verbatim. Absent: the whole preview, every page the branch changed."
+    },
+    "branch": {
+      "type": "string"
+    },
+    "pr": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://smart.who.int/base/ValueSet-KGL1PredicatesVS.jsonld",
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "fhir:CodeSystem": {
+      "@type": "@id"
+    },
+    "cs": "http://smart.who.int/base/CodeSystem-KGL1Predicates"
+  },
+  "@id": "http://smart.who.int/base/ValueSet-KGL1PredicatesVS.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-10-31T08:34:28.048Z",
+  "@graph": [
+    {
+      "id": "#contains",
+      "name": "contains"
+    },
+    {
+      "id": "#hasSupplement",
+      "name": "hasSupplement"
+    },
+    {
+      "id": "#supersedes",
+      "name": "supersedes"
+    },
+    {
+      "id": "#refines",
+      "name": "refines"
+    },
+    {
+      "id": "#partOf",
+      "name": "partOf"
+    },
+    {
+      "id": "#definedIn",
+      "name": "definedIn"
+    },
+    {
+      "id": "#presentedIn",
+      "name": "presentedIn"
+    },
+    {
+      "id": "#answers",
+      "name": "answers"
+    },
+    {
+      "id": "#addresses",
+      "name": "addresses"
+    },
+    {
+      "id": "#hasOutcome",
+      "name": "hasOutcome"
+    },
+    {
+      "id": "#forOutcome",
+      "name": "forOutcome"
+    },
+    {
+      "id": "#aboutIntervention",
+      "name": "aboutIntervention"
+    },
+    {
+      "id": "#supportedBy",
+      "name": "supportedBy"
+    },
+    {
+      "id": "#hasRemark",
+      "name": "hasRemark"
+    },
+    {
+      "id": "#recommends",
+      "name": "recommends"
+    },
+    {
+      "id": "#measures",
+      "name": "measures"
+    },
+    {
+      "id": "#justifiedBy",
+      "name": "justifiedBy"
+    },
+    {
+      "id": "#crossReferences",
+      "name": "crossReferences"
+    },
+    {
+      "id": "#classifiedAs",
+      "name": "classifiedAs"
+    },
+    {
+      "id": "#numberedAs",
+      "name": "numberedAs"
+    },
+    {
+      "id": "#resolvesTo",
+      "name": "resolvesTo"
+    }
+  ],
+  "fhir:CodeSystem": "cs"
+}

@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/package/process-core.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/package/process-core",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "name": "process-core",
+      "version": "0.1.0",
+      "description": "The process model's supporting knowledge: the role model and task authorization, the swimlane glossary, and how a methodology is chosen and adopted (decision-methodology-selector, methodology-adoption, swot-analysis). Moved out of folio-core into the process topic (bean 9umr, owner ruling 2026-09-30); workflow (BPMN/DMN authoring and the engine's state) and raci are its siblings in the same topic.",
+      "path": "skills/process/process-core",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/compiled-artefact-cache",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/decision-methodology-selector",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/methodology-adoption",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/role-model",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/swimlane-glossary",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/swot-analysis",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/skill/task-authorization"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core"
+    }
+  ]
+}

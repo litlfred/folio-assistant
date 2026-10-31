@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/tool-types/PreferenceAction.schema.json",
+  "title": "PreferenceAction",
+  "type": "string",
+  "enum": [
+    "get",
+    "set",
+    "reset"
+  ],
+  "description": "Read, write or clear the stored preferences.",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  }
+}

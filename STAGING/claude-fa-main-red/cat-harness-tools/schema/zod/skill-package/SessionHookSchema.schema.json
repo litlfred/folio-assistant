@@ -1,0 +1,60 @@
+{
+  "$ref": "#/definitions/SessionHook",
+  "definitions": {
+    "SessionHook": {
+      "type": "object",
+      "properties": {
+        "event": {
+          "type": "string",
+          "enum": [
+            "SessionStart",
+            "PreToolUse",
+            "PostToolUse",
+            "PreCommit",
+            "PostCommit",
+            "UserPromptSubmit",
+            "Stop"
+          ]
+        },
+        "matcher": {
+          "type": "string"
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "command"
+              },
+              "command": {
+                "type": "string"
+              },
+              "timeout": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "type",
+              "command"
+            ]
+          }
+        }
+      },
+      "required": [
+        "event",
+        "commands"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SessionHookSchema.schema.json",
+  "title": "SessionHookSchema",
+  "description": "Generated from `SessionHookSchema` in schemas/kg/skill-package.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "$ref": "#/definitions/PairAttestation",
+  "definitions": {
+    "PairAttestation": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "implements",
+            "co-located"
+          ]
+        },
+        "prose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prose_hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code_hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "by": {
+          "type": "string",
+          "enum": [
+            "baseline",
+            "agent",
+            "human"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "prose",
+        "code",
+        "prose_hash",
+        "code_hash",
+        "by"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/PairAttestationSchema.schema.json",
+  "title": "PairAttestationSchema",
+  "description": "Generated from `PairAttestationSchema` in schemas/sdlc/qa-attestations.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  }
+}

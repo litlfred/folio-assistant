@@ -1,0 +1,45 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/tex-install/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-install.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. About 5 GB and 10-20 minutes, so run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal).",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bash cat-harness-tools/scripts/install-tex.sh"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "description": "A `pdflatex --version` line on success. The installed packages are system-wide.",
+            "name": "engine",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "tex-install",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bash",
+          "apt-get",
+          "sudo"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-build-cache",
+      "title": "Install TeX Live in a sandbox"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/tex-install",
+  "path": "tools/tex-install/"
+}

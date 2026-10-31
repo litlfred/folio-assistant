@@ -1,0 +1,106 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/skill-update/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/skill-update.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Change one existing local skill's instruction file through a gate: it must resolve as skill-fetch serves it, be tracked in the working repository, not be generated, be granted `skill-update` to the actor by a policy, be unchanged since it was read, keep its name and parse, and add only links that resolve. A gate that cannot decide refuses. Writes the working tree; the caller commits.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/skill-update.ts"
+        },
+        "mcp": {
+          "tool": "skill_update"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "skill",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/SkillName"
+          },
+          {
+            "name": "package_name",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName"
+          },
+          {
+            "arg": {
+              "stdin": true
+            },
+            "description": "The whole new file: front matter and body.",
+            "name": "new_content",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "description": "SHA-256 hex of the file as the caller read it.",
+            "name": "base_sha256",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "Why the skill changes.",
+            "name": "reason",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "The declared actor making the write; a policy must grant it skill-update.",
+            "name": "actor",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "The BPMN process the write is a step of, for the PROV-O activity.",
+            "name": "process",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProcessId"
+          },
+          {
+            "description": "The task in that process.",
+            "name": "task",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+          },
+          {
+            "description": "The role the lane binds.",
+            "name": "role",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Written or not, every gate's verdict with its reason, findings, and the PROV-O activity of an accepted write when a step was named.",
+            "name": "verdict",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "description": "The PROV-O activity of an accepted write that named its process, task and role; absent otherwise. Pass it to workflow_complete's `activities` for that step.",
+            "name": "activity",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProvActivity"
+          }
+        ]
+      },
+      "name": "skill-update",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/skills-and-tools",
+      "title": "Edit a skill"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/skill-update",
+  "path": "tools/skill-update/"
+}

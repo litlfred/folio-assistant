@@ -1,0 +1,141 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness",
+      "@type": "bootstrap:Process",
+      "label": "Initialize a harness",
+      "summary": "THE ONLY PROCESS IN BOOTSTRAP AN ACTOR STARTS.",
+      "description": "THE ONLY PROCESS IN BOOTSTRAP AN ACTOR STARTS. A Bootstrapping Agent that has read bootstrap's README.md is at its start event and has nowhere else to begin. Every other diagram here is reached from this one by a call activity and is never started: `discussion` determines which harness and where; `human-agent-discussion` is the one reusable way any diagram asks a person anything; `complete-initialization` makes sure every step the declarations name is done; `log-message` records what a step is doing.\n\nPRECONDITIONS are DECLARED below as bootstrap.processes:precondition elements rather than asserted here. Three of the four are kind=\"stated\": nothing in this repository can observe whether an actor understands what a role is, and a check claiming to would be a green tick over an unverified claim — so they evaluate to could-not-determine, never to satisfied. The fourth is checkable, and note what it actually checks: that README.md EXISTS, not that the Bootstrapping Agent read it. Reading is not observable from here.\n\nNO work-plan element on any activity: a work plan is harness machinery and a Bootstrapping Agent runs before the harness that carries it. isExecutable is false because the engine that runs a diagram is harness machinery too — this is data a Bootstrapping Agent reads, not a process bootstrap can drive.",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_CompleteInitialization",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_Discussion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_LogMessage"
+      ],
+      "source": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/processes/initialize-harness.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/processes/initialize-harness.svg",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_1",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/Start_InitializeHarness",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_DetermineHarness",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_10",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_LogInstallStart",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_Install",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_11",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_Install",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_12",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_LogFailure",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/End_Failed",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_13",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_ReadLocation",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_14",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "already, as something else",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_LogFailure",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_15",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "not yet",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_ReadDeclaration",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_16",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_CompleteInitialization",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_17",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "already, as the chosen harness",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/GW_AlreadyInitialized",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_CompleteInitialization",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_18",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_CompleteInitialization",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/End_Installed",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_4",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_DetermineHarness",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_5",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "none",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_LogFailure",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_6",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "one",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/GW_HarnessChosen",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_ReadLocation",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_7",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_ReadDeclaration",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_8",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "no",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_LogFailure",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness#flow/SF_IH_9",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "yes",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "targetRef": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness/node/A_LogInstallStart",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/bootstrap/process/Process_InitializeHarness"
+    }
+  ]
+}

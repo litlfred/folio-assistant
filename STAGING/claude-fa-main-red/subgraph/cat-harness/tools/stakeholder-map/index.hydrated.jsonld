@@ -1,0 +1,60 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/stakeholder-map/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/stakeholder-map.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/stakeholder-map.ts"
+        },
+        "mcp": {
+          "tool": "stakeholder_map"
+        },
+        "shell": "bun run cat stakeholder-map"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "The changed paths. A repeated positional, so it is last on the command line.",
+            "name": "paths",
+            "repeated": true,
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Skills, roles and the people each role names.",
+            "name": "stakeholders",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "stakeholder-map",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
+      ],
+      "title": "Stakeholder map"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/stakeholder-map",
+  "path": "tools/stakeholder-map/"
+}

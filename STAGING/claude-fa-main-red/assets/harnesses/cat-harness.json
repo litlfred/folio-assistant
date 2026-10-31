@@ -1,0 +1,407 @@
+{
+  "$schema": "folio-harness-state/v1",
+  "harness": "cat-harness",
+  "initialization": {
+    "position": "directory:health",
+    "next": {
+      "step": "directory:health",
+      "action": "create test/health/results/ with its first health file (an empty directory is not tracked by git), or remove the entry from cat-harness.json"
+    },
+    "counts": {
+      "done": 42,
+      "not-done": 7,
+      "could-not-determine": 3,
+      "stated": 0
+    },
+    "steps": [
+      {
+        "id": "declaration",
+        "namedBy": "cat-harness",
+        "what": "cat-harness.json parses",
+        "state": "done",
+        "detail": "cat-harness 0.1.0"
+      },
+      {
+        "id": "needs:bootstrap",
+        "namedBy": "cat-harness",
+        "what": "bootstrap, which cat-harness needs, is beside it and parses",
+        "state": "done",
+        "detail": "bootstrap"
+      },
+      {
+        "id": "directory:cat-harness-validators",
+        "namedBy": "cat-harness",
+        "what": "declared directory validators/ exists",
+        "state": "done",
+        "detail": "holds validators"
+      },
+      {
+        "id": "directory:tools",
+        "namedBy": "cat-harness",
+        "what": "declared directory tools/ exists",
+        "state": "done",
+        "detail": "holds tools"
+      },
+      {
+        "id": "directory:external-schemas",
+        "namedBy": "cat-harness",
+        "what": "declared directory external-schemas/ exists",
+        "state": "done",
+        "detail": "holds external-schema"
+      },
+      {
+        "id": "directory:subscriptions",
+        "namedBy": "cat-harness",
+        "what": "declared directory subscriptions/ exists",
+        "state": "done",
+        "detail": "holds substrate-snapshot"
+      },
+      {
+        "id": "directory:subscribed-harnesses",
+        "namedBy": "cat-harness",
+        "what": "declared directory subscribed-harnesses/ exists",
+        "state": "done",
+        "detail": "holds subscribed-harnesses"
+      },
+      {
+        "id": "directory:code-lists",
+        "namedBy": "cat-harness",
+        "what": "declared directory code-lists/ exists",
+        "state": "done",
+        "detail": "holds code-list"
+      },
+      {
+        "id": "directory:vocab-mappings",
+        "namedBy": "cat-harness",
+        "what": "declared directory vocab-mappings/ exists",
+        "state": "done",
+        "detail": "holds vocab-mapping"
+      },
+      {
+        "id": "directory:tool-releases",
+        "namedBy": "cat-harness",
+        "what": "declared directory tool-releases/ exists",
+        "state": "done",
+        "detail": "holds tool-release"
+      },
+      {
+        "id": "directory:schemas",
+        "namedBy": "cat-harness",
+        "what": "declared directory schemas/ exists",
+        "state": "done",
+        "detail": "holds schemas, cat-harness"
+      },
+      {
+        "id": "directory:cat-harness-ns",
+        "namedBy": "cat-harness",
+        "what": "declared directory ns/ exists",
+        "state": "done",
+        "detail": "holds schemas"
+      },
+      {
+        "id": "directory:uml",
+        "namedBy": "cat-harness",
+        "what": "declared directory uml/ exists",
+        "state": "done",
+        "detail": "holds uml"
+      },
+      {
+        "id": "directory:skills",
+        "namedBy": "cat-harness",
+        "what": "declared directory skills/ exists",
+        "state": "done",
+        "detail": "holds skills"
+      },
+      {
+        "id": "directory:scenarios",
+        "namedBy": "cat-harness",
+        "what": "declared directory scenarios/ exists",
+        "state": "done",
+        "detail": "holds scenarios"
+      },
+      {
+        "id": "directory:policies",
+        "namedBy": "cat-harness",
+        "what": "declared directory policies/ exists",
+        "state": "done",
+        "detail": "holds policies"
+      },
+      {
+        "id": "directory:processes",
+        "namedBy": "cat-harness",
+        "what": "declared directory processes/ exists",
+        "state": "done",
+        "detail": "holds processes"
+      },
+      {
+        "id": "directory:methodologies",
+        "namedBy": "cat-harness",
+        "what": "declared directory methodologies/ exists",
+        "state": "done",
+        "detail": "holds methodology"
+      },
+      {
+        "id": "directory:qa",
+        "namedBy": "cat-harness",
+        "what": "declared directory test/results/ exists",
+        "state": "done",
+        "detail": "holds qa"
+      },
+      {
+        "id": "directory:attestations",
+        "namedBy": "cat-harness",
+        "what": "declared directory test/attestations/ exists",
+        "state": "done",
+        "detail": "holds attestations"
+      },
+      {
+        "id": "directory:test-plans",
+        "namedBy": "cat-harness",
+        "what": "declared directory test/plans/ exists",
+        "state": "done",
+        "detail": "holds test-plan"
+      },
+      {
+        "id": "directory:health",
+        "namedBy": "cat-harness",
+        "what": "declared directory test/health/results/ exists",
+        "state": "not-done",
+        "detail": "test/health/results/ is declared and absent — a consumer would scan nothing and call it clean",
+        "action": "create test/health/results/ with its first health file (an empty directory is not tracked by git), or remove the entry from cat-harness.json"
+      },
+      {
+        "id": "directory:uploads",
+        "namedBy": "cat-harness",
+        "what": "declared directory uploads/ exists",
+        "state": "done",
+        "detail": "holds uploads"
+      },
+      {
+        "id": "directory:library",
+        "namedBy": "cat-harness",
+        "what": "declared directory library/ exists",
+        "state": "done",
+        "detail": "holds library"
+      },
+      {
+        "id": "directory:translation-sources",
+        "namedBy": "cat-harness",
+        "what": "declared directory translations/ exists",
+        "state": "done",
+        "detail": "holds translation-sources"
+      },
+      {
+        "id": "directory:folio",
+        "namedBy": "cat-harness",
+        "what": "declared directory folio/ exists",
+        "state": "done",
+        "detail": "holds folio"
+      },
+      {
+        "id": "directory:folio-render",
+        "namedBy": "cat-harness",
+        "what": "declared directory folio-render/ exists",
+        "state": "done",
+        "detail": "holds cat-harness, code"
+      },
+      {
+        "id": "directory:site-chrome",
+        "namedBy": "cat-harness",
+        "what": "declared directory site-chrome/ exists",
+        "state": "done",
+        "detail": "holds docs"
+      },
+      {
+        "id": "directory:docs",
+        "namedBy": "cat-harness",
+        "what": "declared directory docs/ exists",
+        "state": "done",
+        "detail": "holds docs"
+      },
+      {
+        "id": "directory:site",
+        "namedBy": "cat-harness",
+        "what": "declared directory site/ exists",
+        "state": "not-done",
+        "detail": "site/ is declared and absent — a consumer would scan nothing and call it clean",
+        "action": "create site/ with its first basic-cdn-site file (an empty directory is not tracked by git), or remove the entry from cat-harness.json"
+      },
+      {
+        "id": "directory:swimlane-glossary",
+        "namedBy": "cat-harness",
+        "what": "declared directory glossary/ exists",
+        "state": "done",
+        "detail": "holds swimlane-glossary"
+      },
+      {
+        "id": "directory:cat-harness-upstream",
+        "namedBy": "cat-harness",
+        "what": "declared directory upstream/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:openapi",
+        "namedBy": "cat-harness",
+        "what": "declared directory openapi/ exists",
+        "state": "done",
+        "detail": "holds cat-harness"
+      },
+      {
+        "id": "directory:archimate",
+        "namedBy": "cat-harness",
+        "what": "declared directory archimate/ exists",
+        "state": "done",
+        "detail": "holds cat-harness"
+      },
+      {
+        "id": "directory:memory",
+        "namedBy": "cat-harness",
+        "what": "declared directory memory/ exists",
+        "state": "done",
+        "detail": "holds memory, waiver, interaction"
+      },
+      {
+        "id": "directory:fsh-guts",
+        "namedBy": "cat-harness",
+        "what": "declared directory fsh-guts/ exists",
+        "state": "not-done",
+        "detail": "fsh-guts/ is declared and absent — a consumer would scan nothing and call it clean",
+        "action": "create fsh-guts/ with its first fsh-guts file (an empty directory is not tracked by git), or remove the entry from cat-harness.json"
+      },
+      {
+        "id": "directory:beans",
+        "namedBy": "cat-harness",
+        "what": "declared directory beans/ exists",
+        "state": "not-done",
+        "detail": "beans/ is declared and absent — a consumer would scan nothing and call it clean",
+        "action": "create beans/ with its first beans file (an empty directory is not tracked by git), or remove the entry from cat-harness.json"
+      },
+      {
+        "id": "directory:todos",
+        "namedBy": "cat-harness",
+        "what": "declared directory todos/ exists",
+        "state": "not-done",
+        "detail": "todos/ is declared and absent — a consumer would scan nothing and call it clean",
+        "action": "create todos/ with its first todos file (an empty directory is not tracked by git), or remove the entry from cat-harness.json"
+      },
+      {
+        "id": "directory:checkout-uploads",
+        "namedBy": "cat-harness",
+        "what": "declared directory uploads/ exists",
+        "state": "done",
+        "detail": "holds uploads"
+      },
+      {
+        "id": "directory:issue-marks",
+        "namedBy": "cat-harness",
+        "what": "declared directory issue-marks/ exists",
+        "state": "not-done",
+        "detail": "issue-marks/ is declared and absent — a consumer would scan nothing and call it clean",
+        "action": "create issue-marks/ with its first issue-marks file (an empty directory is not tracked by git), or remove the entry from cat-harness.json"
+      },
+      {
+        "id": "directory:merge-reviews",
+        "namedBy": "cat-harness",
+        "what": "declared directory merge-reviews/ exists",
+        "state": "not-done",
+        "detail": "merge-reviews/ is declared and absent — a consumer would scan nothing and call it clean",
+        "action": "create merge-reviews/ with its first merge-reviews file (an empty directory is not tracked by git), or remove the entry from cat-harness.json"
+      },
+      {
+        "id": "directory:cat-harness-libraries",
+        "namedBy": "cat-harness",
+        "what": "declared directory libraries/ exists",
+        "state": "done",
+        "detail": "holds software-library"
+      },
+      {
+        "id": "asset:agent-instructions",
+        "namedBy": "cat-harness",
+        "what": "declared agent-instructions AGENTS.md exists",
+        "state": "done",
+        "detail": "AGENTS.md"
+      },
+      {
+        "id": "asset:instance-readme",
+        "namedBy": "cat-harness",
+        "what": "declared instance-readme README.md exists",
+        "state": "done",
+        "detail": "README.md"
+      },
+      {
+        "id": "asset:bootstrap-initialization",
+        "namedBy": "cat-harness",
+        "what": "declared bootstrap-initialization docs/bootstrap/initialization.md exists",
+        "state": "done",
+        "detail": "docs/bootstrap/initialization.md"
+      },
+      {
+        "id": "asset:npm-manifest",
+        "namedBy": "cat-harness",
+        "what": "declared package-manifest package.json exists",
+        "state": "done",
+        "detail": "package.json"
+      },
+      {
+        "id": "asset:unkinded-baseline",
+        "namedBy": "cat-harness",
+        "what": "declared unkinded-baseline node-kinds.baseline.json exists",
+        "state": "done",
+        "detail": "node-kinds.baseline.json"
+      },
+      {
+        "id": "readme",
+        "namedBy": "cat-harness",
+        "what": "the root has a README.md (FR-8)",
+        "state": "done",
+        "detail": "README.md"
+      },
+      {
+        "id": "site:workflow",
+        "namedBy": "cat-harness",
+        "what": "a workflow that builds the site and deploys it to GitHub Pages",
+        "state": "done",
+        "detail": ".github/workflows/publish-context.yml"
+      },
+      {
+        "id": "site:branch",
+        "namedBy": "cat-harness",
+        "what": "a gh-pages branch exists on litlfred/cat-harness, for Pages to serve",
+        "state": "could-not-determine",
+        "detail": "no `git` here to ask the remote",
+        "action": "create it: an orphan gh-pages holding a placeholder index.html and .nojekyll, pushed to https://github.com/litlfred/cat-harness"
+      },
+      {
+        "id": "site:enabled",
+        "namedBy": "cat-harness",
+        "what": "GitHub Pages is on for litlfred/cat-harness, serving the gh-pages branch",
+        "state": "could-not-determine",
+        "detail": "no `gh` CLI here, so Pages could not be checked or enabled",
+        "action": "open https://github.com/litlfred/cat-harness/settings/pages → \"Build and deployment\" → Source: \"Deploy from a branch\" → branch `gh-pages`, folder `/ (root)` (free for a public repository; the branch must exist first — site:branch). Then re-run the Pages workflow from the Actions tab, or push to main."
+      },
+      {
+        "id": "site:live",
+        "namedBy": "cat-harness",
+        "what": "the site answers at https://litlfred.github.io/cat-harness/, and its README page at https://litlfred.github.io/cat-harness/README.html",
+        "state": "could-not-determine",
+        "detail": "https://litlfred.github.io/cat-harness/ could not be reached from here; https://litlfred.github.io/cat-harness/README.html could not be reached from here — an answer about the way here (a proxy, an access rule), not about the site",
+        "action": "open https://litlfred.github.io/cat-harness/README.html in a browser"
+      }
+    ]
+  },
+  "health": {
+    "badges": [
+      {
+        "id": "initialization",
+        "state": "finding",
+        "label": "7 setup step(s) not done"
+      },
+      {
+        "id": "repository",
+        "state": "unknown",
+        "label": "no committed health report in this checkout"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/actor/collaborator.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/fa-main-red",
+    "sha": "9cc6ee11917dfe0c7db97dcf80a02cf0971a60b7",
+    "pr": "2830/merge",
+    "run": "41184705738"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fa-main-red/cat-harness/actor/collaborator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "collaborator",
+      "actorKind": "person",
+      "title": "Collaborator (gateway session)",
+      "description": "A person signed in through the auth-gateway's GitHub OAuth and listed in deploy/github-collaborators.txt. The gateway's `collaborator` tier as an actor (issue #1207): what it may do over HTTP is cat-harness/policies/http-gateway.jsonld, not a rung compared in code. Takes on no BPMN role; a person who works in a lane does so as the actor that lane's role names.",
+      "hasCapability": [],
+      "mayTakeRole": [],
+      "permissionName": [
+        "content-authoring",
+        "review-comments",
+        "adjudication",
+        "perform-task"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/collaborator"
+    }
+  ]
+}
