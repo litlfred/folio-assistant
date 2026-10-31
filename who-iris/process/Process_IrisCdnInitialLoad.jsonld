@@ -4,17 +4,17 @@
   "partOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "9ddb3b17c3d5c35a582e501de1c300c23537b6f9",
+    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
     "pr": "main",
-    "run": "41206537626"
+    "run": "41213874215"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "IRIS CDN initial load",
-      "summary": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record, and every bitstream (owner, 2026-10-30: metadata plus PDFs).",
-      "description": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record, and every bitstream (owner, 2026-10-30: metadata plus PDFs). Run in batches with a checkpoint, so a run that stops resumes where it stopped and never re-fetches what it already holds. Ends in one signed, verified release.",
+      "summary": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs.",
+      "description": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs. Run in batches with a checkpoint, so a run that stops resumes where it stopped and never re-fetches what it already holds. Ends in one signed, verified release.",
       "enforcement": "strict",
       "sourcePath": "processes/iris-cdn-initial-load.bpmn",
       "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-initial-load.bpmn",

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "core-schemas": {
-      "count": 34,
+      "count": 37,
       "unit": "modules"
     }
   },
@@ -3170,6 +3170,22 @@
       "isTest": false
     },
     {
+      "module": "folio-assistant-core/schemas/acronyms.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "acronyms.test",
+      "graphNode": "undeclared",
+      "summary": "Acronyms in prose (owner, 2026-10-31): which tokens are acronyms, which",
+      "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/acronyms.ts",
+      "instance": "folio-assistant-core",
+      "name": "acronyms",
+      "graphNode": "undeclared",
+      "summary": "Acronyms in prose, and whether a glossary a folio can see already holds",
+      "isTest": false
+    },
+    {
       "module": "folio-assistant-core/schemas/adjudication.test.ts",
       "instance": "folio-assistant-core",
       "name": "adjudication.test",
@@ -3257,6 +3273,14 @@
       "graphNode": "schema",
       "summary": "Qualified Dublin Core, as a graph node.",
       "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/glossary-focus.test.ts",
+      "instance": "folio-assistant-core",
+      "name": "glossary-focus.test",
+      "graphNode": "undeclared",
+      "summary": "A term about an organization (owner, 2026-10-31, option B: SKOS plus W3C",
+      "isTest": true
     },
     {
       "module": "folio-assistant-core/schemas/glossary.test.ts",
@@ -4056,9 +4080,10 @@
         },
         {
           "name": "@graph",
-          "type": "z.array(GraphExportNodeSchema)",
+          "type": "z.array(z.union([GraphExportNodeSchema, GraphExportTombstoneSchema]))",
           "optional": false,
-          "array": true
+          "array": true,
+          "doc": "Subjects, and for one release a tombstone per pre-#958 `#fragment` (litlfred/cat-harness-tools#958)."
         },
         {
           "name": "omitted",
@@ -4083,8 +4108,50 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "bootstrap-tools/schemas/graph-export.ts#GraphExportNodeSchema"
+        "bootstrap-tools/schemas/graph-export.ts#GraphExportNodeSchema",
+        "bootstrap-tools/schemas/graph-export.ts#GraphExportTombstoneSchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "bootstrap-tools/schemas/graph-export.ts#GraphExportTombstoneSchema",
+      "name": "GraphExportTombstoneSchema",
+      "module": "bootstrap-tools/schemas/graph-export.ts",
+      "kind": "zod-object",
+      "doc": "An old `<doc>#<kind>/<id>` fragment, kept for one release after subjects",
+      "fields": [
+        {
+          "name": "@id",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "deprecated",
+          "type": "z.literal(true)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "isReplacedBy",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sameAs",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -73030,6 +73097,32 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/acronyms.ts#AcronymHit",
+      "name": "AcronymHit",
+      "module": "folio-assistant-core/schemas/acronyms.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "acronym",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "line",
+          "type": "number",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/adjudication.ts#AdjudicationAsset",
       "name": "AdjudicationAsset",
       "module": "folio-assistant-core/schemas/adjudication.ts",
@@ -74688,6 +74781,68 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/glossary.ts#Focus",
+      "name": "Focus",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#FocusSchema",
+      "name": "FocusSchema",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.enum(ORG_TYPES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "iri",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "homepage",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "subOrganizationOf",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "sameAs",
+          "type": "z.array(Iri).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/glossary.ts#Iri"
+      ],
+      "unresolved": [],
+      "external": [
+        "ORG_TYPES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/glossary.ts#Glossary",
       "name": "Glossary",
       "module": "folio-assistant-core/schemas/glossary.ts",
@@ -74950,6 +75105,13 @@
           "doc": "The concept's IRI when its defining vocabulary already mints one. The"
         },
         {
+          "name": "focus",
+          "type": "FocusSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The thing the concept is about, such as an organization ({@link FocusSchema}): `foaf:focus`."
+        },
+        {
           "name": "source",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -74973,6 +75135,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "folio-assistant-core/schemas/glossary.ts#FocusSchema",
         "folio-assistant-core/schemas/glossary.ts#Iri",
         "folio-assistant-core/schemas/glossary.ts#LangTextSchema"
       ],
@@ -80965,6 +81128,14 @@
     {
       "from": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema",
       "to": "bootstrap-tools/schemas/graph-export.ts#GraphExportNodeSchema",
+      "via": "@graph",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema",
+      "to": "bootstrap-tools/schemas/graph-export.ts#GraphExportTombstoneSchema",
       "via": "@graph",
       "kind": "field",
       "optional": false,
@@ -92251,6 +92422,30 @@
       "array": true
     },
     {
+      "from": "folio-assistant-core/schemas/glossary.ts#FocusSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "homepage",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#FocusSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "iri",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#FocusSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "sameAs",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
       "from": "folio-assistant-core/schemas/glossary.ts#GlossarySchema",
       "to": "folio-assistant-core/schemas/glossary.ts#Iri",
       "via": "members",
@@ -92265,6 +92460,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#FocusSchema",
+      "via": "focus",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",

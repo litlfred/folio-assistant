@@ -210,7 +210,22 @@
      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
     }
    ],
-   "binding": "dangling"
+   "role": {
+    "name": "cloudflare-r2-cdn",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
+    "title": "Cloudflare R2 and CDN",
+    "skills": [
+     {
+      "name": "getting-started",
+      "href": "../../../reference/skill-instructions/getting-started.html",
+      "via": "publish-target"
+     },
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+     }
+    ]
+   }
   },
   "Task_SignItems": {
    "id": "Task_SignItems",
@@ -225,7 +240,27 @@
      "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
     }
    ],
-   "binding": "dangling"
+   "role": {
+    "name": "release-signer",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+    "title": "Release signer",
+    "skills": [
+     {
+      "name": "iris-cdn-signing",
+      "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html",
+      "via": "attestation-service"
+     },
+     {
+      "name": "test-plan-execution",
+      "href": "../../../reference/skill-instructions/test-plan-execution.html",
+      "via": "attestation-service"
+     }
+    ]
+   }
   },
   "Task_Sign": {
    "id": "Task_Sign",
@@ -240,7 +275,27 @@
      "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
     }
    ],
-   "binding": "dangling"
+   "role": {
+    "name": "release-signer",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+    "title": "Release signer",
+    "skills": [
+     {
+      "name": "iris-cdn-signing",
+      "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html",
+      "via": "attestation-service"
+     },
+     {
+      "name": "test-plan-execution",
+      "href": "../../../reference/skill-instructions/test-plan-execution.html",
+      "via": "attestation-service"
+     }
+    ]
+   }
   },
   "Task_PublishTags": {
    "id": "Task_PublishTags",
@@ -255,7 +310,36 @@
      "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
     }
    ],
-   "binding": "dangling"
+   "role": {
+    "name": "cloudflare-git",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
+    "title": "Cloudflare git (Artifacts)",
+    "skills": [
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+     },
+     {
+      "name": "iris-rest-feed",
+      "href": "../../../reference/skill-instructions/iris-rest-feed.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "corpus"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html",
+      "via": "corpus"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html",
+      "via": "corpus"
+     }
+    ]
+   }
   },
   "Task_Verify": {
    "id": "Task_Verify",
@@ -270,7 +354,17 @@
      "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
     }
    ],
-   "binding": "dangling"
+   "role": {
+    "name": "verifier",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+    "title": "IRIS CDN verifier",
+    "skills": [
+     {
+      "name": "iris-cdn-signing",
+      "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
+     }
+    ]
+   }
   },
   "Task_Revert": {
    "id": "Task_Revert",
@@ -279,8 +373,23 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
    "lane": "Verifier",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
-   "skills": [],
-   "binding": "dangling"
+   "skills": [
+    {
+     "name": "iris-cdn-signing",
+     "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
+    }
+   ],
+   "role": {
+    "name": "verifier",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+    "title": "IRIS CDN verifier",
+    "skills": [
+     {
+      "name": "iris-cdn-signing",
+      "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
+     }
+    ]
+   }
   }
  }
 }

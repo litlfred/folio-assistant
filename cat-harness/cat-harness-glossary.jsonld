@@ -2364,6 +2364,60 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/iris-cdn-owner",
+      "@type": "skos:Concept",
+      "prefLabel": "IRIS CDN owner",
+      "title": "IRIS CDN owner",
+      "notation": "iris-cdn-owner",
+      "definition": "A person: decides the export's scope, budget and storage target. Nothing downstream widens what the owner approved.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/iris-cdn-exporter",
+      "@type": "skos:Concept",
+      "prefLabel": "IRIS CDN Exporter",
+      "title": "IRIS CDN Exporter",
+      "notation": "iris-cdn-exporter",
+      "definition": "The agent role. It plans, reviews and reports; it does not hold the signing key, and it never pushes to a WHO repository.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/cloudflare-r2-cdn",
+      "@type": "skos:Concept",
+      "prefLabel": "Cloudflare R2 and CDN",
+      "title": "Cloudflare R2 and CDN",
+      "notation": "cloudflare-r2-cdn",
+      "definition": "Object storage behind the CDN. Every object is named by its SHA-256 and served with an immutable cache policy; an object already present is never written again. Also serves did.json. A mechanical role, held to the contract its skills state.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/cloudflare-git",
+      "@type": "skos:Concept",
+      "prefLabel": "Cloudflare git (Artifacts)",
+      "title": "Cloudflare git (Artifacts)",
+      "notation": "cloudflare-git",
+      "definition": "A git repository hosted on Cloudflare Artifacts, not GitHub. Holds the release history: BagIt tag files, signatures, the cursor, checkpoints and run reports. A mechanical role: written to, deciding nothing.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/release-signer",
+      "@type": "skos:Concept",
+      "prefLabel": "Release signer",
+      "title": "Release signer",
+      "notation": "release-signer",
+      "definition": "Holds the P-256 private key (GitHub environment secret IRIS_CDN_SIGNING_JWK) and signs each changed item manifest and the release tag manifest. A mechanical role.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/verifier",
+      "@type": "skos:Concept",
+      "prefLabel": "IRIS CDN verifier",
+      "title": "IRIS CDN verifier",
+      "notation": "verifier",
+      "definition": "Anyone. Resolves the key from the did:web DID document, never from the package, and checks its x5c chain up to WHO's signing key. Cannot reach it: the verdict is unknown, not verified.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/lean-authoring-agent",
       "@type": "skos:Concept",
       "prefLabel": "Lean authoring agent",
@@ -2407,60 +2461,6 @@
       "notation": "l1-extraction-reviewer",
       "definition": "Signs, or rejects, the exclusions an L1 extraction proposes: each normative-looking sentence of a WHO publication that the curation says is not a recommendation, an implementation practice or a remark. Until a person acting in this role signs an exclusion, its sentence stays unaccounted and coverage stays below 100 %. Owner ruling 3b, 2026-10-12: exclusions are signed by this named role, never by the agent that proposed them. Inherits the harness's generic reviewer and performs exclusion sign-off in `classify-and-code-content.bpmn` (bean 4nfs).",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/cloudflare-git",
-      "@type": "skos:Concept",
-      "prefLabel": "Cloudflare git (Artifacts)",
-      "notation": "cloudflare-git",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-10-31: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/cloudflare-r2-cdn",
-      "@type": "skos:Concept",
-      "prefLabel": "Cloudflare R2 and CDN",
-      "notation": "cloudflare-r2-cdn",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-10-31: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/iris-cdn-exporter",
-      "@type": "skos:Concept",
-      "prefLabel": "IRIS CDN Exporter",
-      "notation": "iris-cdn-exporter",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-10-31: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/iris-cdn-owner",
-      "@type": "skos:Concept",
-      "prefLabel": "IRIS CDN owner",
-      "notation": "iris-cdn-owner",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-10-31: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/release-signer",
-      "@type": "skos:Concept",
-      "prefLabel": "Release signer",
-      "notation": "release-signer",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-10-31: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/verifier",
-      "@type": "skos:Concept",
-      "prefLabel": "IRIS CDN verifier",
-      "notation": "verifier",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-10-31: no swimlane in this instance derives this term."
     }
   ]
 }

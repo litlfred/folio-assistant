@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Start_Publish.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
+    "pr": "main",
+    "run": "41213874215"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Start_Publish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Change approved",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Reviewer",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish#flow/r0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    }
+  ]
+}

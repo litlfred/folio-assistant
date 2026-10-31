@@ -4,15 +4,15 @@
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "9ddb3b17c3d5c35a582e501de1c300c23537b6f9",
+    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
     "pr": "main",
-    "run": "41206537626"
+    "run": "41213874215"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/CallActivity_PublicComment",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Public comment on the review version",
+      "name": "Release for public comment",
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
@@ -23,7 +23,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
+      "calledElement": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication#flow/G21"
       ],

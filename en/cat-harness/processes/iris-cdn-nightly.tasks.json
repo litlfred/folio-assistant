@@ -707,8 +707,42 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
    "lane": "Cloudflare git (Artifacts)",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_CfGit",
-   "skills": [],
-   "binding": "dangling"
+   "skills": [
+    {
+     "name": "iris-rest-feed",
+     "href": "../../../reference/skill-instructions/iris-rest-feed.html"
+    }
+   ],
+   "role": {
+    "name": "cloudflare-git",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
+    "title": "Cloudflare git (Artifacts)",
+    "skills": [
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+     },
+     {
+      "name": "iris-rest-feed",
+      "href": "../../../reference/skill-instructions/iris-rest-feed.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "corpus"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html",
+      "via": "corpus"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html",
+      "via": "corpus"
+     }
+    ]
+   }
   },
   "Task_Review": {
    "id": "Task_Review",
@@ -723,7 +757,25 @@
      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
     }
    ],
-   "binding": "dangling"
+   "role": {
+    "name": "iris-cdn-exporter",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
+    "title": "IRIS CDN Exporter",
+    "skills": [
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+     },
+     {
+      "name": "iris-dspace",
+      "href": "../../../reference/skill-instructions/iris-dspace.html"
+     },
+     {
+      "name": "iris-rest-feed",
+      "href": "../../../reference/skill-instructions/iris-rest-feed.html"
+     }
+    ]
+   }
   }
  }
 }

@@ -16,10 +16,14 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 1,
+      "count": 2,
       "entries": [
         {
           "file": "cat-harness-tools/schemas/kg/graph-typology-registry.ts",
+          "names": 2
+        },
+        {
+          "file": "folio-assistant-core/skills/library/ingestion/figure-rebuild.md",
           "names": 2
         }
       ]
@@ -40,11 +44,11 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6181,
+          "occurrences": 6199,
           "allowed": 0,
-          "wrongDirection": 7,
-          "wrongDirectionFiles": 3,
-          "exempt": 6174,
+          "wrongDirection": 19,
+          "wrongDirectionFiles": 11,
+          "exempt": 6180,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -54,8 +58,20 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 4,
+      "count": 13,
       "entries": [
+        {
+          "file": "bootstrap-tools/schemas/graph-export.ts",
+          "target": "cat-harness-tools"
+        },
+        {
+          "file": "bootstrap-tools/scripts/export-graph.ts",
+          "target": "cat-harness-tools"
+        },
+        {
+          "file": "bootstrap/models/models.json",
+          "target": "who-iris"
+        },
         {
           "file": "cat-harness-tools/schemas/harness-root.ts",
           "target": "fhir-harness"
@@ -69,11 +85,35 @@
           "target": "folio-assistant-core"
         },
         {
-          "file": "cat-harness/skills/ui/ui-core/archimate-models.md",
-          "target": "cat-harness-tools"
+          "file": "folio-assistant-core/scripts/diig-phases-svg.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "folio-assistant-core/scripts/glossary-term-links.ts",
+          "target": "smart-base"
+        },
+        {
+          "file": "folio-assistant-core/scripts/smart-approach-svg.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "folio-assistant-core/skills/library/ingestion/figure-rebuild.md",
+          "target": "fhir-harness"
+        },
+        {
+          "file": "folio-assistant-core/skills/library/ingestion/figure-rebuild.md",
+          "target": "who-iris"
+        },
+        {
+          "file": "folio-assistant-core/tools/diig-phases-svg/diig-phases-svg.ts",
+          "target": "who-iris"
+        },
+        {
+          "file": "folio-assistant-core/tools/smart-approach-svg/smart-approach-svg.ts",
+          "target": "who-iris"
         }
       ]
     }
   },
-  "total": 6
+  "total": 16
 }

@@ -24,7 +24,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "@type": "bootstrap:Process",
-      "description": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record, and every bitstream (owner, 2026-10-30: metadata plus PDFs). Run in batches with a checkpoint, so a run that stops resumes where it stopped and never re-fetches what it already holds. Ends in one signed, verified release.",
+      "description": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs. Run in batches with a checkpoint, so a run that stops resumes where it stopped and never re-fetches what it already holds. Ends in one signed, verified release.",
       "enforcement": "strict",
       "flowCount": 15,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
@@ -33,7 +33,7 @@
       "sourcePath": "processes/iris-cdn-initial-load.bpmn",
       "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-initial-load.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved",
-      "summary": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record, and every bitstream (owner, 2026-10-30: metadata plus PDFs)."
+      "summary": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F1",
@@ -186,7 +186,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/owner",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
       "name": "Owner",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad"
@@ -298,7 +298,7 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F1",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/owner",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -315,6 +315,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -387,6 +388,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -416,7 +418,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F2",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/owner",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
@@ -440,7 +442,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "@type": "bootstrap:Process",
-      "description": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (owner, 2026-10-30: full rebuild nightly; sorted output keeps unchanged partitions byte-identical), and publish a signed release. A night with no changes publishes nothing and commits nothing.",
+      "description": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release. A night with no changes publishes nothing and commits nothing.",
       "enforcement": "strict",
       "flowCount": 12,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
@@ -449,7 +451,7 @@
       "sourcePath": "processes/iris-cdn-nightly.bpmn",
       "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-nightly.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly",
-      "summary": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (owner, 2026-10-30: full rebuild nightly; sorted output keeps unchanged partitions byte-identical), and publish a signed rel…"
+      "summary": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N1",
@@ -682,6 +684,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
     },
     {
@@ -1052,6 +1055,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
     },
     {
@@ -1067,6 +1071,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
     },
     {
@@ -1384,6 +1389,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     },
     {

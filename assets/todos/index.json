@@ -431,12 +431,22 @@
       "Process_BeanOpen",
       "Process_ContributorFeedback"
     ],
-    "Process_ContentChangeReview": [
+    "Process_ContentChangeReviewCommittee": [
       "Process_Adjudication",
+      "Process_Review"
+    ],
+    "Process_ContentChangeReviewMake": [
+      "Process_OptionsAnalysis"
+    ],
+    "Process_ContentChangeReviewPublish": [],
+    "Process_ContentChangeReviewStage": [],
+    "Process_ContentChangeReview": [
       "Process_BeanClose",
       "Process_BeanOpen",
-      "Process_OptionsAnalysis",
-      "Process_Review"
+      "Process_ContentChangeReviewCommittee",
+      "Process_ContentChangeReviewMake",
+      "Process_ContentChangeReviewPublish",
+      "Process_ContentChangeReviewStage"
     ],
     "Process_Lifecycle": [
       "Process_BeanClose",
@@ -449,7 +459,7 @@
       "Process_BeanClose",
       "Process_BeanOpen",
       "Process_Editing",
-      "Process_PublicComment"
+      "Process_PublicCommentRelease"
     ],
     "Process_DsaDocumentLifecycle": [
       "Process_BeanClose",
@@ -463,6 +473,9 @@
       "Process_OptionsAnalysis"
     ],
     "Process_EvidenceRetrieval": [],
+    "Process_PublicCommentRelease": [
+      "Process_PublicComment"
+    ],
     "Process_PublicComment": [
       "Process_ContentChangeReview"
     ],

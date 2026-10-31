@@ -1,0 +1,21 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Pipeline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
+    "pr": "main",
+    "run": "41213874215"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "CI/CD Pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    }
+  ]
+}

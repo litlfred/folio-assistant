@@ -1249,6 +1249,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-schema-fields/glossary.termschema.focus",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermSchema.focus"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The thing the concept is about, such as an organization ({@link FocusSchema}): `foaf:focus`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.focus",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-schema-fields/glossary.termschema.iri",
       "@type": "skos:Concept",
       "skos:inScheme": {

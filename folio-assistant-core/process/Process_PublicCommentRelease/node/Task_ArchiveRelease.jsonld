@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_ArchiveRelease.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
+    "pr": "main",
+    "run": "41213874215"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_ArchiveRelease",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Archive the release with the review",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-publishing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease#flow/Flow_PublicComment_To_ArchiveRelease"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease#flow/Flow_ArchiveRelease_To_Closed"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    }
+  ]
+}

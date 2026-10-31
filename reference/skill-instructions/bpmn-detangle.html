@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><style id="jtd-nav-activation">
+  
+
+    .site-nav > ul.nav-list:first-child > li > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > a,
+    
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li:not(:nth-child(347)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li > ul > li a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:not(:first-child) a,
+    .site-nav li.external a {
+      background-image: none;
+    }
+
+    .site-nav > ul.nav-list:first-child > li:nth-child(131) > ul > li:nth-child(2) > ul > li:nth-child(347) > a {
+      font-weight: 600;
+      text-decoration: none;
+    }.site-nav > ul.nav-list:first-child > li:nth-child(131) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(131) > ul > li:nth-child(2) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(131) > ul > li:nth-child(2) > ul > li:nth-child(347) > button svg {
+      transform: rotate(-90deg);
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(131) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(131) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(131) > ul.nav-list > li.nav-list-item:nth-child(2) > ul.nav-list > li.nav-list-item:nth-child(347) > ul.nav-list {
+      display: block;
+    }
+  </style><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>bpmn-detangle | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="bpmn-detangle" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><link rel="canonical" href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/bpmn-detangle.html" /><meta property="og:url" content="https://litlfred.github.io/folio-assistant/reference/skill-instructions/bpmn-detangle.html" /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="bpmn-detangle" /><script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model.","headline":"bpmn-detangle","url":"https://litlfred.github.io/folio-assistant/reference/skill-instructions/bpmn-detangle.html"}</script><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-bpmn-detangle",
+    "src": "../../assets/qa/reference-skill-instructions-bpmn-detangle/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-bpmn-detangle/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content=""><meta name="fa-search-index" content=""><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=6071ae228cf3"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=7dce6a7e2ab0" defer></script><script src="../../assets/js/docs-ui.js?v=9cd0cc409fcd" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/bpmn-detangle.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-check","label":"The check"},{"href":"#why-1400--900","label":"Why 1400 × 900"},{"href":"#the-procedure","label":"The procedure"},{"href":"#when-it-still-does-not-fit","label":"When it still does not fit"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>bpmn-detangle</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/bpmn-detangle.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/process/workflow/bpmn-detangle.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/bpmn-detangle.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/process/workflow/bpmn-detangle.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="bpmn-detangle"><a href="#bpmn-detangle" class="anchor-heading" aria-labelledby="bpmn-detangle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> bpmn-detangle
+  
+  
+</h1><p>Owner, 2026-10-31, on the rendered <code class="language-plaintext highlighter-rouge">content-change-review</code> page: <em>“make the
+font a bit bigger, the spacing a bit more compact so dont need to zoom as
+much”</em>, then <em>“bpmn detangle skill including swap lanes to help issues like
+[this]”</em>, and <em>“add as QA and author check”</em>. The screenshot showed the
+gateway question “Satisfied with changes?” written over its own “No” answer,
+a Stage → Review flow running up through two lanes and across the loop-back,
+and a 2610-wide pool whose text the page shrank to about 6px.</p><p>This is the ArchiMate rule (<a href="../../reference/skill-instructions/archimate-models.html"><code class="language-plaintext highlighter-rouge">archimate-models</code></a>
+§”Untangle every view you touch”) for BPMN: <strong>a change never adds a tangle,
+and the diagram you touch leaves cleaner than it came.</strong></p><h2 id="the-check"><a href="#the-check" class="anchor-heading" aria-labelledby="the-check"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The check
+  
+  
+</h2><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat bpmn:detangle &lt;file.bpmn|dir&gt;            # report
+bun run cat bpmn:detangle &lt;file.bpmn&gt; --write        # also swap lanes when it helps
+bun run cat bpmn:detangle &lt;file.bpmn|dir&gt; --check    # exit 1 on any finding
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">render:bpmn</code> prints the same findings as warnings for every diagram it
+draws, so the QA side sees them without running anything. The criteria live
+in <code class="language-plaintext highlighter-rouge">cat-harness-tools/src/workflow/diagram-fit.ts</code>:</p><div class="table-wrapper"><table><thead><tr><th>finding</th><th>means</th><th>fix</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">diagram-too-wide</code></td><td>wider than 1400</td><td>close column gaps; stack steps of different lanes in one column; split by phase</td></tr><tr><td><code class="language-plaintext highlighter-rouge">diagram-too-tall</code></td><td>taller than 900</td><td>shrink each lane to its rows; split by phase</td></tr><tr><td><code class="language-plaintext highlighter-rouge">label-overlap</code></td><td>two labels on each other</td><td>give one a <code class="language-plaintext highlighter-rouge">BPMNLabel</code> position clear of the other</td></tr><tr><td><code class="language-plaintext highlighter-rouge">label-on-edge</code></td><td>a label on a flow that is not its own</td><td>move the label, or the flow</td></tr><tr><td><code class="language-plaintext highlighter-rouge">label-on-shape</code></td><td>a label on a box, its own shape, or a lane’s name strip</td><td>move the label</td></tr><tr><td><code class="language-plaintext highlighter-rouge">edge-diagonal</code></td><td>a flow runs at a slant</td><td><code class="language-plaintext highlighter-rouge">--write</code> routes it at right angles through the gap</td></tr><tr><td><code class="language-plaintext highlighter-rouge">header-overflow</code></td><td>a pool or lane name spills out of its 30-wide strip</td><td><code class="language-plaintext highlighter-rouge">--write</code> makes the lane taller; or shorten the name (never repeat the process id in the pool name)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">text-overflow</code></td><td>a name spills out of its box</td><td><code class="language-plaintext highlighter-rouge">--write</code> widens, then heightens the box; or shorten the name</td></tr><tr><td><code class="language-plaintext highlighter-rouge">edge-crossing</code></td><td>two flows cross</td><td>re-route one around the other, move a step, or swap lanes</td></tr><tr><td><code class="language-plaintext highlighter-rouge">lane-order</code></td><td>another lane order crosses fewer lane boundaries</td><td><code class="language-plaintext highlighter-rouge">--write</code> applies it</td></tr></tbody></table></div><p>Labels are checked where bpmn-js <strong>draws</strong> them, so the check uses the
+browser when one is installed. A file without <code class="language-plaintext highlighter-rouge">BPMNLabel</code> bounds leaves the
+placement to bpmn-js, and only the drawing shows that a gateway’s question,
+wrapped to three lines under the diamond, lands on the flow leaving it.</p><h2 id="why-1400--900"><a href="#why-1400--900" class="anchor-heading" aria-labelledby="why-1400--900"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why 1400 × 900
+  
+  
+</h2><p>Arithmetic, not taste. The renderer draws text at 16px (bootstrap-tools
+<code class="language-plaintext highlighter-rouge">TEXT_STYLE</code>; owner, 2026-10-31: <em>“maybe make tasks a bit taller and font a
+bit bigger?”</em>). A page shows a diagram at most about 1200px wide once the nav
+rail is taken off a 1440px screen, so a diagram <code class="language-plaintext highlighter-rouge">W</code> wide shows its text at
+<code class="language-plaintext highlighter-rouge">16 × 1200 / W</code> px: about 14px at 1400. About 760px of a 900px screen is
+left under the header and the figure toolbar, so 900 keeps a diagram on
+about one screen. Change the budget and the text size together.</p><h2 id="the-procedure"><a href="#the-procedure" class="anchor-heading" aria-labelledby="the-procedure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The procedure
+  
+  
+</h2><ol><li><strong>Run the check before you edit</strong>, and note the counts.</li><li><strong>Fix the lane order first.</strong> <code class="language-plaintext highlighter-rouge">--write</code> tries every order of the lanes (up
+to 8) and keeps the one whose flows cross the fewest lane boundaries,
+only if it adds no flow crossing. It moves shapes with their lane and
+re-draws each flow between lanes as one elbow, since its old bends were
+for the old order. Look at the result: it is a start, not a layout.</li><li><strong>Make it compact.</strong> Tasks 120 × 90 (three lines of 16px text), gateways 50,
+events 36, and big enough for the name at 16px (<code class="language-plaintext highlighter-rouge">text-overflow</code>). About 40–70
+between neighbours in a row; wider only where a flow label needs it.
+<strong>A column can hold one step per lane</strong>: a hand-off straight down from
+one lane to the next is the shortest flow there is. A lane is as tall as
+its rows plus room for labels, no more.</li><li><strong>Right angles only</strong> (owner, 2026-10-31, on dth-pc: <em>“straight angled
+arrows ugly”</em>). A flow between lanes leaves the side facing its target,
+turns once in the gap between the two columns, and enters the target’s
+side: never one slanted line from box to box.</li><li><strong>Route the loops below.</strong> A loop-back leaves through the bottom, runs in
+the channel under the row and comes up into its target
+(<a href="../../reference/skill-instructions/bpmn-processes.html"><code class="language-plaintext highlighter-rouge">bpmn-processes</code></a> §”Edge routing”). A flow between
+lanes leaves on the side facing its target.</li><li><strong>Place every label.</strong> A gateway’s question goes <strong>above</strong> the diamond,
+its answers beside their flows; an event’s name below it, clear of the
+lane’s name strip; a flow label beside its own segment. Write
+<code class="language-plaintext highlighter-rouge">BPMNLabel</code> bounds for each one bpmn-js would put somewhere bad. Give a
+multi-line label room for the lines it wraps to: bpmn-js wraps external
+labels at about 90 wide whatever bounds you give, so a
+three-word question is three lines: about 60 tall at 15px.</li><li><strong>Run the check again</strong>: zero findings on the diagram you touched, or say
+in the PR which remain and why.</li><li><strong>Look at the rendered SVG</strong>, at 100% in a 1200px band. The check finds
+collisions; only looking finds a diagram that is clean and still confusing.</li></ol><h2 id="when-it-still-does-not-fit"><a href="#when-it-still-does-not-fit" class="anchor-heading" aria-labelledby="when-it-still-does-not-fit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When it still does not fit
+  
+  
+</h2><p>Split by phase (<a href="../../reference/skill-instructions/bpmn-authoring.html"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a> §”Split by phase:
+how”). Past about 20 flow nodes a diagram rarely fits 1400 × 900 at a
+readable size, and the phase split is the fix, not a smaller font.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

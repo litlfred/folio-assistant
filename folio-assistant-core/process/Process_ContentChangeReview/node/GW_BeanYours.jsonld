@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "9ddb3b17c3d5c35a582e501de1c300c23537b6f9",
+    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
     "pr": "main",
-    "run": "41206537626"
+    "run": "41213874215"
   },
   "@graph": [
     {
@@ -16,8 +16,8 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -25,8 +25,8 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_2"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_1",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_3"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_3",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview#flow/SF_Bean_1"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     }

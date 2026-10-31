@@ -101,17 +101,49 @@
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-uploads",
       "@type": "bootstrap:Subgraph",
       "name": "who-iris-uploads"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
+      "@type": "bootstrap:Role",
+      "title": "Cloudflare git (Artifacts)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
+      "@type": "bootstrap:Role",
+      "title": "Cloudflare R2 and CDN"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
+      "@type": "bootstrap:Role",
+      "title": "IRIS CDN Exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner",
+      "@type": "bootstrap:Role",
+      "title": "IRIS CDN owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+      "@type": "bootstrap:Role",
+      "title": "Release signer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+      "@type": "bootstrap:Role",
+      "title": "IRIS CDN verifier"
     }
   ],
   "hasSubgraph": [
     "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/",
     "https://litlfred.github.io/folio-assistant/subgraph/who-iris/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/scenarios/",
     "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/",
     "https://litlfred.github.io/folio-assistant/subgraph/who-iris/tools/"
   ],
   "holdsGraph": [
     "cat-harness:graphTypology/library",
     "bootstrap:graphTypology/processes",
+    "bootstrap:graphTypology/scenarios",
     "bootstrap:graphTypology/skills",
     "cat-harness:graphTypology/tools"
   ],

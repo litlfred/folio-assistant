@@ -16,7 +16,57 @@
      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
     }
    ],
-   "binding": "dangling"
+   "role": {
+    "name": "iris-cdn-owner",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner",
+    "title": "IRIS CDN owner",
+    "skills": [
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "content-retire",
+      "href": "../../../reference/skill-instructions/content-retire.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../reference/skill-instructions/decision-methodology-selector.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../reference/skill-instructions/release-epic-planning.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../reference/skill-instructions/release-lifecycle.html",
+      "via": "programme-manager"
+     }
+    ]
+   }
   },
   "Task_PlanBatches": {
    "id": "Task_PlanBatches",
@@ -35,7 +85,25 @@
      "href": "../../../reference/skill-instructions/iris-dspace.html"
     }
    ],
-   "binding": "dangling"
+   "role": {
+    "name": "iris-cdn-exporter",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
+    "title": "IRIS CDN Exporter",
+    "skills": [
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+     },
+     {
+      "name": "iris-dspace",
+      "href": "../../../reference/skill-instructions/iris-dspace.html"
+     },
+     {
+      "name": "iris-rest-feed",
+      "href": "../../../reference/skill-instructions/iris-rest-feed.html"
+     }
+    ]
+   }
   },
   "Task_HarvestBatch": {
    "id": "Task_HarvestBatch",
@@ -248,7 +316,22 @@
      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
     }
    ],
-   "binding": "dangling"
+   "role": {
+    "name": "cloudflare-r2-cdn",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
+    "title": "Cloudflare R2 and CDN",
+    "skills": [
+     {
+      "name": "getting-started",
+      "href": "../../../reference/skill-instructions/getting-started.html",
+      "via": "publish-target"
+     },
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+     }
+    ]
+   }
   },
   "Task_Checkpoint": {
    "id": "Task_Checkpoint",
@@ -257,8 +340,42 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
    "lane": "Cloudflare git (Artifacts)",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfGit",
-   "skills": [],
-   "binding": "dangling"
+   "skills": [
+    {
+     "name": "iris-cdn-exporter",
+     "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+    }
+   ],
+   "role": {
+    "name": "cloudflare-git",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
+    "title": "Cloudflare git (Artifacts)",
+    "skills": [
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+     },
+     {
+      "name": "iris-rest-feed",
+      "href": "../../../reference/skill-instructions/iris-rest-feed.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "corpus"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html",
+      "via": "corpus"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html",
+      "via": "corpus"
+     }
+    ]
+   }
   },
   "Task_Quarantine": {
    "id": "Task_Quarantine",
@@ -267,7 +384,12 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-   "skills": [],
+   "skills": [
+    {
+     "name": "iris-cdn-exporter",
+     "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+    }
+   ],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -573,7 +695,25 @@
      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
     }
    ],
-   "binding": "dangling"
+   "role": {
+    "name": "iris-cdn-exporter",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
+    "title": "IRIS CDN Exporter",
+    "skills": [
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+     },
+     {
+      "name": "iris-dspace",
+      "href": "../../../reference/skill-instructions/iris-dspace.html"
+     },
+     {
+      "name": "iris-rest-feed",
+      "href": "../../../reference/skill-instructions/iris-rest-feed.html"
+     }
+    ]
+   }
   }
  }
 }

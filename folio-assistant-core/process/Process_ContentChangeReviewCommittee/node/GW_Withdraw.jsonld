@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/GW_Withdraw.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
+    "pr": "main",
+    "run": "41213874215"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/GW_Withdraw",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "A comment withdrawn?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c4",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    }
+  ]
+}

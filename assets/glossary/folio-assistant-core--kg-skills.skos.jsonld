@@ -379,6 +379,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/figure-rebuild",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "figure-rebuild"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Turn a source publication's figures into computable diagrams when a folio is built from its L1 entry. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source. The figure-coverage check counts what is missing and what is still only a picture."
+        }
+      ],
+      "skos:notation": "figure-rebuild",
+      "dcterms:source": "folio-assistant-core/skills/library/ingestion/figure-rebuild.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/filing-dublin-core",
       "@type": "skos:Concept",
       "skos:inScheme": {

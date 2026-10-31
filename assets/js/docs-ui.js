@@ -12811,7 +12811,7 @@
         while (p.firstChild) p.removeChild(p.firstChild);
         p.appendChild(document.createTextNode("deployed "));
         var a = document.createElement("a");
-        a.href = /^https:\/\//.test(b.runUrl || "") ? b.runUrl : "https://github.com/litlfred/folio-assistant/actions";
+        a.href = (/^https:\/\//.test(b.runUrl || "") && safeHref(b.runUrl)) || "https://github.com/litlfred/folio-assistant/actions";
         var code = document.createElement("code");
         code.textContent = sha.slice(0, 7);
         a.appendChild(code);

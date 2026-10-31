@@ -45,22 +45,54 @@
         "@graph": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "@id": {
-                "type": "string",
-                "format": "uri"
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "@type": {
+                    "type": "string",
+                    "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+                  }
+                },
+                "required": [
+                  "@id",
+                  "@type"
+                ],
+                "additionalProperties": {}
               },
-              "@type": {
-                "type": "string",
-                "pattern": "^bootstrap:[A-Z][A-Za-z]*$"
+              {
+                "type": "object",
+                "properties": {
+                  "@id": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "deprecated": {
+                    "type": "boolean",
+                    "const": true
+                  },
+                  "isReplacedBy": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "sameAs": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                },
+                "required": [
+                  "@id",
+                  "deprecated",
+                  "isReplacedBy",
+                  "sameAs"
+                ],
+                "additionalProperties": false
               }
-            },
-            "required": [
-              "@id",
-              "@type"
-            ],
-            "additionalProperties": {}
+            ]
           }
         },
         "omitted": {
@@ -109,8 +141,8 @@
   "description": "Generated from `GraphExportSchema` in schemas/graph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "main",
-    "sha": "9ddb3b17c3d5c35a582e501de1c300c23537b6f9",
+    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
     "pr": "main",
-    "run": "41206537626"
+    "run": "41213874215"
   }
 }

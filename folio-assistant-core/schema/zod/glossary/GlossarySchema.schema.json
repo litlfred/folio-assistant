@@ -156,6 +156,46 @@
                 "type": "string",
                 "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/\\S+$"
               },
+              "focus": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "Organization",
+                      "FormalOrganization",
+                      "OrganizationalUnit",
+                      "OrganizationalCollaboration"
+                    ]
+                  },
+                  "iri": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/\\S+$"
+                  },
+                  "homepage": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/\\S+$"
+                  },
+                  "subOrganizationOf": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "sameAs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/\\S+$"
+                    }
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "additionalProperties": false
+              },
               "source": {
                 "type": "string",
                 "minLength": 1
@@ -205,8 +245,8 @@
   "description": "Generated from `GlossarySchema` in schemas/glossary.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "main",
-    "sha": "9ddb3b17c3d5c35a582e501de1c300c23537b6f9",
+    "sha": "26b2d4314437d6d28978a323fa9c05f198e1d55a",
     "pr": "main",
-    "run": "41206537626"
+    "run": "41213874215"
   }
 }

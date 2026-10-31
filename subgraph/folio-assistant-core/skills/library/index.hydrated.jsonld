@@ -188,13 +188,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-          "instructionLines": 315,
+          "instructionLines": 368,
           "instructionsPath": "skills/library/cataloguing/glossary-terms.md",
           "name": "glossary-terms",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ac33aa075dec4ee47a040fb8d81c69baca29937a00806bf365364fbcdb18d0dc",
-            "bytes": 16716,
-            "sha256": "ac33aa075dec4ee47a040fb8d81c69baca29937a00806bf365364fbcdb18d0dc"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a3bac00a3a877b2f6852804e09c95279b63752d40bd441b9638cbc7446fd83a5",
+            "bytes": 19225,
+            "sha256": "a3bac00a3a877b2f6852804e09c95279b63752d40bd441b9638cbc7446fd83a5"
           },
           "title": "Glossary terms"
         },
@@ -273,6 +273,24 @@
             "sha256": "55f40c929bdf12ab008a09228f74ae0fdd3c009b82ea5ad32490573bca5e3c80"
           },
           "title": "Document Intake"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Turn a source publication's figures into computable diagrams when a folio is built from its L1 entry. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source. The figure-coverage check counts what is missing and what is still only a picture.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 275,
+          "instructionsPath": "skills/library/ingestion/figure-rebuild.md",
+          "name": "figure-rebuild",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ad861e90b0796ba5474cc809dd1fc40e3aab0a1df722b8c668cb4d1998c876a6",
+            "bytes": 15870,
+            "sha256": "ad861e90b0796ba5474cc809dd1fc40e3aab0a1df722b8c668cb4d1998c876a6"
+          },
+          "title": "Figure rebuild: a figure is data, not a picture"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-coverage",

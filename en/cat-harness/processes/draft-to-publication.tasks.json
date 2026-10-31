@@ -386,7 +386,7 @@
   },
   "CallActivity_PublicComment": {
    "id": "CallActivity_PublicComment",
-   "name": "Public comment on the review version",
+   "name": "Release for public comment",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/CallActivity_PublicComment",
    "lane": "Public review (commenters, review committee, editor)",
@@ -398,9 +398,9 @@
     }
    ],
    "calls": {
-    "name": "Public comment on a review draft",
-    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
-    "diagram": "public-comment.html"
+    "name": "Release a draft for public comment",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease",
+    "diagram": "public-comment-release.html"
    },
    "role": {
     "name": "review-coordinator",

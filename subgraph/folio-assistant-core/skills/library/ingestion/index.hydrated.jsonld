@@ -41,6 +41,24 @@
       "title": "Document Intake"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Turn a source publication's figures into computable diagrams when a folio is built from its L1 entry. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source. The figure-coverage check counts what is missing and what is still only a picture.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "instructionLines": 275,
+      "instructionsPath": "skills/library/ingestion/figure-rebuild.md",
+      "name": "figure-rebuild",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ad861e90b0796ba5474cc809dd1fc40e3aab0a1df722b8c668cb4d1998c876a6",
+        "bytes": 15870,
+        "sha256": "ad861e90b0796ba5474cc809dd1fc40e3aab0a1df722b8c668cb4d1998c876a6"
+      },
+      "title": "Figure rebuild: a figure is data, not a picture"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-coverage",
       "@type": "bootstrap:Skill",
       "ambiguous": false,

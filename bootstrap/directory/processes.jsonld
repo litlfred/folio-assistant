@@ -1,0 +1,18 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/bootstrap/directory/processes.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/directory/processes",
+      "@type": "bootstrap:Subgraph",
+      "label": "processes",
+      "description": "bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to determine the harness and repositories; `human-agent-discussion.bpmn`, the reusable discussion every diagram calls to ask a person anything; `complete-initialization.bpmn`, which checks every initialization step the declarations name; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.",
+      "type": [
+        "bootstrap:graphTypology/processes"
+      ],
+      "source": "https://litlfred.github.io/folio-assistant/bootstrap/processes/",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld"
+    }
+  ]
+}

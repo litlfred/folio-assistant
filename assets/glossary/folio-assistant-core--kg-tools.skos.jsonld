@@ -74,6 +74,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools/diig-phases-svg",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DIIG phases, steps and resources chart"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; tiles link to their library entry or glossary concept."
+        }
+      ],
+      "skos:notation": "diig-phases-svg",
+      "dcterms:source": "folio-assistant-core/tools/diig-phases-svg/diig-phases-svg.ts#diig-phases-svg",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools/dublin-core-render",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -91,6 +111,26 @@
       ],
       "skos:notation": "dublin-core-render",
       "dcterms:source": "folio-assistant-core/tools/dublin-core-render/dublin-core-render.ts#dublin-core-render",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools/figure-coverage",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Figure coverage and computability"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For every figure a source publication declares, report whether the folio built from it has a block and how computable it is: missing, excluded (signed off), picture (a PNG crop), linked (a picture linked to a model view), computable (a diagram, a table or a figure rebuilt by ArchiMate, BPMN, DMN, Mermaid, a class diagram or a generator), or cited (a picture kept on purpose, signed off). Exits non-zero when any declared figure is missing; `--require-computable` also fails on pictures."
+        }
+      ],
+      "skos:notation": "figure-coverage",
+      "dcterms:source": "folio-assistant-core/tools/figure-coverage/figure-coverage.ts#figure-coverage",
       "skos:note": "candidate"
     },
     {
@@ -291,6 +331,26 @@
       ],
       "skos:notation": "review-sheet-sync",
       "dcterms:source": "folio-assistant-core/tools/review-sheet-sync/review-sheet-sync.ts#review-sheet-sync",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools/smart-approach-svg",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WHO SMART Guidelines approach chart"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Draw the WHO SMART Guidelines approach chart (knowledge layers L1–L5 with their products, and their country adaptations, between the research, localisation and impact bands) as SVG from `smart-guidelines-approach-figure/v1` data on a who-iris library entry, such as the product catalogue handbook's Fig. 5. Every label comes from the data."
+        }
+      ],
+      "skos:notation": "smart-approach-svg",
+      "dcterms:source": "folio-assistant-core/tools/smart-approach-svg/smart-approach-svg.ts#smart-approach-svg",
       "skos:note": "candidate"
     },
     {
