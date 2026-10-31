@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 50,
+      "count": 48,
       "unit": "open beans"
     }
   },
@@ -3852,8 +3852,8 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T06:42:00Z",
-      "updatedAt": "2026-10-31T06:42:00Z",
-      "preview": "Owner, 2026-10-31: each WHO Digital Transformation Handbook becomes an L2 DTH that depends on smart-ra. Its narrative is validated against the glossaries and linked to ArchiMate, with BPMN for its business processes, roles as DAK persona blocks, and DMN tables extracted.\n\nWorkplans: litlfred/dth-phc#1 (PHC), dth-sfp#1 (SFP), and the per-handbook workplans in the project folder dth-l2-ingest-2026-1",
+      "updatedAt": "2026-10-31T12:28:00Z",
+      "preview": "Owner, 2026-10-31: each WHO Digital Transformation Handbook becomes an L2 DTH that depends on smart-ra. Its narrative is validated against the glossaries and linked to ArchiMate, with BPMN for its business processes, roles as DAK persona blocks, and DMN tables extracted.\n\nWorkplans: litlfred/dth-hrh#47 (HRH pilot), litlfred/dth-phc#1 (PHC), litlfred/dth-sc#2 (SC), litlfred/dth-pc#2 (PC), litlfred/",
       "file": "beans/defs/folio-assistant-dthl--dth-handbooks-as-l2-documents-on-smart-ra-hrh-phc-sc-pc.md"
     },
     {
@@ -3905,14 +3905,14 @@
     {
       "id": "folio-assistant-e0jh",
       "title": "Ingest the BPMN and DMN comprehension research papers (7PMG, labeling, PMCF, flow direction, DMN tables, ...) so diagram lint rules cite evidence",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T10:10:00Z",
-      "updatedAt": "2026-10-31T10:11:32Z",
+      "updatedAt": "2026-10-31T11:45:30Z",
       "preview": "Owner, 2026-10-31 (thread \"Improve BPMN quality checks from research\"): review a Gemini discussion on evidence-based BPMN style, and have the connected agent (agy) download and ingest every referenced article so the authoring rules and the diagram lint rules cite the papers, not Gemini's summary of them.\n\nCloud sessions cannot reach researchgate.net, pmc.ncbi.nlm.nih.gov (captcha) or dbis.eprints.",
       "file": "beans/defs/folio-assistant-e0jh--ingest-the-bpmn-comprehension-research-papers-for-di.md"
     },
@@ -6293,6 +6293,20 @@
       "file": "beans/defs/folio-assistant-mo75--named-subgraph-mounts-hydrated-metadata-first-then.md"
     },
     {
+      "id": "folio-assistant-ms3b",
+      "title": "smart-pcmt#2: run sushi on the dth-pc product examples (agy, local)",
+      "status": "completed",
+      "type": "task",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T12:42:00Z",
+      "updatedAt": "2026-10-31T12:46:00Z",
+      "preview": "**For agy** (owner, 2026-10-31 12:40Z: \"make bean for agy\"). Cloud sandboxes cannot reach packages.fhir.org, and the fork's `ghbuild` check does not run sushi, so sushi has not been run on https://github.com/litlfred/smart-pcmt/pull/2.\n\n**Do:**\n\n1. In `~/space_cats/smart-pcmt`: `git fetch && git switch claude/dth-pc-product-examples && git pull && sushi build .`\n2. Comment on smart-pcmt#2 with the",
+      "file": "beans/defs/folio-assistant-ms3b--smart-pcmt-run-sushi-on-dth-pc-product-examples-pr-2.md"
+    },
+    {
       "id": "folio-assistant-n0vx",
       "title": "CONNECTED AGENT: transcribe the smart-ra recording with whisper.cpp (1r0p network block)",
       "status": "completed",
@@ -6323,14 +6337,14 @@
     {
       "id": "folio-assistant-n3h9",
       "title": "HARNESS the smart-* IG repositories: index.config.json remote mounts, Actions gh-pages switched off, agent-run harnessed publish",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-10T14:06:53Z",
-      "updatedAt": "2026-10-23T16:25:00Z",
+      "updatedAt": "2026-10-31T12:15:30Z",
       "preview": "Owner, 2026-10-10: *\"you can work onthe litlfred/smart-* go ahead and harness them with index.config.json and make sure they stop the ghpages currrent redering pipleine and use to the harnessed one\"* (fhir-harness, smart-base harness). Repositories: *\"smart-base, smart-base-clinical, smart-core, smart-immunizations, smart-hiv and smart-trust smart-ra\"*.\n\n## State measured 2026-10-10\n\n- **Push-trig",
       "file": "beans/defs/folio-assistant-n3h9--harness-the-smart-ig-repositories-indexconfigjson.md"
     },
@@ -10537,8 +10551,8 @@
         "share": 0.972972972972973
       }
     ],
-    "orphanOpen": 48,
-    "openTotal": 50,
+    "orphanOpen": 46,
+    "openTotal": 48,
     "coveredOpen": 1,
     "duplicateIds": 0
   }
