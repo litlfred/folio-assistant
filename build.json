@@ -1,10 +1,10 @@
 {
-  "sha": "e7be5d6790904a690bfbb6a8377778ded5e1f946",
-  "built": "2026-10-31T13:27:20Z",
-  "runUrl": "https://github.com/litlfred/folio-assistant/actions/runs/41203302165",
-  "checksUrl": "https://github.com/litlfred/folio-assistant/commit/e7be5d6790904a690bfbb6a8377778ded5e1f946/checks",
+  "sha": "9ddb3b17c3d5c35a582e501de1c300c23537b6f9",
+  "built": "2026-10-31T14:11:29Z",
+  "runUrl": "https://github.com/litlfred/folio-assistant/actions/runs/41206537626",
+  "checksUrl": "https://github.com/litlfred/folio-assistant/commit/9ddb3b17c3d5c35a582e501de1c300c23537b6f9/checks",
   "mounts": {
-    "beans": "aaa488436f4060375de28a81c718c287ed23ce78",
+    "beans": "af82098bdbf759105d8d7d28c50ecfa227a0d8a2",
     "health": "e254f37b54c1d9960ac5867b5573dbb3ddc27ce1",
     "fsh-guts": "cf2b8bd4663cf51435443a1ec4942d260a8060c8",
     "issue-marks": "dda51b18e5841231a0f1ae2365d82c6438a7f200",
@@ -15,5 +15,225 @@
     "folio-assistant-core.health": "1495fcb167db3c4a77393c4a1d3ae44dac46e4df",
     "who-iris.health": "e254f37b54c1d9960ac5867b5573dbb3ddc27ce1",
     "cat-harness.health": "46bc82f17fe2281cdb6b69209a896273758847ed"
+  },
+  "writerVerdicts": {
+    "prev": "703b6105becc5cae4a4ca43e33c82034ba07e0ef",
+    "verdicts": [
+      {
+        "writer": "handler:index",
+        "verdict": "rerun",
+        "why": "bootstrap changed"
+      },
+      {
+        "writer": "uml:overview",
+        "verdict": "rerun",
+        "why": "not recorded: the writer reads cat-harness/uml and then rewrites it"
+      },
+      {
+        "writer": "subgraph:jsonld",
+        "verdict": "rerun",
+        "why": "not recorded: the trace is 309755688 bytes, more than 268435456"
+      },
+      {
+        "writer": "library:viz",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (git-refs: git)"
+      },
+      {
+        "writer": "voices:viz",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (git-refs: git)"
+      },
+      {
+        "writer": "theme:viz",
+        "verdict": "rerun",
+        "why": "bootstrap changed"
+      },
+      {
+        "writer": "uploads:viz",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (git-refs: git)"
+      },
+      {
+        "writer": "ig-index:build",
+        "verdict": "rerun",
+        "why": "not recorded: git ls-remote is not a read-only command the cone replays"
+      },
+      {
+        "writer": "smart-base:document-kinds",
+        "verdict": "rerun",
+        "why": "bootstrap changed"
+      },
+      {
+        "writer": "document-kinds:viz",
+        "verdict": "rerun",
+        "why": "bootstrap changed"
+      },
+      {
+        "writer": "skills:docs",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (git-refs: git)"
+      },
+      {
+        "writer": "node-kinds",
+        "verdict": "rerun",
+        "why": ".git/branch-mounts/beans.json changed"
+      },
+      {
+        "writer": "node-kind:pages",
+        "verdict": "rerun",
+        "why": "not recorded: the writer reads cat-harness/docs/en/cat-harness/todo and then rewrites it"
+      },
+      {
+        "writer": "glossary:page",
+        "verdict": "rerun",
+        "why": "not recorded: the writer reads cat-harness/docs/en/folio-assistant-core/glossary and then rewrites it"
+      },
+      {
+        "writer": "bibliography:page",
+        "verdict": "rerun",
+        "why": "beans/defs changed"
+      },
+      {
+        "writer": "smart:pages",
+        "verdict": "rerun",
+        "why": "not recorded: the writer reads smart-base/docs and then rewrites it"
+      },
+      {
+        "writer": "jsonld:contexts",
+        "verdict": "rerun",
+        "why": "not recorded: the writer reads bootstrap and then rewrites it"
+      },
+      {
+        "writer": "tools:viz",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (git-refs: git)"
+      },
+      {
+        "writer": "smart-base:pages",
+        "verdict": "rerun",
+        "why": "not recorded: the writer reads smart-base/docs and then rewrites it"
+      },
+      {
+        "writer": "smart-base:l1-extraction:pages",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "smart-trust:pages",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "smart-trust-phw:pages",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "auto:docs",
+        "verdict": "rerun",
+        "why": "not recorded: the writer reads cat-harness/docs/cat-harness/auto-docs/index/docs and then rewrites it"
+      },
+      {
+        "writer": "lsi:viz",
+        "verdict": "rerun",
+        "why": "not recorded: the writer reads cat-harness/docs/en/cat-harness/lsi and then rewrites it"
+      },
+      {
+        "writer": "translation:status",
+        "verdict": "rerun",
+        "why": "build/qa-refresh.json changed"
+      },
+      {
+        "writer": "openapi:viz",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "schema:viz",
+        "verdict": "rerun",
+        "why": ".git/branch-mounts/beans.json changed"
+      },
+      {
+        "writer": "methodologies:viz",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (git-refs: git)"
+      },
+      {
+        "writer": "external-schemas:viz",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (git-refs: git)"
+      },
+      {
+        "writer": "subscriptions:viz",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "docs:pages",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (git-refs: git)"
+      },
+      {
+        "writer": "docs:harness",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (git-refs: git)"
+      },
+      {
+        "writer": "navbar:include",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "kind:table",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "avatars:css",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "themes:css",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "folio:viz",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "kg:viewer",
+        "verdict": "rerun",
+        "why": "cat-harness-tools/package.json changed"
+      },
+      {
+        "writer": "state:visualizer",
+        "verdict": "rerun",
+        "why": "not recorded: the writer reads cat-harness/docs/en/cat-harness/beans/index.html and then rewrites it"
+      },
+      {
+        "writer": "site:viz",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)"
+      },
+      {
+        "writer": "slice:sqlite",
+        "verdict": "rerun",
+        "why": "not recorded: git status is not a read-only command the cone replays"
+      },
+      {
+        "writer": "render:bpmn",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (process-presentations: computed load)"
+      },
+      {
+        "writer": "processes:viz",
+        "verdict": "rerun",
+        "why": "not recorded: the run reached a traced input site (process-presentations: computed load)"
+      }
+    ]
   }
 }
