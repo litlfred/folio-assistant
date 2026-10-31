@@ -6,7 +6,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:15:00Z
+updated_at: 2026-10-31T04:22:00Z
 parent: folio-assistant-33iz
 tags:
     - security
@@ -20,9 +20,11 @@ tags:
 - smart-base `.claude/mount-platform.sh:18-23` (SessionStart hook): `ref` read from `index.lock.json` goes unchecked into `M="${TMPDIR:-/tmp}/smart-base-mounter-$ref"`, then `rm -rf "$M"`. A ref with `/..` segments only resolves if the prefix directory exists, so this is not a working traversal, but the guard should refuse anything that is not 40 hex before it names a path. smart-ra `.claude/hooks/session-start.sh` uses `mktemp -d` and does not have this problem.
 
 ## Done when
-- [ ] fsh-cone calls git with argv
-- [ ] mount-platform.sh refuses a `ref` that is not `^[0-9a-f]{40}$` before building `$M`
+- [x] fsh-cone calls git with argv
+- [x] mount-platform.sh refuses a `ref` that is not `^[0-9a-f]{40}$` before building `$M`
 
 _2026-10-31T04:20Z_ — Filed by the group C security review, session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T04:22Z_ — Done: fsh-cone in fhir-harness#244 (ab2d071), mount-platform.sh in smart-base#251 (d1cfa96). Session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
