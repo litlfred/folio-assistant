@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 8,
+      "count": 9,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -52,6 +52,10 @@
           "why": "no-tag"
         },
         {
+          "module": "../cat-harness-tools/archimate/schemas/slugs.ts",
+          "why": "no-tag"
+        },
+        {
           "module": "../smart-base/schemas/dak-annexes.ts",
           "why": "no-tag"
         }
@@ -63,5 +67,5 @@
       "entries": []
     }
   },
-  "total": 8
+  "total": 9
 }

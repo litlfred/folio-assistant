@@ -31,14 +31,41 @@ subgraph, in TypeScript, with no tool installed:
 | node | IRI (under the graph's path) | page | |
 |---|---|---|---|
 | model | `<m>.jsonld` | `<m>/` | views; elements by layer |
-| view | `<m>/views/<id>.jsonld` | `<m>/views/<id>/` | the drawing, `<m>/views/<id>.svg` |
-| element | `<m>/elements/<id>.jsonld` | `<m>/elements/<id>/` | documentation, properties, relationships, views it is in |
+| view | `<m>/views/<id>.jsonld` | `<m>/views/<slug>/` | the drawing, `<m>/views/<id>.svg` |
+| element | `<m>/elements/<id>.jsonld` | `<m>/elements/<slug>/` | documentation, properties, relationships, views it is in |
 | relationship | `<m>/relationships/<id>.jsonld` | `<m>/relationships/<id>/` | its ends, the views it is drawn in |
 
 Ids are **Archi's own** (`id-<32 hex>`). An element therefore keeps its IRI
 across a model's versions wherever Archi kept its id — the property the RA
 mapper's mappings already depend on. Never rewrite one; the reader refuses an
 id that is not filename-safe rather than minting one nobody chose.
+
+## Readable page paths: slugs, worked out each build
+
+Owner, 2026-10-30, of `…/views/id-007936f8c2424b96ad1893ef0ff66059/`: *"do
+we need to use such ugly IDs … why not nicer slug IRIs?"*; then, of the
+designs offered (cat-harness-tools#1054): *"B. clean break ok"*.
+
+**The IRI stays the id; only the page is at a slug.** A view's or element's
+page is at `<m>/views/1-central-health-workforce-registry/`, while its node
+keeps `<m>/views/<id>.jsonld`. Cite the IRI when a link must last: the page
+path is for reading. Relationships keep id paths, since almost none are
+named (smart-ra 0.2.0: 6 of 284).
+
+Slugs are worked out from the names on every build (`archimate/schemas/slugs.ts`
+in cat-harness-tools). Nothing is committed and nothing redirects, so:
+
+- a rename moves the page, and the old path is gone (a clean break, as the
+  owner chose; old `<m>/views/<id>/` page paths are gone too);
+- on a clash the object first in the model keeps the plain slug and a later
+  one gets `-<first hex of its id>`;
+- an author can choose a slug in Archi with a `slug` property (lower-case
+  words joined by `-`); a malformed one, or two objects choosing the same
+  one, is refused rather than rewritten;
+- an object with no readable name keeps its id as its path.
+
+Do not put slugs in the IRIs: the mapper keys on the ids, and a rename would
+move an IRI.
 
 ## No Java, no Archi CLI, no Archi report — ever
 

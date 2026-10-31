@@ -192,6 +192,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/archimate/schemas/slugs.ts",
+      "instance": "cat-harness-tools",
+      "name": "slugs",
+      "graphNode": "undeclared",
+      "summary": "Readable page paths for ArchiMate views and elements.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/openapi/schemas/openapi.test.ts",
       "instance": "cat-harness-tools",
       "name": "openapi.test",
@@ -1001,6 +1009,15 @@
       "name": "detangle",
       "graphNode": "schema",
       "summary": "Detangling — is this candidate subgraph really a subgraph?",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness-tools/schemas/kg/discovered-vocabulary.ts",
+      "instance": "cat-harness-tools",
+      "name": "discovered-vocabulary",
+      "graphNode": "none",
+      "reason": "a marker registry over Zod schemas; it defines no node shape",
+      "summary": "An enum whose members are DISCOVERED from the instances mounted beside this",
       "isTest": false
     },
     {
@@ -6821,6 +6838,13 @@
           "array": false
         },
         {
+          "name": "properties",
+          "type": "ArchimateProperty[]",
+          "optional": false,
+          "array": true,
+          "doc": "The view's own properties — a `slug` one chooses its page path (`slugs.ts`)."
+        },
+        {
           "name": "folder",
           "type": "string[]",
           "optional": false,
@@ -6842,6 +6866,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty",
         "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnection",
         "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNode"
       ],
@@ -20176,7 +20201,9 @@
       "doc": "One thing a voice audits: a block kind or a declared artefact kind.",
       "fields": [],
       "extendsNames": [],
-      "values": [],
+      "values": [
+        "block-kinds"
+      ],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -26737,6 +26764,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/kg/declared-nodes.ts#InstanceFilter",
+      "name": "InstanceFilter",
+      "module": "cat-harness-tools/schemas/kg/declared-nodes.ts",
+      "kind": "type-alias",
+      "doc": "Which instances of a checkout a scan reads: given an instance root, whether",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/kg/dependency-order.ts#FlattenResult",
       "name": "FlattenResult",
       "module": "cat-harness-tools/schemas/kg/dependency-order.ts",
@@ -27493,6 +27534,43 @@
       "module": "cat-harness-tools/schemas/kg/detangle.ts",
       "kind": "type-alias",
       "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/discovered-vocabulary.ts#DISCOVERED_VOCABULARIES",
+      "name": "DISCOVERED_VOCABULARIES",
+      "module": "cat-harness-tools/schemas/kg/discovered-vocabulary.ts",
+      "kind": "undetermined",
+      "note": "z.registry<DiscoveredVocabulary>()",
+      "doc": "Every Zod schema whose members are discovered from the mounted instances.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/discovered-vocabulary.ts#DiscoveredVocabulary",
+      "name": "DiscoveredVocabulary",
+      "module": "cat-harness-tools/schemas/kg/discovered-vocabulary.ts",
+      "kind": "interface",
+      "doc": "What a discovered enum's members are read from.",
+      "fields": [
+        {
+          "name": "graph",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The node graph its members are declared in, by graph typology (`block-kinds`)."
+        }
+      ],
       "extendsNames": [],
       "values": [],
       "refs": [],
@@ -81243,6 +81321,14 @@
     },
     {
       "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateView",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty",
+      "via": "properties",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateView",
       "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnection",
       "via": "connections",
       "kind": "field",
@@ -93036,11 +93122,11 @@
     {
       "id": "folio-extraction/v1",
       "source": "family",
-      "instance": "cat-harness",
+      "decl": "cat-harness-tools/schemas/content/extraction.ts#ExtractionSchema",
+      "instance": "cat-harness-tools",
       "typologies": [
         "uploads"
-      ],
-      "note": "its validator schemas/extraction.ts#ExtractionSchema could not be resolved"
+      ]
     },
     {
       "id": "folio-fhir-artifact-index/v2",
@@ -93146,11 +93232,11 @@
     {
       "id": "folio-intake/v1",
       "source": "family",
-      "instance": "cat-harness",
+      "decl": "cat-harness-tools/schemas/library/intake.ts#IntakeSchema",
+      "instance": "cat-harness-tools",
       "typologies": [
         "uploads"
-      ],
-      "note": "its validator schemas/intake.ts#IntakeSchema could not be resolved"
+      ]
     },
     {
       "id": "folio-interaction/v1",

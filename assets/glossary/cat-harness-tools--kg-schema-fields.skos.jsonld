@@ -394,6 +394,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateview.properties",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateView.properties"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The view's own properties — a `slug` one chooses its page path (`slugs.ts`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateView.properties",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewconnection.bendpoints",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -13672,6 +13691,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/diff-renderers.ts#DiffRendererSchema.label",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/discovered-vocabulary.discoveredvocabulary.graph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DiscoveredVocabulary.graph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The node graph its members are declared in, by graph typology (`block-kinds`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/discovered-vocabulary.ts#DiscoveredVocabulary.graph",
       "skos:note": "candidate"
     },
     {

@@ -15,10 +15,10 @@
       "entries": [
         {
           "status": "completed",
-          "total": 1255,
+          "total": 1256,
           "instance": 15,
           "namedId": 96,
-          "none": 1144
+          "none": 1145
         },
         {
           "status": "scrapped",
@@ -41,7 +41,7 @@
     },
     "open-bean-unlinked": {
       "summary": "WARNING, never a failure. An open bean (todo, in-progress, draft) that no workflow instance names and whose file names no process or activity id of a declared diagram. It may belong to a process not yet in the graph; the groups say which ones cluster.",
-      "count": 27,
+      "count": 26,
       "entries": [
         {
           "severity": "warning",
@@ -51,7 +51,7 @@
           "parent": "folio-assistant-uhkv",
           "basis": "none",
           "group": "folio-assistant-uhkv",
-          "cosine": 0.388
+          "cosine": 0.389
         },
         {
           "severity": "warning",
@@ -61,7 +61,7 @@
           "parent": "folio-assistant-slw1",
           "basis": "none",
           "group": "folio-assistant-7x5n",
-          "cosine": 0.567
+          "cosine": 0.423
         },
         {
           "severity": "warning",
@@ -101,17 +101,7 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.31
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-f0hv",
-          "title": "INGEST: formula-region arm (ScanSSD-style), blocked on recorded detector output",
-          "status": "in-progress",
-          "parent": "folio-assistant-slw1",
-          "basis": "none",
-          "group": "folio-assistant-7x5n",
-          "cosine": 0.428
+          "cosine": 0.312
         },
         {
           "severity": "warning",
@@ -121,7 +111,7 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "(no epic fits)",
-          "cosine": 0.285
+          "cosine": 0.286
         },
         {
           "severity": "warning",
@@ -171,7 +161,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-uhkv",
-          "cosine": 0.451
+          "cosine": 0.449
         },
         {
           "severity": "warning",
@@ -211,7 +201,7 @@
           "parent": "folio-assistant-0lmb",
           "basis": "none",
           "group": "folio-assistant-uhkv",
-          "cosine": 0.555
+          "cosine": 0.556
         },
         {
           "severity": "warning",
@@ -221,7 +211,7 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "(no epic fits)",
-          "cosine": 0.284
+          "cosine": 0.287
         },
         {
           "severity": "warning",
@@ -231,7 +221,7 @@
           "parent": "folio-assistant-1xhc",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.709
+          "cosine": 0.708
         },
         {
           "severity": "warning",
@@ -251,7 +241,7 @@
           "parent": "folio-assistant-vke6",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.393
+          "cosine": 0.394
         },
         {
           "severity": "warning",
@@ -438,52 +428,12 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-7x5n",
-          "size": 4,
-          "size_class": "small",
-          "nearest_epic": "folio-assistant-7x5n",
-          "nearest_epic_title": "SEPARATION ARC: one workplan consolidating five stalled sessions' GOAL 1 work (S0–S8)",
-          "mean_cosine": 0.514,
-          "terms": [
-            "finish leftovers",
-            "agy",
-            "drain ingest",
-            "project files",
-            "ingest beans",
-            "arm",
-            "front matter",
-            "qou"
-          ],
-          "beans": [
-            "folio-assistant-75c5",
-            "folio-assistant-9hxd",
-            "folio-assistant-f0hv",
-            "folio-assistant-negd"
-          ],
-          "filed_under": [],
-          "known_processes": [
-            {
-              "process": "Process_BoardRelocate",
-              "beans": 1
-            },
-            {
-              "process": "Process_KgSeparation",
-              "beans": 1
-            },
-            {
-              "process": "Process_RenderKgToCdn",
-              "beans": 1
-            }
-          ]
-        },
-        {
-          "severity": "warning",
           "group": "folio-assistant-yj32",
           "size": 4,
           "size_class": "small",
           "nearest_epic": "folio-assistant-yj32",
           "nearest_epic_title": "HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system",
-          "mean_cosine": 0.363,
+          "mean_cosine": 0.364,
           "terms": [
             "milestone ancestor",
             "todo stickies",
@@ -510,12 +460,51 @@
         },
         {
           "severity": "warning",
+          "group": "folio-assistant-7x5n",
+          "size": 3,
+          "size_class": "small",
+          "nearest_epic": "folio-assistant-7x5n",
+          "nearest_epic_title": "SEPARATION ARC: one workplan consolidating five stalled sessions' GOAL 1 work (S0–S8)",
+          "mean_cosine": 0.494,
+          "terms": [
+            "trailing blank",
+            "exact spans",
+            "voters",
+            "article",
+            "hand cut",
+            "front matter",
+            "volume",
+            "pdf"
+          ],
+          "beans": [
+            "folio-assistant-75c5",
+            "folio-assistant-9hxd",
+            "folio-assistant-negd"
+          ],
+          "filed_under": [],
+          "known_processes": [
+            {
+              "process": "Process_BoardRelocate",
+              "beans": 1
+            },
+            {
+              "process": "Process_KgSeparation",
+              "beans": 1
+            },
+            {
+              "process": "Process_RenderKgToCdn",
+              "beans": 1
+            }
+          ]
+        },
+        {
+          "severity": "warning",
           "group": "folio-assistant-ksek",
           "size": 3,
           "size_class": "small",
           "nearest_epic": "folio-assistant-ksek",
           "nearest_epic_title": "CI: green PR must mean green main",
-          "mean_cosine": 0.651,
+          "mean_cosine": 0.65,
           "terms": [
             "post-merge regen",
             "cone deploy",
@@ -639,7 +628,7 @@
           "group": "(no epic fits)",
           "size": 2,
           "size_class": "no-fit",
-          "mean_cosine": 0.284,
+          "mean_cosine": 0.286,
           "terms": [
             "arg-designer mapping",
             "task bank",
@@ -660,5 +649,5 @@
       ]
     }
   },
-  "total": 38
+  "total": 37
 }

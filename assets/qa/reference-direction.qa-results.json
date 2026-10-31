@@ -35,10 +35,10 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6091,
+          "occurrences": 6093,
           "allowed": 0,
-          "wrongDirection": 0,
-          "wrongDirectionFiles": 0,
+          "wrongDirection": 2,
+          "wrongDirectionFiles": 1,
           "exempt": 6091,
           "namesRepository": 0,
           "undetermined": 0,
@@ -49,9 +49,14 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "file": "cat-harness/skills/ui/ui-core/archimate-models.md",
+          "target": "cat-harness-tools"
+        }
+      ]
     }
   },
-  "total": 1
+  "total": 2
 }
