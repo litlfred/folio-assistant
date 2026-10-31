@@ -2,11 +2,11 @@
 # folio-assistant-n3h9
 $schema: bean/1.0.0
 title: 'HARNESS the smart-* IG repositories: index.config.json remote mounts, Actions gh-pages switched off, agent-run harnessed publish'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-10-10T14:06:53Z
-updated_at: 2026-10-23T16:25:00Z
+updated_at: 2026-10-31T12:15:30Z
 parent: folio-assistant-vuip
 ---
 
@@ -29,11 +29,11 @@ Agent-run publishing, as for who-iris: an `index.config.json` remote-mounting sm
 
 ## Done when, per repository
 
-- [ ] `index.config.json` declares the instance and its remote mounts, with consent recorded
-- [ ] no push- or PR-triggered workflow writes gh-pages
-- [ ] the harnessed site is built from an empty directory and published by an agent; its Pages run succeeds
-- [ ] smart-base: the per-branch IG previews under `branches/` survive
-- [ ] smart-core (pre-SUSHI): builds, or is recorded as not buildable with the reason
+- [x] `index.config.json` declares the instance and its remote mounts, with consent recorded
+- [x] no push- or PR-triggered workflow writes gh-pages
+- [x] the harnessed site is built from an empty directory and published by an agent; its Pages run succeeds
+- [x] smart-base: the per-branch IG previews under `branches/` survive
+- [x] smart-core (pre-SUSHI): builds, or is recorded as not buildable with the reason
 
 ## 2026-10-10 — progress, and what this container cannot reach
 
