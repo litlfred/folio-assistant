@@ -273,3 +273,82 @@ describe("the signature is read before it is overwritten", () => {
     expect(head.id).toBe("head");
   });
 });
+
+describe("pre-merge steps run from main's tree, and the token reaches only the push", () => {
+  // Hardening, litlfred/folio-assistant#2824: under `pull_request_target` this
+  // job holds a write token. Nothing from the PR branch's tree may run while a
+  // token is in reach, so the checkout persists none, the tree is prepared by
+  // main's copies of the scripts, and only the push step is handed a token.
+  type FullStep = Step & { id?: string; if?: string; env?: Record<string, string>; with?: Record<string, unknown>; "working-directory"?: string };
+  const job = doc.jobs.merge! as unknown as { env?: Record<string, string>; steps: FullStep[] };
+  const steps = job.steps;
+  const runOf = (s: Step) => s.run ?? "";
+  const checkout = steps.findIndex((s) => (s.uses ?? "").startsWith("actions/checkout"));
+  const tool = steps.findIndex((s) => runOf(s).includes('worktree add --detach "$RUNNER_TEMP/tool" origin/main'));
+  const merge = steps.findIndex((s) => s.id === "merge");
+  const push = steps.findIndex((s) => s.id === "push");
+  const bot = steps.findIndex((s) => (s.uses ?? "").startsWith("actions/create-github-app-token"));
+
+  test("the PR checkout persists no credential and is given no push token", () => {
+    expect(steps[checkout]!.with?.["persist-credentials"]).toBe(false);
+    expect(steps[checkout]!.with?.token).toBeUndefined();
+  });
+
+  test("no token is set for the whole job", () => {
+    for (const v of Object.values(job.env ?? {})) expect(v).not.toMatch(/secrets\.|steps\.bot/);
+  });
+
+  test("main's tool is checked out before anything runs in the PR's tree", () => {
+    expect(tool).toBeGreaterThan(checkout);
+    for (const s of steps.slice(checkout + 1, tool)) {
+      expect(runOf(s)).not.toMatch(/mount-from-lock|bun install|bun run cat\b|state-mount/);
+    }
+  });
+
+  test("between the checkout and the merge, no step runs the PR tree's own scripts", () => {
+    for (const s of steps.slice(checkout + 1, merge)) {
+      if (s === steps[tool]) continue; // main's worktree, prepared from inside it
+      const run = runOf(s);
+      expect(run).not.toMatch(/bun run cat\b/);
+      expect(run).not.toMatch(/(?:^|\s)(?:bash\s+)?\.\/?\.github\/mount-from-lock\.sh/);
+      if (run.includes("mount-from-lock.sh")) expect(run).toContain('"$RUNNER_TEMP/tool/.github/mount-from-lock.sh" --root "$GITHUB_WORKSPACE"');
+      if (/\bbun install\b/.test(run)) expect(run).toContain("--ignore-scripts");
+      if (run.includes("state-mount.ts")) expect(run).toContain('"$RUNNER_TEMP/tool/cat-harness-tools/scripts/state-mount.ts"');
+    }
+    // The tool step itself works inside main's worktree, not the PR's tree.
+    const t = runOf(steps[tool]!);
+    expect(t.indexOf('cd "$RUNNER_TEMP/tool"')).toBeGreaterThanOrEqual(0);
+    expect(t.indexOf('cd "$RUNNER_TEMP/tool"')).toBeLessThan(t.indexOf("mount-from-lock.sh"));
+  });
+
+  test("the PR tree is still mounted, installed and state-mounted before the merge", () => {
+    const before = steps.slice(tool + 1, merge).map(runOf).join("\n");
+    expect(before).toContain('bash "$RUNNER_TEMP/tool/.github/mount-from-lock.sh" --root "$GITHUB_WORKSPACE"');
+    expect(before).toContain("bun install --frozen-lockfile --ignore-scripts");
+    expect(before).toContain('bun "$RUNNER_TEMP/tool/cat-harness-tools/scripts/state-mount.ts"');
+  });
+
+  test("the App token is minted after the merge, only when there is one to push", () => {
+    expect(bot).toBeGreaterThan(merge);
+    expect(bot).toBeLessThan(push);
+    expect(steps[bot]!.if).toContain("steps.merge.outputs.merged == 'true'");
+  });
+
+  test("only the push step is handed a push token, and it never lands in .git/config", () => {
+    steps.forEach((s, i) => {
+      if (i === push) return;
+      expect(JSON.stringify(s.env ?? {})).not.toContain("steps.bot.outputs.token ||");
+      expect(JSON.stringify(s.env ?? {})).not.toContain("PUSH_BRANCH_TRIGGERING_CI ||");
+    });
+    const p = steps[push]!;
+    expect(p.env?.PUSH_TOKEN).toContain("steps.bot.outputs.token");
+    expect(runOf(p)).toContain("GIT_CONFIG_KEY_1=core.hooksPath GIT_CONFIG_VALUE_1=/dev/null");
+    for (const s of steps) expect(runOf(s)).not.toMatch(/git (?:config|remote set-url)[^\n]*(?:extraheader|x-access-token)/);
+  });
+
+  test("steps that run before the merge hold no GitHub token at all", () => {
+    for (const s of steps.slice(checkout + 1, merge + 1)) {
+      expect(JSON.stringify(s.env ?? {})).not.toMatch(/GH_TOKEN|GITHUB_TOKEN|secrets\./);
+    }
+  });
+});
