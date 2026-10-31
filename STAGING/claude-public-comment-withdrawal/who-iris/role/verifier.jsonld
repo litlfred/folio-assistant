@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/role/verifier.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
+    "pr": "2847/merge",
+    "run": "41212211476"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/role/verifier",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "IRIS CDN verifier",
+      "title": "IRIS CDN verifier",
+      "notation": "verifier",
+      "description": "Anyone. Resolves the key from the did:web DID document, never from the package, and checks its x5c chain up to WHO's signing key. Cannot reach it: the verdict is unknown, not verified.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/skill/iris-cdn-signing"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier"
+    }
+  ]
+}

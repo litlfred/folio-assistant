@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/public-comment-withdrawal",
-    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "sha": "73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
     "pr": "2847/merge",
-    "run": "41202589173"
+    "run": "41212211476"
   },
   "@graph": [
     {
@@ -16,8 +16,8 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_ContentChangeReview",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,

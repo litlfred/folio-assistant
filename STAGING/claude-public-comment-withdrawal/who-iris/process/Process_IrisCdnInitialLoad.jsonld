@@ -4,17 +4,17 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/who-iris.jsonld",
   "staging": {
     "branch": "claude/public-comment-withdrawal",
-    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "sha": "73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
     "pr": "2847/merge",
-    "run": "41202589173"
+    "run": "41212211476"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/process/Process_IrisCdnInitialLoad",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "IRIS CDN initial load",
-      "summary": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record, and every bitstream (owner, 2026-10-30: metadata plus PDFs).",
-      "description": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record, and every bitstream (owner, 2026-10-30: metadata plus PDFs). Run in batches with a checkpoint, so a run that stops resumes where it stopped and never re-fetches what it already holds. Ends in one signed, verified release.",
+      "summary": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs.",
+      "description": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs. Run in batches with a checkpoint, so a run that stops resumes where it stopped and never re-fetches what it already holds. Ends in one signed, verified release.",
       "enforcement": "strict",
       "sourcePath": "processes/iris-cdn-initial-load.bpmn",
       "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-initial-load.bpmn",

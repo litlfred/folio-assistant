@@ -1,0 +1,55 @@
+{
+  "$schema": "folio-ig-menu/v1",
+  "id": "smart.who.int.base",
+  "canonical": "http://smart.who.int/base",
+  "version": "0.3.0",
+  "source": {
+    "kind": "sushi-config",
+    "of": "https://github.com/litlfred/smart-base",
+    "ref": "633b11fb2e628a9aa6086815e78edfe2d47d2095",
+    "path": "sushi-config.yaml",
+    "readAt": "2026-10-31"
+  },
+  "groups": [
+    {
+      "label": "Home",
+      "href": "index.html",
+      "items": []
+    },
+    {
+      "label": "Authoring",
+      "items": [
+        {
+          "label": "Process",
+          "href": "authoring-process.html"
+        },
+        {
+          "label": "Personas",
+          "href": "authoring-personas.html"
+        },
+        {
+          "label": "Skills",
+          "href": "authoring-skills.html"
+        }
+      ]
+    },
+    {
+      "label": "Downloads",
+      "href": "downloads.html",
+      "items": []
+    },
+    {
+      "label": "Indices",
+      "items": [
+        {
+          "label": "Artifact Index",
+          "href": "artifacts.html"
+        },
+        {
+          "label": "DAK API",
+          "href": "dak-api.html"
+        }
+      ]
+    }
+  ]
+}

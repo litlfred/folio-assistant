@@ -4,17 +4,17 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/who-iris.jsonld",
   "staging": {
     "branch": "claude/public-comment-withdrawal",
-    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "sha": "73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
     "pr": "2847/merge",
-    "run": "41202589173"
+    "run": "41212211476"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/process/Process_IrisCdnNightly",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "IRIS CDN nightly change ingest",
-      "summary": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (owner, 2026-10-30: full rebuild nightly; sorted output keeps unchanged partitions byte-identical), and publish a signed rel…",
-      "description": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (owner, 2026-10-30: full rebuild nightly; sorted output keeps unchanged partitions byte-identical), and publish a signed release. A night with no changes publishes nothing and commits nothing.",
+      "summary": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release.",
+      "description": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release. A night with no changes publishes nothing and commits nothing.",
       "enforcement": "strict",
       "sourcePath": "processes/iris-cdn-nightly.bpmn",
       "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-nightly.bpmn",

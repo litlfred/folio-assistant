@@ -67,13 +67,21 @@ function go(){
     .then(function(f){fill(d,f,r);})
     .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
 }
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
 function share(){
   var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
   navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
-    if(navigator.serviceWorker.controller)return;
-    var k='fa-share:'+r;if(sessionStorage.getItem(k))return;
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
     return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
-  }).catch(function(){});
+  }).catch(show);
 }
 measure();share();
 if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);

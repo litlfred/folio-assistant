@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 91 of 91 declared kind(s), 274 gate(s), 89 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 91 of 91 declared kind(s), 277 gate(s), 89 criteria.",
       "count": 91,
       "entries": [
         {
@@ -412,6 +412,7 @@
             "bun run cat check:bootstrap-standalone",
             "bun run cat check:cat-harness-standalone",
             "bun run cat check:code-accounting",
+            "bun run cat check:content-code-free",
             "bun run cat check:dependency-advisories",
             "bun run cat check:fhir-harness-exclusions",
             "bun run cat check:foreign-paths",
@@ -596,7 +597,9 @@
           "directories": [],
           "criteria": [],
           "subjectKinds": [],
-          "gates": [],
+          "gates": [
+            "bun run cat check:dsa-hash"
+          ],
           "typed": true,
           "adversarial": "never",
           "hasFiles": false
@@ -904,6 +907,7 @@
             "bun run cat check:upload-names:check",
             "bun run cat check:uploads-retired",
             "bun run cat gen:jsonld:check",
+            "bun run cat library:covers:check",
             "bun run cat lsi:skills:check",
             "bun run cat smart-base:smart-kg-l1:check"
           ],
@@ -1268,7 +1272,8 @@
             "fhir-harness/scenarios",
             "folio-assistant-core/scenarios",
             "folio-assistant-sci/scenarios",
-            "smart-base/scenarios"
+            "smart-base/scenarios",
+            "who-iris/scenarios"
           ],
           "criteria": [
             "actor-kind-fits-role",
@@ -1944,7 +1949,9 @@
         {
           "kind": "dsa",
           "criteria": 0,
-          "gates": []
+          "gates": [
+            "bun run cat check:dsa-hash"
+          ]
         },
         {
           "kind": "ig-artifact-jsonld",
@@ -2014,7 +2021,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 274 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 277 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },

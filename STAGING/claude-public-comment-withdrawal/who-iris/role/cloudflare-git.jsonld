@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/role/cloudflare-git.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
+    "pr": "2847/merge",
+    "run": "41212211476"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/role/cloudflare-git",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Cloudflare git (Artifacts)",
+      "title": "Cloudflare git (Artifacts)",
+      "notation": "cloudflare-git",
+      "description": "A git repository hosted on Cloudflare Artifacts, not GitHub. Holds the release history: BagIt tag files, signatures, the cursor, checkpoints and run reports. A mechanical role: written to, deciding nothing.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/skill/iris-cdn-exporter",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/skill/iris-rest-feed"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git"
+    }
+  ]
+}

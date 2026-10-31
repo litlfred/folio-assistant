@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/role/iris-cdn-exporter.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
+    "pr": "2847/merge",
+    "run": "41212211476"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/role/iris-cdn-exporter",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "IRIS CDN Exporter",
+      "title": "IRIS CDN Exporter",
+      "notation": "iris-cdn-exporter",
+      "description": "The agent role. It plans, reviews and reports; it does not hold the signing key, and it never pushes to a WHO repository.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/skill/iris-cdn-exporter",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/skill/iris-dspace",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/skill/iris-rest-feed"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/role/release-signer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/public-comment-withdrawal",
+    "sha": "73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
+    "pr": "2847/merge",
+    "run": "41212211476"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/role/release-signer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Release signer",
+      "title": "Release signer",
+      "notation": "release-signer",
+      "description": "Holds the P-256 private key (GitHub environment secret IRIS_CDN_SIGNING_JWK) and signs each changed item manifest and the release tag manifest. A mechanical role.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/who-iris/skill/iris-cdn-signing"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer"
+    }
+  ]
+}

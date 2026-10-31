@@ -4,15 +4,15 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/public-comment-withdrawal",
-    "sha": "7c0d4e505b8984e14dbe684e338df02ea812d238",
+    "sha": "73a70a9d5b74470406a7a5d9e26da0d1bfdfa27f",
     "pr": "2847/merge",
-    "run": "41202589173"
+    "run": "41212211476"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_Publication/node/CallActivity_PublicComment",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Public comment on the review version",
+      "name": "Release for public comment",
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_Publication",
@@ -23,7 +23,7 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_PublicComment",
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_PublicCommentRelease",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-public-comment-withdrawal/folio-assistant-core/process/Process_Publication#flow/G21"
       ],
