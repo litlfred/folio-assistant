@@ -27,13 +27,11 @@ name: Feature Staging (GitHub Pages)
 # `publish_branch` input.
 
 on:
-  # NO PREVIEW FOR A DRAFT (owner, 2026-10-23, "1y"; bean `dft1`). A preview
-  # is for reviewers, and a draft is not yet up for review. Each build costs
-  # ~25 min of runner time and a `gh-pages` push under the #1956 rate limit.
-  # So `stage` skips a draft PR, and `conflict-gate` does not stage a push to
-  # a draft's branch. `ready_for_review` is listed so the preview (and the
-  # Liquid check inside `stage`) is built as soon as the PR is marked ready.
-  # A draft's skipped run is never the newest run merge-guard judges.
+  # EVERY PR GETS A PREVIEW, DRAFTS TOO (owner, 2026-10-31, "drafts get
+  # previews"; this reverses bean `dft1` of 2026-10-23). A draft is where an
+  # author most wants to see the change, and waiting for "ready" added the
+  # whole build to the review loop. `ready_for_review` stays listed so a PR
+  # marked ready after a skipped or failed run is staged again.
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
@@ -201,11 +199,6 @@ jobs:
           if [ -z "$pr" ]; then
             echo "no open PR for $BRANCH: no preview"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
-          # A draft gets no preview (bean `dft1`, see `on:`). Its
-          # `ready_for_review` run stages it.
-          if [ "$(gh api "repos/$REPO/pulls/$pr" --jq '.draft')" = "true" ]; then
-            echo "PR #$pr is a draft: no preview until it is marked ready"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0
-          fi
           state=unknown
           # `unknown` means not computed yet (bean h2s9), so it is asked again.
           for i in 1 2 3 4 5; do
@@ -243,11 +236,10 @@ jobs:
     # A skipped job reports `skipped`, which satisfies a required check, so the
     # queue gets its verdict without a deployment.
     #
-    # A DRAFT PR is not a staging request either (bean `dft1`, see `on:`).
+    # A DRAFT PR IS a staging request (owner, 2026-10-31; see `on:`).
     if: >-
       needs.conflict-gate.outputs.go == 'true'
       && github.event.action != 'closed'
-      && github.event.pull_request.draft != true
       && (github.event_name != 'workflow_dispatch' || inputs.cleanup_slug == '')
       && github.event_name != 'merge_group'
     runs-on: ubuntu-latest
