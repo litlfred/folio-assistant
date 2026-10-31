@@ -33,6 +33,11 @@ concurrency:
   group: pyhecke-native-wheels-${{ github.ref }}
   cancel-in-progress: true
 
+# Least privilege: build_wheels only reads the repository. The publish jobs
+# below set their own job-level permissions, which replace this default.
+permissions:
+  contents: read
+
 jobs:
   build_wheels:
     name: Build wheels (${{ matrix.os }})

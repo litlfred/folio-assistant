@@ -7,6 +7,10 @@ concurrency:
   group: pyhecke-${{ github.ref }}
   cancel-in-progress: true
 
+# Least privilege: the jobs here only read the repository.
+permissions:
+  contents: read
+
 jobs:
   lint-test:
     runs-on: ubuntu-latest
