@@ -340,7 +340,6 @@ jobs:
         # declarations of the checkout it is run in (`git rev-parse
         # --show-toplevel` of the working directory), so it mounts what the
         # PR's tree declares, which is what `bun run cat state:mount` there did.
-        working-directory: ${{ github.workspace }}
         run: bun "$RUNNER_TEMP/tool/cat-harness-tools/scripts/state-mount.ts"
 
       # `id` because this exit 1 is an expected RACE, not a defect: under a fast
