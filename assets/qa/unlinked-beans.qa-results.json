@@ -15,10 +15,10 @@
       "entries": [
         {
           "status": "completed",
-          "total": 1256,
+          "total": 1271,
           "instance": 15,
           "namedId": 96,
-          "none": 1145
+          "none": 1160
         },
         {
           "status": "scrapped",
@@ -41,7 +41,7 @@
     },
     "open-bean-unlinked": {
       "summary": "WARNING, never a failure. An open bean (todo, in-progress, draft) that no workflow instance names and whose file names no process or activity id of a declared diagram. It may belong to a process not yet in the graph; the groups say which ones cluster.",
-      "count": 50,
+      "count": 48,
       "entries": [
         {
           "severity": "warning",
@@ -50,48 +50,48 @@
           "status": "todo",
           "parent": "folio-assistant-uhkv",
           "basis": "none",
-          "group": "folio-assistant-uhkv",
-          "cosine": 0.388
+          "group": "folio-assistant-n3h9",
+          "cosine": 0.378
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-1sc6",
           "title": "smart-trust: release.yml is broken and over-privileged (checkout@v2, ::set-output, empty tag ref)",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-3o2w",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.635
+          "cosine": 0.649
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-33iz",
           "title": "Security and QA review of the FHIR and SMART layers (2026-10-31)",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.808
+          "cosine": 0.821
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-3o2w",
           "title": "SECURITY REVIEW 2026-10-31, group D: smart-trust, who-iris, dth-hrh, bootstrap",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.742
+          "cosine": 0.744
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-6zcw",
           "title": "folio-assistant-sci cannot run the security gate",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.655
+          "cosine": 0.681
         },
         {
           "severity": "warning",
@@ -100,8 +100,8 @@
           "status": "in-progress",
           "parent": "folio-assistant-slw1",
           "basis": "none",
-          "group": "folio-assistant-7x5n",
-          "cosine": 0.429
+          "group": "folio-assistant-uhkv",
+          "cosine": 0.416
         },
         {
           "severity": "warning",
@@ -111,17 +111,17 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.877
+          "cosine": 0.875
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-8eyy",
           "title": "Lake cache extraction checks member paths but not member types",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.622
+          "cosine": 0.685
         },
         {
           "severity": "warning",
@@ -131,7 +131,7 @@
           "parent": "folio-assistant-iirv",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.871
+          "cosine": 0.879
         },
         {
           "severity": "warning",
@@ -141,17 +141,17 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "folio-assistant-7x5n",
-          "cosine": 0.629
+          "cosine": 0.631
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-a3fj",
           "title": "Dependency advisories: 7 high, 12 moderate in smart-trust, who-iris and dth-hrh installs",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-3o2w",
           "basis": "none",
           "group": "folio-assistant-3o2w",
-          "cosine": 0.656
+          "cosine": 0.603
         },
         {
           "severity": "warning",
@@ -161,47 +161,37 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "(no epic fits)",
-          "cosine": 0.276
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-aso6",
-          "title": "deploy-folio runs branch scripts with production secrets and no permissions block",
-          "status": "todo",
-          "parent": "",
-          "basis": "none",
-          "group": "folio-assistant-33iz",
-          "cosine": 0.737
+          "cosine": 0.299
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-avcq",
           "title": "terminology-sw.js says no request reaches the network, but unanswered cross-origin requests go out",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.673
+          "cosine": 0.706
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-dnrj",
           "title": "bootstrap: graph.schema.json lets a Subgraph path or Asset src be absolute or climb with ..",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-3o2w",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.539
+          "cosine": 0.537
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-fg31",
           "title": "Shell-string and rm -rf hygiene: fsh-cone execSync and smart-base mount-platform.sh",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.736
+          "cosine": 0.801
         },
         {
           "severity": "warning",
@@ -210,8 +200,8 @@
           "status": "todo",
           "parent": "folio-assistant-5a3l",
           "basis": "none",
-          "group": "folio-assistant-yj32",
-          "cosine": 0.316
+          "group": "(no epic fits)",
+          "cosine": 0.296
         },
         {
           "severity": "warning",
@@ -221,27 +211,27 @@
           "parent": "folio-assistant-fs43",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.383
+          "cosine": 0.379
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-hgxs",
           "title": "smart-immunizations package-lock.json: 27 advisories (1 critical tar, 14 high) via the npm dependency",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.739
+          "cosine": 0.743
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-hto2",
           "title": "Installs that fall back from the lockfile: smart-trust site-publish, who-iris checks, dth-hrh session hook",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-3o2w",
           "basis": "none",
           "group": "folio-assistant-3o2w",
-          "cosine": 0.75
+          "cosine": 0.723
         },
         {
           "severity": "warning",
@@ -251,7 +241,7 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.874
+          "cosine": 0.862
         },
         {
           "severity": "warning",
@@ -261,7 +251,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.849
+          "cosine": 0.858
         },
         {
           "severity": "warning",
@@ -270,8 +260,8 @@
           "status": "todo",
           "parent": "",
           "basis": "none",
-          "group": "folio-assistant-uhkv",
-          "cosine": 0.355
+          "group": "folio-assistant-negd",
+          "cosine": 0.337
         },
         {
           "severity": "warning",
@@ -281,7 +271,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-uhkv",
-          "cosine": 0.44
+          "cosine": 0.427
         },
         {
           "severity": "warning",
@@ -291,7 +281,7 @@
           "parent": "folio-assistant-7x5n",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.795
+          "cosine": 0.796
         },
         {
           "severity": "warning",
@@ -301,7 +291,7 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.503
+          "cosine": 0.519
         },
         {
           "severity": "warning",
@@ -310,8 +300,8 @@
           "status": "todo",
           "parent": "",
           "basis": "none",
-          "group": "folio-assistant-7x5n",
-          "cosine": 0.425
+          "group": "folio-assistant-33iz",
+          "cosine": 0.417
         },
         {
           "severity": "warning",
@@ -321,17 +311,7 @@
           "parent": "folio-assistant-0lmb",
           "basis": "none",
           "group": "folio-assistant-uhkv",
-          "cosine": 0.573
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-o8tv",
-          "title": "folio-assistant-sci builds shell strings from file names and paths",
-          "status": "todo",
-          "parent": "",
-          "basis": "none",
-          "group": "folio-assistant-33iz",
-          "cosine": 0.672
+          "cosine": 0.563
         },
         {
           "severity": "warning",
@@ -341,7 +321,7 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "(no epic fits)",
-          "cosine": 0.269
+          "cosine": 0.272
         },
         {
           "severity": "warning",
@@ -351,17 +331,17 @@
           "parent": "folio-assistant-1xhc",
           "basis": "none",
           "group": "folio-assistant-ksek",
-          "cosine": 0.684
+          "cosine": 0.64
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-plxg",
           "title": "lxml parses repository XML with default entity resolution (smart-base)",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.711
+          "cosine": 0.718
         },
         {
           "severity": "warning",
@@ -370,8 +350,8 @@
           "status": "in-progress",
           "parent": "folio-assistant-negd",
           "basis": "none",
-          "group": "folio-assistant-negd",
-          "cosine": 0.614
+          "group": "folio-assistant-7x5n",
+          "cosine": 0.578
         },
         {
           "severity": "warning",
@@ -381,7 +361,7 @@
           "parent": "folio-assistant-vke6",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.399
+          "cosine": 0.411
         },
         {
           "severity": "warning",
@@ -391,27 +371,27 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.346
+          "cosine": 0.341
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-rx8k",
           "title": "smart-trust: Visual Studio state committed under .vs/",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-3o2w",
           "basis": "none",
-          "group": "folio-assistant-uhkv",
-          "cosine": 0.587
+          "group": "folio-assistant-3o2w",
+          "cosine": 0.614
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-towy",
           "title": "smart-base issue skills: issue body reaches an LLM unfenced and LLM-chosen labels are applied unchecked",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.768
+          "cosine": 0.775
         },
         {
           "severity": "warning",
@@ -421,7 +401,7 @@
           "parent": "folio-assistant-7x5n",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.809
+          "cosine": 0.808
         },
         {
           "severity": "warning",
@@ -437,21 +417,21 @@
           "severity": "warning",
           "bean": "folio-assistant-vbhb",
           "title": "sci and folio-assistant pin tools and workflows to moving refs",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-3o2w",
-          "cosine": 0.664
+          "cosine": 0.655
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-vj2d",
           "title": "dth-hrh: reusable workflows at @main in write-token workflows (security:gate fails)",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-3o2w",
           "basis": "none",
           "group": "folio-assistant-3o2w",
-          "cosine": 0.775
+          "cosine": 0.708
         },
         {
           "severity": "warning",
@@ -461,17 +441,17 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-vke6",
-          "cosine": 0.563
+          "cosine": 0.582
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-vl71",
           "title": "smart-base ghbuild.yml runs ~36 scripts curled from WorldHealthOrganization/smart-base@main with a write token",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.822
+          "cosine": 0.807
         },
         {
           "severity": "warning",
@@ -481,47 +461,47 @@
           "parent": "folio-assistant-iirv",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.751
+          "cosine": 0.746
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-wox6",
           "title": "Dependency advisories: happy-dom critical, node-forge, zod, undici",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "",
           "basis": "none",
-          "group": "folio-assistant-3o2w",
-          "cosine": 0.723
+          "group": "folio-assistant-33iz",
+          "cosine": 0.658
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-wyez",
           "title": "fhir-harness bun.lock: 17 dependency advisories (7 high), node-forge and zod",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.696
+          "cosine": 0.712
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-x09n",
           "title": "Unpinned third-party actions in write-token workflows (smart-base, smart-ra, smart-immunizations)",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.772
+          "cosine": 0.747
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-xbfx",
           "title": "smart-trust: 12 unpinned actions and reusable workflows in write-token workflows (security:gate fails)",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-3o2w",
           "basis": "none",
-          "group": "folio-assistant-3o2w",
-          "cosine": 0.799
+          "group": "folio-assistant-33iz",
+          "cosine": 0.807
         },
         {
           "severity": "warning",
@@ -531,41 +511,41 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.415
+          "cosine": 0.414
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-ylu8",
           "title": "Workflows with no permissions block run with the repository's default token",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-33iz",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.751
+          "cosine": 0.752
         }
       ]
     },
     "unlinked-group": {
       "summary": "The unlinked open beans grouped by the epic each is nearest to in the store's LSI space (lsi-epics' ranking). A group of 5 or more is a CANDIDATE undocumented process; smaller groups, singletons, and the beans that fit no epic (cosine < 0.3) are listed as such.",
-      "count": 10,
+      "count": 11,
       "entries": [
         {
           "severity": "warning",
           "group": "folio-assistant-33iz",
-          "size": 17,
+          "size": 18,
           "size_class": "candidate",
           "nearest_epic": "folio-assistant-33iz",
           "nearest_epic_title": "Security and QA review of the FHIR and SMART layers (2026-10-31)",
           "mean_cosine": 0.708,
           "terms": [
             "security severity",
-            "security review",
             "group security",
+            "security review",
+            "smart-ra release",
             "smart-ra public-comment",
             "litlfred smart-base",
-            "category",
-            "flag categories",
-            "smart-base submodule"
+            "litlfred fhir-harness",
+            "agy"
           ],
           "beans": [
             "folio-assistant-1sc6",
@@ -573,17 +553,18 @@
             "folio-assistant-3o2w",
             "folio-assistant-6zcw",
             "folio-assistant-8eyy",
-            "folio-assistant-aso6",
             "folio-assistant-avcq",
             "folio-assistant-fg31",
             "folio-assistant-hgxs",
             "folio-assistant-n3h9",
-            "folio-assistant-o8tv",
+            "folio-assistant-negd",
             "folio-assistant-plxg",
             "folio-assistant-towy",
             "folio-assistant-vl71",
+            "folio-assistant-wox6",
             "folio-assistant-wyez",
             "folio-assistant-x09n",
+            "folio-assistant-xbfx",
             "folio-assistant-ylu8"
           ],
           "filed_under": [
@@ -593,41 +574,7 @@
             },
             {
               "epic": "folio-assistant-3o2w",
-              "beans": 1
-            }
-          ],
-          "known_processes": []
-        },
-        {
-          "severity": "warning",
-          "group": "folio-assistant-3o2w",
-          "size": 6,
-          "size_class": "candidate",
-          "nearest_epic": "folio-assistant-3o2w",
-          "nearest_epic_title": "SECURITY REVIEW 2026-10-31, group D: smart-trust, who-iris, dth-hrh, bootstrap",
-          "mean_cosine": 0.728,
-          "terms": [
-            "security severity",
-            "first-party reusable",
-            "dth-hrh",
-            "lockfile",
-            "reusable workflows",
-            "category",
-            "folio-assistant layers",
-            "normal"
-          ],
-          "beans": [
-            "folio-assistant-a3fj",
-            "folio-assistant-hto2",
-            "folio-assistant-vbhb",
-            "folio-assistant-vj2d",
-            "folio-assistant-wox6",
-            "folio-assistant-xbfx"
-          ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-3o2w",
-              "beans": 4
+              "beans": 2
             }
           ],
           "known_processes": []
@@ -639,13 +586,13 @@
           "size_class": "candidate",
           "nearest_epic": "folio-assistant-iirv",
           "nearest_epic_title": "cat-harness / cat-harness-tools separation",
-          "mean_cosine": 0.83,
+          "mean_cosine": 0.828,
           "terms": [
             "litlfred cat-harness-tools",
             "litlfred cat-harness",
             "cat-harness bd72c",
-            "block lifted",
             "tools cat-harness",
+            "block lifted",
             "finish goal",
             "code cat-harness-tools",
             "goal code-move"
@@ -697,40 +644,62 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-uhkv",
-          "size": 6,
+          "group": "folio-assistant-3o2w",
+          "size": 5,
           "size_class": "candidate",
-          "nearest_epic": "folio-assistant-uhkv",
-          "nearest_epic_title": "SMART STACK: core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}",
-          "mean_cosine": 0.508,
+          "nearest_epic": "folio-assistant-3o2w",
+          "nearest_epic_title": "SECURITY REVIEW 2026-10-31, group D: smart-trust, who-iris, dth-hrh, bootstrap",
+          "mean_cosine": 0.661,
           "terms": [
-            "phii crdm",
-            "referencing phii",
-            "instantiates smart-base",
-            "phc handbook",
-            "cat-harness crdm",
-            "collaborative requirements",
-            "phc workplan",
-            "fhir-harness smart-base"
+            "dth-hrh",
+            "agy",
+            "normal",
+            "lockfile",
+            "category",
+            "security",
+            "severity",
+            "moderate"
           ],
           "beans": [
-            "folio-assistant-17iw",
-            "folio-assistant-llxa",
-            "folio-assistant-max2",
-            "folio-assistant-nvhg",
+            "folio-assistant-a3fj",
+            "folio-assistant-hto2",
             "folio-assistant-rx8k",
-            "folio-assistant-uhkv"
+            "folio-assistant-vbhb",
+            "folio-assistant-vj2d"
           ],
           "filed_under": [
             {
               "epic": "folio-assistant-3o2w",
-              "beans": 1
-            },
-            {
-              "epic": "folio-assistant-uhkv",
-              "beans": 1
+              "beans": 4
             }
           ],
+          "known_processes": []
+        },
+        {
+          "severity": "warning",
+          "group": "folio-assistant-uhkv",
+          "size": 4,
+          "size_class": "small",
+          "nearest_epic": "folio-assistant-uhkv",
+          "nearest_epic_title": "SMART STACK: core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}",
+          "mean_cosine": 0.527,
+          "terms": [
+            "phii crdm",
+            "instantiates smart-base",
+            "collaborative requirements",
+            "smart-ig instance",
+            "smart-ig box",
+            "requirements development",
+            "smart-ig dropped",
+            "smart-immunizations instantiates"
+          ],
+          "beans": [
+            "folio-assistant-75c5",
+            "folio-assistant-max2",
+            "folio-assistant-nvhg",
+            "folio-assistant-uhkv"
+          ],
+          "filed_under": [],
           "known_processes": [
             {
               "process": "Process_L2Dak",
@@ -757,24 +726,23 @@
         {
           "severity": "warning",
           "group": "folio-assistant-yj32",
-          "size": 5,
-          "size_class": "candidate",
+          "size": 4,
+          "size_class": "small",
           "nearest_epic": "folio-assistant-yj32",
           "nearest_epic_title": "HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system",
-          "mean_cosine": 0.403,
+          "mean_cosine": 0.426,
           "terms": [
-            "folio board",
-            "milestone ancestor",
             "todo stickies",
-            "writable datastore",
+            "milestone ancestor",
+            "folio board",
             "pipeline todos",
+            "writable datastore",
             "miro board",
             "orphan epics",
             "todos beans"
           ],
           "beans": [
             "folio-assistant-dnrj",
-            "folio-assistant-fvec",
             "folio-assistant-r29x",
             "folio-assistant-rwmf",
             "folio-assistant-yj32"
@@ -793,28 +761,58 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-7x5n",
+          "group": "folio-assistant-ksek",
           "size": 3,
+          "size_class": "small",
+          "nearest_epic": "folio-assistant-ksek",
+          "nearest_epic_title": "CI: green PR must mean green main",
+          "mean_cosine": 0.626,
+          "terms": [
+            "post-merge regen",
+            "cone deploy",
+            "regen run",
+            "deploy stamps",
+            "cone update",
+            "builtatpublish outputs",
+            "main deploy",
+            "full deploy"
+          ],
+          "beans": [
+            "folio-assistant-fwtz",
+            "folio-assistant-ksek",
+            "folio-assistant-p7mb"
+          ],
+          "filed_under": [],
+          "known_processes": []
+        },
+        {
+          "severity": "warning",
+          "group": "folio-assistant-7x5n",
+          "size": 2,
           "size_class": "small",
           "nearest_epic": "folio-assistant-7x5n",
           "nearest_epic_title": "SEPARATION ARC: one workplan consolidating five stalled sessions' GOAL 1 work (S0–S8)",
-          "mean_cosine": 0.494,
+          "mean_cosine": 0.605,
           "terms": [
-            "trailing blank",
-            "exact spans",
-            "voters",
-            "article",
-            "hand cut",
-            "front matter",
-            "volume",
-            "pdf"
+            "official contexts",
+            "head shards",
+            "dsa steps",
+            "base head",
+            "folio-assistant copy",
+            "index declares",
+            "checks passing",
+            "voice review"
           ],
           "beans": [
-            "folio-assistant-75c5",
             "folio-assistant-9hxd",
-            "folio-assistant-negd"
+            "folio-assistant-q7dh"
           ],
-          "filed_under": [],
+          "filed_under": [
+            {
+              "epic": "folio-assistant-negd",
+              "beans": 1
+            }
+          ],
           "known_processes": [
             {
               "process": "Process_BoardRelocate",
@@ -832,28 +830,28 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-ksek",
-          "size": 3,
-          "size_class": "small",
-          "nearest_epic": "folio-assistant-ksek",
-          "nearest_epic_title": "CI: green PR must mean green main",
-          "mean_cosine": 0.639,
+          "group": "folio-assistant-n3h9",
+          "size": 1,
+          "size_class": "singleton",
+          "nearest_epic": "folio-assistant-n3h9",
+          "nearest_epic_title": "HARNESS the smart-* IG repositories: index.config.json remote mounts, Actions gh-pages switched off, agent-run harnessed publish",
+          "mean_cosine": 0.378,
           "terms": [
-            "post-merge regen",
-            "cone deploy",
-            "regen run",
-            "cone update",
-            "deploy stamps",
-            "main deploy",
-            "builtatpublish outputs",
-            "main push"
+            "catalogues",
+            "who-iris",
+            "businessprocessworkflow",
+            "health-system",
+            "public-health"
           ],
           "beans": [
-            "folio-assistant-fwtz",
-            "folio-assistant-ksek",
-            "folio-assistant-p7mb"
+            "folio-assistant-17iw"
           ],
-          "filed_under": [],
+          "filed_under": [
+            {
+              "epic": "folio-assistant-uhkv",
+              "beans": 1
+            }
+          ],
           "known_processes": []
         },
         {
@@ -863,25 +861,18 @@
           "size_class": "singleton",
           "nearest_epic": "folio-assistant-negd",
           "nearest_epic_title": "COMPUTABLE DSAs: public agreement + ODRL, referenced by hash; GDHCN trust; one PDP (#2702, option D)",
-          "mean_cosine": 0.614,
+          "mean_cosine": 0.337,
           "terms": [
-            "official contexts",
-            "head shards",
-            "dsa steps",
-            "base head",
-            "voice review",
-            "checks passing",
-            "dcmi"
+            "phii",
+            "crdm",
+            "rfc",
+            "phc",
+            "handbook"
           ],
           "beans": [
-            "folio-assistant-q7dh"
+            "folio-assistant-llxa"
           ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-negd",
-              "beans": 1
-            }
-          ],
+          "filed_under": [],
           "known_processes": [
             {
               "process": "Process_DsaDocumentLifecycle",
@@ -896,7 +887,7 @@
           "size_class": "singleton",
           "nearest_epic": "folio-assistant-vke6",
           "nearest_epic_title": "SPLIT (#223): cut this repo into layers that can depend on each other",
-          "mean_cosine": 0.563,
+          "mean_cosine": 0.582,
           "terms": [
             "cut",
             "cycles",
@@ -936,9 +927,9 @@
         {
           "severity": "warning",
           "group": "(no epic fits)",
-          "size": 2,
+          "size": 3,
           "size_class": "no-fit",
-          "mean_cosine": 0.273,
+          "mean_cosine": 0.289,
           "terms": [
             "task bank",
             "independent queues",
@@ -951,6 +942,7 @@
           ],
           "beans": [
             "folio-assistant-amom",
+            "folio-assistant-fvec",
             "folio-assistant-oz9e"
           ],
           "filed_under": [],
@@ -959,5 +951,5 @@
       ]
     }
   },
-  "total": 62
+  "total": 61
 }
