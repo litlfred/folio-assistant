@@ -542,6 +542,118 @@
       "name": "Withdraw a review comment"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
+      "@type": "bootstrap:Process",
+      "name": "Contributor feedback on a working draft"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF04",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF06",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF07",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF08",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "agreed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "name": "Authoring agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Committee",
+      "@type": "cat-harness:Lane",
+      "name": "Authoring Committee"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Editor",
+      "@type": "cat-harness:Lane",
+      "name": "Editor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Change merged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_FeedbackChanged",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Feedback changed since the proposal?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/StartEvent_Feedback",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Feedback on the working draft"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_AnswerPreview",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Review the preview and answer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_EditInPullRequest",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Edit the document in the row's pull request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Merge the pull request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Propose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Propose a direction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForAgent",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Set Ready for agent to Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForMerge",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Set Ready for merge to Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_StartRow",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Start a change-set row: title, sections, feedback"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
       "@type": "bootstrap:Process",
       "name": "Authoring a document"
@@ -607,6 +719,15 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D15",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Authoring Committee feedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D16",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/SF_Bean_1",
       "@type": "bootstrap:SequenceFlow",
       "name": "claimed"
@@ -640,6 +761,11 @@
       "name": "Build pipeline — validate · render · publish"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Committee",
+      "@type": "cat-harness:Lane",
+      "name": "Authoring Committee"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Reviewer",
       "@type": "cat-harness:Lane",
       "name": "Reviewer / subject-matter expert"
@@ -658,6 +784,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_BeanOpen",
       "@type": "bootstrap:ProcessNode",
       "name": "Open the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_ContributorFeedback",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Contributor feedback"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/EndEvent_Published",

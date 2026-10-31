@@ -1154,6 +1154,146 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contributorfeedback.task_answerpreview",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Review the preview and answer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Members read the preview and answer in their Blue columns, or leave them as they are when the change is right."
+        }
+      ],
+      "skos:notation": "Task_AnswerPreview",
+      "dcterms:source": "folio-assistant-core/processes/content/contributor-feedback.bpmn#Task_AnswerPreview",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contributorfeedback.task_editinpullrequest",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Edit the document in the row's pull request"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One row, one pull request: the agent edits on the row's branch and opens its pull request, or updates it when the row comes round again. Agentic status (Green) says where it is, and Staging review opens the preview's what-changed page."
+        }
+      ],
+      "skos:notation": "Task_EditInPullRequest",
+      "dcterms:source": "folio-assistant-core/processes/content/contributor-feedback.bpmn#Task_EditInPullRequest",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contributorfeedback.task_merge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge the pull request"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The agent merges the row's pull request, and Agentic status says merged."
+        }
+      ],
+      "skos:notation": "Task_Merge",
+      "dcterms:source": "folio-assistant-core/processes/content/contributor-feedback.bpmn#Task_Merge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contributorfeedback.task_propose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Propose a direction"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The agent reads the row and the sections it names, writes a proposed direction in the Green (agent) column, and records the row's feedback basis on the Agent tab, so the script can tell when the feedback has moved on."
+        }
+      ],
+      "skos:notation": "Task_Propose",
+      "dcterms:source": "folio-assistant-core/processes/content/contributor-feedback.bpmn#Task_Propose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contributorfeedback.task_readyforagent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Set Ready for agent to Yes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An Editor agrees the direction and sets the row's Ready for agent (Orange) to Yes. Person-only: the agent never sets it."
+        }
+      ],
+      "skos:notation": "Task_ReadyForAgent",
+      "dcterms:source": "folio-assistant-core/processes/content/contributor-feedback.bpmn#Task_ReadyForAgent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contributorfeedback.task_readyformerge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Set Ready for merge to Yes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An Editor sets the row's Ready for merge (Orange) to Yes, and may record its Disposition. Person-only."
+        }
+      ],
+      "skos:notation": "Task_ReadyForMerge",
+      "dcterms:source": "folio-assistant-core/processes/content/contributor-feedback.bpmn#Task_ReadyForMerge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_contributorfeedback.task_startrow",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Start a change-set row: title, sections, feedback"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A member adds a row on the Contributor Feedback tab: a title, the Selected Sections it is about (a dropdown from the document's table of contents) and their feedback in their own Blue column. The script gives the row its Change-set id and links each section."
+        }
+      ],
+      "skos:notation": "Task_StartRow",
+      "dcterms:source": "folio-assistant-core/processes/content/contributor-feedback.bpmn#Task_StartRow",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_deepdocumentresearch.a_plan",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1391,6 +1531,26 @@
       ],
       "skos:notation": "Call_BeanOpen",
       "dcterms:source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Call_BeanOpen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities/process_documentauthoring.call_contributorfeedback",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Contributor feedback [review-sheet-script]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process_ContributorFeedback: while the document is a working draft, the Authoring Committee gives feedback through the Contributor Feedback sheet, and each change set is edited and merged in its own pull request. When its changes are merged, the document is validated and rendered again (owner, 2026-10-31)."
+        }
+      ],
+      "skos:notation": "Call_ContributorFeedback",
+      "dcterms:source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Call_ContributorFeedback",
       "skos:note": "candidate"
     },
     {

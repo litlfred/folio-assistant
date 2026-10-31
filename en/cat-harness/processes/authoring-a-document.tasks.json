@@ -1167,6 +1167,36 @@
      }
     ]
    }
+  },
+  "Call_ContributorFeedback": {
+   "id": "Call_ContributorFeedback",
+   "name": "Contributor feedback",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_ContributorFeedback",
+   "lane": "Authoring Committee",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Committee",
+   "skills": [
+    {
+     "name": "review-sheet-script",
+     "href": "../../../reference/skill-instructions/review-sheet-script.html"
+    }
+   ],
+   "calls": {
+    "name": "Contributor feedback on a working draft",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
+    "diagram": "contributor-feedback.html"
+   },
+   "role": {
+    "name": "authoring-committee",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-committee",
+    "title": "Authoring Committee",
+    "skills": [
+     {
+      "name": "review-sheet-script",
+      "href": "../../../reference/skill-instructions/review-sheet-script.html"
+     }
+    ]
+   }
   }
  }
 }

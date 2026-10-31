@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-committee.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "6a47cb22609a56ffb0bfc5b5d02e8dad55c1dbc2",
+    "pr": "main",
+    "run": "41191483628"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-committee",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Authoring Committee",
+      "title": "Authoring Committee",
+      "notation": "authoring-committee",
+      "description": "The people writing a document with its editor, while it is still a working draft: contributors who give feedback through the Contributor Feedback sheet, one change set per row, in their own Blue column. They recommend; an Editor decides, through the sheet's Ready columns. Added 2026-10-31 by the owner, so the drafting sheet names a process role rather than a job title, as the public-comment sheet names the Feedback Review Committee. The lane it binds is in folio-assistant-core/processes/content/contributor-feedback.bpmn and authoring-a-document.bpmn.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script"
+      ]
+    }
+  ]
+}

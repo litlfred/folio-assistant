@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_StartRow.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "main",
+    "sha": "6a47cb22609a56ffb0bfc5b5d02e8dad55c1dbc2",
+    "pr": "main",
+    "run": "41191483628"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_StartRow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Start a change-set row: title, sections, feedback",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-committee",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Committee",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 48,
+      "count": 49,
       "unit": "open beans"
     }
   },
@@ -442,7 +442,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T08:21:00Z",
       "preview": "**Category:** correctness, security. **Rule:** `scz-least-privilege`. **Severity:** low: manual dispatch only.\n\n**Evidence** (`.github/workflows/release.yml`, smart-trust `496290a`):\n\n- `:3-7` grants `contents, pages, id-token, pull-requests: write` to every job, including the `check` job that only reads a file.\n- `:22` `actions/checkout@v2` (Node 12, long deprecated).\n- `:24` `ref: ${{ github.eve",
       "file": "beans/defs/folio-assistant-1sc6--smart-trust-release-workflow-is-broken-and-over-privi.md"
     },
@@ -922,7 +922,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T04:24:00Z",
+      "updatedAt": "2026-10-31T08:21:00Z",
       "preview": "The owner asked (2026-10-31 03:51Z, thread \"Security review all harnessed KG code\") for a full QA and security review of all code harnessed in a KG, with findings recorded per the SOPs. This epic holds group D's public findings. The sibling epic for cat-harness and cat-harness-tools is `cat-tools-sr31` in the cat-harness-tools store.\n\nReviewed heads (main): smart-trust `496290a`, who-iris `df8f63f",
       "file": "beans/defs/folio-assistant-3o2w--security-review-2026-10-31-group-d-smart-trust-who.md"
     },
@@ -1979,11 +1979,11 @@
       "status": "in-progress",
       "type": "bug",
       "priority": "normal",
-      "parent": "",
+      "parent": "folio-assistant-sb31",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:01:56Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T08:24:00Z",
       "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** false-green · **Severity:** minor\n\nSame shape as folio-core-0dy3, measured",
       "file": "beans/defs/folio-assistant-6zcw--folio-assistant-sci-cannot-run-the-security-gate.md"
     },
@@ -2184,7 +2184,7 @@
       "status": "completed",
       "type": "bug",
       "priority": "high",
-      "parent": "",
+      "parent": "folio-assistant-sb31",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:21:22Z",
@@ -2366,11 +2366,11 @@
       "status": "in-progress",
       "type": "bug",
       "priority": "normal",
-      "parent": "",
+      "parent": "folio-assistant-sb31",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:01:56Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T08:24:00Z",
       "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** minor\n\nfolio-assistant-sci at `f0d44d9`. Security",
       "file": "beans/defs/folio-assistant-8eyy--lake-cache-extraction-checks-member-paths-but-not.md"
     },
@@ -2433,14 +2433,14 @@
     {
       "id": "folio-assistant-8lcl",
       "title": "Separation stage 1b: Zod moves to cat-harness-tools; generated JSON Schema stays in cat-harness",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-iirv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:01Z",
-      "updatedAt": "2026-10-30T20:37:00Z",
+      "updatedAt": "2026-10-31T08:35:00Z",
       "preview": "Stage 1b of the split plan: the 205 Zod `schemas/*.ts` move to `cat-harness-tools/schemas/`; `cat-harness/schemas/` gets **generated** JSON Schema (one per declared node kind, `$id` under `iriBase`), as bootstrap does (`xsqm` ruling 1). `bunfig.toml` preload follows.\n\nOrder: D4 option 3 (owner, 2026-10-01) — after placement PR8, which regroups the same `schemas/` tree and moves the 28 above-harnes",
       "file": "beans/defs/folio-assistant-8lcl--separation-stage-1b-zod-moves-to-cat-harness-tools.md"
     },
@@ -2874,7 +2874,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T08:21:00Z",
       "preview": "**Category:** security (dependencies). **Rule:** `scz-review-dependency-changes`. **Severity:** normal: build-time tooling, not served code; `check-dependency-advisories` is warn-only by design.\n\n**Evidence** (`bun audit` after `bun install`, 2026-10-31):\n\n- smart-trust: 24 (7 high, 12 moderate, 5 low). dth-hrh: 24 (7 high, 12 moderate, 5 low). who-iris: 21 (6 high, 11 moderate, 4 low).\n- High: `u",
       "file": "beans/defs/folio-assistant-a3fj--dependency-advisories-7-high-in-smart-trust-who-iris.md"
     },
@@ -3029,14 +3029,14 @@
     {
       "id": "folio-assistant-aso6",
       "title": "deploy-folio runs branch scripts with production secrets and no permissions block",
-      "status": "completed",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
-      "parent": "",
+      "parent": "folio-assistant-sb31",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:01:56Z",
-      "updatedAt": "2026-10-31T04:22:00Z",
+      "updatedAt": "2026-10-31T08:24:00Z",
       "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** major\n\nfolio-assistant `.github/workflows/deploy-",
       "file": "beans/defs/folio-assistant-aso6--deploy-folio-runs-branch-scripts-with-production-s.md"
     },
@@ -3782,7 +3782,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T08:21:00Z",
       "preview": "**Category:** security (path containment). **Rule:** `scz-every-input-is-suspect`; skill `path-containment`. **Severity:** normal: a schema gap, closed today only in one consumer.\n\n**Evidence** (bootstrap `3ce2b5d`): `schemas/graph.schema.json` describes `directories[].path` (line 41, also 273) as \"relative to the declaration\" and `assets[].src` (line 134, also 349) as \"relative to the declaration",
       "file": "beans/defs/folio-assistant-dnrj--bootstrap-graph-schema-lets-a-subgraph-path-or-asset.md"
     },
@@ -3829,6 +3829,20 @@
       "file": "beans/defs/folio-assistant-dscv--markers-what-a-harness-could-declare-scan-show-pick.md"
     },
     {
+      "id": "folio-assistant-dthl",
+      "title": "DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T06:42:00Z",
+      "updatedAt": "2026-10-31T06:42:00Z",
+      "preview": "Owner, 2026-10-31: each WHO Digital Transformation Handbook becomes an L2 DTH that depends on smart-ra. Its narrative is validated against the glossaries and linked to ArchiMate, with BPMN for its business processes, roles as DAK persona blocks, and DMN tables extracted.\n\nWorkplans: litlfred/dth-phc#1 (PHC), dth-sfp#1 (SFP), and the per-handbook workplans in the project folder dth-l2-ingest-2026-1",
+      "file": "beans/defs/folio-assistant-dthl--dth-handbooks-as-l2-documents-on-smart-ra-hrh-phc-sc-pc.md"
+    },
+    {
       "id": "folio-assistant-dv8v",
       "title": "B6b-1 (#1168): the 8 generated writtenBy families get Zod schemas",
       "status": "completed",
@@ -3873,6 +3887,20 @@
       "updatedAt": "2026-10-07T14:55:47Z",
       "preview": "PR #2102 (two bean notes on 4ak5 and yj6r; no code), opened 15:01Z on 2026-10-04. Handed back on intake by the Merge Manager.\n\n## Refused\n- `merge:steward`: Rule_NotReady. Green, but there is no ready marker and no `ready-to-merge` label (merge:guard checks 3 and 4), and it conflicts with main in generated paths only (most likely the regenerated `beans/notes/README.md`).\n- Awaiting the owner's exp",
       "file": "beans/defs/folio-assistant-e0hw--merge-refused-2102-not-signed-conflicts-with-main.md"
+    },
+    {
+      "id": "folio-assistant-e0jh",
+      "title": "Ingest the BPMN comprehension research papers (7PMG, labeling, PMCF, flow direction, ...) so diagram lint rules cite evidence",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T10:10:00Z",
+      "updatedAt": "2026-10-31T10:10:00Z",
+      "preview": "Owner, 2026-10-31 (thread \"Improve BPMN quality checks from research\"): review a Gemini discussion on evidence-based BPMN style, and have the connected agent (agy) download and ingest every referenced article so the authoring rules and the diagram lint rules cite the papers, not Gemini's summary of them.\n\nCloud sessions cannot reach researchgate.net, pmc.ncbi.nlm.nih.gov (captcha) or dbis.eprints.",
+      "file": "beans/defs/folio-assistant-e0jh--ingest-the-bpmn-comprehension-research-papers-for-di.md"
     },
     {
       "id": "folio-assistant-e0uk",
@@ -4173,7 +4201,7 @@
     {
       "id": "folio-assistant-fg31",
       "title": "Shell-string and rm -rf hygiene: fsh-cone execSync and smart-base mount-platform.sh",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-33iz",
@@ -4774,7 +4802,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T08:21:00Z",
       "preview": "**Category:** security (supply chain). **Rule:** `scz-review-dependency-changes`; injection-boundaries \"a pin that falls back is not a pin\". **Severity:** normal.\n\n**Evidence** (`check-lockfile-pinning.ts`):\n\n- smart-trust `.github/workflows/site-publish.yml:109` `bun install --no-save` in each mounted layer, with no lockfile (flagged NEW).\n- who-iris `.github/workflows/checks.yml:53` plain `bun i",
       "file": "beans/defs/folio-assistant-hto2--installs-that-fall-back-from-the-lockfile-smart-trus.md"
     },
@@ -4936,7 +4964,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:58:00Z",
-      "updatedAt": "2026-10-12T18:30:00Z",
+      "updatedAt": "2026-10-31T08:35:00Z",
       "preview": "Owner, 2026-10-01: \"make sure workplan properly beaned and status trackable\" for the cat-harness / cat-harness-tools separation arc. This epic is the one place that answers \"where is the separation up to\": every stage of the split plan and every placement PR still to do is a child, ordered by `blocked_by`.\n\n**What it delivers:** `cat-harness/` becomes two repositories — litlfred/cat-harness (conte",
       "file": "beans/defs/folio-assistant-iirv--cat-harness-cat-harness-tools-separation.md"
     },
@@ -5309,20 +5337,6 @@
       "updatedAt": "2026-09-26T14:36:43Z",
       "preview": "## What is red\n\n`bun test cat-harness/content/pipeline/translation-index.test.ts`\n→ `this repository's own corpus > the committed index is up to date and valid`\n\n```\nexpect(r.state, `run: bun run cat translation:index`).toBe(\"ok\")\nExpected: \"ok\"   Received: \"stale\"\n```\n\nIt runs inside the `TypeScript — tests, lint, types (hard)` job, so every open\nPR's merged tree is red on it, on top of the `t8g3",
       "file": "beans/defs/folio-assistant-k3tw--gate-red-on-main-docs-datatranslationsjson-is-stal.md"
-    },
-    {
-      "id": "folio-assistant-k3tw",
-      "title": "lean-kg-viewer inserted unsanitised HTML and loaded CDN scripts without SRI",
-      "status": "completed",
-      "type": "bug",
-      "priority": "normal",
-      "parent": "",
-      "blocking": [],
-      "blockedBy": [],
-      "createdAt": "2026-10-31T04:25:00Z",
-      "updatedAt": "2026-10-31T04:25:00Z",
-      "preview": "Found by the 2026-10-31 security review of the folio-assistant layers. Held privately until the fix merged, then filed (owner, option A).\n\n**Where:** folio-assistant-sci `adapters/paper/lean/lean-kg-viewer/` (`viewer.js`, `index.html`).\n\n**Fixed in** litlfred/folio-assistant-sci#152 (merge `1ec9283`). All HTML goes through DOMPurify (text fallback, never raw HTML), links are limited to http(s) or ",
-      "file": "beans/defs/folio-assistant-k3tw--lean-kg-viewer-inserted-unsanitised-html-and-loade.md"
     },
     {
       "id": "folio-assistant-k4sp",
@@ -5803,18 +5817,32 @@
       "file": "beans/defs/folio-assistant-lk2a--checkworkflow-refs-sends-the-reader-to-bean-bvuk-w.md"
     },
     {
+      "id": "folio-assistant-lkv5",
+      "title": "lean-kg-viewer inserted unsanitised HTML and loaded CDN scripts without SRI",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-sb31",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T04:25:00Z",
+      "updatedAt": "2026-10-31T04:25:00Z",
+      "preview": "Found by the 2026-10-31 security review of the folio-assistant layers. Held privately until the fix merged, then filed (owner, option A).\n\n**Where:** folio-assistant-sci `adapters/paper/lean/lean-kg-viewer/` (`viewer.js`, `index.html`).\n\n**Fixed in** litlfred/folio-assistant-sci#152 (merge `1ec9283`). All HTML goes through DOMPurify (text fallback, never raw HTML), links are limited to http(s) or ",
+      "file": "beans/defs/folio-assistant-lkv5--lean-kg-viewer-inserted-unsanitised-html-and-loade.md"
+    },
+    {
       "id": "folio-assistant-llxa",
       "title": "cat-harness CRDM skills: cite PHII and PATH CRDM as the method they adapt",
       "status": "todo",
       "type": "task",
       "priority": "normal",
-      "parent": "",
+      "parent": "folio-assistant-dthl",
       "blocking": [],
       "blockedBy": [
         "folio-assistant-max2"
       ],
       "createdAt": "2026-10-31T01:56:00Z",
-      "updatedAt": "2026-10-31T01:56:00Z",
+      "updatedAt": "2026-10-31T06:42:00Z",
       "preview": "Owner, 2026-10-31 01:53Z: \"cat-harness CRDM should be referencing PHII and PATH CRDM so its same, no?\" Card option A at 01:54Z: the citation fix is a bean, not a PR yet.\n\ncat-harness `skills/sdlc/crdm/` (phases 1-6 and `processes/process/crdm-*.bpmn`) uses the CRDM name and phase idea but cites no source. Today \"CRDM\" names two things: PHII's methodology (cited by the PHC handbook) and this platfo",
       "file": "beans/defs/folio-assistant-llxa--cat-harness-crdm-skills-cite-phii-and-path-crdm-as-the-me.md"
     },
@@ -6054,13 +6082,13 @@
       "status": "in-progress",
       "type": "task",
       "priority": "normal",
-      "parent": "",
+      "parent": "folio-assistant-dthl",
       "blocking": [
         "folio-assistant-llxa"
       ],
       "blockedBy": [],
       "createdAt": "2026-10-31T01:56:00Z",
-      "updatedAt": "2026-10-31T02:11:00Z",
+      "updatedAt": "2026-10-31T06:42:00Z",
       "preview": "Owner, 2026-10-31 01:54Z (card \"What should I do with the SDLC alignment findings?\", option A): add the SDLC alignment to the PHC workplan and fetch the CRDM sources. Owner 01:53Z: \"cat-harness CRDM should be referencing PHII and PATH CRDM\".\n\nThe PHC handbook (who-iris 9789240093362-eng, sec-006) says its method \"leverages the Collaborative Requirements Development Methodology (CRDM)\" and cites:\n\n",
       "file": "beans/defs/folio-assistant-max2--cat-harness-library-ingest-the-crdm-sources-phii-and-path.md"
     },
@@ -6612,11 +6640,11 @@
       "status": "completed",
       "type": "bug",
       "priority": "high",
-      "parent": "",
+      "parent": "folio-assistant-sb31",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:01:56Z",
-      "updatedAt": "2026-10-31T04:25:00Z",
+      "updatedAt": "2026-10-31T08:24:00Z",
       "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** major\n\nfolio-assistant-sci at `f0d44d9`. Rule `sc",
       "file": "beans/defs/folio-assistant-o8tv--folio-assistant-sci-builds-shell-strings-from-file.md"
     },
@@ -7686,7 +7714,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T08:21:00Z",
       "preview": "**Category:** provenance (hygiene). **Rule:** `scz-secrets-never-in-text` (preventive). **Severity:** low.\n\n**Evidence:** smart-trust `496290a` tracks `.vs/ProjectSettings.json`, `.vs/VSWorkspaceState.json`, `.vs/slnx.sqlite` and `.vs/smart-ig-starter-kit/v17/.suo`. These are per-user IDE state (opened files, local paths, a SQLite index) and can carry local paths or other machine data. No secret w",
       "file": "beans/defs/folio-assistant-rx8k--smart-trust-visual-studio-state-committed-under-vs.md"
     },
@@ -7773,6 +7801,20 @@
       "updatedAt": "2026-10-31T00:05:00Z",
       "preview": "Story S5 (txue), with/after 70lx. Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — pr '(#223 code partition; S5)', instance=cat-harness, target folio-assistant-sci: MOVE 49, AMBIGUOUS 10 (owner Q4: SPLIT — generic pipeline -> cat-harness-tools, Lean/LaTeX checkers -> sci code plugged into it). Plus smart-base 3, fhir-harness 2, core 1. One agent at a time.\n## Done when",
       "file": "beans/defs/folio-assistant-saqd--s5-a-maths-code-out-of-cat-harness-into-folio-assi.md"
+    },
+    {
+      "id": "folio-assistant-sb31",
+      "title": "SECURITY REVIEW 2026-10-31, GROUP B: folio-assistant-core, folio-assistant-sci and folio-assistant",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "high",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-31T06:45:00Z",
+      "updatedAt": "2026-10-31T08:52:00Z",
+      "preview": "Group B of the owner's 2026-10-31 security and QA review of every harnessed layer (overall epic `cat-tools-sr31` in cat-harness-tools). Groups C and D are `folio-assistant-33iz` and `folio-assistant-3o2w`. The core findings live in the core store under its own beans.\n\nChildren here are the findings whose code lives in folio-assistant or folio-assistant-sci.\n\n## Done when\n\n- [ ] Every child is comp",
+      "file": "beans/defs/folio-assistant-sb31--security-review-2026-10-31-group-b-folio-assistant-layers.md"
     },
     {
       "id": "folio-assistant-sd5v",
@@ -8375,15 +8417,15 @@
     {
       "id": "folio-assistant-txue",
       "title": "S5 code out of cat-harness: stages 1a-1d (70lx absorbs w2gr 3b), 8lcl, y9r6, vj2p",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:14:34Z",
-      "updatedAt": "2026-10-30T20:37:00Z",
-      "preview": "D1: all cat-harness code -> cat-harness-tools. One agent at a time.\n\n## Done when\n- [x] 70lx: server/tools/routes/rbac/auth/mcp moved; MCP server lists the same tools\n- [ ] 8lcl Zod moved; JSON Schema stays\n- [ ] y9r6 no .ts in cat-harness content\n- [ ] vj2p each instance hosts its own outputs\n\n## State 2026-10-09\n- 70lx (stage 1a): completed. y9r6 (1c): completed (closed on #1702). 8lcl (1b): tod",
+      "updatedAt": "2026-10-31T08:35:00Z",
+      "preview": "D1: all cat-harness code -> cat-harness-tools. One agent at a time.\n\n## Done when\n- [x] 70lx: server/tools/routes/rbac/auth/mcp moved; MCP server lists the same tools\n- [x] 8lcl Zod moved; JSON Schema stays\n- [x] y9r6 no .ts in cat-harness content\n- [x] vj2p each instance hosts its own outputs\n\n## State 2026-10-09\n- 70lx (stage 1a): completed. y9r6 (1c): completed (closed on #1702). 8lcl (1b): tod",
       "file": "beans/defs/folio-assistant-txue--s5-code-out-of-cat-harness-stages-1a-1d-70lx-absor.md"
     },
     {
@@ -8602,11 +8644,11 @@
       "status": "in-progress",
       "type": "bug",
       "priority": "normal",
-      "parent": "",
+      "parent": "folio-assistant-sb31",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:01:56Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T08:24:00Z",
       "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** minor\n\nRule `scz-pin-third-party-by-full-sha`.\n\n-",
       "file": "beans/defs/folio-assistant-vbhb--sci-and-folio-assistant-pin-tools-and-workflows-to.md"
     },
@@ -8676,7 +8718,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-10-31T08:21:00Z",
       "preview": "**Category:** security (supply chain). **Rule:** `scz-pin-third-party-by-full-sha`. **Severity:** normal: first-party code, but the gate's blocking check fails.\n\n**Evidence** (`security-gate.ts` on dth-hrh `ffb89eb`: `action-sha-pinning — fail: 2 unpinned`):\n\n- `.github/workflows/wg-comment-check.yml:18` `litlfred/folio-assistant-core/.github/workflows/public-comment-check.yml@main`, with `content",
       "file": "beans/defs/folio-assistant-vj2d--dth-hrh-reusable-workflows-at-main-in-write-token-wo.md"
     },
@@ -9216,11 +9258,11 @@
       "status": "in-progress",
       "type": "bug",
       "priority": "high",
-      "parent": "",
+      "parent": "folio-assistant-sb31",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:01:56Z",
-      "updatedAt": "2026-10-31T04:25:00Z",
+      "updatedAt": "2026-10-31T08:24:00Z",
       "preview": "Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.\n\n**Category:** security · **Severity:** major\n\nRule `scz-review-dependency-changes`. `bun",
       "file": "beans/defs/folio-assistant-wox6--dependency-advisories-happy-dom-critical-node-forg.md"
     },
@@ -9444,7 +9486,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:10:00Z",
-      "updatedAt": "2026-10-31T04:22:00Z",
+      "updatedAt": "2026-10-31T08:21:00Z",
       "preview": "**Category:** security (supply chain). **Rule:** `scz-pin-third-party-by-full-sha`. **Severity:** high: the gate's blocking check fails, and the workflows hold `contents: write`.\n\n**Evidence** (`security-gate.ts` → `action-sha-pinning — fail: 12 unpinned outside exempt staging workflows`; smart-trust `496290a`):\n\n| file:line | uses |\n|---|---|\n| `.github/workflows/fhirbuild.yml:25` | `litlfred/sma",
       "file": "beans/defs/folio-assistant-xbfx--smart-trust-12-unpinned-actions-and-reusable-workflow.md"
     },
@@ -10432,14 +10474,7 @@
       ]
     }
   ],
-  "findings": [
-    {
-      "kind": "blocked-without-expiry",
-      "bean": "folio-assistant-max2",
-      "blocks": "folio-assistant-llxa",
-      "detail": "blocks `folio-assistant-llxa` (declared by its blocked_by:), and neither states an expiry, so the block cannot be told from abandoned work"
-    }
-  ],
+  "findings": [],
   "plan": {
     "milestones": [
       {
@@ -10488,9 +10523,9 @@
         "share": 0.972972972972973
       }
     ],
-    "orphanOpen": 46,
-    "openTotal": 48,
+    "orphanOpen": 47,
+    "openTotal": 49,
     "coveredOpen": 1,
-    "duplicateIds": 1
+    "duplicateIds": 0
   }
 }
