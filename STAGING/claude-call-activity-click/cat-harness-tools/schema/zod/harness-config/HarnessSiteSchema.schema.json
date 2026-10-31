@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/HarnessSite",
+  "definitions": {
+    "HarnessSite": {
+      "type": "object",
+      "properties": {
+        "landing": {
+          "type": "boolean"
+        },
+        "build": {
+          "type": "object",
+          "properties": {
+            "home": {
+              "type": "string"
+            },
+            "pre": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+              }
+            },
+            "sourceSteps": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+              }
+            },
+            "siteSteps": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/HarnessSiteSchema.schema.json",
+  "title": "HarnessSiteSchema",
+  "description": "Generated from `HarnessSiteSchema` in schemas/kg/harness-config.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  }
+}

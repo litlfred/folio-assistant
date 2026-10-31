@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NamedQueryExecution/node/A_FormatResponse.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NamedQueryExecution/node/A_FormatResponse",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Format Universal Result Response Envelope",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NamedQueryExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/named-query-execution"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Executed"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NamedQueryExecution#flow/Flow_ToCaller"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_FormatResponse"
+    }
+  ]
+}

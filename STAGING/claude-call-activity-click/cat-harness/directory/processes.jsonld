@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "processes",
+      "path": "processes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/processes"
+      ],
+      "description": "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth, not illustrations of one: a lane binds a Role, an activity names the Skill to run through `<folio:skill ref>`, and `workflow_complete` refuses a step that is not enabled. WHERE A RUNNING INSTANCE GOT TO is not here — that is `beans/workflows/`, kind `workflow-state`, which is `state` rather than `content`. Two questions, two graphs. GROUPED BY CONCERN since placement PR3 (bean `63wl`): `processes.json` names the groups, each diagram sits in `processes/<group>/` and a DMN in `processes/<group>/decisions/` beside the diagrams that read it; the content-type diagrams moved up to the instances that own their skills (folio-assistant-core, folio-assistant-sci, fhir-harness), whose same-named `processes/<group>/` are members of these groups.",
+      "readmePath": "processes/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Task_ReadFindings.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Task_ReadFindings",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Read the sidecar findings",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/role/narrative-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/lane/Lane_NarrativeReviewer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/node/Task_ReadFindings"
+    }
+  ]
+}

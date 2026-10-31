@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Edit the document as decided, on a feature branch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment/lane/Lane_Author",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAuthorEdits"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangeSet"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits"
+    }
+  ]
+}

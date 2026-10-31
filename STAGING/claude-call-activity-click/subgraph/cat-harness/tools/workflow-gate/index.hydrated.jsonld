@@ -1,0 +1,74 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/workflow-gate/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/workflow-gate.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Ask before doing work a strict process governs. The content-agnostic processes refuse a step that is not enabled; the per-content-type ones advise.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/workflow.ts"
+        },
+        "mcp": {
+          "tool": "workflow_gate"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "name": "instance",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/InstanceId"
+          },
+          {
+            "arg": {
+              "positional": 1
+            },
+            "name": "activity",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+          },
+          {
+            "description": "Who you say would perform it. Recorded only: strict mode authorizes the principal GitHub vouches for (issue #1207).",
+            "name": "actor",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "The content it would act on, for the access check.",
+            "name": "target",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Permitted, refused with the reason, or advisory — and the task-authorization verdict.",
+            "name": "verdict",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "workflow-gate",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/process-state",
+      "title": "May this step be performed?"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/workflow-gate",
+  "path": "tools/workflow-gate/"
+}

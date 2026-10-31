@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/fhir-harness/directory/fhir-harness-libraries.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-libraries.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-libraries",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "fhir-harness-libraries",
+      "path": "libraries/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/software-library"
+      ],
+      "title": "Software libraries",
+      "description": "The outside libraries this layer's code imports or keeps vendored, one `software-library` node each. A dependency in `package.json` is a `software-library/1.0.0` node: the version and sha512 `bun.lock` pins, the registry tarball, the SPDX licence read from the installed package, the range, whether it is a dev dependency, and the files that import it (`usedBy`). A bundle kept under `scripts/assets/vendor/<name>/<version>/` (LHC-Forms, the NLM Form Builder, jQuery, ucum-lhc) is a `software-library/1.1.0` node marked `vendored`: name, version, tarball and sha512 from its `vendored.json`, and its licence from its own licence file (an NLM notice the SPDX list does not carry is a `LicenseRef-`). The imports inside a bundle are not this layer's, so they name no node (owner, 2026-10-26: \"A. Record as vendored\"). GENERATED, never hand-edited: `bun run cat libraries:derive` writes it and `libraries:check` fails on a stale node, an import no node names, a shim no node names, and a vendored file whose bytes are not the ones its `vendored.json` records. The kind is cat-harness's (bean `jbvi`); this layer keeps its own nodes because it pins its own versions.",
+      "readmePath": "libraries/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-libraries"
+    }
+  ]
+}

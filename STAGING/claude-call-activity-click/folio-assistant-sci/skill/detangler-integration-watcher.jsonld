@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/skill/detangler-integration-watcher.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/skill/detangler-integration-watcher",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "detangler-integration-watcher",
+      "title": "/detangler-integration-watcher",
+      "description": "Structural-QA integration watcher — watches the default branch + open active PRs + newly-opened PRs for organisational changes (paper / chapter manifest edits, new blocks, edited `uses[]` / `kind` / `label` / `interprets` / `defines` / `tags`, block renames) and runs the editor's detanglement skill suite (`content-graph`, `chapter-complexity-review`, `block-density`, `critical-path-analysis`) on every detected change. Queues findings, auto-discharges mechanical fixes (table extraction), routes block reorderings through narrative review before applying them, and escalates section splits / merges / cross-chapter moves / new sections to the author. Inherits shared mechanics from `local/integration-watcher`.",
+      "instructionsPath": "skills/content/folio-paper-adapter/detangler-integration-watcher.md",
+      "instructionLines": 354,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/detangler-integration-watcher"
+    }
+  ]
+}

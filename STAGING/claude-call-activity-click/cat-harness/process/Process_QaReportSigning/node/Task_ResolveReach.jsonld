@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_QaReportSigning/node/Task_ResolveReach.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_QaReportSigning/node/Task_ResolveReach",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Resolve the performer's reach [effectiveReach + signing-api probe]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/role/validation-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/qa-report-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_QaReportSigning#flow/S02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_QaReportSigning#flow/S03"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_ResolveReach"
+    }
+  ]
+}

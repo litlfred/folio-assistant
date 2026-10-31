@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "P2.2b · State the fixed-version URL and hash a Consent cites",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/role/publication-manager",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/skill/content-publish"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F67"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F68"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "$ref": "#/definitions/NamedQueryResponse",
+  "definitions": {
+    "NamedQueryResponse": {
+      "type": "object",
+      "properties": {
+        "queryName": {
+          "type": "string"
+        },
+        "datasetIri": {
+          "type": "string"
+        },
+        "quadsLoaded": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "loadTimeMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "executionTimeMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "totalRows": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "queryName",
+        "datasetIri",
+        "quadsLoaded",
+        "loadTimeMs",
+        "executionTimeMs",
+        "totalRows",
+        "rows"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/nquads-distribution/NamedQueryResponseSchema.schema.json",
+  "title": "NamedQueryResponseSchema",
+  "description": "Generated from `NamedQueryResponseSchema` in schemas/kg/nquads-distribution.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  }
+}

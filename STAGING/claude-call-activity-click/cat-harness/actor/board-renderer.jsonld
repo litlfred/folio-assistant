@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/actor/board-renderer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/actor/board-renderer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "board-renderer",
+      "actorKind": "system",
+      "title": "Board renderer",
+      "description": "The client-side code that draws a folio's boards where the reader is: the avatar, window and layout machinery each content kind declares into. Mechanical — it runs a fixed program and exercises no judgement, which is why every decision in the board diagrams sits in the reader's lane. It is NOT the CI pipeline: that publishes and never reacts to a reader, and conflating the two would put a person's click behind a build.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/role/board-renderer"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/board-renderer"
+    }
+  ]
+}

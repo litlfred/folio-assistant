@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/actor/qc-reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/actor/qc-reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "qc-reviewer",
+      "actorKind": "person",
+      "title": "QC Reviewer",
+      "description": "Quality control reviewer who validates publication readiness across L1-L4 layers, runs QA reports, and verifies conformance.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.QCReviewer",
+        "lifecycle": [
+          "validate",
+          "test"
+        ]
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/role/qc-reviewer"
+      ],
+      "permissionName": [
+        "qa-reporting"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/qc-reviewer"
+    }
+  ]
+}

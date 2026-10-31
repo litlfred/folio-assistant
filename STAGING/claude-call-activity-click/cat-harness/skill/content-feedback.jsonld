@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/content-feedback.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/content-feedback",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "content-feedback",
+      "title": "Content Feedback Collection",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-feedback.md",
+      "instructionLines": 45,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skills/content-feedback/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skills/content-feedback/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback"
+    }
+  ]
+}

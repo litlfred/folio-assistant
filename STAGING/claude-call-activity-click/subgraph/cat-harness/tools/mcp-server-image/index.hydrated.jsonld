@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/mcp-server-image/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/mcp-server-image.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Build and run the folio MCP server as one image carrying Bun, TeX Live, Lean, lean-lsp-mcp and the generated Python set — the image `deploy/` serves behind the auth gateway. Run it with `docker run -i --rm paper-assistant --stdio`, or `--http` on port 8080.",
+      "install": {
+        "container": "bun run cat mcp:image"
+      },
+      "invoke": {
+        "manual": true
+      },
+      "io": {
+        "inputs": [],
+        "outputs": []
+      },
+      "name": "mcp-server-image",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "docker"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-auth",
+      "title": "folio MCP server, as a container"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/mcp-server-image",
+  "path": "tools/mcp-server-image/"
+}

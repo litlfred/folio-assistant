@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-KGEdge.schema.json",
+  "title": "Knowledge graph: edge",
+  "description": "One reified statement: a predicate from a source node to a target node, with its derivation and evidence.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "const": "KGEdge",
+      "description": "Resource type identifier for KGEdge logical model"
+    },
+    "@context": {
+      "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri",
+          "description": "URI reference to external JSON-LD context"
+        },
+        {
+          "type": "object",
+          "description": "Inline JSON-LD context",
+          "properties": {
+            "@version": {
+              "type": "number",
+              "const": 1.1
+            },
+            "fhir": {
+              "type": "string",
+              "const": "http://hl7.org/fhir/"
+            }
+          },
+          "additionalProperties": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        {
+          "type": "array",
+          "description": "Array of JSON-LD context objects/URIs",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "@type": {
+      "type": "string",
+      "description": "JSON-LD type identifier for KGEdge logical model",
+      "examples": [
+        "LogicalModel-KGEdge"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "description": "Always Statement (rdf:Statement)."
+    },
+    "predicate": {
+      "$ref": "./ValueSet-KGL1PredicatesVS.schema.json",
+      "description": "The predicate; the layer's edge table says which (source, target) pairs it licenses."
+    },
+    "source": {
+      "type": "string",
+      "description": "IRI of the source node."
+    },
+    "target": {
+      "type": "string",
+      "description": "IRI of the target node."
+    },
+    "qualifier": {
+      "type": "string",
+      "description": "A label on the relationship."
+    },
+    "derivation": {
+      "$ref": "./ValueSet-KGDerivationVS.schema.json",
+      "description": "derived | inferred | decided."
+    },
+    "note": {
+      "type": "string",
+      "description": "Why it is what it is. Required unless derived."
+    },
+    "evidence": {
+      "$ref": "StructureDefinition-KGEvidenceLocation.schema.json",
+      "description": "Where it came from. Required unless derived."
+    },
+    "flagRef": {
+      "type": "string",
+      "description": "Id of a flag raised while extracting this edge."
+    },
+    "skill": {
+      "type": "string",
+      "description": "Skill id that produced this edge."
+    },
+    "properties": {
+      "type": "object",
+      "description": "Fields of the statement itself."
+    },
+    "id": {
+      "type": "object",
+      "description": "Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."
+    },
+    "modifierExtension": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "FHIR Extension"
+      },
+      "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."
+    },
+    "resolutionStatus": {
+      "$ref": "./ValueSet-KGResolutionStatusVS.schema.json",
+      "description": "For a cross-format join: unresolved | resolved | ambiguous."
+    },
+    "matchedOn": {
+      "type": "string",
+      "description": "What the join was matched on."
+    }
+  },
+  "required": [
+    "resourceType",
+    "type",
+    "predicate",
+    "source",
+    "target",
+    "derivation"
+  ],
+  "allOf": [
+    {
+      "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "resourceDefinition": {
+          "type": "string",
+          "format": "uri",
+          "const": "http://smart.who.int/base/StructureDefinition/KGEdge"
+        },
+        "fhir:parent": {
+          "type": "string",
+          "const": "http://hl7.org/fhir/StructureDefinition/Base"
+        },
+        "jsonld:valuesets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "const": [
+            "KGDerivationVS",
+            "KGL1PredicatesVS",
+            "KGResolutionStatusVS"
+          ]
+        },
+        "jsonld:contextTemplate": {
+          "type": "object",
+          "const": {
+            "@version": 1.1,
+            "fhir": "http://hl7.org/fhir/",
+            "KGDerivationVS": "http://smart.who.int/base/ValueSet-KGDerivationVS.jsonld",
+            "KGL1PredicatesVS": "http://smart.who.int/base/ValueSet-KGL1PredicatesVS.jsonld",
+            "KGResolutionStatusVS": "http://smart.who.int/base/ValueSet-KGResolutionStatusVS.jsonld"
+          }
+        }
+      }
+    }
+  ]
+}

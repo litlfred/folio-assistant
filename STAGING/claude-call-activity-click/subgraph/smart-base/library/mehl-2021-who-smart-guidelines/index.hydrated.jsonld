@@ -1,0 +1,67 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/mehl-2021-who-smart-guidelines/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/smart-base/mehl-2021-who-smart-guidelines/manifest.jsonld",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/mehl-2021-who-smart-guidelines/manifest.jsonld",
+      "title": "WHO SMART guidelines: optimising country-level use of guideline recommendations in the digital age"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/mehl-2021-who-smart-guidelines/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/mehl-2021-who-smart-guidelines/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/mehl-2021-who-smart-guidelines/blocks/prose-sec-000.jsonld",
+          "title": "WHO SMART guidelines: optimising country-level use of guideline recommendations in the digital age"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/mehl-2021-who-smart-guidelines/blocks/prose-sec-front-matter",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/mehl-2021-who-smart-guidelines/blocks/prose-sec-front-matter.jsonld",
+          "title": "Front matter"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/mehl-2021-who-smart-guidelines/blocks",
+      "path": "library/mehl-2021-who-smart-guidelines/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/library/mehl-2021-who-smart-guidelines/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/mehl-2021-who-smart-guidelines/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/mehl-2021-who-smart-guidelines/sections/sec-000.jsonld",
+          "title": "WHO SMART guidelines: optimising country-level use of guideline recommendations in the digital age"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/mehl-2021-who-smart-guidelines/sections/sec-front-matter",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/mehl-2021-who-smart-guidelines/sections/sec-front-matter.jsonld",
+          "title": "Front matter"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/mehl-2021-who-smart-guidelines/sections",
+      "path": "library/mehl-2021-who-smart-guidelines/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/mehl-2021-who-smart-guidelines",
+  "path": "library/mehl-2021-who-smart-guidelines/"
+}

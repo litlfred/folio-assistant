@@ -1,0 +1,553 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2601.04544v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-000-introduction.md",
+      "narrative": null,
+      "content": "As large language models (LLMs) continue to improve in agent-based scenarios, multi-agent systems\n(MAS) have become increasingly mature. Their core idea is to decompose complex problems into smaller\nsub-tasks, each of which is handled by a specialized expert agent [1]. Representative applications include\nVibe Coding [2] and Deep Research [3].Today, large-scale enterprise systems—such as those in finance,\nhealthcare, education, and cloud computing are also increasingly relying on multi-agent architectures\nto deliver accurate and eﬀicient problem solving capabilities. Despite their broad applica",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Introduction. Multi-agent systems split problems across specialised expert agents, and the router that picks the agent sets a floor on the whole system's performance. Routing is either performance-based (choosing model sizes to trade cost against accuracy, Figure 1a) or task-based (choosing domain experts, Figure 1b), and task-based routing, the enterprise backbone, suffers from agent conflicts: queries such as \"website latency\" in cloud computing may belong to several agents at once, yet single-label routers must pick one, and static routers cannot adapt as categories change. TCAR instead writes a reasoning chain and names every relevant agent, and a Refining Agent reconciles the selected agents' answers. The claimed contributions are a reasoning-centric router that outputs rationales and selects several agents (described as the first of its kind), the generate-then-refine pipeline for conflicts, and an open-source release; evaluation uses CLINC150, HWU64, MINDS14, SGD and a private cloud-computing dataset.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "TCAndon-Router\nTCAndon-Router: Adaptive Reasoning Router for\nMulti-Agent Collaboration\nJiuzhou Zhao∗, Chunrong Chen∗, Chenqi Qiao∗, Lebin Zheng∗,\nMinqi Han∗, Yanchi Liu∗Yongzhou Xu∗Xiaochuan Xu∗Min Zhang∗\n∗Tencent Cloud Andon\n{joskazhao, charentchen, chenqiqiao, lebinzheng}@tencent.com\n{minqihan, yanncyliu, alanxu, xxcxu, alexzmzhang}@tencent.com\nAbstract\nMulti-Agent Systems(MAS) have become a powerful paradigm for building high performance intelli-\ngent applications. Within these systems, the router responsible for determining which expert agents\nshould handle a given query plays a crucial ro",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Title, authors and abstract of \"TCAndon-Router: Adaptive Reasoning Router for Multi-Agent Collaboration\" by Jiuzhou Zhao and eight co-authors at Tencent Cloud Andon. In a multi-agent system the router decides which expert agents handle a query. The abstract argues that task routing (sending queries to domain experts) suits enterprise use, but static single-label routers struggle to add new agents and cannot handle conflicts where agents' capabilities overlap. TCAR, the proposed router, accepts new agents dynamically, writes a natural-language reasoning chain before predicting a set of candidate agents, and passes their independent answers to a Refining Agent that merges them. The model is released on Hugging Face.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/figure-img-p002-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../images/img-p002-2.png",
+      "narrative": "draft",
+      "content": "Figure 1: Comparison between (a) performance router which routes queries to different sized models (Small LLM vs Large LLM) to balance cost and latency, and (b) task router which routes queries to domain-specific expert agents (ELB Agent, CDN Agent, DNS Agent) to improve accuracy.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-related-work.md",
+      "narrative": null,
+      "content": "Performance based routing selects among models of different sizes to balance cost and latency. Hybrid\nLLM[18] proposes a model based on the BERT architecture to assess the diﬀiculty of a query and make\nrouting decisions. Self-REF[19] uses an LLM to output a confidence score, For low confidence, it uses an\nLLM or rejects the answer, while for high confidence, it uses an SLM.\nTask based routing assigns queries to domain-specific expert agents to achieve higher accuracy. This",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The opening of Related Work, cut off by the extraction. Performance-based routing chooses among model sizes for cost and latency: Hybrid LLM uses a BERT-style model to judge query difficulty, and Self-REF has an LLM output a confidence score, sending high-confidence queries to a small model. The block ends as the paragraph on task-based routing begins; its continuation is in the next block.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Method",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-002-method.md",
+      "narrative": null,
+      "content": "2\nTCAndon-Router\ndirections. Early approaches largely employed BERT-style encoders [20], formulating routing as a fixed\nsingle-label classification problem grounded in a predefined intent space and model structure. To support\nadding new agents without retraining, some studies shifted toward KNN-based methods, such as com-\nputing similarity between query and agent representations[21], or using query–agent dual-tower models\nor fusion-based cross-encoders [22] to dynamically compute relevance scores. [9]Train a binary classifier\nto determine whether the model performs excellently on a specific ta",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The rest of Related Work, followed by the one-line opening of the Method section. Task routing moved from BERT-style single-label classifiers over a fixed intent space, to similarity and dual-tower or cross-encoder scoring that lets new agents be added without retraining, to LLM-based routers (ArchRouter, AgentRouter's knowledge-graph edge prediction, a confidence-driven router). The authors' criticism is that all still pick a single agent and give no structured explanation. Multi-agent frameworks such as AutoGen, CAMEL and CrewAI focus on how agents collaborate rather than which should take part, and pay little attention to merging several agents' outputs.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Problem Formulation",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-problem-formulation.md",
+      "narrative": null,
+      "content": "A multi-agent system consists of a set of expert agents with different domain specializations. Let A =\n{a1, a2, ..., aN} denote the set of all available expert agents. In real systems, each expert agent is not hard-\ncoded into the router through a fixed identifier; instead, it exposes its capabilities and responsibilities\nto the routing model through a natural-language description. We denote this description as di, and\ndefine a natural-language ”encoding function” g such that g(ai) = di.The set of all descriptions is\nD = {d1, d2, ..., dN} Given a user query q, the router does not operate direc",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Problem formulation. The system has expert agents A = {a1, …, aN}, each exposed to the router only through a natural-language description di = g(ai). The router's prompt concatenates its instruction, the user query q and all descriptions, Prompt(q, A) = Φ(ins, q, D), and the router maps it to a reasoning text Cq and a selected agent set Aq.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Dynamic Agent Addition",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-dynamic-agent-addition.md",
+      "narrative": null,
+      "content": "Traditional methods typically bind a router R to a fixed agent set A, when A changes R must be\nretrained. In TCAR, adding a new agent requires only appending anew to the existing set, yielding\nA′ = A ∪{anew} which produces a new description set D′ = D ∪{dnew}, The routing process then\nbecomes (Cq, Aq) = R(Prompt(q, D′)), Aq ⊆A, meaning that the router R itself does not need to be\nmodified or retrained to support newly added agents. This property greatly improves eﬀiciency and\nusability in real-world enterprise environments.\n3.3",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Dynamic agent addition. Because agents enter the router only through their descriptions, adding an agent means appending its description, D′ = D ∪ {dnew}; the router itself is neither modified nor retrained, which the authors present as the practical advantage over routers bound to a fixed agent set.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Multi-Agent Conflicts",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-005-multi-agent-conflicts.md",
+      "narrative": null,
+      "content": "Selecting Multiple Agents. Traditional task routing typically formulates routing as a single-label\nclassification problem:R(Prompt(q, A)) = ai ∈A meaning that each query can only be assigned to a sin-\ngle agent. This formulation implicitly assumes strict and mutually exclusive domain boundaries, as well\n3\nTCAndon-Router\nas a clearly defined intent space—assumptions that rarely hold in real enterprise environments. When\nmultiple agents are simultaneously suitable for handling a query due to overlapping domain responsi-\nbilities or cross-domain problem characteristics, an agent conflict occurs,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "How TCAR handles agent conflicts, in three parts. First, routing is redefined from picking one agent to selecting a subset Aq ⊆ A with |Aq| ≥ 1, a conflict being the case |Aq| > 1. Second, the router reasons before it selects, analysing the query's likely causes, the technical stack and each agent's responsibilities; the stated benefits are more stable selection under overlap or ambiguity, and reasoning that engineers can inspect to fix routing errors or agent descriptions. Third, all selected agents answer in parallel and a Refining Agent filters and fuses their answers into one, yq = F({rij}), so that conflicts become multi-perspective evidence rather than a forced single choice.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Training TCAR",
+      "pageStart": 4,
+      "pageEnd": 6,
+      "target": "../sections/sec-006-training-tcar.md",
+      "narrative": null,
+      "content": "To endow the router R with both multi-agent selection capabilities and interpretable reasoning, we adopt\na two-stage[28] training strategy. We first apply supervised fine-tuning (SFT)[29] to teach the model\nthe basic “reason–then–select” pattern. We then further enhance the quality of agent selection and the\nstability of reasoning through reward-based reinforcement learning using DAPO [30].\nSupervised Fine-Tuning. In the first stage, we train the model using labeled data with standard\ncausal language modeling. SFT equips the model with the following capabilities: (i) performing semantic\nalignm",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Training TCAR in two stages. Supervised fine-tuning with the standard autoregressive loss teaches the reason-then-select output, using a dedicated <reason> tag rather than <think>. Reinforcement learning with DAPO then improves selection. The reward applies to the agent set only and combines a precision-like term R1 = |Aq ∩ A∗| / max(1, |Aq|), a coverage term R2 = |Aq ∩ A∗| / max(1, |A∗|), and a length penalty β·max(|Aq| − |A∗|, 0) against listing too many agents, weighted by α and β. The prose describes R2 as all-or-nothing (paid only when Aq contains the whole gold set), but the formula given is the fractional recall. Figure 2 contrasts a solo agent with the Refining Agent pipeline.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/figure-img-p005-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../images/img-p005-2.png",
+      "narrative": "draft",
+      "content": "Figure 2: Execution pipeline architectures. (a) Solo Agent: the router selects a single solver agent to respond directly to the query. (b) Refining Agent: the router selects candidate solver agents (Solver Agent A, B, C) running in parallel, and a downstream Refining Agent aggregates and reconciles partial responses into a unified Final Answer.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiments",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-007-experiments.md",
+      "narrative": null,
+      "content": "We present the experimental results and analyses.\n4.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "A one-line heading paragraph opening the Experiments section.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experimental Setup",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-008-experimental-setup.md",
+      "narrative": null,
+      "content": "This section introduces the datasets, baselines, evaluation metrics, and implementation details used to\nevaluate TCAR. All experiments focus on the core task of multi-agent domain routing, aiming to thor-\noughly assess TCAR’s effectiveness under domain conflicts, ambiguous intents, and real-world enterprise\nscenarios.\nDatasets. We conduct evaluations on four public intent-classification datasets and one internal enter-\nprise dataset:\n• CLINC150 [14]: Contains 150 intent categories covering everyday conversational scenarios. The\ntask boundaries are clear, but the large number of classes leads t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Experimental setup. Datasets: CLINC150 (150 intents, long agent descriptions), HWU64 (64 intents, cross-domain ambiguity), MINDS14 (multilingual, 14 domains), SGD (multi-turn dialogue), and QCloud, an internal Tencent Cloud dataset with stronger domain coupling and more agent conflicts. Metrics are accuracy on single-agent datasets, F1 on multi-agent ones, and an end-to-end task success rate after refinement. Baselines are dynamic routers: GPT-5.1, Claude-4.5, DeepSeek-v3.1, ArcRouter and the Qwen3 family. The released model is Qwen3-4B-Instruct-2507, fully fine-tuned with ms-swift on 8 GPUs for one epoch; for RL, samples whose 8 rollouts agree above τ = 0.6 are dropped as already learned, and initialisation from a Slerp-merged model was also tried.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Main Results",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-009-main-results.md",
+      "narrative": null,
+      "content": "Table 1 presents the performance of all models across the five datasets (CLINC150, HWU64, MINDS14,\nSGD, QCloud). Overall, general-purpose LLMs such as GPT-5.1 and DeepSeek-v3.1 outperform most\nsmall-scale open-source models by a considerable margin.\nDespite having only 4B parameters, our\nTCAR achieves state-of-the-art performance on all datasets except CLINC150. CLINC150 contains 150\nintent categories, resulting in extremely long prompts (averaging 18k tokens), which pose challenges for\nsmaller models that struggle with ultra-long sequence processing. On multi-turn (SGD) and multilingual\n(MIND",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Main results (Table 1, Figure 3). The large general LLMs beat most small open models, but the 4B TCAR reports the best score on every dataset except CLINC150, whose 150 intents make prompts average 18k tokens: 91.63 on HWU64, 96.70 on MINDS14, 91.58 on SGD and 93.98 F1 on QCloud, against GPT-5.1, Claude-Sonnet-4.5 and DeepSeek-v3.1-terminus. In a human-preference comparison on QCloud, the Refining Agent (built on DeepSeek-v3.1) wins human-preference comparisons against a single randomly chosen agent, most clearly on troubleshooting queries; for consultation queries one agent is usually enough. The figure's extracted labels give win rates of 27.0% and 63.0%, which by the caption are consultation and troubleshooting respectively.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Ablation Studies",
+      "pageStart": 7,
+      "pageEnd": 9,
+      "target": "../sections/sec-010-ablation-studies.md",
+      "narrative": null,
+      "content": "To systematically analyze the contribution of each component in TCAR, we conduct ablation studies\nalong three dimensions: reasoning capability, training strategy, and the source of RL initialization.\nEffect of Reasoning This experiment evaluates the impact of explicit reasoning chains[10] on routing\nperformance.\n• Without reasoning: The model performs direct classification prediction and outputs only Aq.\n• With reasoning: The model first generates Cq as an explicit and interpretable reasoning chain\nand then outputs the set of agents Aq.\nWe evaluated both settings on the public datasets and the",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Ablation studies on three factors. Reasoning: TCAR with a reasoning chain scores higher than without on all five datasets (Table 2), the largest gap on SGD, 91.58 against 84.96, which the authors read as better generalisation. RL: SFT followed by RL beats SFT alone on four datasets (Table 3), most on SGD, and raises recall on QCloud, curing SFT's tendency to output a single agent, though on CLINC150 it is marginally lower (91.25 against 91.32). Initialisation: RL started from a Slerp merge of five SFT models gives no clear gain in final scores (Table 4) but, in Figure 4, keeps higher entropy at similar reward, which the authors take as broader exploration. The block ends at the heading of the ablation summary.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-011-conclusion.md",
+      "narrative": null,
+      "content": "• Reasoning capability is a key factor for improving routing interpretability and robustness.\n• RL is an essential training stage that enhances recall while maintaining high precision.\n• The choice of RL initialization point is crucial; Slerp-based models offer stronger generalization\nand are less prone to entropy collapse during RL.\n5",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Despite its title, this block holds the three-bullet summary of the ablation findings: reasoning is key to routing interpretability and robustness; RL raises recall while keeping precision high; and the RL initialisation point matters, Slerp-merged models generalising better and resisting entropy collapse.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Analysis",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-012-analysis.md",
+      "narrative": null,
+      "content": "After validating the overall effectiveness of TCAR through the main results and ablation studies, we\nfurther analyze its behavioral characteristics and internal mechanisms from multiple perspectives. This\nsection provides an in-depth examination of error types, reasoning quality, multi-agent collaboration\neffects, and system eﬀiciency, offering a more comprehensive understanding of the model’s strengths and",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The opening of the Analysis section, cut off mid-sentence: it announces an examination of error types, reasoning quality, multi-agent collaboration effects and system efficiency.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Limitations",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-013-limitations.md",
+      "narrative": null,
+      "content": "5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "An empty block: it holds only the subsection number \"5.1\", the extraction having placed the Limitations heading here while its text sits in a later block.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Error Analysis",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-014-error-analysis.md",
+      "narrative": null,
+      "content": "To systematically understand the major sources of routing errors, we categorize the mistakes and observe\nthat TCAR’s errors primarily fall into three types: (1) Incomplete problem descriptions.\nUser\nqueries may lack key information. For example, in “What should I do if my webpage loads slowly?”,\nalthough TCAR’s reasoning often infers that multiple agents are needed, the lack of essential context\nmay still lead to deviations; see Appendix B. (2) Insuﬀicient understanding of highly domain-\nspecific scenarios. In Tencent Cloud use cases, the model sometimes struggles with understanding\nspecialize",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Error analysis. TCAR's routing errors fall into three types: incomplete queries lacking key context (such as \"What should I do if my webpage loads slowly?\"); misunderstanding of highly domain-specific Tencent Cloud terminology; and reasoning that is sound but disagrees with the agents finally output, which the authors leave as an open problem. Examples are in Appendix B.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Multi-Agent Collaboration Analysis",
+      "pageStart": 10,
+      "pageEnd": 15,
+      "target": "../sections/sec-015-multi-agent-collaboration-analysis.md",
+      "narrative": null,
+      "content": "Multi-agent collaboration effectively supplements information from different perspectives. In Tencent\nCloud troubleshooting scenarios, multiple agents are often required to jointly diagnose and resolve issues,\nas a single agent is typically insuﬀicient. Moreover, the Refining Agent demonstrates strong capability in\nreconciling conflicting responses. With RAG support, the Refining Agent compares and filters multiple\ncandidate answers using the knowledge base, enabling conflicting opinions to converge. For instance, in\ntroubleshooting scenarios localization tasks, partial correctness from differ",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "The rest of the paper's body, followed by its references. Collaboration analysis: in troubleshooting, several agents are often needed, and the Refining Agent, with RAG over a knowledge base, reconciles conflicting answers. Efficiency: the average number of routed agents is only 1.37, the reasoning averages under 100 tokens with under one second of GPU latency, and collaboration adds on average 0.37 extra agent calls. Limitations: performance depends on hand-written agent descriptions, and rare or highly specialised cases and heavily changed instructions remain unstable. The conclusion restates the contributions and plans structured reasoning constraints, more efficient collaboration protocols and cheaper expansion to new domains. The references cover multi-agent surveys, routing work, the evaluation datasets, and the training methods and models used.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "prompt",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../sections/sec-016-prompt.md",
+      "narrative": null,
+      "content": "TCAR Prompt:\nYou are a Router Agent. Your job is to determine which Agents should handle the user’s issue based on\nthe chat history.Your goal is to select the appropriate Agents to ensure the problem can be solved eﬀiciently\nand accurately. You may select up to 3 Agents.\n# Agent List\n{agents}\n# Notes\n+ The Description is each Agent’s capability description. When selecting an Agent, you must ensure that\nits capabilities clearly allow it to resolve the user’s problem.\n+ If no Agent can reasonably handle the problem, output ”oos” in the <ID> tag.\n# Output Format\nOutput in XML format. If multiple",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Appendix A: the two prompts. The router prompt tells the model to pick up to 3 agents from the agent list whose descriptions clearly cover the user's problem, output \"oos\" if none can, and answer in XML with a <Reason> and one <ID> per agent. The Refining Agent prompt asks it to compare and merge the agents' answers into one final answer, avoiding repetition, stating any conflicts between answers explicitly, and politely refusing if no answer is useful.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    },
+    {
+      "id": "library/arxiv-2601.04544v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Badcase",
+      "pageStart": 15,
+      "pageEnd": 16,
+      "target": "../sections/sec-017-badcase.md",
+      "narrative": null,
+      "content": "Incomplete problem descriptions\nInput Query: What should I do if a webpage loads very slowly?\nTCAR Output:\n<Reason> The user reports that “the webpage loads very slowly,” which requires diagnosis from both the\nnetwork path and acceleration layers. The Network Agent can analyze public/private network latency, packet\nloss, jitter, and path quality. The CDN Agent can examine CDN access latency, origin fetch behavior, and\ndistribution policies. If EdgeOne is being used, the EO Agent should investigate origin latency, edge node\nissues, and configuration problems. </Reason>\n<ID>network_agent</ID>\n<I",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "draft",
+        "text": "Appendix B: two failure cases. For the incomplete query \"What should I do if a webpage loads very slowly?\", TCAR reasons that diagnosis spans the network path and acceleration layers and routes to the network, CDN and EdgeOne agents. In the domain-specific case, a query about a CKafka configuration change is routed to the RocketMQ agent, because its description mentions configuration changes, rather than to the CKafka agent.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed"
+        },
+        "draftedAt": "2026-10-24"
+      }
+    }
+  ]
+}

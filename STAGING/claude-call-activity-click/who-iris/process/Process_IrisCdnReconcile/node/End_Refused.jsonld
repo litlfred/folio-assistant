@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnReconcile/node/End_Refused.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Nothing marked",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnReconcile#flow/R5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused"
+    }
+  ]
+}

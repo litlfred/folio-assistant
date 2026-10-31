@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/skill/proof-status-tracking.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/skill/proof-status-tracking",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "proof-status-tracking",
+      "title": "Proof Status Tracking",
+      "description": "Maintain the proof-objects.json manifest tracking formalization status, review records, and LaTeX-to-Lean linkages.  Generate status dashboards and enforce review policies.",
+      "instructionsPath": "skills/content/folio-paper-adapter/proof-status-tracking.md",
+      "instructionLines": 225,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-status-tracking"
+    }
+  ]
+}

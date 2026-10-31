@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Quarantine and report the mismatch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnInitialLoad#flow/F7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/process/Process_IrisCdnInitialLoad#flow/F9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine"
+    }
+  ]
+}

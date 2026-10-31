@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/fhir-harness/skill/terminology-management.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/terminology-management.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/terminology-management",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "terminology-management",
+      "title": "terminology-management",
+      "instructionsPath": "skills/content/fhir-ig-authoring/terminology-management.md",
+      "instructionLines": 63,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/terminology-management/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/terminology-management/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Criterion adjudication",
+      "summary": "Two reviewer entries for ONE QA criterion disagree: ask the adjudication, then do the one of three things that a criterion disagreement admits.",
+      "description": "Two reviewer entries for ONE QA criterion disagree: ask the adjudication, then do the one of three things that a criterion disagreement admits.\n\nYou are in this process when the disagreement is about a criterion — a script failing what a reviewer passed, an agent and a person reading the same block differently. If what disagrees is not a criterion, this is the wrong process and `adjudication.bpmn` is the one to call directly, with your own outcomes.\n\nThe three outcomes are legitimate in the same way, and it is not which one is chosen: the finding stands, the criterion does not apply here and should be scoped, or it applies and this is a stated exception. All three converge on A_RecordEntry, because what makes an outcome sound is that its reason was recorded.\n\nADVISORY at the process level, for the reason the adjudication itself is: a judgement cannot be gated, since the whole reason it was entered is that the mechanism ran out of facts. What is NOT relaxable is A_RecordEntry. A judgement nobody wrote down is indistinguishable from a checker that was never run, so the judgement is free and the record is not.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/sdlc/criterion-adjudication.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/criterion-adjudication.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/assets/img/workflows/criterion-adjudication.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/Start_CriterionDisagreement"
+      ],
+      "nodeCount": 7,
+      "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication#flow/F_C1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/Start_CriterionDisagreement",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/Call_Adjudicate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication#flow/F_C2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/Call_Adjudicate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication#flow/F_Stands",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "the finding stands",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Stands"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication#flow/F_Scope",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "the criterion does not apply here",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/A_ScopeCriterion",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Scope"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication#flow/F_Exception",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "it applies; this is an exception",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/A_Dispensation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_Exception"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication#flow/F_C5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/A_ScopeCriterion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication#flow/F_C6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/A_Dispensation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication#flow/F_C7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/A_RecordEntry",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CriterionAdjudication/node/End_Settled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication#flow/F_C7"
+    }
+  ]
+}

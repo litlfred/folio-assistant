@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/asset-extraction.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/asset-extraction",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "asset-extraction",
+      "title": "Asset extraction — the index goes in, the contents do not",
+      "description": "Reading a container — a zip, a PDF, a saved web page — into the knowledge graph. What goes in by default (metadata), what does not (contents), the three timestamps that sit near each other and mean different things, and why a producer string is evidence.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/asset-extraction.md",
+      "instructionLines": 184,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/asset-extraction"
+    }
+  ]
+}

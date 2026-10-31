@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/actor/clinical-sme.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/actor/clinical-sme",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "clinical-sme",
+      "actorKind": "person",
+      "title": "Clinical Subject Matter Expert",
+      "description": "Clinical validator and ground-truth provider who ensures clinical accuracy and completeness of authored content.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.ClinicalSME",
+        "lifecycle": [
+          "validate",
+          "review",
+          "feedback"
+        ]
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/role/clinical-sme"
+      ],
+      "permissionName": [
+        "clinical-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/clinical-sme"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "$ref": "#/definitions/Folio",
+  "definitions": {
+    "Folio": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "papers": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dir": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "dir"
+            ]
+          }
+        },
+        "meta": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "title",
+        "papers"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/FolioSchema.schema.json",
+  "title": "FolioSchema",
+  "description": "Generated from `FolioSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  }
+}

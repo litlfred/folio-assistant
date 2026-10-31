@@ -1,0 +1,85 @@
+{
+  "$ref": "#/definitions/NQuadsPartition",
+  "definitions": {
+    "NQuadsPartition": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Partition identifier, e.g. 'spine' or community/subgraph id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable title for the partition"
+        },
+        "graphIri": {
+          "type": "string",
+          "format": "uri",
+          "description": "Target named graph IRI serialized in the N-Quads"
+        },
+        "fileNq": {
+          "type": "string",
+          "format": "ends_with",
+          "pattern": ".*\\.nq$",
+          "description": "Relative filename of uncompressed W3C N-Quads"
+        },
+        "fileGz": {
+          "type": "string",
+          "format": "ends_with",
+          "pattern": ".*\\.nq\\.gz$",
+          "description": "Relative filename of gzipped W3C N-Quads"
+        },
+        "mediaType": {
+          "default": "application/n-quads",
+          "type": "string",
+          "const": "application/n-quads"
+        },
+        "compressFormat": {
+          "default": "application/gzip",
+          "type": "string",
+          "const": "application/gzip"
+        },
+        "quadCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "itemCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "byteSize": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "sha256": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "graphIri",
+        "fileNq",
+        "fileGz",
+        "quadCount",
+        "itemCount"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/nquads-distribution/NQuadsPartitionSchema.schema.json",
+  "title": "NQuadsPartitionSchema",
+  "description": "Generated from `NQuadsPartitionSchema` in schemas/kg/nquads-distribution.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  }
+}

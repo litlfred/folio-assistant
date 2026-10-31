@@ -1,0 +1,61 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/tools/latex-preflight/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/latex-preflight.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Lint TeX source for the pdflatex-compile failure classes a permissive AST parser accepts — the ones that pass validation and then break the build.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-sci/pipeline/latex-preflight.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--json"
+            },
+            "name": "json",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--warn"
+            },
+            "description": "Report without failing — for a corpus not yet clean.",
+            "name": "warn",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Compile-breaking hazards, located. A clean run here is not a successful compile; it is the absence of these classes.",
+            "name": "findings",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "latex-preflight",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-validation",
+      "title": "LaTeX preflight"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/latex-preflight",
+  "path": "tools/latex-preflight/"
+}

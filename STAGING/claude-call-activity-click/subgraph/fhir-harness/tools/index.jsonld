@@ -1,0 +1,53 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-tools",
+      "@type": "bootstrap:Subgraph",
+      "name": "fhir-ig-tools"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/build-ig-site/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/check-wireframe-questionnaire/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/fhir-cache-seed-npm/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/fhir-package-mirror/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/fsh-cone/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-artifact-jsonld/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-diff/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-export/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-incremental-build/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-jsonld/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-list/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-measure-real-igs/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-pages/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-plan/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-refresh/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-render/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-ast-validity/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-binary-audit/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-cache/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-pages/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-repo-site/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ig-site-data/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ingest-ig-menu/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/ingest-ig-releases/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/jsonld-vocabularies/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/logical-model-schemas/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/pin-ig-terminology/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/sdc-checks/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/stage-ig-sites/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/strip-library-binaries/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/strip-library-content/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/terminology-index/",
+    "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/valueset-schemas/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools",
+  "path": "tools/"
+}

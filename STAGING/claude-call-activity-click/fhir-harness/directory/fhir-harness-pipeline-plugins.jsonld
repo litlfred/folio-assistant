@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/fhir-harness/directory/fhir-harness-pipeline-plugins.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-pipeline-plugins.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-pipeline-plugins",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "fhir-harness-pipeline-plugins",
+      "path": "pipeline-plugins/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/pipeline-plugins"
+      ],
+      "description": "The generic pipeline slots this instance fills, one folio-pipeline-plugin/v1 node per slot, naming PIPELINE_IMPLEMENTATIONS in pipeline/plugin-slots.ts (bean riit, step 3b). Today one: `site-publisher-ig`, the FHIR-IG site publisher that cat-harness-tools' stage-local.ts finds among the dependencies of the repository it publishes (owner, 2026-10-14, Q4).",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-pipeline-plugins"
+    }
+  ]
+}

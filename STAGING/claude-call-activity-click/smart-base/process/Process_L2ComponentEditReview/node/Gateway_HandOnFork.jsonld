@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/smart-base/process/Process_L2ComponentEditReview/node/Gateway_HandOnFork.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Gateway_HandOnFork.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Gateway_HandOnFork",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Hand on and review",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R05"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R06",
+        "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R07"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

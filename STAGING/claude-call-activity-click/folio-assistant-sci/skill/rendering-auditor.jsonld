@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/skill/rendering-auditor.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/skill/rendering-auditor",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "rendering-auditor",
+      "title": "Rendering Auditor",
+      "description": "Multi-pass rendering auditor for content blocks. Validates markdown+TeX syntax, notation consistency, compilation, layout, and visual output across both HTML and PDF pipelines. Used by author agents after edits and as part of QC reports.",
+      "instructionsPath": "skills/content/folio-paper-adapter/rendering-auditor.md",
+      "instructionLines": 426,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/rendering-auditor"
+    }
+  ]
+}

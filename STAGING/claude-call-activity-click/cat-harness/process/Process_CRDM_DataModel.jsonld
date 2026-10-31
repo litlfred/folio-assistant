@@ -1,0 +1,109 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "CRDM data model",
+      "summary": "Draft the data model from the BPA and the requirements, have the BA confirm the entities and the stakeholders confirm the cardinalities, and loop until both.",
+      "description": "Draft the data model from the BPA and the requirements, have the BA confirm the entities and the stakeholders confirm the cardinalities, and loop until both. A requirement the model cannot express is a finding, not a modelling failure: it means the requirement is about something nobody has named.",
+      "enforcement": "strict",
+      "sourcePath": "processes/process/crdm-data-model.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/crdm-data-model.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/assets/img/workflows/crdm-data-model.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/Start_Process_CRDM_DataModel"
+      ],
+      "nodeCount": 8,
+      "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/Start_Process_CRDM_DataModel",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/A_Entities",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/A_Entities",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/A_Relations",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/A_Relations",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/BA_ConfirmEntities",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/BA_ConfirmEntities",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/S_ConfirmCardinality",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/S_ConfirmCardinality",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/GW_Model",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "revise",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/GW_Model",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/A_Entities",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/GW_Model",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/A_Declare",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/A_Declare",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_CRDM_DataModel/node/End_Process_CRDM_DataModel",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel#flow/SF_Process_CRDM_DataModel_8"
+    }
+  ]
+}

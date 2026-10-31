@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/skill/initialization-steps.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/skill/initialization-steps",
+      "@type": "bootstrap:Skill",
+      "label": "initialization-steps",
+      "title": "Every initialization step, as the declarations name them",
+      "description": "Walk every initialization step the declarations name (the instance's own and each one it needs), check each before doing anything, do what can be done, ask for what only a person can do, and report every step as done, not done, could not determine, or stated.",
+      "source": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/skills/initialization-steps.md",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/directory/skills"
+    }
+  ]
+}

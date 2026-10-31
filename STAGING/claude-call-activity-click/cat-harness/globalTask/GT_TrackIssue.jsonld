@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/globalTask/GT_TrackIssue.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/globalTask/GT_TrackIssue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "name": "Open or EDIT the one tracking issue",
+      "summary": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body.",
+      "description": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/ci-health"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_TrackIssue"
+    }
+  ]
+}

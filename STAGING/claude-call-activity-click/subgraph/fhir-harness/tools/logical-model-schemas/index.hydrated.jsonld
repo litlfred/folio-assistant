@@ -1,0 +1,50 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/logical-model-schemas/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/logical-model-schemas.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "A JSON Schema per logical model, from the published FHIR resources.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run fhir-harness/scripts/ig-api-gen.ts --ast output-ast --out <sidecars> --site <site>"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "The IG's AST (`output-ast/`, with the build's `expansions.json`).",
+            "name": "ast",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "`schemas/<stem>.schema.json`, one per logical model.",
+            "name": "logicalModelSchemas",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "logical-model-schemas",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline",
+      "title": "Logical models → JSON Schema"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/logical-model-schemas",
+  "path": "tools/logical-model-schemas/"
+}

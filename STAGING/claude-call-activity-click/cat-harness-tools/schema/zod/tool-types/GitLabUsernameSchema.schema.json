@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/GitLabUsername",
+  "definitions": {
+    "GitLabUsername": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_](?:[A-Za-z0-9_.-]{0,253}[A-Za-z0-9_-])?$",
+      "description": "A GitLab username, e.g. jane.doe"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/GitLabUsernameSchema.schema.json",
+  "title": "GitLabUsernameSchema",
+  "description": "Generated from `GitLabUsernameSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  }
+}

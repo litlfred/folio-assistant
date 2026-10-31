@@ -1,0 +1,118 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Narrative review",
+      "summary": "Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does.",
+      "description": "Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does.\n\nYou are in this process when prose changed. `review-code` is its sibling for code nodes and `review-task` is what dispatches to either, so arriving here means somebody has already decided the change is narrative.\n\nEverything this lane produces is ADVICE. The reviewer records findings; accepting or refusing the change belongs to the editor's lane in `review-task`. The separation is why a review can be thorough without being a veto.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/review-narrative.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/content/review-narrative.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/assets/img/workflows/review-narrative.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Start_ProseChanged"
+      ],
+      "nodeCount": 9,
+      "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Start_ProseChanged",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Task_ReadFindings",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview#flow/F_N1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Task_ReadFindings",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Task_AdjudicateVoice",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview#flow/F_N2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Task_AdjudicateVoice",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Call_VoiceOverlay",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview#flow/F_N3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N3b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Call_VoiceOverlay",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/GW_Translated",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview#flow/F_N3b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/GW_Translated",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Task_ReviewTranslation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview#flow/F_N5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/GW_Translated",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview#flow/F_N6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Task_ReviewTranslation",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/GW_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview#flow/F_N7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/GW_Join",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Task_RecordFindings",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview#flow/F_N8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview#flow/F_N9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/Task_RecordFindings",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/process/Process_NarrativeReview/node/End_NarrativeReviewed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview#flow/F_N9"
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Verifiable Health Link Payload (DRAFT) API",
+    "description": "Verifiable Health Link Payload (DRAFT)\n\nThis logical model constrains the Health Link Payload for a Verifiable Health Link\n",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/StructureDefinition-VerifiableHealthLinkPayload.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the Logical Model StructureDefinition-VerifiableHealthLinkPayload",
+        "description": "This endpoint serves the JSON Schema definition for the Logical Model StructureDefinition-VerifiableHealthLinkPayload.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for StructureDefinition-VerifiableHealthLinkPayload",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./StructureDefinition-VerifiableHealthLinkPayload.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "StructureDefinition-VerifiableHealthLinkPayload": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/trust-phw/StructureDefinition-VerifiableHealthLinkPayload.schema.json",
+        "title": "Verifiable Health Link Payload (DRAFT)",
+        "description": "Verifiable Health Link Payload (DRAFT)\n\nThis logical model constrains the Health Link Payload for a Verifiable Health Link\n",
+        "type": "object",
+        "properties": {
+          "resourceType": {
+            "type": "string",
+            "const": "VerifiableHealthLinkPayload",
+            "description": "Resource type identifier for VerifiableHealthLinkPayload logical model"
+          },
+          "@context": {
+            "description": "JSON-LD context for this logical model with ValueSet vocabularies",
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri",
+                "description": "URI reference to external JSON-LD context"
+              },
+              {
+                "type": "object",
+                "description": "Inline JSON-LD context",
+                "properties": {
+                  "@version": {
+                    "type": "number",
+                    "const": 1.1
+                  },
+                  "fhir": {
+                    "type": "string",
+                    "const": "http://hl7.org/fhir/"
+                  }
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              {
+                "type": "array",
+                "description": "Array of JSON-LD context objects/URIs",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "@type": {
+            "type": "string",
+            "description": "JSON-LD type identifier for VerifiableHealthLinkPayload logical model",
+            "examples": [
+              "LogicalModel-VerifiableHealthLinkPayload"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "description": "Manifest URL for this Health Link"
+          },
+          "key": {
+            "type": "string",
+            "description": "Decryption key for processing files returned in the manifest. 43 characters, consisting of 32 random bytes base64urlencoded."
+          },
+          "exp": {
+            "type": "string",
+            "description": "Optional. Number representing expiration time in Epoch seconds, as a hint to help the Health Link Receiving Application determine if this QR is stale. (Note: epoch times should be parsed into 64-bit numeric types.)"
+          },
+          "flag": {
+            "type": "string",
+            "description": "Optional. String created by concatenating single-character flags in alphabetical order:\n'L' indicates the Health Link is intended for long-term use and manifest content can evolve over time; \n'P' indicates the Health Link requires a Passcode to resolves; and 'U' indicates the Health Link's url resolves to a single encrypted file accessible via GET, bypassing the manifest and SHALL NOT be used in combination with P."
+          },
+          "label": {
+            "type": "string",
+            "description": "Optional. String no longer than 80 characters that provides a short description of the data behind the Health Link."
+          },
+          "v": {
+            "type": "string",
+            "description": "Optional. Integer representing the Health Links protocol version this Health Link conforms to. MAY be omitted when the default value (1) applies."
+          },
+          "type": {
+            "$ref": "./ValueSet-HL.TYPE.schema.json",
+            "description": "Classifying type code to distinguish different types of health links.  If not present then the Health Link is a SMART Health Link."
+          }
+        },
+        "required": [
+          "resourceType",
+          "url",
+          "key",
+          "type"
+        ],
+        "allOf": [
+          {
+            "$ref": "./StructureDefinition-FHIRSchemaBase.schema.json"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "resourceDefinition": {
+                "type": "string",
+                "format": "uri",
+                "const": "http://smart.who.int/trust-phw/StructureDefinition/VerifiableHealthLinkPayload"
+              },
+              "fhir:parent": {
+                "type": "string",
+                "const": "http://smart.who.int/trust-phw/StructureDefinition/HealthLinkPayload"
+              },
+              "jsonld:valuesets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "const": [
+                  "HL.TYPE"
+                ]
+              },
+              "jsonld:contextTemplate": {
+                "type": "object",
+                "const": {
+                  "@version": 1.1,
+                  "fhir": "http://hl7.org/fhir/",
+                  "HL.TYPE": "http://smart.who.int/trust-phw/ValueSet-HL.TYPE.jsonld"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

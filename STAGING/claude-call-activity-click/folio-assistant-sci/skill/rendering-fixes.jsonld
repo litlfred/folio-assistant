@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/skill/rendering-fixes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/skill/rendering-fixes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "rendering-fixes",
+      "title": "Rendering Fixes",
+      "description": "Quick-fix reference for common rendering errors found by the rendering-auditor. Agents should consult this when editing content blocks to avoid introducing issues and to fix flagged problems efficiently.",
+      "instructionsPath": "skills/content/folio-paper-adapter/rendering-fixes.md",
+      "instructionLines": 442,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/rendering-fixes"
+    }
+  ]
+}

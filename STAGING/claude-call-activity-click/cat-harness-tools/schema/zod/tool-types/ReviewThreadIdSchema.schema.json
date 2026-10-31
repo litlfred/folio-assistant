@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/ReviewThreadId",
+  "definitions": {
+    "ReviewThreadId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{6,127}$",
+      "description": "A review thread id — a GitHub review-thread node id or a GitLab discussion id"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ReviewThreadIdSchema.schema.json",
+  "title": "ReviewThreadIdSchema",
+  "description": "Generated from `ReviewThreadIdSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  }
+}

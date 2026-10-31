@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/smart-base/directory/smart-base-typologies.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-typologies.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-typologies",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-base-typologies",
+      "path": "typologies/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/typologies"
+      ],
+      "description": "The graph typologies smart-base owns, one folio-graph-typology/v1 node per file (bean dmx1), as fhir-harness's typologies/ are. Among them `web-annex` (formerly `dak-annex`): a WHO publication's web annexes, L1 or L2, held as data, a kind of smart-base's own because a web annex is a WHO concept fhir-harness may not name.",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-typologies"
+    }
+  ]
+}

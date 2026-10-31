@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/StructureDefinition-FHIRSchemaBase.schema.json",
+  "title": "FHIR Schema Base (SMART Guidelines)",
+  "description": "Base logical model providing the common schema metadata interface inherited by all SMART Guidelines logical models. Every SMART Guidelines logical model schema derives from this base, which documents the shared FHIR and JSON-LD metadata properties used by the JSON Schema generation pipeline.",
+  "type": "object",
+  "properties": {
+    "resourceType": {
+      "type": "string",
+      "description": "Identifier for the logical model resource type"
+    },
+    "resourceDefinition": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URI of the FHIR StructureDefinition that defines this logical model."
+    },
+    "fhir:parent": {
+      "type": "string",
+      "description": "Parent FHIR base type that this logical model is derived from."
+    },
+    "jsonld:valuesets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "ValueSet identifiers used in this logical model for JSON-LD context generation."
+    },
+    "jsonld:contextTemplate": {
+      "type": "object",
+      "description": "JSON-LD context template for this logical model."
+    }
+  },
+  "required": [
+    "resourceType"
+  ]
+}

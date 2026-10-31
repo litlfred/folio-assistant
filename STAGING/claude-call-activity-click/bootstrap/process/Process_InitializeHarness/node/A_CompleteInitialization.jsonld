@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/process/Process_InitializeHarness/node/A_CompleteInitialization.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/process/Process_InitializeHarness/node/A_CompleteInitialization",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Make sure every step is done",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/process/Process_InitializeHarness",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/skill/initialization-steps",
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/bootstrap/process/Process_CompleteInitialization"
+    }
+  ]
+}

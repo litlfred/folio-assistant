@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/Uncertainty",
+  "definitions": {
+    "Uncertainty": {
+      "type": "string",
+      "enum": [
+        "low",
+        "moderate",
+        "high",
+        "deep"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/UncertaintySchema.schema.json",
+  "title": "UncertaintySchema",
+  "description": "Generated from `UncertaintySchema` in schemas/process/decision-methodology-context.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  }
+}

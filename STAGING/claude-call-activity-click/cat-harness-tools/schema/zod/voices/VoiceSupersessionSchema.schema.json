@@ -1,0 +1,55 @@
+{
+  "$ref": "#/definitions/VoiceSupersession",
+  "definitions": {
+    "VoiceSupersession": {
+      "type": "object",
+      "properties": {
+        "on": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "successor": {
+          "type": "object",
+          "properties": {
+            "instance": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "description": "A forge repository's full name, owner/name"
+            },
+            "voiceId": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+$"
+            }
+          },
+          "required": [
+            "voiceId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "on",
+        "by",
+        "quote"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoiceSupersessionSchema.schema.json",
+  "title": "VoiceSupersessionSchema",
+  "description": "Generated from `VoiceSupersessionSchema` in schemas/content/voices.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  }
+}

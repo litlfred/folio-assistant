@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/schema/subgraph-manifest.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/schema/subgraph-manifest",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "subgraph-manifest",
+      "title": "subgraph-manifest",
+      "summary": "The two files a NAMED SUBGRAPH publishes — `index.jsonld` (referenced) and",
+      "module": "schemas/kg/subgraph-manifest.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/subgraph-manifest"
+    }
+  ]
+}

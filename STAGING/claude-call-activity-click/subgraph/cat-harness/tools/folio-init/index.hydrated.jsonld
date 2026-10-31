@@ -1,0 +1,116 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/folio-init/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/folio-init.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/folio-init.ts"
+        },
+        "mcp": {
+          "tool": "folio_init"
+        },
+        "shell": "bun run cat init-folio"
+      },
+      "io": {
+        "inputs": [
+          {
+            "description": "The folio's human title.",
+            "name": "title",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "One entry per author. Repeated rather than a joined string: a name may contain the separator.",
+            "name": "authors",
+            "repeated": true,
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "arg": {
+              "flag": "--content-type"
+            },
+            "name": "content_type",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ContentType"
+          },
+          {
+            "arg": {
+              "flag": "--slug"
+            },
+            "name": "slug",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "description": "Where to create the folio.",
+            "name": "dir",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+          },
+          {
+            "arg": {
+              "flag": "--link"
+            },
+            "name": "link",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/LinkMode"
+          },
+          {
+            "description": "Path to the platform checkout, for a sibling link.",
+            "name": "assistant_path",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+          },
+          {
+            "arg": {
+              "flag": "--force"
+            },
+            "name": "force",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--dry-run"
+            },
+            "name": "dry_run",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "What was written, or what would have been under --dry-run.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          }
+        ]
+      },
+      "name": "folio-init",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-conversion",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/folio-init"
+      ],
+      "title": "Scaffold a folio"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/folio-init",
+  "path": "tools/folio-init/"
+}

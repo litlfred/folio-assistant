@@ -1,0 +1,61 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/content-graph-build/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/content-graph-build.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat content:graph"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "Content root to walk; defaults to the folio's `content/`.",
+            "name": "targetPath",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--json"
+            },
+            "name": "json",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Block count, then edge counts reported separately and never summed: EDITORIAL (`uses[]`, `interprets` — author-maintained) and FORMAL (derived from `lean.ref`). The formal line distinguishes `0` from `cache ABSENT`, so an unavailable formal graph cannot be read as a graph with no formal edges.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "content-graph-build",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
+      "title": "Content graph"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/content-graph-build",
+  "path": "tools/content-graph-build/"
+}

@@ -1,0 +1,48 @@
+{
+  "$ref": "#/definitions/TargetProperty",
+  "definitions": {
+    "TargetProperty": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {}
+          },
+          "required": [
+            "type",
+            "value"
+          ]
+        },
+        "extra": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "code",
+        "value"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/TargetPropertySchema.schema.json",
+  "title": "TargetPropertySchema",
+  "description": "Generated from `TargetPropertySchema` in schemas/content/vocab-mapping.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  }
+}

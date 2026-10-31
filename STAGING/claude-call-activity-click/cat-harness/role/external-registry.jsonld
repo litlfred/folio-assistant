@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/role/external-registry.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/role/external-registry",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "External registry",
+      "title": "External registry",
+      "notation": "external-registry",
+      "description": "Trusted registries and observatories outside this instance's control. Nothing here instructs it; its skill is the contract the diagrams rely on it for.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "external"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/external-registry-contract"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry"
+    }
+  ]
+}

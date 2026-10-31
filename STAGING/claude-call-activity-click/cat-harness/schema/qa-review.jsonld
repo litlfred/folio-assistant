@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/schema/qa-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/schema/qa-review",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "qa-review",
+      "title": "qa-review",
+      "summary": "QA review — findings, decisions, and the audit notes that justify them.",
+      "module": "schemas/sdlc/qa-review.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/qa-review"
+    }
+  ]
+}

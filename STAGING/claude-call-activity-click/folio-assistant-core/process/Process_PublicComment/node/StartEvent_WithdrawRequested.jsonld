@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment/node/StartEvent_WithdrawRequested.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment/node/StartEvent_WithdrawRequested",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Commenter withdraws a comment",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/role/feedback-provider",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment/lane/Lane_Commenter",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToWithdraw"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/StartEvent_WithdrawRequested"
+    }
+  ]
+}

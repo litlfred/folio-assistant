@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/domain-fencing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/domain-fencing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "domain-fencing",
+      "title": "Domain fencing — keeping one folio's rules out of everybody's platform",
+      "description": "How a domain-specific rule is kept out of the platform without being lost — the opt-in axis mechanism, the one criterion that should use it and does not, and the test for whether a rule generalizes at all.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/package/graph-management"
+      ],
+      "instructionsPath": "skills/kg/graph-management/domain-fencing.md",
+      "instructionLines": 224,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/domain-fencing"
+    }
+  ]
+}

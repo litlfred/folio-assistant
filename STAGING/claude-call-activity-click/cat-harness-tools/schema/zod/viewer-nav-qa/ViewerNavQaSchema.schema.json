@@ -1,0 +1,124 @@
+{
+  "$ref": "#/definitions/ViewerNavQa",
+  "definitions": {
+    "ViewerNavQa": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "viewer-nav-qa/v1"
+        },
+        "root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "totals": {
+          "type": "object",
+          "properties": {
+            "pages": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "railed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "declined": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "linked": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "missing": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "flagged": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "pages",
+            "railed",
+            "declined",
+            "missing"
+          ]
+        },
+        "pages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "verdict": {
+                "type": "string",
+                "enum": [
+                  "railed",
+                  "declined",
+                  "linked",
+                  "missing"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "flags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "header",
+                    "clickable-mark",
+                    "visualiser-nav",
+                    "single-open",
+                    "no-redundant-toggle",
+                    "rail-tips",
+                    "harnesses-at-rest",
+                    "declared-mark"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "path",
+              "source",
+              "verdict"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "root",
+        "totals",
+        "pages"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/viewer-nav-qa/ViewerNavQaSchema.schema.json",
+  "title": "ViewerNavQaSchema",
+  "description": "Generated from `ViewerNavQaSchema` in schemas/sdlc/viewer-nav-qa.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/adversarial-code-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/call-activity-click",
+    "sha": "0db8453512ff52a15cf66eab8ba12881bdac2ad0",
+    "pr": "2834/merge",
+    "run": "41194136957"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/skill/adversarial-code-review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "adversarial-code-review",
+      "title": "Adversarial code review",
+      "description": "Review a pull request an agent touched by building the strongest case that it is wrong, unsafe, or not what it claims, and record the verdict where the merge gate reads it: one `merge-review/v1` file per head, on the `merge-reviews` state branch, never in the pull request itself. Covers who may review, what the whole-diff scope is, the RED FLAG categories and their evidence rule, the one rebuttal round, overrides, and how a per-head verdict composes with a merge train.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/adversarial-code-review.md",
+      "instructionLines": 105,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-call-activity-click/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adversarial-code-review"
+    }
+  ]
+}

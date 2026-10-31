@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><script data-folio-saved-scheme>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Folio Assistant</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-aqm66np1dy.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/css/navbar-row.css"><script src="../assets/js/navbar-row.js" defer></script><meta name="fa-search-exclude" content="true"><script src="../assets/js/vendor/lunr.min.js" defer></script><script src="../assets/js/just-the-docs.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script><script type="application/json" id="fa-translation-meta">{"lang":"en","translationStatus":"","translationSource":"","supportedLocales":["ar","zh","en","fr","ru","es"],"availableLocales":[]}</script></head><body data-font="paper"><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+measure();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><script type="application/json" id="fa-navbar-row" data-fa-root="..">{"icons":["close","todos","beans","fsh-guts","qr","launcher"],"hrefs":{"todos":"/en/cat-harness/todos/","beans":"/en/cat-harness/beans/folio-assistant-core/","fsh-guts":"/en/cat-harness/fsh-guts/"},"notes":{},"folders":[{"kind":"beans","label":"Beans","path":"/en/cat-harness/beans/folio-assistant-core/"},{"kind":"block-kinds","label":"Block kinds","path":"/en/cat-harness/block-kinds/folio-assistant-core/"},{"kind":"code","label":"Code","path":"/en/cat-harness/code/folio-assistant-core/"},{"kind":"code-list","label":"Code lists","path":"/en/cat-harness/code-lists/folio-assistant-core/"},{"kind":"content-adapters","label":"Content adapters","path":"/en/cat-harness/content-adapters/folio-assistant-core/"},{"kind":"docs","label":"Docs","path":"/cat-harness/auto-docs/index/docs/folio-assistant-core-docs/"},{"kind":"folio","label":"Folio","path":"/en/cat-harness/folio/folio-assistant-core/"},{"kind":"glossary","label":"Glossary","path":"/en/folio-assistant-core/glossary/instance/folio-assistant-core/"},{"kind":"health","label":"Health","path":"/en/cat-harness/health/folio-assistant-core/"},{"kind":"library","label":"Library","path":"/en/cat-harness/library/folio-assistant-core/"},{"kind":"memory","label":"Memory","path":"/en/cat-harness/memory/folio-assistant-core/"},{"kind":"methodology","label":"Methodologies","path":"/en/cat-harness/methodologies/"},{"kind":"pipeline-plugins","label":"Pipeline plugins","path":"/en/cat-harness/pipeline-plugins/folio-assistant-core/"},{"kind":"processes","label":"Processes","path":"/en/cat-harness/processes/"},{"kind":"qa","label":"QA","path":"/en/cat-harness/qa/folio-assistant-core/"},{"kind":"qa-checkers","label":"QA checkers","path":"/en/cat-harness/qa-checkers/folio-assistant-core/"},{"kind":"scenarios","label":"Scenarios","path":"/en/cat-harness/scenarios/folio-assistant-core/"},{"kind":"schemas","label":"Schemas","path":"/en/cat-harness/schemas/folio-assistant-core/"},{"kind":"skills","label":"Skills","path":"/cat-harness/auto-docs/index/skills/core-skills/"},{"kind":"software-library","label":"Software libraries","note":"no viewer by design"},{"kind":"tools","label":"Tools","path":"/en/cat-harness/tools/folio-assistant-core/"},{"kind":"translation-sources","label":"Translation sources","path":"/en/cat-harness/translation-status/"},{"kind":"typologies","label":"Graph typologies","path":"/en/cat-harness/graph-typologies/folio-assistant-core/"},{"kind":"validators","label":"Validators","path":"/en/cat-harness/validators/folio-assistant-core/"},{"kind":"voices","label":"Voices","path":"/en/cat-harness/voices/folio-assistant-core/"}]}</script><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-aqm66np1dy","here":"/cat-harness-tools/"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search this site" autocomplete="off"><label for="search-input" class="search-label"><span class="sr-only">Search this site</span></label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><nav class="nav"><a href="#/" class="nav-brand">Folio</a><div class="nav-links" id="nav-links"></div><div class="nav-right"><button id="c-sb" title="Toggle sidebar">☰</button> <button id="c-wd" title="Toggle wide mode">⇔</button> <select id="c-br" title="Switch branch"></select> <button id="c-diff" title="Show diff from main" style="display:none">diff</button> <button id="c-th" title="Toggle theme">light</button> <button id="c-fn" title="Toggle font">web</button></div></nav><main id="app"><div class="loading">loading...</div></main><div class="feedback-overlay" id="feedback-overlay"></div><div class="feedback-panel" id="feedback-panel"><div class="fb-head"><h3>Feedback</h3><button class="fb-close" id="fb-close">&times;</button></div><div class="fb-target" id="fb-target"></div><div class="fb-input-area"><textarea id="fb-text" placeholder="Describe the issue, question, or suggestion..." rows="4"></textarea><div class="fb-controls"><select id="fb-priority"><option value="medium">Medium</option><option value="high">High</option><option value="critical">Critical</option><option value="low">Low</option></select> <select id="fb-assignee"><option value="editor-agent">Editor Agent</option><option value="proof-agent">Proof Agent</option><option value="author">Author</option></select> <button class="fb-voice" id="fb-voice" title="Voice input">&#x1F399;</button> <button class="fb-submit" id="fb-submit">Submit</button></div></div><div class="fb-history" id="fb-history"></div></div><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script></body></html>
