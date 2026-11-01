@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/RenderScope",
+  "definitions": {
+    "RenderScope": {
+      "type": "string",
+      "enum": [
+        "full",
+        "chapter",
+        "section"
+      ],
+      "description": "How much of the folio to render."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/RenderScopeSchema.schema.json",
+  "title": "RenderScopeSchema",
+  "description": "Generated from `RenderScopeSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

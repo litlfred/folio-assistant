@@ -1,0 +1,74 @@
+{
+  "$ref": "#/definitions/IndicatorCohortCase",
+  "definitions": {
+    "IndicatorCohortCase": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "indicatorRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "populationSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "period": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputs": {
+          "anyOf": [
+            {
+              "minItems": 1,
+              "type": "array",
+              "items": {}
+            },
+            {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          ]
+        },
+        "expectedValue": {},
+        "computedValue": {},
+        "numerator": {
+          "type": "number"
+        },
+        "denominator": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "summary",
+        "indicatorRef",
+        "populationSize",
+        "inputs",
+        "expectedValue",
+        "computedValue"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/IndicatorCohortCaseSchema.schema.json",
+  "title": "IndicatorCohortCaseSchema",
+  "description": "Generated from `IndicatorCohortCaseSchema` in schemas/sdlc/test-data.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

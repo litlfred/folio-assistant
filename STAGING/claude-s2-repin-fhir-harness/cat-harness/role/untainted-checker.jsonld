@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/role/untainted-checker.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/role/untainted-checker",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Untainted checker",
+      "title": "Untainted checker",
+      "notation": "untainted-checker",
+      "description": "Re-executes a SAMPLE of a plan's cases from the plan and the data alone — never the tester's verdicts — and reports whether it agrees. It rules on nothing: agreement is a fact the certification table reads, not a verdict the checker writes (`untainted-verification` rule 3: one party doing both halves is not this check). Lane `Lane_Checker` in `test-plan-execution.bpmn`, bean `3o5b`.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skill/untainted-verification",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skill/test-plan-execution"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/untainted-checker"
+    }
+  ]
+}

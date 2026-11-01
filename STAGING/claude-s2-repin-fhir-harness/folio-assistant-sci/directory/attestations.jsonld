@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/directory/attestations.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/directory/attestations",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "attestations",
+      "path": "test/attestations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/attestations"
+      ],
+      "description": "The judgement half of this instance's QA verdicts, kept on main by owner ruling D2 (a), 2026-10-01 (bean `2gst`): the `pair_attestations` that were carried inside its `kg-qa/v1` sidecars (all `by: baseline` at migration, which the owner ruled are judgements), one `qa-attestations/v1` file per subject at `kg-qa/<mirrored subject path>.attestations.json`. Schema: cat-harness `schemas/qa-attestations.ts`. dependents: reproduce, for the reason the `qa` entry gives. Declared WITH its files, per bean dh4f.",
+      "readmePath": "test/attestations/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/attestations"
+    }
+  ]
+}

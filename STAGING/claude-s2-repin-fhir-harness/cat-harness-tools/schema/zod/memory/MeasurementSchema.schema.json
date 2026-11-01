@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/Measurement",
+  "definitions": {
+    "Measurement": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "command",
+        "date",
+        "result"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/memory/MeasurementSchema.schema.json",
+  "title": "MeasurementSchema",
+  "description": "Generated from `MeasurementSchema` in schemas/conduct/memory.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

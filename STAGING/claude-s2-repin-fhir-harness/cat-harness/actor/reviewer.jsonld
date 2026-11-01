@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/actor/reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/actor/reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "reviewer",
+      "actorKind": "person",
+      "title": "Reviewer",
+      "description": "A person who reads a change and judges it. Acting as `reviewer` does not carry the authority to accept — that is the editor's lane.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/role/narrative-reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/role/feedback-provider"
+      ],
+      "permissionName": [
+        "review-comments"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/reviewer"
+    }
+  ]
+}

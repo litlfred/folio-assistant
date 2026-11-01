@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skill/site-presentation-assets.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skill/site-presentation-assets",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "site-presentation-assets",
+      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering",
+      "description": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/package/theming"
+      ],
+      "instructionsPath": "skills/ui/theming/site-presentation-assets.md",
+      "instructionLines": 111,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/site-presentation-assets"
+    }
+  ]
+}

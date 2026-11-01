@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Open the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/role/work-plan",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_WorkPlan",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/skill/bean-coordination"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/process/Process_PaperAuthoring#flow/A02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/process/Process_PaperAuthoring#flow/SF_Bean_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen"
+    }
+  ]
+}

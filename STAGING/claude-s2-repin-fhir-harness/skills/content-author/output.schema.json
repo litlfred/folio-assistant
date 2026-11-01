@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/skills/content-author/output.schema.json",
+  "title": "Content Author Output (moved)",
+  "description": "Moved to https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skills/content-author/output.schema.json (litlfred/cat-harness-tools#603 decision 1b: the host's documents sit under its own directory, like every layer's). This address is a tombstone kept for one release; it validates as the new document does.",
+  "deprecated": true,
+  "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skills/content-author/output.schema.json",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skills/content-author/output.schema.json"
+    }
+  ],
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

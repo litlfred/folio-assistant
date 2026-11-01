@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/skill/root-readme.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/skill/root-readme",
+      "@type": "bootstrap:Skill",
+      "label": "root-readme",
+      "title": "The root README, and the one fact it must carry",
+      "description": "Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. It runs only once the install has succeeded.",
+      "source": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/skills/root-readme.md",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/directory/skills"
+    }
+  ]
+}

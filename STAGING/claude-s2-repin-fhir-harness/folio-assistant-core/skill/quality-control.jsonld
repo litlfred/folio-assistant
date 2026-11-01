@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/skill/quality-control.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/skill/quality-control",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "quality-control",
+      "title": "quality-control",
+      "instructionsPath": "skills/content/content-lifecycle-ext/quality-control.md",
+      "instructionLines": 70,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/schema/skills/quality-control/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/schema/skills/quality-control/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/quality-control"
+    }
+  ]
+}

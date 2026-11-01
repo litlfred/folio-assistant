@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/process/Process_HumanAgentDiscussion/node/A_LayOutOptions.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/process/Process_HumanAgentDiscussion/node/A_LayOutOptions",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Lay out the options, with what each costs",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/process/Process_HumanAgentDiscussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/skill/human-agent-discussion"
+    }
+  ]
+}

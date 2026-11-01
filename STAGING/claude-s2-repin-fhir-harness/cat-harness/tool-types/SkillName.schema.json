@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/tool-types/SkillName.schema.json",
+  "title": "SkillName",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[a-z][a-z0-9-]*$",
+  "description": "A skill name, e.g. todo-manager",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

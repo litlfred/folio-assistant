@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/skill/review-sheet-script.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/skill/review-sheet-script",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "review-sheet-script",
+      "title": "The review sheet's Apps Script",
+      "description": "Build, install and reuse the Google Apps Script that keeps a review sheet's links and joined columns current (Tool `review-sheet-sync`). Public-comment mode: comment numbers, sections, pages and lines link into the frozen review draft, and Review Change Sets joins its comments. Drafting mode: one Contributor Feedback tab where each row is a change set with its own GitHub issue, and Sections pick from the document's table of contents. Use when setting up either sheet for a document, when its links are missing or stale, or after a tab, header, anchor or draft link changes.",
+      "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
+      "instructionLines": 1259,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script"
+    }
+  ]
+}

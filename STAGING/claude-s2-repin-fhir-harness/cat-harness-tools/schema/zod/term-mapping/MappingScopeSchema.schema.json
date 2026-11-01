@@ -1,0 +1,47 @@
+{
+  "$ref": "#/definitions/MappingScope",
+  "definitions": {
+    "MappingScope": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string",
+          "enum": [
+            "skos",
+            "fhir"
+          ]
+        },
+        "consulted": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "via": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unreachable_reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "target",
+        "consulted",
+        "via"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-mapping/MappingScopeSchema.schema.json",
+  "title": "MappingScopeSchema",
+  "description": "Generated from `MappingScopeSchema` in schemas/content/term-mapping.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

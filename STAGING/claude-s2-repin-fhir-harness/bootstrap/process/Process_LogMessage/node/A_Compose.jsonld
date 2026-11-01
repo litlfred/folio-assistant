@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/process/Process_LogMessage/node/A_Compose.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/process/Process_LogMessage/node/A_Compose",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Compose the message",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/process/Process_LogMessage",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/bootstrap/skill/log-message"
+    }
+  ]
+}

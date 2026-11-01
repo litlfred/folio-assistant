@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/TestCaseId",
+  "definitions": {
+    "TestCaseId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestCaseIdSchema.schema.json",
+  "title": "TestCaseIdSchema",
+  "description": "Generated from `TestCaseIdSchema` in schemas/sdlc/test-plan.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Recommendation Scenarios Output",
+  "description": "One smart-kg L2 user-scenario candidate per L1 recommendation.",
+  "type": "object",
+  "required": [
+    "graph",
+    "runContext"
+  ],
+  "properties": {
+    "graph": {
+      "type": "string",
+      "description": "scenario-candidates.l2.json."
+    },
+    "warnings": {
+      "type": "string",
+      "description": "scenario-warnings.md: processes not determined, personas that are glossary candidates."
+    },
+    "runContext": {
+      "type": "string",
+      "description": "run-context.json, cat-harness folio-run-context/v1."
+    }
+  },
+  "additionalProperties": false,
+  "$id": "http://smart.who.int/base/schema/skills/recommendation-scenarios/output.schema.json",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

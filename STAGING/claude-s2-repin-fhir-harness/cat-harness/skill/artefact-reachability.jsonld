@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skill/artefact-reachability.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skill/artefact-reachability",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "artefact-reachability",
+      "title": "Artefact reachability — load is not evaluability, and a test is not a caller",
+      "description": "Which declared executable artefacts can be reached — decision tables, BPMN diagrams, self-declared entry points. Read before trusting that a .dmn works because it loads, before concluding a script has a caller, and before building any reachability report: load is not evaluability, a test is not a caller, and where a grep fails in both directions the subject has to be narrowed rather than the signals.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/artefact-reachability.md",
+      "instructionLines": 314,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/artefact-reachability"
+    }
+  ]
+}

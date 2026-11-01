@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/skill/folio-repo-conversion.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/skill/folio-repo-conversion",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "folio-repo-conversion",
+      "title": "Folio repository conversion — markers, orphaned evidence, and intake handoff",
+      "description": "The content-folio half of the harness's repo-conversion skill: outside-content evidence and refutation candidate scanning, content-type marker declarations, and dispatching library and content buckets to document-intake and folio authoring.",
+      "instructionsPath": "skills/content/folio-document-adapter/folio-repo-conversion.md",
+      "instructionLines": 55,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-repo-conversion"
+    }
+  ]
+}

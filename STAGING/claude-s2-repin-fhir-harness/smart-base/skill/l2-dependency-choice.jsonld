@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/smart-base/skill/l2-dependency-choice.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/l2-dependency-choice.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/l2-dependency-choice",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "l2-dependency-choice",
+      "title": "l2-dependency-choice",
+      "description": "Stage 3 of smart-guideline-end-to-end: choose which existing DAKs (WHO's, or a jurisdiction's adaptation) the guideline builds on. From the L1 knowledge graph and any known candidates, one decision row per candidate DAK — reuse, adapt, extend or reject, with evidence and a reason — laid out as a decision-comparison table and put to the adjudicators as a DecisionRequest. Also defines the dependency decision row that stage 5 (l3-dependency-choice) uses at L3. Read before choosing, or recording, a DAK dependency.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-dependency-choice.md",
+      "instructionLines": 72,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l2-dependency-choice/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l2-dependency-choice/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

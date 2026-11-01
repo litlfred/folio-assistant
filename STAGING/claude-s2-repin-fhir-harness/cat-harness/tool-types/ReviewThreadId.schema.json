@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/tool-types/ReviewThreadId.schema.json",
+  "title": "ReviewThreadId",
+  "type": "string",
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{6,127}$",
+  "description": "A review thread id — a GitHub review-thread node id or a GitLab discussion id",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "$ref": "#/definitions/MethodologySelectionResult",
+  "definitions": {
+    "MethodologySelectionResult": {
+      "type": "object",
+      "properties": {
+        "context": {
+          "type": "object",
+          "properties": {
+            "summary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "questionType": {
+              "type": "string",
+              "enum": [
+                "computable",
+                "evidence-grading",
+                "decision-record",
+                "decision-analysis"
+              ]
+            },
+            "alternativeCount": {
+              "type": "integer",
+              "minimum": 2,
+              "maximum": 9007199254740991
+            },
+            "criteriaCount": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "criteriaWeightsKnown": {
+              "type": "boolean"
+            },
+            "dataType": {
+              "type": "string",
+              "enum": [
+                "quantitative",
+                "qualitative",
+                "mixed"
+              ]
+            },
+            "stakeholderCount": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "timeConstraint": {
+              "type": "string",
+              "enum": [
+                "minutes",
+                "hours",
+                "days",
+                "weeks"
+              ]
+            },
+            "reversibility": {
+              "type": "string",
+              "enum": [
+                "reversible",
+                "costly",
+                "irreversible"
+              ]
+            },
+            "uncertainty": {
+              "type": "string",
+              "enum": [
+                "low",
+                "moderate",
+                "high",
+                "deep"
+              ]
+            },
+            "sequential": {
+              "type": "boolean"
+            }
+          }
+        },
+        "recommendations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "methodologyId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "family": {
+                "type": "string",
+                "minLength": 1
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1
+              },
+              "avoidWhen": {
+                "type": "string",
+                "minLength": 1
+              },
+              "complexity": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "dataRequirements": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "matchTier": {
+                "type": "string",
+                "enum": [
+                  "primary",
+                  "secondary",
+                  "excluded"
+                ]
+              }
+            },
+            "required": [
+              "methodologyId",
+              "title",
+              "family",
+              "rationale",
+              "avoidWhen",
+              "complexity",
+              "dataRequirements",
+              "source",
+              "matchTier"
+            ]
+          }
+        },
+        "noMatchReason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "context",
+        "recommendations"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/MethodologySelectionResultSchema.schema.json",
+  "title": "MethodologySelectionResultSchema",
+  "description": "Generated from `MethodologySelectionResultSchema` in schemas/process/decision-methodology-context.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

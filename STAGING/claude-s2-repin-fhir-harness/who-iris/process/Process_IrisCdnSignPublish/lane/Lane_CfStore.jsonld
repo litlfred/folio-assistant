@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Cloudflare R2 + CDN",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/who-iris/process/Process_IrisCdnSignPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/who-iris/role/cloudflare-r2-cdn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore"
+    }
+  ]
+}

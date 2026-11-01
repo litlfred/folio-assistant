@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skill/bpmn-detangle.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skill/bpmn-detangle",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "bpmn-detangle",
+      "title": "bpmn-detangle",
+      "description": "Make a BPMN diagram readable at 100% without zooming, and untangle it: keep it inside the size budget, give every label a place clear of other labels, flows and boxes, remove crossings, and swap lanes when another order makes the flows between lanes shorter. Run before and after every diagram edit.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/bpmn-detangle.md",
+      "instructionLines": 120,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-detangle"
+    }
+  ]
+}

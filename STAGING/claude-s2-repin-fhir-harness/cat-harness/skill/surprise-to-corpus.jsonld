@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skill/surprise-to-corpus.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/skill/surprise-to-corpus",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "surprise-to-corpus",
+      "title": "Surprise to corpus — notice it, filter it, then ask",
+      "description": "What was unexpected in that task, and does it belong in the corpus? Logical surprise is the detectable kind, recurrence is the filter that stops this generating noise every turn, and the agent PROMPTS — it never writes corpus guidance unasked.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/surprise-to-corpus.md",
+      "instructionLines": 193,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/surprise-to-corpus"
+    }
+  ]
+}

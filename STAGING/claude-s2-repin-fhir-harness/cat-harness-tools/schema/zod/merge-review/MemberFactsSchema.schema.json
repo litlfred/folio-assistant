@@ -1,0 +1,114 @@
+{
+  "$ref": "#/definitions/MemberFacts",
+  "definitions": {
+    "MemberFacts": {
+      "type": "object",
+      "properties": {
+        "pr": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "authoredPaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "touchesShared": {
+          "type": "boolean"
+        },
+        "touchesHarness": {
+          "type": "boolean"
+        },
+        "seedsStaging": {
+          "type": "boolean"
+        },
+        "unblocks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "mvp": {
+          "type": "boolean"
+        },
+        "sizeBand": {
+          "type": "string",
+          "enum": [
+            "small",
+            "large"
+          ]
+        },
+        "conflictRisk": {
+          "type": "string",
+          "enum": [
+            "low",
+            "high"
+          ]
+        },
+        "overlapKind": {
+          "type": "string",
+          "enum": [
+            "none",
+            "generated-only",
+            "shared-declaration",
+            "authored"
+          ]
+        },
+        "refused": {
+          "type": "boolean"
+        },
+        "ownCi": {
+          "type": "string",
+          "enum": [
+            "green",
+            "red",
+            "missing-required",
+            "none",
+            "unknown"
+          ]
+        },
+        "headShaMatchesCi": {
+          "type": "boolean"
+        },
+        "readiness": {
+          "type": "string",
+          "enum": [
+            "ready",
+            "draft",
+            "not-main",
+            "no-marker",
+            "foreign-marker",
+            "stale-marker"
+          ]
+        }
+      },
+      "required": [
+        "pr",
+        "authoredPaths",
+        "touchesShared",
+        "touchesHarness",
+        "seedsStaging",
+        "unblocks",
+        "mvp",
+        "sizeBand",
+        "conflictRisk",
+        "overlapKind",
+        "refused",
+        "ownCi",
+        "headShaMatchesCi",
+        "readiness"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/MemberFactsSchema.schema.json",
+  "title": "MemberFactsSchema",
+  "description": "Generated from `MemberFactsSchema` in schemas/sdlc/merge-review.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}

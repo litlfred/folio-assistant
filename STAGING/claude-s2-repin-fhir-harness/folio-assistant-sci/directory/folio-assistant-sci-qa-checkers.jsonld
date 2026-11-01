@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/directory/folio-assistant-sci-qa-checkers.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/directory/folio-assistant-sci-qa-checkers",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "folio-assistant-sci-qa-checkers",
+      "path": "qa-checkers/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/qa-checkers"
+      ],
+      "description": "The QA checkers this instance's Lean tooling provides, one folio-qa-checker/v1 node per criterion, naming COST_AUTOMATED_CHECKERS in pipeline/qa-checkers-cost.ts (bean riit, step 3b), and the maths checkers moved here from cat-harness-tools (bean saqd): VACUITY_AUTOMATED_CHECKERS (Lean vacuity, four criteria), RENDER_AUTOMATED_CHECKERS (render-math-mode-envelope), TRIVIALITY_AUTOMATED_CHECKERS (proof-not-machine-trivial), EXTENDED_AUTOMATED_CHECKERS (the paper proof-*, canonical-* and compute-* criteria), USES_AUTOMATED_CHECKERS (uses-formal-coverage, lean-ref-owns-decl), Q_USAGE_AUTOMATED_CHECKERS in pipeline/qa-checkers-q-usage.ts (the seven q-usage-* criteria, run on their own by pipeline/q-usage-audit.ts) and WALL_AUTOMATED_CHECKERS in pipeline/qa-checkers-wall.ts (framework-canonical and the §7c archimedean wall: wall-side-correct, wall-base-ring-minimal). Registered for a folio by loadContributions through its dependency tree; they replace the qaCheckers array contributions.ts returned.",
+      "readmePath": "qa-checkers/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-repin-fhir-harness/folio-assistant-sci/directory/folio-assistant-sci-qa-checkers",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/folio-assistant-sci-qa-checkers"
+    }
+  ]
+}

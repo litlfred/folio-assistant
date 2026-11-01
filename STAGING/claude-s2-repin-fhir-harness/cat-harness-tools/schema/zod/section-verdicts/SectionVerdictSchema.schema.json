@@ -1,0 +1,33 @@
+{
+  "$ref": "#/definitions/SectionVerdict",
+  "definitions": {
+    "SectionVerdict": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "specimen"
+          ]
+        },
+        "saw": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "role",
+        "saw"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/section-verdicts/SectionVerdictSchema.schema.json",
+  "title": "SectionVerdictSchema",
+  "description": "Generated from `SectionVerdictSchema` in schemas/content/section-verdicts.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-repin-fhir-harness",
+    "sha": "0dce2e0ba5f43041a9645ca4371b1849557919d0",
+    "pr": "2863/merge",
+    "run": "41285190067"
+  }
+}
