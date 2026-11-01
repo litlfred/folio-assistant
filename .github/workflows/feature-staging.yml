@@ -126,6 +126,18 @@ on:
         required: false
         default: ''
         type: string
+      # Owner, 2026-11-01: "preview" = no reindex, only changes; "full" for a
+      # public comment release and a release. A pull request always builds
+      # `preview`. Dispatch `full` for a branch about to be frozen as a public
+      # comment release: `pc:release freeze` refuses a preview build, because
+      # its search index and slices are main's, not the draft's. Skill
+      # feature-staging, section "Build types".
+      build_type:
+        description: 'preview (indexes borrowed from main) or full (every index rebuilt; use before a public comment freeze)'
+        required: false
+        default: 'preview'
+        type: choice
+        options: [preview, full]
       # ── The two below are a DELETION TRIGGER. ────────────────
       # They exist because the label path cannot reach the previews the
       # health sweep reports: `cleanup` below fires on `pull_request_target:
@@ -248,6 +260,11 @@ jobs:
     # from the last healthy runs, 2026-10-07: ~25 min for the whole job, of
     # which 11-15 min is "Build Jekyll site" (bounded on its own below).
     timeout-minutes: 90
+    # The build type (cat-harness-tools `lib/build-type.ts`): `derive:publish`
+    # borrows main's copy of every declared index in a preview, and the stamp
+    # below serves main's search index. Only a dispatch can ask for `full`.
+    env:
+      CAT_BUILD_TYPE: ${{ github.event_name == 'workflow_dispatch' && inputs.build_type || 'preview' }}
     # Read by `liquid-undefined` below: whether the Jekyll source was handed
     # off, i.e. whether there is a render to check.
     outputs:
@@ -695,7 +712,14 @@ jobs:
           # fork's preview at this repository's index.
           SEARCH_SRC="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/assets/js/search-data.json"
           SEARCH_STATE="unavailable"
-          if curl -fsSL --max-time 60 -o /tmp/published-search-data.json "$SEARCH_SRC" \
+          # A FULL build serves the index it builds itself, and the page says
+          # nothing: it is the draft's own index, which is what a public
+          # comment release must freeze (owner, 2026-11-01).
+          if [ "$CAT_BUILD_TYPE" = "full" ]; then
+            SEARCH_STATE="built"
+            rm -f /tmp/published-search-data.json
+            echo "search index: full build, serving this build's own index"
+          elif curl -fsSL --max-time 60 -o /tmp/published-search-data.json "$SEARCH_SRC" \
              && [ -s /tmp/published-search-data.json ] \
              && head -c 1 /tmp/published-search-data.json | grep -q '{'; then
             SEARCH_STATE="published"
@@ -962,6 +986,10 @@ jobs:
       - name: Serve the published search index, or none
         run: |
           DEST="./_site/assets/js/search-data.json"
+          if [ "$CAT_BUILD_TYPE" = "full" ]; then
+            echo "search-data.json: full build, this build's own index, $(wc -c < "$DEST" 2>/dev/null || echo 0) bytes"
+            exit 0
+          fi
           mkdir -p "$(dirname "$DEST")"
           # `-s` alone is correct HERE only because the stamp step deletes the
           # file when it is not a usable index. The validation lives there, with
@@ -1324,6 +1352,7 @@ jobs:
             ${ISSUE:+--issue "$ISSUE"} \
             --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --checks-url "$CHECKS_URL" \
+            --build-type "$CAT_BUILD_TYPE" \
             --main-site "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
             $MAIN_PAGES_ARG
 

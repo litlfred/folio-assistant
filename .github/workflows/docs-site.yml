@@ -148,6 +148,11 @@ jobs:
     # 38290940471 was cancelled there, 2026-10-13). "Build Jekyll site" has
     # its own, tighter bound below.
     timeout-minutes: 120
+    # The main deploy is a FULL build (owner, 2026-11-01): every index is
+    # rebuilt from the tree being published, never borrowed. Unset means the
+    # same; it is spelled here so the two workflows read side by side.
+    env:
+      CAT_BUILD_TYPE: full
     # Serialise on the CONTENDED RESOURCE — `gh-pages` — not on the branch.
     #
     # A concurrency group serialises only the jobs that NAME it, and this one
