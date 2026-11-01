@@ -765,6 +765,7 @@
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-comparison",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/deletion-requires-confirmation",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/getting-started",
+                "https://litlfred.github.io/folio-assistant/cat-harness/skill/hand-back-to-discussion",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-projections",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/interaction-modality",
                 "https://litlfred.github.io/folio-assistant/cat-harness/skill/repo-conversion",
@@ -829,14 +830,14 @@
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/ask-the-person/input.schema.json",
-              "instructionLines": 53,
+              "instructionLines": 59,
               "instructionsPath": "skills/conduct/conduct-core/ask-the-person.md",
               "name": "ask-the-person",
               "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/ask-the-person/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ae49bcbdfb0a2b65f51dca1ca233c06871fe018c2e05c94c82e841c3985e4770",
-                "bytes": 2792,
-                "sha256": "ae49bcbdfb0a2b65f51dca1ca233c06871fe018c2e05c94c82e841c3985e4770"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6206fab5a9c5375ea7c09468b17635722743df37413d8c650301c895e51c8fae",
+                "bytes": 3233,
+                "sha256": "6206fab5a9c5375ea7c09468b17635722743df37413d8c650301c895e51c8fae"
               },
               "title": "Ask the person"
             },
@@ -936,6 +937,27 @@
               "title": "/getting-started — what did they actually ask for?"
             },
             {
+              "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/hand-back-to-discussion",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "A sibling agent, spawned during or working beside a live agent-human discussion, hands every card, question, decision, result, blocker or piece of context back to the discussion agent that is talking with the person, and never leaves it only in its own thread. The discussion agent asks the person (ask-the-person), marks every copy answered, and routes the answer back. A review sheet or issue in play is an extra channel. Use whenever an agent that is not the one talking with the person has something the person must see.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
+              "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+              "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/hand-back-to-discussion/input.schema.json",
+              "instructionLines": 142,
+              "instructionsPath": "skills/conduct/conduct-core/hand-back-to-discussion.md",
+              "name": "hand-back-to-discussion",
+              "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/hand-back-to-discussion/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e839b4fe5f268a27b8ee00c1e4286694ca77f9a9a5e87f085b28dbd73a101d27",
+                "bytes": 8314,
+                "sha256": "e839b4fe5f268a27b8ee00c1e4286694ca77f9a9a5e87f085b28dbd73a101d27"
+              },
+              "title": "Hand back to the discussion"
+            },
+            {
               "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-projections",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -963,13 +985,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-              "instructionLines": 693,
+              "instructionLines": 696,
               "instructionsPath": "skills/conduct/conduct-core/interaction-modality.md",
               "name": "interaction-modality",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/00efa6414cd17c95c0ef818e6d2b85b714a2c015212231fcd7b34e217bfa4927",
-                "bytes": 39430,
-                "sha256": "00efa6414cd17c95c0ef818e6d2b85b714a2c015212231fcd7b34e217bfa4927"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ac7b2829846ebfdfee5b53949d3b1b88ce7764ac9861bd13350db94dbb12a91e",
+                "bytes": 39671,
+                "sha256": "ac7b2829846ebfdfee5b53949d3b1b88ce7764ac9861bd13350db94dbb12a91e"
               },
               "title": "/interaction-modality — ask in a form the person can answer"
             },
@@ -982,13 +1004,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/conduct-core",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-              "instructionLines": 263,
+              "instructionLines": 272,
               "instructionsPath": "skills/conduct/conduct-core/repo-conversion.md",
               "name": "repo-conversion",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0b7628be43e896515c1f256023f54555ddc056949432af945e3964622514acab",
-                "bytes": 14986,
-                "sha256": "0b7628be43e896515c1f256023f54555ddc056949432af945e3964622514acab"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8765ca5cefc4d453dd805a03b43551b8b1971d015e64ebe97708abdd52bd40ca",
+                "bytes": 15584,
+                "sha256": "8765ca5cefc4d453dd805a03b43551b8b1971d015e64ebe97708abdd52bd40ca"
               },
               "title": "/repo-conversion — folio-assistant over a repo that already has a life"
             },
@@ -2710,14 +2732,14 @@
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/workflow",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/bpmn-authoring/input.schema.json",
-              "instructionLines": 124,
+              "instructionLines": 130,
               "instructionsPath": "skills/process/workflow/bpmn-authoring.md",
               "name": "bpmn-authoring",
               "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/bpmn-authoring/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0ee12210658f304a7d7f2475ea373e857b5bafe9fd21bfe68cbff24135297367",
-                "bytes": 6455,
-                "sha256": "0ee12210658f304a7d7f2475ea373e857b5bafe9fd21bfe68cbff24135297367"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/40624b5f6e51fed1415251f0b4faed14906bc7b85f5ad19f9509eab1ea7a7056",
+                "bytes": 6860,
+                "sha256": "40624b5f6e51fed1415251f0b4faed14906bc7b85f5ad19f9509eab1ea7a7056"
               },
               "title": "bpmn-authoring"
             },
@@ -2730,13 +2752,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/workflow",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-              "instructionLines": 107,
+              "instructionLines": 120,
               "instructionsPath": "skills/process/workflow/bpmn-detangle.md",
               "name": "bpmn-detangle",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c54044608d2e71691dc2be977af3dd013baa24ff0d0761caa24619e0058feec8",
-                "bytes": 5995,
-                "sha256": "c54044608d2e71691dc2be977af3dd013baa24ff0d0761caa24619e0058feec8"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f70da82120740bc6e07c5881f83c8fea62c9c0bf053258e1b2a96147449e07e0",
+                "bytes": 7198,
+                "sha256": "f70da82120740bc6e07c5881f83c8fea62c9c0bf053258e1b2a96147449e07e0"
               },
               "title": "bpmn-detangle"
             },
@@ -2807,13 +2829,13 @@
               "hasInstructions": true,
               "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/workflow",
               "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-              "instructionLines": 298,
+              "instructionLines": 307,
               "instructionsPath": "skills/process/workflow/process-state.md",
               "name": "process-state",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c8ffbfa8f22f9a0ed0616064e76dafc9a0705f797e53abfd7bc4763883d3d465",
-                "bytes": 16303,
-                "sha256": "c8ffbfa8f22f9a0ed0616064e76dafc9a0705f797e53abfd7bc4763883d3d465"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e753d4c877bd2b24d88394a67be650c00c5d193529142740fc12eaba06a7824c",
+                "bytes": 16846,
+                "sha256": "e753d4c877bd2b24d88394a67be650c00c5d193529142740fc12eaba06a7824c"
               },
               "title": "Process state — the task you are in, inside the process you are running"
             },
@@ -5499,9 +5521,9 @@
               "instructionsPath": "skills/ui/ui-core/ui-accessibility.md",
               "name": "ui-accessibility",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7dbede95d2ec877690dfcd87708b7b501a4ee7625574aab84e9fa0c991ef03aa",
-                "bytes": 9743,
-                "sha256": "7dbede95d2ec877690dfcd87708b7b501a4ee7625574aab84e9fa0c991ef03aa"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/186040136a56daf3c357d8202e2540f4e27c3841000a9e0314ba52013264e6de",
+                "bytes": 9759,
+                "sha256": "186040136a56daf3c357d8202e2540f4e27c3841000a9e0314ba52013264e6de"
               },
               "title": "All UI must follow accessibility guidelines"
             },

@@ -614,6 +614,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_asktheperson.a_handback",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Hand it back to the discussion"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The composed question goes, unchanged, to the discussion agent, which asks it through this same process on its `yes` branch and routes the answer back: the sibling's half of `Process_HandBackToDiscussion` (a task here, not a call, because that process calls this one). The sibling also shows it in its own thread, never only there."
+        }
+      ],
+      "skos:notation": "A_HandBack",
+      "dcterms:source": "cat-harness/processes/process/ask-the-person.bpmn#A_HandBack",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_asktheperson.a_offercard",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3791,6 +3811,166 @@
       ],
       "skos:notation": "Task_Propose",
       "dcterms:source": "cat-harness/processes/kg/graph-detanglement.bpmn#Task_Propose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_handbacktodiscussion.d_ask",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Ask the person"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The sibling's ask, unchanged in letters and recommendation, through `Process_AskThePerson`: the full chat text first, naming the sibling and that the answer will be passed on, then the card. A tap on the sibling's own card or a Blue-column answer in the sheet answers it too; take the first."
+        }
+      ],
+      "skos:notation": "D_Ask",
+      "dcterms:source": "cat-harness/processes/process/hand-back-to-discussion.bpmn#D_Ask",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_handbacktodiscussion.d_inform",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Post it in the discussion"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Say it comes from the sibling (title and link) and give the context or result in full. State `informed`."
+        }
+      ],
+      "skos:notation": "D_Inform",
+      "dcterms:source": "cat-harness/processes/process/hand-back-to-discussion.bpmn#D_Inform",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_handbacktodiscussion.d_markanswered",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mark every copy answered"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Chat copies keep their text: the question struck through and \"[Edit: <letter> chosen by <who>, <time>]\" added. Cards closed with the chosen option. The sheet's \"Decision needed\" block replaced by the decision and who made it. Withdrawn or superseded hand-backs marked the same way, with the reason."
+        }
+      ],
+      "skos:notation": "D_MarkAnswered",
+      "dcterms:source": "cat-harness/processes/process/hand-back-to-discussion.bpmn#D_MarkAnswered",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_handbacktodiscussion.d_routeback",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Route the answer back, quoted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On `answerRoute`, with the person's own message attached by id where the host allows, so the sibling can treat it as the person's approval. A paraphrase is never approval."
+        }
+      ],
+      "skos:notation": "D_RouteBack",
+      "dcterms:source": "cat-harness/processes/process/hand-back-to-discussion.bpmn#D_RouteBack",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_handbacktodiscussion.s_act",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Act on the answer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Never ask the person again for what they answered. A rule-level answer goes into the governing skill in the same turn."
+        }
+      ],
+      "skos:notation": "S_Act",
+      "dcterms:source": "cat-harness/processes/process/hand-back-to-discussion.bpmn#S_Act",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_handbacktodiscussion.s_compose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Compose the hand-back and post it in own thread"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compose it once, against the input schema: a question is the full ask-the-person input (what will differ, context, lettered options with a one-line trade-off each, the recommendation, what happens with no answer); context, a result or a blocker gets the same stand-alone test. Post it in your own thread too, chat text then card. Your own thread is never the only copy."
+        }
+      ],
+      "skos:notation": "S_Compose",
+      "dcterms:source": "cat-harness/processes/process/hand-back-to-discussion.bpmn#S_Compose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_handbacktodiscussion.s_handback",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Hand it back to the discussion agent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "By the host's route: `message_coordinator` or `message_thread` in Claude projects; the final report (a json block valid against the input schema) for a subagent; `SendMessage` for a sibling session. Then keep working on the recommended option where it can be undone, or stop if `blocking`."
+        }
+      ],
+      "skos:notation": "S_HandBack",
+      "dcterms:source": "cat-harness/processes/process/hand-back-to-discussion.bpmn#S_HandBack",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_handbacktodiscussion.s_mirror",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mirror it to the feedback channel"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Review sheet: the \"Decision needed\" block in the row's agent column, Agentic status `Needs you` (the document layer's `review-sheet-script` skill). Issue or PR: a comment. An extra copy, never instead of the discussion."
+        }
+      ],
+      "skos:notation": "S_Mirror",
+      "dcterms:source": "cat-harness/processes/process/hand-back-to-discussion.bpmn#S_Mirror",
       "skos:note": "candidate"
     },
     {

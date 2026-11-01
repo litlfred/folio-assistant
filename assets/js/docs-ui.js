@@ -10634,8 +10634,19 @@
       if (e.button !== 0) return;
       // A control or a link owns its own press.
       if (e.target.closest && e.target.closest("a, button, input, select, textarea")) return;
-      drag = { x: e.clientX, y: e.clientY, sl: scope.scrollLeft, st: scope.scrollTop, moved: false };
+      drag = { x: e.clientX, y: e.clientY, sl: scope.scrollLeft, st: scope.scrollTop, py: e.clientY, moved: false };
       try { scope.setPointerCapture(e.pointerId); } catch (_e) { /* not captureable */ }
+      // Owner, 2026-10-31, with a screenshot: *"i cant drag Figure"*. A mouse
+      // press on an inline SVG's text started a text selection before the 4px
+      // threshold put `is-panning` (and its `user-select: none`) on the scope,
+      // so the drag selected labels instead. Cancelling the press stops the
+      // selection from starting; it also cancels the focus the press would
+      // give, so focus is taken here, without scrolling, to keep the arrow
+      // keys working after a click.
+      if (e.pointerType === "mouse") {
+        e.preventDefault();
+        try { scope.focus({ preventScroll: true }); } catch (_e) { /* not focusable */ }
+      }
     });
 
     scope.addEventListener("pointermove", function (e) {
@@ -10646,7 +10657,19 @@
       drag.moved = true;
       scope.classList.add("is-panning");
       scope.scrollLeft = drag.sl - dx;
+      var top = scope.scrollTop;
       scope.scrollTop = drag.st - dy;
+      // A figure that fits its card, or one already scrolled to its edge,
+      // cannot take the vertical part of the drag, and a drag that moves
+      // nothing reads as broken. That part moves the page instead, the way
+      // the wheel over the margin already does.
+      var step = e.clientY - drag.py;
+      drag.py = e.clientY;
+      if (scope.scrollTop === top && step !== 0) {
+        window.scrollBy(0, -step);
+        drag.y += step;
+        drag.st = scope.scrollTop;
+      }
       e.preventDefault();
     });
 

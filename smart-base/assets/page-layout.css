@@ -9,6 +9,10 @@
    pads nothing, over docs-ui's own padding for its band, which on a page with this bar is not drawn. page-layout.js measures the bar (0 while not stuck). */
 :root:has(.fa-page-bar){scroll-padding-top:0!important}
 .fa-page-main,.fa-page-main *{scroll-margin-top:calc(var(--fa-staging-offset,0px) + var(--fa-page-bar-h,0px) + .5rem)}
+/* The same margin on a just-the-docs page, whose site bar is the page bar but whose content column is the theme's `.main-content`, not
+   `.fa-page-main`. Specific enough to win over a page's own fixed `:target` margin (a document page's `.fa-doc :target{4rem}`), which is shorter
+   than the staging banner plus the bar: a jump to a heading landed it under them (owner, 2026-10-31, dth-pc "Zambia"). */
+:root:has(.fa-page-bar) :is(.fa-page-main,.main-content) *{scroll-margin-top:calc(var(--fa-staging-offset,0px) + var(--fa-page-bar-h,0px) + .5rem)}
 body{margin:0}
 body:has(.fa-page-main){background:var(--fa-pl-bg);color:var(--fa-pl-fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 /* THE BAR: the whole width beside the rail, outside the content column. Its colours are the page's (`--fa-page-bar-bg`, `--fa-page-bar-fg`). */

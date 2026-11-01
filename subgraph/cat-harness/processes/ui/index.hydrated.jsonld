@@ -11,6 +11,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/archimate-publish.svg",
       "description": "An ArchiMate model is authored in Archi and committed; everything a reader sees is derived from it by three mechanical Tools, in order, in the pipeline lane: `archimate-check` (it parses and resolves), `archimate-metamodel` (the element types and relationship patterns it uses, each checked against ArchiMate's relationship table), and `archimate-pages` (a page and an IRI for every view, element and relationship, every view drawn, and the \"Metamodel in use\" page). No step draws a diagram by hand, and none runs Archi or a JVM (skill `archimate-models`).\n\nOwner, 2026-10-31: \"i dont really like native UML, rather derived\", then \"make mechanical tools as parts of skills/processes\". A metamodel used to be a hand-drawn view of placeholder elements named after their types; here it is the second step's output, so it cannot disagree with the model.",
       "enforcement": "strict",
       "flowCount": 7,

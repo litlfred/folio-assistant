@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "4f8d2c74773d3be1a329b663bc1c71b1a16de366",
+    "sha": "e6e0ac1b4e2da69c7a541997f0ea2640af6fbff2",
     "pr": "main",
-    "run": "41240607717"
+    "run": "41284861517"
   },
   "@graph": [
     {
@@ -16,7 +16,7 @@
       "title": "/q-usage-watcher",
       "description": "q-usage integration watcher — detects how each content block treats the substrate parameter $q$ (symbolic / generic-R / real-positive / q > 1 / |q| > 1 / unit-circle / root-of-unity / fixed q_0 / n/a) and cross-checks the detected regime vector against the chapter's narrative-expected profile. Emits per-block `<block>.qa.json` sidecars under the `q-usage-*` criteria and a global witness JSON. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from `local/integration-watcher`.",
       "instructionsPath": "skills/content/folio-paper-adapter/q-usage-watcher.md",
-      "instructionLines": 342,
+      "instructionLines": 343,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

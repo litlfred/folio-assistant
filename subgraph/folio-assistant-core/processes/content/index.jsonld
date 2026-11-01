@@ -656,6 +656,20 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF12",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "failed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF13",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "passed"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "name": "Authoring agent"
@@ -671,6 +685,11 @@
       "name": "Editor"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_QaReviewer",
+      "@type": "cat-harness:Lane",
+      "name": "QA reviewer (independent)"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",
       "@type": "bootstrap:ProcessNode",
       "name": "Change merged"
@@ -679,6 +698,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_FeedbackChanged",
       "@type": "bootstrap:ProcessNode",
       "name": "Feedback changed since the proposal?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_QaPassed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "QA gate passed for the PR's head?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/StartEvent_Feedback",
@@ -704,6 +728,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Propose",
       "@type": "bootstrap:ProcessNode",
       "name": "Propose a direction"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_QaGate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "QA gate: review dispositions against the people and the pull request"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForAgent",
@@ -2206,15 +2235,6 @@
       "name": "to be weighed"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToAuthorEdits",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "yes: accepted"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangeSet",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToChangesGateway",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -2227,16 +2247,17 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporate",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIncorporated",
       "@type": "bootstrap:SequenceFlow"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToIngest",
       "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToMakeChange",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes: accepted"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToRecommend",
@@ -2261,11 +2282,6 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment#flow/Flow_ToWithdrawn",
       "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Author",
-      "@type": "cat-harness:Lane",
-      "name": "Author (human or agentic)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Commenter",
@@ -2293,14 +2309,9 @@
       "name": "Intake agent"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Pipeline",
-      "@type": "cat-harness:Lane",
-      "name": "Change set — feature branch and staging"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/CallActivity_ChangeSet",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/CallActivity_MakeChange",
       "@type": "bootstrap:ProcessNode",
-      "name": "Review the change set on its staging preview"
+      "name": "Make the change, check it and merge it"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/EndEvent_Decided",
@@ -2353,11 +2364,6 @@
       "name": "Assign to committee members"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_AuthorEdits",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Edit the document as decided, on a feature branch"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_CommitteeRecommends",
       "@type": "bootstrap:ProcessNode",
       "name": "Recommend a decision, with a rationale"
@@ -2371,11 +2377,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_GroupChangeSets",
       "@type": "bootstrap:ProcessNode",
       "name": "Agree each change-set's requirements on its issue"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Incorporate",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Mark incorporated when the change set merges"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Ingest",
@@ -2401,6 +2402,91 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Withdraw",
       "@type": "bootstrap:ProcessNode",
       "name": "Record the withdrawal"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange",
+      "@type": "bootstrap:Process",
+      "name": "Make a decided public comment change"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_QaFailed",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "failed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToAuthor",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToChangeSet",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToIncorporate",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "passed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToMerged",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGate",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToQaGateway",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Author",
+      "@type": "cat-harness:Lane",
+      "name": "Author (human or agentic)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Pipeline",
+      "@type": "cat-harness:Lane",
+      "name": "Change set — feature branch and staging"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_QaReviewer",
+      "@type": "cat-harness:Lane",
+      "name": "QA reviewer (independent)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/CallActivity_ChangeSet",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Review the change set on its staging preview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/EndEvent_ChangeMerged",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Merged, comments incorporated"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Gateway_QaPassed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "QA gate passed for the PR's head?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/StartEvent_ChangeDecided",
+      "@type": "bootstrap:ProcessNode",
+      "name": "The editor's decision changes the document"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Edit the document as decided, on a feature branch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_Incorporate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Mark incorporated when the change set merges"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_QaGate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "QA gate: check dispositions against the people and the pull request"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease",

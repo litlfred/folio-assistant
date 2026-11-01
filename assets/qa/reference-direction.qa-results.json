@@ -40,11 +40,11 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6200,
+          "occurrences": 6204,
           "allowed": 0,
-          "wrongDirection": 21,
-          "wrongDirectionFiles": 13,
-          "exempt": 6179,
+          "wrongDirection": 13,
+          "wrongDirectionFiles": 8,
+          "exempt": 6191,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -54,16 +54,8 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 14,
+      "count": 9,
       "entries": [
-        {
-          "file": "bootstrap-tools/schemas/graph-export.ts",
-          "target": "cat-harness-tools"
-        },
-        {
-          "file": "bootstrap-tools/scripts/export-graph.ts",
-          "target": "cat-harness-tools"
-        },
         {
           "file": "bootstrap/models/models.json",
           "target": "who-iris"
@@ -71,10 +63,6 @@
         {
           "file": "cat-harness-tools/schemas/harness-root.ts",
           "target": "fhir-harness"
-        },
-        {
-          "file": "folio-assistant-core/schemas/figure-data.ts",
-          "target": "who-iris"
         },
         {
           "file": "folio-assistant-core/scripts/diig-phases-svg.ts",
@@ -103,17 +91,9 @@
         {
           "file": "folio-assistant-core/tools/smart-approach-svg/smart-approach-svg.ts",
           "target": "who-iris"
-        },
-        {
-          "file": "folio-assistant-core/validators/diig-phases-figure.json",
-          "target": "who-iris"
-        },
-        {
-          "file": "folio-assistant-core/validators/smart-guidelines-approach-figure.json",
-          "target": "who-iris"
         }
       ]
     }
   },
-  "total": 16
+  "total": 11
 }
