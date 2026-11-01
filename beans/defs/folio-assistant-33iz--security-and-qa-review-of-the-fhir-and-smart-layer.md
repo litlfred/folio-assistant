@@ -2,11 +2,11 @@
 # folio-assistant-33iz
 $schema: bean/1.0.0
 title: 'Security and QA review of the FHIR and SMART layers (2026-10-31)'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T08:25:00Z
+updated_at: 2026-11-01T21:00:00Z
 tags:
     - security
     - security-review-2026-10-31
@@ -27,3 +27,5 @@ _2026-10-31T04:20Z_ — Filed by the group C security review, session https://cl
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 _2026-10-31T08:25Z_ — Open PRs for all remaining Group C beans: `fhir-harness#247` (`avcq`, `wyez`), `smart-base#255` (`plxg`, `towy`, `vl71`, `ylu8`), `smart-ra#181` (`x09n`, `ylu8`), `smart-immunizations#105` (`hgxs`, `ylu8`). (`fg31` completed in `fhir-harness#244` and `smart-base#251`.)
+
+_2026-11-01T21:00Z_ — Completed. Every Group C finding is fixed and merged: fhir-harness#244/#247, smart-base#251/#253/#255, smart-ra#175/#177/#181, smart-immunizations#104/#105. The four held findings are filed as completed beans 98uf, ytsf, jo5h, 10rg (owner Q-SEC-1 A), and hf33 is completed. Re-check 2026-11-01: bun audit shows no high or critical advisory in folio-assistant, core or tools. MVP security review, session https://claude.ai/code/session_01Qmmkt7zjJDpkdmxtXvQWTS
