@@ -97,6 +97,18 @@ describe("the workflows", () => {
     expect(train).not.toMatch(/\/merge\b|gh pr merge/);
   });
 
+  test("the train refreshes bun.lock with its pins, so frozen installs pass", () => {
+    const repin = train.indexOf("mount:repin:standing --summary-file");
+    const install = train.indexOf("bun install\n", repin);
+    expect(install).toBeGreaterThan(repin);
+    expect(install).toBeLessThan(train.indexOf("git add -u"));
+  });
+
+  test("without a bot token, the train starts both workflows the verdict reads", () => {
+    expect(train).toContain("gh workflow run code-quality-gates.yml");
+    expect(train).toContain("gh workflow run feature-staging.yml");
+  });
+
   test("the verdict judges only train branches", () => {
     expect(verdict).toContain("startsWith(github.event.workflow_run.head_branch, 'repin-train/')");
   });

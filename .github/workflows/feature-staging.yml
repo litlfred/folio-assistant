@@ -1875,24 +1875,6 @@ jobs:
       # Halving this workflow's writes attacks that cause rather than
       # absorbing it. The three-attempt rebase loop is kept regardless: the
       # contention BETWEEN sessions is untouched, and is `yzsj`'s ground.
-      - name: Check out the publish branch
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          ref: gh-pages
-          path: pages
-          persist-credentials: true
-
-      # THE PREVIEW IS STAGED BEFORE IT IS PUSHED — issue #1956. The deploy
-      # below may wait for the rate-limit window, so the reviewer is told now
-      # that the build is done, that it is queued, and when it should be live —
-      # estimated against the `gh-pages` tip just checked out. The step after
-      # the deploy rewrites the same comment once the push lands.
-      #
-      # `continue-on-error`: a comment that could not be written must not stop
-      # a deploy that can still succeed. The body is built in
-      # `staging-push-gate.ts` (`stagingComment`, tested), and every value from
-      # the PR reaches it through `env`, never through the script's source text
-      # — the `j0zs` rule on the step after the deploy.
       # ── A VERIFY run: the agent's build against this one ────────
       # Owner, 2026-11-01, Q-SPD-9b A: a FULL rebuild, compared file by file,
       # not a sample. Same files: nothing is pushed, the agent's preview stays,
@@ -1903,11 +1885,18 @@ jobs:
         id: verify_agent
         if: inputs.verify_pr != ''
         env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -u
-          AGENT="pages/STAGING/$STAGING_SLUG/_build-record.json"
+          # Read off gh-pages through the API: with the batched publisher this
+          # job has no gh-pages checkout. Read just before the hand-off, so a
+          # newer preview that landed while this run built is seen and kept.
+          AGENT="$RUNNER_TEMP/agent-record.json"
+          gh api "repos/$REPO/contents/STAGING/$STAGING_SLUG/_build-record.json?ref=gh-pages" \
+            -H 'Accept: application/vnd.github.raw' > "$AGENT" 2>/dev/null || rm -f "$AGENT"
           OUT="$RUNNER_TEMP/verify-comment.md"
           if [ ! -f "$RUNNER_TEMP/ci-record.json" ]; then
             echo "::error::this tools pin cannot write a build record, so it cannot verify one"
@@ -1931,6 +1920,91 @@ jobs:
           # Kept for the PR comment whatever the answer.
           [ -f "$OUT" ] || printf '<!-- preview-build-verify -->\n**Agent-built preview could not be compared** (its record was refused). CI replaced it.\n\nCI run: %s\n' "$RUN_URL" > "$OUT"
 
+      # Q-SPD-5c (owner card 2026-11-01 16:24Z, option A): hand the built site
+      # to the batched publisher (`staging-publish.yml`) instead of waiting at
+      # the gh-pages push gate on this runner. The publisher pushes every
+      # waiting preview in one commit per Pages window. If any part of the
+      # hand-off fails (or the publisher is not on main yet), the in-job deploy
+      # below runs exactly as before.
+      - name: Pack the preview for the batched publisher (Q-SPD-5c)
+        id: handoff
+        # A verify run hands off only a build that replaces the agent's.
+        if: inputs.verify_pr == '' || steps.verify_agent.outputs.same == 'false' || steps.verify_agent.outputs.same == 'stale'
+        continue-on-error: true
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
+          PR: ${{ github.event.pull_request.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -eu
+          case "$STAGING_SLUG" in
+            ""|.|..|*/*|_retired) echo "::error::staging slug '$STAGING_SLUG' is not one safe path segment"; exit 1 ;;
+          esac
+          if [ -z "$(ls -A _site 2>/dev/null || true)" ]; then
+            echo "::error::the build produced an empty ./_site; nothing handed off"; exit 1
+          fi
+          H="$RUNNER_TEMP/staging-handoff"; rm -rf "$H"; mkdir -p "$H"
+          tar -C _site -cf "$H/site.tar" .
+          jq -n --arg slug "$STAGING_SLUG" --arg branch "$STAGING_BRANCH" --arg sha "$GITHUB_SHA" \
+            --arg pr "$PR" --arg run "$RUN_URL" \
+            '{slug: $slug, branch: $branch, sha: $sha, pr: (if $pr == "" then null else ($pr | tonumber) end), run: $run}' > "$H/meta.json"
+          echo "packed $(du -h "$H/site.tar" | cut -f1) for STAGING/$STAGING_SLUG"
+
+      - name: Queue the preview for the batched publisher (Q-SPD-5c)
+        id: handoff_upload
+        if: steps.handoff.outcome == 'success'
+        continue-on-error: true
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: staging-site-${{ steps.slug.outputs.slug }}
+          path: |
+            ${{ runner.temp }}/staging-handoff/site.tar
+            ${{ runner.temp }}/staging-handoff/meta.json
+          if-no-files-found: error
+          compression-level: 1
+          overwrite: true
+          retention-days: 1
+
+      - name: Wake the batched publisher (Q-SPD-5c)
+        id: handoff_dispatch
+        if: steps.handoff_upload.outcome == 'success'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SLUG: ${{ steps.slug.outputs.slug }}
+          ARTIFACT_ID: ${{ steps.handoff_upload.outputs.artifact-id }}
+        run: |
+          if gh workflow run staging-publish.yml --repo "$REPO" --ref main; then
+            echo "handed STAGING/$SLUG to the batched publisher"
+            exit 0
+          fi
+          # No publisher to take it: deploy in this job, and take the artifact
+          # back so a later publisher run cannot replace a newer preview with it.
+          [ -z "$ARTIFACT_ID" ] || gh api -X DELETE "repos/$REPO/actions/artifacts/$ARTIFACT_ID" || true
+          exit 1
+
+      - name: Check out the publish branch
+        # Only for the in-job deploy, when the hand-off above did not happen.
+        if: steps.handoff_dispatch.outcome != 'success'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: gh-pages
+          path: pages
+          persist-credentials: true
+
+      # THE PREVIEW IS STAGED BEFORE IT IS PUSHED — issue #1956. The deploy
+      # below may wait for the rate-limit window, so the reviewer is told now
+      # that the build is done, that it is queued, and when it should be live —
+      # estimated against the `gh-pages` tip just checked out. The step after
+      # the deploy rewrites the same comment once the push lands.
+      #
+      # `continue-on-error`: a comment that could not be written must not stop
+      # a deploy that can still succeed. The body is built in
+      # `staging-push-gate.ts` (`stagingComment`, tested), and every value from
+      # the PR reaches it through `env`, never through the script's source text
+      # — the `j0zs` rule on the step after the deploy.
       - name: Comment on the PR that the preview is queued
         if: github.event_name == 'pull_request'
         continue-on-error: true
@@ -1942,7 +2016,9 @@ jobs:
         with:
           script: |
             const out = `${process.env.RUNNER_TEMP}/staging-comment.md`;
-            const args = ['--state', 'queued', '--dir', 'pages', '--out', out];
+            const args = ['--state', 'queued', '--out', out];
+            // With the batched publisher there is no gh-pages checkout here.
+            if (require('fs').existsSync('pages/.git')) args.push('--dir', 'pages');
             const { readFileSync } = require('fs');
             await exec.exec('bun', ['run', 'cat-harness-tools/scripts/staging-push-gate.ts', 'comment', ...args]);
             let body = readFileSync(out, 'utf8');
@@ -1973,10 +2049,12 @@ jobs:
 
       - name: Deploy the preview and log the render, in one commit
         id: deploy
-        # A verify run deploys only when the agent's build differed or was of
-        # an older tree; when it matched, or its record is gone, the preview
-        # stays as it is.
-        if: inputs.verify_pr == '' || steps.verify_agent.outputs.same == 'false' || steps.verify_agent.outputs.same == 'stale'
+        # In-job deploy only when the hand-off to the batched publisher did not
+        # happen, and, in a verify run, only when the agent's build differed or
+        # was of an older tree (folio-assistant#2881).
+        if: >-
+          steps.handoff_dispatch.outcome != 'success'
+          && (inputs.verify_pr == '' || steps.verify_agent.outputs.same == 'false' || steps.verify_agent.outputs.same == 'stale')
         env:
           VERIFY_TREE: ${{ steps.verify_agent.outputs.agent_tree }}
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
@@ -2199,7 +2277,8 @@ jobs:
           done
 
       - name: Comment staging URL on PR
-        if: github.event_name == 'pull_request'
+        # The batched publisher posts this itself once its push lands.
+        if: github.event_name == 'pull_request' && steps.handoff_dispatch.outcome != 'success'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         # A `script:` block is JavaScript, and `${{ }}` is substituted into its
         # SOURCE TEXT before V8 parses it — so the hazard is the `run:` one in a
@@ -2299,7 +2378,7 @@ jobs:
           PR: ${{ inputs.verify_pr }}
           SAME: ${{ steps.verify_agent.outputs.same }}
           AGENT_HEAD: ${{ steps.verify_agent.outputs.agent_head }}
-          DEPLOY: ${{ steps.deploy.outcome }}
+          DEPLOY: ${{ steps.handoff_dispatch.outcome == 'success' && 'handed to the batched publisher' || steps.deploy.outcome }}
           JUDGE: ${{ steps.judge.outcome }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
