@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
+    "pr": "2864/merge",
+    "run": "41293015265"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Authoring agent (system)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-sci/process/Process_PaperAuthoring",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-sci/role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/TabularStub",
+  "definitions": {
+    "TabularStub": {
+      "type": "object",
+      "properties": {
+        "tool": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "since": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        }
+      },
+      "required": [
+        "tool",
+        "reason",
+        "since"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-csvw/TabularStubSchema.schema.json",
+  "title": "TabularStubSchema",
+  "description": "Generated from `TabularStubSchema` in schemas/library/tabular-csvw.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
+    "pr": "2864/merge",
+    "run": "41293015265"
+  }
+}

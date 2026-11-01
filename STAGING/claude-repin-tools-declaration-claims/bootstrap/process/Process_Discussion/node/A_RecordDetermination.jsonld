@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/bootstrap/process/Process_Discussion/node/A_RecordDetermination.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/bootstrap/process/Process_Discussion/node/A_RecordDetermination",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Record the determination",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/bootstrap/process/Process_Discussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/bootstrap/skill/discussion"
+    }
+  ]
+}

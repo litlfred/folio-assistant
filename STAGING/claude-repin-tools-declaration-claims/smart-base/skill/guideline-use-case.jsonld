@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/smart-base/skill/guideline-use-case.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/guideline-use-case.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
+    "pr": "2864/merge",
+    "run": "41293015265"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/guideline-use-case",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "guideline-use-case",
+      "title": "guideline-use-case",
+      "description": "Stage 0 of smart-guideline-end-to-end: turn a request for a SMART Guideline into a use case — population, setting, jurisdiction and interventions in scope, new or an adaptation — in the requester's own words. The agent asks numbered questions for what the request did not say, and never invents the answer. Read when a guideline request arrives, before any L1 source is looked for.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/guideline-use-case.md",
+      "instructionLines": 56,
+      "inputSchema": "http://smart.who.int/base/schema/skills/guideline-use-case/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/guideline-use-case/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "$ref": "#/definitions/SpdxChecksum",
+  "definitions": {
+    "SpdxChecksum": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "spdx:Checksum"
+        },
+        "spdx:algorithm": {
+          "type": "string",
+          "enum": [
+            "spdx:checksumAlgorithm_sha256",
+            "spdx:checksumAlgorithm_sha512"
+          ]
+        },
+        "spdx:checksumValue": {
+          "type": "string",
+          "pattern": "^[0-9a-f]+$"
+        }
+      },
+      "required": [
+        "spdx:algorithm",
+        "spdx:checksumValue"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/SpdxChecksumSchema.schema.json",
+  "title": "SpdxChecksumSchema",
+  "description": "Generated from `SpdxChecksumSchema` in schemas/content/prov.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
+    "pr": "2864/merge",
+    "run": "41293015265"
+  }
+}

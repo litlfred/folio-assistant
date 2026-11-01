@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/asset/unkinded-baseline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
+    "pr": "2864/merge",
+    "run": "41293015265"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/asset/unkinded-baseline",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "name": "unkinded-baseline",
+      "path": "node-kinds.baseline.json",
+      "assetRole": "unkinded-baseline",
+      "title": "Unkinded families — cat-harness",
+      "description": "The families whose typology THIS instance declares (in code, BASE_GRAPH_TYPOLOGIES and its registrations, or in its archimate/ and openapi/ typologies graphs) that predate node kinds and may stay unkinded; `node-kinds:check` fails on any other. Owner, 2026-10-15: split out of docs/_data/node-kinds.json, which spanned every layer and is now built at publish, so each layer's families are judged by its own commit. Written by `bun run cat node-kinds`, which only shrinks it; `--accept-unkinded` grows it deliberately.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/asset/unkinded-baseline"
+    }
+  ]
+}

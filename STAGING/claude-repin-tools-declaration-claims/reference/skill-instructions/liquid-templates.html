@@ -1,0 +1,293 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Liquid templates | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Liquid templates" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Liquid templates" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-liquid-templates",
+    "src": "../../assets/qa/reference-skill-instructions-liquid-templates/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-liquid-templates/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=0fe5e7574704"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=420fe327c2dc" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/liquid-templates.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#where-a-template-lives","label":"Where a template lives"},{"href":"#what-a-template-may-read--and-what-it-must-not-compose","label":"What a template may read — and what it must not compose"},{"href":"#versions-are-variables-never-numbers","label":"Versions are variables, never numbers"},{"href":"#the-leading-comment-is-the-files-description","label":"The leading comment IS the file’s description"},{"href":"#includes","label":"Includes"},{"href":"#whitespace--check-the-output-not-the-template","label":"Whitespace — check the output, not the template"},{"href":"#escaping","label":"Escaping"},{"href":"#an-undefined-variable-is-a-message-not-silence","label":"An undefined variable is a message, not silence"},{"href":"#markers--the-platform-owns-the-region-the-folio-owns-the-file","label":"Markers — the platform owns the region, the folio owns the file"},{"href":"#regenerate-commit-and-the-gate","label":"Regenerate, commit, and the gate"},{"href":"#on-the-site-specifically","label":"On the site specifically"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Liquid templates</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/liquid-templates.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/ui/ui-core/liquid-templates.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/liquid-templates.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/ui/ui-core/liquid-templates.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="liquid-templates--layout-only-every-fact-from-the-graph"><a href="#liquid-templates--layout-only-every-fact-from-the-graph" class="anchor-heading" aria-labelledby="liquid-templates--layout-only-every-fact-from-the-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Liquid templates — layout only, every fact from the graph
+  
+  
+</h1><p>Two engines run Liquid here, and they produce different kinds of output. Know
+which one you are writing for before you write a line:</p><div class="table-wrapper"><table><thead><tr><th></th><th>README templates</th><th>site templates</th></tr></thead><tbody><tr><td>engine</td><td>liquidjs, run by bootstrap-tools’ <code class="language-plaintext highlighter-rouge">subgraph-readmes</code> (<code class="language-plaintext highlighter-rouge">jekyllInclude: true</code>, <code class="language-plaintext highlighter-rouge">strictFilters: true</code>)</td><td>Jekyll, run by <code class="language-plaintext highlighter-rouge">docs-site.yml</code> with the pinned just-the-docs <code class="language-plaintext highlighter-rouge">remote_theme</code></td></tr><tr><td>lives in</td><td><code class="language-plaintext highlighter-rouge">templates/readme/</code> beside the writer, in the tools repository (<code class="language-plaintext highlighter-rouge">bootstrap-tools/scripts/templates/readme/</code>)</td><td><code class="language-plaintext highlighter-rouge">cat-harness/docs/_includes/</code> — just-the-docs’ extension points (<code class="language-plaintext highlighter-rouge">head_custom.html</code>, <code class="language-plaintext highlighter-rouge">footer_custom.html</code>, <code class="language-plaintext highlighter-rouge">nav_footer_custom.html</code>) plus our own</td></tr><tr><td>output</td><td><code class="language-plaintext highlighter-rouge">&lt;directory&gt;/README.md</code>, <strong>committed</strong>, read on GitHub where no Liquid runs</td><td><code class="language-plaintext highlighter-rouge">_site/</code>, <strong>never committed</strong>, published to Pages</td></tr><tr><td>data</td><td>only what the generator passes: <code class="language-plaintext highlighter-rouge">subgraph</code>, <code class="language-plaintext highlighter-rouge">instance</code>, <code class="language-plaintext highlighter-rouge">kg</code>, <code class="language-plaintext highlighter-rouge">files</code>, <code class="language-plaintext highlighter-rouge">subdirs</code>, <code class="language-plaintext highlighter-rouge">summary</code></td><td><code class="language-plaintext highlighter-rouge">site</code>, <code class="language-plaintext highlighter-rouge">page</code>, <code class="language-plaintext highlighter-rouge">include</code>, and <code class="language-plaintext highlighter-rouge">_data/*.json</code> written by the pipeline</td></tr><tr><td>verified by</td><td><code class="language-plaintext highlighter-rouge">bun run cat readme:subgraphs:check</code> — the diff is the output</td><td>building the site: <a href="../../reference/skill-instructions/rendered-verification.html"><code class="language-plaintext highlighter-rouge">rendered-verification</code></a>, <code class="language-plaintext highlighter-rouge">bun run cat preview:site</code></td></tr></tbody></table></div><h2 id="where-a-template-lives"><a href="#where-a-template-lives" class="anchor-heading" aria-labelledby="where-a-template-lives"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a template lives
+  
+  
+</h2><p><strong>Beside the writer that renders it, in the tools repository.</strong> The README
+templates are part of bootstrap-tools’ <code class="language-plaintext highlighter-rouge">scripts/</code> subgraph, at
+<code class="language-plaintext highlighter-rouge">bootstrap-tools/scripts/templates/readme/</code>, and the writer finds them with
+<code class="language-plaintext highlighter-rouge">TEMPLATES</code>, a path relative to its own file. They moved there with the
+writer (bean <code class="language-plaintext highlighter-rouge">xsqm</code>, owner 2026-09-29: one copy of the README writers, in the
+tools repository): a template is part of the toolset, and somebody who wants
+different READMEs uses a different toolset over the same content. Until then
+they sat in cat-harness’s <code class="language-plaintext highlighter-rouge">tools/</code> directory, found through its <code class="language-plaintext highlighter-rouge">id</code>, and a
+harness that wants its own layout still passes its own templates directory to
+<code class="language-plaintext highlighter-rouge">plan()</code>. They are files OF the <code class="language-plaintext highlighter-rouge">scripts/</code> subgraph, not a directory of their
+own: a declared directory nested inside another is refused by
+<code class="language-plaintext highlighter-rouge">check:layout-norms</code>. Never an inline template string in a <code class="language-plaintext highlighter-rouge">.ts</code> file and
+never a <code class="language-plaintext highlighter-rouge">.liquid</code> file outside a declared directory: a template nobody
+declared is one no checker looks at, and its README row cannot say what it is.</p><h2 id="what-a-template-may-read--and-what-it-must-not-compose"><a href="#what-a-template-may-read--and-what-it-must-not-compose" class="anchor-heading" aria-labelledby="what-a-template-may-read--and-what-it-must-not-compose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a template may read — and what it must not compose
+  
+  
+</h2><p><strong>A template arranges facts; it never states one.</strong> Every word that is not
+layout comes from a variable the generator read from the Knowledge Graph: the
+directory’s declared <code class="language-plaintext highlighter-rouge">title</code> and <code class="language-plaintext highlighter-rouge">description</code>, each file’s own account of
+itself, a relation a diagram records. No count, URL, name or claim typed into
+a template — each is a second answer free to drift from the first, which is
+<a href="../../reference/skill-instructions/readme-sections.html"><code class="language-plaintext highlighter-rouge">readme-sections</code></a> §”Resolve links; never compose them”
+one level down.</p><ul><li><strong>Computation belongs in the generator</strong>, where it is tested: counting,
+grouping, choosing a link target, collapsing a long list. The template sees
+results (<code class="language-plaintext highlighter-rouge">subdirs[].count</code>, <code class="language-plaintext highlighter-rouge">summary</code>), not inputs to derive them from.</li><li><strong>A missing value is shown as missing</strong>, never papered over:
+<code class="language-plaintext highlighter-rouge">{{ subgraph.title | default: subgraph.id }}</code> and
+“<em>No description is declared for …</em>” are the pattern. The generator records
+the gap as a QA finding in <code class="language-plaintext highlighter-rouge">test/results/subgraph-readmes.qa-results.json</code>
+(a derived result, stored on the <code class="language-plaintext highlighter-rouge">qa-reports</code> branch by <code class="language-plaintext highlighter-rouge">qa-publish</code>);
+the template must not make it look filled.</li><li><strong>A new variable is a generator change first.</strong> Add it to the object passed
+to <code class="language-plaintext highlighter-rouge">renderFile</code>, list it in the template’s comment, then use it.</li></ul><h2 id="versions-are-variables-never-numbers"><a href="#versions-are-variables-never-numbers" class="anchor-heading" aria-labelledby="versions-are-variables-never-numbers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Versions are variables, never numbers
+  
+  
+</h2><p>A version typed into a template is stale on the next bump. Read it:</p><ul><li><strong>README templates</strong> get <code class="language-plaintext highlighter-rouge">release</code>: <code class="language-plaintext highlighter-rouge">version</code> (every instance declares one),
+and — for an instance declaring an <code class="language-plaintext highlighter-rouge">iriBase</code> — <code class="language-plaintext highlighter-rouge">major</code>, <code class="language-plaintext highlighter-rouge">agent</code> (for
+identifiers) and <code class="language-plaintext highlighter-rouge">human</code> (for pages), both <code class="language-plaintext highlighter-rouge">&lt;iriBase&gt;v&lt;major&gt;/</code> since the
+owner’s 2026-10-23 ruling. Empty strings where not declared: test with
+<code class="language-plaintext highlighter-rouge">!= ""</code>, and show nothing rather than a guess.</li><li><strong>Site templates</strong> read <code class="language-plaintext highlighter-rouge">site.data.harness.releases.&lt;instance&gt;</code> — the same
+four fields for every instance, written by <code class="language-plaintext highlighter-rouge">sync-docs-harness</code> into
+<code class="language-plaintext highlighter-rouge">_data/harness.json</code> under the <code class="language-plaintext highlighter-rouge">docs:harness:check</code> gate.</li></ul><p>Link a person to <code class="language-plaintext highlighter-rouge">human</code> and name an identifier with <code class="language-plaintext highlighter-rouge">agent</code>. They are one
+address today — every address carries the major only, and the pin, not the
+address, fixes the exact release (<a href="../../reference/skill-instructions/instance-publication.html"><code class="language-plaintext highlighter-rouge">instance-publication</code></a>
+§”Release IRIs”) — but the field still says which audience a link is for.</p><h2 id="the-leading-comment-is-the-files-description"><a href="#the-leading-comment-is-the-files-description" class="anchor-heading" aria-labelledby="the-leading-comment-is-the-files-description"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The leading comment IS the file’s description
+  
+  
+</h2><p>Open every template with a <code class="language-plaintext highlighter-rouge">{%- comment -%}</code> block. Its <strong>first sentence</strong> is
+what the directory README’s “what it is” column shows for the file
+(<code class="language-plaintext highlighter-rouge">describe()</code> in <code class="language-plaintext highlighter-rouge">bootstrap-tools/scripts/readme-graph-sections.ts</code>), so write it for
+a reader of that table — “The file table: files directly in the directory,
+then its subdirectories.” — and put the variables it reads in the lines after.
+No comment and the row says only “a template”.</p><h2 id="includes"><a href="#includes" class="anchor-heading" aria-labelledby="includes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Includes
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">jekyllInclude: true</code> gives Jekyll’s syntax: <code class="language-plaintext highlighter-rouge">{% include files.liquid %}</code>, the
+file name unquoted and with its extension. An include with no parameters sees
+the including template’s variables (<code class="language-plaintext highlighter-rouge">files.liquid</code> reads <code class="language-plaintext highlighter-rouge">files</code> directly); a
+parameter passed as <code class="language-plaintext highlighter-rouge">{% include x.liquid key=value %}</code> is read as
+<code class="language-plaintext highlighter-rouge">include.key</code>, as in Jekyll. Split a template when a part is reusable or when
+a reader would want its own row for it — not to hide logic.</p><h2 id="whitespace--check-the-output-not-the-template"><a href="#whitespace--check-the-output-not-the-template" class="anchor-heading" aria-labelledby="whitespace--check-the-output-not-the-template"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Whitespace — check the output, not the template
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">{%-</code> and <code class="language-plaintext highlighter-rouge">-%}</code> strip the whitespace on that side of the tag, and that is how a
+template emits clean Markdown. It is also how a separator the output needs
+disappears: one <code class="language-plaintext highlighter-rouge">{% endif -%}</code> in <code class="language-plaintext highlighter-rouge">_includes/landing.html</code> glued two HTML
+attributes together and the live landing page printed its own markup as text,
+past every gate (<a href="../../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a> §”A template is
+not a page”). Strip freely inside a tag’s own lines; think before stripping
+next to a table row’s newline, the blank line before a heading or table, or
+an attribute boundary. <code class="language-plaintext highlighter-rouge">subgraph-readmes</code> also collapses three or more
+newlines to two, so do not fight blank lines with stripping.</p><h2 id="escaping"><a href="#escaping" class="anchor-heading" aria-labelledby="escaping"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Escaping
+  
+  
+</h2><ul><li><strong><code class="language-plaintext highlighter-rouge">strictFilters: true</code></strong> — an unknown filter is an error, not a silent
+pass-through. No custom filter is registered.</li><li><strong>A value bound for a table cell is escaped before it reaches the
+template</strong> — the generator’s <code class="language-plaintext highlighter-rouge">cell()</code> turns <code class="language-plaintext highlighter-rouge">|</code> into <code class="language-plaintext highlighter-rouge">\|</code> and folds
+newlines. A new cell-bound field goes through it; a raw <code class="language-plaintext highlighter-rouge">|</code> from a file’s
+description splits the row.</li><li><strong>Liquid syntax in prose that Jekyll will build</strong> must sit inside a <code class="language-plaintext highlighter-rouge">raw</code>
+block. <code class="language-plaintext highlighter-rouge">gen-skill-docs</code> wraps every skill page in one, so a skill may quote
+<code class="language-plaintext highlighter-rouge">{{ }}</code> and <code class="language-plaintext highlighter-rouge">{% %}</code> freely — but never the closing <code class="language-plaintext highlighter-rouge">endraw</code> tag itself,
+which ends the block early. A generated README
+that sits under a site source (<code class="language-plaintext highlighter-rouge">cat-harness/docs/</code>, root <code class="language-plaintext highlighter-rouge">docs/</code>) may be
+read by the site build too; if a KG value there can carry Liquid, build the
+site and look before assuming either way.</li></ul><h2 id="an-undefined-variable-is-a-message-not-silence"><a href="#an-undefined-variable-is-a-message-not-silence" class="anchor-heading" aria-labelledby="an-undefined-variable-is-a-message-not-silence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An undefined variable is a message, not silence
+  
+  
+</h2><p>Jekyll renders an undefined variable as the empty string and says nothing;
+<code class="language-plaintext highlighter-rouge">strict_variables</code> says something by FAILING the build and by changing what
+renders (the exception aborts the whole tag, <code class="language-plaintext highlighter-rouge">else</code> branch included).
+<code class="language-plaintext highlighter-rouge">docs/_plugins/liquid-undefined-warn.rb</code> does neither: every lookup runs as
+Liquid runs it, and at the end of the build each path that was ABSENT is
+printed as a warning with its count and pages, <code class="language-plaintext highlighter-rouge">site.data.*</code> first (owner,
+2026-10-09, bean <code class="language-plaintext highlighter-rouge">8pyz</code>: <em>“jekyll strict (if not error out, just message)”</em>).
+A lookup inside a condition or under <code class="language-plaintext highlighter-rouge">| default</code> is not reported — there the
+template asked — nor an include’s own parameter (<code class="language-plaintext highlighter-rouge">include.x</code>, optional by
+convention), a field of a variable that is there and nil (its cause is reported
+once, where it went undefined), or a path <code class="language-plaintext highlighter-rouge">liquid_undefined_ignore</code> in
+<code class="language-plaintext highlighter-rouge">_config.yml</code> lists: a THEME’s optional settings, which <code class="language-plaintext highlighter-rouge">site-chrome/_config.yml</code>
+names for just-the-docs. On the immunizations IG those rules took 399 reports
+to the 2 real gaps. <code class="language-plaintext highlighter-rouge">FOLIO_LIQUID_UNDEFINED_REPORT=&lt;file&gt;</code> writes the same record
+as JSON; <code class="language-plaintext highlighter-rouge">liquid_undefined: off</code> in <code class="language-plaintext highlighter-rouge">_config.yml</code> turns it off. It runs only
+where plugins do (<code class="language-plaintext highlighter-rouge">bundle exec jekyll</code>, as an IG repository’s own site and
+<code class="language-plaintext highlighter-rouge">preview:site</code> build); the github-pages build is safe mode and loads none.</p><h2 id="markers--the-platform-owns-the-region-the-folio-owns-the-file"><a href="#markers--the-platform-owns-the-region-the-folio-owns-the-file" class="anchor-heading" aria-labelledby="markers--the-platform-owns-the-region-the-folio-owns-the-file"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Markers — the platform owns the region, the folio owns the file
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">subgraph-readmes</code> writes only between <code class="language-plaintext highlighter-rouge">&lt;!-- kg:subgraph:begin --&gt;</code> and
+<code class="language-plaintext highlighter-rouge">&lt;!-- kg:subgraph:end --&gt;</code>, creates a README holding just that region when
+there is none, and leaves an unmarked README alone and reported. The rules,
+and why the whole-file generator they replaced was wrong, are in
+<a href="../../reference/skill-instructions/readme-sections.html"><code class="language-plaintext highlighter-rouge">readme-sections</code></a>; do not restate them in a template.</p><h2 id="regenerate-commit-and-the-gate"><a href="#regenerate-commit-and-the-gate" class="anchor-heading" aria-labelledby="regenerate-commit-and-the-gate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Regenerate, commit, and the gate
+  
+  
+</h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>readme:subgraphs          <span class="c"># render every declared directory's README + the QA sidecar</span>
+bun run <span class="nb">cat </span>readme:subgraphs:check    <span class="c"># fail on a stale README or sidecar — CI and the pre-commit hook</span>
+</code></pre></div></div><p>Changing a template changes every README it renders; commit them with the
+template, in one commit. So does adding or removing a file in any declared
+directory — that directory’s table changed. <code class="language-plaintext highlighter-rouge">readme:subgraphs:check</code> runs in
+<code class="language-plaintext highlighter-rouge">code-quality-gates.yml</code> and in <code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/git-hooks/pre-commit</code>; it
+is part of <code class="language-plaintext highlighter-rouge">bun run cat gates</code>.</p><h2 id="on-the-site-specifically"><a href="#on-the-site-specifically" class="anchor-heading" aria-labelledby="on-the-site-specifically"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> On the site specifically
+  
+  
+</h2><ul><li>Pages need front matter to be pages — <code class="language-plaintext highlighter-rouge">title</code>, and <code class="language-plaintext highlighter-rouge">parent</code> / <code class="language-plaintext highlighter-rouge">nav_order</code>
+for just-the-docs’ sidebar, which it builds from front matter at build time.</li><li><code class="language-plaintext highlighter-rouge">baseurl</code> is <code class="language-plaintext highlighter-rouge">/folio-assistant</code>; a link or asset path goes through
+<code class="language-plaintext highlighter-rouge">relative_url</code>, never a literal <code class="language-plaintext highlighter-rouge">/…</code>.</li><li>Override just-the-docs through its extension-point includes, not by copying
+a theme layout — a copied layout silently stops tracking the pinned version
+(<a href="../../reference/skill-instructions/upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption</code></a>).</li><li>A generated reference directory (<code class="language-plaintext highlighter-rouge">reference/skill-instructions/</code>,
+<code class="language-plaintext highlighter-rouge">reference/skills/</code>, <code class="language-plaintext highlighter-rouge">auto-docs/</code>) is never hand-edited; change its generator.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

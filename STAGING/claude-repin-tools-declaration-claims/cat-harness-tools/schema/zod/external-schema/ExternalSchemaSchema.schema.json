@@ -1,0 +1,103 @@
+{
+  "$ref": "#/definitions/ExternalSchema",
+  "definitions": {
+    "ExternalSchema": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-external-schema/v1"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9.-]*$"
+        },
+        "authority": {
+          "type": "string",
+          "enum": [
+            "OMG",
+            "DCMI",
+            "W3C",
+            "IETF",
+            "ISO",
+            "HL7",
+            "other"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "specUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "namespaces": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "use": {
+          "type": "string",
+          "enum": [
+            "conforms",
+            "reads",
+            "cites"
+          ]
+        },
+        "terms": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "minLength": 1
+              },
+              "operative": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "term",
+              "operative"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "$schema",
+        "id",
+        "authority",
+        "title",
+        "version",
+        "specUrl",
+        "use"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/external-schema/ExternalSchemaSchema.schema.json",
+  "title": "ExternalSchemaSchema",
+  "description": "Generated from `ExternalSchemaSchema` in schemas/kg/external-schema.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
+    "pr": "2864/merge",
+    "run": "41293015265"
+  }
+}
