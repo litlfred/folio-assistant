@@ -20,6 +20,10 @@
 # finds it.
 #
 # Main and release builds never come here: they are CI-built, always.
+#
+# TRIGGERS, ACTUAL: schedule and workflow_dispatch only. It reads open PRs;
+# no PR event starts it, by the owner's decision (Q-SPD-9b A): one verify at a
+# time, off the critical path, which a per-PR trigger could not hold.
 name: Preview verify sweep
 
 on:
