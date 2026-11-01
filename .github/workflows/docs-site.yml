@@ -276,7 +276,26 @@ jobs:
           if command -v strace >/dev/null; then strace -V | head -1; exit 0; fi
           sudo apt-get update -qq && sudo apt-get install -y -qq strace && strace -V | head -1
 
+      # Issue #2880 (Q-SPD-8 D): the merged PR's `code-quality-gates` run
+      # already ran `derive:publish` over this tree (its `publish-pages` job).
+      # When that run tested THIS tree, built the pages over the same QA
+      # working copy as the one on disk, and its pages name nothing of the PR
+      # run, its `publish-pages` artifact is restored byte-identical to its
+      # manifest and the build below is skipped (~5 min). Otherwise it says why
+      # and the build runs as before. The security gate above is unchanged.
+      # `.github/scripts/publish-pages-reuse.sh` explains it.
+      - name: Reuse the merged PR's publish-time pages when it built this tree (#2880)
+        id: pages-reuse
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          RECORD_WRITERS: ${{ inputs.record_writers && 'true' || '' }}
+        run: bash .github/scripts/publish-pages-reuse.sh
+
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
+        # #2880: skipped when the step before restored the merged PR's pages.
+        if: ${{ steps.pages-reuse.outputs.reused != 'true' }}
         env:
           # Bean fwtz: traced writers and build/writer-cone/records.json, only on a manual run that asks.
           CAT_WRITER_RECORD: ${{ inputs.record_writers && '1' || '' }}
