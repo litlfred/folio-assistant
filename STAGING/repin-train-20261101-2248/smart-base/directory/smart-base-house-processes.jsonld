@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/smart-base/directory/smart-base-house-processes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-house-processes.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-2248",
+    "sha": "301fb139ff844c6697ccefdb94501657d2e4c16f",
+    "pr": "repin-train/20261101-2248",
+    "run": "41359001460"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-house-processes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-base-house-processes",
+      "path": "processes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/processes"
+      ],
+      "description": "The BPMN this layer OWNS as a house process, as against `methodologies/processes/`, which holds the executable half of a methodology adopted whole from the corpus. `l2-dak-authoring.bpmn` is the first: moved here from cat-harness/processes/ on 2026-10-01 by owner ruling (issue #1772 item 3), because placement PR1 had moved its `l2-dak-authoring` skill into `skills/content/authoring-who-smart-guidelines/` and the three activities naming it no longer resolved from cat-harness, which cannot reach this layer. Here the skill sits beside the diagram; the remaining refs (`content-plan`, `todo-manager`, `bpmn-authoring`, `dmn-authoring`, `content-review`, `content-validate`, `terminology-management`) point down, through `fhir-harness`. A TOP-LEVEL directory rather than a second file in `methodologies/processes/`, for the reason `folio-assistant-core-processes` gives: that nested shape is a baselined `check:layout-norms` exception, and a house process is not a methodology read out of `library/`. Declared WITH its file in one commit, per bean `dh4f`. `smart-guideline-end-to-end.bpmn` (2026-10-14) is the second: use case to consuming application through the L1 KG, L2 and L3, with adjudication as QA rather than a gate; it names `l2-dak-authoring.bpmn` and `dak-l3-ig.bpmn` for its L2 and L3 stages rather than copying them. `SGAuthoring.DAKLifecycle.bpmn` (2026-10-14) moved here from the IG's `input/bpmn/`, merged with its graphviz `.layout.bpmn` into one file with diagram interchange, so every authoring process has one home; `l2-component-edit-review.bpmn` (2026-10-14) is the subprocess every `l2-dak-authoring.bpmn` track calls: the agent edits one component, checks, renders and stages it, and hands it on, while a person in the component's reviewing role reviews it alongside, never as a gate; its per-component renderer, checker and reviewer are the skill `l2-component-edit-review`'s table. `scripts/render-processes.ts` draws each beside its source; the site that shows them is folio-assistant's just-the-docs build, which mounts this directory.",
+      "readmePath": "processes/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

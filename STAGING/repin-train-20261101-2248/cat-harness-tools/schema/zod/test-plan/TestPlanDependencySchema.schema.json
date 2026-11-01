@@ -1,0 +1,31 @@
+{
+  "$ref": "#/definitions/TestPlanDependency",
+  "definitions": {
+    "TestPlanDependency": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "predecessor": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestPlanDependencySchema.schema.json",
+  "title": "TestPlanDependencySchema",
+  "description": "Generated from `TestPlanDependencySchema` in schemas/sdlc/test-plan.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2248",
+    "sha": "301fb139ff844c6697ccefdb94501657d2e4c16f",
+    "pr": "repin-train/20261101-2248",
+    "run": "41359001460"
+  }
+}

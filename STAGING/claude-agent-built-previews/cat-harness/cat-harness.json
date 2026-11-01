@@ -370,10 +370,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-11-01T21:54:33.308Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5a4e8c01a5ca6e8821461407ac499b36604a8883",
-  "sourceCommitSha": "5a4e8c01a5ca6e8821461407ac499b36604a8883",
-  "sourceCommitAt": "2026-11-01T21:07:54Z",
+  "generatedAt": "2026-11-01T23:28:33.816Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6c157fadd83ec85590239d89ae0992f458881642",
+  "sourceCommitSha": "6c157fadd83ec85590239d89ae0992f458881642",
+  "sourceCommitAt": "2026-11-01T23:01:51Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -387,7 +387,7 @@
     "SequenceFlow": 1062,
     "Lane": 175,
     "ProcessNode": 1029,
-    "Tool": 167,
+    "Tool": 168,
     "Schema": 183,
     "ExternalSchema": 28,
     "GraphTypology": 53,
@@ -2516,7 +2516,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/package/workflow"
       ],
       "instructionsPath": "skills/process/workflow/bpmn-authoring.md",
-      "instructionLines": 130,
+      "instructionLines": 212,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skills/bpmn-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skills/bpmn-authoring/output.schema.json",
       "hasInstructions": true,
@@ -2893,7 +2893,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
-      "instructionLines": 527,
+      "instructionLines": 540,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2944,7 +2944,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
-      "instructionLines": 770,
+      "instructionLines": 786,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skills/staging-review/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skills/staging-review/output.schema.json",
       "hasInstructions": true,
@@ -3352,7 +3352,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
-      "instructionLines": 650,
+      "instructionLines": 629,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3640,7 +3640,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 939,
+      "instructionLines": 935,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4337,7 +4337,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/archimate-models.md",
-      "instructionLines": 287,
+      "instructionLines": 311,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4453,7 +4453,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/serving-renderings.md",
-      "instructionLines": 177,
+      "instructionLines": 214,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -42358,6 +42358,67 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/tools/agent-memory.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tools/archimate-blocks.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "archimate-blocks",
+      "title": "Draw a document's tables and figures from its ArchiMate data, and check the model against the document's relationship rules",
+      "description": "For each table an instance's `cat-archimate.config.json` lists under `tables`, rewrites the block's Markdown table from an `archimate-relationship-rules/v1` file (`relationship-rules`: source, relationship, target, note; `relationship-types`: picture, verb, meaning), keeping the caption and footnotes. For each figure under `figures` that names an `svg`, writes the view as SVG (the same drawing as the view's page). For a rules table that names a `model`, reports the rules the model never uses, the relationships no rule covers, the rules ArchiMate's relationship table refuses, and the relationship types the rules use without a meaning. The rules are in charge: nothing is rewritten from the model.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat archimate:blocks"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The instance root whose config, models, rules and blocks are read.",
+            "required": true,
+            "arg": {
+              "flag": "--instance"
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Write nothing; exit 1 when a block or SVG is not what the data draws.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Also exit 1 when the model has relationships no rule covers, or a rule is one ArchiMate does not allow.",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "blocks",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The rewritten table blocks and figure SVGs, at the paths the config names; the rules check on stdout."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/archimate-models"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-blocks.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tools/archimate-check.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "archimate-check",
@@ -56030,7 +56091,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/library"
       ],
-      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to the IRIS replica, milnorlink to the science layer) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to the content core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good. THE AGENT-SKILL CORPUS JOINED IT on 2026-10-01 (owner ruling: agent-skills dissolves into cat-harness's concern groups; bean `j7ql`): the 14 documents listed in `heldEntries` — vendor skill documentation (ASSERTION: a publisher describing its own product) and three arXiv papers (EVIDENCE: a measurement somebody else can repeat); each entry's `structure.json` carries its publisher, which is how a reader tells the two kinds apart. They sit flat here until placement PR8 (bean `f8wp`) regroups `library/` into `library/<group>/<slug>/`; the audit (#1778) assigns them conduct (10), sdlc (`hmans-2026-beans-readme`), tools (`mcp-2026-specification-2026-07-28`) and content (the two RFCs). Their summaries stay HELD, per entry, on the owner's 2026-09-24 ruling (bean `x80s`: 'Library summaries for agent-skills entries — No, keep held back'), which was stated about these documents and not about this directory.",
+      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to the IRIS replica, milnorlink to the science layer) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to the content core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good. THE AGENT-SKILL CORPUS JOINED IT on 2026-10-01 (owner ruling: agent-skills dissolves into cat-harness's concern groups; bean `j7ql`): the 14 documents listed in `heldEntries` — vendor skill documentation (ASSERTION: a publisher describing its own product) and three arXiv papers (EVIDENCE: a measurement somebody else can repeat); each entry's `structure.json` carries its publisher, which is how a reader tells the two kinds apart. They sit flat here until placement PR8 (bean `f8wp`) regroups `library/` into `library/<group>/<slug>/`; the audit (#1778) assigns them conduct (10), sdlc (`hmans-2026-beans-readme`), tools (`mcp-2026-specification-2026-07-28`) and content (the two RFCs). Their summaries stay HELD, per entry, on the owner's 2026-09-24 ruling (bean `x80s`: 'Library summaries for agent-skills entries — No, keep held back'), which was stated about these documents and not about this directory. THE BPMN AND DMN COMPREHENSION PAPERS JOINED IT on 2026-11-01 (bean `e0jh`, ingested at the owner's request in f23c13b and 6725d1d): the 25 entries in `awaitingCitation`, behind the BPMN and DMN modelling guidance. No methodology cites them yet, so they are admitted by name until one does; unlike `heldEntries`, their summaries still drain.",
       "readmePath": "library/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/library",
@@ -60825,6 +60886,216 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GettingStarted/node/Task_SeedPlan"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_11",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_12",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_13",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_15",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_16",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_17",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/flow/Flow_9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/lane/Lane_Adaptation",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/lane/Lane_Committee",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/lane/Lane_Publisher",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Publisher",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Publisher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/End_Current",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/End_Current",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/End_Current"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Gw_More",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Gw_Revise",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Gw_Touches",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Start_LayerChanged",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Start_NewVersion",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Task_Decide",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Task_Impact",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Task_MapCone",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Task_Merge",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Task_Review",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_GuidelineUpdates/node/Task_Revise",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_IgAstCache",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
@@ -65049,6 +65320,120 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Triage"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF01",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF02",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF03",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF04",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF05",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF06",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF07",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF08",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/node/StartEvent_Poll",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Task_Accept",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#process/Process_SgEndToEnd",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/process/Process_SgEndToEnd",
@@ -66677,6 +67062,18 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-comments",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-comments"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#skill/review-log-watch",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-log-watch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-log-watch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#skill/review-sheet-agent-columns",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-sheet-agent-columns",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-sheet-agent-columns"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#skill/review-sheet-script",
@@ -82861,6 +83258,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tools/agent-memory.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/tools/archimate-blocks.jsonld",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tools/archimate-blocks.jsonld",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tools/archimate-blocks.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/tools/archimate-check.jsonld",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tools/archimate-check.jsonld",
@@ -85653,8 +86056,8 @@
   ],
   "staging": {
     "branch": "claude/agent-built-previews",
-    "sha": "5a4e8c01a5ca6e8821461407ac499b36604a8883",
+    "sha": "6c157fadd83ec85590239d89ae0992f458881642",
     "pr": "2885/merge",
-    "run": "41350396376"
+    "run": "41360054245"
   }
 }

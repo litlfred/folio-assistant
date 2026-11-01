@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/smart-base/skill/l3-dependency-choice.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/l3-dependency-choice.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-2248",
+    "sha": "301fb139ff844c6697ccefdb94501657d2e4c16f",
+    "pr": "repin-train/20261101-2248",
+    "run": "41359001460"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/l3-dependency-choice",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "l3-dependency-choice",
+      "title": "l3-dependency-choice",
+      "description": "Stage 5 of smart-guideline-end-to-end: choose which existing FHIR IGs (WHO's, or a jurisdiction's) the guideline's L3 builds on. Indexes each candidate IG with ig-artifact-ingestion, matches the L1 knowledge graph and the stage-4 L2 assets against the index, and returns one decision row per IG naming the profiles, value sets and libraries reused, derived from or not used. Read before choosing, or recording, an IG dependency.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l3-dependency-choice.md",
+      "instructionLines": 49,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l3-dependency-choice/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l3-dependency-choice/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

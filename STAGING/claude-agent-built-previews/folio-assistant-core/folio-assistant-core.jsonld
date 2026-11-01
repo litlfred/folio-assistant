@@ -374,25 +374,25 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-01T21:54:43.597Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5a4e8c01a5ca6e8821461407ac499b36604a8883",
-  "sourceCommitSha": "5a4e8c01a5ca6e8821461407ac499b36604a8883",
-  "sourceCommitAt": "2026-11-01T21:07:54Z",
+  "generatedAt": "2026-11-01T23:28:41.268Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6c157fadd83ec85590239d89ae0992f458881642",
+  "sourceCommitSha": "6c157fadd83ec85590239d89ae0992f458881642",
+  "sourceCommitAt": "2026-11-01T23:01:51Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "Skill": 45,
+    "Skill": 47,
     "Decision": 4,
     "Task": 1,
-    "Process": 25,
-    "SequenceFlow": 396,
-    "Lane": 83,
-    "ProcessNode": 366,
+    "Process": 27,
+    "SequenceFlow": 420,
+    "Lane": 88,
+    "ProcessNode": 389,
     "GraphTypology": 29,
     "Role": 4,
     "Subgraph": 28,
     "Asset": 4,
-    "Tool": 20
+    "Tool": 22
   },
   "@graph": [
     {
@@ -501,7 +501,7 @@
       "name": "public-comment",
       "title": "public-comment",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
-      "instructionLines": 604,
+      "instructionLines": 607,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/schema/skills/public-comment/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/schema/skills/public-comment/output.schema.json",
       "hasInstructions": true,
@@ -558,7 +558,7 @@
       "name": "document-publishing",
       "title": "document-publishing",
       "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
-      "instructionLines": 119,
+      "instructionLines": 131,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
       "hasInstructions": true,
@@ -653,13 +653,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/public-comment-channels"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-log-watch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "review-log-watch",
+      "title": "Review-log watch",
+      "description": "Poll a drafting review log (a Contributor Feedback sheet) and its folio repository's issues mechanically, with Tool `review-log-watch`, and start agent work only when a cell people set or an open issue changed. Each issue that no row links yet becomes a Contributor Feedback row, and a closed issue's row is hidden with its text struck through. Use on every wake of a review-log watcher, and when setting up a watcher for a new log.",
+      "instructionsPath": "skills/content/folio-document-adapter/review-log-watch.md",
+      "instructionLines": 148,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-log-watch"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-sheet-script",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "review-sheet-script",
       "title": "The review sheet's Apps Script",
       "description": "Build, install and reuse the Google Apps Script that keeps a review sheet's links and joined columns current (Tool `review-sheet-sync`). Public-comment mode: comment numbers, sections, pages and lines link into the frozen review draft, and Review Change Sets joins its comments. Drafting mode: one Contributor Feedback tab where each row is a change set with its own GitHub issue, and Sections pick from the document's table of contents. Use when setting up either sheet for a document, when its links are missing or stale, or after a tab, header, anchor or draft link changes.",
       "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
-      "instructionLines": 1259,
+      "instructionLines": 1286,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -750,6 +764,20 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-sheet-agent-columns",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "review-sheet-agent-columns",
+      "title": "Keep the review sheet's Agent columns current",
+      "description": "Whenever an agent works on a change set of a folio whose review sheet is kept by the Tool `review-sheet-sync`, it writes the Agent tabs' columns for that change set and its comments as it goes: status, step, what it did, the PR, the staging page and its build, what the PR changed and when it finished. Use on every change-set edit, draft, PR, push, merge or close, in a sheet sync or not.",
+      "instructionsPath": "skills/content/folio-document-adapter/review-sheet-agent-columns.md",
+      "instructionLines": 121,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-agent-columns"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/requirement-definition",
@@ -3674,6 +3702,302 @@
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanClose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Review-log watch",
+      "summary": "One poll of one drafting review log (a Contributor Feedback sheet) and its folio repository.",
+      "description": "One poll of one drafting review log (a Contributor Feedback sheet) and\nits folio repository. A tool decides, with no agent judgement, whether\nanything a person set in the sheet or any open issue changed since the\nlast poll. Only then does the agent append rows for new issues and do\nits pass. Skill: review-log-watch.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/review-log-watch.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/review-log-watch.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/assets/img/workflows/review-log-watch.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll"
+      ],
+      "nodeCount": 9,
+      "flowCount": 8,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "changed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "unchanged",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Log watcher (authoring agent)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Every 3 minutes",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Read the Contributor Feedback tab",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-log-watch"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Run the review-log-watch check",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-log-watch"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Sheet or issues changed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Append rows for new issues; hide closed ones",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-log-watch"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Agent pass on the changed rows",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-sheet-script"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ContributorFeedback",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Accept the new state",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-log-watch"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Changes handled",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Nothing changed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_DocumentAuthoring",
@@ -10175,6 +10499,523 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Call_BeanClose"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Guideline Updates",
+      "summary": "Taking up a new version of a guideline, or a changed lower layer, is a re-pin and a review at once.",
+      "description": "Taking up a new version of a guideline, or a changed lower layer, is a\nre-pin and a review at once. The steward maps the affected layers and\nre-pins them in dependency order. For each re-pin, the adaptation team\ncompares the old version, the new version and its own adaptations. A\nchange that touches no adaptation or policy merges on the technical\npath. One that does goes to the adaptation committee, which decides for\neach adaptation whether to keep, revise or retire it. Revisions are\nordinary content changes (Process_ContentChangeReview), and the re-pin\nmerges with them. The loop runs until every layer is current.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/guideline-updates.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/guideline-updates.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/assets/img/workflows/guideline-updates.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged"
+      ],
+      "nodeCount": 14,
+      "flowCount": 16,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/End_Current",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Publisher",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Guideline publisher",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/publication-manager",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Publisher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Re-pin steward and build pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/merge-steward",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Adaptation team (human or agentic)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/business-analyst",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Adaptation committee (policy, clinical, programme)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-committee",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "A new guideline version is published",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/publication-manager",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Publisher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Publish the version with its change notes",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/publication-manager",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Publisher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/content-publish"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "A harness or base layer changed",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Map the affected layers in order",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/remote-mount"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Open the re-pin for the next ready layer",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/remote-mount"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Compare old, new and our adaptations",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/rendered-impact"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Does the change touch an adaptation or policy?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Review the impact with stakeholders",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-committee",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Decide each adaptation: keep, revise or retire",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-committee",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/decision-audit"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Any adaptation to revise?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-committee",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Revise the adaptations as decided",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ContentChangeReview",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Merge the re-pin with its decided revisions",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/prepare-merge"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "More layers left to re-pin?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/End_Current",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Every layer current with the new version",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/End_Current"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_L1Gate",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Ingestion subprocess — the L1 completeness gate",
@@ -14842,7 +15683,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/qa"
       ],
-      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 7 files across processes (1), scenarios (1), skills (1), tools (4). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "description": "What auditing THIS instance produced, kept so a consumer can tell \"never audited\" from \"audited clean\". Stored on the `qa-reports` branch keyed by commit (`storage`), not committed: a local run writes the working copy here and `.gitignore` keeps it out of the checkout (bean 7mwa) — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 7 files across processes (1), scenarios (1), skills (1), tools (4). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it. Since `storage` was added, a reader resolves it from the store rather than the checkout, so its absence on disk reads as `unknown`, not clean.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/qa"
@@ -16048,6 +16889,58 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-page.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/tools/glossary-table.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "glossary-table",
+      "title": "Glossary and acronyms tables",
+      "description": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes, or acronyms (notation and prefLabel). The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat glossary:table"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The instance root holding `glossary/glossary-tables.json`.",
+            "required": true,
+            "arg": {
+              "flag": "--instance"
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a table is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "blocks",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The rewritten table blocks, at the paths the config names."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-table.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/tools/l1-coverage.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "l1-coverage",
@@ -16116,6 +17009,103 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/l1-coverage"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/l1-coverage.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/tools/review-log-watch.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "review-log-watch",
+      "title": "Check a review log and its repository's issues for changes",
+      "description": "The mechanical check a review-log watcher runs on every poll (owner, 2026-11-01; Q-WATCH1 B). Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened left out) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0, and the watcher does nothing more. Changed: it lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Q-WATCH2 B; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through (owner, 10:18Z): Title is the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL. It exits 10. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state, so the next poll compares against it.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/tools/review-log-watch/watch.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "repo",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The folio repository, `owner/name`, whose open issues are read with `gh api`.",
+            "required": true,
+            "arg": {
+              "flag": "--repo"
+            }
+          },
+          {
+            "name": "sheet",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The Contributor Feedback tab's values as JSON: the Sheets API `values` array (or the whole `get_values` answer), from row 1, so the header row (first cell `Change-set`) is found.",
+            "required": true,
+            "arg": {
+              "flag": "--sheet"
+            }
+          },
+          {
+            "name": "state",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The last check's state file. Missing on the first check, which reports every open issue as opened.",
+            "required": true,
+            "arg": {
+              "flag": "--state"
+            }
+          },
+          {
+            "name": "issues",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Issues as JSON (the issues API's shape), instead of reading them with `gh api`. For tests and offline runs.",
+            "required": false,
+            "arg": {
+              "flag": "--issues"
+            }
+          },
+          {
+            "name": "author",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Only issues this GitHub login opened. Default every author.",
+            "required": false,
+            "arg": {
+              "flag": "--author"
+            }
+          },
+          {
+            "name": "sheetHash",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The sheet script's hash of the person-set cells, Watch!G1 (Q-WATCH4 A). Given, it stands for the cells, so `--sheet` needs only the header row and the Issue column.",
+            "required": false,
+            "arg": {
+              "flag": "--sheet-hash"
+            }
+          },
+          {
+            "name": "skipLabel",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The label that keeps an issue off the sheet. Default `no-sheet`.",
+            "required": false,
+            "arg": {
+              "flag": "--skip-label"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "JSON on standard output: `status` (`unchanged` or `changed`), `digest`, and when changed `changes`, `append` (rows aligned to the header, each with `closed`), `closedRows` and `state`. Exit 0 unchanged, 10 changed, 2 usage."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-log-watch"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/review-log-watch.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/tools/review-sheet-sync.jsonld",
@@ -16475,6 +17465,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/public-comment-channels"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#skill/review-log-watch",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-log-watch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-log-watch"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#skill/review-sheet-script",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-sheet-script",
@@ -16515,6 +17511,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/dsa-dcat-record",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/dsa-dcat-record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#skill/review-sheet-agent-columns",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-sheet-agent-columns",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/review-sheet-agent-columns"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#skill/requirement-definition",
@@ -17703,6 +18705,120 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanClose",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanClose"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/flow/WF01",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/flow/WF02",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/flow/WF03",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/flow/WF04",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/flow/WF05",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/flow/WF06",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/flow/WF07",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/flow/WF08",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/node/StartEvent_Poll",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/node/Task_Accept",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_DocumentAuthoring",
@@ -20309,6 +21425,216 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_Editing/node/Call_BeanClose"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_11",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_12",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_13",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_15",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_16",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/flow/Flow_17",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/lane/Lane_Publisher",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Publisher",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Publisher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/lane/Lane_Adaptation",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/lane/Lane_Committee",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Start_NewVersion",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Start_LayerChanged",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Task_MapCone",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Task_Impact",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Gw_Touches",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Task_Review",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Task_Decide",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Gw_Revise",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Task_Revise",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Task_Merge",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/Gw_More",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_GuidelineUpdates/node/End_Current",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/End_Current",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/End_Current"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld#process/Process_L1Gate",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_L1Gate",
@@ -22105,8 +23431,8 @@
   ],
   "staging": {
     "branch": "claude/agent-built-previews",
-    "sha": "5a4e8c01a5ca6e8821461407ac499b36604a8883",
+    "sha": "6c157fadd83ec85590239d89ae0992f458881642",
     "pr": "2885/merge",
-    "run": "41350396376"
+    "run": "41360054245"
   }
 }

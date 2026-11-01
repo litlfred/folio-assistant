@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/leopold-2016-bpmn-quality-issues-industry",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Learning from Quality Issues of BPMN Models from Industry",
+      "dcterms:issued": "2016",
+      "dcterms:source": "cat-harness/library/leopold-2016-bpmn-quality-issues-industry/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/leopold-2016-bpmn-quality-issues-industry"
+    }
+  ]
+}

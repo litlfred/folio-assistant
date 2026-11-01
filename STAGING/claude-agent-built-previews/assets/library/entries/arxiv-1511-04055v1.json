@@ -1,0 +1,2071 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-1511-04055v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-000-1-introduction.md",
+      "narrative": null,
+      "content": "In the quest for knowledge about how to make process models of high quality, recent research focus is shifting \nfrom studying the quality of process models to studying the process of process modeling itself (PPM). The PPM \nis a phase in the process model development lifecycle where the mental view of the modeler on the process is \nformalized into a graphical process representation (Hoppenbrouwers, Proper, & Van der Weide, 2005) (see e.g. \nFig. 2). It encompasses the course of action taken by the modeler to design/construct a (business) process model \nconsisting of start and end event(s), activ",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "1 \n \n \nA visual analysis of the process of process modeling1 \nJan Claes1,2, Irene Vanderfeesten2, Jakob Pinggera3, Hajo A. Reijers2, Barbara Weber3 and Geert Poels1 \n \n1 Ghent University, Belgium \n{jan.claes, geert.poels}@ugent.be \n \n2 Eindhoven University of Technology, The Netherlands \n{i.t.p.vanderfeesten, h.a.reijers}@tue.nl \n \n3 University of Innsbruck, Austria \n{jakob.pinggera, barbara.weber}@uibk.ac.at \n \n \n \nAbstract. The construction of business process models has become an important requisite in the analysis and \noptimization of processes. The success of the analysis and optimization",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Dotted Chart",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-21-dotted-chart.md",
+      "narrative": null,
+      "content": "represents every recorded event of the different process instances in one diagram in such a way that patterns \nacross multiple instances can graphically be discovered and at the same time one can zoom in on details about \nthe events of a single instance. However, the Dotted Chart does not support the analysis of the PPM optimally. \nHence, this paper presents a modified implementation, i.e., the PPMChart.  \n \nThis paper extends the work in (Claes et al., 2013) in several ways. The previous version of the PPMChart \nstayed close to the Dotted Chart Analysis plug-in in ProM3 (Van Dongen, De Medeir",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Motivation",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-002-2-motivation.md",
+      "narrative": null,
+      "content": "The goal of the research presented in this paper is to develop a visualization that can assist the study of the \nprocess of process modeling (PPM) in a cognitive effective fashion. Cognitive effectiveness is defined as the \nspeed, ease and accuracy with which a representation can be processed by the human mind (Larkin & Simon, \n1987). The inspiration for the PPMChart visualization was drawn from the Dotted Chart (Song & Van der Aalst, \n2007). It was perceived to have an optimal balance between representing information about the structure of the \noverall process and the timing and relation of i",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p003-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-1.png",
+      "narrative": "draft",
+      "content": "Figure 1(a): Dotted Chart for a full event log containing multiple Process of Process Modeling (PPM) instances, where each horizontal line represents the modeling operations of one modeler over time.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p003-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../images/img-p003-2.png",
+      "narrative": "draft",
+      "content": "Figure 1(b): Dotted Chart for a transformed partial event log containing events of a single PPM instance, where each horizontal line represents operations on a distinct process model element over time.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Cognitive effectiveness of a visualization",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-003-22-cognitive-effectiveness-of-a-visualization.md",
+      "narrative": null,
+      "content": "(a) Full event log: multiple PPM instances \n(b) Transformed partial event log: only one PPM instance\nFig. 1. Example of a Dotted Chart for the full event log with multiple PPM instances and for an event log containing events of only one \nPPM instance (each line representing the operations on a different process model element). \n2.2 \nCognitive effectiveness of a visualization \nBefore the PPMChart visualization is described in more detail in Section 3, this section explains what is meant \nwith a ‘cognitive effective visualization’. Moody collected nine concrete principles that can be applied to",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Visual expressiveness",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-221-visual-expressiveness.md",
+      "narrative": null,
+      "content": "Visual expressiveness \nA graphical representation is visually expressive if it makes optimal use of the different graphical variables on \nwhich symbols can differ (Moody, 2009). Eight graphical variables are defined: shape, size, color, brightness, \norientation, texture, horizontal position and vertical position (Bertin, 2010). Moreover, some graphical variables \nhave a stronger impact on the cognitive load for interpreting the diagrams. Color is considered the most \neffective graphical variable (Lohse, 1993; Treisman, 1982; Winn, 1993), although in some situations it causes \nproblems with vis",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Perceptual discriminability",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-005-222-perceptual-discriminability.md",
+      "narrative": null,
+      "content": "Perceptual discriminability \nPerceptual discriminability advocates that symbols are clearly distinguishable and that the more two concepts \ndiffer from each other, the more the corresponding symbols should differ (Winn, 1990). In this context, the \nvisual distance is determined by the number of graphical variables for which two symbols have different values \nand by the size of these differences (Moody, 2009).  \nThe perceptual discriminability of the Dotted Chart is also rather low. The colors of the dots are assigned \nrandomly to the event classes that are present in the event log, which means",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Graphic economy",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-006-223-graphic-economy.md",
+      "narrative": null,
+      "content": "Graphic economy \nThere is a limit on the amount of different values for each graphical variable to assure that these design \nprinciples increase cognitive effectiveness (Nordbotten & Crosby, 1999). The span of absolute judgment, the \n                                                          \n4 Note that this is only possible when there is a fixed, known set of possible occurring operations, which is the case in the study of the PPM.  \n4 \n \n \namount of distinct perceptual values for each graphical variable, is estimated at seven (Miller, 1956). \nFurthermore, the amount of different objects that",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Dual coding",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-007-224-dual-coding.md",
+      "narrative": null,
+      "content": "Dual coding \nWhile a graphical representation is a lot more effective than a textual representation (for processing \ninformation), the combination of both results in an even higher cognitive effectiveness (Paivio, 1990).  \nThe Dotted Chart is divided in configurable time intervals of which start and end date and time are textually \ndisplayed on top of the chart. Each line also represents the instance identifier at the beginning of the line5. \nInformation on selected dots is displayed in tooltip text when the mouse hoovers over the selected dot(s). We \nconclude that the Dotted Chart makes suffi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Semiotic clarity",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-008-225-semiotic-clarity.md",
+      "narrative": null,
+      "content": "Semiotic clarity \nSemiotic clarity means that every concept is represented by exactly one symbol and every symbol represents \nexactly one concept (Goodman, 1968). \nEvery event class of the event log is represented in a Dotted Chart as a dot with a unique color. Moreover, each \ndot has a unique position. Therefore, the Dotted Chart has maximal semiotic clarity. Nevertheless, it can \nsometimes be appropriate to introduce symbol deficit (i.e., use the same symbol for different concepts) to \nincrease graphic economy (Moody, 2009).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Semantic transparency",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-009-226-semantic-transparency.md",
+      "narrative": null,
+      "content": "Semantic transparency \nA visualization has optimal semantic transparency if a novice would be able to guess the meaning of each \nsymbol (Moody, 2009). This can be achieved through natural mappings: i.e., “taking advantage of physical \nanalogies and cultural standards” (Norman, 2002, p. 23).  \nThe Dotted Chart makes use of only three graphical variables: color, horizontal position and vertical position. \nWhen utilizing Dotted Charts for presenting the PPM, only one of these three variables is semantically \ntransparent: the horizontal position indicates the timing of the corresponding event. The",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Complexity management",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-010-227-complexity-management.md",
+      "narrative": null,
+      "content": "Complexity management \nTo cope with perceptual and cognitive limits (Miller, 1956; Novak, 2002), it is encouraged to reduce complexity \nby modularization (divide the diagram in smaller subsystems) and hierarchical structuring (make separate \ndiagrams of the same information at different levels of abstraction) (Moody, 2009; R. Weber, 1997). \nWe suggest to only represent one PPM instance at a time in each chart. This way, the timelines can represent the \ndifferent model elements (as in Fig. 1b), rather than different instances of the PPM (as in Fig. 1a). This can be \nachieved by splitting the ev",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Cognitive integration",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-011-228-cognitive-integration.md",
+      "narrative": null,
+      "content": "Cognitive integration \nWhen different diagrams are used, explicit mechanisms should exist to support the integration of these diagrams \n(Hahn & Kim, 1999; Kim, Hahn, & Hahn, 2000).  \nWhen different PPM instances are represented by different charts (rather than aggregating them in only one \nchart), the need for cognitive integration mechanisms emerges. A first step towards cognitive integration might \nbe a uniform color, shade and shape coding and time scaling between different charts. Without uniform coding \n(as in the Dotted Chart), comparing or combining information of multiple charts is not",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p005-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../images/img-p005-1.png",
+      "narrative": "draft",
+      "content": "Figure 2: The process of process modeling and the attributes of the captured data, showing a modeler placing activities, events, gateways, and edges on a canvas alongside the captured event table (Operation, Element, Time).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Cognitive fit",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-012-229-cognitive-fit.md",
+      "narrative": null,
+      "content": "Cognitive fit \nThe optimal representation of data depends on the task it supports and on the user of the visualization. For the \nsame representation, the cognitive load is greater for novices than for experts (experts in working with that \nparticular visualization) (Vessey & Galletta, 1991). Similarly, depending on the particular analysis the user \nneeds the representation to support, a different view on the data is desired. \nThe Dotted Chart has various configuration options, which facilitate to tailor the appearance of the chart \naccording to the needs of the analysis. However, a mechanism t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-013-2210-conclusion.md",
+      "narrative": null,
+      "content": "Conclusion \nThe Dotted Chart can be used in its current form to study the PPM. To maximize complexity management, it \nseems appropriate to represent only one PPM instance at a time. However, according to the presented design \nprinciples for visual notations, cognitive effectiveness of the Dotted Chart can be substantially improved in the \nspecific context of this research (even if an event log containing data about a single PPM instance is provided to \nthe plug-in). For 7 out of 9 principles concrete suggestions are formulated, which formed the basis for the \nextension of the Dotted Chart pres",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "The PPMChart visualization",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-014-3-the-ppmchart-visualization.md",
+      "narrative": null,
+      "content": "The PPMChart visualization graphically represents data of the process of process modeling (PPM) (see Section \n3.1). The visualization uses timelines on which colored dots are associated with positions that correspond to the \ntime when the corresponding PPM operations are recorded for the process model (see Section 3.2). The Dotted \nChart Analysis plug-in was adapted and extended (see Section 3.3), which resulted in a new plug-in in the ProM \ntool that produces the PPMCharts (see Section 3.4).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data requirements",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-015-31-data-requirements.md",
+      "narrative": null,
+      "content": "Data requirements \nThe PPM is a human endeavor in which a modeler constructs a process model by drawing model elements such \nas activities, events, gateways, and edges on a canvas (see Fig. 2). In order to be able to represent a PPM \ninstance with the PPMChart visualization, data of the PPM instance need to be collected at a specific level (see \nSection 3.4.1). Therefore, it is convenient if a modeling tool with logging functionality is used for the \nconstruction of the process model. The PPMChart implementation is created under the assumption that it is \npossible to record data on every model",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Visualization with PPMChart",
+      "pageStart": 5,
+      "pageEnd": 6,
+      "target": "../sections/sec-016-32-visualization-with-ppmchart.md",
+      "narrative": null,
+      "content": "Visualization with PPMChart \nThe collected data about consecutive operations in a PPM instance are used to construct a PPMChart (see Fig. \n3). The horizontal axis represents a time interval of one hour by default. Vertically, each line represents one \n6 \n \n \nelement of the process model, as it was present during modeling. The model element identifier is displayed at \nthe beginning of the line. Each colored dot on the line represents one operation performed on the element.  \n \nThe color of the dot corresponds with the type of operation: create (green), move (blue), delete (red) \nand (re)name (",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p006-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../images/img-p006-1.png",
+      "narrative": "draft",
+      "content": "Figure 3 (top panel): PPMChart visualization of the events in the construction of one process model by one modeler plotted against time (with a dashed highlight rectangle around the initial left-hand model construction operations).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p006-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../images/img-p006-2.png",
+      "narrative": "draft",
+      "content": "Figure 3 (bottom panel): PPMChart visualization of the same modeling session plotted with logical relative time (one column per consecutive operation) on the horizontal axis, revealing the sequential creation of elements 1-14 inside the highlighted rectangle.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p006-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../images/img-p006-3.png",
+      "narrative": "draft",
+      "content": "Figure 4: Process model in BPMN notation resulting from the modeling process in Figure 3, annotated with numbered black circles (1 to 33) indicating each element's identifier for comparison with the highlighted region of Figure 3.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Differences with Dotted Chart",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-017-33-differences-with-dotted-chart.md",
+      "narrative": null,
+      "content": "Differences with Dotted Chart \nThe PPMChart visualization differs from the classical Dotted Chart mainly in four ways: \n                                                          \n7 High resolution graphs in color of all figures in this paper are available from http://www.janclaes.info/papers/PPMISeB. \n8 Download an animation showing how the PPMChart evolves during the model construction at http://www.janclaes.info/papers/PPMISeB. \n7 \n \n \n(i) \nIn contrast to the typical use of a Dotted Chart, the PPMChart displays information about only one \nprocess instance. Each timeline represents a particul",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p007-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../images/img-p007-1.png",
+      "narrative": "draft",
+      "content": "Figure 5 (top panel): Screenshot of the PPMChart Analysis plug-in window in ProM 6 for Model 2012-184 showing unfiltered create, move, delete, and rename operations alongside filter and sort controls.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p007-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../images/img-p007-2.png",
+      "narrative": "draft",
+      "content": "Figure 5 (bottom panel): Screenshot of the PPMChart Analysis plug-in window in ProM 6 for Model 2012-184 illustrating the effect of filtering out selected operation types and re-sorting the element timelines.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Tool support",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-018-34-tool-support.md",
+      "narrative": null,
+      "content": "Tool support \nThe PPMChart Analysis plug-in9 (see Fig. 5) is an adapted version of the existing Dotted Chart Analysis plug-in \nin ProM. In the middle, the PPMChart is presented. At the left hand side, one can configure the view, and at the \nright one can filter the data. The previous version of this plug-in (Claes et al., 2013) remained closely to the \nDotted Chart Analysis plug-in implementation in order to not confuse users that are familiar with that plug-in. \nThe version described here was fully redesigned after feedback of various experts (i.e., participants to the BPM \n2012 conference, i",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Required format of the recorded data",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-019-341-required-format-of-the-recorded-data.md",
+      "narrative": null,
+      "content": "Required format of the recorded data \nFor the sake of complexity management and cognitive fit, it was decided to define a PPMChart as a visualization \nto display information of a single process modeling effort. Therefore, the tool requires as input an event log \n                                                          \n9 The PPMChart Analysis plug-in for ProM 6 can be downloaded at http://www.janclaes.info/plugins.php. \n8 \n \n \ncontaining data about a single PPM instance, grouped in traces per model element. Section 3.1 already explained \nwhich data of that PPM instance are needed. The require",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Fixed default color, shade and shape coding",
+      "pageStart": 8,
+      "pageEnd": 9,
+      "target": "../sections/sec-020-342-fixed-default-color-shade-and-shape-coding.md",
+      "narrative": null,
+      "content": "Fixed default color, shade and shape coding \nVisual expressiveness is increased by the addition of default shade and shape coding. In order to preserve \nsemantic transparency, size, texture and orientation are currently not used as symbol discriminating factors. The \nselection of similar colors and shapes for similar operations improves perceptual discriminability. This \nintroduces some redundant coding (i.e., the type of model element can be deduced from the color shade and \nfrom the shape) (Green & Swets, 1966), but increases perceptual pop-out (because almost each different \noperation has i",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p009-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../images/img-p009-1.png",
+      "narrative": "draft",
+      "content": "Figure 6(b): BPMN model fragment illustrating the 'Create order from start' sort option in the PPMChart implementation, with black circle annotations indicating creation order alongside topological distance.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p009-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../images/img-p009-2.png",
+      "narrative": "draft",
+      "content": "Figure 6(a): BPMN model fragment illustrating the 'Distance from start' sort option in the PPMChart implementation, with white-on-black and outlined circle annotations showing shortest path distance from the start event and creation order.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Fixed default time interval",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-021-343-fixed-default-time-interval.md",
+      "narrative": null,
+      "content": "Fixed default time interval \nBy default, the time interval represented by a PPMChart is fixed, which makes it easier to compare time related \nissues between different PPMCharts (i.e., facilitating cognitive integration). The length of this interval is set to \nan arbitrary value of one hour, but this interval can be modified with the use of the zoom (X) button.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Sort options",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-022-344-sort-options.md",
+      "narrative": null,
+      "content": "Sort options \nCognitive integration also promotes the addition of two sort options that help the user to find a link between the",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Distance from start",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-023-distance-from-start.md",
+      "narrative": null,
+      "content": "(see Fig. 6). This subsection explains both additional sort options, as well as the option to sort by ‘First \noperation’, which existed already in the Dotted Chart implementation and is used in two examples in this paper. \n \n(a) Distance from start \n(b) Create order from start \nFig. 6. Additional sort order options in the PPMChart implementation. \nDistance from start \nThe Distance from start sort option was added to sort the timelines according to the processing order of the \ncorresponding model elements from start event to end event. This can be observed in Fig. 6a, which represents \nthe left",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "First operation",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-024-first-operation.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-025",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Example",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-025-346-example.md",
+      "narrative": null,
+      "content": "above sort options, but in two cases, it was useful to sort by First operation. This sort option orders the timelines \naccording to the actual creation order of the model elements (the first operation of each element is its creation).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-026",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Filter options",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-026-345-filter-options.md",
+      "narrative": null,
+      "content": "Filter options \nIn order to raise cognitive fit and for complexity management, the PPMChart can be filtered from within the \nplug-in to show or hide dots on the charts. Model element types can be selected to hide all operations on all \nmodel elements of that type (e.g., hide operations on edges). The timelines representing these model elements \nremain in the chart in order to preserve the positioning of the remaining timelines, but the concerned dots on \nthese timelines are hidden. Next, it is also possible to hide specific operations by selecting the operation type in \nthe filter panel (e.g.,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-027",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Application",
+      "pageStart": 10,
+      "pageEnd": 10,
+      "target": "../sections/sec-027-4-application.md",
+      "narrative": null,
+      "content": "To demonstrate the usefulness of the PPMChart visualization, it was applied on the collected data for many \nprocess of process modeling (PPM) instances of students. A PPMChart was generated for every PPM instance in",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-028",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Data collection",
+      "pageStart": 10,
+      "pageEnd": 11,
+      "target": "../sections/sec-028-41-data-collection.md",
+      "narrative": null,
+      "content": "presented, followed by their interpretation and a number of possible explanations, illustrated by examples from \nthe dataset. Besides simple observations such as modeling time or amount of created model elements (see \nSection 4.2), more complex observations can be made from the study of patterns of operations (see Section 4.3). \nFurthermore, different charts can be compared to get additional insights (see Section 4.4). \n \nThe possible explanations were selected to optimally illustrate the usefulness of the PPMChart. It is not the \npurpose to be complete, but the focus is merely on demonstratin",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p011-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-1.png",
+      "narrative": "draft",
+      "content": "Figure 7(a): PPMChart for Model 2010-318 illustrating scattered delete operations (red dots) occurring throughout the modeling session (moves and renames hidden).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p011-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../images/img-p011-2.png",
+      "narrative": "draft",
+      "content": "Figure 7(b): PPMChart for Model 2010-213 illustrating simultaneous delete operations (vertical alignments of red dots where whole model chunks are removed at once).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-029",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Simple observations",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-029-42-simple-observations.md",
+      "narrative": null,
+      "content": "Simple observations \nA visualization of high quality supports the discovery of surprising insights in highly complex data, but should \nalso support the easy derivation of simple characteristics. For the sake of brevity, this section is limited to a brief \npresentation of four of such rather simple observations.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-030",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Modeling speed",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-030-modeling-speed.md",
+      "narrative": null,
+      "content": "Observation: The width of the part of the chart that contains dots differs between charts from different modelers \nthat modeled the same case. \nInterpretation: Some modelers work faster than others.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-031",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Modeling pauses",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-031-modeling-pauses.md",
+      "narrative": null,
+      "content": "Observation: Some charts have clear horizontal gaps: i.e., a non-trivial time interval where no line contains dots.  \nInterpretation: Some modelers pause their modeling operations at certain times.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-032",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Amount of model elements",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-032-amount-of-model-elements.md",
+      "narrative": null,
+      "content": "Observation: The number of lines differs between charts from different modelers that modeled the same case. \nInterpretation: Some modelers create more model elements.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-033",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Amount of modeling operations",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-033-amount-of-modeling-operations.md",
+      "narrative": null,
+      "content": "Observation: The relative number of blue, red, and orange dots differs between charts from different modelers \nthat modeled the same case. \nInterpretation: Some modelers tend to move, delete, or rename elements relatively more than others.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-034",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Observations on patterns of operations on model elements",
+      "pageStart": 11,
+      "pageEnd": 11,
+      "target": "../sections/sec-034-43-observations-on-patterns-of-operations-on-mod.md",
+      "narrative": null,
+      "content": "Observations on patterns of operations on model elements \nThis section discusses a number of observations that relate to patterns of operations on model elements. These \ncan be derived from the amount and position of dots of a certain type.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-035",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Patterns of delete operations",
+      "pageStart": 11,
+      "pageEnd": 12,
+      "target": "../sections/sec-035-431-patterns-of-delete-operations.md",
+      "narrative": null,
+      "content": "Patterns of delete operations \nObservation: If the chart contains red dots, they are sometimes scattered around the chart (without a clear \npattern), and sometimes a vertical line of red dots can be distinguished. \nInterpretation: Some modelers delete model elements at various times, some modelers decide to delete a whole \npart of the model (i.e., multiple model elements) at the same time. \n \nPossible explanations: In Fig. 7a the red dots are scattered over the PPMChart. Possibly, this means the modeler \noccasionally changed her/his mind about the content of the model. When the PPMChart shows",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p012-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-1.png",
+      "narrative": "draft",
+      "content": "Figure 8(a): PPMChart for Model 2010-312 illustrating a modeling session with very few movement operations (blue dots).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p012-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-2.png",
+      "narrative": "draft",
+      "content": "Figure 8(b): PPMChart for Model 2010-210 illustrating movement operations (blue dots) occurring close to element creation (green dots).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p012-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-3.png",
+      "narrative": "draft",
+      "content": "Figure 8(c): PPMChart for Model 2010-170 illustrating movement operations (blue dots) concentrated near the end of the modeling process for final layout cleanup.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p012-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../images/img-p012-4.png",
+      "narrative": "draft",
+      "content": "Figure 8(d): PPMChart for Model 2010-228 illustrating movement operations (blue dots) scattered throughout the modeling session.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-036",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Patterns of move operations",
+      "pageStart": 12,
+      "pageEnd": 12,
+      "target": "../sections/sec-036-432-patterns-of-move-operations.md",
+      "narrative": null,
+      "content": "Patterns of move operations \nObservation: If the charts contains blue dots, sometimes they are positioned near to the green dot on the same \nline, sometimes they form a broad vertical line at the right, and sometimes the dots are scattered over the chart. \nInterpretation: Some modelers hardly move any model elements, some modelers move the elements shortly \nafter their creation, some modelers tend to move elements rather at the end of their modeling process, some \nmodelers move model elements at various times. \n \nPossible explanations: Some modelers do not move a lot of process model elements",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-037",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Patterns of create operations: order of creating activities, gateways and edges",
+      "pageStart": 12,
+      "pageEnd": 13,
+      "target": "../sections/sec-037-433-patterns-of-create-operations-order-of-creat.md",
+      "narrative": null,
+      "content": "Patterns of create operations: order of creating activities, gateways and edges \nObservation: Some charts have non-crossing vertical lines formed by green, dark green and light green dots. \nInterpretation: Some modelers delay creation of edges (and gateways) until all activities are put on the canvas. \n \nPossible explanations: In some PPMCharts, activities are created first (green dots) followed by the edges (light \ngreen dots) (see Fig. 9a), while other PPMCharts show a more divers order of creating activities, gateways and \n13 \n \n \nedges (see Fig. 9b). Possibly, modelers either work aspect-o",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p013-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../images/img-p013-1.png",
+      "narrative": "draft",
+      "content": "Figure 9(a): PPMChart for Model 2010-367 illustrating aspect-oriented creation order where activities and gateways are created in separate non-crossing blocks before edges.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p013-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../images/img-p013-2.png",
+      "narrative": "draft",
+      "content": "Figure 9(b): PPMChart for Model 2010-237 illustrating flow-oriented creation where edges are drawn immediately while creating activities and gateways.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p013-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../images/img-p013-3.png",
+      "narrative": "draft",
+      "content": "Figure 10(a): PPMChart for Model 2010-106 (sorted by first operation, hiding edges, moves, deletes, and renames) showing dark-green gateway creation dots occurring in split/join pairs.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p013-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../images/img-p013-4.png",
+      "narrative": "draft",
+      "content": "Figure 10(b): PPMChart for Model 2010-361 (sorted by first operation) showing single dark-green split gateway creations followed by branch activities before the corresponding join gateway is created.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-038",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Patterns of create operations: split and join gateways",
+      "pageStart": 13,
+      "pageEnd": 13,
+      "target": "../sections/sec-038-434-patterns-of-create-operations-split-and-join.md",
+      "narrative": null,
+      "content": "Patterns of create operations: split and join gateways \nObservation: When sorted by first event, it can be noticed that in some charts dark green dots come (mostly) in \npairs, while in other charts they are interchanged with bright green dots. \nInterpretation: Some modelers create the join gateway right after the creation of the split gateway, while others \ncreate the join gateway later on. \n \nPossible explanations: Fig. 10a presents a model where the creation of one gateway is mostly directly followed \nby the creation of another gateway. This modeler puts the split and join gateway right afte",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-039",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Patterns of create operations: chunked modeling",
+      "pageStart": 13,
+      "pageEnd": 14,
+      "target": "../sections/sec-039-435-patterns-of-create-operations-chunked-modeli.md",
+      "narrative": null,
+      "content": "Patterns of create operations: chunked modeling \nObservation: Some charts contain groups of different shades of green delimited by pauses (see Section 4.2). \nInterpretation: Some modelers work in chunks: i.e., they alternate between creating a group of activities, \ngateways and edges, and pausing. \n \n14 \n \n \nPossible explanations: It is observed that some modelers group the creation of parts of the model. While the \nsecond observation in Section 4.2 concludes that modelers might take a pause at various times, we observe that \nsome modelers seem to pause only after finishing a specific part of",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p014-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../images/img-p014-1.png",
+      "narrative": "draft",
+      "content": "Figure 11(a): PPMChart for Model 2010-201 (time in minutes, hiding moves, deletes, and renames) illustrating chunked modeling where groups of elements are created between thinking pauses.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p014-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../images/img-p014-2.png",
+      "narrative": "draft",
+      "content": "Figure 11(b): PPMChart for Model 2010-189 (time in minutes) illustrating chunked modeling with distinct bursts of element creation delimited by pauses.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p014-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../images/img-p014-3.png",
+      "narrative": "draft",
+      "content": "Figure 12(a): PPMChart for Model 2010-258 illustrating a chaotic process of process modeling with no clear regular creation or layout pattern.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p014-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 14,
+      "pageEnd": 14,
+      "target": "../images/img-p014-4.png",
+      "narrative": "draft",
+      "content": "Figure 12(b): PPMChart for Model 2010-270 illustrating a chaotic process of process modeling with frequent interleaved additions, deletions, and movements.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-040",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "No clear patterns",
+      "pageStart": 14,
+      "pageEnd": 15,
+      "target": "../sections/sec-040-436-no-clear-patterns.md",
+      "narrative": null,
+      "content": "No clear patterns \nObservation: In some charts no clear patterns are observed. \nInterpretation: Some modelers have a more chaotic and unstructured modeling process than other modelers. \n \nPossible explanations: To be complete, it is important to notice that not every modeler has a clear, observable \nmodeling approach. Some modelers work rather chaotically and tend to work on different parts of the model \nsimultaneously. Possibly, they are not determined about how to construct the model. Indeed, it can be observed \nin the dataset that they usually have a lot of move and delete operations. Alter",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p015-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../images/img-p015-1.png",
+      "narrative": "draft",
+      "content": "Figure 13(a): PPMChart for simple case Model 2010-354 showing an aspect-oriented element creation pattern.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p015-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../images/img-p015-2.png",
+      "narrative": "draft",
+      "content": "Figure 13(b): PPMChart for extensive case Model 2012-156 showing a similar aspect-oriented creation pattern on a larger model.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p015-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../images/img-p015-3.png",
+      "narrative": "draft",
+      "content": "Figure 13(c): PPMChart for simple case Model 2010-140 showing a flow-oriented element creation pattern.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p015-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../images/img-p015-4.png",
+      "narrative": "draft",
+      "content": "Figure 13(d): PPMChart for extensive case Model 2012-136 showing a similar flow-oriented creation pattern on a larger model.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-041",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Observations based on multiple diagrams",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../sections/sec-041-44-observations-based-on-multiple-diagrams.md",
+      "narrative": null,
+      "content": "Observations based on multiple diagrams \nIn this section, it is demonstrated how a deeper insight can be obtained through the comparison of a PPMChart \nwith other PPMCharts of modeling sessions for more extensive cases (see Section 4.4.1), with other PPMCharts \nfrom the same modeler (see Section 4.4.2) or with the constructed process model that corresponds to the \nPPMChart (see Section 4.4.3).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-042",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Comparison between PPMCharts of different cases",
+      "pageStart": 15,
+      "pageEnd": 15,
+      "target": "../sections/sec-042-441-comparison-between-ppmcharts-of-different-ca.md",
+      "narrative": null,
+      "content": "Comparison between PPMCharts of different cases \nObservation: The same patterns (as described above) occur in charts for different cases. \nInterpretation: The same modeling approaches can be observed for different cases. \n \nPossible explanations: Possibly, the discovered patterns correspond with general modeling approaches that are \n(rather) independent of the case to be modeled. Fig. 13 shows two examples. The left column contains examples \nfrom the pre-flight case. The right column displays examples from the more extensive mortgage case. It can be \nobserved that similar patterns exist in bot",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-043",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Comparison between PPMCharts of the same modeler modeling different cases",
+      "pageStart": 15,
+      "pageEnd": 16,
+      "target": "../sections/sec-043-442-comparison-between-ppmcharts-of-the-same-mod.md",
+      "narrative": null,
+      "content": "Comparison between PPMCharts of the same modeler modeling different cases \nObservation: Sometimes, when the same modeler creates a process model for different cases, each chart for that \nmodeler contains similar patterns. \nInterpretation: Some modelers used a certain modeling approach consistently. \n \nPossible explanations: Possibly, these modelers have adopted a certain individual modeling approach that can \nbe recognized in the PPM instances for different cases. Each PPMChart at the right in Fig. 14 belongs to the \nsame modeler as the corresponding chart at the left. Similar patterns can be",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p016-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../images/img-p016-1.png",
+      "narrative": "draft",
+      "content": "Figure 14(a): PPMChart for Model 2010-354 representing the first modeling effort of a modeler using an aspect-oriented style.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p016-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../images/img-p016-2.png",
+      "narrative": "draft",
+      "content": "Figure 14(b): PPMChart for Model 2010-355 representing the second modeling effort of the same modeler as Figure 14(a), preserving the aspect-oriented style.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p016-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../images/img-p016-3.png",
+      "narrative": "draft",
+      "content": "Figure 14(c) and Figure 15(c): PPMChart for Model 2010-140 showing a flow-oriented modeling pattern in the modeler's first modeling effort.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p016-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "target": "../images/img-p016-4.png",
+      "narrative": "draft",
+      "content": "Figure 14(d): PPMChart for Model 2010-141 representing the second modeling effort of the same modeler as Figure 14(c), preserving the flow-oriented style.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-044",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Comparison between PPMCharts and process models",
+      "pageStart": 16,
+      "pageEnd": 17,
+      "target": "../sections/sec-044-443-comparison-between-ppmcharts-and-process-mod.md",
+      "narrative": null,
+      "content": "Comparison between PPMCharts and process models \nObservation: Some specific patterns seem to occur only in combination with particular process models. \nInterpretation: Modeling approaches can be discovered with the aid of PPMCharts that seem to have a relation \nwith the properties of the modeling result (i.e., the constructed process model). \n \nPossible explanations: Fig. 15 illustrates the comparison between PPMCharts and process models. The models \nat the right correspond to the charts at the left. The modeling approach in Fig. 15a-b is aspect-oriented (i.e., first \ncreating events and activ",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p017-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../images/img-p017-2.png",
+      "narrative": "draft",
+      "content": "Figure 15(a): PPMChart for Model 2010-354 showing aspect-oriented creation (events and activities created first, followed by gateways and edges).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p017-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../images/img-p017-3.png",
+      "narrative": "draft",
+      "content": "Figure 15(b): Resulting BPMN process model for Model 2010-354 corresponding to the aspect-oriented PPMChart in Figure 15(a).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p017-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../images/img-p017-4.png",
+      "narrative": "draft",
+      "content": "Figure 15(d): Resulting BPMN process model for Model 2010-140 corresponding to the flow-oriented PPMChart in Figure 15(c).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-045",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Qualitative evaluation",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../sections/sec-045-5-qualitative-evaluation.md",
+      "narrative": null,
+      "content": "This section reports on a qualitative study that confirms the usefulness of the PPMChart and the increase in \ncognitive effectiveness compared to the Dotted Chart. The evaluation was designed to collect mainly qualitative",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-046",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Participants",
+      "pageStart": 17,
+      "pageEnd": 17,
+      "target": "../sections/sec-046-51-participants.md",
+      "narrative": null,
+      "content": "instructed to use a particular visualization (see Section 5.2) to graphically represent data about the process of \nprocess modeling (PPM) (see Section 5.3) and study the data for one hour (see Section 5.4). During the exercise \nqualitative and quantitative data were collected and before and afterwards a number of questions were posed to \ncollect additional data (see Section 5.5). The results of the empirical evaluation are presented in Section 5.6. \n5.1 \nParticipants \nThe PPMChart visualization is in the first place intended to support explorative research into the PPM. The pool \nof potential",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-047",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Visualization tools",
+      "pageStart": 17,
+      "pageEnd": 18,
+      "target": "../sections/sec-047-52-visualization-tools.md",
+      "narrative": null,
+      "content": "Visualization tools \nTwo visualizations were compared. The Dotted Chart in ProM 6.2 (see Section 2.1) was compared to the \nPPMChart (see Section 3.2). Each participant had to work with only one visualization (i.e., either Dotted Chart \nor PPMChart). To prevent interference, one user that was familiar with the Dotted Chart was instructed to use \nthe PPMChart. A random visualization was appointed to the other users, but in such a way that each \nvisualization in the end would have been tested by an equal amount of users. \n18",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-048",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Input data",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "target": "../sections/sec-048-53-input-data.md",
+      "narrative": null,
+      "content": "Input data \nThe evaluation involved five datasets that originate from a single observational modeling session. Every \nparticipant got access to all five datasets. These contained the information of the construction of models 2010-\n140 (see Fig. 13c), 2010-213 (see Fig. 7b), 2010-270 (see Fig. 12b), 2010-354 (see Fig. 13a), and 2010-361 (see \nFig. 10b). They were selected as outlier examples, which was explicitly mentioned to the participants. Each \ndataset consisted of a pre-loaded event log in ProM according to the format described in Section 3.4.1 and the \ncorresponding process model on pape",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-049",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Protocol",
+      "pageStart": 18,
+      "pageEnd": 18,
+      "target": "../sections/sec-049-54-protocol.md",
+      "narrative": null,
+      "content": "Protocol \nThe PPMChart visualization was developed to support explorative research. Therefore, no particular task was \nprepared, but the participants were simply instructed to use the visualization and the five event logs for one hour \nand to try to discover as much information as possible about how people construct models. Also, because of the \nexplorative nature of the intended use, we selected researchers that had no experience with the visualization and \nwe provided only minimal tool training.  \n \nThe participants were asked to take place behind a computer on which ProM 6 and screen record",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-050",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Measurements",
+      "pageStart": 18,
+      "pageEnd": 19,
+      "target": "../sections/sec-050-55-measurements.md",
+      "narrative": null,
+      "content": "Measurements \nQualitative and quantitative data were collected during the evaluation session. Qualitative data includes the \nreported observations of the participants, observations of the administrator in how the participant uses the \nvisualization, opinions of the participant about the data, visualization and tool (expressed during or after the \nassignment). Quantitative data includes per observation time and domain value (score from 1 to 5) assessed by \nan external BPM(N) expert. It was also coded by the authors whether an observation was correct, was directed \nor unexpected (based on the fo",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-051",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/sec-051-56-results.md",
+      "narrative": null,
+      "content": "Results \nTo evaluate whether the PPMChart visualization is useful and cognitively more effective than the Dotted Chart, \nqualitative data was collected through participant observation and interviews during the evaluation session \n(Myers, 1997).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-052",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Usefulness",
+      "pageStart": 19,
+      "pageEnd": 19,
+      "target": "../sections/sec-052-561-usefulness.md",
+      "narrative": null,
+      "content": "Usefulness \nSection 4 clearly demonstrates the usefulness of the visualization for our own previous research. The question \nthat remains is whether other users could draw meaningful conclusions from the charts as well.  \n \nIt was observed that all three researchers that used the PPMChart visualization in the assignment indeed made \nsimilar observations than the ones described in this paper. For example, they reported on patterns of deletion, \nmovement and creation and discovered the styles that we labeled flow-oriented and aspect-oriented modeling. \nOne of the participants even described a thi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-053",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Increased cognitive effectiveness",
+      "pageStart": 19,
+      "pageEnd": 20,
+      "target": "../sections/sec-053-562-increased-cognitive-effectiveness.md",
+      "narrative": null,
+      "content": "Increased cognitive effectiveness \nWe acknowledge that the Dotted Chart can be used for the study of the PPM, but we claim the PPMChart \nsupports such research in a more effective way from a cognitive viewpoint. To evaluate this, the observations \nand feedback of the participants using both visualizations are compared.  \n \nFirst, it should be noted that we did not evaluate the choice of representing only one PPM instance at the time. \nBoth participants appointed to the Dotted Chart and appointed to the PPMChart were provided with the same \nevent logs containing one PPM instance each. This non-",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-054",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Limitations, implications and future research",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/sec-054-6-limitations-implications-and-future-research.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-055",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Limitations of this study",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/sec-055-61-limitations-of-this-study.md",
+      "narrative": null,
+      "content": "Limitations of this study \nThe usefulness of the visualization is illustrated in Section 4. The presented examples mostly represent \nextremes. An informal analysis indicated that, although these extremes were present in the dataset, for a number \nof observations there appears to be a continuum of examples in between the presented extremes. Furthermore, \nthese examples are based on data of modeling sessions with students only. They illustrate the usefulness of the \nvisualization, but must not be considered to be representative for all modelers. Therefore, a profound study is \nneeded to examine",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-056",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Implications for research and practice",
+      "pageStart": 20,
+      "pageEnd": 20,
+      "target": "../sections/sec-056-62-implications-for-research-and-practice.md",
+      "narrative": null,
+      "content": "Implications for research and practice \nThe comparison of different diagrams and the discussion section clearly show that the PPMChart visualization \ncan be a very helpful instrument in the exploration of data from observational modeling sessions. Concrete \nexamples in Section 4.4 illustrate that the discovered patterns might relate to modeling approaches that are \ngeneral (independent of the case), individual (dependent of the modeler) and that have an impact on the \nproperties of the resulting process model (see Section 6.2.1). If this interpretation is correct, this means that the \nPPMChart",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-057",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discovery of modeling phases and styles",
+      "pageStart": 20,
+      "pageEnd": 21,
+      "target": "../sections/sec-057-621-discovery-of-modeling-phases-and-styles.md",
+      "narrative": null,
+      "content": "Discovery of modeling phases and styles \nWhen modelers work aspect-oriented, the PPM proceeds in phases. The PPMCharts for our dataset revealed that \nsome PPM instances contain, besides the creation phases, also deletion phases (see Section 4.3.1), or move \nphases (see Section 4.3.2). Sometimes, the phases are interspersed with pauses, which can be easily detected \n21 \n \n \ngraphically in the PPMCharts (see Section 4.2). Furthermore, the study of PPMCharts proposes that the \nmodeling phases in one PPM instance might be aspect-oriented (i.e., during a modeling phase the modeler \nconcentrates sub",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-058",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Link with process model quality",
+      "pageStart": 21,
+      "pageEnd": 21,
+      "target": "../sections/sec-058-622-link-with-process-model-quality.md",
+      "narrative": null,
+      "content": "Link with process model quality \nWhile the previous section discusses how the PPMChart could have been used in other research about the PPM, \nthis section describes how the PPMChart was actually used in PPM research. Because of the recent development \nof the PPMChart, only a limited part of our findings is already published in academic articles. The comparison \nof PPMCharts with the corresponding process models (see Section 4.4.3) revealed a potential link between \ncertain PPM properties and process model quality. For example, we observed that modelers with a short PPM \n(see Section 4.2) tend",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-059",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Future research",
+      "pageStart": 21,
+      "pageEnd": 22,
+      "target": "../sections/sec-059-63-future-research.md",
+      "narrative": null,
+      "content": "Future research \nTo be able to reach the point of gaining knowledge of the connection between the characteristics of the PPM and \nthe quality of the resulting process model, a substantial amount of research still needs to be performed. \nConcerning the graphical representation of the collected data in the PPMCharts presented in this paper, the \nfuture work concentrates on improving the support for the inclusion of more data into the analysis (i.e., improve \nthe cognitive integration of information). For example, from our experience in using the charts for research, we \nlearned it would be valua",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p022-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../images/img-p022-1.png",
+      "narrative": "draft",
+      "content": "Figure 16(a): Modeling Phase Diagram for a PPM instance plotting cumulative elements against time in comprehension, modeling, and reconciliation phases.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p022-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../images/img-p022-2.png",
+      "narrative": "draft",
+      "content": "Figure 16(b): PPMChart for the same PPM instance as Figure 16(a), showing detailed element-level create, move, delete, and rename operations.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-060",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related work",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../sections/sec-060-7-related-work.md",
+      "narrative": null,
+      "content": "This section describes related work from several perspectives. First of all, related research in the area of \nvisualizing the process of process modeling (PPM) is summarized (see Section 7.1). Next, the usage of \ntraditional process modeling notations for the visualization of the PPM is discussed (see Section 7.2). \nSubsequently, a selection of other visualizations that focus on hierarchy and control perspectives is presented \n(see Section 7.3).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-061",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Visualizations of the process of process modeling",
+      "pageStart": 22,
+      "pageEnd": 22,
+      "target": "../sections/sec-061-71-visualizations-of-the-process-of-process-mode.md",
+      "narrative": null,
+      "content": "Visualizations of the process of process modeling \nPinggera, et al. (2012) use Modeling Phase Diagram visualizations to graphically represent the consecutive \nphases of a modeler in the construction of a process model. A Modeling Phase Diagram is a line chart \nrepresenting the number of elements present in the partial process model during the model construction. The \nalternating line color (i.e., black or grey) and line style (i.e., solid or dotted line) indicate the consecutive phases \nof the modeling process (see Fig. 16a). While this visualization is very useful to provide a consolidated \ng",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-062",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Process models",
+      "pageStart": 22,
+      "pageEnd": 23,
+      "target": "../sections/sec-062-72-process-models.md",
+      "narrative": null,
+      "content": "Process models \nA conceptual (process) model is a “formal description of some aspects of the physical and social world around \nus for purposes of understanding and communication” (Mylopoulos, 1992, p. 3). A combination of textual and \ngraphical notations can be used for this formal specification (Engelen & Van den Brand, 2010). When the focus \nis on control flow (i.e., the order of activities and events), graphical representations are preferred over textual \nmodels (Weske, 2007). Various graphical process model notations exist (e.g., BPMN (OMG, 2011a), UML \nActivity diagrams (OMG, 2011b), Petr",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-063",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Visualizations that concentrate on control flow and hierarchy",
+      "pageStart": 23,
+      "pageEnd": 24,
+      "target": "../sections/sec-063-73-visualizations-that-concentrate-on-control-fl.md",
+      "narrative": null,
+      "content": "Visualizations that concentrate on control flow and hierarchy \nAn optimal visualization technique for exploratory research about the characteristics of the PPM should show a \nlot of details about the recorded operations on model elements, focusing on timing and relative order and taking \nthe hierarchical structure of the data into account. Therefore, this subsection presents a number of visualizations \nthat concentrate on control flow or hierarchy and discusses their potential usefulness as an instrument to \ngraphically detect characteristics of the PPM from the collected observational data.",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p024-1",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../images/img-p024-1.png",
+      "narrative": "draft",
+      "content": "Figure 17(a): Example of a non-traditional process visualization using a nested TreeMap (from Johnson, 1993).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p024-2",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../images/img-p024-2.png",
+      "narrative": "draft",
+      "content": "Figure 17(b): Example of a non-traditional process visualization using a Timeline tree (from Burch et al., 2008).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p024-3",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../images/img-p024-3.png",
+      "narrative": "draft",
+      "content": "Figure 17(c): Example of a non-traditional process visualization using a Gantt chart of scheduled tasks over time.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/figure-img-p024-4",
+      "types": [
+        "folio-assistant-core:Figure",
+        "doco:Figure"
+      ],
+      "kind": "figure",
+      "title": "",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../images/img-p024-4.png",
+      "narrative": "draft",
+      "content": "Figure 17(d): Example of a non-traditional process visualization showing E.J. Marey's graphical train schedule plotting station position against time of day (from Tufte, 1983).",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": null
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-064",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 24,
+      "pageEnd": 24,
+      "target": "../sections/sec-064-8-conclusion.md",
+      "narrative": null,
+      "content": "The goal of the research described in this paper was to design and implement a visualization that helps to study \nobservational data about the process of process modeling (PPM) in a cognitive effective way. The visualization \nmakes the characteristics of PPM instances explicit, which facilitates the development of theory, training and \ntool support for various aspects of the PPM, and especially in the context of increasing the quality of the \nresulting process models. \n \nThe PPMChart visualization of the PPM presented in this paper displays modeling operations of one modeler in \nthe constructi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-065",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Acknowledgements",
+      "pageStart": 24,
+      "pageEnd": 25,
+      "target": "../sections/sec-065-9-acknowledgements.md",
+      "narrative": null,
+      "content": "Our research builds upon the work of the development team of CEP and the researchers involved in the \nmodeling sessions. Therefore, we express our extensive gratitude to Stefan Zugal, Jan Mendling and Dirk \nFahland. We also thank the various people that provided feedback on the plug-in, subjects of the initial \nexperiments and participants of the qualitative evaluation study. This research was funded by the Austrian \nScience Fund (FWF): P23699-N23. \n \n                                                          \n15 See http://software-document.blogspot.be/2010/07/activity-network-methods.html. \n2",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-066",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "References",
+      "pageStart": 25,
+      "pageEnd": 29,
+      "target": "../sections/sec-066-references.md",
+      "narrative": null,
+      "content": "Andrews, K. (1998). Information Slices: Visualising and Exploring Large Hierarchies using Cascading , Semi-Circular \nDiscs. In IEEE Symposium on Information Visualization (InfoVis’98) (pp. 4–7). IEEE Computer Society. \nBaird, H. S., Coates, A. L., & Fateman, R. J. (2003). PessimalPrint: A Reverse Turing Test. International Journal on \nDocument Analysis and Recognition, 5(2-3), 158–163. \nBarros, A. P., & Ter Hofstede, A. H. M. (1998). Towards the Construction of Workflow‐Suitable Conceptual Modelling \nTechniques. Information Systems Journal, 8(4), 313–337. \nBecker, J., Rosemann, M., & Von Uthma",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-067",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Parameter settings of the PPMChart Analysis plug-in in ProM.",
+      "pageStart": 29,
+      "pageEnd": 29,
+      "target": "../sections/sec-067-appendix-a-parameter-settings-of-the-ppmchart-an.md",
+      "narrative": null,
+      "content": "",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "empty"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-068",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Configuration",
+      "pageStart": 29,
+      "pageEnd": 30,
+      "target": "../sections/sec-068-configuration.md",
+      "narrative": null,
+      "content": "Configuration \nAt the left hand side, the view can be configured (see Fig. 5 in the paper).  \n \nThe Component type indicates which dimension is used to define the unit of the timelines. In contrast to the \nDotted Chart Analysis plug-in, this option cannot be configured. The fixed value for this option in the \nPPMChart implementation is: \n \nModel element (default): select this option to view a timeline per model element. Each dot on the \ntimeline represents an operation on the model element represented by the timeline (e.g., create, move, \n(re)name, delete of a particular XOR gateway). \nThe Ti",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-069",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Filtering",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "target": "../sections/sec-069-filtering.md",
+      "narrative": null,
+      "content": "Filtering \nAt the right-hand side the user can customize the view by filtering on specific operations or model elements (see \nFig. 5 in the paper). The top part represents a small view on the unfiltered PPMChart. Below, one can configure \nnext three filter options: \n \nHide next model elements: choose to hide specific element types (e.g., hide edges).  \nAll dots that represent operations on an element of the selected type are removed from the chart. \nHowever, no timelines are removed. This might result in a PPMChart with a number of empty \ntimelines (i.e., without any dot on the line). \n \nHid",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-1511-04055v1/blocks/prose-sec-070",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Settings",
+      "pageStart": 30,
+      "pageEnd": 30,
+      "target": "../sections/sec-070-settings.md",
+      "narrative": null,
+      "content": "Settings \nUse the Settings tab page to change the color and shape coding of elements. Simply click on the button to \nchange the color or shape for the corresponding operation.",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

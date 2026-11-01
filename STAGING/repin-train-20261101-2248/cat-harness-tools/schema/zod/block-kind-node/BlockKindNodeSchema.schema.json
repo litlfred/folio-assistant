@@ -1,0 +1,85 @@
+{
+  "$ref": "#/definitions/BlockKindNode",
+  "definitions": {
+    "BlockKindNode": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-block-kind/v1"
+        },
+        "kind": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "adapter": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "enum": [
+            "document",
+            "paper"
+          ]
+        },
+        "builder": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+        },
+        "labelPrefix": {
+          "type": "string",
+          "pattern": "^[a-z]+$"
+        },
+        "prefixEnforced": {
+          "default": true,
+          "type": "boolean"
+        },
+        "provable": {
+          "default": false,
+          "type": "boolean"
+        },
+        "folioType": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*:[A-Z][A-Za-z]*$"
+        },
+        "docoType": {
+          "type": "string",
+          "pattern": "^doco:[A-Z][A-Za-z]*$"
+        },
+        "heading": {
+          "type": "string"
+        },
+        "headingPlural": {
+          "type": "string",
+          "minLength": 1
+        },
+        "indexRank": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "rationale": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "adapter",
+        "labelPrefix",
+        "folioType"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/block-kind-node/BlockKindNodeSchema.schema.json",
+  "title": "BlockKindNodeSchema",
+  "description": "Generated from `BlockKindNodeSchema` in schemas/kg/block-kind-node.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2248",
+    "sha": "301fb139ff844c6697ccefdb94501657d2e4c16f",
+    "pr": "repin-train/20261101-2248",
+    "run": "41359001460"
+  }
+}

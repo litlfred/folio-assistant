@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Branch archaeology: what each branch holds that main does not | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Branch archaeology: what each branch holds that main does not" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Branch archaeology: what each branch holds that main does not" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-branch-archaeology",
+    "src": "../../assets/qa/reference-skill-instructions-branch-archaeology/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-branch-archaeology/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=18eb22b50395"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=456c57efeed4"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=52e4c68c64c7" defer></script><script src="../../assets/js/edit-links.js?v=4f82faf45c35" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/branch-archaeology.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#1-the-five-classes-decided-in-this-order","label":"The five classes, decided in this order","icon":"1"},{"href":"#2-content-protection-a-content-branch-is-salvage-review-never-delete-candidate","label":"Content protection: a content branch is salvage-review, never delete-candidate","icon":"2","children":[{"href":"#the-content-census--absent-on-main-is-the-signal-differs-is-not","label":"The content census — “absent on main” is the signal, “differs” is not","depth":1}],"fold":"1 sub-section"},{"href":"#3-making-6000-branches-cheap-a-treeless-fetch","label":"Making 6,000 branches cheap: a treeless fetch","icon":"3"},{"href":"#4-cache-by-tip-sha-and-know-which-classes-go-stale","label":"Cache by tip sha, and know which classes go stale","icon":"4"},{"href":"#5-the-report","label":"The report","icon":"5"},{"href":"#what-this-skill-does-not-do","label":"What this skill does not do"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  var rv=el('span',{'data-fa-staging-review':''});d.appendChild(rv);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+  review(rv,r,rel);
+}
+// The preview's review page (owner, 2026-11-01, Q-REV-1): reviewers could not
+// find it from a staging page. A folio writes it at <root>/<locale>/review/,
+// an IG at <root>/review/. Asked with HEAD, which the staging worker passes
+// through, so a 404 here is not answered with the live site's page. No review
+// page, no link.
+function review(s,r,rel){
+  if(typeof fetch!=='function')return;
+  var c=[],m=rel.match(/^([a-z]{2,3}(?:-[A-Za-z0-9]+)?)\//);
+  if(m)c.push(r+m[1]+'/review/');
+  c.push(r+'review/');
+  (function next(i){
+    if(i>=c.length)return;
+    fetch(c[i]+'index.html',{method:'HEAD',cache:'no-store'}).then(function(x){
+      if(!x.ok)return next(i+1);
+      s.appendChild(sep());
+      s.appendChild(link(c[i],'\ud83d\udd0d Review changes','font-weight:bold'));
+      measure();
+    }).catch(function(){next(i+1);});
+  })(0);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Branch archaeology: what each branch holds that main does not</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/branch-archaeology.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="branch-archaeology-what-each-branch-holds-that-main-does-not"><a href="#branch-archaeology-what-each-branch-holds-that-main-does-not" class="anchor-heading" aria-labelledby="branch-archaeology-what-each-branch-holds-that-main-does-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Branch archaeology: what each branch holds that main does not
+  
+  
+</h1><p>The question sounds like <code class="language-plaintext highlighter-rouge">git branch -r --no-merged</code>, and that command answers
+it wrong. It tests <strong>ancestry</strong>, so a branch landed by <strong>squash</strong> or
+<strong>cherry-pick</strong> (which is how most PRs land here) shows as unmerged forever.
+<code class="language-plaintext highlighter-rouge">lsi:epics</code> uses it to find unmerged branches, which is fine for filing and
+wrong for disposal.</p><p><strong>Measured in the <code class="language-plaintext highlighter-rouge">qou</code> folio, 2026-10-04 (issue #2106, bean <code class="language-plaintext highlighter-rouge">nrrf</code>):</strong> 6,480
+remote branches, of which <strong>461 held mathematics not on main</strong>. Those 461 are
+the reason for the rule in §2. A sweep that labelled them “stale” would have
+offered the only copy of proofs for deletion.</p><h2 id="1-the-five-classes-decided-in-this-order"><a href="#1-the-five-classes-decided-in-this-order" class="anchor-heading" aria-labelledby="1-the-five-classes-decided-in-this-order"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The five classes, decided in this order
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>class</th><th>test</th><th>meaning</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">merged</code></td><td><code class="language-plaintext highlighter-rouge">git merge-base --is-ancestor &lt;tip&gt; origin/main</code></td><td>every commit is on main</td></tr><tr><td><code class="language-plaintext highlighter-rouge">landed</code></td><td><code class="language-plaintext highlighter-rouge">git merge-tree --write-tree origin/main &lt;tip&gt;</code> produces <strong>main’s own tree</strong>, or every commit’s patch-id is on main (<code class="language-plaintext highlighter-rouge">git cherry origin/main &lt;tip&gt;</code> prints only <code class="language-plaintext highlighter-rouge">-</code>), or the branch’s <strong>combined</strong> diff patch-id matches a main commit (the squash case)</td><td>the CHANGE is on main under other commits</td></tr><tr><td><code class="language-plaintext highlighter-rouge">partial</code></td><td>some commits’ patch-ids are on main, some are not</td><td>part landed; the rest is unique work</td></tr><tr><td><code class="language-plaintext highlighter-rouge">unlanded</code></td><td>none of the above, and every test ran</td><td>unique work</td></tr><tr><td><code class="language-plaintext highlighter-rouge">undetermined</code></td><td>a test could not run: an object could not be fetched, or merge-tree conflicted and patch-ids disagree</td><td><strong>not</strong> <code class="language-plaintext highlighter-rouge">unlanded</code> and <strong>not</strong> <code class="language-plaintext highlighter-rouge">landed</code>. Report it as unknown</td></tr></tbody></table></div><p>Some notes on the tests:</p><ul><li><strong>The merge-tree test is the strongest.</strong> If merging the branch into main
+changes nothing, then nothing on the branch is missing from main, however it
+got there: squash, cherry-pick, a re-implementation with the same result, or
+a revert-and-reapply. A <strong>conflict</strong> proves nothing either way, so move on to
+the patch-id tests.</li><li><p><strong><code class="language-plaintext highlighter-rouge">git cherry</code> compares per-commit patch-ids.</strong> It catches cherry-picks. It
+misses a squash, because one squashed commit’s patch-id equals the sum of the
+branch, not any single commit. Hence the combined test:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">base</span><span class="o">=</span><span class="si">$(</span>git merge-base origin/main <span class="s2">"</span><span class="nv">$tip</span><span class="s2">"</span><span class="si">)</span>
+git diff <span class="s2">"</span><span class="nv">$base</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$tip</span><span class="s2">"</span> | git patch-id <span class="nt">--stable</span>          <span class="c"># the branch as one patch</span>
+git log <span class="nt">--format</span><span class="o">=</span>%H <span class="s2">"</span><span class="nv">$base</span><span class="s2">"</span>..origin/main | <span class="k">while </span><span class="nb">read </span>c<span class="p">;</span> <span class="k">do
+  </span>git show <span class="s2">"</span><span class="nv">$c</span><span class="s2">"</span> | git patch-id <span class="nt">--stable</span>                  <span class="c"># each main commit since</span>
+<span class="k">done</span>
+</code></pre></div></div></li><li><strong>Subject lines are never evidence.</strong> Two commits titled “fix build” share
+nothing, and a squash usually renames.</li><li><strong><code class="language-plaintext highlighter-rouge">undetermined</code> must never be folded into either neighbour.</strong> A census that
+counts it as unlanded inflates salvage work. One that counts it as landed
+offers unique work for deletion, which is the <code class="language-plaintext highlighter-rouge">dh4f</code> shape: a clean report
+over what the tool could not read.</li></ul><p>Two flags sit beside the class rather than inside it:</p><ul><li><strong><code class="language-plaintext highlighter-rouge">open-pr: #n</code></strong> — any branch backing an open PR is live, whatever its class.</li><li><strong><code class="language-plaintext highlighter-rouge">beans: […]</code></strong> — bean ids named in its commit messages, the same
+extraction <code class="language-plaintext highlighter-rouge">lsi:epics</code> performs. This is the link that lets
+<a href="../../reference/skill-instructions/work-plan-restructure.html"><code class="language-plaintext highlighter-rouge">work-plan-restructure</code></a> close a bean whose work
+this census shows <code class="language-plaintext highlighter-rouge">landed</code>.</li></ul><h2 id="2-content-protection-a-content-branch-is-salvage-review-never-delete-candidate"><a href="#2-content-protection-a-content-branch-is-salvage-review-never-delete-candidate" class="anchor-heading" aria-labelledby="2-content-protection-a-content-branch-is-salvage-review-never-delete-candidate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Content protection: a content branch is salvage-review, never delete-candidate
+  
+  
+</h2><p><strong>If an unlanded or partial branch touches content, it goes on the
+salvage-review list and is never offered for deletion, at any age or size.</strong>
+“Content” means any path under a directory the instance declares with a
+content kind (<code class="language-plaintext highlighter-rouge">folio</code>, <code class="language-plaintext highlighter-rouge">library</code>), any <code class="language-plaintext highlighter-rouge">.lean</code> file, and the folio’s block,
+chapter and computation sources. Read the declaration
+(<code class="language-plaintext highlighter-rouge">&lt;instance&gt;.json</code>); do not use a hard-coded path list.</p><p>The reason is asymmetric cost. A platform branch’s unique work can usually be
+re-derived from the issue that motivated it. A proof, a computation or an
+authored chapter often cannot, because the session that wrote it is gone and
+its scrollback with it. So:</p><div class="table-wrapper"><table><thead><tr><th>branch</th><th>goes to</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">merged</code> / <code class="language-plaintext highlighter-rouge">landed</code>, no open PR</td><td><strong>delete-candidate</strong> list, with size, age, last author and the evidence that it landed</td></tr><tr><td><code class="language-plaintext highlighter-rouge">partial</code> / <code class="language-plaintext highlighter-rouge">unlanded</code>, no content touched</td><td><strong>review</strong> list, with unique commits, size and age</td></tr><tr><td><code class="language-plaintext highlighter-rouge">partial</code> / <code class="language-plaintext highlighter-rouge">unlanded</code>, content touched</td><td><strong>salvage-review</strong> list, with the unique paths and hunks, and bean ids</td></tr><tr><td><code class="language-plaintext highlighter-rouge">undetermined</code></td><td><strong>unknown</strong> list, with the test that failed</td></tr><tr><td>any class with an open PR</td><td>not listed for disposal at all</td></tr></tbody></table></div><p><strong>The delete-candidate list is a report, not an action.</strong> <a href="../../reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a>:
+the owner reads it, with sizes and ages, and says which go. A branch is the
+last copy of its commits once the PR is closed, and <code class="language-plaintext highlighter-rouge">plj1</code> is that skill’s
+worked example of a workflow whose shape deleted work nobody decided to delete.</p><h3 id="the-content-census--absent-on-main-is-the-signal-differs-is-not"><a href="#the-content-census--absent-on-main-is-the-signal-differs-is-not" class="anchor-heading" aria-labelledby="the-content-census--absent-on-main-is-the-signal-differs-is-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The content census — “absent on main” is the signal, “differs” is not
+  
+  
+</h3><p>For a branch on the salvage list, the question is which of its content is
+<strong>nowhere on main</strong>. Compare at three levels, strongest first:</p><ol><li><strong>By name, not by path.</strong> For each Lean module and declaration, and each
+block label, the branch adds, search main for the <strong>name</strong> anywhere. A
+module that moved directories is still on main. <strong>Measured in the <code class="language-plaintext highlighter-rouge">qou</code>
+orphaned-content census, 2026-10-04:</strong> of 60 recent unlanded branches, 32
+touched content and 27 carried content not on main. After excluding schema
+files, the residue was <strong>12 Lean modules on 7 branches</strong> whose names occur
+nowhere on main. That residue is the salvage list. The other 55 files that
+merely “differ” are not.</li><li><strong>Path-remapped.</strong> A branch cut before a layout move uses the old paths
+(qou’s branches all predate its <code class="language-plaintext highlighter-rouge">content/</code> → <code class="language-plaintext highlighter-rouge">folio/</code> move). Remap through
+the move before comparing, or every file reads as absent. Take the remap
+from the commit that made the move. Do not guess it.</li><li><strong>“Differs from main” is not unique work.</strong> Main moved on after the branch
+was cut. Count it separately, and never as math. Only a three-way
+comparison against the merge-base says whose change a hunk is.</li></ol><p><strong>Salvage is filed per CLUSTER, not per branch.</strong> 461 branches are not 461
+beans. Beans are not sidecars, and one bean per branch is the generated-template
+flood <a href="../../reference/skill-instructions/work-plan-restructure.html"><code class="language-plaintext highlighter-rouge">work-plan-restructure</code></a> exists to clean up.
+Group the salvage list by the subject its unique paths touch (a chapter, a Lean
+namespace), and propose one bean per group to the owner.</p><h2 id="3-making-6000-branches-cheap-a-treeless-fetch"><a href="#3-making-6000-branches-cheap-a-treeless-fetch" class="anchor-heading" aria-labelledby="3-making-6000-branches-cheap-a-treeless-fetch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Making 6,000 branches cheap: a treeless fetch
+  
+  
+</h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch <span class="nt">--filter</span><span class="o">=</span>tree:0 origin <span class="s1">'+refs/heads/*:refs/remotes/origin/*'</span>
+</code></pre></div></div><p>This fetches every head’s <strong>commits</strong> without their trees or blobs: <strong>15 s for
+~6.5k branches</strong> in qou. That is enough for the ancestry test and for the
+commit-message bean extraction. The merge-tree and patch-id tests need trees
+and blobs, which the partial clone then fetches <strong>on demand</strong>, per branch. So
+order the work to fetch as little as possible:</p><ol><li>Ancestry for every branch (commits only, cheap). Most stale branches end
+here as <code class="language-plaintext highlighter-rouge">merged</code>.</li><li>Open-PR heads from the API, once.</li><li>Merge-tree, then patch-id, only for what is left. A branch whose objects
+cannot be fetched is <code class="language-plaintext highlighter-rouge">undetermined</code> (§1), not skipped silently.</li></ol><h2 id="4-cache-by-tip-sha-and-know-which-classes-go-stale"><a href="#4-cache-by-tip-sha-and-know-which-classes-go-stale" class="anchor-heading" aria-labelledby="4-cache-by-tip-sha-and-know-which-classes-go-stale"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Cache by tip sha, and know which classes go stale
+  
+  
+</h2><p>Key each row by <strong>branch tip sha</strong> and record the <strong>main sha</strong> it was computed
+against.</p><ul><li><code class="language-plaintext highlighter-rouge">merged</code> and <code class="language-plaintext highlighter-rouge">landed</code> are <strong>monotone</strong>: main only grows, so they stay true
+while the tip is unchanged. The exception is a revert on main, which the
+next full run catches.</li><li><code class="language-plaintext highlighter-rouge">partial</code>, <code class="language-plaintext highlighter-rouge">unlanded</code> and <code class="language-plaintext highlighter-rouge">undetermined</code> <strong>must be recomputed when main
+moves</strong>, because the work may have landed since.</li><li>A changed tip invalidates the row whatever its class.</li></ul><p>A re-run then costs only the branches that moved plus the non-monotone rows.
+The full answer is never re-derived from scratch, which is the waste
+<a href="../../reference/skill-instructions/goal-review.html"><code class="language-plaintext highlighter-rouge">goal-review</code></a> and the survey graph (<code class="language-plaintext highlighter-rouge">beans/surveys/</code>)
+already exist to stop.</p><h2 id="5-the-report"><a href="#5-the-report" class="anchor-heading" aria-labelledby="5-the-report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. The report
+  
+  
+</h2><p>For each branch: name, tip sha, main sha, class, the evidence (which test
+decided it, patch-ids matched of total), <code class="language-plaintext highlighter-rouge">open-pr</code>, <code class="language-plaintext highlighter-rouge">beans</code>, commits ahead,
+size of the unique diff, last commit date, and the last author or
+<code class="language-plaintext highlighter-rouge">Claude-Session:</code> trailer. Then the four lists in §2, each with counts, and
+the <code class="language-plaintext highlighter-rouge">undetermined</code> count stated beside the others, never dropped.</p><p>Where it goes: summarised on the issue or in a bean note
+(<code class="language-plaintext highlighter-rouge">bun run cat beans:note</code>) for the owner, and the per-branch rows as a file
+attached to that review. A committed, declared home for a recurring census
+(a <code class="language-plaintext highlighter-rouge">qa-reports</code> sidecar) is not built yet. Do not invent an undeclared
+directory for it. Name the gap instead.</p><h2 id="what-this-skill-does-not-do"><a href="#what-this-skill-does-not-do" class="anchor-heading" aria-labelledby="what-this-skill-does-not-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this skill does not do
+  
+  
+</h2><ul><li><strong>Delete, prune or close anything.</strong> Not branches, not PRs, not beans.</li><li><strong>Judge whether unique work is wanted.</strong> <code class="language-plaintext highlighter-rouge">unlanded</code> means “not on main”, not
+“should be on main”. That call belongs to the owner, through salvage review.</li><li><strong>Replace <a href="../../reference/skill-instructions/branch-freshness.html"><code class="language-plaintext highlighter-rouge">branch-freshness</code></a></strong>
+(your own branch against main) or <a href="../../reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">coordinate</code></a> (live sibling
+PRs). This skill is the census of everything else.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

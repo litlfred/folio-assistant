@@ -1,0 +1,105 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-2248",
+    "sha": "301fb139ff844c6697ccefdb94501657d2e4c16f",
+    "pr": "repin-train/20261101-2248",
+    "run": "41359001460"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Review-log watch",
+      "summary": "One poll of one drafting review log (a Contributor Feedback sheet) and its folio repository.",
+      "description": "One poll of one drafting review log (a Contributor Feedback sheet) and\nits folio repository. A tool decides, with no agent judgement, whether\nanything a person set in the sheet or any open issue changed since the\nlast poll. Only then does the agent append rows for new issues and do\nits pass. Skill: review-log-watch.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/review-log-watch.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/review-log-watch.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/assets/img/workflows/review-log-watch.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll"
+      ],
+      "nodeCount": 9,
+      "flowCount": 8,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "changed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "unchanged",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "6c157fadd83ec85590239d89ae0992f458881642",
+    "pr": "2885/merge",
+    "run": "41360054245"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Review the impact with stakeholders",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/role/authoring-committee",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review"
+    }
+  ]
+}

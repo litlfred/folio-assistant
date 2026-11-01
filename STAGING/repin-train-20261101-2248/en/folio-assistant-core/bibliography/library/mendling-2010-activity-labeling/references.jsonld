@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/mendling-2010-activity-labeling",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Activity labeling in process modeling: empirical insights and recommendations",
+      "dcterms:issued": "2010",
+      "dcterms:source": "cat-harness/library/mendling-2010-activity-labeling/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/mendling-2010-activity-labeling"
+    }
+  ]
+}

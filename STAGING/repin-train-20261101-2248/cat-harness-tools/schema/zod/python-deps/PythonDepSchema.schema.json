@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/PythonDep",
+  "definitions": {
+    "PythonDep": {
+      "type": "object",
+      "properties": {
+        "distribution": {
+          "type": "string",
+          "minLength": 1
+        },
+        "imports": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "lean",
+            "extended"
+          ]
+        },
+        "why": {
+          "type": "string",
+          "minLength": 1
+        },
+        "transitive": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "distribution",
+        "tier",
+        "why"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/python-deps/PythonDepSchema.schema.json",
+  "title": "PythonDepSchema",
+  "description": "Generated from `PythonDepSchema` in schemas/sdlc/python-deps.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2248",
+    "sha": "301fb139ff844c6697ccefdb94501657d2e4c16f",
+    "pr": "repin-train/20261101-2248",
+    "run": "41359001460"
+  }
+}

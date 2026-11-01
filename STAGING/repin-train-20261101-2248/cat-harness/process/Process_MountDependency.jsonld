@@ -1,0 +1,118 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-2248",
+    "sha": "301fb139ff844c6697ccefdb94501657d2e4c16f",
+    "pr": "repin-train/20261101-2248",
+    "run": "41359001460"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Remote-mount a dependency",
+      "summary": "Laying a harness — and every instance it needs — down from another repository at a pinned commit, as declared directories, with a lock that says exactly what arrived.",
+      "description": "Laying a harness — and every instance it needs — down from another repository at a pinned commit, as declared directories, with a lock that says exactly what arrived.\n\nYou are in this process whenever a folio or harness needs a layer it does not hold: a downstream folio built on a content layer above this harness, a separated instance whose foundation lives elsewhere. The downstream names the harness, its repository and a 40-character pin as a `source.remote` instance in its root `index.config.json` (legacy: `remoteMounts` on its declaration, never both); everything else is read from the harness's own declaration at that pin.\n\nEvery instance reached ends in one of three states — mounted, missing, could-not-determine — and the third is never reported as the first. The skill is `remote-mount`.",
+      "enforcement": "strict",
+      "sourcePath": "processes/kg/mount-dependency.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/kg/mount-dependency.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/assets/img/workflows/mount-dependency.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Start_LayerNeeded"
+      ],
+      "nodeCount": 10,
+      "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency#flow/F_D1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Start_LayerNeeded",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_DeclareMount",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency#flow/F_D1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency#flow/F_D2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_DeclareMount",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_ResolveClosure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency#flow/F_D2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency#flow/F_D3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_ResolveClosure",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_MountInstances",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency#flow/F_D3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency#flow/F_D4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_MountInstances",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_WriteLock",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency#flow/F_D4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency#flow/F_D5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_WriteLock",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_RenderAgentSurface",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency#flow/F_D5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency#flow/F_D5b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_RenderAgentSurface",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_CheckAgainstLock",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency#flow/F_D5b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency#flow/F_D6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/Task_CheckAgainstLock",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/GW_State",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency#flow/F_D6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency#flow/F_D7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/GW_State",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/End_Mounted",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency#flow/F_D7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency#flow/F_D8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/GW_State",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/process/Process_MountDependency/node/End_Reported",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2248/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency#flow/F_D8"
+    }
+  ]
+}

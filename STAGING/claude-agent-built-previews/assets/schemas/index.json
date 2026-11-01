@@ -31,6 +31,13 @@
   ],
   "modules": [
     {
+      "module": "bootstrap-tools/schemas/declaration.test.ts",
+      "instance": "bootstrap-tools",
+      "name": "declaration.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
       "module": "bootstrap-tools/schemas/declaration.ts",
       "instance": "bootstrap-tools",
       "name": "declaration",
@@ -70,6 +77,14 @@
       "graphNode": "undeclared",
       "summary": "The shape of `bootstrap.jsonld`, the graph bootstrap owes in place of a",
       "isTest": false
+    },
+    {
+      "module": "bootstrap-tools/schemas/graph-paths.test.ts",
+      "instance": "bootstrap-tools",
+      "name": "graph-paths.test",
+      "graphNode": "undeclared",
+      "summary": "A path a declaration names stays inside the declaring directory (bean",
+      "isTest": true
     },
     {
       "module": "bootstrap-tools/schemas/graph.test.ts",
@@ -4263,7 +4278,7 @@
         },
         {
           "name": "src",
-          "type": "z.string().min(1).describe(\"The file, relative to the declaration.\")",
+          "type": "z.string().min(1).regex(RELATIVE_INSIDE).describe(\"The file, relative to the declaration.\")",
           "optional": false,
           "array": false
         },
@@ -4279,6 +4294,7 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "RELATIVE_INSIDE",
         "z"
       ],
       "exported": true
@@ -4426,7 +4442,7 @@
         },
         {
           "name": "path",
-          "type": "z.string().min(1).describe(\"The directory, relative to the declaration.\")",
+          "type": "z.string().min(1).regex(RELATIVE_INSIDE).describe(\"The directory, relative to the declaration.\")",
           "optional": false,
           "array": false
         },
@@ -4456,6 +4472,7 @@
       ],
       "unresolved": [],
       "external": [
+        "RELATIVE_INSIDE",
         "z"
       ],
       "exported": true
@@ -78917,6 +78934,13 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "editorialNote",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A note for the editors, not part of the meaning (`skos:editorialNote`):"
         },
         {
           "name": "broader",

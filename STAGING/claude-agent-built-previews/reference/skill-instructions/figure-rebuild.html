@@ -1,0 +1,356 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Figure rebuild: a figure is data, not a picture | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Figure rebuild: a figure is data, not a picture" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Figure rebuild: a figure is data, not a picture" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-figure-rebuild",
+    "src": "../../assets/qa/reference-skill-instructions-figure-rebuild/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-figure-rebuild/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=2ed7923cda66"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=456c57efeed4"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=52e4c68c64c7" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/figure-rebuild.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-steps-after-the-folio-is-seeded","label":"The steps, after the folio is seeded"},{"href":"#routes-by-figure-type-in-detail","label":"Routes by figure type, in detail","children":[{"href":"#a-workflow-picture-becomes-bpmn-xml","label":"A workflow picture becomes BPMN XML","depth":1},{"href":"#a-data-model-becomes-fhir-logical-models-rendered-as-uml","label":"A data model becomes FHIR logical models, rendered as UML","depth":1},{"href":"#a-layered-or-phased-chart-becomes-an-svg-generated-from-data","label":"A layered or phased chart becomes an SVG generated from data","depth":1},{"href":"#mermaid-is-a-rendering-never-a-source","label":"Mermaid is a rendering, never a source","depth":1},{"href":"#drop-the-flattened-figure-text-from-the-prose","label":"Drop the flattened figure text from the prose","depth":1},{"href":"#link-table-cells","label":"Link table cells","depth":1},{"href":"#example-data-becomes-fhir-example-instances","label":"Example data becomes FHIR example instances","depth":1},{"href":"#a-repeated-activity-header-comes-from-the-step-records","label":"A repeated activity header comes from the step records","depth":1}],"fold":"8 sub-sections"},{"href":"#reviewing-the-classification","label":"Reviewing the classification"},{"href":"#reading-the-report","label":"Reading the report"},{"href":"#related","label":"Related"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  var rv=el('span',{'data-fa-staging-review':''});d.appendChild(rv);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+  review(rv,r,rel);
+}
+// The preview's review page (owner, 2026-11-01, Q-REV-1): reviewers could not
+// find it from a staging page. A folio writes it at <root>/<locale>/review/,
+// an IG at <root>/review/. Asked with HEAD, which the staging worker passes
+// through, so a 404 here is not answered with the live site's page. No review
+// page, no link.
+function review(s,r,rel){
+  if(typeof fetch!=='function')return;
+  var c=[],m=rel.match(/^([a-z]{2,3}(?:-[A-Za-z0-9]+)?)\//);
+  if(m)c.push(r+m[1]+'/review/');
+  c.push(r+'review/');
+  (function next(i){
+    if(i>=c.length)return;
+    fetch(c[i]+'index.html',{method:'HEAD',cache:'no-store'}).then(function(x){
+      if(!x.ok)return next(i+1);
+      s.appendChild(sep());
+      s.appendChild(link(c[i],'\ud83d\udd0d Review changes','font-weight:bold'));
+      measure();
+    }).catch(function(){next(i+1);});
+  })(0);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Figure rebuild: a figure is data, not a picture</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/skills/library/ingestion/figure-rebuild.md"><code class="language-plaintext highlighter-rouge">folio-assistant-core/skills/library/ingestion/figure-rebuild.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-core/skills/library/ingestion/figure-rebuild.md" class="fa-edit-source" data-fa-link="edit" data-src="folio-assistant-core/skills/library/ingestion/figure-rebuild.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="figure-rebuild-a-figure-is-data-not-a-picture"><a href="#figure-rebuild-a-figure-is-data-not-a-picture" class="anchor-heading" aria-labelledby="figure-rebuild-a-figure-is-data-not-a-picture"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Figure rebuild: a figure is data, not a picture
+  
+  
+</h1><p>Owner, 2026-10-31, after reading the ingested product catalogue and supply
+chain handbooks (litlfred/dth-pc, litlfred/dth-sc): <em>“the ingested dth-pc and
+dth-sc did not have any of the figures that i could see…. where they
+extracted into KG? can we recreate them computably?”</em> The owner then chose to
+<strong>pick the form by figure type</strong> (option A).</p><p>Two separate failures sat behind that question:</p><ol><li><strong>Figures went missing silently.</strong> The vector arm matched only <code class="language-plaintext highlighter-rouge">Fig.</code> and
+<code class="language-plaintext highlighter-rouge">Figure</code>, and the supply chain handbook writes <code class="language-plaintext highlighter-rouge">Fig 1.</code>, so nine of its 32
+figures had no render and no block (cat-harness-tools#1119). Nothing
+compared the publication’s declared figures with the folio’s blocks.</li><li><strong>The figures that did arrive were pictures.</strong> A <code class="language-plaintext highlighter-rouge">figure</code> block whose
+<code class="language-plaintext highlighter-rouge">file</code> is <code class="language-plaintext highlighter-rouge">vfig-pNNN.png</code> has a caption, a page and glossary links in the
+KG. Its boxes, arrows and labels are pixels: no query can reach them.</li></ol><h2 id="the-steps-after-the-folio-is-seeded"><a href="#the-steps-after-the-folio-is-seeded" class="anchor-heading" aria-labelledby="the-steps-after-the-folio-is-seeded"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The steps, after the folio is seeded
+  
+  
+</h2><ol><li><strong>Every declared figure has a block.</strong> Run
+<code class="language-plaintext highlighter-rouge">bun run cat figure:coverage --entry &lt;library&gt;/&lt;doc-id&gt; --folio folio/&lt;doc&gt;</code>.
+A <code class="language-plaintext highlighter-rouge">missing</code> figure is a bug in extraction or seeding. Fix that (re-run the
+vector arms, inspect, place the block) rather than excluding it. The one
+legitimate block exclusion is content the folio may not copy, such as a
+third-party figure used by permission. It is signed off by a person
+(<code class="language-plaintext highlighter-rouge">scope: "block"</code>), and the folio says in prose what the figure was.</li><li><p><strong>Classify each figure by what it draws</strong>, by looking at the render, never
+by its labels alone (see <code class="language-plaintext highlighter-rouge">l1-document-ingestion</code>, “the text layer is not
+the figure”):</p><div class="table-wrapper"><table><thead><tr><th>The figure draws</th><th>Rebuild as</th><th>Where it lives</th></tr></thead><tbody><tr><td>actors, systems, components, layers of an architecture</td><td>an <strong>ArchiMate view</strong></td><td>the reference architecture the folio mounts (e.g. smart-ra <code class="language-plaintext highlighter-rouge">tools/archimate-dth/</code>), linked from the block’s <code class="language-plaintext highlighter-rouge">meta.figureViews</code></td></tr><tr><td>a workflow with tasks, gateways, lanes</td><td><strong>BPMN 2.0</strong></td><td>the folio’s <code class="language-plaintext highlighter-rouge">processes/</code>, or the DAK it is adapted from</td></tr><tr><td>a decision or a transition rule</td><td><strong>DMN 1.3</strong></td><td><code class="language-plaintext highlighter-rouge">processes/decisions/</code></td></tr><tr><td>classes, attributes, cardinalities</td><td><strong>FHIR logical models</strong> (FSH), drawn as a UML class diagram generated from them</td><td>the upstream IG (e.g. smart-pcmt), else a litlfred FSH repo</td></tr><tr><td>a graph of named boxes and arrows</td><td>find what the boxes ARE (processes, actors, systems) and model it as <strong>ArchiMate</strong> elements and relationships</td><td>the reference architecture</td></tr><tr><td>phases, layers, nested shapes, a tree, a staircase</td><td>an <strong>SVG generated from data</strong>: a data file plus a generator Tool. The DIIG phases chart is the worked example: <code class="language-plaintext highlighter-rouge">diig-phases-figure/v1</code> data on the who-iris library entry of each publication that prints it, drawn by Tool <code class="language-plaintext highlighter-rouge">diig-phases-svg</code></td><td>the data on the source’s who-iris library entry; the folio commits the SVG, and adds only its own tiles in a <code class="language-plaintext highlighter-rouge">diig-phases-adaptation/v1</code> file</td></tr><tr><td>a table of values drawn as a picture</td><td>a <strong>table</strong> block</td><td>the block</td></tr><tr><td>a country example, a photograph, a screenshot, a third-party figure</td><td><strong>keep the cited picture</strong> (<code class="language-plaintext highlighter-rouge">scope: "rebuild"</code> exclusion, signed off)</td><td>unchanged</td></tr></tbody></table></div><p><strong>One source, never a copy (owner, 2026-10-31: “dont want to duplicate
+content”).</strong> Every rebuilt figure is generated from, or links to, ONE
+schema-backed source: an ArchiMate model, a BPMN or DMN file, a FHIR
+logical model, or a data file whose labels are glossary IRIs. A figure
+that appears in several publications (the DIIG phases chart, the SMART
+Guidelines layers, the ANC workflow) has one source in the layer they all
+mount, and each folio points at it. Content that already lives upstream
+(smart-pcmt’s FHIR models for dth-pc) is linked, never re-typed.</p></li><li><strong>Start from the drawing’s own structure.</strong> <code class="language-plaintext highlighter-rouge">pdf-vector-figures.py</code>
+already records, per render, the labelled boxes (<code class="language-plaintext highlighter-rouge">assembly.boxes</code>) and
+which open strokes join two of them. That is a draft node and edge list.
+Check it against the render: the assembly does not know arrow direction
+or meaning, and a label in white space belongs to no box.</li><li><strong>Keep the picture as evidence.</strong> The rebuilt block cites the PDF page and
+keeps <code class="language-plaintext highlighter-rouge">meta.source.file</code> pointing at the crop, so a reviewer can compare.
+Record how it was made in <code class="language-plaintext highlighter-rouge">meta.source.method</code>: <code class="language-plaintext highlighter-rouge">archimate-view</code>, <code class="language-plaintext highlighter-rouge">bpmn</code>,
+<code class="language-plaintext highlighter-rouge">dmn</code>, <code class="language-plaintext highlighter-rouge">fhir-logical-model</code>, <code class="language-plaintext highlighter-rouge">generated</code> or <code class="language-plaintext highlighter-rouge">redrawn</code>, plus <code class="language-plaintext highlighter-rouge">generator</code>
+when a script draws it and the source’s path or IRI.</li><li><strong>Assert nothing the figure does not draw.</strong> A rebuild is a transcription
+of the drawing. A relation the figure does not draw is not added, and
+counts, dates and country facts stay cited source content, never model
+facts (the L2 DTH workplan rule: no empirical claims in formal content).
+smart-ra’s <code class="language-plaintext highlighter-rouge">dth_sc.py</code> states the same rule in its view documentation.</li><li><strong>Re-run the check.</strong> <code class="language-plaintext highlighter-rouge">--require-computable</code> fails while any figure is
+still a <code class="language-plaintext highlighter-rouge">picture</code> or only <code class="language-plaintext highlighter-rouge">linked</code>, so a folio can adopt it as a gate once
+the rebuilds are done.</li></ol><h2 id="routes-by-figure-type-in-detail"><a href="#routes-by-figure-type-in-detail" class="anchor-heading" aria-labelledby="routes-by-figure-type-in-detail"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Routes by figure type, in detail
+  
+  
+</h2><p>The owner asked for each of these on 2026-10-31 while reading dth-pc and
+dth-sc.</p><h3 id="a-workflow-picture-becomes-bpmn-xml"><a href="#a-workflow-picture-becomes-bpmn-xml" class="anchor-heading" aria-labelledby="a-workflow-picture-becomes-bpmn-xml"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A workflow picture becomes BPMN XML
+  
+  
+</h3><p>A figure drawn in BPMN notation (lanes, events, gateways, tasks, groups,
+subprocesses), such as the ANC workflow in dth-pc Fig. 6 and dth-sc Fig. 7, is
+transcribed into a <code class="language-plaintext highlighter-rouge">.bpmn</code> file.</p><ol><li><strong>Look for the source’s own BPMN first.</strong> If the publication it is adapted
+from (a DAK, a DTH, an IG) publishes the process as <code class="language-plaintext highlighter-rouge">.bpmn</code>, mount or cite
+that file; never redraw it. WHO smart-anc, checked 2026-10-31, publishes no
+<code class="language-plaintext highlighter-rouge">.bpmn</code> for its ANC workflow, only PlantUML pictures of other processes. So
+that figure is transcribed.</li><li>Transcribe exactly what is drawn. Keep the source’s activity numbers and
+names as task ids and names (<code class="language-plaintext highlighter-rouge">10.5 Nutrition supplementation</code>), the lanes,
+the gateway labels on their flows, a group as <code class="language-plaintext highlighter-rouge">bpmn:group</code>, and a
+subprocess as <code class="language-plaintext highlighter-rouge">bpmn:subProcess</code>. Include <code class="language-plaintext highlighter-rouge">bpmndi</code> coordinates taken from
+the render, so the diagram looks like the source.</li><li><strong>What the figure emphasises becomes data, not colour.</strong> The purple
+outline on “connections to the supply chain” becomes a marker on those
+tasks, an extension element or a documented category, so a query can find
+them.</li><li>Shared processes live once, in the layer the folios mount (dth-sc for the
+supply chain handbooks), and each folio’s figure block points at that file.</li><li>Validate with the cat-harness <code class="language-plaintext highlighter-rouge">bpmn-authoring</code> checks, then render the SVG
+with the same tool the folio uses for its own processes.</li></ol><h3 id="a-data-model-becomes-fhir-logical-models-rendered-as-uml"><a href="#a-data-model-becomes-fhir-logical-models-rendered-as-uml" class="anchor-heading" aria-labelledby="a-data-model-becomes-fhir-logical-models-rendered-as-uml"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A data model becomes FHIR logical models, rendered as UML
+  
+  
+</h3><p>A class diagram with attributes and cardinalities (dth-pc Fig. 9: Generic
+Product, Trade Item, Regulated Trade Item) is a data model.</p><ol><li><strong>Find the newer computable source first.</strong> dth-pc’s data model is carried
+forward in smart-pcmt (owner, 2026-10-31): <code class="language-plaintext highlighter-rouge">Product</code> and
+<code class="language-plaintext highlighter-rouge">ProductAuthorization</code> logical models. Link to those, cite the handbook
+figure as the original, and list the differences rather than hiding them.
+Read WHO and smart-* repositories; never change them.</li><li>Only where no source exists, transcribe it as FSH <code class="language-plaintext highlighter-rouge">Logical:</code> models in a
+litlfred repository. sushi must run without errors before the commit.</li><li>Draw the figure as a UML class diagram generated from the
+StructureDefinitions, never from the picture. Show each entity as an
+IG-style structure tree, using fhir-harness <code class="language-plaintext highlighter-rouge">logical-model-schemas</code> and
+<code class="language-plaintext highlighter-rouge">ig-ast-render</code>.</li><li>In mapping tables, every FHIR path links to the spec page for its version
+(<code class="language-plaintext highlighter-rouge">https://hl7.org/fhir/R5/&lt;resource&gt;-definitions.html#&lt;Resource.path&gt;</code>), and
+every entity links to its logical model or profile. State the FHIR version
+when the source and the mapping differ (smart-pcmt is 4.0.1; dth-pc maps to
+R5, where <code class="language-plaintext highlighter-rouge">InventoryItem</code> first exists).</li></ol><h3 id="a-layered-or-phased-chart-becomes-an-svg-generated-from-data"><a href="#a-layered-or-phased-chart-becomes-an-svg-generated-from-data" class="anchor-heading" aria-labelledby="a-layered-or-phased-chart-becomes-an-svg-generated-from-data"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A layered or phased chart becomes an SVG generated from data
+  
+  
+</h3><p>Charts such as the SMART Guidelines L1–L5 layers, the DIIG phases, nested
+strategies or a cost tree are not graphs. Write their content as a data file:
+layers, boxes, their text, and which feeds which. Then generate the SVG with a
+Tool. The DIIG phases chart is the worked example (owner, 2026-10-31, “B in
+who-iris”):</p><ul><li>Each published version is transcribed once, as <code class="language-plaintext highlighter-rouge">diig-phases-figure/v1</code>
+data on that publication’s who-iris library entry, under <code class="language-plaintext highlighter-rouge">figure-data/</code>.
+DIIG Fig. 1.1.1 lives on <code class="language-plaintext highlighter-rouge">9789240010567-eng</code>, and the product catalogue
+handbook’s Fig. 4 lives on <code class="language-plaintext highlighter-rouge">9789240116191-eng</code>.</li><li>A folio that adds its own tiles (dth-hrh) writes only those tiles in a
+<code class="language-plaintext highlighter-rouge">diig-phases-adaptation/v1</code> file that <code class="language-plaintext highlighter-rouge">adapts</code> the published version.</li><li>Tool <code class="language-plaintext highlighter-rouge">diig-phases-svg</code> (<code class="language-plaintext highlighter-rouge">bun run figure:diig-phases</code>) draws either one. The
+folio commits the SVG and records the data file in <code class="language-plaintext highlighter-rouge">meta.source.generated</code>.</li><li>The SMART Guidelines approach chart (L1–L5 layers and their country
+adaptations) follows the same pattern: <code class="language-plaintext highlighter-rouge">smart-guidelines-approach-figure/v1</code>
+data (the product catalogue handbook’s Fig. 5 is on <code class="language-plaintext highlighter-rouge">9789240116191-eng</code>),
+drawn by Tool <code class="language-plaintext highlighter-rouge">smart-approach-svg</code> (<code class="language-plaintext highlighter-rouge">bun run figure:smart-approach</code>).</li><li><p>A source’s own wording stays as printed, typos included (“prioritise
+outcomes”); a correction is a review comment, not an edit to the data.</p></li><li>Labels are SVG <code class="language-plaintext highlighter-rouge">&lt;text&gt;</code>, never pixels, so they can be searched,
+translated and read aloud.</li><li>A label that names a glossary concept (L1 Narrative, Digital adaptation
+kit, Localisation) links to the SKOS term, an <code class="language-plaintext highlighter-rouge">&lt;a href&gt;</code> around the text.</li><li>A chart that appears in several publications is transcribed once per
+published version, on its library entry. Each version is never copied
+into a folio.</li></ul><h3 id="mermaid-is-a-rendering-never-a-source"><a href="#mermaid-is-a-rendering-never-a-source" class="anchor-heading" aria-labelledby="mermaid-is-a-rendering-never-a-source"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mermaid is a rendering, never a source
+  
+  
+</h3><p>Mermaid is a drawing language, not a schema. Nothing downstream consumes it:
+no KG import, no validator, and the document site does not render it. Its node
+names are local strings with no IRI, so they cannot link to a glossary term,
+an ArchiMate element or a FHIR model. A hand-written <code class="language-plaintext highlighter-rouge">.mmd</code> is therefore a
+second copy of content, which the one-source rule forbids. Mermaid may appear
+only as a view GENERATED from a schema-backed source, when it lays out better
+than the native renderer, and then the generated text and SVG are build
+output, not authored files.</p><h3 id="drop-the-flattened-figure-text-from-the-prose"><a href="#drop-the-flattened-figure-text-from-the-prose" class="anchor-heading" aria-labelledby="drop-the-flattened-figure-text-from-the-prose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Drop the flattened figure text from the prose
+  
+  
+</h3><p>Page-level seeding puts a figure’s text layer into the prose block of its page
+(“Fig. 1: Product master data Product identifier, Name, …”). That text is
+neither prose nor a figure. Once the figure has a block, remove its text from
+the prose, from the caption line to the end of the figure’s labels. The labels
+live in <code class="language-plaintext highlighter-rouge">vector-labels.json</code> and, after a rebuild, in the computable source.
+The <code class="language-plaintext highlighter-rouge">l1-coverage</code> check is unaffected, because figure labels are not
+normative sentences.</p><h3 id="link-table-cells"><a href="#link-table-cells" class="anchor-heading" aria-labelledby="link-table-cells"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Link table cells
+  
+  
+</h3><p>Tables seeded from a publication hold names that the folio already defines.
+Link them:</p><ul><li>a chapter or section name links to its section anchor in the folio;</li><li>an organisation or role (Ministry of Health, National Regulatory Authority,
+Central Medical Stores, Data officer) links to its glossary term, and
+through that to the ArchiMate actor or role the term maps to;</li><li>a cross-reference to a figure or table (“Fig. 9”) links to the block.</li></ul><p>Match names only on an exact glossary label or <code class="language-plaintext highlighter-rouge">altLabel</code>. A cell with no
+match stays plain text and is listed for review. A guessed link is worse
+than none.</p><h3 id="example-data-becomes-fhir-example-instances"><a href="#example-data-becomes-fhir-example-instances" class="anchor-heading" aria-labelledby="example-data-becomes-fhir-example-instances"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Example data becomes FHIR example instances
+  
+  
+</h3><p>A figure or table that shows example records, such as products, packs or
+identifiers with quantities, is instance data and not a drawing. Examples are
+dth-pc Fig. 11 (packaging variations) and the NPC01101001 table. Write
+the records once as FSH <code class="language-plaintext highlighter-rouge">Instance:</code>s of the upstream logical model
+(<code class="language-plaintext highlighter-rouge">InstanceOf: Product</code>, <code class="language-plaintext highlighter-rouge">Usage: #example</code>) beside that model. The figure or
+table is then generated from the compiled instances. For dth-pc these instances
+are in litlfred/smart-pcmt (owner chose this place on 2026-10-31). The
+instances carry only what the source prints:</p><ul><li>A value the model requires but the source omits gets
+<code class="language-plaintext highlighter-rouge">data-absent-reason#unknown</code>, never a plausible guess.</li><li>Numbers that do not add up in the source are transcribed as printed, and
+the mismatch is listed in the PR.</li><li>A column with no clean element is left out and listed, not forced.</li></ul><h3 id="a-repeated-activity-header-comes-from-the-step-records"><a href="#a-repeated-activity-header-comes-from-the-step-records" class="anchor-heading" aria-labelledby="a-repeated-activity-header-comes-from-the-step-records"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A repeated activity header comes from the step records
+  
+  
+</h3><p>A bar that repeats over each activity, such as INPUTS / STEPS / RESOURCES /
+OUTPUTS in dth-pc, is a view of that activity’s step-table record. Generate
+it from the record. Each input and output links the BPMN data object it
+names, and nothing is typed into the bar.</p><h2 id="reviewing-the-classification"><a href="#reviewing-the-classification" class="anchor-heading" aria-labelledby="reviewing-the-classification"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reviewing the classification
+  
+  
+</h2><p>An agent proposes, and a person decides. The owner chose on 2026-10-31 that
+review can happen either in the folio’s Contributor Log sheet or in a GitHub
+issue, and the result always lands in the folio’s <code class="language-plaintext highlighter-rouge">figures.json</code> by a PR.</p><ol><li><strong>Propose.</strong> An agent looks at each figure’s render and vector-layer
+structure. It proposes a route from the table in step 2 and an upstream
+source to reuse, if one exists, and gives its evidence.</li><li><strong>Review in the sheet.</strong> Write one row per figure, or per batch, to the
+Contributor Log’s Agent tab, one row per change set. The script copies
+the rows across, so the sheet needs no new columns:
+    <ul><li><strong>Title:</strong> <code class="language-plaintext highlighter-rouge">Fig N: route</code></li><li><strong>Selected Sections:</strong> the section that holds the figure</li><li><strong>Feedback:</strong> <code class="language-plaintext highlighter-rouge">Decision needed: &lt;question&gt;</code>, followed by lettered options
+with the recommendation marked</li><li><strong>Agentic status:</strong> <code class="language-plaintext highlighter-rouge">Needs human</code></li></ul><p>An Editor accepts the recommendation by setting Ready for agent to Yes, or
+types another letter. The steps are in <code class="language-plaintext highlighter-rouge">review-sheet-script</code>, “A question
+to people goes in the sheet”.</p></li><li><strong>Or review in an issue.</strong> One issue per figure, labelled <code class="language-plaintext highlighter-rouge">figure-route</code>,
+holding the same question. The row’s Issue column and <code class="language-plaintext highlighter-rouge">feedback-issue.ts</code>
+keep a sheet row and its issue linked, so either one can start the review
+and the decision closes both.</li><li><strong>Record.</strong> Accepted routes are written to <code class="language-plaintext highlighter-rouge">figures.json</code> in a PR, with
+who approved each one. <code class="language-plaintext highlighter-rouge">figure-coverage</code> then holds the folio to them.</li></ol><h2 id="reading-the-report"><a href="#reading-the-report" class="anchor-heading" aria-labelledby="reading-the-report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reading the report
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>State</th><th>Meaning</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">missing</code></td><td>declared by the publication, no block in the folio</td></tr><tr><td><code class="language-plaintext highlighter-rouge">excluded</code></td><td>no block, by a signed-off <code class="language-plaintext highlighter-rouge">scope: "block"</code> exclusion</td></tr><tr><td><code class="language-plaintext highlighter-rouge">picture</code></td><td>only crop or image blocks</td></tr><tr><td><code class="language-plaintext highlighter-rouge">linked</code></td><td>a picture whose block links a model view; the view may not draw the whole figure</td></tr><tr><td><code class="language-plaintext highlighter-rouge">computable</code></td><td>a diagram or table block, or a figure block with a rebuild method</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cited</code></td><td>kept as a picture on purpose, by a signed-off <code class="language-plaintext highlighter-rouge">scope: "rebuild"</code> exclusion</td></tr></tbody></table></div><p>As in <code class="language-plaintext highlighter-rouge">l1-coverage</code>, an agent may <strong>propose</strong> an exclusion, but only a person
+signs one off. Declared figures are read with cat-harness-tools
+<code class="language-plaintext highlighter-rouge">declaredFigureCaptions</code>, the same reading <code class="language-plaintext highlighter-rouge">check:l1-complete</code> uses, so the
+two checks agree on what the publication declares.</p><h2 id="related"><a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
+  
+  
+</h2><ul><li><a href="../../reference/skill-instructions/l1-document-ingestion.html"><code class="language-plaintext highlighter-rouge">l1-document-ingestion</code></a>: the vector arms that render and label figures</li><li><a href="../../reference/skill-instructions/l1-coverage.html"><code class="language-plaintext highlighter-rouge">l1-coverage</code></a>: the same question asked of normative sentences</li><li><a href="../../reference/skill-instructions/archimate-models.html"><code class="language-plaintext highlighter-rouge">archimate-models</code></a>: authoring the views</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

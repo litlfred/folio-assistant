@@ -1,0 +1,380 @@
+{
+  "$ref": "#/definitions/ArchimateModel",
+  "definitions": {
+    "ArchimateModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string"
+        },
+        "archiVersion": {
+          "type": "string"
+        },
+        "documentation": {
+          "type": "string"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "value"
+            ],
+            "additionalProperties": false,
+            "description": "Property"
+          }
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string"
+              },
+              "layer": {
+                "type": "string",
+                "enum": [
+                  "Strategy",
+                  "Business",
+                  "Application",
+                  "Technology",
+                  "Physical",
+                  "Motivation",
+                  "Implementation & Migration",
+                  "Other"
+                ]
+              },
+              "documentation": {
+                "type": "string"
+              },
+              "properties": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "value"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Property"
+                }
+              },
+              "folder": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "type",
+              "name",
+              "layer",
+              "properties",
+              "folder"
+            ],
+            "additionalProperties": false,
+            "description": "Element"
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "type": "string",
+                "minLength": 1
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string"
+              },
+              "documentation": {
+                "type": "string"
+              },
+              "accessType": {
+                "type": "string",
+                "enum": [
+                  "write",
+                  "read",
+                  "access",
+                  "readwrite"
+                ]
+              },
+              "directed": {
+                "type": "boolean"
+              },
+              "strength": {
+                "type": "string"
+              },
+              "properties": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "value"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Property"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "type",
+              "source",
+              "target",
+              "properties"
+            ],
+            "additionalProperties": false,
+            "description": "Relationship"
+          }
+        },
+        "views": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string"
+              },
+              "viewpoint": {
+                "type": "string"
+              },
+              "documentation": {
+                "type": "string"
+              },
+              "properties": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "value"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Property"
+                }
+              },
+              "folder": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "nodes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "element",
+                        "group",
+                        "note",
+                        "view-ref"
+                      ]
+                    },
+                    "ref": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "x": {
+                      "type": "number"
+                    },
+                    "y": {
+                      "type": "number"
+                    },
+                    "w": {
+                      "type": "number"
+                    },
+                    "h": {
+                      "type": "number"
+                    },
+                    "parent": {
+                      "type": "string"
+                    },
+                    "fill": {
+                      "type": "string"
+                    },
+                    "alternate": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "x",
+                    "y",
+                    "w",
+                    "h"
+                  ],
+                  "additionalProperties": false,
+                  "description": "ViewNode"
+                }
+              },
+              "connections": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "relationship": {
+                      "type": "string"
+                    },
+                    "source": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "bendpoints": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "startX": {
+                            "type": "number"
+                          },
+                          "startY": {
+                            "type": "number"
+                          },
+                          "endX": {
+                            "type": "number"
+                          },
+                          "endY": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "startX",
+                          "startY",
+                          "endX",
+                          "endY"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "source",
+                    "target",
+                    "bendpoints"
+                  ],
+                  "additionalProperties": false,
+                  "description": "ViewConnection"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "properties",
+              "folder",
+              "nodes",
+              "connections"
+            ],
+            "additionalProperties": false,
+            "description": "View"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "properties",
+        "elements",
+        "relationships",
+        "views"
+      ],
+      "additionalProperties": false,
+      "description": "Model"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateModelSchema.schema.json",
+  "title": "ArchimateModelSchema",
+  "description": "Generated from `ArchimateModelSchema` in archimate/schemas/archimate.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2248",
+    "sha": "301fb139ff844c6697ccefdb94501657d2e4c16f",
+    "pr": "repin-train/20261101-2248",
+    "run": "41359001460"
+  }
+}

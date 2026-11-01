@@ -1,0 +1,25 @@
+{
+  "$ref": "#/definitions/BeanStatus",
+  "definitions": {
+    "BeanStatus": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "todo",
+        "in-progress",
+        "completed",
+        "scrapped"
+      ],
+      "description": "A bean status. Exactly what `beans update --status` accepts."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/BeanStatusSchema.schema.json",
+  "title": "BeanStatusSchema",
+  "description": "Generated from `BeanStatusSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2248",
+    "sha": "301fb139ff844c6697ccefdb94501657d2e4c16f",
+    "pr": "repin-train/20261101-2248",
+    "run": "41359001460"
+  }
+}

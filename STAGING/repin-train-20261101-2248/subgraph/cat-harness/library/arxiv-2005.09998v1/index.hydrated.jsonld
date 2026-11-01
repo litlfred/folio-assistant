@@ -1,0 +1,103 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2005.09998v1/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/arxiv-2005.09998v1/manifest.jsonld",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/arxiv-2005.09998v1/manifest.jsonld",
+      "title": "Tackling the DMN Challenges with cDMN: A Tight Integration of DMN and Constraint Reasoning"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2005.09998v1/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2005.09998v1/blocks/figure-img-p002-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2005.09998v1/blocks/figure-img-p002-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2005.09998v1/blocks/figure-img-p010-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2005.09998v1/blocks/figure-img-p010-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2005.09998v1/blocks/figure-img-p011-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2005.09998v1/blocks/figure-img-p011-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2005.09998v1/blocks/figure-img-p012-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2005.09998v1/blocks/figure-img-p012-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2005.09998v1/blocks/figure-img-p014-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2005.09998v1/blocks/figure-img-p014-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2005.09998v1/blocks/figure-img-p014-2",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2005.09998v1/blocks/figure-img-p014-2.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2005.09998v1/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/arxiv-2005.09998v1/blocks/prose-sec-000.jsonld",
+          "title": "Tackling the DMN Challenges with cDMN: A Tight Integration of DMN and Constraint Reasoning"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2005.09998v1/blocks",
+      "path": "library/arxiv-2005.09998v1/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2005.09998v1/figures/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2005.09998v1/figures",
+      "path": "library/arxiv-2005.09998v1/figures/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2005.09998v1/images/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2005.09998v1/images",
+      "path": "library/arxiv-2005.09998v1/images/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2005.09998v1/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2005.09998v1/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/arxiv-2005.09998v1/sections/sec-000.jsonld",
+          "title": "Tackling the DMN Challenges with cDMN: A Tight Integration of DMN and Constraint Reasoning"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2005.09998v1/sections",
+      "path": "library/arxiv-2005.09998v1/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/arxiv-2005.09998v1",
+  "path": "library/arxiv-2005.09998v1/"
+}

@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/SmeVerdictOutcome",
+  "definitions": {
+    "SmeVerdictOutcome": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "needs-revision"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/SmeVerdictOutcomeSchema.schema.json",
+  "title": "SmeVerdictOutcomeSchema",
+  "description": "Generated from `SmeVerdictOutcomeSchema` in schemas/sdlc/test-data.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2248",
+    "sha": "301fb139ff844c6697ccefdb94501657d2e4c16f",
+    "pr": "repin-train/20261101-2248",
+    "run": "41359001460"
+  }
+}

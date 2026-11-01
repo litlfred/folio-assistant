@@ -15,10 +15,10 @@
       "entries": [
         {
           "status": "completed",
-          "total": 1312,
+          "total": 1317,
           "instance": 15,
-          "namedId": 96,
-          "none": 1201
+          "namedId": 97,
+          "none": 1205
         },
         {
           "status": "scrapped",
@@ -31,19 +31,8 @@
     },
     "open-bean-linked-inferred": {
       "summary": "Not a finding: an open bean tied to a task only because its file NAMES a diagram id (inferred — a mention is not a run). Listed so the inference can be checked.",
-      "count": 2,
+      "count": 1,
       "entries": [
-        {
-          "severity": "info",
-          "bean": "folio-assistant-ksek",
-          "title": "CI: green PR must mean green main",
-          "status": "in-progress",
-          "parent": "",
-          "basis": "named-id",
-          "named": [
-            "Process_Editing"
-          ]
-        },
         {
           "severity": "info",
           "bean": "folio-assistant-p7mb",
@@ -64,7 +53,7 @@
     },
     "open-bean-unlinked": {
       "summary": "WARNING, never a failure. An open bean (todo, in-progress, draft) that no workflow instance names and whose file names no process or activity id of a declared diagram. It may belong to a process not yet in the graph; the groups say which ones cluster.",
-      "count": 23,
+      "count": 19,
       "entries": [
         {
           "severity": "warning",
@@ -74,7 +63,7 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.566
+          "cosine": 0.563
         },
         {
           "severity": "warning",
@@ -94,7 +83,7 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.585
+          "cosine": 0.586
         },
         {
           "severity": "warning",
@@ -104,17 +93,7 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.397
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-aso6",
-          "title": "deploy-folio runs branch scripts with production secrets and no permissions block",
-          "status": "in-progress",
-          "parent": "folio-assistant-sb31",
-          "basis": "none",
-          "group": "folio-assistant-sb31",
-          "cosine": 0.789
+          "cosine": 0.399
         },
         {
           "severity": "warning",
@@ -134,7 +113,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.796
+          "cosine": 0.797
         },
         {
           "severity": "warning",
@@ -153,8 +132,8 @@
           "status": "in-progress",
           "parent": "folio-assistant-1xhc",
           "basis": "none",
-          "group": "folio-assistant-ksek",
-          "cosine": 0.347
+          "group": "folio-assistant-yj32",
+          "cosine": 0.308
         },
         {
           "severity": "warning",
@@ -174,7 +153,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.757
+          "cosine": 0.758
         },
         {
           "severity": "warning",
@@ -194,7 +173,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.712
+          "cosine": 0.711
         },
         {
           "severity": "warning",
@@ -203,8 +182,8 @@
           "status": "todo",
           "parent": "folio-assistant-rwmf",
           "basis": "none",
-          "group": "folio-assistant-sb31",
-          "cosine": 0.73
+          "group": "folio-assistant-iirv",
+          "cosine": 0.443
         },
         {
           "severity": "warning",
@@ -223,7 +202,7 @@
           "status": "todo",
           "parent": "folio-assistant-rwmf",
           "basis": "none",
-          "group": "folio-assistant-sb31",
+          "group": "folio-assistant-yj32",
           "cosine": 0.358
         },
         {
@@ -244,7 +223,7 @@
           "parent": "folio-assistant-yj32",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.41
+          "cosine": 0.411
         },
         {
           "severity": "warning",
@@ -254,54 +233,60 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.329
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-sb31",
-          "title": "SECURITY REVIEW 2026-10-31, GROUP B: folio-assistant-core, folio-assistant-sci and folio-assistant",
-          "status": "in-progress",
-          "parent": "",
-          "basis": "none",
-          "group": "folio-assistant-sb31",
-          "cosine": 0.675
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-vbhb",
-          "title": "sci and folio-assistant pin tools and workflows to moving refs",
-          "status": "in-progress",
-          "parent": "folio-assistant-sb31",
-          "basis": "none",
-          "group": "folio-assistant-sb31",
-          "cosine": 0.82
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-wox6",
-          "title": "Dependency advisories: happy-dom critical, node-forge, zod, undici",
-          "status": "in-progress",
-          "parent": "folio-assistant-sb31",
-          "basis": "none",
-          "group": "folio-assistant-sb31",
-          "cosine": 0.796
+          "cosine": 0.33
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-yj32",
           "title": "HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.434
+          "cosine": 0.433
         }
       ]
     },
     "unlinked-group": {
       "summary": "The unlinked open beans grouped by the epic each is nearest to in the store's LSI space (lsi-epics' ranking). A group of 5 or more is a CANDIDATE undocumented process; smaller groups, singletons, and the beans that fit no epic (cosine < 0.3) are listed as such.",
-      "count": 5,
+      "count": 3,
       "entries": [
+        {
+          "severity": "warning",
+          "group": "folio-assistant-yj32",
+          "size": 8,
+          "size_class": "candidate",
+          "nearest_epic": "folio-assistant-yj32",
+          "nearest_epic_title": "HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system",
+          "mean_cosine": 0.378,
+          "terms": [
+            "epic open",
+            "card q-dq",
+            "old epic",
+            "epic closes",
+            "folio board",
+            "task bank",
+            "independent queues",
+            "spec-kit split"
+          ],
+          "beans": [
+            "folio-assistant-amom",
+            "folio-assistant-fvec",
+            "folio-assistant-fwtz",
+            "folio-assistant-nvhg",
+            "folio-assistant-oz9e",
+            "folio-assistant-r29x",
+            "folio-assistant-rwmf",
+            "folio-assistant-yj32"
+          ],
+          "filed_under": [
+            {
+              "epic": "folio-assistant-yj32",
+              "beans": 1
+            }
+          ],
+          "known_processes": []
+        },
         {
           "severity": "warning",
           "group": "folio-assistant-dthl",
@@ -309,7 +294,7 @@
           "size_class": "candidate",
           "nearest_epic": "folio-assistant-dthl",
           "nearest_epic_title": "DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)",
-          "mean_cosine": 0.749,
+          "mean_cosine": 0.748,
           "terms": [
             "phii crdm",
             "phc handbook",
@@ -338,94 +323,27 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-sb31",
-          "size": 6,
-          "size_class": "candidate",
-          "nearest_epic": "folio-assistant-sb31",
-          "nearest_epic_title": "SECURITY REVIEW 2026-10-31, GROUP B: folio-assistant-core, folio-assistant-sci and folio-assistant",
-          "mean_cosine": 0.695,
-          "terms": [
-            "security review",
-            "security severity",
-            "repository secrets",
-            "arg-designer mapping",
-            "litlfred folio-assistant",
-            "folio-assistant layers",
-            "task bank",
-            "flag categories"
-          ],
-          "beans": [
-            "folio-assistant-aso6",
-            "folio-assistant-nbp9",
-            "folio-assistant-oz9e",
-            "folio-assistant-sb31",
-            "folio-assistant-vbhb",
-            "folio-assistant-wox6"
-          ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-sb31",
-              "beans": 3
-            }
-          ],
-          "known_processes": []
-        },
-        {
-          "severity": "warning",
-          "group": "folio-assistant-yj32",
-          "size": 6,
-          "size_class": "candidate",
-          "nearest_epic": "folio-assistant-yj32",
-          "nearest_epic_title": "HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system",
-          "mean_cosine": 0.393,
-          "terms": [
-            "epic open",
-            "folio board",
-            "epic closes",
-            "old epic",
-            "miro board",
-            "todo stickies",
-            "milestone ancestor",
-            "pipeline todos"
-          ],
-          "beans": [
-            "folio-assistant-amom",
-            "folio-assistant-fvec",
-            "folio-assistant-nvhg",
-            "folio-assistant-r29x",
-            "folio-assistant-rwmf",
-            "folio-assistant-yj32"
-          ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-yj32",
-              "beans": 1
-            }
-          ],
-          "known_processes": []
-        },
-        {
-          "severity": "warning",
           "group": "folio-assistant-iirv",
-          "size": 4,
-          "size_class": "small",
+          "size": 5,
+          "size_class": "candidate",
           "nearest_epic": "folio-assistant-iirv",
           "nearest_epic_title": "cat-harness / cat-harness-tools separation",
-          "mean_cosine": 0.684,
+          "mean_cosine": 0.636,
           "terms": [
             "placement proposal",
+            "repository secrets",
             "bootstrap bootstrap-tools",
             "separation arc",
             "phase iii",
             "seeded shas",
             "move workflows",
-            "instance move",
-            "remote mounts"
+            "open children"
           ],
           "beans": [
             "folio-assistant-6fez",
             "folio-assistant-9hxd",
             "folio-assistant-iirv",
+            "folio-assistant-nbp9",
             "folio-assistant-pga6"
           ],
           "filed_under": [
@@ -460,38 +378,9 @@
               "beans": 1
             }
           ]
-        },
-        {
-          "severity": "warning",
-          "group": "folio-assistant-ksek",
-          "size": 1,
-          "size_class": "singleton",
-          "nearest_epic": "folio-assistant-ksek",
-          "nearest_epic_title": "CI: green PR must mean green main",
-          "mean_cosine": 0.347,
-          "terms": [
-            "cone deploy",
-            "deploy stamps",
-            "cone update",
-            "full deploy",
-            "dependency cone",
-            "incremental deploy",
-            "unrecorded writers",
-            "main deploy"
-          ],
-          "beans": [
-            "folio-assistant-fwtz"
-          ],
-          "filed_under": [],
-          "known_processes": [
-            {
-              "process": "Process_Editing",
-              "beans": 1
-            }
-          ]
         }
       ]
     }
   },
-  "total": 32
+  "total": 25
 }

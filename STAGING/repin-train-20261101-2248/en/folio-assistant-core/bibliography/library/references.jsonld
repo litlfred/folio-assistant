@@ -1,0 +1,1531 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/omg-2024-spdx-3-0",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "System Package Data Exchange (SPDX)",
+      "dcterms:creator": [
+        "(SPDX), System Package Data Exchange"
+      ],
+      "dcterms:issued": "D:20241216",
+      "dcterms:source": "cat-harness/library/omg-2024-spdx-3-0/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/omg-2024-spdx-3-0"
+    },
+    {
+      "@id": "references/w3c-2020-json-ld-1-1",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "JSON-LD 1.1",
+      "dcterms:creator": [
+        "(v1.0, Gregg Kellogg",
+        "v1.1)"
+      ],
+      "dcterms:issued": "D:20261001",
+      "dcterms:source": "cat-harness/library/w3c-2020-json-ld-1-1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/w3c-2020-json-ld-1-1"
+    },
+    {
+      "@id": "references/arxiv-2504-10971v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "The Effectiveness of Business Process Visualisations: a Systematic Literature Review",
+      "dcterms:creator": [
+        "[0000-0002-4210-2342], Ed Overes1",
+        "Santoro2[0000-0003-3421-1894], Flavia Maria"
+      ],
+      "dcterms:issued": "D:20250415",
+      "dcterms:abstract": "Business Process Visualisations (BPVs) have become indispensable tools for organisations seeking to enhance their operational efficiency, decision-making capabilities, and overall performance. The burgeoning interest in process modeling and tool development, coupled with the rise of data visualisation field, underscores the significant role of visual tools in leveraging human cognition. Unlike traditional models, data visualisation approaches graphics from a novel angle, emphasising the potency of visual representations. This review aims to integrate the domains of BPV and data visualisation to assess their combined influence on organisational effectiveness comprehensively. Through a meticulous analysis of existing literature, this study aims to amalgamate insights on BPVs impact from a data visualisation standpoint, advocating for a design philosophy that prioritises user engagement to bolster organisational outcomes. Additionally, our systematic review has unveiled promising avenues for future research, identifying underexplored variables that influence the efficacy of BPVs, thereby charting a path for forthcoming scholarly inquiries.",
+      "dcterms:source": "cat-harness/library/arxiv-2504-10971v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2504-10971v1"
+    },
+    {
+      "@id": "references/avila-2021-process-modeling-guidelines-slr",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "A systematic literature review of process modeling guidelines and their empirical support",
+      "dcterms:issued": "2021",
+      "dcterms:source": "cat-harness/library/avila-2021-process-modeling-guidelines-slr/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/avila-2021-process-modeling-guidelines-slr"
+    },
+    {
+      "@id": "references/mendling-2010-activity-labeling",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Activity labeling in process modeling: empirical insights and recommendations",
+      "dcterms:issued": "2010",
+      "dcterms:source": "cat-harness/library/mendling-2010-activity-labeling/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/mendling-2010-activity-labeling"
+    },
+    {
+      "@id": "references/agent-skill-best-practices---gemini-cli",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Agent Skill best practices",
+      "dcterms:issued": "D:20260920",
+      "dcterms:source": "cat-harness/library/agent-skill-best-practices---gemini-cli/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/agent-skill-best-practices---gemini-cli"
+    },
+    {
+      "@id": "references/agent-skills---google-antigravity-docs",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Agent Skills",
+      "dcterms:issued": "D:20260920",
+      "dcterms:source": "cat-harness/library/agent-skills---google-antigravity-docs/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/agent-skills---google-antigravity-docs"
+    },
+    {
+      "@id": "references/arxiv-2508.21620v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Introduction to the Analysis of Probabilistic Decision-Making Algorithms",
+      "dcterms:creator": [
+        "Algorithms, Decision-Making"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2508.21620",
+      "dcterms:abstract": "Decision theories offer principled methods for making choices under various types of uncertainty. Algorithms that implement these theories have been success- fully applied to a wide range of real-world problems, including materials and drug discovery. Indeed, they are desirable since they can adaptively gather information to make better decisions in the future, resulting in data-efficient workflows. In scien- tific discovery, where experiments are costly, these algorithms can thus significantly reduce the cost of experimentation. Theoretical analyses of these algorithms are cru- cial for understanding their behavior and providing valuable insights for developing next-generation algorithms. However, theoretical analyses in the literature are often inaccessible to non-experts. This monograph aims to provide an accessible, self- contained introduction to the theoretical analysis of commonly used probabilistic decision-making algorithms, including bandit algorithms, Bayesian optimization, and tree search algorithms. Only basic knowledge of probability theory and statis- tics, along with some elementary knowledge about Gaussian processes, is assumed. arXiv:2508.21620v2 [cs.LG] 23 May 2026",
+      "dcterms:source": "cat-harness/library/arxiv-2508.21620v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2508.21620v2"
+    },
+    {
+      "@id": "references/rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words",
+      "dcterms:issued": "D:20260921",
+      "dcterms:source": "cat-harness/library/rfc8174-uppercase-vs-lowercase-2119-key-words/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/rfc8174-uppercase-vs-lowercase-2119-key-words"
+    },
+    {
+      "@id": "references/genon-2010-bpmn2-cognitive-effectiveness",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Analysing the Cognitive Effectiveness of the BPMN 2.0 Visual Notation",
+      "dcterms:issued": "2010",
+      "dcterms:source": "cat-harness/library/genon-2010-bpmn2-cognitive-effectiveness/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/genon-2010-bpmn2-cognitive-effectiveness"
+    },
+    {
+      "@id": "references/arxiv-2607.20636v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Algorithmic Approaches to Sequential Decision-Making and Social Epistemology",
+      "dcterms:creator": [
+        "and, Sequential Decision-Making"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2607.20636",
+      "dcterms:source": "cat-harness/library/arxiv-2607.20636v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2607.20636v1"
+    },
+    {
+      "@id": "references/dusengumuremyi-2026-ai-mediated-raci",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "How AI-Mediated RACI Matrix in the Organisational Boardroom Reshapes Real-Time Operational Efficiency, Error-Free Sensemaking of Strategic Decision-Making, Management Effectiveness, and Organisational Defensibility",
+      "dcterms:creator": [
+        "anthon, dusengumuremyi"
+      ],
+      "dcterms:issued": "D:20260425",
+      "dcterms:source": "cat-harness/library/dusengumuremyi-2026-ai-mediated-raci/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/dusengumuremyi-2026-ai-mediated-raci"
+    },
+    {
+      "@id": "references/nist-sp-800-207",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Zero Trust Architecture",
+      "dcterms:creator": [
+        "Architecture, Zero Trust"
+      ],
+      "dcterms:issued": "D:20200810",
+      "bibo:doi": "10.6028/NIST.SP.800-207",
+      "dcterms:identifier": "https://doi.org/10.6028/NIST.SP.800-207",
+      "dcterms:source": "cat-harness/library/nist-sp-800-207/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/nist-sp-800-207"
+    },
+    {
+      "@id": "references/hasic-2018-5pdm-decision-intelligence",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Augmenting processes with decision intelligence: Principles for integrated modelling",
+      "dcterms:issued": "2018",
+      "dcterms:source": "cat-harness/library/hasic-2018-5pdm-decision-intelligence/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/hasic-2018-5pdm-decision-intelligence"
+    },
+    {
+      "@id": "references/hmans-2026-beans-readme",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "beans",
+      "dcterms:issued": "2026",
+      "dcterms:source": "cat-harness/library/hmans-2026-beans-readme/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/hmans-2026-beans-readme"
+    },
+    {
+      "@id": "references/arxiv-2505.11701v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "DMN-Guided Prompting: A Framework for Controlling LLM Behavior",
+      "dcterms:creator": [
+        "Behavior, LLM"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2505.11701",
+      "dcterms:abstract": "Large Language Models (LLMs) have shown considerable potential in automating decision logic within knowledge-intensive processes. However, their effectiveness largely depends on the strategy and quality of prompting. Since decision logic is typically embedded in prompts, it becomes challenging for end users to modify or refine it. Decision Model and Notation (DMN) offers a standardized graphical approach for defining decision logic in a structured, user- friendly manner. This paper introduces a DMN-guided prompting framework that breaks down complex decision logic into smaller, manageable components, guid- ing LLMs through structured decision pathways. We implemented the framework in a graduate-level course where students submitted assignments. The assign- ments and DMN models representing feedback instructions served as inputs to our framework. The instructor evaluated the generated feedback and labeled it for performance assessment. Our approach demonstrated promising results, out- performing chain-of-thought (CoT) prompting in our case study. Students also responded positively to the generated feedback, reporting high levels of perceived usefulness in a survey based on the Technology Acceptance Model.",
+      "dcterms:source": "cat-harness/library/arxiv-2505.11701v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2505.11701v2"
+    },
+    {
+      "@id": "references/best-practices---google-antigravity-docs",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Best practices for Antigravity CLI",
+      "dcterms:issued": "D:20260920",
+      "dcterms:source": "cat-harness/library/best-practices---google-antigravity-docs/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/best-practices---google-antigravity-docs"
+    },
+    {
+      "@id": "references/arxiv-2607.14456v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution",
+      "dcterms:creator": [
+        "Borman, Harris",
+        "Wandabwa, Herman",
+        "Yu, Fusun",
+        "Kannangara, Sandeepa",
+        "Liu, Justin",
+        "Leontjeva, Anna",
+        "Ng, Ritchie"
+      ],
+      "dcterms:source": "cat-harness/library/arxiv-2607.14456v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2607.14456v1"
+    },
+    {
+      "@id": "references/omg-2013-bpmn-2-0-2",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Business Process Model and Notation (BPMN)",
+      "dcterms:issued": "2013",
+      "dcterms:source": "cat-harness/library/omg-2013-bpmn-2-0-2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/omg-2013-bpmn-2-0-2"
+    },
+    {
+      "@id": "references/arxiv-1603.07466v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Semantics and Analysis of DMN Decision Tables",
+      "dcterms:creator": [
+        "Calvanese1, Diego",
+        "Dumas2, Marlon",
+        "Laurson2, Ülari"
+      ],
+      "dcterms:issued": "D:20160325",
+      "dcterms:identifier": "https://arxiv.org/abs/1603.07466",
+      "dcterms:abstract": "The Decision Model and Notation (DMN) is a standard no- tation to capture decision logic in business applications in general and business processes in particular. A central construct in DMN is that of a decision table. The increasing use of DMN decision tables to capture critical business knowledge raises the need to support analysis tasks on these tables such as correctness and completeness checking. This paper provides a formal semantics for DMN tables, a formal deﬁnition of key analysis tasks and scalable algorithms to tackle two such tasks, i.e., de- tection of overlapping rules and of missing rules. The algorithms are based on a geometric interpretation of decision tables that can be used to support other analysis tasks by tapping into geometric algorithms. The algorithms have been implemented in an open-source DMN editor and tested on large decision tables derived from a credit lending dataset.",
+      "dcterms:source": "cat-harness/library/arxiv-1603.07466v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-1603.07466v1"
+    },
+    {
+      "@id": "references/arxiv-2507.07974v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Defending Against Prompt Injection With a Few DefensiveTokens",
+      "dcterms:creator": [
+        "Chen, Sizhe"
+      ],
+      "dcterms:issued": "D:20250826",
+      "bibo:doi": "10.1145/3733799.3762982",
+      "dcterms:identifier": "https://arxiv.org/abs/2507.07974",
+      "dcterms:abstract": "When large language model (LLM) systems interact with exter- nal data to perform complex tasks, a new attack, namely prompt injection, becomes a significant threat. By injecting instructions into the data accessed by the system, the attacker is able to over- ride the initial user task with an arbitrary task directed by the attacker. To secure the system, test-time defenses, e.g., defensive prompting, have been proposed for system developers to attain security only when needed in a flexible manner. However, they are much less effective than training-time defenses that change the model parameters. Motivated by this, we propose DefensiveToken, a test-time defense with prompt injection robustness comparable to training-time alternatives. DefensiveTokens are newly inserted as special tokens, whose embeddings are optimized for security. In security-sensitive cases, system developers can append a few DefensiveTokens before the LLM input to achieve security with a minimal utility drop. In scenarios where security is less of a con- cern, developers can simply skip DefensiveTokens; the LLM system remains the same as there is no defense, generating high-quality responses. Thus, DefensiveTokens, if released alongside the model, allow a flexible switch between the state-of-the-art (SOTA) utility and almost-SOTA security at test time. The code is available here. CCS Concepts • Security and privacy →Systems security.",
+      "dcterms:source": "cat-harness/library/arxiv-2507.07974v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2507.07974v2"
+    },
+    {
+      "@id": "references/arxiv-2605.03537v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "A Skill-Based Agentic Pipeline for Library of Congress Subject Indexing",
+      "dcterms:creator": [
+        "Chow, Eric H. C."
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2605.03537",
+      "dcterms:abstract": "This paper presents a modular AI agentic skill pipeline for au- tomating subject indexing with Library of Congress Subject Headings (LCSH). Subject indexing—the process of analyzing a work’s aboutness, selecting controlled vocabulary terms, and encoding them as MARC 21 subject access fields—is one of the most time-consuming components of library cataloging. The system decomposes this process into four discrete, sequentially executed agent skills: conceptual analysis, quantitative filtering, authority validation, and MARC field synthesis. Each skill encodes domain knowledge drawn directly from Library of Congress Subject Headings Manual (SHM) instruction sheets and subject analysis theory. The pipeline was evaluated against a corpus of ten titles whose existing subject headings were captured from the Harvard Library bibliographic dataset (a snapshot of their Alma ILS). Results demonstrate strong con- ceptual alignment with professional subject indexing practice, with notable differences in specificity, subdivision practice, and the agent’s adherence to the 2026 LC policy discontinuing form subdivisions ($v) in favor of LCGFT 655 fields.",
+      "dcterms:source": "cat-harness/library/arxiv-2605.03537v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2605.03537v1"
+    },
+    {
+      "@id": "references/moeller-winter-reichert-2025-cognitive-factors-slr",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Cognitive Factors in Process Model Comprehension—A Systematic Literature Review",
+      "dcterms:creator": [
+        "Citation: Möller, M.",
+        "Winter, M."
+      ],
+      "dcterms:issued": "D:20250516",
+      "bibo:doi": "10.3390/brainsci15050505",
+      "dcterms:identifier": "https://doi.org/10.3390/brainsci15050505",
+      "dcterms:abstract": "Process models constitute essential tools in business process management and software engineering for representing and managing real-world business processes. Hence, the proper comprehension of these models is crucial for enabling an effective and efficient communication among stakeholders. While several studies have examined factors affecting process model comprehension, such as the used modeling notation or process complexity, there is a lack of in-depth research on the cognitive processes important to comprehend process models deeper. This systematic literature review explores the cognitive mech- anisms underlying process model comprehension by integrating insights from relevant disciplines such as cognitive neuroscience and psychology. Key areas of cognition include perception, attention, memory, language, problem solving, emotion, and metacognition. This review was conducted following the well-established Kitchenham methodology and included an extensive search in the following digital libraries: Web of Science, IEEE Xplore, ScienceDirect, ACM Digital Library, PubMed, and SpringerLink. By analyzing 47 studies, this literature review identifies gaps in current research, emphasizing the need for further investigation into these cognitive processes to improve model comprehensibility.",
+      "dcterms:source": "cat-harness/library/moeller-winter-reichert-2025-cognitive-factors-slr/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/moeller-winter-reichert-2025-cognitive-factors-slr"
+    },
+    {
+      "@id": "references/arxiv-1511-04055v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "A Visual Analysis of the Process of Process Modeling",
+      "dcterms:creator": [
+        "Claes1, Jan",
+        "2",
+        "Vanderfeesten2, Irene",
+        "Pinggera3, Jakob",
+        "Reijers2, Hajo A.",
+        "Weber3, Barbara",
+        "Poels1, Geert"
+      ],
+      "dcterms:issued": "D:20151111",
+      "bibo:doi": "10.1007/s10257-014-0245-4",
+      "dcterms:identifier": "https://doi.org/10.1007/s10257-014-0245-4",
+      "dcterms:abstract": "The construction of business process models has become an important requisite in the analysis and optimization of processes. The success of the analysis and optimization efforts heavily depends on the quality of the models. Therefore, a research domain emerged that studies the process of process modeling. This paper contributes to this research by presenting a way of visualizing the different steps a modeler undertakes to construct a process model, in a so-called PPMChart. The graphical representation lowers the cognitive efforts to discover properties of the modeling process, which facilitates the research and the development of theory, training and tool support for improving model quality. The paper contains an extensive overview of applications of the tool that demonstrate its usefulness for research and practice and discusses the observations from the visualization in relation to other work. The visualization was evaluated through a qualitative study that confirmed its usefulness and added value compared to the Dotted Chart on which the visualization was inspired.",
+      "dcterms:source": "cat-harness/library/arxiv-1511-04055v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-1511-04055v1"
+    },
+    {
+      "@id": "references/codata-2022",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "CODATA 2022 Recommended Values of the Fundamental Physical Constants",
+      "dcterms:issued": "2022",
+      "dcterms:source": "folio-assistant-sci/library/codata-2022/manifest.jsonld",
+      "dcterms:hasVersion": "folio-assistant-sci/library/codata-2022"
+    },
+    {
+      "@id": "references/zimoch-2017-cognitive-insights-preliminary",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Cognitive Insights into Business Process Model Comprehension: Preliminary Results for Experienced and Inexperienced Individuals",
+      "dcterms:issued": "2017",
+      "dcterms:source": "cat-harness/library/zimoch-2017-cognitive-insights-preliminary/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/zimoch-2017-cognitive-insights-preliminary"
+    },
+    {
+      "@id": "references/hasic-2019-complexity-metrics-dmn",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Complexity metrics for DMN decision models",
+      "dcterms:issued": "2019",
+      "dcterms:source": "cat-harness/library/hasic-2019-complexity-metrics-dmn/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/hasic-2019-complexity-metrics-dmn"
+    },
+    {
+      "@id": "references/arxiv-2503.18813v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Defeating Prompt Injections by Design",
+      "dcterms:creator": [
+        "Debenedetti1, Edoardo",
+        "3*",
+        "Shumailov2, Ilia",
+        "Fan1, Tianqi",
+        "Hayes2, Jamie",
+        "Carlini2, Nicholas"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2503.18813",
+      "dcterms:source": "cat-harness/library/arxiv-2503.18813v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2503.18813v2"
+    },
+    {
+      "@id": "references/omg-2024-dmn-1-5",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Decision Model and Notation (DMN)",
+      "dcterms:issued": "2024",
+      "dcterms:source": "cat-harness/library/omg-2024-dmn-1-5/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/omg-2024-dmn-1-5"
+    },
+    {
+      "@id": "references/arxiv-2607.25032v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Authoring Agent Skills: A Software-Engineering Approach",
+      "dcterms:creator": [
+        "Destefanis, Giuseppe"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2607.25032",
+      "dcterms:abstract": "Agent Skills are an emerging way to extend large language model agents with reusable procedural knowledge that the agent loads on demand. Anthropic introduced Agent Skills and published the format as an open specification supported across several agent tools. This note argues that a skill is a software artefact and that its construction should follow software-engineering principles, with qualifications: single responsibility, separation of interface from implementation, low coupling, and economy in a shared token budget, together with behavioural evaluation in place of deterministic testing. Using Claude Code as the reference implementation, it describes how a skill is structured, how its contents are loaded in stages, and how to write the description on which selection depends. It places skills against the other mechanisms a developer can use to shape agent behaviour, like project memory files, slash commands, subagents, external tool connections, and hooks, and gives a rule for choosing between them based on who decides that a mechanism runs and what guarantee it provides. It then sets out an evaluation-driven authoring process, a set of patterns and faults commonly encountered in authoring, and the trust question raised by using skills from third parties. We illustrate the comparison drawn in UML class style, the loading model, the anatomy of a skill, the relative position of each mechanism, and the points at which skills and hooks act during a session. Note on sources This note draws on Anthropic’s official documentation1 for Agent Skills, Claude Code skills, hooks, and skill authoring best practices, together with the open Agent Skills specification.",
+      "dcterms:source": "cat-harness/library/arxiv-2607.25032v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2607.25032v1"
+    },
+    {
+      "@id": "references/arxiv-2005.09998v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Tackling the DMN Challenges with cDMN: A Tight Integration of DMN and Constraint Reasoning",
+      "dcterms:creator": [
+        "DMN, A Tight Integration of",
+        "Constraint"
+      ],
+      "dcterms:issued": "D:20200521",
+      "dcterms:identifier": "https://arxiv.org/abs/2005.09998",
+      "dcterms:abstract": "This paper describes an extension to the DMN standard, called cDMN. It aims to enlarge the expressivity of DMN in order to solve more complex problems, while retaining DMN’s goal of being readable by domain experts. We test cDMN by solving the most complex challenges posted on the DM Community website. We compare our own cDMN solutions to the solutions that have been submitted to the website and ﬁnd that our approach is competitive, both in readability and compactness. Moreover, cDMN is able to solve more challenges than any other approach.",
+      "dcterms:source": "cat-harness/library/arxiv-2005.09998v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2005.09998v1"
+    },
+    {
+      "@id": "references/arxiv-2608.18294v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Debiased Inference for AI-Generated Data without Gold-Standard Labels: Identification via Multiple Imperfect Measurements",
+      "dcterms:creator": [
+        "Egami†, Naoki"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2608.18294",
+      "dcterms:abstract": "An increasing number of scholars use AI to measure variables they subsequently include in downstream analyses. Although AI-measured variables are often analyzed as if observed without error, ignoring prediction errors in automated measurement leads to substantial bias and invalid confidence intervals in downstream analyses, even if AI measurement accuracy is high, e.g., above 90%. Existing solutions, such as design-based supervised learning and prediction-powered infer- ence, combine error-prone AI-based measurements with gold-standard labels, which may be costly and difficult to obtain in some application areas. In this paper, we propose debiased inference with multiple imperfect measurements (DMM), a framework that combines multiple error-prone AI measurements to enable valid downstream inference without gold-standard labels. Building on the established results on CP decomposition, DMM assumes that these measurements are independent conditional on the latent true label and observed unit-level features, such as text features represented by embeddings. This framework allows for unknown misclassification rates to vary across annotation methods (e.g., large language models) and across units of annotation (e.g., texts). Under this assumption, we use semiparamet- ric inference theory to prove that the DMM estimator is consistent and asymptotically normal, enabling valid inference for a wide range of downstream statistical analyses common in the so- cial sciences. Our simulation results show that DMM yields valid inference and that adding accurate, though imperfect, measurements can improve efficiency. Focusing on common applica- tions of large language model annotations, we also develop diagnostics to assess the conditional independence assumption. ∗We thank Betsy Ogburn, Helen Guo, AmirEmad Ghassami, and Ilya Shpitser for thoughtful comments. †Associate Professor, Department of Political Science and Statistics and Data Science Center, Massachusetts Insti- tute of Techn",
+      "dcterms:source": "cat-harness/library/arxiv-2608.18294v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2608.18294v2"
+    },
+    {
+      "@id": "references/equipping-agents-for-the-real-world-with-agent-skills-anthro",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Equipping agents for the real world with Agent Skills",
+      "dcterms:issued": "D:20260920",
+      "dcterms:source": "cat-harness/library/equipping-agents-for-the-real-world-with-agent-skills-anthro/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/equipping-agents-for-the-real-world-with-agent-skills-anthro"
+    },
+    {
+      "@id": "references/zimoch-2017-eye-tracking-lessons-learned",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Eye Tracking Experiments on Process Model Comprehension: Lessons Learned",
+      "dcterms:issued": "2017",
+      "dcterms:source": "cat-harness/library/zimoch-2017-eye-tracking-lessons-learned/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/zimoch-2017-eye-tracking-lessons-learned"
+    },
+    {
+      "@id": "references/hl7-2023-fhir-r5-testplan",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "FHIR R5 (5.0.0) — TestPlan resource",
+      "dcterms:issued": "2023",
+      "dcterms:source": "fhir-harness/library/hl7-2023-fhir-r5-testplan/manifest.jsonld",
+      "dcterms:hasVersion": "fhir-harness/library/hl7-2023-fhir-r5-testplan"
+    },
+    {
+      "@id": "references/figl-2018-what-we-know-dmn-emisa",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "What we know and what we do not know about DMN (Extended Abstract)",
+      "dcterms:creator": [
+        "Figl2, Kathrin",
+        "Mendling3, Jan",
+        "Tokdemir4, Gul",
+        "Vanthienen5, Jan"
+      ],
+      "dcterms:issued": "D:20210719",
+      "dcterms:abstract": ")1 Kathrin Figl2, Jan Mendling3, Gul Tokdemir4, Jan Vanthienen5 Abstract: The recent Decision Model and Notation (DMN) establishes business decisions as first- class citizens of executable business processes. This research note has two objectives: first, to describe DMN’s technical and theoretical foundations; second, to identify research directions for investigating DMN’s potential benefits on a technological, individual and organizational level. To this end, we integrate perspectives from management science, cognitive theory and information systems research.",
+      "dcterms:source": "cat-harness/library/figl-2018-what-we-know-dmn-emisa/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/figl-2018-what-we-know-dmn-emisa"
+    },
+    {
+      "@id": "references/arxiv-0909.4061v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Finding Structure with Randomness: Probabilistic Algorithms for Constructing Approximate Matrix Decompositions",
+      "dcterms:issued": "D:20241126",
+      "dcterms:source": "cat-harness/library/arxiv-0909.4061v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-0909.4061v2"
+    },
+    {
+      "@id": "references/figl-strembeck-2015-flow-direction-experiment",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Findings from an Experiment on Flow Direction of Business Process Models",
+      "dcterms:issued": "2015",
+      "dcterms:source": "cat-harness/library/figl-strembeck-2015-flow-direction-experiment/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/figl-strembeck-2015-flow-direction-experiment"
+    },
+    {
+      "@id": "references/cucumber-2024-gherkin-reference",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Gherkin Reference",
+      "dcterms:issued": "2024",
+      "dcterms:source": "fhir-harness/library/cucumber-2024-gherkin-reference/manifest.jsonld",
+      "dcterms:hasVersion": "fhir-harness/library/cucumber-2024-gherkin-reference"
+    },
+    {
+      "@id": "references/arxiv-2202.02427v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Lightweight Compositional Embeddings for Incremental Streaming Recommendation",
+      "dcterms:creator": [
+        "Hang1, Mengyue",
+        "Schnabel2, Tobias",
+        "Yang2, Longqi",
+        "Neville1, Jennifer",
+        "2"
+      ],
+      "dcterms:issued": "D:20220208",
+      "dcterms:identifier": "https://arxiv.org/abs/2202.02427",
+      "dcterms:abstract": "Most work in graph-based recommender systems considers a static setting where all information about test nodes (i.e., users and items) is available upfront at training time. However, this static setting makes little sense for many real world applications where data comes in continuously as a stream of new edges and nodes, and one has to update model predictions incrementally to reflect the latest state. To fully capitalize on the newly available data in the stream, recent graph-based recommendation models would need to be repeatedly retrained, which is infeasible in practice. In this pa- per, we study the graph-based streaming recommendation setting and propose a compositional recommendation model—Lightweight Compositional Embedding (LCE)—that supports incremental up- dates under low computational cost. Instead of learning explicit embeddings for the full set of nodes, LCE learns explicit embed- dings for only a subset of nodes and represents the other nodes implicitly, through a composition function based on their interac- tions in the graph. This provides an effective, yet efficient, means to leverage streaming graph data when one node type (e.g., items) is more amenable to static representation. We conduct an extensive empirical study to compare LCE to a set of competitive baselines on three large-scale user-item recommendation datasets with inter- actions under a streaming setting. The results demonstrate the su- perior performance of LCE, showing that it achieves nearly skyline performance with significantly fewer parameters than alternative graph-based models.",
+      "dcterms:source": "cat-harness/library/arxiv-2202.02427v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2202.02427v1"
+    },
+    {
+      "@id": "references/arxiv-2405.14766v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Evaluating Large Language Models for Public Health Classification and Extraction Tasks",
+      "dcterms:creator": [
+        "Harris1, Joshua",
+        "†",
+        "Laurence1, Timothy",
+        "Loman1, Leo",
+        "Grayson1, Fan",
+        "Nonnenmacher1, Toby",
+        "Harry"
+      ],
+      "dcterms:issued": "D:20250220",
+      "dcterms:identifier": "https://arxiv.org/abs/2405.14766",
+      "dcterms:abstract": "Advances in Large Language Models (LLMs) have led to significant interest in their potential to support human experts across a range of domains, including public health. In this work we present automated evaluations of LLMs for public health tasks involving the classification and extraction of free text. We combine six externally annotated datasets with seven new internally annotated datasets to evaluate LLMs for processing text related to: health burden, epidemiological risk factors, and public health interventions. We evaluate eleven open-weight LLMs (7-123 billion parameters) across all tasks using zero-shot in-context learning. We find that Llama-3.3-70B-Instruct is the highest performing model, achieving the best results on 8/16 tasks (using micro-F1 scores). We see significant variation across tasks with all open-weight LLMs scoring below 60% micro-F1 on some challenging tasks, such as Contact Classification, while all LLMs achieve greater than 80% micro-F1 on others, such as GI Illness Classification. For a subset of 11 tasks, we also evaluate three GPT-4 and GPT-4o series models and find comparable results to Llama-3.3-70B-Instruct. Overall, based on these initial results we find promising signs that LLMs may be useful tools for public health experts to extract information from a wide variety of free text sources, and support public health surveillance, research, and interventions. Figure 1: Public Health Large Language Model (LLM) Evaluation Areas [Number of Evalua- tions] and Task Evaluation Micro-F1 Scores by Model. (Left) We divide public health free text processing into three sub-domains: (1) burden, such as reports of disease symptoms, cases, morbidity, or mortality; (2) risk factors, such as environmental, behavioural, or biological contributors; (3) interventions, pharmaceutical and non-pharmaceutical. (Right) Evaluation results (micro-F1 scores) for seven open-weight LLM architectures (highest performing model evaluated from each) across the 16 task",
+      "dcterms:source": "cat-harness/library/arxiv-2405.14766v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2405.14766v2"
+    },
+    {
+      "@id": "references/arxiv-2512.09874v3",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs",
+      "dcterms:creator": [
+        "Horn1[0009−0004−1911−1138], Pius",
+        "Janis Keuper1, 2[0000−0002−1327−1243]"
+      ],
+      "dcterms:issued": "D:20260825",
+      "dcterms:identifier": "https://arxiv.org/abs/2512.09874",
+      "dcterms:abstract": "Correctly parsing mathematical formulas from PDFs is crit- ical for training large language models and building scientiﬁc knowledge bases from academic literature, yet existing benchmarks either exclude formulas entirely or lack semantically-aware evaluation metrics. We in- troduce a benchmarking framework centered on synthetically generated PDFs with precise LaTeX ground truth, enabling systematic control over layout, formulas, and content characteristics. For evaluation, we apply LLM-as-a-judge to assess semantic equivalence of parsed formulas, cap- turing mathematical meaning beyond surface-level notation diﬀerences. We validate this approach through a human study (250 formula pairs, 750 ratings from 30 evaluators), showing a Pearson correlation of r=0.78 with human judgment, compared to r=0.34 for character-level match- ing (CDM) and r≈0 for text similarity. Our robust two-stage matching pipeline combining LLM-based extraction with fuzzy validation reliably aligns parsed formulas with ground truth despite format inconsisten- cies across parsers. Evaluating 20+ contemporary PDF parsers across 100 synthetic documents with 2,000+ formulas reveals signiﬁcant per- formance disparities, providing actionable guidance for practitioners se- lecting parsers for downstream applications.",
+      "dcterms:source": "folio-assistant-sci/library/arxiv-2512.09874v3/manifest.jsonld",
+      "dcterms:hasVersion": "folio-assistant-sci/library/arxiv-2512.09874v3"
+    },
+    {
+      "@id": "references/zur-muehlen-recker-2008-how-much-language",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "How Much Language Is Enough? Theoretical and Practical Use of the Business Process Modeling Notation",
+      "dcterms:issued": "2008",
+      "dcterms:source": "cat-harness/library/zur-muehlen-recker-2008-how-much-language/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/zur-muehlen-recker-2008-how-much-language"
+    },
+    {
+      "@id": "references/arxiv-2601.22554v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "LeanArchitect: Automating Blueprint Generation for Humans and AI",
+      "dcterms:creator": [
+        "Humans, Automating Blueprint Generation for",
+        "AI"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2601.22554",
+      "dcterms:abstract": "Large-scale formalization projects in Lean rely on blueprints: structured dependency graphs linking informal mathematical exposition to formal declarations. While blueprints are central to human collaboration, existing tooling treats the informal (LATEX) and formal (Lean) components as largely decoupled artifacts, leading to maintenance overhead and limiting integration with AI automation. We present LeanArchitect, a Lean package for extracting, managing, and exporting blueprint data directly from Lean code. LeanArchitect introduces a declarative annotation mechanism that associates formal declarations with blueprint metadata, automatically infers dependency information, and generates LATEX blueprint content synchronized with the Lean development. This design eliminates duplication between formal and informal representations and eases fine-grained progress tracking for both human contributors and AI-based theorem provers. We demonstrate the practicality of LeanArchitect through the automated conversion of several large existing blueprint-driven projects, and through a human–AI collaboration case study formalizing a multivariate Taylor theorem. Our results show that LeanArchitect improves maintainability, exposes latent inconsistencies in existing blueprints, and provides an effective interface for integrating AI tools into real-world formalization workflows. arXiv:2601.22554v1 [cs.LO] 30 Jan 2026",
+      "dcterms:source": "folio-assistant-sci/library/arxiv-2601.22554v1/manifest.jsonld",
+      "dcterms:hasVersion": "folio-assistant-sci/library/arxiv-2601.22554v1"
+    },
+    {
+      "@id": "references/w3c-2018-odrl-model-2-2",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "ODRL Information Model 2.2",
+      "dcterms:creator": [
+        "Iannella, Renato",
+        "Monegraph",
+        "r@iannel.la"
+      ],
+      "dcterms:issued": "D:20261001",
+      "dcterms:abstract": "The Open Digital Rights Language (ODRL) is a policy expression language that provides a flexible and interoperable information model, vocabulary, and encoding mechanisms for representing statements about the usage of content and services. The ODRL Information Model describes the underlying concepts, entities, and relationships that form the foundational basis for the semantics of the ODRL policies. Policies are used to represent permitted and prohibited actions over a certain asset, as well as the obligations required to be meet by stakeholders. In addition, policies may be limited by constraints (e.g., temporal or spatial constraints) and duties (e.g. payments) may be imposed on permissions. Status of This Document This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the W3C technical reports index at https://www.w3.org/TR/. This document was published by the Permissions & Obligations Expression Working Group as a Recommendation. Comments regarding this document are welcome. Please send them to public-poe-comments@w3.org (subscribe, archives). Please see the Working Group's implementation report. This document has been reviewed by W3C Members, by software developers, and by other W3C groups and interested parties, and is endorsed by the Director as a W3C Recommendation. It is a stable document and may be used as reference material or cited from another document. W3C's role in making the Recommendation is to draw attention to the specification and to promote its widespread deployment. This enhances the functionality and interoperability of the Web. This document was produced by a group operating under the W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An",
+      "dcterms:source": "cat-harness/library/w3c-2018-odrl-model-2-2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/w3c-2018-odrl-model-2-2"
+    },
+    {
+      "@id": "references/qi-hessen-vanderheijden-2023-ca-vs-lsa",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Improving information retrieval through correspondence analysis instead of latent semantic analysis",
+      "dcterms:issued": "D:20230909",
+      "bibo:doi": "10.1007/s10844-023-00815-y",
+      "dcterms:identifier": "https://doi.org/10.1007/s10844-023-00815-y",
+      "dcterms:abstract": "The initial dimensions extracted by latent semantic analysis (LSA) of a document-term matrix have been shown to mainly display marginal effects, which are irrelevant for information retrieval. To improve the performance of LSA, usually the elements of the raw document- term matrix are weighted and the weighting exponent of singular values can be adjusted. An alternative information retrieval technique that ignores the marginal effects is correspon- dence analysis (CA). In this paper, the information retrieval performance of LSA and CA is empirically compared. Moreover, it is explored whether the two weightings also improve the performance of CA. The results for four empirical datasets show that CA always performs better than LSA. Weighting the elements of the raw data matrix can improve CA; however, it is data dependent and the improvement is small. Adjusting the singular value weighting exponent often improves the performance of CA; however, the extent of the improvement depends on the dataset and the number of dimensions.",
+      "dcterms:source": "cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa"
+    },
+    {
+      "@id": "references/deerwester-1990-indexing-by-lsa",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Indexing by Latent Semantic Analysis",
+      "dcterms:issued": "D:19991215",
+      "dcterms:source": "cat-harness/library/deerwester-1990-indexing-by-lsa/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/deerwester-1990-indexing-by-lsa"
+    },
+    {
+      "@id": "references/arxiv-2508.05192v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "AI-assisted JSON Schema Creation and Mapping",
+      "dcterms:creator": [
+        "Institute for Parallel",
+        "Systems, Distributed"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2508.05192",
+      "dcterms:abstract": "Model-Driven Engineering (MDE) places models at the core of system and data engineering processes. In the context of research data, these models are typically expressed as schemas that define the structure and semantics of datasets. However, many domains still lack standardized models, and creating them remains a significant barrier, especially for non- experts. We present a hybrid approach that combines large language models (LLMs) with deterministic techniques to enable JSON Schema creation, modification, and schema mapping based on natural language inputs by the user. These capabilities are integrated into the open-source tool MetaConfigurator, which already provides visual model editing, validation, code gener- ation, and form generation from models. For data integration, we generate schema mappings from heterogeneous JSON, CSV, XML, and YAML data using LLMs, while ensuring scalability and reliability through deterministic execution of generated mapping rules. The applicability of our work is demonstrated in an application example in the field of chemistry. By combining natural language interaction with deterministic safeguards, this work significantly lowers the barrier to structured data modeling and data integration for non-experts. Index Terms—rdm, research data management, mde, model driven engineering, json, yaml, configuration, schema, data, model, editor, gui, tool, ai, llm, mapping, matching I. INTRODUCTION Model-Driven Engineering (MDE) emphasizes the central role of models in the design, development, and operation of systems [1]. In the context of research data management [2]– [4], models are typically expressed as schemas, which define the structure and semantics of datasets. These models enable key functionalities such as instance validation, transformation, code generation, and visualization, and are essential for ensur- ing data quality, interoperability, and reusability. Despite their importance, many scientific domains still lack standardized da",
+      "dcterms:source": "cat-harness/library/arxiv-2508.05192v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2508.05192v2"
+    },
+    {
+      "@id": "references/isaitb-2026-interoperability-test-bed-readme",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Interoperability Test Bed",
+      "dcterms:issued": "2026",
+      "dcterms:source": "fhir-harness/library/isaitb-2026-interoperability-test-bed-readme/manifest.jsonld",
+      "dcterms:hasVersion": "fhir-harness/library/isaitb-2026-interoperability-test-bed-readme"
+    },
+    {
+      "@id": "references/djurica-2024-decision-model-comprehension-emisa",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Investigating the impact of representation features on decision model comprehension (Extended Abstract)",
+      "dcterms:issued": "D:20240502",
+      "bibo:doi": "10.18420/EMISA2024_05",
+      "dcterms:identifier": "https://doi.org/10.18420/EMISA2024_05",
+      "dcterms:abstract": ")5 Djordje Djurica 1, Tyge F. Kummer 2, Jan Mendling 1,3, and Kathrin Figl 4 Abstract: Decision models play a crucial role in the development of information systems for tasks such as system analysis and design, as well as compliance management. The effective presentation of these models is essential to ensure their accuracy and completeness. Existing research on their cognitive effectiveness remains inconclusive. Our study advances understanding by examining the detailed representation features of decision models, including type (tree versus table), structure (expanded versus frugal), and design (monochromatic versus colored). We demonstrate that the use of color can improve model-task fit, and that structural features can enhance comprehension. Utilizing eye-tracking, we analyzed the underlying mechanisms of these effects. Our findings provide valuable insights for cognitive information systems research and practical applications, offering guidance for both users and developers of decision models.",
+      "dcterms:source": "cat-harness/library/djurica-2024-decision-model-comprehension-emisa/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/djurica-2024-decision-model-comprehension-emisa"
+    },
+    {
+      "@id": "references/arxiv-2504.07199v3",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject Tagging for a National Technical Library’s Open-Access Catalog",
+      "dcterms:creator": [
+        "Jennifer D’Souza, Sameer Sadruddin, Holger Israel, Mathias Begoin",
+        "Slawig, Diana"
+      ],
+      "dcterms:issued": "D:20250526",
+      "dcterms:identifier": "https://arxiv.org/abs/2504.07199",
+      "dcterms:abstract": "We present SemEval-2025 Task 5: LLMs4Subjects, a shared task on auto- mated subject tagging for scientific and technical records in English and German using the GND taxonomy. Participants developed LLM-based systems to recommend top-k subjects, evaluated through quantitative metrics (precision, recall, F1-score) and qualitative assessments by subject specialists. Results highlight the effectiveness of LLM ensembles, synthetic data generation, and multilingual processing, offering insights into applying LLMs for digital library classification.",
+      "dcterms:source": "cat-harness/library/arxiv-2504.07199v3/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2504.07199v3"
+    },
+    {
+      "@id": "references/rfc2119-key-words-requirement-levels",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Key words for use in RFCs to Indicate Requirement Levels",
+      "dcterms:issued": "D:20260921",
+      "dcterms:source": "cat-harness/library/rfc2119-key-words-requirement-levels/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/rfc2119-key-words-requirement-levels"
+    },
+    {
+      "@id": "references/arxiv-2505.06046v4",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Healthy LLMs? Benchmarking LLM Knowledge of UK Government Public Health Information",
+      "dcterms:creator": [
+        "KNOWL-, BENCHMARKING LLM"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2505.06046",
+      "dcterms:abstract": "As Large Language Models (LLMs) become widely accessible, a detailed un- derstanding of their knowledge within specific domains becomes necessary for successful real world use. This is particularly critical in the domains of medicine and public health, where failure to retrieve relevant, accurate, and current infor- mation could significantly impact UK residents. However, while there are a num- ber of LLM benchmarks in the medical domain, currently little is known about LLM knowledge within the field of public health. To address this issue, this pa- per introduces a new benchmark, PubHealthBench, with over 8000 questions for evaluating LLMs’ Multiple Choice Question Answering (MCQA) and free form responses to public health queries. To create PubHealthBench we extract free text from 687 current UK government guidance documents and implement an automated pipeline for generating MCQA samples. Assessing 24 LLMs on Pub- HealthBench we find the latest proprietary LLMs (GPT-4.5, GPT-4.1 and o1) have a high degree of knowledge, achieving over 90% accuracy in the MCQA setup, and outperform humans with cursory search engine use. However, in the free form setup we see lower performance with no model scoring over 75%. There- fore, while there are promising signs that state of the art (SOTA) LLMs are an increasingly accurate source of public health information, additional safeguards or tools may still be needed when providing free form responses. Figure 1: (left) PubHealthBench Full and Reviewed model accuracy, (right) PubHealthBench- FreeForm model accuracy. 95% Wilson CI. *LLM used to generate benchmark, **Judge LLM.",
+      "dcterms:source": "cat-harness/library/arxiv-2505.06046v4/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2505.06046v4"
+    },
+    {
+      "@id": "references/landauer-foltz-laham-1998-intro-lsa",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "An Introduction to Latent Semantic Analysis",
+      "dcterms:creator": [
+        "Laham), (Darrell"
+      ],
+      "dcterms:issued": "(10:59 AM ",
+      "dcterms:source": "cat-harness/library/landauer-foltz-laham-1998-intro-lsa/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/landauer-foltz-laham-1998-intro-lsa"
+    },
+    {
+      "@id": "references/leopold-2016-bpmn-quality-issues-industry",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Learning from Quality Issues of BPMN Models from Industry",
+      "dcterms:issued": "2016",
+      "dcterms:source": "cat-harness/library/leopold-2016-bpmn-quality-issues-industry/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/leopold-2016-bpmn-quality-issues-industry"
+    },
+    {
+      "@id": "references/arxiv-2507.23348v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "SWE-Debate: Competitive Multi-Agent Debate for Software Issue Resolution",
+      "dcterms:creator": [
+        "Li†, Han"
+      ],
+      "dcterms:issued": "D:20250801",
+      "dcterms:identifier": "https://arxiv.org/abs/2507.23348",
+      "dcterms:abstract": "Issue resolution has made remarkable progress thanks to the ad- vanced reasoning capabilities of large language models (LLMs). Recently, agent-based frameworks such as SWE-agent have further advanced this progress by enabling autonomous, tool-using agents to tackle complex software engineering tasks. While existing agent- based issue resolution approaches are primarily based on agents’ independent explorations, they often get stuck in local solutions and fail to identify issue patterns that span across different parts of the codebase. To address this limitation, we propose SWE-Debate, a competitive multi-agent debate framework that encourages diverse reasoning paths and achieves more consolidated issue localization. SWE-Debate first creates multiple fault propagation traces as local- ization proposals by traversing a code dependency graph. Then, it organizes a three-round debate among specialized agents, each em- bodying distinct reasoning perspectives along the fault propagation trace. This structured competition enables agents to collaboratively converge on a consolidated fix plan. Finally, this consolidated fix plan is integrated into an MCTS-based code modification agent for patch generation. Experiments on the SWE-bench benchmark show that SWE-Debate achieves new state-of-the-art results in open-source agent frameworks and outperforms baselines by a large margin1.",
+      "dcterms:source": "cat-harness/library/arxiv-2507.23348v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2507.23348v1"
+    },
+    {
+      "@id": "references/arxiv-2602.12670v4",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+      "dcterms:creator": [
+        "Li1, Xiangyi",
+        "*",
+        "Liu1, Yimin",
+        "2",
+        "*",
+        "Chen3, Wenbo",
+        "*",
+        "†",
+        "You1, Bingran",
+        "4",
+        "*",
+        "Di5, Zonglin",
+        "‡"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2602.12670",
+      "dcterms:abstract": "Agent Skills are structured packages of procedural knowledge that augment large language model (LLM) agents at inference time. Despite rapid adoption, there is no standard way to measure whether they actually help. We present SKILLSBENCH, a benchmark whose current inventory contains 87 tasks across 8 domains paired with curated Skills and deterministic verifiers. Our latest aggregate evaluation runs the 87-task benchmark under matched no-Skills and curated-Skills conditions for 18 model–harness configurations. Curated Skills raise the average pass rate from 33.9% to 50.5% (+16.6 percentage points; 25.5% normalized gain), with configuration-level gains ranging from +4.1 to +25.7 pp. Focused Skills with at most three modules outperform larger or exhaustive bundles, and smaller models with Skills can match larger models without them. SKILLSBENCH establishes paired evaluation as the foundation for rigorous measurement of Skill efficacy on agentic, expertise-heavy work. Skills applications Agent Harness Operating Systems Models CPUs Gemini 3.1 Flash Lite (OH) MiniMax M2.7 (OH) GPT-5.4 Mini (OH) Grok 4.3 (OH) DeepSeek V4 Flash (OH) Claude Sonnet 4.6 (OH) Gemini 3.5 Flash (OH) DeepSeek V4 Pro (OH) Gemini 3.1 Pro (OH) MiniMax M3 (OH) Claude Opus 4.7 (OH) Kimi K2.6 (OH) Claude Opus 4.8 (OH) GLM 5.1 (OH) Gemini 3.1 Pro (GCLI) Claude Opus 4.7 (CC) GPT-5.5 (Codex) GPT-5.5 (OH) 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 Resolution Rate No Skills Skill Lift OpenAI Anthropic Google DeepSeek Moonshot Zhipu MiniMax xAI Skills applications Agent Harness Operating Systems Models CPUs Figure 1: Agent architecture stack and resolution rates across 18 model–harness configurations on 87 SkillsBench tasks. Each bar stacks the no-Skills baseline and curated-Skills lift; open/filled interval markers denote 95% CIs for the baseline/total. Bars are ordered by Curated-Skills pass rate and colored by model family. Harness abbreviations: OH = OpenHands, CC = Claude Code, GCLI = Gemini CLI. 1BenchFlow, 2OSU,",
+      "dcterms:source": "cat-harness/library/arxiv-2602.12670v4/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2602.12670v4"
+    },
+    {
+      "@id": "references/milnorlink",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Link Groups",
+      "dcterms:issued": "D:20100521",
+      "dcterms:source": "folio-assistant-sci/library/milnorlink/manifest.jsonld",
+      "dcterms:hasVersion": "folio-assistant-sci/library/milnorlink"
+    },
+    {
+      "@id": "references/arxiv-2404.04834v4",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "LLM-Based Multi-Agent Systems for Software Engineering: Literature Review, Vision and the Road Ahead",
+      "dcterms:creator": [
+        "Literature Review, Vision",
+        "Ahead, the Road"
+      ],
+      "dcterms:issued": "D:20250721",
+      "bibo:doi": "10.1145/nnnnnnn",
+      "dcterms:identifier": "https://arxiv.org/abs/2404.04834",
+      "dcterms:source": "cat-harness/library/arxiv-2404.04834v4/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2404.04834v4"
+    },
+    {
+      "@id": "references/arxiv-2203.02010v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "This manuscript has been accepted to SPIE Medical Imaging, February 20-24, 2022. Please use the following reference when citing the manuscript",
+      "dcterms:creator": [
+        "Liu",
+        "Z.",
+        "Li",
+        "Z.",
+        "Mhlanga",
+        "C., J.",
+        "Siegel",
+        "A., B.",
+        "Jha",
+        "K., A.",
+        "quantitative, “No-gold-standard evaluation of"
+      ],
+      "dcterms:issued": "D:20220306",
+      "dcterms:identifier": "https://arxiv.org/abs/2203.02010",
+      "dcterms:source": "cat-harness/library/arxiv-2203.02010v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2203.02010v1"
+    },
+    {
+      "@id": "references/arxiv-260327124v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "arxiv-260327124v1",
+      "dcterms:creator": [
+        "Liu, Yan"
+      ],
+      "dcterms:issued": "D:20260327",
+      "dcterms:source": "cat-harness/library/arxiv-260327124v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-260327124v1"
+    },
+    {
+      "@id": "references/arxiv-2406.01940v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Process-Driven Autoformalization in Lean 4",
+      "dcterms:creator": [
+        "Lu1∗, Jianqiao",
+        "Wan2∗, Yingjia",
+        "Liu3, Zhengying",
+        "Huang4, Yinya",
+        "Xiong1, Jing"
+      ],
+      "dcterms:issued": "D:20241015",
+      "dcterms:identifier": "https://arxiv.org/abs/2406.01940",
+      "dcterms:abstract": "Autoformalization, the conversion of natural language mathematics into formal languages, offers significant potential for advancing mathematical reasoning. How- ever, existing efforts are limited to formal languages with substantial online corpora and struggle to keep pace with rapidly evolving languages like Lean 4. To bridge this gap, we propose a large-scale dataset Formalization for Lean 4 (FORML4) de- signed to comprehensively evaluate the autoformalization capabilities of large lan- guage models (LLMs), encompassing both statements and proofs in natural and for- mal languages. Additionally, we introduce the Process-Driven Autoformalization (PDA) framework that leverages the precise feedback from Lean 4 compilers to enhance autoformalization. Extensive experiments demonstrate that PDA improves autoformalization, enabling higher compiler accuracy and human-evaluation scores using less filtered training data. Moreover, when fine-tuned with data containing detailed process information, PDA exhibits enhanced data utilization, resulting in more substantial improvements in autoformalization for Lean 4.",
+      "dcterms:source": "folio-assistant-sci/library/arxiv-2406.01940v2/manifest.jsonld",
+      "dcterms:hasVersion": "folio-assistant-sci/library/arxiv-2406.01940v2"
+    },
+    {
+      "@id": "references/arxiv-2606.21008v3",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "The Metanym Game: An LLM Benchmark Without Ground Truth That Rises With the Models It Measures",
+      "dcterms:creator": [
+        "MEASURES, IT"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2606.21008",
+      "dcterms:abstract": "We introduce a benchmark that is fully self-contained, needs no ground truth, and rises with the models it measures. Language models compete at making analo- gies and subjectively grade one another; nothing enters from outside. The bench- mark reproduces GPQA Diamond, a keyed benchmark of expert-written ques- tions, at r = 0.98, audited for a leak and found clean. We hypothesize that both benchmarks measure the same thing in different ways: a language model holds its knowledge as archetypal contexts, relationship patterns valid across many topic domains. GPQA instantiates the required knowledge in one domain; the Metanym Game instantiates one archetype into several domains, generating analogies, no reasoning required. The reasoning feature of an LLM hardly changes the game’s ratings, while it lifts GPQA, which requires derivations. In the game, a player writes a context template whose slots, filled with a set of keywords from a topic domain, instantiate a factually true description of that domain; the instantiations are each other’s metaphors, and keywords filling the same slot are metanyms, metaphorically synonymous. Correctness is settled sentence by sentence. Ground truth is replaced by the SVD of the factual rating matrix: its left and right singular vectors rate the players as judges and as generators, two ratings from one factori- sation, to our knowledge a first for an LLM council of peers. On the subjective criteria, judges are weighted by their rating consistency under a swept calibration anchor. Generating and judging are different skills: on this roster the strongest generators were middling judges. A council of the five best issues the official ratings; its contestable seats keep it current, a candidate steering signal for self- improving AI. The paper is accompanied by a validating package that recomputes every number.",
+      "dcterms:source": "cat-harness/library/arxiv-2606.21008v3/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2606.21008v3"
+    },
+    {
+      "@id": "references/hasic-2019-measuring-complexity-dmn",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Measuring the Complexity of DMN Decision Models",
+      "dcterms:issued": "2019",
+      "dcterms:source": "cat-harness/library/hasic-2019-measuring-complexity-dmn/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/hasic-2019-measuring-complexity-dmn"
+    },
+    {
+      "@id": "references/mcp-2026-specification-2026-07-28",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Model Context Protocol Specification, version 2026-07-28",
+      "dcterms:issued": "2026",
+      "dcterms:source": "cat-harness/library/mcp-2026-specification-2026-07-28/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/mcp-2026-specification-2026-07-28"
+    },
+    {
+      "@id": "references/arxiv-2312.07755v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Designing with Language: Wireframing UI Design Intent with Generative Large Language Models",
+      "dcterms:creator": [
+        "Models, Language"
+      ],
+      "dcterms:issued": "D:20231214",
+      "dcterms:identifier": "https://arxiv.org/abs/2312.07755",
+      "dcterms:source": "cat-harness/library/arxiv-2312.07755v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2312.07755v1"
+    },
+    {
+      "@id": "references/monitoring-metrics-related-to-the-global-covid-19-vaccinatio",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Monitoring Metrics Related to the Global Covid-19 Vaccination Strategy in a Changing World",
+      "dcterms:issued": "D:20220808",
+      "dcterms:source": "smart-immunizations/library/monitoring-metrics-related-to-the-global-covid-19-vaccinatio/manifest.jsonld",
+      "dcterms:hasVersion": "smart-immunizations/library/monitoring-metrics-related-to-the-global-covid-19-vaccinatio"
+    },
+    {
+      "@id": "references/arxiv-2601.04544v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "TCAndon-Router: Adaptive Reasoning Router for Multi-Agent Collaboration",
+      "dcterms:creator": [
+        "Multi-Agent Collaboration"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2601.04544",
+      "dcterms:abstract": "Multi-Agent Systems(MAS) have become a powerful paradigm for building high performance intelli- gent applications. Within these systems, the router responsible for determining which expert agents should handle a given query plays a crucial role in overall performance. Existing routing strategies generally fall into two categories: performance routing, which balances latency and cost across mod- els of different sizes, and task routing, which assigns queries to domain-specific experts to improve accuracy. In real-world enterprise applications, task routing is more suitable; however, most existing approaches rely on static single-label decisions, which introduce two major limitations: (i) diﬀiculty in seamlessly integrating new agents as business domains expand, and (ii) routing conflicts caused by overlapping agent capabilities, ultimately degrading accuracy and robustness.To address these challenges, we propose TCAndon-Router(TCAR): an adaptive reasoning router for multi-agent col- laboration. Unlike traditional routers, TCAR supports dynamic agent onboarding and first generates a natural-language reasoning chain before predicting a set of candidate agents capable of handling the query. In addition, we design a collaborative execution pipeline in which selected agents indepen- dently produce responses, which are then aggregated and refined into a single high-quality response by a dedicated Refining Agent.Experiments on public datasets and real enterprise data demonstrate that TCAR significantly improves routing accuracy, reduces routing conflicts, and remains robust in am- biguous scenarios. We have released TCAR at https://huggingface.co/tencent/TCAndon-Router to support future research on explainable and collaborative multi-agent routing.",
+      "dcterms:source": "cat-harness/library/arxiv-2601.04544v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2601.04544v1"
+    },
+    {
+      "@id": "references/figl-strembeck-2014-flow-direction-importance",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "On the Importance of Flow Direction in Business Process Models",
+      "dcterms:issued": "2014",
+      "dcterms:source": "cat-harness/library/figl-strembeck-2014-flow-direction-importance/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/figl-strembeck-2014-flow-direction-importance"
+    },
+    {
+      "@id": "references/mehl-2021-who-smart-guidelines",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "WHO SMART guidelines: optimising country-level use of guideline recommendations in the digital age",
+      "dcterms:creator": [
+        "Online, Published"
+      ],
+      "dcterms:issued": "D:20210311",
+      "dcterms:source": "smart-base/library/mehl-2021-who-smart-guidelines/manifest.jsonld",
+      "dcterms:hasVersion": "smart-base/library/mehl-2021-who-smart-guidelines"
+    },
+    {
+      "@id": "references/arxiv-2003.08005v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "ScanSSD: Scanning Single Shot Detector for Mathematical Formulas in PDF Document Images",
+      "dcterms:creator": [
+        "Parag Mali, Puneeth Kukkadapu, Mahshad Mahdavi, and, Richard Zanibbi"
+      ],
+      "dcterms:issued": "D:20200319",
+      "dcterms:identifier": "https://arxiv.org/abs/2003.08005",
+      "dcterms:abstract": "We introduce the Scanning Single Shot Detector (ScanSSD) for locating math formulas offset from text and embedded in textlines. ScanSSD uses only visual features for detection: no formatting or typesetting information such as layout, font, or character labels are employed. Given a 600 dpi document page image, a Single Shot Detector (SSD) locates formulas at multiple scales using sliding windows, after which candidate detections are pooled to obtain page-level results. For our experiments we use the TFD-ICDAR2019v2 dataset, a modiﬁcation of the GTDB scanned math article collection. ScanSSD detects characters in formulas with high accuracy, obtaining a 0.926 f-score, and detects formulas with high recall overall. Detection errors are largely minor, such as splitting formulas at large whitespace gaps (e.g., for variable constraints) and merging formulas on adjacent textlines. Formula detection f-scores of 0.796 (IOU ≥0.5) and 0.733 (IOU ≥0.75) are obtained. Our data, evaluation tools, and code are publicly available. I. INTRODUCTION The PDF format is used ubiquitously for sharing and printing documents. Unfortunately, while the latest PDF speciﬁcation supports embedding structural information for graphical elements (e.g., ﬁgures, tables, and footnotes1), most born-digital PDF documents contain only rendering-level information such as characters, lines, and images. These low-level objects can be recovered by parsing the document [1], but graphic regions must be located using detection algorithms. For example, PDFFigures [2] extracts ﬁgures and tables from born-digital Computer Science research papers for Semantic Scholar.2 Unfortunately, older PDF documents may contain only scanned images of document pages, providing no information about characters or other graphical objects in the page images. We present a new image-based detector for mathematical formulas in in both born-digital and scanned PDF documents. Math expressions may be displayed and offset from the main text",
+      "dcterms:source": "folio-assistant-sci/library/arxiv-2003.08005v1/manifest.jsonld",
+      "dcterms:hasVersion": "folio-assistant-sci/library/arxiv-2003.08005v1"
+    },
+    {
+      "@id": "references/gurel-tat-2017-swot-analysis",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "SWOT Analysis: A Theoretical Review",
+      "dcterms:creator": [
+        "pc"
+      ],
+      "dcterms:issued": "D:20170828",
+      "dcterms:source": "cat-harness/library/gurel-tat-2017-swot-analysis/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/gurel-tat-2017-swot-analysis"
+    },
+    {
+      "@id": "references/9789275119532-eng",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "ELECTRONIC IMMUNIZATION REGISTRY",
+      "dcterms:creator": [
+        "Planning, Development"
+      ],
+      "dcterms:issued": "D:20200727",
+      "dcterms:source": "smart-immunizations/library/9789275119532-eng/manifest.jsonld",
+      "dcterms:hasVersion": "smart-immunizations/library/9789275119532-eng"
+    },
+    {
+      "@id": "references/arxiv-2604.00554v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "LLM-supported document separation for printed reviews from zbMATH Open",
+      "dcterms:creator": [
+        "Pluzhnikov, Ivan"
+      ],
+      "dcterms:issued": "D:20260402",
+      "dcterms:identifier": "https://arxiv.org/abs/2604.00554",
+      "dcterms:abstract": "This paper presents a specialized methodology for digitizing and segmenting mathematical documents from zbMATH Open, a com- prehensive database of mathematical literature, to enhance ma- chine processing capabilities. Currently, approximately 831,000 documents exist only in scanned volumes, which makes them not machine-processable. Furthermore, these scans often span multi- ple pages or share pages with other documents and incorporate diverse typesetting techniques, posing challenges for automated processing. To address these issues, we evaluate various Optical Charac- ter Recognition (OCR) tools and document separation techniques, proposing an optimized pipeline that outperforms existing ap- proaches. Our study identifies Mathpix as the most effective OCR tool for LaTeX conversion, demonstrating superior performance based on BLEU and Edit Distance metrics. For document sepa- ration, we fine-tune generative Large Language Models (LLMs) and integrate them into a Majority Voting framework, achieving 97.5% accuracy when providing the text of the document. Addi- tionally, our method identifies the start and end indexes for 90.6% of the test dataset, with an accuracy of 98.4% on applicable cases, resulting in an overall accuracy of 89.1% on the entire dataset. This approach surpasses traditional baselines, including regular expres- sions, ChatGPT-4o, and computer vision-based techniques. As a practical outcome, we process 810,977 mathematical documents into machine-readable text and extract precise document bound- aries for 721,288 documents in LaTeX format. These contributions significantly improve accessibility for mathematical information re- trieval systems, machine learning models, and related applications.",
+      "dcterms:source": "folio-assistant-sci/library/arxiv-2604.00554v1/manifest.jsonld",
+      "dcterms:hasVersion": "folio-assistant-sci/library/arxiv-2604.00554v1"
+    },
+    {
+      "@id": "references/wang-rangaiah-2026-mcdm-aggregation",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Multi-Criteria Decision-Making: Aggregation-Type Methods",
+      "dcterms:creator": [
+        "Rangaiah, Prof. GP"
+      ],
+      "dcterms:issued": "D:20250908",
+      "dcterms:source": "cat-harness/library/wang-rangaiah-2026-mcdm-aggregation/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/wang-rangaiah-2026-mcdm-aggregation"
+    },
+    {
+      "@id": "references/arxiv-2505.10399v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Evaluating Model Explanations without Ground Truth",
+      "dcterms:creator": [
+        "Rawal, Kaivalya"
+      ],
+      "dcterms:issued": "D:20250611",
+      "bibo:doi": "10.1145/3715275.3732219",
+      "dcterms:identifier": "https://arxiv.org/abs/2505.10399",
+      "dcterms:abstract": "There can be many competing and contradictory explanations for a single model prediction, making it difficult to select which one to use. Current explanation evaluation frameworks measure qual- ity by comparing against ideal “ground-truth” explanations, or by verifying model sensitivity to important inputs. We outline the limitations of these approaches, and propose three desirable princi- ples to ground the future development of explanation evaluation strategies for local feature importance explanations. We propose a ground-truth Agnostic eXplanation Evaluation framework (AXE) for evaluating and comparing model explanations that satis- fies these principles. Unlike prior approaches, AXE does not require access to ideal ground-truth explanations for comparison, or rely on model sensitivity – providing an independent measure of expla- nation quality. We verify AXE by comparing with baselines, and show how it can be used to detect explanation fairwashing. Our code is available at https://github.com/KaiRawal/Evaluating-Model- Explanations-without-Ground-Truth. CCS Concepts • Computing methodologies →Artificial intelligence; Ma- chine learning.",
+      "dcterms:source": "cat-harness/library/arxiv-2505.10399v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2505.10399v1"
+    },
+    {
+      "@id": "references/immunization-summary-table-3",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Refer to https://www.who.int/teams/immunization-vaccines-and-biologicals/policies/position-papers for latest position paper updates. * For some antigens the WHO position paper does not provide a recommendation on interrupted or delayed schedules at this present time. When the position paper is next revised this will be included. In the meantime, some of the recommendations are",
+      "dcterms:issued": "D:20260107",
+      "dcterms:source": "smart-immunizations/library/immunization-summary-table-3/manifest.jsonld",
+      "dcterms:hasVersion": "smart-immunizations/library/immunization-summary-table-3"
+    },
+    {
+      "@id": "references/immunization-summary-table-1",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Refer to https://www.who.int/teams/immunization-vaccines-and-biologicals/policies/position-papers for latest position paper updates. This table summarizes the WHO vaccination recommendations for children. The ages/intervals cited are to assist the development of country specific schedules and are not for direct use by health workers",
+      "dcterms:issued": "D:20260105",
+      "dcterms:source": "smart-immunizations/library/immunization-summary-table-1/manifest.jsonld",
+      "dcterms:hasVersion": "smart-immunizations/library/immunization-summary-table-1"
+    },
+    {
+      "@id": "references/arxiv-2602.16554v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "MerLean: An Agentic Framework for Autoformalization in Quantum Computation",
+      "dcterms:creator": [
+        "Ren∗, Yuanjie"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2602.16554",
+      "dcterms:abstract": "We introduce MerLean, a fully automated agentic framework for autoformalization in quantum computation. MerLean extracts mathematical statements from LATEX source files, formalizes them into verified Lean 4 code built on Mathlib, and trans- lates the result back into human-readable LATEX for semantic review. We evaluate MerLean on three theoretical quantum computing papers producing 2,050 Lean dec- larations from 114 statements in total. MerLean achieves end-to-end formalization on all three papers, reducing the verification burden to only the newly introduced definitions and axioms. Our results demonstrate that agentic autoformalization can scale to frontier research, offering both a practical tool for machine-verified peer review and a scalable engine for mining high-quality synthetic data to train future reasoning models. Our approach can also be generalized to any other rigorous research in mathematics and theoretical physics.",
+      "dcterms:source": "folio-assistant-sci/library/arxiv-2602.16554v1/manifest.jsonld",
+      "dcterms:hasVersion": "folio-assistant-sci/library/arxiv-2602.16554v1"
+    },
+    {
+      "@id": "references/facilityanalysisguide-immunization",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "facilityanalysisguide-immunization",
+      "dcterms:creator": [
+        "RUSCIANO, Florence"
+      ],
+      "dcterms:issued": "D:20180222",
+      "dcterms:source": "smart-immunizations/library/facilityanalysisguide-immunization/manifest.jsonld",
+      "dcterms:hasVersion": "smart-immunizations/library/facilityanalysisguide-immunization"
+    },
+    {
+      "@id": "references/strauch-carbno-2025-spdx-3-1-supply-chain",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Capturing the Supply Chain as HBOMs, SBOMs and more with SPDX 3.1",
+      "dcterms:creator": [
+        "SBOMs",
+        "3.1, more with SPDX"
+      ],
+      "dcterms:issued": "D:20250913",
+      "dcterms:source": "cat-harness/library/strauch-carbno-2025-spdx-3-1-supply-chain/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/strauch-carbno-2025-spdx-3-1-supply-chain"
+    },
+    {
+      "@id": "references/github-docs-actions-secure-use-reference",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Secure use reference",
+      "dcterms:issued": "D:20261007",
+      "dcterms:source": "cat-harness/library/github-docs-actions-secure-use-reference/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/github-docs-actions-secure-use-reference"
+    },
+    {
+      "@id": "references/mendling-2010-7pmg",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Seven Process Modeling Guidelines (7PMG)",
+      "dcterms:issued": "2010",
+      "dcterms:source": "cat-harness/library/mendling-2010-7pmg/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/mendling-2010-7pmg"
+    },
+    {
+      "@id": "references/immunization-summary-table-2",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Refer to https://www.who.int/teams/immunization-vaccines-and-biologicals/policies/position-papers for latest position paper updates. This table summarizes the WHO vaccination recommendations for children. The ages/intervals cited are for the development of country specific schedules and are not for health workers",
+      "dcterms:creator": [
+        "SHENDALE, Stephanie"
+      ],
+      "dcterms:issued": "D:20260105",
+      "dcterms:source": "smart-immunizations/library/immunization-summary-table-2/manifest.jsonld",
+      "dcterms:hasVersion": "smart-immunizations/library/immunization-summary-table-2"
+    },
+    {
+      "@id": "references/skill-authoring-best-practices---claude-platform-docs",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Skill authoring best practices",
+      "dcterms:issued": "D:20260920",
+      "dcterms:source": "cat-harness/library/skill-authoring-best-practices---claude-platform-docs/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/skill-authoring-best-practices---claude-platform-docs"
+    },
+    {
+      "@id": "references/skills-in-openai-api",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Skills in OpenAI API",
+      "dcterms:issued": "D:20260920",
+      "dcterms:source": "cat-harness/library/skills-in-openai-api/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/skills-in-openai-api"
+    },
+    {
+      "@id": "references/skills-in-openai-api-notebook",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Skills in OpenAI API",
+      "dcterms:source": "cat-harness/library/skills-in-openai-api-notebook/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/skills-in-openai-api-notebook"
+    },
+    {
+      "@id": "references/arxiv-2607.00053v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "SWE-Router: Routing in Multi-turn Agentic Software Engineering Tasks",
+      "dcterms:creator": [
+        "Son, Seongho",
+        "Yoon, Sangwoong",
+        "Tang, Jiahua",
+        "Wang, Shuhan",
+        "Wolf, Lorenz",
+        "Bogunovic, Ilija"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2607.00053",
+      "dcterms:abstract": "Large language models (LLMs) embedded in multi-turn agentic harnesses are reshaping soft- ware engineering (SWE), but routing every task to a frontier model is wasteful when many issues admit cheap fixes. Existing LLM routers operate on the task description alone, which inherits an information-theoretic Bayes-error floor in agentic settings: a similar issue can hide either a localized typo or a multi-module refactor, and the prompt does not separate the two. We introduce SWE- Router, a value-based temporal approach that lets a cheap model run for a few exploratory turns and reads the resulting partial trajectory before de- ciding whether to continue cheaply or to escalate to an expensive model. We provide a Bayes- optimality theorem showing that conditioning on the partial trajectory never harms routing and is strictly better whenever exploration is informative. Across the LLM pairs of weak and strong models spanning the contemporary cost–capability frontier, we show that SWE-Router greatly improves the cost efficiency of SWE tasks, while maintaining the majority of the performances of the stronger model. We additionally release a multi-LLM trajectory dataset which allows reproduction of our trajectory-level routing.",
+      "dcterms:source": "cat-harness/library/arxiv-2607.00053v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2607.00053v1"
+    },
+    {
+      "@id": "references/arxiv-2504.19675v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs",
+      "dcterms:creator": [
+        "Suominen, Osma",
+        "Inkinen, Juho",
+        "Lehtinen, Mona"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2504.19675",
+      "dcterms:abstract": "This paper presents the Annif system in SemEval-2025 Task 5 (LLMs4Subjects), which focussed on subject indexing using large lan- guage models (LLMs). The task required creating subject predictions for bibliographic records from the bilingual TIBKAT database using the GND subject vocabulary. Our ap- proach combines traditional natural language processing and machine learning techniques im- plemented in the Annif toolkit with innovative LLM-based methods for translation and syn- thetic data generation, and merging predictions from monolingual models. The system ranked first in the all-subjects category and second in the tib-core-subjects category in the quantita- tive evaluation, and fourth in qualitative evalu- ations. These findings demonstrate the poten- tial of combining traditional XMTC algorithms with modern LLM techniques to improve the accuracy and efficiency of subject indexing in multilingual contexts.",
+      "dcterms:source": "cat-harness/library/arxiv-2504.19675v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2504.19675v2"
+    },
+    {
+      "@id": "references/sammut-bonnici-galea-2015-swot-analysis",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "SWOT analysis",
+      "dcterms:issued": "D:20141211",
+      "dcterms:source": "cat-harness/library/sammut-bonnici-galea-2015-swot-analysis/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/sammut-bonnici-galea-2015-swot-analysis"
+    },
+    {
+      "@id": "references/reijers-2011-syntax-highlighting",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Syntax Highlighting in Business Process Models",
+      "dcterms:issued": "2011",
+      "dcterms:source": "cat-harness/library/reijers-2011-syntax-highlighting/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/reijers-2011-syntax-highlighting"
+    },
+    {
+      "@id": "references/arxiv-2606.04382v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "LCSHBench: A Multilingual, Consensus-Grounded Benchmark for Library of Congress Subject Heading Assignment",
+      "dcterms:creator": [
+        "Tang, Kwok Leong"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2606.04382",
+      "dcterms:abstract": "Automated subject cataloging assigns controlled- vocabulary headings to bibliographic records, but LCSH has no standard public benchmark. We intro- duce LCSHBench: 22,346 books in 15 languages from the openly licensed Harvard, Columbia, and Prince- ton catalogs. Records enter only when at least two independent cataloging agencies assigned LCSH; we release per-catalog provenance plus union and unani- mous answer views. A concordance study of 465,187 works cataloged by all three libraries shows why this design matters: libraries usually agree on the under- lying topic (93.3% share a concept-level heading) but often differ in exact expression (39.4% have identical heading sets). LCSHBench therefore scores both ex- act and concept matches, with set and rank metrics broken down by language and heading type, across open-vocabulary generation and full-vocabulary re- trieval. As a first demonstration, a low-rank fine-tune of a 300M on-device embedder improves cross-lingual retrieval and beats a 3,072-dimensional hosted em- bedder on development exact recall@200 (0.659 vs 0.623). The language panel shows the gain is not uni- form, and held-out-test and end-to-end confirmation remain future work.",
+      "dcterms:source": "cat-harness/library/arxiv-2606.04382v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2606.04382v1"
+    },
+    {
+      "@id": "references/arxiv-2402.02172v5",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "CodeAgent : Autonomous Communicative Agents for Code Review",
+      "dcterms:creator": [
+        "Tang1, Xunzhu",
+        "Kim2, Kisub",
+        "Song1, Yewei",
+        "Lothritz3, Cedric",
+        "Li4, Bei",
+        "Ezzini5, Saad"
+      ],
+      "dcterms:issued": "D:20240926",
+      "dcterms:identifier": "https://arxiv.org/abs/2402.02172",
+      "dcterms:abstract": "Code review, which aims at ensuring the over- all quality and reliability of software, is a cor- nerstone of software development. Unfortu- nately, while crucial, Code review is a labor- intensive process that the research community is looking to automate. Existing automated methods rely on single input-output generative models and thus generally struggle to emulate the collaborative nature of code review. This work introduces CodeAgent, a novel multi- agent Large Language Model (LLM) system for code review automation. CodeAgent in- corporates a supervisory agent, QA-Checker, to ensure that all the agents’ contributions ad- dress the initial review question. We evaluated CodeAgent on critical code review tasks: (1) detect inconsistencies between code changes and commit messages, (2) identify vulnerabil- ity introductions, (3) validate code style ad- herence, and (4) suggest code revision. The results demonstrate CodeAgent’s effective- ness, contributing to a new state-of-the-art in code review automation. Our data and code are publicly available (https://github. com/Code4Agent/codeagent).",
+      "dcterms:source": "cat-harness/library/arxiv-2402.02172v5/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2402.02172v5"
+    },
+    {
+      "@id": "references/arxiv-2504.21474v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Homa at SemEval-2025 Task 5: Aligning Librarian Records with OntoAligner for Subject Tagging",
+      "dcterms:creator": [
+        "Tekanlou1, Hadi Bayrami Asl",
+        "Razmara1, Jafar",
+        "Sanaei1, Mahsa"
+      ],
+      "dcterms:issued": "D:20250501",
+      "dcterms:identifier": "https://arxiv.org/abs/2504.21474",
+      "dcterms:abstract": "This paper presents our system, Homa, for SemEval-2025 Task 5: Subject Tagging, which focuses on automatically assigning subject la- bels to technical records from TIBKAT us- ing the Gemeinsame Normdatei (GND) tax- onomy. We leverage OntoAligner, a modu- lar ontology alignment toolkit, to address this task by integrating retrieval-augmented genera- tion (RAG) techniques. Our approach formu- lates the subject tagging problem as an align- ment task, where records are matched to GND categories based on semantic similarity. We evaluate OntoAligner’s adaptability for sub- ject indexing and analyze its effectiveness in handling multilingual records. Experimental results demonstrate the strengths and limita- tions of this method, highlighting the potential of alignment techniques for improving subject tagging in digital libraries.",
+      "dcterms:source": "cat-harness/library/arxiv-2504.21474v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2504.21474v1"
+    },
+    {
+      "@id": "references/moody-2009-physics-of-notations",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "The 'Physics' of Notations: Toward a Scientific Basis for Constructing Visual Notations in Software Engineering",
+      "dcterms:issued": "2009",
+      "dcterms:source": "cat-harness/library/moody-2009-physics-of-notations/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/moody-2009-physics-of-notations"
+    },
+    {
+      "@id": "references/w3c-2024-prov-jsonld",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "The PROV-JSONLD Serialization: A JSON-LD Representation for the PROV Data Model",
+      "dcterms:issued": "2024",
+      "dcterms:source": "cat-harness/library/w3c-2024-prov-jsonld/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/w3c-2024-prov-jsonld"
+    },
+    {
+      "@id": "references/mendling-2012-thresholds-error-probability",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Thresholds for error probability measures of business process models",
+      "dcterms:issued": "2012",
+      "dcterms:source": "cat-harness/library/mendling-2012-thresholds-error-probability/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/mendling-2012-thresholds-error-probability"
+    },
+    {
+      "@id": "references/w3c-2013-prov-o",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "PROV-O: The PROV Ontology",
+      "dcterms:creator": [
+        "Timothy Lebo, Rensselaer Polytechnic Institute, USA"
+      ],
+      "dcterms:issued": "D:20261001",
+      "dcterms:abstract": "The PROV Ontology (PROV-O) expresses the PROV Data Model [PROV-DM] using the OWL2 Web Ontology Language (OWL2) [OWL2- OVERVIEW]. It provides a set of classes, properties, and restrictions that can be used to represent and interchange provenance information generated in different systems and under different contexts. It can also be specialized to create new classes and properties to model provenance information for different applications and domains. The PROV Document Overview describes the overall state of PROV, and should be read before other PROV documents. The namespace for all PROV-O terms is http://www.w3.org/ns/prov#. The OWL encoding of the PROV Ontology is available here. Status of This Document This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the W3C technical reports index at http://www.w3.org/TR/. PROV Family of Documents This document is part of the PROV family of documents, a set of documents defining various aspects that are necessary to achieve the vision of inter-operable interchange of provenance information in heterogeneous environments such as the Web. These documents are listed below. Please consult the [PROV-OVERVIEW] for a guide to reading these documents. PROV-OVERVIEW (Note), an overview of the PROV family of documents [PROV-OVERVIEW]; PROV-PRIMER (Note), a primer for the PROV data model [PROV-PRIMER]; PROV-O (Recommendation), the PROV ontology, an OWL2 ontology allowing the mapping of the PROV data model to RDF (this document); PROV-DM (Recommendation), the PROV data model for provenance [PROV-DM]; PROV-N (Recommendation), a notation for provenance aimed at human consumption [PROV-N]; PROV-CONSTRAINTS (Recommendation), a set of constraints applying to the PROV data model [PROV-CONSTRAINTS]; PROV-XML (Note), an XML schema for the PROV data model [PROV-XML]; PROV-AQ (",
+      "dcterms:source": "cat-harness/library/w3c-2013-prov-o/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/w3c-2013-prov-o"
+    },
+    {
+      "@id": "references/immunization-summary-table-4",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Updated December 2025 Antigen Vaccination of Health Care Workers Recommended BCG 1 BCG vaccination is recommended for unvaccinated TST- or IGRA-negative persons at risk of occupational exposure in low and high TB incidence areas (e.g. health-",
+      "dcterms:issued": "D:20241205",
+      "dcterms:source": "smart-immunizations/library/immunization-summary-table-4/manifest.jsonld",
+      "dcterms:hasVersion": "smart-immunizations/library/immunization-summary-table-4"
+    },
+    {
+      "@id": "references/arxiv-2510.19207v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Defending Against Prompt Injection with DataFilter",
+      "dcterms:creator": [
+        "Wang1, Yizhu",
+        "Chen1, Sizhe",
+        "Alkhudair2, Raghad",
+        "Alomair2, Basel",
+        "Wagner1, David"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2510.19207",
+      "dcterms:abstract": "When large language model (LLM) agents are in- creasingly deployed to automate tasks and interact with untrusted external data, prompt injection emerges as a significant security threat. By injecting malicious instructions into the data that LLMs access, an attacker can arbitrarily override the original user task and redirect the agent toward unintended, potentially harmful actions. Existing defenses either require access to model weights (fine-tuning), incur substantial utility loss (detection- based), or demand non-trivial system redesign (system-level). Motivated by this, we propose DataFilter, a test-time model- agnostic defense that removes malicious instructions from the data before it reaches the backend LLM. DataFilter is trained with supervised fine-tuning on simulated injections and leverages both the user’s instruction and the data to selectively strip adversarial content while preserving benign information. Across multiple benchmarks, DataFilter consistently reduces the prompt injection attack success rates to near zero while maintaining the LLMs’ utility. DataFilter delivers strong security, high utility, and plug-and-play deployment, making it a strong practical defense to secure black-box commercial LLMs against prompt injection. Our DataFilter model is released here for immediate use, with the code to reproduce our results here. 1 Index Terms—Large Language Models (LLMs), Prompt Injec- tion, Data Filtering, LLM Security I. INTRODUCTION AI agents [1, 2] have automated diverse tasks like web- navigation and tool-calling. In agents, the Large Language Model (LLM) interacts with the external environment (web- sites, documents, emails, etc.), where the data is untrusted and may contain a prompt injection attack [3, 4]. By injecting a prompt into the data that LLMs access, an attacker can arbitrarily override the original user task and redirect the agent system towards unintended and potentially harmful actions. Successful prompt injection attacks against",
+      "dcterms:source": "cat-harness/library/arxiv-2510.19207v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2510.19207v2"
+    },
+    {
+      "@id": "references/9789241549912-websupplement-eng",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Web supplement WHO recommendations on antenatal care for a positive pregnancy experience: evidence base*",
+      "dcterms:issued": "D:20161128",
+      "dcterms:source": "who-iris/library/9789241549912-websupplement-eng/manifest.jsonld",
+      "dcterms:hasVersion": "who-iris/library/9789241549912-websupplement-eng"
+    },
+    {
+      "@id": "references/9789241549912-webannexes-eng",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "WHO recommendations on antenatal care for a positive pregnancy experience: web annexes *",
+      "dcterms:issued": "D:20161108",
+      "dcterms:source": "who-iris/library/9789241549912-webannexes-eng/manifest.jsonld",
+      "dcterms:hasVersion": "who-iris/library/9789241549912-webannexes-eng"
+    },
+    {
+      "@id": "references/kg-folio-asst-2026-09-30",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "WHO SMART Guidelines: Architecture & Knowledge Content Platform",
+      "dcterms:issued": "2026",
+      "dcterms:source": "cat-harness/library/kg-folio-asst-2026-09-30/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/kg-folio-asst-2026-09-30"
+    },
+    {
+      "@id": "references/smart-trust",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "WHO SMART Trust",
+      "dcterms:source": "smart-base/library/smart-trust/manifest.jsonld",
+      "dcterms:hasVersion": "smart-base/library/smart-trust"
+    },
+    {
+      "@id": "references/arxiv-2106.12880v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Towards Measuring and Quantifying the Comprehensibility of Process Models — The Process Model Comprehension Framework",
+      "dcterms:creator": [
+        "Winter1*, Michael",
+        "Pryss2, Rüdiger",
+        "Fink3, Matthias",
+        "Reichert1, Manfred"
+      ],
+      "dcterms:issued": "D:20210625",
+      "dcterms:identifier": "https://arxiv.org/abs/2106.12880",
+      "dcterms:abstract": "Process models constitute crucial artifacts in modern information systems and, hence, the proper comprehension of these models is of utmost importance in the utilization of such systems. Generally, process models are considered from two different perspectives: process modelers and readers. Both perspectives share similarities and differences in the comprehension of process models (e.g., diverse experiences when working with process models). The literature proposed many rules and guidelines to ensure a proper comprehension of process models for both perspectives. As a novel contribution in this context, this paper introduces the Process Model Comprehension Framework (PMCF) as a ﬁrst step towards the measurement and quantiﬁcation of the perspectives of process modelers and readers as well as the interaction of both regarding the comprehension of process models. Therefore, the PMCF describes an Evaluation Theory Tree based on the Communication Theory as well as the Conceptual Modeling Quality Framework and considers a total of 96 quality metrics in order to quantify process model comprehension. Furthermore, the PMCF was evaluated in a survey with 131 participants and has been implemented as well as applied successfully in a practical case study including 33 participants. To conclude, the PMCF allows for the identiﬁcation of pitfalls and provides related information about how to assist process modelers as well as readers in order to foster and enable a proper comprehension of process models.",
+      "dcterms:source": "cat-harness/library/arxiv-2106.12880v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2106.12880v1"
+    },
+    {
+      "@id": "references/arxiv-2403.16873v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "How accurately can quantitative imaging methods be ranked without ground truth: An upper bound on no-gold-standard evaluation",
+      "dcterms:creator": [
+        "Yan Liua, b",
+        "Jhaa, Abhinav K.",
+        "b"
+      ],
+      "dcterms:issued": "D:20240326",
+      "dcterms:identifier": "https://arxiv.org/abs/2403.16873",
+      "dcterms:abstract": "Objective evaluation of quantitative imaging (QI) methods with patient data, while important, is typically hindered by the lack of gold standards. To address this challenge, no-gold-standard evaluation (NGSE) techniques have been proposed. These techniques have demonstrated efficacy in accurately ranking QI methods without access to gold standards. The development of NGSE methods has raised an important question: how accurately can QI methods be ranked without ground truth. To answer this question, we propose a Cram´er–Rao bound (CRB)-based framework that quantifies the upper bound in ranking QI methods without any ground truth. We present the application of this framework in guiding the use of a well-known NGSE technique, namely the regression-without-truth (RWT) technique. Our results show the utility of this framework in quantifying the performance of this NGSE technique for different patient numbers. These results provide motivation towards studying other applications of this upper bound.",
+      "dcterms:source": "cat-harness/library/arxiv-2403.16873v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2403.16873v1"
+    },
+    {
+      "@id": "references/arxiv-2608.08453v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "What Keeps Agent Skills from Being Reusable? Evidence from 138K SKILL.md Files",
+      "dcterms:creator": [
+        "Zhang, Chi"
+      ],
+      "dcterms:issued": "D:20260811",
+      "dcterms:identifier": "https://arxiv.org/abs/2608.08453",
+      "dcterms:abstract": "Under the current standard, Agent Skills are SKILL.md files that combine instructions with supporting resources, en- abling Large Language Model (LLM) agents to reuse proce- dures beyond a single conversation. Yet many public skills appear to originate from a single task, repository, or conver- sation, even when they are shared as reusable components. We analyze this gap across 138,133 public SKILL.md files from 20,556 repositories using a two-tier defect taxonomy grounded in the official specification and best-practice guid- ance. We find that 91.8% of skills contain at least one de- tected defect, with stable estimates across lenient and strict thresholds (88.8–94.6%). The dominant failures are ordinary packaging problems rather than exotic attacks: weak routing metadata, bloated or non-actionable bodies, and poor re- source organization. A deterministic routing stress test over 20,000 skills shows the functional impact: skills with valid routing metadata are retrieved more reliably from startup descriptions than skills with routing defects. Defect rates vary by platform and provenance: specification-aware skills contain fewer defects, while AI-marked skills show more safety and portability problems. Lightweight enforcement and repair experiments support a quality-assured generation workflow combining spec-aware prompting, lightweight lint- ing, automated repair, and safety gating.",
+      "dcterms:source": "cat-harness/library/arxiv-2608.08453v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2608.08453v1"
+    }
+  ]
+}
