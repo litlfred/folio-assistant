@@ -1,0 +1,181 @@
+# The re-pin train — issue #2873 (owner, 2026-11-01, card Q-SPD-3 B).
+#
+# Re-pin PRs used to chase new layer merges: each push moved the pins again,
+# every check reran, and a newer merge landed before the run ended (fa#2864:
+# 10 pushes, no green run, in 3.5 hours). So re-pins run as a TRAIN instead.
+#
+# On a schedule, every two hours, this workflow:
+#
+#   1. resolves the newest `main` commit of every layer whose pin carries a
+#      standing consent (`trust.standing` in index.config.json) and writes
+#      those pins and the lock ONCE, with `mount:repin:standing`;
+#   2. records the git tree that commit would test, and SKIPS when an earlier
+#      train already tested that tree, when the previous train is still being
+#      checked, or when it passed and is waiting for a person's merge
+#      (`.github/scripts/repin-train.ts decide`);
+#   3. otherwise pushes `repin-train/<stamp>` and opens ONE PR labelled
+#      `repin-train`, closing an earlier train that had new failures.
+#
+# Nothing re-pins a train branch after it opens: its pins stay frozen, and the
+# next train picks up whatever merged in the meantime.
+#
+# The merge rule is `repin-train-verdict.yml`: a train PR may merge when its
+# checks show no new failures compared with fa main. This workflow never
+# merges; a person does.
+
+#
+# TRIGGERS, ACTUAL (the owner's decision, card Q-SPD-3 B): `schedule` (every two hours) and `workflow_dispatch`. It
+# opens PRs; no PR or push to main triggers it.
+
+name: Re-pin train
+
+on:
+  schedule:
+    - cron: '17 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repin-train
+  cancel-in-progress: false
+
+jobs:
+  train:
+    name: Freeze the pins and open one train PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: write
+      statuses: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.4
+      - name: Cache remote mounts (bean cis1)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
+      - name: Mount the layers from the lock
+        run: bash .github/mount-from-lock.sh --root .
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Freeze this train's pins (standing consent only)
+        id: pins
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          bun run cat mount:repin:standing --summary-file "$RUNNER_TEMP/repin.md"
+          git config user.name "repin-train[bot]"
+          git config user.email "repin-train@users.noreply.github.com"
+          git add -u
+          if git diff --cached --quiet; then
+            echo "No pin moved: every layer is at its newest main commit." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "moved=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          stamp=$(date -u +%Y%m%d-%H%M)
+          git checkout -b "repin-train/$stamp"
+          git commit -q -F - <<EOF
+          Re-pin train $stamp
+
+          Pins frozen at $(date -u +%Y-%m-%dT%H:%MZ) by repin-train.yml (issue #2873):
+          every layer with a standing consent moved to its newest main commit.
+          EOF
+          echo "moved=true" >> "$GITHUB_OUTPUT"
+          echo "branch=repin-train/$stamp" >> "$GITHUB_OUTPUT"
+          echo "stamp=$stamp" >> "$GITHUB_OUTPUT"
+          echo "tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_OUTPUT"
+
+      - name: Skip a tree already tested, or a train still running
+        id: decide
+        if: steps.pins.outputs.moved == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TREE: ${{ steps.pins.outputs.tree }}
+        run: |
+          set -euo pipefail
+          bun .github/scripts/repin-train.ts decide --tree "$TREE" | tee -a "$GITHUB_OUTPUT"
+          grep '^reason=' "$GITHUB_OUTPUT" | tail -1 | sed 's/^reason=/Train decision: /' >> "$GITHUB_STEP_SUMMARY"
+
+      # PUSH_BRANCH_TRIGGERING_CI, as in merge-main.yml: a push made with the
+      # default token starts no pull_request workflow, so the harness App (or
+      # the repository secret) pushes when it is set up, and the dispatch
+      # fallback below covers the rest.
+      - id: bot
+        if: steps.decide.outputs.action == 'open' && vars.HARNESS_BOT_ID != ''
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ vars.HARNESS_BOT_ID }}
+          private-key: ${{ secrets.HARNESS_BOT_PRIVATE_KEY }}
+
+      - name: Push the train and open its PR
+        id: open
+        if: steps.decide.outputs.action == 'open'
+        env:
+          PUSH_TOKEN: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ steps.pins.outputs.branch }}
+          STAMP: ${{ steps.pins.outputs.stamp }}
+          TREE: ${{ steps.pins.outputs.tree }}
+          CLOSE: ${{ steps.decide.outputs.close }}
+          GIT_CONFIG_GLOBAL: /dev/null
+          GIT_CONFIG_NOSYSTEM: "1"
+        run: |
+          set -euo pipefail
+          url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git"
+          auth=$(printf 'x-access-token:%s' "$PUSH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          GIT_CONFIG_COUNT=3 \
+          GIT_CONFIG_KEY_0="http.$GITHUB_SERVER_URL/.extraheader" GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth" \
+          GIT_CONFIG_KEY_1=core.hooksPath GIT_CONFIG_VALUE_1=/dev/null \
+          GIT_CONFIG_KEY_2=credential.helper GIT_CONFIG_VALUE_2= \
+            git push "$url" "HEAD:refs/heads/$BRANCH"
+          gh label create repin-train --color 0E8A16 --description "A 2-hour re-pin train (issue #2873)" --force
+          {
+            echo "Pins frozen by the re-pin train at $STAMP UTC (issue #2873). Nothing re-pins this branch again; the next train picks up later merges."
+            echo
+            cat "$RUNNER_TEMP/repin.md" 2>/dev/null || true
+            echo
+            echo "**Merge rule:** this PR may merge when the status \`repin-train / no new failures\` is green: no check fails here that passes on fa main. A person merges it."
+            echo
+            echo "<!-- repin-train:tree=$TREE -->"
+          } > "$RUNNER_TEMP/body.md"
+          number=$(gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$BRANCH" \
+            --title "Re-pin train $STAMP" --label repin-train --body-file "$RUNNER_TEMP/body.md" \
+            | grep -oE '[0-9]+$')
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+          echo "Opened train #$number from $BRANCH" >> "$GITHUB_STEP_SUMMARY"
+          for old in $CLOSE; do
+            gh pr close "$old" --repo "$GITHUB_REPOSITORY" --delete-branch \
+              --comment "Replaced by train #$number: this train had new failures compared with fa main, and its pins were frozen."
+          done
+
+      # A push made with GITHUB_TOKEN starts no pull_request workflow, so the
+      # gates are dispatched on the branch instead (the same fallback as
+      # merge-main.yml's "Have CI judge the merge commit").
+      - name: Have CI judge the train
+        if: steps.open.outputs.number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ steps.pins.outputs.branch }}
+          PUSHED_AS_BOT: ${{ steps.bot.outputs.token != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '' }}
+        run: |
+          if [ "$PUSHED_AS_BOT" = "true" ]; then
+            echo "pushed with a token that starts pull_request workflows; nothing to dispatch"
+            exit 0
+          fi
+          gh workflow run code-quality-gates.yml --repo "$GITHUB_REPOSITORY" --ref "$BRANCH"
