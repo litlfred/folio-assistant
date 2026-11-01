@@ -374,10 +374,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-01T16:02:15.237Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
-  "sourceCommitSha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
-  "sourceCommitAt": "2026-11-01T15:44:06Z",
+  "generatedAt": "2026-11-01T16:41:18.129Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2d6558d432acdbb829ec4d306f7d0f9a4c55e6f1",
+  "sourceCommitSha": "2d6558d432acdbb829ec4d306f7d0f9a4c55e6f1",
+  "sourceCommitAt": "2026-11-01T16:21:06Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -560,6 +560,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/library"
       ],
       "description": "L1 source documents materialized for smart-trust: the GDHCN Administrative and Operational Framework 1.2 (9 October 2026), the legal source document for GDHCN definitions and Trust Domains (owner, 2026-11-01: \"admin framework is the legal source document for GDHCN\"). Every knowledge-graph reference to the Framework resolves through here, and `check:materialized-fixity` verifies its SHA-256 digest against `catalogue/`.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-trust/directory/library",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/library"
     },
@@ -576,6 +577,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/catalogue"
       ],
       "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and materialization fixity (`folio-catalogue-node/v1`) records for the documents materialized in `library/`: the GDHCN Administrative and Operational Framework 1.2. `bun run cat check:catalogue` and `bun run cat check:materialized-fixity` verify every node, metadataRef, libraryId, localPath and SHA-256 digest.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-trust/directory/smart-trust-catalogue",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-catalogue"
     },
@@ -592,6 +594,7 @@
         "https://litlfred.github.io/folio-assistant-core/v0/ns#graphTypology/glossary"
       ],
       "description": "The primary GDHCN glossary (`gdhcn.glossary.json`, folio-glossary/v1): the 21 definitions in Section II of the GDHCN Administrative and Operational Framework 1.2, quoted from the L1 copy in `library/`. The Framework is the legal source (owner, 2026-11-01); IG-only terms may be added in a separate scheme and never override it. Rendered and checked by check:glossary.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-trust/directory/glossary",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/glossary"
     },
@@ -608,6 +611,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/translation-sources"
       ],
       "description": "The gettext side of smart-trust's own strings, one directory per target locale: today the `glossary/` templates of the GDHCN glossary (`glossary/gdhcn.glossary.json`). A scheme's translations sit with the instance whose terms they translate (owner, 2026-10-04, bean riit). Written by `bun run cat glossary:pot`.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-trust/directory/smart-trust-translations",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-translations"
     },
@@ -700,8 +704,8 @@
   ],
   "staging": {
     "branch": "repin-train/20261101-1524",
-    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "sha": "2d6558d432acdbb829ec4d306f7d0f9a4c55e6f1",
     "pr": "2876/merge",
-    "run": "41322715298"
+    "run": "41325886056"
   }
 }
