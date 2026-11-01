@@ -1,0 +1,48 @@
+{
+  "$ref": "#/definitions/DataAttribute",
+  "definitions": {
+    "DataAttribute": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cardinality": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "logical-model",
+            "property",
+            "documentation"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "source"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataAttributeSchema.schema.json",
+  "title": "DataAttributeSchema",
+  "description": "Generated from `DataAttributeSchema` in archimate/schemas/diagrams.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "ffe4449ac4c8ad3acdf4196e94b3af83e5d93947",
+    "pr": "2885/merge",
+    "run": "41346355179"
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/tool-types/HarnessStates.schema.json",
+  "title": "HarnessStates",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "$schema": {
+        "type": "string",
+        "const": "folio-harness-state/v1"
+      },
+      "harness": {
+        "type": "string",
+        "minLength": 1
+      },
+      "initialization": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "string",
+            "minLength": 1
+          },
+          "next": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "step": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "action": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "step",
+                  "action"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "counts": {
+            "type": "object",
+            "properties": {
+              "done": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "not-done": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "could-not-determine": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "stated": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "done",
+              "not-done",
+              "could-not-determine",
+              "stated"
+            ],
+            "additionalProperties": false
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "namedBy": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "what": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "done",
+                    "not-done",
+                    "could-not-determine",
+                    "stated"
+                  ]
+                },
+                "detail": {
+                  "type": "string"
+                },
+                "action": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "namedBy",
+                "what",
+                "state",
+                "detail"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "position",
+          "next",
+          "counts",
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "health": {
+        "type": "object",
+        "properties": {
+          "badges": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "enum": [
+                    "initialization",
+                    "repository"
+                  ]
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "ok",
+                    "finding",
+                    "unknown"
+                  ]
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "id",
+                "state",
+                "label"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "badges"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "$schema",
+      "harness",
+      "initialization",
+      "health"
+    ],
+    "additionalProperties": false
+  },
+  "description": "Every harness's initialization position, next step and health badges, in name order.",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "ffe4449ac4c8ad3acdf4196e94b3af83e5d93947",
+    "pr": "2885/merge",
+    "run": "41346355179"
+  }
+}

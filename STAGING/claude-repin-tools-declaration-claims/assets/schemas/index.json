@@ -2283,6 +2283,15 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/sdlc/read-projections.ts",
+      "instance": "cat-harness-tools",
+      "name": "read-projections",
+      "graphNode": "none",
+      "reason": "a table of pure functions and the hook that reports them",
+      "summary": "Projected reads: a reader that uses only part of a file says so, and a",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/sdlc/red-flag.ts",
       "instance": "cat-harness-tools",
       "name": "red-flag",
@@ -6814,6 +6823,13 @@
           "optional": true,
           "array": true,
           "doc": "The document's tables that are drawn from data (`archimate-blocks`)."
+        },
+        {
+          "name": "poster",
+          "type": "z .object({ noteProperty: z.string().min(1).optional(), starProperty: z.string().min(1).optional(), starLabel: z.string…",
+          "optional": true,
+          "array": false,
+          "doc": "How banded views are drawn as posters (`render-poster.ts`): the element"
         }
       ],
       "extendsNames": [],
@@ -54920,6 +54936,19 @@
           "array": false
         }
       ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/read-projections.ts#ProjectionName",
+      "name": "ProjectionName",
+      "module": "cat-harness-tools/schemas/sdlc/read-projections.ts",
+      "kind": "type-alias",
+      "fields": [],
       "extendsNames": [],
       "values": [],
       "refs": [],

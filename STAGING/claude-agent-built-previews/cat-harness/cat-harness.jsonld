@@ -370,10 +370,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-11-01T18:29:43.497Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a2c42555e609c3a24560058fc7096bbb80127b18",
-  "sourceCommitSha": "a2c42555e609c3a24560058fc7096bbb80127b18",
-  "sourceCommitAt": "2026-11-01T17:57:21Z",
+  "generatedAt": "2026-11-01T20:41:28.010Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ffe4449ac4c8ad3acdf4196e94b3af83e5d93947",
+  "sourceCommitSha": "ffe4449ac4c8ad3acdf4196e94b3af83e5d93947",
+  "sourceCommitAt": "2026-11-01T20:20:31Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -388,7 +388,7 @@
     "Lane": 175,
     "ProcessNode": 1029,
     "Tool": 167,
-    "Schema": 177,
+    "Schema": 183,
     "ExternalSchema": 28,
     "GraphTypology": 53,
     "Role": 44,
@@ -53254,6 +53254,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/change-size"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/harness-state",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "harness-state",
+      "title": "harness-state",
+      "summary": "One harness's state as `harness:state` publishes it (`folio-harness-state/v1`).",
+      "module": "schemas/sdlc/harness-state.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/harness-state"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/health-report",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "health-report",
@@ -53524,6 +53534,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/viewer-nav-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/store-tool-results",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "store-tool-results",
+      "title": "store-tool-results",
+      "summary": "Typed results of the tools that read and write the harness's data stores —",
+      "module": "schemas/tools/store-tool-results.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/store-tool-results"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/tool-invocation",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "tool-invocation",
@@ -53588,6 +53608,16 @@
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/workflow-tool-results",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "workflow-tool-results",
+      "title": "workflow-tool-results",
+      "summary": "Typed results of the workflow engine's tools (issue",
+      "module": "schemas/tools/workflow-tool-results.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/workflow-tool-results"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/board-positions",
@@ -53781,6 +53811,36 @@
       "module": "archimate/schemas/archimate.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/archimate",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/archimate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/diagrams",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "diagrams",
+      "title": "diagrams",
+      "summary": "Derived UML data class diagrams and sequence diagrams from an ArchiMate model",
+      "module": "archimate/schemas/diagrams.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/diagrams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/metamodel",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "metamodel",
+      "title": "metamodel",
+      "summary": "The metamodel a model actually uses, derived from the model and checked",
+      "module": "archimate/schemas/metamodel.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/metamodel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/rules",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "rules",
+      "title": "rules",
+      "summary": "`archimate-relationship-rules/v1`: the relationships a reference",
+      "module": "archimate/schemas/rules.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rules"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/openapi",
@@ -84541,6 +84601,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/change-size"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#schema/harness-state",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/harness-state",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/harness-state"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#schema/health-report",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/health-report",
@@ -84703,6 +84769,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/viewer-nav-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#schema/store-tool-results",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/store-tool-results",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/store-tool-results"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#schema/tool-invocation",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/tool-invocation",
@@ -84737,6 +84809,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/tool",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/tool"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#schema/workflow-tool-results",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/workflow-tool-results",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/workflow-tool-results"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#schema/board-positions",
@@ -84851,6 +84929,24 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/archimate",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/archimate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#schema/diagrams",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/diagrams",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/diagrams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#schema/metamodel",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/metamodel",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/metamodel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#schema/rules",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/rules",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/schema/rules"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness.jsonld#schema/openapi",
@@ -85557,8 +85653,8 @@
   ],
   "staging": {
     "branch": "claude/agent-built-previews",
-    "sha": "a2c42555e609c3a24560058fc7096bbb80127b18",
+    "sha": "ffe4449ac4c8ad3acdf4196e94b3af83e5d93947",
     "pr": "2885/merge",
-    "run": "41334082096"
+    "run": "41346355179"
   }
 }

@@ -10866,7 +10866,12 @@
     // image the column has SHRUNK qualifies: one shown at its own size is
     // already readable and gains nothing but chrome.
     var rasterOk = !!document.querySelector("[data-fa-figure-images]");
-    var sel = ".main-content img[src$='.svg'], .main-content svg, .main-content object[data$='.svg']" +
+    // A rendered DOCUMENT (`.fa-doc`, a handbook or guideline page) says the
+    // same thing by being one: its images are the publication's figures, never
+    // card faces, so every large one gets the controls, shrunk or not. A
+    // reader still wants to zoom, pan and copy a figure shown at its own size.
+    var docFigures = ".fa-doc img";
+    var sel = ".main-content img[src$='.svg'], .main-content svg, .main-content object[data$='.svg'], " + docFigures +
       (rasterOk ? ", .main-content img" : "");
 
     document.querySelectorAll(sel).forEach(function (node) {
@@ -10888,7 +10893,8 @@
         }
         var shown = node.getBoundingClientRect().width;
         var column = node.parentElement ? node.parentElement.clientWidth : 0;
-        if (shown < MIN_FIGURE_PX || node.naturalWidth <= shown + 1 || shown < 0.9 * column) return;
+        if (shown < MIN_FIGURE_PX) return;
+        if (!node.closest(".fa-doc") && (node.naturalWidth <= shown + 1 || shown < 0.9 * column)) return;
       }
       var box = node.getBoundingClientRect();
       if (box.width < MIN_FIGURE_PX && box.height < MIN_FIGURE_PX) return;

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 30,
+      "count": 28,
       "unit": "open beans"
     }
   },
@@ -409,14 +409,14 @@
     {
       "id": "folio-assistant-x09n",
       "title": "Unpinned third-party actions in write-token workflows (smart-base, smart-ra, smart-immunizations)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-33iz",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:20:00Z",
-      "updatedAt": "2026-10-31T04:22:00Z",
+      "updatedAt": "2026-11-01T19:40:00Z",
       "preview": "**Category:** security (RED FLAG, blocking) · **severity:** major · **rule:** scz-pin-third-party-by-full-sha (security.md row \"a third-party action → a runner\": `security:gate` blocks this)\n\n**Where (tag or branch refs, no SHA):**\n- smart-ra `release.yml`: `actions/checkout@v2` (line 22) and `WorldHealthOrganization/smart-html/.github/workflows/release.yml@main` (38) with `contents`, `pages`, `id",
       "file": "beans/defs/folio-assistant-x09n--unpinned-third-party-actions-in-write-token-workfl.md"
     },
@@ -437,14 +437,14 @@
     {
       "id": "folio-assistant-ylu8",
       "title": "Workflows with no permissions block run with the repository's default token",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-33iz",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T04:20:00Z",
-      "updatedAt": "2026-10-31T04:15:00Z",
+      "updatedAt": "2026-11-01T19:40:00Z",
       "preview": "**Category:** security · **severity:** minor · **rule:** scz-least-privilege\n\n**Where:** no top-level or job-level `permissions:` in smart-base `release.yml` and `fhirbuild.yml`; smart-immunizations `release.yml` and `fhirbuild.yml`; smart-ra `fhirbuild.yml` and `ghbuild.yml`. Each then inherits whatever default the repository setting gives `GITHUB_TOKEN`, and the `release.yml` ones pass it on to ",
       "file": "beans/defs/folio-assistant-ylu8--workflows-with-no-permissions-block-run-with-the-r.md"
     }
@@ -477,8 +477,8 @@
         "share": 0
       }
     ],
-    "orphanOpen": 27,
-    "openTotal": 30,
+    "orphanOpen": 25,
+    "openTotal": 28,
     "coveredOpen": 2,
     "duplicateIds": 0
   }

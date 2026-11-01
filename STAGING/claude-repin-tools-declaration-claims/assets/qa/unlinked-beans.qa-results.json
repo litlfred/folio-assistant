@@ -15,10 +15,10 @@
       "entries": [
         {
           "status": "completed",
-          "total": 1299,
+          "total": 1301,
           "instance": 15,
           "namedId": 96,
-          "none": 1188
+          "none": 1190
         },
         {
           "status": "scrapped",
@@ -64,7 +64,7 @@
     },
     "open-bean-unlinked": {
       "summary": "WARNING, never a failure. An open bean (todo, in-progress, draft) that no workflow instance names and whose file names no process or activity id of a declared diagram. It may belong to a process not yet in the graph; the groups say which ones cluster.",
-      "count": 28,
+      "count": 26,
       "entries": [
         {
           "severity": "warning",
@@ -74,7 +74,7 @@
           "parent": "folio-assistant-uhkv",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.526
+          "cosine": 0.527
         },
         {
           "severity": "warning",
@@ -84,7 +84,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-33iz",
-          "cosine": 0.845
+          "cosine": 0.847
         },
         {
           "severity": "warning",
@@ -124,7 +124,7 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.342
+          "cosine": 0.341
         },
         {
           "severity": "warning",
@@ -134,7 +134,7 @@
           "parent": "folio-assistant-sb31",
           "basis": "none",
           "group": "folio-assistant-sb31",
-          "cosine": 0.791
+          "cosine": 0.792
         },
         {
           "severity": "warning",
@@ -284,7 +284,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.646
+          "cosine": 0.645
         },
         {
           "severity": "warning",
@@ -304,7 +304,7 @@
           "parent": "folio-assistant-sb31",
           "basis": "none",
           "group": "folio-assistant-sb31",
-          "cosine": 0.827
+          "cosine": 0.828
         },
         {
           "severity": "warning",
@@ -318,16 +318,6 @@
         },
         {
           "severity": "warning",
-          "bean": "folio-assistant-x09n",
-          "title": "Unpinned third-party actions in write-token workflows (smart-base, smart-ra, smart-immunizations)",
-          "status": "in-progress",
-          "parent": "folio-assistant-33iz",
-          "basis": "none",
-          "group": "folio-assistant-33iz",
-          "cosine": 0.731
-        },
-        {
-          "severity": "warning",
           "bean": "folio-assistant-yj32",
           "title": "HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system",
           "status": "todo",
@@ -335,16 +325,6 @@
           "basis": "none",
           "group": "folio-assistant-yj32",
           "cosine": 0.438
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-ylu8",
-          "title": "Workflows with no permissions block run with the repository's default token",
-          "status": "in-progress",
-          "parent": "folio-assistant-33iz",
-          "basis": "none",
-          "group": "folio-assistant-33iz",
-          "cosine": 0.751
         }
       ]
     },
@@ -486,37 +466,6 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-33iz",
-          "size": 3,
-          "size_class": "small",
-          "nearest_epic": "folio-assistant-33iz",
-          "nearest_epic_title": "Security and QA review of the FHIR and SMART layers (2026-10-31)",
-          "mean_cosine": 0.776,
-          "terms": [
-            "group security",
-            "smart-ra release",
-            "security review",
-            "first-party reusable",
-            "smart-html release",
-            "reusable workflows",
-            "four repos",
-            "smart-immunizations"
-          ],
-          "beans": [
-            "folio-assistant-33iz",
-            "folio-assistant-x09n",
-            "folio-assistant-ylu8"
-          ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-33iz",
-              "beans": 2
-            }
-          ],
-          "known_processes": []
-        },
-        {
-          "severity": "warning",
           "group": "folio-assistant-sb31",
           "size": 3,
           "size_class": "small",
@@ -592,9 +541,30 @@
               "beans": 1
             }
           ]
+        },
+        {
+          "severity": "warning",
+          "group": "folio-assistant-33iz",
+          "size": 1,
+          "size_class": "singleton",
+          "nearest_epic": "folio-assistant-33iz",
+          "nearest_epic_title": "Security and QA review of the FHIR and SMART layers (2026-10-31)",
+          "mean_cosine": 0.847,
+          "terms": [
+            "security",
+            "group",
+            "secret-pattern",
+            "disclose",
+            "path-containment"
+          ],
+          "beans": [
+            "folio-assistant-33iz"
+          ],
+          "filed_under": [],
+          "known_processes": []
         }
       ]
     }
   },
-  "total": 38
+  "total": 36
 }

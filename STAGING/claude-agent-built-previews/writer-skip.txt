@@ -1,86 +1,71 @@
-  writer skip: ON (records of aff8bfa0c89b, 35 writer(s))
-  handler:index runs: . changed [decided in 0.1s]
-  ig-index:build runs: not recorded: git ls-remote is not a read-only command the cone replays [decided in 0.0s]
-  ran handler:index (reuse off) [4.0s]
-  uml:overview runs: . changed [decided in 0.0s]
-  ran ig-index:build (reuse off) [15.7s]
-  smart-base:document-kinds runs: . changed [decided in 0.0s]
-  ran smart-base:document-kinds (reuse off) [0.7s]
+  writer skip: ON (no records: every writer runs)
+  ran handler:index (reuse off) [3.7s]
+  ran ig-index:build (reuse off) [11.7s]
+  ran smart-base:document-kinds (reuse off) [0.6s]
+qa:refresh: kg:audit:all runs: no writer records from a full deploy
+qa:refresh: kg:detangle runs: no writer records from a full deploy
+qa:refresh: translation:block-qa runs: no writer records from a full deploy
+qa:refresh: qa-sweep:docs runs: no writer records from a full deploy
   voice gate: 42 criterion(s) skipped — this folio activates agent-skill-authoring (voice-overlay-address-adjudicator, voice-overlay-address-administrator, voice-overlay-address-author, voice-overlay-address-authoring-agent, voice-overlay-address-business-analyst, voice-overlay-address-clinical-sme, voice-overlay-address-code-reviewer, voice-overlay-address-compute-authoring-agent, voice-overlay-address-deep-researcher, voice-overlay-address-docs-authoring-agent, voice-overlay-address-editor, voice-overlay-address-editorial-authoring-agent, voice-overlay-address-evidence-agent, voice-overlay-address-feedback-provider, voice-overlay-address-ingestion-agent, voice-overlay-address-integration-watcher, voice-overlay-address-lean-authoring-agent, voice-overlay-address-librarian, voice-overlay-address-narrative-reviewer, voice-overlay-address-onboarding-agent, voice-overlay-address-platform-authoring-agent, voice-overlay-address-programme-manager, voice-overlay-address-proof-review-agent, voice-overlay-address-publication-manager, voice-overlay-address-qc-reviewer, voice-overlay-address-review-coordinator, voice-overlay-address-reviewer, voice-overlay-address-session-coordinator, voice-overlay-address-sibling-session, voice-overlay-address-stakeholder, voice-overlay-address-terminologist, voice-overlay-address-translation-adjudicator, voice-overlay-address-translation-coordinator, voice-overlay-address-translator, voice-overlay-address-user, voice-overlay-milnor, voice-overlay-technical-writer, voice-overlay-who-digital-health, voice-overlay-who-digital-transformation-handbook, voice-overlay-who-editorial, voice-overlay-who-guideline-development, voice-overlay-who-publication-design)
-  subgraph:jsonld runs: not recorded: the trace is 307526211 bytes, more than 268435456 [decided in 0.0s]
-  ran subgraph:jsonld (reuse off) [31.0s]
-  library:viz runs: cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html changed [decided in 0.1s]
-  voices:viz runs: cat-harness/docs/assets/library/index.json changed [decided in 0.0s]
-  ran voices:viz (reuse off) [1.0s]
-  theme:viz runs: build/qa-refresh.json changed [decided in 0.0s]
+qa:refresh: check:l1-complete runs: no writer records from a full deploy
+qa:refresh: p2:refusals runs: no writer records from a full deploy
+qa:refresh: lsi:index:cat-harness:skills runs: no writer records from a full deploy
+qa:refresh: lsi:index:library runs: no writer records from a full deploy
+qa:refresh: lsi:audit runs: no writer records from a full deploy
+qa:refresh: docs:pages runs: no writer records from a full deploy
+qa:refresh: viewer:nav:audit runs: no writer records from a full deploy
+qa:refresh: eval:crdm-detect runs: no writer records from a full deploy
+qa:refresh: root-scan-census runs: no writer records from a full deploy
+qa:refresh: skill:register runs: no writer records from a full deploy
+qa:refresh: term:mapping runs: no writer records from a full deploy
+qa:refresh: check:harness-state runs: no writer records from a full deploy
+qa:refresh: check:wireframes runs: no writer records from a full deploy
+qa:refresh: check:source-licence runs: no writer records from a full deploy
+qa:refresh: check:layout-norms runs: no writer records from a full deploy
+qa:refresh: check:rendered-labels runs: no writer records from a full deploy
+qa:refresh: check:lane-documentation runs: no writer records from a full deploy
+qa:refresh: check:methodology-evidence runs: no writer records from a full deploy
+qa:refresh: check:avatar-coverage runs: no writer records from a full deploy
+qa:refresh: check:unlinked-beans runs: no writer records from a full deploy
+qa:refresh: kg:export runs: no writer records from a full deploy
+qa:refresh: check:reference-direction runs: no writer records from a full deploy
+qa:refresh: audit:coverage runs: no writer records from a full deploy
+qa:refresh: readme:subgraphs runs: no writer records from a full deploy
+  ran subgraph:jsonld (reuse off) [28.7s]
+  ran voices:viz (reuse off) [0.9s]
   ran theme:viz (reuse off) [0.7s]
-  uploads:viz runs: fhir-harness/library/cucumber-2024-gherkin-reference changed [decided in 0.3s]
   ran uploads:viz (reuse off) [2.3s]
-  document-kinds:viz runs: fhir-harness/package.json changed [decided in 0.0s]
-  ran document-kinds:viz (reuse off) [1.0s]
-  skills:docs runs: .git/branch-mounts/beans.json changed [decided in 0.0s]
-  ran skills:docs (reuse off) [6.2s]
-  node-kinds runs: .git/branch-mounts/beans.json changed [decided in 0.0s]
-  ran node-kinds (reuse off) [1.7s]
-  node-kind:pages runs: .git/branch-mounts/beans.json changed [decided in 0.0s]
-  ran node-kind:pages (reuse off) [2.9s]
-  glossary:page runs: fhir-harness/glossary/generated/fhir-harness/kg-schema-fields.glossary.json changed [decided in 0.0s]
-  ran glossary:page (reuse off) [16.7s]
-  bibliography:page runs: fhir-harness/package.json changed [decided in 0.0s]
-  ran bibliography:page (reuse off) [0.7s]
-  smart:pages runs: not recorded: the writer reads smart-base/docs/artifact and then rewrites it [decided in 0.0s]
+  ran document-kinds:viz (reuse off) [0.9s]
+  ran skills:docs (reuse off) [6.0s]
+  ran node-kinds (reuse off) [1.6s]
+  ran node-kind:pages (reuse off) [2.6s]
+  ran glossary:page (reuse off) [14.6s]
+  ran bibliography:page (reuse off) [0.6s]
   ran smart:pages (reuse off) [0.8s]
-  jsonld:contexts runs: .github/scripts changed [decided in 0.0s]
-  ran jsonld:contexts (reuse off) [1.7s]
-  tools:viz runs: build/qa-refresh.json changed [decided in 0.0s]
-  smart-base:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output [decided in 0.0s]
-  smart-trust:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output [decided in 0.0s]
-  smart-trust-phw:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output [decided in 0.0s]
-  ran smart-trust-phw:pages (reuse off) [0.8s]
-  ran smart-base:pages (reuse off) [1.2s]
-  smart-base:l1-extraction:pages runs: fhir-harness/package.json changed [decided in 0.0s]
-  ran smart-trust:pages (reuse off) [1.2s]
+  ran jsonld:contexts (reuse off) [1.6s]
+  ran smart-trust-phw:pages (reuse off) [0.7s]
+  ran smart-trust:pages (reuse off) [1.0s]
+  ran smart-base:pages (reuse off) [1.1s]
   ran smart-base:l1-extraction:pages (reuse off) [0.9s]
-  ran tools:viz (reuse off) [3.5s]
-  auto:docs runs: cat-harness/docs/ar/folio-assistant-core/glossary/index.md changed [decided in 0.0s]
-  ran auto:docs (reuse off) [10.5s]
-  lsi:viz runs: beans/defs/archive/folio-assistant-96y4--smart-immunizations-has-no-bpmn-immza-i-exist-only.md changed [decided in 0.0s]
-  ran lsi:viz (reuse off) [3.2s]
-  translation:status runs: build/qa-refresh.json changed [decided in 0.0s]
-  ran translation:status (reuse off) [1.5s]
-  openapi:viz runs: fhir-harness/package.json changed [decided in 0.0s]
-  ran openapi:viz (reuse off) [0.3s]
-  schema:viz runs: .git/branch-mounts/beans.json changed [decided in 0.0s]
+  ran tools:viz (reuse off) [3.2s]
+  ran auto:docs (reuse off) [9.4s]
+  ran lsi:viz (reuse off) [3.4s]
+  ran translation:status (reuse off) [1.4s]
+  ran openapi:viz (reuse off) [0.2s]
   ran schema:viz (reuse off) [3.7s]
-  methodologies:viz runs: cat-harness/docs/assets/library/index.json changed [decided in 0.0s]
   ran methodologies:viz (reuse off) [2.1s]
-  external-schemas:viz runs: .github/scripts changed [decided in 0.0s]
-  ran external-schemas:viz (reuse off) [6.3s]
-  subscriptions:viz runs: fhir-harness/package.json changed [decided in 0.0s]
-  ran subscriptions:viz (reuse off) [0.3s]
-  docs:pages runs: .git/branch-mounts/beans.json changed [decided in 0.0s]
-  ran docs:pages (reuse off) [2.4s]
-  docs:harness runs: .github/scripts changed [decided in 0.0s]
-  ran docs:harness (reuse off) [5.2s]
-  navbar:include runs: cat-harness/docs/_data/harness.json changed [decided in 0.0s]
+  ran external-schemas:viz (reuse off) [6.4s]
+  ran subscriptions:viz (reuse off) [0.2s]
+  ran docs:pages (reuse off) [2.2s]
+  ran docs:harness (reuse off) [4.8s]
   ran navbar:include (reuse off) [0.2s]
-  kind:table runs: cat-harness/docs/cat-harness changed [decided in 0.0s]
   ran kind:table (reuse off) [0.1s]
-  avatars:css runs: cat-harness/site-chrome/assets/css changed [decided in 0.0s]
-  ran avatars:css (reuse off) [0.2s]
-  themes:css runs: cat-harness/docs/_data changed [decided in 0.0s]
-  ran themes:css (reuse off) [0.6s]
-  folio:viz runs: cat-harness/docs/assets/folio changed [decided in 0.0s]
+  ran avatars:css (reuse off) [0.1s]
+  ran themes:css (reuse off) [0.7s]
   ran folio:viz (reuse off) [0.8s]
-  kg:viewer runs: cat-harness/docs/cat-harness changed [decided in 0.0s]
-  ran kg:viewer (reuse off) [0.6s]
-  state:visualizer runs: .git/branch-mounts/beans.json changed [decided in 0.0s]
-  ran state:visualizer (reuse off) [9.2s]
-  site:viz runs: not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git) [decided in 0.0s]
-  ran site:viz (reuse off) [1.5s]
-  slice:sqlite runs: not recorded: git status is not a read-only command the cone replays [decided in 0.0s]
-  ran slice:sqlite (reuse off) [12.4s]
-  render:bpmn runs: cat-harness/docs/assets/img/workflows changed [decided in 0.0s]
-  ran render:bpmn (reuse off) [6.7s]
-  processes:viz runs: .git/branch-mounts/beans.json changed [decided in 0.0s]
-  ran processes:viz (reuse off) [9.5s]
+  ran kg:viewer (reuse off) [0.5s]
+  ran state:visualizer (reuse off) [9.6s]
+  ran site:viz (reuse off) [1.3s]
+  ran slice:sqlite (reuse off) [11.5s]
+  ran render:bpmn (reuse off) [7.1s]
+  ran processes:viz (reuse off) [9.0s]

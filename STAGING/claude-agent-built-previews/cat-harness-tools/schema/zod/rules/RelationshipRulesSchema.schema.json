@@ -1,0 +1,103 @@
+{
+  "$ref": "#/definitions/RelationshipRules",
+  "definitions": {
+    "RelationshipRules": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "archimate-relationship-rules/v1"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationships": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Za-z]+$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "verb": {
+                "type": "string",
+                "minLength": 1
+              },
+              "icon": {
+                "type": "string",
+                "minLength": 1
+              },
+              "meaning": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "type",
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "rules": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Za-z]+$"
+              },
+              "relationship": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Za-z]+$"
+              },
+              "target": {
+                "type": "string",
+                "pattern": "^[A-Z][A-Za-z]+$"
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "source",
+              "relationship",
+              "target",
+              "note"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "relationships",
+        "rules"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rules/RelationshipRulesSchema.schema.json",
+  "title": "RelationshipRulesSchema",
+  "description": "Generated from `RelationshipRulesSchema` in archimate/schemas/rules.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "ffe4449ac4c8ad3acdf4196e94b3af83e5d93947",
+    "pr": "2885/merge",
+    "run": "41346355179"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$ref": "#/definitions/ArchimateViewConnection",
+  "definitions": {
+    "ArchimateViewConnection": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bendpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "startX": {
+                "type": "number"
+              },
+              "startY": {
+                "type": "number"
+              },
+              "endX": {
+                "type": "number"
+              },
+              "endY": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "startX",
+              "startY",
+              "endX",
+              "endY"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "source",
+        "target",
+        "bendpoints"
+      ],
+      "additionalProperties": false,
+      "description": "ViewConnection"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateViewConnectionSchema.schema.json",
+  "title": "ArchimateViewConnectionSchema",
+  "description": "Generated from `ArchimateViewConnectionSchema` in archimate/schemas/archimate.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "ffe4449ac4c8ad3acdf4196e94b3af83e5d93947",
+    "pr": "2885/merge",
+    "run": "41346355179"
+  }
+}
