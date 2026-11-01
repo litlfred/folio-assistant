@@ -1,5 +1,6 @@
 ---
 # folio-assistant-96y4
+$schema: bean/1.0.0
 title: 'smart-immunizations has no BPMN: IMMZ.A-I exist only as SVG images, and its personas only as HTML'
 status: completed
 type: task
