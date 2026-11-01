@@ -1341,7 +1341,7 @@ jobs:
           # deploy cannot silently replace it; the failure is an annotation,
           # not a blocked preview.
           # Which derive:publish writers this preview skipped, and why the rest ran (bean fwtz).
-          { grep -E 'writer skip|skipped |[^ ]+ runs: ' "$RUNNER_TEMP/derive.log" || true; } > ./_site/writer-skip.txt 2>/dev/null || true
+          { grep -E 'writer skip|skipped |[^ ]+ runs: |^  ran ' "$RUNNER_TEMP/derive.log" || true; } > ./_site/writer-skip.txt 2>/dev/null || true
           RECORD=./_site/staging-preview.json
           git show "FETCH_HEAD:STAGING/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
             || rm -f "$RECORD"
@@ -1544,7 +1544,10 @@ jobs:
           # locale with no workflow edit, and so the gates and the deploy run
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir "./_site/${STUB}"
+          # `--core`: the document kg-export wrote above, read rather than built a
+          # second time (bean fwtz: 19 s of this step on main). An older tools
+          # pin ignores the flag and builds it, as before.
+          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --core "./_site/${STUB}/${STUB}.jsonld" --out-dir "./_site/${STUB}"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_DIR}"
             cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
