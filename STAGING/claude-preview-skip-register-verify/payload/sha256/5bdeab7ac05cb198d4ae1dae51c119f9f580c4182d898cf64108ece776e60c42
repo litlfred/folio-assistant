@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-10-31T06:42:00Z
-updated_at: 2026-11-01T07:31:00Z
+updated_at: 2026-11-01T07:50:00Z
 ---
 
 Owner, 2026-10-31: each WHO Digital Transformation Handbook becomes an L2 DTH that depends on smart-ra. Its narrative is validated against the glossaries and linked to ArchiMate, with BPMN for its business processes, roles as DAK persona blocks, and DMN tables extracted.
@@ -86,5 +86,6 @@ Children: the beans that each handbook's workplan files, starting with folio-ass
 
 ### 4. Overnight Merge Rollup & Open PRs Fixing Remaining Jobs on `folio-assistant#2862` (`1d8a29b` → merged `e6e0ac1`) — _2026-11-01T07:31:00Z_
 
+- **Merged (`2026-11-01T07:40Z–07:46Z`)**: [`litlfred/cat-harness#849`](https://github.com/litlfred/cat-harness/pull/849) (`430b14abb355`, `e0jh`), [`litlfred/cat-harness#874`](https://github.com/litlfred/cat-harness/pull/874) (`f824cad9641a`), [`litlfred/cat-harness#846`](https://github.com/litlfred/cat-harness/pull/846) (`aab54064053b`), [`litlfred/cat-harness#836`](https://github.com/litlfred/cat-harness/pull/836) (`4a93b5a1f6ce`, `x80s` batch 66), [`litlfred/cat-harness#835`](https://github.com/litlfred/cat-harness/pull/835) (`ce320a5378be`, `x80s` batch 67), [`litlfred/smart-trust-phw#18`](https://github.com/litlfred/smart-trust-phw/pull/18) (`d7d73c32e4ea`, `x80s` IHE PCF & VHL)
 - **Merged Overnight**: [`litlfred/cat-harness#873`](https://github.com/litlfred/cat-harness/pull/873) (`8e1bb38`), [`litlfred/cat-harness#879`](https://github.com/litlfred/cat-harness/pull/879) (`3de2a95`), [`litlfred/folio-assistant-core#456`](https://github.com/litlfred/folio-assistant-core/pull/456) (`d9950d3`), [`litlfred/folio-assistant-core#457`](https://github.com/litlfred/folio-assistant-core/pull/457) (`564969b`), [`litlfred/bootstrap#35`](https://github.com/litlfred/bootstrap/pull/35) (`8785b20`), [`litlfred/bootstrap#37`](https://github.com/litlfred/bootstrap/pull/37), [`litlfred/bootstrap-tools#59`](https://github.com/litlfred/bootstrap-tools/pull/59) (`2b8ddf7`), [`litlfred/cat-harness-tools#1197`](https://github.com/litlfred/cat-harness-tools/pull/1197), [`#1209`](https://github.com/litlfred/cat-harness-tools/pull/1209), [`#1210`](https://github.com/litlfred/cat-harness-tools/pull/1210), [`#1211`](https://github.com/litlfred/cat-harness-tools/pull/1211), [`#1212`](https://github.com/litlfred/cat-harness-tools/pull/1212) (`da81742`), [`litlfred/folio-assistant#2862`](https://github.com/litlfred/folio-assistant/pull/2862) (`e6e0ac1`)
 - **Open & Ready for Review (both GREEN)**: [`litlfred/cat-harness-tools#1159`](https://github.com/litlfred/cat-harness-tools/pull/1159) (`fix/2781-e2e-sidebar-rail-and-iris-search`, `dedcc0d`, 9/9 `SUCCESS`, `MERGEABLE/CLEAN`), [`litlfred/smart-base#261`](https://github.com/litlfred/smart-base/pull/261) (`fix/bpmn-svgs-bootstrap-tools-72344e1`, `2f22e8d`, 8/8 `SUCCESS`, `MERGEABLE/CLEAN`)

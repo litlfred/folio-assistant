@@ -3,14 +3,22 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "bdfe688ab336cf5274a8293c831253006ecc962f",
+    "head": "95d002e5620ea72d4a222744604413ee83f596ac",
     "changes": [
+      {
+        "path": ".github/workflows/code-quality-gates.yml",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant",
+        "upstreamPath": ".github/workflows/code-quality-gates.yml",
+        "ref": "95d002e5620ea72d4a222744604413ee83f596ac",
+        "mounted": true
+      },
       {
         "path": ".github/workflows/feature-staging.yml",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/feature-staging.yml",
-        "ref": "bdfe688ab336cf5274a8293c831253006ecc962f",
+        "ref": "95d002e5620ea72d4a222744604413ee83f596ac",
         "mounted": true
       }
     ],
@@ -589,7 +597,7 @@
         "via": []
       },
       {
-        "path": "assets/slices/beans.b1dfbb8105a293b2f30bda5a64b17265119f7ed94b029a86901b40b53a564a49.sqlite3",
+        "path": "assets/slices/beans.db1bad2a9b3102f2e12e8a19eaf12fcd51825cc797e7ee0c20312955dc0b0cae.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
