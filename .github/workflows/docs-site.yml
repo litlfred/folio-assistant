@@ -237,12 +237,29 @@ jobs:
       # the mount (as in code-quality-gates, so fixity sees the same tree) and
       # before anything is built, so a refused gate publishes nothing.
       # `docs-site-publish.bpmn` Task_SecurityGate.
+      # Q-SPD-7b (owner card 2026-11-01 16:17Z, option A): the merged PR's
+      # `code-quality-gates` run built this copy already, over the same steps.
+      # When that run tested THIS tree (its `tested-tree-<tree>` record), its
+      # `qa-working-copy` artifact is restored byte-identical to its manifest
+      # and the build below is skipped (~8 min). Otherwise it says why and the
+      # build runs as before. `.github/scripts/qa-copy-reuse.sh` explains it.
+      - name: Reuse the merged PR's QA working copy when it tested this tree (Q-SPD-7b)
+        id: qa-reuse
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: bash .github/scripts/qa-copy-reuse.sh
+
       - name: Produce the QA working copy the security gate reads (bean ieum)
         # `check:qa-reviewer-permission`, one of the gate's blocking checks,
         # READS the derived QA results, which are not committed (bean `5hox`).
         # Without them it fails, and the gate refused every publish from
         # 91d6a0b on (issue #2459). The same step code-quality-gates runs
         # before its gates (bean `72a8`).
+        # Q-SPD-7b (owner card 2026-11-01, A): skipped when the step before
+        # restored the merged PR's copy of this same tree.
+        if: ${{ steps.qa-reuse.outputs.reused != 'true' }}
         run: bun run cat qa:working-copy
 
       - name: Release security gate
@@ -281,7 +298,26 @@ jobs:
           if command -v strace >/dev/null; then strace -V | head -1; exit 0; fi
           sudo apt-get update -qq && sudo apt-get install -y -qq strace && strace -V | head -1
 
+      # Issue #2880 (Q-SPD-8 D): the merged PR's `code-quality-gates` run
+      # already ran `derive:publish` over this tree (its `publish-pages` job).
+      # When that run tested THIS tree, built the pages over the same QA
+      # working copy as the one on disk, and its pages name nothing of the PR
+      # run, its `publish-pages` artifact is restored byte-identical to its
+      # manifest and the build below is skipped (~5 min). Otherwise it says why
+      # and the build runs as before. The security gate above is unchanged.
+      # `.github/scripts/publish-pages-reuse.sh` explains it.
+      - name: Reuse the merged PR's publish-time pages when it built this tree (#2880)
+        id: pages-reuse
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          RECORD_WRITERS: ${{ inputs.record_writers && 'true' || '' }}
+        run: bash .github/scripts/publish-pages-reuse.sh
+
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
+        # #2880: skipped when the step before restored the merged PR's pages.
+        if: ${{ steps.pages-reuse.outputs.reused != 'true' }}
         env:
           # Bean fwtz: traced writers and build/writer-cone/records.json, only on a manual run that asks.
           CAT_WRITER_RECORD: ${{ inputs.record_writers && '1' || '' }}
@@ -798,7 +834,10 @@ jobs:
           # locale with no workflow edit, and so the gates and the deploy run
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --out-dir "./_site/${STUB}"
+          # `--core`: the document kg-export wrote above, read rather than built a
+          # second time (bean fwtz: 19 s of this step on main). An older tools
+          # pin ignores the flag and builds it, as before.
+          bun run cat-harness-tools/scripts/kg-locale-export.ts --core "./_site/${STUB}/${STUB}.jsonld" --out-dir "./_site/${STUB}"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir "./_site/${BOOT_DIR}"
             cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
