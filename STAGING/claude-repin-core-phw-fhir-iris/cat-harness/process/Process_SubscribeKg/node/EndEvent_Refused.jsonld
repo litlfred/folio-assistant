@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-core-phw-fhir-iris",
+    "sha": "17bec737af9b6bd0d3531617bb53506676c132e4",
+    "pr": "2869/merge",
+    "run": "41286441333"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Not subscribed, and the record says why",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/process/Process_SubscribeKg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/role/corpus",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/process/Process_SubscribeKg/lane/Lane_2",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused"
+    }
+  ]
+}

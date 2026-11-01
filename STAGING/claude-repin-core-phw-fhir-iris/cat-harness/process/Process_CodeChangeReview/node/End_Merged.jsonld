@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/process/Process_CodeChangeReview/node/End_Merged.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-core-phw-fhir-iris",
+    "sha": "17bec737af9b6bd0d3531617bb53506676c132e4",
+    "pr": "2869/merge",
+    "run": "41286441333"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/process/Process_CodeChangeReview/node/End_Merged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Merged",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/process/Process_CodeChangeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/process/Process_CodeChangeReview#flow/f18"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/End_Merged"
+    }
+  ]
+}

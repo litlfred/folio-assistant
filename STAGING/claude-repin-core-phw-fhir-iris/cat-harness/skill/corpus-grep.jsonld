@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/skill/corpus-grep.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-core-phw-fhir-iris",
+    "sha": "17bec737af9b6bd0d3531617bb53506676c132e4",
+    "pr": "2869/merge",
+    "run": "41286441333"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/skill/corpus-grep",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "corpus-grep",
+      "title": "Corpus-Grep Skill",
+      "description": "Pre-declaration corpus check. Before declaring any item \"open\", \"gap\", \"TODO\", \"open problem\", \"pending derivation\" — or asserting in chat that something is unresolved in the corpus — run the four-path grep checklist. A source file's `## Status` note lags the corpus by weeks; the corpus is the source of truth. An item is open only after all four paths come back empty (modulo the originating file itself).",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/corpus-grep.md",
+      "instructionLines": 140,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/corpus-grep"
+    }
+  ]
+}

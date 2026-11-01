@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/fhir-harness/directory/scenarios.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/scenarios.jsonld",
+  "staging": {
+    "branch": "claude/repin-core-phw-fhir-iris",
+    "sha": "17bec737af9b6bd0d3531617bb53506676c132e4",
+    "pr": "2869/merge",
+    "run": "41286441333"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "scenarios",
+      "path": "scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/scenarios"
+      ],
+      "description": "Scenarios: the roles an actor takes on, in `roles.json`, the user stories told as them, in `stories.json`, the actors in `actors/`, and the capabilities in `capabilities/`. The `fhir-modeller` and `ig-publisher-service` roles, actors, stories and FHIR IG capability probes moved here from cat-harness in placement PR4 (bean `4fv8`), beside the FHIR IG processes and skills they bind.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/scenarios"
+    }
+  ]
+}

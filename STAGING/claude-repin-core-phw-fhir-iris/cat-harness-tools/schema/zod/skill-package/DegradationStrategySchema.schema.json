@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/DegradationStrategy",
+  "definitions": {
+    "DegradationStrategy": {
+      "type": "string",
+      "enum": [
+        "fail",
+        "warn",
+        "skip",
+        "fallback"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/DegradationStrategySchema.schema.json",
+  "title": "DegradationStrategySchema",
+  "description": "Generated from `DegradationStrategySchema` in schemas/kg/skill-package.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-phw-fhir-iris",
+    "sha": "17bec737af9b6bd0d3531617bb53506676c132e4",
+    "pr": "2869/merge",
+    "run": "41286441333"
+  }
+}

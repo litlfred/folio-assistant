@@ -1,0 +1,33 @@
+{
+  "$ref": "#/definitions/ChapterRef",
+  "definitions": {
+    "ChapterRef": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "dir": {
+          "type": "string",
+          "minLength": 1
+        },
+        "partTitle": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "dir"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ChapterRefSchema.schema.json",
+  "title": "ChapterRefSchema",
+  "description": "Generated from `ChapterRefSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-phw-fhir-iris",
+    "sha": "17bec737af9b6bd0d3531617bb53506676c132e4",
+    "pr": "2869/merge",
+    "run": "41286441333"
+  }
+}

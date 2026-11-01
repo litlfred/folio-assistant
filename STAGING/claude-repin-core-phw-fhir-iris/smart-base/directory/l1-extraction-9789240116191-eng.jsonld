@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-base/directory/l1-extraction-9789240116191-eng.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/l1-extraction-9789240116191-eng.jsonld",
+  "staging": {
+    "branch": "claude/repin-core-phw-fhir-iris",
+    "sha": "17bec737af9b6bd0d3531617bb53506676c132e4",
+    "pr": "2869/merge",
+    "run": "41286441333"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/l1-extraction-9789240116191-eng",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "l1-extraction-9789240116191-eng",
+      "path": "l1-extractions/9789240116191-eng/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/l1-extraction"
+      ],
+      "description": "What the recommendation-extraction skill read out of library entry `9789240116191-eng` (Digital transformation handbook for health product catalogue), which lives in who-iris since 2026-10-30 (who-iris#107): the L1 A-Box graph `l1.json`, the L2 scenario candidates `scenarios/scenario-candidates.l2.json`, and the curation, vocabulary and run context behind them. smart-base's own analysis (owner, 2026-10-16: \"l1-extraction is part of smart-base\"), so it stays here, at `l1-extractions/<entry>/`, and cites its source entry wherever that entry is held. Declared so it is part of the knowledge graph and published (owner, 2026-10-12, bean 8pzh item 1). It sat inside `library/<entry>/` until the entry moved; a library folder holding only the extraction then read as a second copy of the entry, and folio-assistant's library ingest refused the duplicate slug. One entry per extracted library entry, never a wildcard: `scripts/l1-extraction-declared.test.ts` fails when an `l1-extractions/<entry>/` on disk is undeclared, or a declaration names one that is not there.",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/l1-extraction-9789240116191-eng"
+    }
+  ]
+}

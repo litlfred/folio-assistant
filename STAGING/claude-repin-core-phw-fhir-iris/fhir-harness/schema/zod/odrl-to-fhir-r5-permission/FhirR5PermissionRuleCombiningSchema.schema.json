@@ -1,0 +1,25 @@
+{
+  "$ref": "#/definitions/FhirR5PermissionRuleCombining",
+  "definitions": {
+    "FhirR5PermissionRuleCombining": {
+      "type": "string",
+      "enum": [
+        "deny-overrides",
+        "permit-overrides",
+        "ordered-deny-overrides",
+        "ordered-permit-overrides",
+        "deny-unless-permit",
+        "permit-unless-deny"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/odrl-to-fhir-r5-permission/FhirR5PermissionRuleCombiningSchema.schema.json",
+  "title": "FhirR5PermissionRuleCombiningSchema",
+  "description": "Generated from `FhirR5PermissionRuleCombiningSchema` in schemas/odrl-to-fhir-r5-permission.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-phw-fhir-iris",
+    "sha": "17bec737af9b6bd0d3531617bb53506676c132e4",
+    "pr": "2869/merge",
+    "run": "41286441333"
+  }
+}

@@ -1,0 +1,751 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://smart.who.int/base/ValueSet-ISCO08ValueSet.jsonld",
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "fhir:CodeSystem": {
+      "@type": "@id"
+    },
+    "cs": "http://www.ilo.org/public/english/bureau/stat/isco/isco08/"
+  },
+  "@id": "http://smart.who.int/base/ValueSet-ISCO08ValueSet.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-11-01T08:06:02.698Z",
+  "@graph": [
+    {
+      "id": "#0",
+      "name": "Armed Forces Occupations"
+    },
+    {
+      "id": "#1",
+      "name": "Managers"
+    },
+    {
+      "id": "#2",
+      "name": "Professionals"
+    },
+    {
+      "id": "#3",
+      "name": "Technicians and Associate Professionals"
+    },
+    {
+      "id": "#4",
+      "name": "Clerical Support Workers"
+    },
+    {
+      "id": "#5",
+      "name": "Service and Sales Workers"
+    },
+    {
+      "id": "#6",
+      "name": "Skilled Agricultural, Forestry and Fishery Workers"
+    },
+    {
+      "id": "#7",
+      "name": "Craft and Related Trades Workers"
+    },
+    {
+      "id": "#8",
+      "name": "Plant and Machine Operators and Assemblers"
+    },
+    {
+      "id": "#9",
+      "name": "Elementary Occupations"
+    },
+    {
+      "id": "#11",
+      "name": "Chief Executives, Senior Officials and Legislators"
+    },
+    {
+      "id": "#12",
+      "name": "Administrative and Commercial Managers"
+    },
+    {
+      "id": "#13",
+      "name": "Production and Specialised Services Managers"
+    },
+    {
+      "id": "#14",
+      "name": "Hospitality, Retail and Other Services Managers"
+    },
+    {
+      "id": "#21",
+      "name": "Science and Engineering Professionals"
+    },
+    {
+      "id": "#22",
+      "name": "Health Professionals"
+    },
+    {
+      "id": "#23",
+      "name": "Teaching Professionals"
+    },
+    {
+      "id": "#24",
+      "name": "Business and Administration Professionals"
+    },
+    {
+      "id": "#25",
+      "name": "Information and Communications Technology Professionals"
+    },
+    {
+      "id": "#26",
+      "name": "Legal, Social and Cultural Professionals"
+    },
+    {
+      "id": "#31",
+      "name": "Science and Engineering Associate Professionals"
+    },
+    {
+      "id": "#32",
+      "name": "Health Associate Professionals"
+    },
+    {
+      "id": "#33",
+      "name": "Business and Administration Associate Professionals"
+    },
+    {
+      "id": "#34",
+      "name": "Legal, Social, Cultural and Related Associate Professionals"
+    },
+    {
+      "id": "#35",
+      "name": "Information and Communications Technicians"
+    },
+    {
+      "id": "#41",
+      "name": "General and Keyboard Clerks"
+    },
+    {
+      "id": "#42",
+      "name": "Customer Services Clerks"
+    },
+    {
+      "id": "#43",
+      "name": "Numerical and Material Recording Clerks"
+    },
+    {
+      "id": "#44",
+      "name": "Other Clerical Support Workers"
+    },
+    {
+      "id": "#51",
+      "name": "Personal Service Workers"
+    },
+    {
+      "id": "#52",
+      "name": "Sales Workers"
+    },
+    {
+      "id": "#53",
+      "name": "Personal Care Workers"
+    },
+    {
+      "id": "#54",
+      "name": "Protective Services Workers"
+    },
+    {
+      "id": "#61",
+      "name": "Market-oriented Skilled Agricultural Workers"
+    },
+    {
+      "id": "#62",
+      "name": "Market-oriented Skilled Forestry, Fishery and Hunting Workers"
+    },
+    {
+      "id": "#63",
+      "name": "Subsistence Farmers, Fishers, Hunters and Gatherers"
+    },
+    {
+      "id": "#71",
+      "name": "Building and Related Trades Workers, Excluding Electricians"
+    },
+    {
+      "id": "#72",
+      "name": "Metal, Machinery and Related Trades Workers"
+    },
+    {
+      "id": "#73",
+      "name": "Handicraft and Printing Workers"
+    },
+    {
+      "id": "#74",
+      "name": "Electrical and Electronic Trades Workers"
+    },
+    {
+      "id": "#75",
+      "name": "Food Processing, Wood Working, Garment and Other Craft and Related Trades Workers"
+    },
+    {
+      "id": "#81",
+      "name": "Stationary Plant and Machine Operators"
+    },
+    {
+      "id": "#82",
+      "name": "Assemblers"
+    },
+    {
+      "id": "#83",
+      "name": "Drivers and Mobile Plant Operators"
+    },
+    {
+      "id": "#91",
+      "name": "Cleaners and Helpers"
+    },
+    {
+      "id": "#92",
+      "name": "Agricultural, Forestry and Fishery Labourers"
+    },
+    {
+      "id": "#93",
+      "name": "Labourers in Mining, Construction, Manufacturing and Transport"
+    },
+    {
+      "id": "#94",
+      "name": "Food Preparation Assistants"
+    },
+    {
+      "id": "#95",
+      "name": "Street and Related Sales and Service Workers"
+    },
+    {
+      "id": "#96",
+      "name": "Refuse Workers and Other Elementary Workers"
+    },
+    {
+      "id": "#111",
+      "name": "Legislators and Senior Officials"
+    },
+    {
+      "id": "#112",
+      "name": "Managing Directors and Chief Executives"
+    },
+    {
+      "id": "#121",
+      "name": "Business Services and Administration Managers"
+    },
+    {
+      "id": "#122",
+      "name": "Sales, Marketing and Development Managers"
+    },
+    {
+      "id": "#211",
+      "name": "Physical and Earth Science Professionals"
+    },
+    {
+      "id": "#212",
+      "name": "Mathematicians, Actuaries and Statisticians"
+    },
+    {
+      "id": "#213",
+      "name": "Life Science Professionals"
+    },
+    {
+      "id": "#214",
+      "name": "Engineering Professionals (excluding Electrotechnology)"
+    },
+    {
+      "id": "#215",
+      "name": "Electrotechnology Engineers"
+    },
+    {
+      "id": "#216",
+      "name": "Architects, Planners, Surveyors and Designers"
+    },
+    {
+      "id": "#221",
+      "name": "Medical Doctors"
+    },
+    {
+      "id": "#222",
+      "name": "Nursing and Midwifery Professionals"
+    },
+    {
+      "id": "#223",
+      "name": "Traditional and Complementary Medicine Professionals"
+    },
+    {
+      "id": "#224",
+      "name": "Paramedical Practitioners"
+    },
+    {
+      "id": "#225",
+      "name": "Veterinarians"
+    },
+    {
+      "id": "#226",
+      "name": "Other Health Professionals"
+    },
+    {
+      "id": "#231",
+      "name": "University and Higher Education Teachers"
+    },
+    {
+      "id": "#232",
+      "name": "Vocational Education Teachers"
+    },
+    {
+      "id": "#233",
+      "name": "Secondary Education Teachers"
+    },
+    {
+      "id": "#234",
+      "name": "Primary School and Early Childhood Teachers"
+    },
+    {
+      "id": "#235",
+      "name": "Other Teaching Professionals"
+    },
+    {
+      "id": "#311",
+      "name": "Physical and Engineering Science Technicians"
+    },
+    {
+      "id": "#312",
+      "name": "Mining, Manufacturing and Construction Supervisors"
+    },
+    {
+      "id": "#313",
+      "name": "Process Control Technicians"
+    },
+    {
+      "id": "#314",
+      "name": "Life Science Technicians and Related Associate Professionals"
+    },
+    {
+      "id": "#315",
+      "name": "Ship and Aircraft Controllers and Technicians"
+    },
+    {
+      "id": "#321",
+      "name": "Medical and Pharmaceutical Technicians"
+    },
+    {
+      "id": "#322",
+      "name": "Nursing and Midwifery Associate Professionals"
+    },
+    {
+      "id": "#323",
+      "name": "Traditional and Complementary Medicine Associate Professionals"
+    },
+    {
+      "id": "#324",
+      "name": "Veterinary Technicians and Assistants"
+    },
+    {
+      "id": "#325",
+      "name": "Other Health Associate Professionals"
+    },
+    {
+      "id": "#411",
+      "name": "General Office Clerks"
+    },
+    {
+      "id": "#412",
+      "name": "Secretaries (general)"
+    },
+    {
+      "id": "#413",
+      "name": "Keyboard Operators"
+    },
+    {
+      "id": "#511",
+      "name": "Travel Attendants, Conductors and Guides"
+    },
+    {
+      "id": "#512",
+      "name": "Cooks"
+    },
+    {
+      "id": "#513",
+      "name": "Waiters and Bartenders"
+    },
+    {
+      "id": "#514",
+      "name": "Hairdressers, Beauticians and Related Workers"
+    },
+    {
+      "id": "#515",
+      "name": "Building and Housekeeping Supervisors"
+    },
+    {
+      "id": "#516",
+      "name": "Other Personal Services Workers"
+    },
+    {
+      "id": "#711",
+      "name": "Building Frame and Related Trades Workers"
+    },
+    {
+      "id": "#712",
+      "name": "Building Finishers and Related Trades Workers"
+    },
+    {
+      "id": "#713",
+      "name": "Painters, Building Structure Cleaners and Related Trades Workers"
+    },
+    {
+      "id": "#811",
+      "name": "Mining and Mineral Processing Plant Operators"
+    },
+    {
+      "id": "#812",
+      "name": "Metal Processing and Finishing Plant Operators"
+    },
+    {
+      "id": "#813",
+      "name": "Chemical and Photographic Products Plant and Machine Operators"
+    },
+    {
+      "id": "#911",
+      "name": "Domestic, Hotel and Office Cleaners and Helpers"
+    },
+    {
+      "id": "#912",
+      "name": "Vehicle, Window, Laundry and Other Hand Cleaning Workers"
+    },
+    {
+      "id": "#913",
+      "name": "Helpers in Food Preparation"
+    },
+    {
+      "id": "#1111",
+      "name": "Legislators"
+    },
+    {
+      "id": "#1112",
+      "name": "Senior Government Officials"
+    },
+    {
+      "id": "#1113",
+      "name": "Traditional Chiefs and Heads of Villages"
+    },
+    {
+      "id": "#1114",
+      "name": "Senior Officials of Special-Interest Organizations"
+    },
+    {
+      "id": "#1120",
+      "name": "Managing Directors and Chief Executives"
+    },
+    {
+      "id": "#1211",
+      "name": "Finance Managers"
+    },
+    {
+      "id": "#1212",
+      "name": "Human Resource Managers"
+    },
+    {
+      "id": "#1213",
+      "name": "Policy and Planning Managers"
+    },
+    {
+      "id": "#1219",
+      "name": "Business Services and Administration Managers Not Elsewhere Classified"
+    },
+    {
+      "id": "#1221",
+      "name": "Sales and Marketing Managers"
+    },
+    {
+      "id": "#1222",
+      "name": "Advertising and Public Relations Managers"
+    },
+    {
+      "id": "#1223",
+      "name": "Research and Development Managers"
+    },
+    {
+      "id": "#2111",
+      "name": "Physicists and Astronomers"
+    },
+    {
+      "id": "#2112",
+      "name": "Meteorologists"
+    },
+    {
+      "id": "#2113",
+      "name": "Chemists"
+    },
+    {
+      "id": "#2114",
+      "name": "Geologists and Geophysicists"
+    },
+    {
+      "id": "#2120",
+      "name": "Mathematicians, Actuaries and Statisticians"
+    },
+    {
+      "id": "#2131",
+      "name": "Biologists, Botanists, Zoologists and Related Professionals"
+    },
+    {
+      "id": "#2132",
+      "name": "Farming, Forestry and Fisheries Advisers"
+    },
+    {
+      "id": "#2133",
+      "name": "Environmental Protection Professionals"
+    },
+    {
+      "id": "#2141",
+      "name": "Industrial and Production Engineers"
+    },
+    {
+      "id": "#2142",
+      "name": "Civil Engineers"
+    },
+    {
+      "id": "#2143",
+      "name": "Environmental Engineers"
+    },
+    {
+      "id": "#2144",
+      "name": "Mechanical Engineers"
+    },
+    {
+      "id": "#2145",
+      "name": "Chemical Engineers"
+    },
+    {
+      "id": "#2146",
+      "name": "Mining Engineers, Metallurgists and Related Professionals"
+    },
+    {
+      "id": "#2149",
+      "name": "Engineering Professionals Not Elsewhere Classified"
+    },
+    {
+      "id": "#2151",
+      "name": "Electrical Engineers"
+    },
+    {
+      "id": "#2152",
+      "name": "Electronics Engineers"
+    },
+    {
+      "id": "#2153",
+      "name": "Telecommunications Engineers"
+    },
+    {
+      "id": "#2161",
+      "name": "Building Architects"
+    },
+    {
+      "id": "#2162",
+      "name": "Landscape Architects"
+    },
+    {
+      "id": "#2163",
+      "name": "Product and Garment Designers"
+    },
+    {
+      "id": "#2164",
+      "name": "Town and Traffic Planners"
+    },
+    {
+      "id": "#2165",
+      "name": "Cartographers and Surveyors"
+    },
+    {
+      "id": "#2166",
+      "name": "Graphic and Multimedia Designers"
+    },
+    {
+      "id": "#2211",
+      "name": "Generalist Medical Practitioners"
+    },
+    {
+      "id": "#2212",
+      "name": "Specialist Medical Practitioners"
+    },
+    {
+      "id": "#2221",
+      "name": "Nursing Professionals"
+    },
+    {
+      "id": "#2222",
+      "name": "Midwifery Professionals"
+    },
+    {
+      "id": "#2230",
+      "name": "Traditional and Complementary Medicine Professionals"
+    },
+    {
+      "id": "#2240",
+      "name": "Paramedical Practitioners"
+    },
+    {
+      "id": "#2250",
+      "name": "Veterinarians"
+    },
+    {
+      "id": "#2261",
+      "name": "Dentists"
+    },
+    {
+      "id": "#2262",
+      "name": "Pharmacists"
+    },
+    {
+      "id": "#2263",
+      "name": "Environmental and Occupational Health and Hygiene Professionals"
+    },
+    {
+      "id": "#2264",
+      "name": "Physiotherapists"
+    },
+    {
+      "id": "#2265",
+      "name": "Dietitians and Nutritionists"
+    },
+    {
+      "id": "#2266",
+      "name": "Audiologists and Speech Therapists"
+    },
+    {
+      "id": "#2267",
+      "name": "Optometrists and Ophthalmic Opticians"
+    },
+    {
+      "id": "#2269",
+      "name": "Health Professionals Not Elsewhere Classified"
+    },
+    {
+      "id": "#3111",
+      "name": "Chemical and Physical Science Technicians"
+    },
+    {
+      "id": "#3112",
+      "name": "Civil Engineering Technicians"
+    },
+    {
+      "id": "#3113",
+      "name": "Electrical Engineering Technicians"
+    },
+    {
+      "id": "#3114",
+      "name": "Electronics Engineering Technicians"
+    },
+    {
+      "id": "#3115",
+      "name": "Mechanical Engineering Technicians"
+    },
+    {
+      "id": "#3116",
+      "name": "Chemical Engineering Technicians"
+    },
+    {
+      "id": "#3117",
+      "name": "Mining and Metallurgical Technicians"
+    },
+    {
+      "id": "#3118",
+      "name": "Draughtspersons"
+    },
+    {
+      "id": "#3119",
+      "name": "Physical and Engineering Science Technicians Not Elsewhere Classified"
+    },
+    {
+      "id": "#4110",
+      "name": "General Office Clerks"
+    },
+    {
+      "id": "#4120",
+      "name": "Secretaries (general)"
+    },
+    {
+      "id": "#4131",
+      "name": "Typists and Word Processing Operators"
+    },
+    {
+      "id": "#4132",
+      "name": "Data Entry Clerks"
+    },
+    {
+      "id": "#5111",
+      "name": "Travel Attendants and Travel Stewards"
+    },
+    {
+      "id": "#5112",
+      "name": "Transport Conductors"
+    },
+    {
+      "id": "#5113",
+      "name": "Travel Guides"
+    },
+    {
+      "id": "#6111",
+      "name": "Field Crop and Vegetable Growers"
+    },
+    {
+      "id": "#6112",
+      "name": "Tree and Shrub Crop Growers"
+    },
+    {
+      "id": "#6113",
+      "name": "Gardeners, Horticultural and Nursery Growers"
+    },
+    {
+      "id": "#6114",
+      "name": "Mixed Crop Growers"
+    },
+    {
+      "id": "#7111",
+      "name": "House Builders"
+    },
+    {
+      "id": "#7112",
+      "name": "Bricklayers and Related Workers"
+    },
+    {
+      "id": "#7113",
+      "name": "Stonemasons, Stone Cutters, Splitters and Carvers"
+    },
+    {
+      "id": "#7114",
+      "name": "Concrete Placers, Concrete Finishers and Related Workers"
+    },
+    {
+      "id": "#8111",
+      "name": "Miners and Quarriers"
+    },
+    {
+      "id": "#8112",
+      "name": "Mineral and Stone Processing Plant Operators"
+    },
+    {
+      "id": "#8113",
+      "name": "Well Drillers and Borers and Related Workers"
+    },
+    {
+      "id": "#9111",
+      "name": "Domestic Cleaners and Helpers"
+    },
+    {
+      "id": "#9112",
+      "name": "Cleaners and Helpers in Offices, Hotels and Other Establishments"
+    },
+    {
+      "id": "#9211",
+      "name": "Crop Farm Labourers"
+    },
+    {
+      "id": "#9212",
+      "name": "Livestock Farm Labourers"
+    },
+    {
+      "id": "#9213",
+      "name": "Mixed Crop and Livestock Farm Labourers"
+    }
+  ],
+  "fhir:CodeSystem": "cs"
+}

@@ -1,0 +1,1714 @@
+{
+  "@context": {
+    "name": "https://litlfred.github.io/cat-harness/v0/ns#name",
+    "stub": "https://litlfred.github.io/cat-harness/v0/ns#stub",
+    "title": "https://litlfred.github.io/cat-harness/v0/ns#title",
+    "description": "https://litlfred.github.io/cat-harness/v0/ns#description",
+    "version": "https://litlfred.github.io/cat-harness/v0/ns#version",
+    "path": "https://litlfred.github.io/cat-harness/v0/ns#path",
+    "nodes": "https://litlfred.github.io/cat-harness/v0/ns#nodes",
+    "bytes": "https://litlfred.github.io/cat-harness/v0/ns#bytes",
+    "sha256": "https://litlfred.github.io/cat-harness/v0/ns#sha256",
+    "dependsOn": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#dependsOn",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "directory": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#directory",
+      "@container": "@set"
+    },
+    "graphTypologies": {
+      "@id": "http://purl.org/dc/terms/type",
+      "@container": "@set"
+    },
+    "subgraph": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#hasSubgraph",
+      "@type": "@id"
+    },
+    "url": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#contentUrl",
+      "@type": "@id"
+    },
+    "hasHarness": {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#hasMember",
+      "@container": "@set"
+    }
+  },
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/index.jsonld",
+  "@type": "https://litlfred.github.io/bootstrap/v0/ns#KnowledgeGraph",
+  "hasHarness": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap/bootstrap.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "bootstrap",
+      "stub": "bootstrap",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap/bootstrap.jsonld",
+      "title": "Bootstrap",
+      "description": "The graph an agent reads before it knows what this repository is.",
+      "version": "0.1.1",
+      "directory": [
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "models",
+          "path": "models/",
+          "graphTypologies": [
+            "models"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
+      "nodes": 336,
+      "bytes": 219376,
+      "sha256": "b9add794d365cf287a5925662397cb30a44b479b15f11bad8c48c369193c9670"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap-tools/bootstrap-tools.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "bootstrap-tools",
+      "stub": "bootstrap-tools",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap-tools/bootstrap-tools.jsonld",
+      "title": "Bootstrap tools",
+      "description": "The Zod source of bootstrap's schemas, the generators that write bootstrap's JSON Schemas, schema page and READMEs, and the checks bootstrap's content must pass — runnable by an agent, with zod, liquidjs, Playwright and bpmn-js as its dependencies.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap/bootstrap.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "bootstrap-tools-schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "bootstrap-tools-scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
+      "nodes": 83,
+      "bytes": 89352,
+      "sha256": "11730487235a103c3a5c01bb14afd1d0cbb9bac396f4f72c6c0a1146d2a675af"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/cat-harness.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "cat-harness",
+      "stub": "cat-harness",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/cat-harness.jsonld",
+      "title": "C@T Harness",
+      "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap/bootstrap.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "cat-harness-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
+          ]
+        },
+        {
+          "name": "tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "external-schemas",
+          "path": "external-schemas/",
+          "graphTypologies": [
+            "external-schema"
+          ]
+        },
+        {
+          "name": "subscriptions",
+          "path": "subscriptions/",
+          "graphTypologies": [
+            "substrate-snapshot"
+          ]
+        },
+        {
+          "name": "subscribed-harnesses",
+          "path": "subscribed-harnesses/",
+          "graphTypologies": [
+            "subscribed-harnesses"
+          ]
+        },
+        {
+          "name": "code-lists",
+          "path": "code-lists/",
+          "graphTypologies": [
+            "code-list"
+          ]
+        },
+        {
+          "name": "vocab-mappings",
+          "path": "vocab-mappings/",
+          "graphTypologies": [
+            "vocab-mapping"
+          ]
+        },
+        {
+          "name": "tool-releases",
+          "path": "tool-releases/",
+          "graphTypologies": [
+            "tool-release"
+          ]
+        },
+        {
+          "name": "schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "schemas",
+            "cat-harness"
+          ]
+        },
+        {
+          "name": "cat-harness-ns",
+          "path": "ns/",
+          "graphTypologies": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "uml",
+          "path": "uml/",
+          "graphTypologies": [
+            "uml"
+          ]
+        },
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "policies",
+          "path": "policies/",
+          "graphTypologies": [
+            "policies"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "methodologies",
+          "path": "methodologies/",
+          "graphTypologies": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        },
+        {
+          "name": "attestations",
+          "path": "test/attestations/",
+          "graphTypologies": [
+            "attestations"
+          ]
+        },
+        {
+          "name": "test-plans",
+          "path": "test/plans/",
+          "graphTypologies": [
+            "test-plan"
+          ]
+        },
+        {
+          "name": "health",
+          "path": "test/health/results/",
+          "graphTypologies": [
+            "health"
+          ]
+        },
+        {
+          "name": "uploads",
+          "path": "uploads/",
+          "graphTypologies": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "translation-sources",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio",
+          "path": "folio/",
+          "graphTypologies": [
+            "folio"
+          ]
+        },
+        {
+          "name": "folio-render",
+          "path": "folio-render/",
+          "graphTypologies": [
+            "cat-harness",
+            "code"
+          ]
+        },
+        {
+          "name": "site-chrome",
+          "path": "site-chrome/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "site",
+          "path": "site/",
+          "graphTypologies": [
+            "basic-cdn-site"
+          ]
+        },
+        {
+          "name": "swimlane-glossary",
+          "path": "glossary/",
+          "graphTypologies": [
+            "swimlane-glossary"
+          ]
+        },
+        {
+          "name": "cat-harness-upstream",
+          "path": "upstream/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "openapi",
+          "path": "openapi/",
+          "graphTypologies": [
+            "cat-harness"
+          ]
+        },
+        {
+          "name": "archimate",
+          "path": "archimate/",
+          "graphTypologies": [
+            "cat-harness"
+          ]
+        },
+        {
+          "name": "memory",
+          "path": "memory/",
+          "graphTypologies": [
+            "memory",
+            "waiver",
+            "interaction"
+          ]
+        },
+        {
+          "name": "fsh-guts",
+          "path": "fsh-guts/",
+          "graphTypologies": [
+            "fsh-guts"
+          ]
+        },
+        {
+          "name": "beans",
+          "path": "beans/",
+          "graphTypologies": [
+            "beans"
+          ]
+        },
+        {
+          "name": "todos",
+          "path": "todos/",
+          "graphTypologies": [
+            "todos"
+          ]
+        },
+        {
+          "name": "checkout-uploads",
+          "path": "uploads/",
+          "graphTypologies": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "issue-marks",
+          "path": "issue-marks/",
+          "graphTypologies": [
+            "issue-marks"
+          ]
+        },
+        {
+          "name": "merge-reviews",
+          "path": "merge-reviews/",
+          "graphTypologies": [
+            "merge-reviews"
+          ]
+        },
+        {
+          "name": "cat-harness-libraries",
+          "path": "libraries/",
+          "graphTypologies": [
+            "software-library"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
+      "nodes": 8070,
+      "bytes": 6763085,
+      "sha256": "60df289f1b63d3d203069c5fe034f4fd61c93a5fd26b60fb6eef1f2972ed8db8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness-tools.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "cat-harness-tools",
+      "stub": "cat-harness-tools",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness-tools/cat-harness-tools.jsonld",
+      "title": "C@T Harness Tools",
+      "description": "What implements the harness's Tool definitions: the MCP servers, their tool registrars and routes. Definitions stay in cat-harness; this layer runs them.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap-tools/bootstrap-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "cat-harness-tools-adapters",
+          "path": "adapters/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-ui",
+          "path": "ui/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-viewer",
+          "path": "viewer/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "schemas",
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-id-lookup",
+          "path": "id-lookup/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-tests",
+          "path": "test/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-src",
+          "path": "src/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-types",
+          "path": "types/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools",
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-python",
+          "path": "python/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-libraries",
+          "path": "libraries/",
+          "graphTypologies": [
+            "software-library"
+          ]
+        },
+        {
+          "name": "beans",
+          "path": "beans/",
+          "graphTypologies": [
+            "beans"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-pipeline",
+          "path": "pipeline/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "folio-templates",
+          "path": "templates/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-deploy",
+          "path": "deploy/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-upstream",
+          "path": "upstream/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-archimate",
+          "path": "archimate/scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-archimate-schemas",
+          "path": "archimate/schemas/",
+          "graphTypologies": [
+            "schemas",
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-openapi",
+          "path": "openapi/scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "cat-harness-tools-openapi-schemas",
+          "path": "openapi/schemas/",
+          "graphTypologies": [
+            "schemas",
+            "code"
+          ]
+        },
+        {
+          "name": "health",
+          "path": "health/",
+          "graphTypologies": [
+            "health"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/",
+      "nodes": 64,
+      "bytes": 61327,
+      "sha256": "91987f4347f01cf263564be1b4e97204ec2e71cb1b74e496b41f5139d3d59143"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/fhir-harness.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "fhir-harness",
+      "stub": "fhir-harness",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/fhir-harness/fhir-harness.jsonld",
+      "title": "FHIR IG Harness",
+      "description": "The bare FHIR IG pipeline — SUSHI, the IG Publisher, Jekyll assembly and publication — with no WHO, DAK or SMART assumption. What a non-WHO implementation guide instantiates.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "fhir-harness-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "fhir-harness-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
+          ]
+        },
+        {
+          "name": "fhir-harness-typologies",
+          "path": "typologies/",
+          "graphTypologies": [
+            "typologies"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "fhir-ig-skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "fhir-ig-tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "fhir-ig-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "fhir-harness-pipeline-plugins",
+          "path": "pipeline-plugins/",
+          "graphTypologies": [
+            "pipeline-plugins"
+          ]
+        },
+        {
+          "name": "fhir-harness-plugin-slots",
+          "path": "pipeline/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "fhir-harness-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "fhir-harness-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        },
+        {
+          "name": "fhir-harness-libraries",
+          "path": "libraries/",
+          "graphTypologies": [
+            "software-library"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphTypologies": [
+            "glossary"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
+      "nodes": 473,
+      "bytes": 396784,
+      "sha256": "d9ddfa114c06895fd7d9d351cebc7819a0f885dd89a8c05d9ab7edb657a2cc39"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/folio-assistant-core/folio-assistant-core.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "folio-assistant-core",
+      "stub": "folio-assistant-core",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/folio-assistant-core/folio-assistant-core.jsonld",
+      "title": "Folio Assistant Core",
+      "description": "What a folio IS — the content-object model, the block kinds, the adapters, and the `folio` graph typology itself.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/cat-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness-tools.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "folio-assistant-core-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-block-typologies",
+          "path": "block-kinds/",
+          "graphTypologies": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-content-adapters",
+          "path": "content-adapters/",
+          "graphTypologies": [
+            "content-adapters"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
+          ]
+        },
+        {
+          "name": "core-code-lists",
+          "path": "code-lists/",
+          "graphTypologies": [
+            "code-list"
+          ]
+        },
+        {
+          "name": "core-qa-checkers",
+          "path": "qa-checkers/",
+          "graphTypologies": [
+            "qa-checkers"
+          ]
+        },
+        {
+          "name": "core-pipeline-plugins",
+          "path": "pipeline-plugins/",
+          "graphTypologies": [
+            "pipeline-plugins"
+          ]
+        },
+        {
+          "name": "core-pipeline",
+          "path": "pipeline/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-typologies",
+          "path": "typologies/",
+          "graphTypologies": [
+            "typologies"
+          ]
+        },
+        {
+          "name": "core-schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "schemas",
+            "cat-harness"
+          ]
+        },
+        {
+          "name": "folios",
+          "path": "folios/",
+          "graphTypologies": [
+            "folio"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphTypologies": [
+            "glossary"
+          ]
+        },
+        {
+          "name": "core-tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "core-adapters",
+          "path": "adapters/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-src",
+          "path": "src/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-templates",
+          "path": "templates/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "core-library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "core-methodologies",
+          "path": "methodologies/",
+          "graphTypologies": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "core-skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "core-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        },
+        {
+          "name": "memory",
+          "path": "memory/",
+          "graphTypologies": [
+            "memory"
+          ]
+        },
+        {
+          "name": "beans",
+          "path": "beans/",
+          "graphTypologies": [
+            "beans"
+          ]
+        },
+        {
+          "name": "folio-assistant-core-libraries",
+          "path": "libraries/",
+          "graphTypologies": [
+            "software-library"
+          ]
+        },
+        {
+          "name": "health",
+          "path": "test/health/results/",
+          "graphTypologies": [
+            "health"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
+      "nodes": 1961,
+      "bytes": 1940183,
+      "sha256": "126a46199d24fce1dcc8540b2293e6b243d278a6b20bde5ad45f8fb4e886a9cc"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/folio-assistant-sci/folio-assistant-sci.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "folio-assistant-sci",
+      "stub": "folio-assistant-sci",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/folio-assistant-sci/folio-assistant-sci.jsonld",
+      "description": "Scientific source material used by folios that formalise mathematics, and the methodologies for formalising it in Lean that this layer adopts from that material.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "folio-assistant-sci-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-qa-checkers",
+          "path": "qa-checkers/",
+          "graphTypologies": [
+            "qa-checkers"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-editor-checkers",
+          "path": "editor-checkers/",
+          "graphTypologies": [
+            "editor-checkers"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-pipeline-plugins",
+          "path": "pipeline-plugins/",
+          "graphTypologies": [
+            "pipeline-plugins"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-block-typologies",
+          "path": "block-kinds/",
+          "graphTypologies": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-content-adapters",
+          "path": "content-adapters/",
+          "graphTypologies": [
+            "content-adapters"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-typologies",
+          "path": "typologies/",
+          "graphTypologies": [
+            "typologies"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "sci-extracted-references",
+          "path": "extracted-references/",
+          "graphTypologies": [
+            "references"
+          ]
+        },
+        {
+          "name": "sci-methodologies",
+          "path": "methodologies/",
+          "graphTypologies": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "sci-adapters",
+          "path": "adapters/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "sci-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "folio-assistant-sci-libraries",
+          "path": "libraries/",
+          "graphTypologies": [
+            "software-library"
+          ]
+        },
+        {
+          "name": "sci-lean",
+          "path": "lean/",
+          "graphTypologies": [
+            "lean"
+          ]
+        },
+        {
+          "name": "folio-templates",
+          "path": "templates/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "sci-tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "sci-sources",
+          "path": "sources/",
+          "graphTypologies": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "sci-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        },
+        {
+          "name": "attestations",
+          "path": "test/attestations/",
+          "graphTypologies": [
+            "attestations"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphTypologies": [
+            "glossary"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
+      "nodes": 398,
+      "bytes": 417349,
+      "sha256": "bc72cc4be2a66098818f57cf00a7482713eb7681ac1adc4d98f42f38354ba304"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-base.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "smart-base",
+      "stub": "smart-base",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-base/smart-base.jsonld",
+      "title": "SMART Base",
+      "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/fhir-harness.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/who-iris/who-iris.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-base-site-docs",
+          "path": "site-docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "smart-base-qa-checkers",
+          "path": "qa-checkers/",
+          "graphTypologies": [
+            "qa-checkers"
+          ]
+        },
+        {
+          "name": "smart-base-block-kinds",
+          "path": "block-kinds/",
+          "graphTypologies": [
+            "block-kinds"
+          ]
+        },
+        {
+          "name": "smart-base-content-adapters",
+          "path": "content-adapters/",
+          "graphTypologies": [
+            "content-adapters"
+          ]
+        },
+        {
+          "name": "smart-base-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "l1-extraction-9789240116191-eng",
+          "path": "l1-extractions/9789240116191-eng/",
+          "graphTypologies": [
+            "l1-extraction"
+          ]
+        },
+        {
+          "name": "methodologies",
+          "path": "methodologies/",
+          "graphTypologies": [
+            "methodology"
+          ]
+        },
+        {
+          "name": "processes",
+          "path": "methodologies/processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "smart-base-house-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "smart-base-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphTypologies": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        },
+        {
+          "name": "smart-base-themes",
+          "path": "themes/",
+          "graphTypologies": [
+            "themes"
+          ]
+        },
+        {
+          "name": "smart-base-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs",
+            "ig-pages"
+          ]
+        },
+        {
+          "name": "smart-base-document-kinds",
+          "path": "document-kinds/",
+          "graphTypologies": [
+            "document-kinds"
+          ]
+        },
+        {
+          "name": "smart-base-findings",
+          "path": "findings/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "smart-base-platform",
+          "path": "platform/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "smart-base-typologies",
+          "path": "typologies/",
+          "graphTypologies": [
+            "typologies"
+          ]
+        },
+        {
+          "name": "smart-base-validators",
+          "path": "validators/",
+          "graphTypologies": [
+            "validators"
+          ]
+        },
+        {
+          "name": "smart-base-schemas",
+          "path": "schemas/",
+          "graphTypologies": [
+            "code",
+            "schemas"
+          ]
+        },
+        {
+          "name": "smart-base-pipeline",
+          "path": "pipeline/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "smart-base-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "smart-base-kg",
+          "path": "kg/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "smart-base-skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "smart-base-scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "smart-base-code-lists",
+          "path": "code-lists/",
+          "graphTypologies": [
+            "code-list"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphTypologies": [
+            "glossary"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
+      "nodes": 672,
+      "bytes": 420886,
+      "sha256": "7076074a65562e1506e85549f3ae12cea34891638096823a9b01d11222d44ff1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-immunizations/smart-immunizations.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "smart-immunizations",
+      "stub": "smart-immunizations",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-immunizations/smart-immunizations.jsonld",
+      "title": "WHO SMART Guidelines — Immunizations",
+      "description": "The WHO SMART Guidelines immunizations implementation guide (FHIR IG source under input/), as a harnessed instance of smart-base.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-base.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "l1-recommendation-scenarios",
+          "path": "examples/l1-recommendation-scenarios/",
+          "graphTypologies": [
+            "l1-extraction"
+          ]
+        },
+        {
+          "name": "smart-immunizations-document-kinds",
+          "path": "document-kinds/",
+          "graphTypologies": [
+            "document-kinds"
+          ]
+        },
+        {
+          "name": "smart-immunizations-annexes",
+          "path": "annexes/",
+          "graphTypologies": [
+            "ig-annex"
+          ]
+        },
+        {
+          "name": "smart-immunizations-web-annexes",
+          "path": "web-annexes/",
+          "graphTypologies": [
+            "web-annex"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        }
+      ],
+      "nodes": 22,
+      "bytes": 36304,
+      "sha256": "082269dd083e45c1128fc2115d95dd703658f011d7371342456648b4d25220a8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-trust/smart-trust.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "smart-trust",
+      "stub": "smart-trust",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-trust/smart-trust.jsonld",
+      "title": "WHO SMART Trust",
+      "description": "The WHO SMART Trust implementation guide (FHIR IG source under input/), as a harnessed instance of smart-base.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-base.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-trust-ast",
+          "path": "fhir-ast/",
+          "graphTypologies": [
+            "ig-ast"
+          ]
+        },
+        {
+          "name": "smart-trust-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphTypologies": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "smart-trust-document-kinds",
+          "path": "document-kinds/",
+          "graphTypologies": [
+            "document-kinds"
+          ]
+        },
+        {
+          "name": "smart-trust-openapi",
+          "path": "openapi/",
+          "graphTypologies": [
+            "openapi"
+          ]
+        },
+        {
+          "name": "smart-trust-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs",
+            "ig-pages"
+          ]
+        }
+      ],
+      "nodes": 20,
+      "bytes": 32962,
+      "sha256": "3a6a621b946f70da6bf09253f9168fd3e3e96204ee78f50e6ac2180988b2ff29"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-trust-phw/smart-trust-phw.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "smart-trust-phw",
+      "stub": "smart-trust-phw",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-trust-phw/smart-trust-phw.jsonld",
+      "title": "GDHCN Trust Network - Personal Health Wallet",
+      "description": "The WHO SMART Guidelines Personal Health Wallet (PHW) implementation guide on the GDHCN Trust Network (FHIR IG source under input/), as a harnessed instance of smart-base.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/smart-base.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "smart-trust-phw-ast",
+          "path": "fhir-ast/",
+          "graphTypologies": [
+            "ig-ast"
+          ]
+        },
+        {
+          "name": "smart-trust-phw-artifact-index",
+          "path": "fhir-artifact-index/",
+          "graphTypologies": [
+            "fhir-artifact-index"
+          ]
+        },
+        {
+          "name": "smart-trust-phw-document-kinds",
+          "path": "document-kinds/",
+          "graphTypologies": [
+            "document-kinds"
+          ]
+        },
+        {
+          "name": "smart-trust-phw-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs",
+            "ig-pages"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "smart-trust-phw-catalogue",
+          "path": "catalogue/",
+          "graphTypologies": [
+            "catalogue"
+          ]
+        }
+      ],
+      "nodes": 23,
+      "bytes": 32676,
+      "sha256": "26de4c08b0b085930c5cea60f18dd13a6fe0795e9f76e0632ab9e5e4e369d8af"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/who-iris/who-iris.jsonld",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "name": "who-iris",
+      "stub": "who-iris",
+      "url": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/who-iris/who-iris.jsonld",
+      "title": "WHO IRIS",
+      "description": "The WHO Institutional Repository for Information Sharing, catalogued by reference — 1,057,223 files known, a handful materialized as the pre-CDN preview.",
+      "version": "0.1.0",
+      "dependsOn": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/folio-assistant-core/folio-assistant-core.jsonld"
+      ],
+      "directory": [
+        {
+          "name": "who-iris-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "who-iris-site",
+          "path": "site/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "who-iris-catalogue",
+          "path": "catalogue/",
+          "graphTypologies": [
+            "catalogue"
+          ]
+        },
+        {
+          "name": "who-iris-uploads",
+          "path": "uploads/",
+          "graphTypologies": [
+            "uploads"
+          ]
+        },
+        {
+          "name": "who-iris-skills",
+          "path": "skills/",
+          "graphTypologies": [
+            "skills"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphTypologies": [
+            "glossary"
+          ]
+        },
+        {
+          "name": "who-iris-themes",
+          "path": "themes/",
+          "graphTypologies": [
+            "themes"
+          ]
+        },
+        {
+          "name": "who-iris-docs",
+          "path": "docs/",
+          "graphTypologies": [
+            "docs"
+          ]
+        },
+        {
+          "name": "who-iris-processes",
+          "path": "processes/",
+          "graphTypologies": [
+            "processes"
+          ]
+        },
+        {
+          "name": "who-iris-scenarios",
+          "path": "scenarios/",
+          "graphTypologies": [
+            "scenarios"
+          ]
+        },
+        {
+          "name": "who-iris-scripts",
+          "path": "scripts/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "who-iris-sources",
+          "path": "sources/",
+          "graphTypologies": [
+            "schemas"
+          ]
+        },
+        {
+          "name": "id-lookup",
+          "path": "id-lookup/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
+          "name": "qa",
+          "path": "test/results/",
+          "graphTypologies": [
+            "qa"
+          ]
+        },
+        {
+          "name": "folio",
+          "path": "folio/",
+          "graphTypologies": [
+            "folio"
+          ]
+        },
+        {
+          "name": "who-iris-tools",
+          "path": "tools/",
+          "graphTypologies": [
+            "tools"
+          ]
+        },
+        {
+          "name": "who-iris-libraries",
+          "path": "libraries/",
+          "graphTypologies": [
+            "software-library"
+          ]
+        },
+        {
+          "name": "health",
+          "path": "test/health/results/",
+          "graphTypologies": [
+            "health"
+          ]
+        }
+      ],
+      "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
+      "nodes": 325,
+      "bytes": 295043,
+      "sha256": "e53b6cc16f509ed1fbdc78d1aef8a1fabbcc96cff489375ef0a208be4c1ad845"
+    }
+  ]
+}

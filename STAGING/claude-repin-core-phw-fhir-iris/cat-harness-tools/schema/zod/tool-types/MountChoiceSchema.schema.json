@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/MountChoice",
+  "definitions": {
+    "MountChoice": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*(?::[a-z0-9][a-z0-9-]*)?$",
+      "description": "A mount entry and instance to write a choice to, e.g. cat-harness or cat-harness:cat-harness-tools"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/MountChoiceSchema.schema.json",
+  "title": "MountChoiceSchema",
+  "description": "Generated from `MountChoiceSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-phw-fhir-iris",
+    "sha": "17bec737af9b6bd0d3531617bb53506676c132e4",
+    "pr": "2869/merge",
+    "run": "41286441333"
+  }
+}

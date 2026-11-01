@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap/process/Process_CompleteInitialization/node/A_FollowStated.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap/process/Process_CompleteInitialization/node/A_FollowStated",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Follow it, and say that you did",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap/process/Process_CompleteInitialization",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/bootstrap/skill/initialization-steps"
+    }
+  ]
+}
