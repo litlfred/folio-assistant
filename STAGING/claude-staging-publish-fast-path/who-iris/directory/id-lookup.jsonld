@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/who-iris/directory/id-lookup.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/staging-publish-fast-path",
+    "sha": "3832ed697fce42c8862aab887360cecfb0c140a1",
+    "pr": "2892/merge",
+    "run": "41338759435"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/who-iris/directory/id-lookup",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "id-lookup",
+      "path": "id-lookup/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "The GENERATED prefix-sharded identifier lookup over this catalogue's REFERENCED nodes: `manifest.json` plus JSON shards keyed by id prefix, each under 64 KiB. Written by `cat-harness-tools/scripts/gen-id-lookup.ts` (`bun run cat id-lookup`, gated by `id-lookup:check`), which finds this directory by its id `id-lookup` and never by this instance's name; read by `cat-harness-tools/id-lookup/lookup.js`. Here rather than beside the generator because an instance hosts its own generated outputs (D3, bean `j7ql`, 2026-10-01). Edit the catalogue, never the shards: the generator replaces this directory whole.",
+      "readmePath": "id-lookup/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/who-iris/directory/id-lookup",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/directory/id-lookup"
+    }
+  ]
+}

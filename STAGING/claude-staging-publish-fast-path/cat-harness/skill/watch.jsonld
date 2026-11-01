@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/skill/watch.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-publish-fast-path",
+    "sha": "3832ed697fce42c8862aab887360cecfb0c140a1",
+    "pr": "2892/merge",
+    "run": "41338759435"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/skill/watch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "watch",
+      "title": "/watch — background watcher with integration check",
+      "description": "Background-watch a branch (default origin/main) or a GitHub PR for new activity while you work, and on every event report whether to integrate / whether it conflicts with the current branch / whether it lets you simplify exposition / proofs / computations",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/watch.md",
+      "instructionLines": 322,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "$ref": "#/definitions/PdfFigureEntry",
+  "definitions": {
+    "PdfFigureEntry": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "figure",
+            "table",
+            "box",
+            "chart",
+            "algorithm",
+            "listing"
+          ]
+        },
+        "number": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "page_label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "number",
+        "title",
+        "page",
+        "confidence",
+        "evidence"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pdf-structure/PdfFigureEntrySchema.schema.json",
+  "title": "PdfFigureEntrySchema",
+  "description": "Generated from `PdfFigureEntrySchema` in schemas/ui/pdf-structure.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-publish-fast-path",
+    "sha": "3832ed697fce42c8862aab887360cecfb0c140a1",
+    "pr": "2892/merge",
+    "run": "41338759435"
+  }
+}

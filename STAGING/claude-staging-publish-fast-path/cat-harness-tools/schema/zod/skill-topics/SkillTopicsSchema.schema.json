@@ -1,0 +1,97 @@
+{
+  "$ref": "#/definitions/SkillTopics",
+  "definitions": {
+    "SkillTopics": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "skill-topics/v1"
+        },
+        "_comment": {
+          "type": "string"
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "path",
+              "title",
+              "description"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "directories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "subgraph": {
+                "type": "boolean",
+                "const": true
+              },
+              "graphTypologies": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "id",
+              "path",
+              "subgraph",
+              "graphTypologies"
+            ],
+            "additionalProperties": {}
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "topics"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-topics/SkillTopicsSchema.schema.json",
+  "title": "SkillTopicsSchema",
+  "description": "Generated from `SkillTopicsSchema` in schemas/kg/skill-topics.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-publish-fast-path",
+    "sha": "3832ed697fce42c8862aab887360cecfb0c140a1",
+    "pr": "2892/merge",
+    "run": "41338759435"
+  }
+}

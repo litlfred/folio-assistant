@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/folio-assistant-sci/skill/category-theory.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/staging-publish-fast-path",
+    "sha": "3832ed697fce42c8862aab887360cecfb0c140a1",
+    "pr": "2892/merge",
+    "run": "41338759435"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/folio-assistant-sci/skill/category-theory",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "category-theory",
+      "title": "Category Theory Formalization",
+      "description": "Category Theory formalization skill — handles diagram chasing, universal properties, functorial translation, and whiskering in Lean 4.  Integrates with Mathlib's typeclass-centric category theory and provides tactic strategies for commutativity proofs.",
+      "instructionsPath": "skills/content/folio-paper-adapter/category-theory.md",
+      "instructionLines": 415,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/category-theory"
+    }
+  ]
+}

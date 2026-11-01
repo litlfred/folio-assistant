@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/directory/openapi.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-publish-fast-path",
+    "sha": "3832ed697fce42c8862aab887360cecfb0c140a1",
+    "pr": "2892/merge",
+    "run": "41338759435"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/directory/openapi",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "openapi",
+      "path": "openapi/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/cat-harness"
+      ],
+      "description": "The OpenAPI subgraph — a NAMED SUBGRAPH of the harness, and until 2026-10-07 an instance of its own, `cat-openapi` (repository never created). Owner, 2026-10-07: *\"put cat-openapi under cat-harness as named subgraph 'openapi', not separate repo.\"* It holds the machinery for OpenAPI 3 documents rather than documents: the graph typology `openapi` an instance declares to hold one, the validator for that kind's provenance node, the shapes (`cat-openapi.config.json`, provenance, the subset of OpenAPI 3 the pages read) and the rendering sub-pipeline that gives every operation a page and an IRI. Of graph typology `cat-harness` because it holds MORE THAN ONE of the harness's parts; the graphs inside it — `openapi-validators` and `openapi-typologies` — are declared FROM WITHIN, in `openapi/graph.json` (#980); its schema and scripts are code, so the tools layer (https://github.com/litlfred/cat-harness-tools) holds them (`cat-harness-tools-openapi-schemas`, `cat-harness-tools-openapi`; beans `70lx`, `8lcl`), never reached down to from here. Bean `s4ta`.",
+      "readmePath": "openapi/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/cat-harness/directory/openapi",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/openapi"
+    }
+  ]
+}

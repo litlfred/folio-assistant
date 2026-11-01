@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/who-iris/skill/iris-rest-feed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/staging-publish-fast-path",
+    "sha": "3832ed697fce42c8862aab887360cecfb0c140a1",
+    "pr": "2892/merge",
+    "run": "41338759435"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/who-iris/skill/iris-rest-feed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "iris-rest-feed",
+      "title": "Reading IRIS changes over DSpace REST",
+      "description": "How to read changes from the WHO IRIS DSpace 7 REST API: the nightly \"changed since\" walk over Discovery sorted by lastModified, the weekly reconciliation that stands in for the deletions REST does not report, and the guard that stops a short listing from reading as a mass withdrawal.",
+      "instructionsPath": "skills/iris-rest-feed.md",
+      "instructionLines": 91,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-fast-path/who-iris/directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/GeometryBasis",
+  "definitions": {
+    "GeometryBasis": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "const": "geometry"
+        },
+        "coverage": {
+          "type": "number",
+          "minimum": 0
+        },
+        "imagesOnPage": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "method",
+        "coverage",
+        "imagesOnPage",
+        "page"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/GeometryBasisSchema.schema.json",
+  "title": "GeometryBasisSchema",
+  "description": "Generated from `GeometryBasisSchema` in schemas/content/document-image.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-publish-fast-path",
+    "sha": "3832ed697fce42c8862aab887360cecfb0c140a1",
+    "pr": "2892/merge",
+    "run": "41338759435"
+  }
+}

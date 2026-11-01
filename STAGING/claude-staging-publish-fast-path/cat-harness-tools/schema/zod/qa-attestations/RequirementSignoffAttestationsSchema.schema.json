@@ -1,0 +1,132 @@
+{
+  "$ref": "#/definitions/RequirementSignoffAttestations",
+  "definitions": {
+    "RequirementSignoffAttestations": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "qa-attestations/v1"
+        },
+        "family": {
+          "type": "string",
+          "const": "requirement-signoff"
+        },
+        "subject": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "id",
+            "path"
+          ]
+        },
+        "signoffs": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "script",
+                  "agent",
+                  "human"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "actor": {
+                "type": "string",
+                "minLength": 1
+              },
+              "at": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}(:\\d{2}(\\.\\d+)?)?(Z|[+-]\\d{2}:\\d{2}))?$"
+              },
+              "scope": {
+                "type": "string",
+                "pattern": "^(reqset:[a-z0-9][a-z0-9-]*|req:[a-z0-9][a-z0-9-]*(#[A-Za-z0-9][A-Za-z0-9_.-]*)?)$"
+              },
+              "outcome": {
+                "type": "string",
+                "enum": [
+                  "approve",
+                  "amend",
+                  "reject",
+                  "defer",
+                  "cancel"
+                ]
+              },
+              "stage": {
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "proposed",
+                  "approved",
+                  "planned",
+                  "in-progress",
+                  "delivered",
+                  "accepted",
+                  "rejected",
+                  "cancelled",
+                  "superseded"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence": {
+                "type": "string",
+                "pattern": "^https:\\/\\/\\S+$"
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "at",
+              "scope",
+              "outcome",
+              "evidence"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "family",
+        "subject",
+        "signoffs"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/RequirementSignoffAttestationsSchema.schema.json",
+  "title": "RequirementSignoffAttestationsSchema",
+  "description": "Generated from `RequirementSignoffAttestationsSchema` in schemas/sdlc/qa-attestations.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-publish-fast-path",
+    "sha": "3832ed697fce42c8862aab887360cecfb0c140a1",
+    "pr": "2892/merge",
+    "run": "41338759435"
+  }
+}

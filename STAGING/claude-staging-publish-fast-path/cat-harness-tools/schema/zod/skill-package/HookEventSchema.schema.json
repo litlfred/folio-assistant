@@ -1,0 +1,26 @@
+{
+  "$ref": "#/definitions/HookEvent",
+  "definitions": {
+    "HookEvent": {
+      "type": "string",
+      "enum": [
+        "SessionStart",
+        "PreToolUse",
+        "PostToolUse",
+        "PreCommit",
+        "PostCommit",
+        "UserPromptSubmit",
+        "Stop"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/HookEventSchema.schema.json",
+  "title": "HookEventSchema",
+  "description": "Generated from `HookEventSchema` in schemas/kg/skill-package.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-publish-fast-path",
+    "sha": "3832ed697fce42c8862aab887360cecfb0c140a1",
+    "pr": "2892/merge",
+    "run": "41338759435"
+  }
+}
