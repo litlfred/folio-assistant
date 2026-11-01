@@ -48,10 +48,10 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6240,
+          "occurrences": 6239,
           "allowed": 0,
-          "wrongDirection": 31,
-          "wrongDirectionFiles": 15,
+          "wrongDirection": 30,
+          "wrongDirectionFiles": 14,
           "exempt": 6209,
           "namesRepository": 0,
           "undetermined": 0,
@@ -62,7 +62,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 19,
+      "count": 18,
       "entries": [
         {
           "file": "bootstrap/models/models.json",
@@ -83,10 +83,6 @@
         {
           "file": "cat-harness-tools/scripts/merge-conflict-patterns.ts",
           "target": "folio-assistant-core"
-        },
-        {
-          "file": "fhir-harness/.github/workflows/ig-ast-refresh.yml",
-          "target": "smart-base"
         },
         {
           "file": "folio-assistant-core/scripts/diig-phases-svg.ts",
@@ -143,5 +139,5 @@
       ]
     }
   },
-  "total": 23
+  "total": 22
 }

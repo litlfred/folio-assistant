@@ -3006,21 +3006,6 @@
       "isTest": false
     },
     {
-      "module": "fhir-harness/schemas/ig-ast-lock.test.ts",
-      "instance": "fhir-harness",
-      "name": "ig-ast-lock.test",
-      "graphNode": "undeclared",
-      "isTest": true
-    },
-    {
-      "module": "fhir-harness/schemas/ig-ast-lock.ts",
-      "instance": "fhir-harness",
-      "name": "ig-ast-lock",
-      "graphNode": "undeclared",
-      "summary": "`ig-ast.lock.json` (`ig-ast-lock/v1`): the AST cache commit each IG's",
-      "isTest": false
-    },
-    {
       "module": "fhir-harness/schemas/ig-ast-plan.schema.json",
       "instance": "fhir-harness",
       "name": "ig-ast-plan",
@@ -70053,135 +70038,6 @@
       "exported": true
     },
     {
-      "id": "fhir-harness/schemas/ig-ast-lock.ts#IgAstLock",
-      "name": "IgAstLock",
-      "module": "fhir-harness/schemas/ig-ast-lock.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast-lock.ts#IgAstLockSchema",
-      "name": "IgAstLockSchema",
-      "module": "fhir-harness/schemas/ig-ast-lock.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(IG_AST_LOCK_TAG)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "pins",
-          "type": "z.array(IgAstPinSchema)",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "IG_AST_LOCK_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPin",
-      "name": "IgAstPin",
-      "module": "fhir-harness/schemas/ig-ast-lock.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema",
-      "name": "IgAstPinSchema",
-      "module": "fhir-harness/schemas/ig-ast-lock.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "instance",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The IG instance, as `index.lock.json` names it."
-        },
-        {
-          "name": "repository",
-          "type": "z.string().regex(/^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$/)",
-          "optional": false,
-          "array": false,
-          "doc": "The repository the cache branch lives in: the IG's own."
-        },
-        {
-          "name": "branch",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The cache branch the commit was read from, for the reader; the commit is what is fetched."
-        },
-        {
-          "name": "sha",
-          "type": "Sha",
-          "optional": false,
-          "array": false,
-          "doc": "The pinned cache commit."
-        },
-        {
-          "name": "sourceRevision",
-          "type": "Sha.optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The IG commit the AST says it was compiled from (`manifest.json` `inputs.sourceRevision`), when it says."
-        },
-        {
-          "name": "consent",
-          "type": "z .object({ by: z.string().min(1), on: z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/), /** Where the owner said yes: date, tim…",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "fhir-harness/schemas/ig-ast-lock.ts#Sha"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "fhir-harness/schemas/ig-ast-lock.ts#Sha",
-      "name": "Sha",
-      "module": "fhir-harness/schemas/ig-ast-lock.ts",
-      "kind": "zod-scalar",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": false
-    },
-    {
       "id": "fhir-harness/schemas/ig-ast-plan.schema.json#IGASTRebuildPlanIgAstPlanV1",
       "name": "IGASTRebuildPlanIgAstPlanV1",
       "module": "fhir-harness/schemas/ig-ast-plan.schema.json",
@@ -94297,30 +94153,6 @@
       "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgDefinedTermSchema",
       "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
       "via": "schema:inDefinedTermSet",
-      "kind": "field",
-      "optional": true,
-      "array": false
-    },
-    {
-      "from": "fhir-harness/schemas/ig-ast-lock.ts#IgAstLockSchema",
-      "to": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema",
-      "via": "pins",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
-      "from": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema",
-      "to": "fhir-harness/schemas/ig-ast-lock.ts#Sha",
-      "via": "sha",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema",
-      "to": "fhir-harness/schemas/ig-ast-lock.ts#Sha",
-      "via": "sourceRevision",
       "kind": "field",
       "optional": true,
       "array": false
