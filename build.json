@@ -1,10 +1,10 @@
 {
-  "sha": "03fc12e00c4357a25ddb1f9f6255d48fe403174d",
-  "built": "2026-11-01T08:44:49Z",
-  "runUrl": "https://github.com/litlfred/folio-assistant/actions/runs/41288210395",
-  "checksUrl": "https://github.com/litlfred/folio-assistant/commit/03fc12e00c4357a25ddb1f9f6255d48fe403174d/checks",
+  "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
+  "built": "2026-11-01T15:49:01Z",
+  "runUrl": "https://github.com/litlfred/folio-assistant/actions/runs/41321010741",
+  "checksUrl": "https://github.com/litlfred/folio-assistant/commit/aff8bfa0c89bee023e19cc129f430ed51ab8ea8d/checks",
   "mounts": {
-    "beans": "10cf93bacdabecad6c951ac00dc4046acf58d7ef",
+    "beans": "8cc6879fec4e4ebfa489f4063bc6bb4d6cfc5cd8",
     "health": "fc357776a3b4e04aa9de22df51efa8c22338c103",
     "fsh-guts": "cf2b8bd4663cf51435443a1ec4942d260a8060c8",
     "issue-marks": "dda51b18e5841231a0f1ae2365d82c6438a7f200",
@@ -12,13 +12,13 @@
     "merge-reviews": "4c3cc6b644e8ac01b35412e0d1b96403ad0047ce",
     "subscribed-harnesses": "29c70685067da1b158f5cf6c73b4ba88496d13b4",
     "todos": "9e1af0ab07c018288ae31ac9ae74a85d601bd942",
-    "cat-harness-tools.health": "49f7aa6e6f549000fc3d285ea9a5427048b15fd6",
-    "folio-assistant-core.health": "8a4e1d7ea9ed2643421f0bcc866eca232fc0e56b",
     "who-iris.health": "fc357776a3b4e04aa9de22df51efa8c22338c103",
-    "cat-harness.health": "00f42b083ba9659420d39985861985f9a3dbb273"
+    "cat-harness.health": "00f42b083ba9659420d39985861985f9a3dbb273",
+    "cat-harness-tools.health": "49f7aa6e6f549000fc3d285ea9a5427048b15fd6",
+    "folio-assistant-core.health": "8a4e1d7ea9ed2643421f0bcc866eca232fc0e56b"
   },
   "writerVerdicts": {
-    "prev": "e6e0ac1b4e2da69c7a541997f0ea2640af6fbff2",
+    "prev": "03fc12e00c4357a25ddb1f9f6255d48fe403174d",
     "verdicts": [
       {
         "writer": "handler:index",
@@ -33,7 +33,7 @@
       {
         "writer": "subgraph:jsonld",
         "verdict": "rerun",
-        "why": "not recorded: the trace is 307506545 bytes, more than 268435456"
+        "why": "not recorded: the trace is 307516960 bytes, more than 268435456"
       },
       {
         "writer": "library:viz",
@@ -88,12 +88,12 @@
       {
         "writer": "glossary:page",
         "verdict": "rerun",
-        "why": "bootstrap changed"
+        "why": "beans/defs changed"
       },
       {
         "writer": "bibliography:page",
         "verdict": "rerun",
-        "why": "bootstrap changed"
+        "why": "beans/defs changed"
       },
       {
         "writer": "smart:pages",
@@ -103,7 +103,7 @@
       {
         "writer": "jsonld:contexts",
         "verdict": "rerun",
-        "why": "cat-harness/docs changed"
+        "why": ".github/scripts changed"
       },
       {
         "writer": "tools:viz",
@@ -138,7 +138,7 @@
       {
         "writer": "lsi:viz",
         "verdict": "rerun",
-        "why": "beans/defs/folio-assistant-ksek--ci-green-pr-must-mean-green-main.md changed"
+        "why": "beans/defs changed"
       },
       {
         "writer": "translation:status",
@@ -164,13 +164,12 @@
       {
         "writer": "external-schemas:viz",
         "verdict": "rerun",
-        "why": ".github/workflows/docs-site.yml changed"
+        "why": ".github/scripts changed"
       },
       {
         "writer": "subscriptions:viz",
-        "verdict": "skip-safe",
-        "proof": false,
-        "outputs": 2
+        "verdict": "rerun",
+        "why": "index.config.json changed"
       },
       {
         "writer": "docs:pages",
@@ -180,13 +179,12 @@
       {
         "writer": "docs:harness",
         "verdict": "rerun",
-        "why": ".github/workflows/docs-site.yml changed"
+        "why": ".github/scripts changed"
       },
       {
         "writer": "navbar:include",
-        "verdict": "skip-safe",
-        "proof": true,
-        "outputs": 1
+        "verdict": "rerun",
+        "why": "cat-harness/docs/_data/harness.json changed"
       },
       {
         "writer": "kind:table",
@@ -200,21 +198,18 @@
       },
       {
         "writer": "themes:css",
-        "verdict": "skip-safe",
-        "proof": false,
-        "outputs": 2
+        "verdict": "rerun",
+        "why": "index.config.json changed"
       },
       {
         "writer": "folio:viz",
-        "verdict": "skip-safe",
-        "proof": false,
-        "outputs": 10
+        "verdict": "rerun",
+        "why": "cat-harness/docs/todos.json changed"
       },
       {
         "writer": "kg:viewer",
-        "verdict": "skip-safe",
-        "proof": false,
-        "outputs": 3
+        "verdict": "rerun",
+        "why": "cat-harness/docs/todos.json changed"
       },
       {
         "writer": "state:visualizer",
@@ -233,9 +228,8 @@
       },
       {
         "writer": "render:bpmn",
-        "verdict": "skip-safe",
-        "proof": false,
-        "outputs": 50
+        "verdict": "rerun",
+        "why": "cat-harness/docs/todos.json changed"
       },
       {
         "writer": "processes:viz",
@@ -247,18 +241,12 @@
   "writerVerifyLog": [
     "### Writers, rerun and measure — dry run (bean `fwtz`, option B)",
     "",
-    "**safe** · records from e6e0ac1b4e2d · could skip 7 of 43 · would have been stale 0 · must rerun 36",
+    "**safe** · records from 03fc12e00c43 · could skip 1 of 43 · would have been stale 0 · must rerun 42",
     "",
     "- `openapi:viz` could skip: 100 output(s) matched (evidence)",
-    "- `subscriptions:viz` could skip: 2 output(s) matched (evidence)",
-    "- `navbar:include` could skip: 1 output(s) matched (proof)",
-    "- `themes:css` could skip: 2 output(s) matched (evidence)",
-    "- `folio:viz` could skip: 10 output(s) matched (evidence)",
-    "- `kg:viewer` could skip: 3 output(s) matched (evidence)",
-    "- `render:bpmn` could skip: 50 output(s) matched (evidence)",
     "- `handler:index` reruns: bootstrap changed",
     "- `uml:overview` reruns: .git/branch-mounts/beans.json changed",
-    "- `subgraph:jsonld` reruns: not recorded: the trace is 307506545 bytes, more than 268435456",
+    "- `subgraph:jsonld` reruns: not recorded: the trace is 307516960 bytes, more than 268435456",
     "- `library:viz` reruns: bootstrap changed",
     "- `voices:viz` reruns: bootstrap changed",
     "- `theme:viz` reruns: bootstrap changed",
@@ -269,41 +257,41 @@
     "- `skills:docs` reruns: .git/branch-mounts/beans.json changed",
     "- `node-kinds` reruns: .git/branch-mounts/beans.json changed",
     "- `node-kind:pages` reruns: .git/branch-mounts/beans.json changed",
-    "- `glossary:page` reruns: bootstrap changed",
-    "- `bibliography:page` reruns: bootstrap changed",
+    "- `glossary:page` reruns: beans/defs changed",
+    "- `bibliography:page` reruns: beans/defs changed",
     "- `smart:pages` reruns: not recorded: the writer reads smart-base/docs/assets and then rewrites it",
-    "- `jsonld:contexts` reruns: cat-harness/docs changed",
+    "- `jsonld:contexts` reruns: .github/scripts changed",
     "- `tools:viz` reruns: build changed",
     "- `smart-base:pages` reruns: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
     "- `smart-base:l1-extraction:pages` reruns: cat-harness/docs changed",
-    "- … 16 more rerun",
+    "- … 22 more rerun",
     ""
   ],
   "kgStepTimes": [
-    "1793522501 STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)",
-    "1793522501 bun run cat-harness-tools/scripts/kg-export.ts --scope instance --out \"./_site/${STUB}/${STUB}.jsonld\"",
-    "1793522520 bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site",
-    "1793522520 bun run cat-harness-tools/scripts/kg-viewer.ts --site ./_site",
-    "1793522521 BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)",
-    "1793522521 BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap)",
-    "1793522521 bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url \"${SITE}/${BOOT_DIR}/\" --provenance --out \"./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld",
-    "1793522521 bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site",
-    "1793522544 bun run cat-harness-tools/scripts/glossary-export.ts --out \"./_site/${STUB}/${STUB}-glossary.jsonld\"",
-    "1793522547 bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out \"./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld\"",
-    "1793522548 bun run cat-harness-tools/scripts/kg-locale-export.ts --core \"./_site/${STUB}/${STUB}.jsonld\" --out-dir \"./_site/${STUB}\"",
-    "1793522567 bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir \"./_site/${BOOT_DIR}\"",
-    "1793522569 bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out \"./_site/${BOOT_DIR}\" --allow-collision bootstrap.json",
-    "1793522569 bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site",
-    "1793522569 bun run cat-harness-tools/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness --theme-source ./_docs",
-    "1793522643 bun run cat-harness-tools/scripts/fsh-guts-export.ts --out \"./_site/fsh-guts.jsonld\"",
-    "1793522644 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans",
-    "1793522645 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos",
-    "1793522646 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library",
-    "1793522647 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg",
-    "1793522658 bun run cat harness:state --out ./_site/assets/harnesses",
-    "1793522659 bun run cat-harness-tools/scripts/ns-export.ts --layer \"$LAYER\" --exact --out \"./_site/${DIR}/ns.jsonld\"",
-    "1793522659 bun run cat-harness-tools/scripts/ns-export.ts --layer \"$LAYER\" --exact --out \"./_site/${DIR}/ns.jsonld\"",
-    "1793522660 bun run cat-harness-tools/scripts/root-index.ts --site ./_site",
-    "1793522660 end"
+    "1793547944 STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)",
+    "1793547945 bun run cat-harness-tools/scripts/kg-export.ts --scope instance --out \"./_site/${STUB}/${STUB}.jsonld\"",
+    "1793547964 bun run cat-harness-tools/scripts/harness-schema-export.ts --out-dir ./_site",
+    "1793547964 bun run cat-harness-tools/scripts/kg-viewer.ts --site ./_site",
+    "1793547965 BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)",
+    "1793547965 BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap)",
+    "1793547965 bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url \"${SITE}/${BOOT_DIR}/\" --provenance --out \"./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld",
+    "1793547965 bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site",
+    "1793547990 bun run cat-harness-tools/scripts/glossary-export.ts --out \"./_site/${STUB}/${STUB}-glossary.jsonld\"",
+    "1793547992 bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out \"./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld\"",
+    "1793547993 bun run cat-harness-tools/scripts/kg-locale-export.ts --core \"./_site/${STUB}/${STUB}.jsonld\" --out-dir \"./_site/${STUB}\"",
+    "1793548012 bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --out-dir \"./_site/${BOOT_DIR}\"",
+    "1793548014 bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out \"./_site/${BOOT_DIR}\" --allow-collision bootstrap.json",
+    "1793548015 bun run cat-harness-tools/scripts/publish-id-lookup.ts --site ./_site",
+    "1793548015 bun run cat-harness-tools/scripts/rail-standalone-pages.ts --site ./_site --built cat-harness --theme-source ./_docs",
+    "1793548094 bun run cat-harness-tools/scripts/fsh-guts-export.ts --out \"./_site/fsh-guts.jsonld\"",
+    "1793548095 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans",
+    "1793548096 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos",
+    "1793548096 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library",
+    "1793548097 bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg",
+    "1793548110 bun run cat harness:state --out ./_site/assets/harnesses",
+    "1793548110 bun run cat-harness-tools/scripts/ns-export.ts --layer \"$LAYER\" --exact --out \"./_site/${DIR}/ns.jsonld\"",
+    "1793548110 bun run cat-harness-tools/scripts/ns-export.ts --layer \"$LAYER\" --exact --out \"./_site/${DIR}/ns.jsonld\"",
+    "1793548111 bun run cat-harness-tools/scripts/root-index.ts --site ./_site",
+    "1793548111 end"
   ]
 }

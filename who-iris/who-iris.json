@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-01T08:42:24.804Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/03fc12e00c4357a25ddb1f9f6255d48fe403174d",
-  "sourceCommitSha": "03fc12e00c4357a25ddb1f9f6255d48fe403174d",
-  "sourceCommitAt": "2026-11-01T09:17:04+01:00",
+  "generatedAt": "2026-11-01T15:46:30.067Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
+  "sourceCommitSha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
+  "sourceCommitAt": "2026-11-01T16:23:45+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -390,19 +390,6 @@
   },
   "@graph": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
-      "name": "iris-dspace",
-      "title": "IRIS, DSpace and Dublin Core",
-      "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.",
-      "instructionsPath": "skills/iris-dspace.md",
-      "instructionLines": 260,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "iris-rest-feed",
@@ -416,13 +403,13 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
-      "name": "iris-oxigraph",
-      "title": "Oxigraph Multi-Graph Search & Discovery for WHO IRIS",
-      "description": "How to compile, validate, distribute, and query WHO IRIS catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly and CLI pipelines. Enables combined complex queries, multi-dimensional faceted rollups, and lazy-loaded named subgraphs on the static edge.",
-      "instructionsPath": "skills/iris-oxigraph.md",
-      "instructionLines": 177,
+      "name": "iris-dspace",
+      "title": "IRIS, DSpace and Dublin Core",
+      "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.",
+      "instructionsPath": "skills/iris-dspace.md",
+      "instructionLines": 260,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -455,350 +442,17 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
-      "name": "IRIS CDN weekly reconciliation",
-      "summary": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds.",
-      "description": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds. An item no longer listed is re-checked by id; only one IRIS confirms withdrawn is marked so.",
-      "enforcement": "strict",
-      "sourcePath": "processes/iris-cdn-reconcile.bpmn",
-      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-reconcile.bpmn",
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/iris-cdn-reconcile.svg",
-      "startNode": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly"
-      ],
-      "nodeCount": 11,
-      "flowCount": 10,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "no",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
-      "name": "Build pipeline",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
-      "name": "IRIS CDN Exporter (agent)",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Weekly, Sunday 04:00 UTC",
-      "nodeKind": "start",
-      "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "List every item id IRIS reports",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Compare with the ids the library holds",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Missing share under 1%?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4",
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Treat the listing as faulty; escalate",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Nothing marked",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Re-check each missing item by id",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Mark confirmed items withdrawn (keep bytes)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Rebuild the whole graph (sorted output)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/nquads-distribution"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Sign and publish the release",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Reconciled",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "iris-oxigraph",
+      "title": "Oxigraph Multi-Graph Search & Discovery for WHO IRIS",
+      "description": "How to compile, validate, distribute, and query WHO IRIS catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly and CLI pipelines. Enables combined complex queries, multi-dimensional faceted rollups, and lazy-loaded named subgraphs on the static edge.",
+      "instructionsPath": "skills/iris-oxigraph.md",
+      "instructionLines": 177,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
@@ -1211,461 +865,6 @@
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N12"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
-      "name": "Sign and publish an IRIS CDN release",
-      "summary": "Turn a candidate payload into a signed release on Cloudflare: each changed library item gets a detached JWS over its own manifest, and the BagIt bag (RFC 8493) whose tagmanifest pins every item manifest and signature is signed once with a detached JWS (RFC 75…",
-      "description": "Turn a candidate payload into a signed release on Cloudflare: each changed library item gets a detached JWS over its own manifest, and the BagIt bag (RFC 8493) whose tagmanifest pins every item manifest and signature is signed once with a detached JWS (RFC 7515 Appendix F, ES256 per RFC 7518), the key published as a verificationMethod of a did:web DID document whose publicKeyJwk carries an x5c chain to the WHO signing key. Nothing unchanged is re-uploaded or re-signed; an empty diff ends the process with no commit.",
-      "enforcement": "strict",
-      "sourcePath": "processes/iris-cdn-sign-publish.bpmn",
-      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-sign-publish.bpmn",
-      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/iris-cdn-sign-publish.svg",
-      "startNode": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate"
-      ],
-      "nodeCount": 14,
-      "flowCount": 13,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "no",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Unchanged",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "no / unknown",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
-      "name": "Build pipeline",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
-      "name": "Release signer",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
-      "name": "Cloudflare R2 + CDN",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
-      "name": "Cloudflare git (Artifacts)",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
-      "name": "Verifier",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "A candidate payload",
-      "nodeKind": "start",
-      "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Write the BagIt tag files (sorted, no dates)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Diff against the published manifest",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Anything changed?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4",
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Unchanged",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Unchanged: no commit",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Store new objects (never overwrite)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Sign each changed item manifest (ES256)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Sign the release tag manifest (ES256)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Commit tag files and signature, last",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Resolve did:web; verify JWS and digests",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Verified?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10",
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Release published and verified",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Revert to the previous release",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Failed; previous release still served",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
@@ -2151,6 +1350,807 @@
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F14"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "IRIS CDN weekly reconciliation",
+      "summary": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds.",
+      "description": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds. An item no longer listed is re-checked by id; only one IRIS confirms withdrawn is marked so.",
+      "enforcement": "strict",
+      "sourcePath": "processes/iris-cdn-reconcile.bpmn",
+      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-reconcile.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/iris-cdn-reconcile.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly"
+      ],
+      "nodeCount": 11,
+      "flowCount": 10,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Build pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "IRIS CDN Exporter (agent)",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Weekly, Sunday 04:00 UTC",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "List every item id IRIS reports",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Compare with the ids the library holds",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Missing share under 1%?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4",
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Treat the listing as faulty; escalate",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Nothing marked",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Re-check each missing item by id",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Mark confirmed items withdrawn (keep bytes)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Rebuild the whole graph (sorted output)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/nquads-distribution"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Sign and publish the release",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Reconciled",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Sign and publish an IRIS CDN release",
+      "summary": "Turn a candidate payload into a signed release on Cloudflare: each changed library item gets a detached JWS over its own manifest, and the BagIt bag (RFC 8493) whose tagmanifest pins every item manifest and signature is signed once with a detached JWS (RFC 75…",
+      "description": "Turn a candidate payload into a signed release on Cloudflare: each changed library item gets a detached JWS over its own manifest, and the BagIt bag (RFC 8493) whose tagmanifest pins every item manifest and signature is signed once with a detached JWS (RFC 7515 Appendix F, ES256 per RFC 7518), the key published as a verificationMethod of a did:web DID document whose publicKeyJwk carries an x5c chain to the WHO signing key. Nothing unchanged is re-uploaded or re-signed; an empty diff ends the process with no commit.",
+      "enforcement": "strict",
+      "sourcePath": "processes/iris-cdn-sign-publish.bpmn",
+      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-sign-publish.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/iris-cdn-sign-publish.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate"
+      ],
+      "nodeCount": 14,
+      "flowCount": 13,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Unchanged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no / unknown",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Build pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Release signer",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Cloudflare R2 + CDN",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Cloudflare git (Artifacts)",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Verifier",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "A candidate payload",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Write the BagIt tag files (sorted, no dates)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Diff against the published manifest",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Anything changed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4",
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Unchanged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Unchanged: no commit",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Store new objects (never overwrite)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Sign each changed item manifest (ES256)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Sign the release tag manifest (ES256)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Commit tag files and signature, last",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Resolve did:web; verify JWS and digests",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Verified?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10",
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Release published and verified",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Revert to the previous release",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Failed; previous release still served",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes"
@@ -2772,22 +2772,16 @@
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#skill/iris-dspace",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#skill/iris-rest-feed",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#skill/iris-oxigraph",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#skill/iris-dspace",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#skill/iris-cdn-signing",
@@ -2802,148 +2796,10 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile",
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#skill/iris-oxigraph",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R1",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R2",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R3",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R4",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R5",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R6",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R7",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R8",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R9",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R10",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/lane/Lane_Exporter",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Start_Weekly",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Task_ListAll",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Task_Compare",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/GW_Plausible",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Task_Escalate",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/End_Refused",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Task_Recheck",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Call_Rebuild",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Call_SignPublish",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/End_Reconciled",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnNightly",
@@ -3118,204 +2974,6 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_Done",
       "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_Done"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P1",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P2",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P3",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P4",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P5",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P6",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P6b",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P7",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P8",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P9",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P10",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P11",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P12",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_Signer",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Start_Candidate",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_BuildBag",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_Diff",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/GW_Empty",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/End_Unchanged",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Unchanged",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Unchanged"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_Upload",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_SignItems",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_Sign",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_PublishTags",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_Verify",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/GW_Verified",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/End_Published",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_Revert",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/End_Failed",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed",
-      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnInitialLoad",
@@ -3528,6 +3186,348 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/flow/R10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Start_Weekly",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Task_Compare",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/End_Refused",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Refused"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnReconcile/node/End_Reconciled",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P6b",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P9",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P10",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P11",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/flow/P12",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Start_Candidate",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_BuildBag",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_Diff",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/GW_Empty",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/End_Unchanged",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Unchanged",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Unchanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_Upload",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_SignItems",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_Sign",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_PublishTags",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_Verify",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/GW_Verified",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/End_Published",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/Task_Revert",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#process/Process_IrisCdnSignPublish/node/End_Failed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld#role/iris-cdn-owner",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner",
@@ -3692,8 +3692,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "03fc12e00c4357a25ddb1f9f6255d48fe403174d",
+    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
     "pr": "main",
-    "run": "41288210395"
+    "run": "41321010741"
   }
 }

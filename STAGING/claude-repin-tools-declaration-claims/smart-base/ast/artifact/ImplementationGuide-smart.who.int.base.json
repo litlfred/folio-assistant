@@ -1,0 +1,43 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ImplementationGuide-smart.who.int.base.jsonld",
+  "@type": "fhir:ImplementationGuide",
+  "dcterms:identifier": "ImplementationGuide/smart.who.int.base",
+  "schema:name": "Base",
+  "dcterms:title": "SMART Base",
+  "dcterms:description": "Base SMART Guidelines implementation guide to be used as the base dependency for all SMART Guidelines IGs",
+  "schema:version": "0.3.0",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/ImplementationGuide/smart.who.int.base"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/ImplementationGuide/smart.who.int.base--5a285041.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "ce2ee66927070af85bc030ed180adcd0a761791d"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

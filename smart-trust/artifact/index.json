@@ -14,7 +14,7 @@
     "@id": "http://smart.who.int/trust"
   },
   "dcterms:title": "WHO SMART Trust",
-  "schema:numberOfItems": 682,
+  "schema:numberOfItems": 690,
   "schema:hasPart": [
     {
       "@id": "ActorDefinition-Holder.jsonld",
@@ -72,180 +72,18 @@
       }
     },
     {
-      "@id": "CodeSystem-Actors.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/Actors",
-      "dcterms:title": "WHO GDHCN Trust Actors CodeSystem",
-      "dcterms:description": "CodeSystem for SMART Trust actors that has usage codes for verification keys published to the Trust Network as defined by the [certificate governance](concepts_certificate_governance.html)",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/Actors"
-      }
+      "@id": "Binary-TrustDomain-DDCC.jsonld",
+      "@type": "fhir:Binary",
+      "dcterms:identifier": "Binary/TrustDomain-DDCC",
+      "dcterms:title": "TrustDomain-DDCC",
+      "dcterms:type": "Other"
     },
     {
-      "@id": "CodeSystem-ConnectionTypes.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/ConnectionTypes",
-      "dcterms:title": "WHO GDHCN Connection Types",
-      "dcterms:description": "CodeSystem for GDHCN connection types",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/ConnectionTypes"
-      }
-    },
-    {
-      "@id": "CodeSystem-Domains.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/Domains",
-      "dcterms:title": "WHO GDHCN Trust Domains",
-      "dcterms:description": "CodeSystem for define WHO GDHCN Trust Domains for Production environment.",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/Domains"
-      }
-    },
-    {
-      "@id": "CodeSystem-Domains-DEV.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/Domains-DEV",
-      "dcterms:title": "WHO GDHCN Trust Domains - DEV",
-      "dcterms:description": "CodeSystem for define WHO GDHCN Trust Domains for Development environment.",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/Domains-DEV"
-      }
-    },
-    {
-      "@id": "CodeSystem-Domains-UAT.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/Domains-UAT",
-      "dcterms:title": "WHO GDHCN Trust Domains - UAT",
-      "dcterms:description": "CodeSystem for define WHO GDHCN Trust Domains for User Acceptance Testing environment.",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/Domains-UAT"
-      }
-    },
-    {
-      "@id": "CodeSystem-KeyUsage.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/KeyUsage",
-      "dcterms:title": "WHO GDHCN Key Usage CodeSystem",
-      "dcterms:description": "CodeSystem for GDHCN Key Usage that has usage codes for verification keys published to the Trust Network as defined by the [certificate governance](concepts_certificate_governance.html) for Production environment",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage"
-      }
-    },
-    {
-      "@id": "CodeSystem-KeyUsage-DEV.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/KeyUsage-DEV",
-      "dcterms:title": "WHO GDHCN Key Usage CodeSystem - DEV",
-      "dcterms:description": "CodeSystem for GDHCN Key Usage that has usage codes for verification keys published to the Trust Network as defined by the [certificate governance](concepts_certificate_governance.html) for Development environment",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-DEV"
-      }
-    },
-    {
-      "@id": "CodeSystem-KeyUsage-UAT.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/KeyUsage-UAT",
-      "dcterms:title": "WHO GDHCN Key Usage CodeSystem - UAT",
-      "dcterms:description": "CodeSystem for GDHCN Key Usage that has usage codes for verification keys published to the Trust Network as defined by the [certificate governance](concepts_certificate_governance.html) for User Acceptance Testing environment",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-UAT"
-      }
-    },
-    {
-      "@id": "CodeSystem-Participants.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/Participants",
-      "dcterms:title": "WHO GDHCN Trust Network Participants CodeSystem",
-      "dcterms:description": "CodeSystem for GDHCN Trust Network Participants which are not already included in the ISO-3166 three letter code system for Production environment",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/Participants"
-      }
-    },
-    {
-      "@id": "CodeSystem-Participants-DEV.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/Participants-DEV",
-      "dcterms:title": "WHO GDHCN Trust Network Participant - DEV",
-      "dcterms:description": "CodeSystem for GDHCN Trust Network Participants for Development environment",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystems/Participants-DEV"
-      }
-    },
-    {
-      "@id": "CodeSystem-Participants-UAT.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/Participants-UAT",
-      "dcterms:title": "WHO GDHCN Trust Network Participant - UAT",
-      "dcterms:description": "CodeSystem for GDHCN Trust Network Participants for User Acceptance Testing environment",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystems/Participants-UAT"
-      }
-    },
-    {
-      "@id": "CodeSystem-PayloadTypes.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/PayloadTypes",
-      "dcterms:title": "WHO GDHCN Payload Types",
-      "dcterms:description": "CodeSystem for GDHCN Payload types",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/PayloadTypes"
-      }
-    },
-    {
-      "@id": "CodeSystem-RefMartCountryList.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/RefMartCountryList",
-      "dcterms:title": "WHO RefMart Jurisidiction List",
-      "dcterms:description": "CodeSystem for WHO Refmart Country and Jurisidiction List available at https://xmart-api-public.who.int/REFMART/REF_COUNTRY for Production environment",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY"
-      }
-    },
-    {
-      "@id": "CodeSystem-Transactions.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/Transactions",
-      "dcterms:title": "WHO GDHCN Transactions CodeSystem",
-      "dcterms:description": "CodeSystem for GDHCN transactions that has usage codes for verification keys published to the Trust Network as defined by the [certificate governance](concepts_certificate_governance.html)",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/Transactions"
-      }
-    },
-    {
-      "@id": "CodeSystem-WHORegionalOffices.jsonld",
-      "@type": "fhir:CodeSystem",
-      "dcterms:identifier": "CodeSystem/WHORegionalOffices",
-      "dcterms:title": "WHO Regional Offices CodeSystem",
-      "dcterms:description": "CodeSystem for WHO Regional Offices",
-      "dcterms:type": "Terminology: Code Systems",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/CodeSystem/WHORegionalOffices"
-      }
-    },
-    {
-      "@id": "ConceptMap-ParticipantsToWHORegionalOffices.jsonld",
-      "@type": "fhir:ConceptMap",
-      "dcterms:identifier": "ConceptMap/ParticipantsToWHORegionalOffices",
-      "dcterms:title": "GDHCN Participants to WHO Regional Offices",
-      "dcterms:description": "ConceptMap from GDHCN Trust Network Production Participants to WHO Regional Offices.\nParticipants that are not WHO Member States or State Parties (e.g. international organizations\nor non-member territories) have no mapping and are grouped under Other Participants.",
-      "dcterms:type": "Terminology: Concept Maps",
-      "schema:sameAs": {
-        "@id": "http://smart.who.int/trust/ConceptMap/ParticipantsToWHORegionalOffices"
-      }
+      "@id": "Binary-TrustDomain-IPS-PILGRIMAGE.jsonld",
+      "@type": "fhir:Binary",
+      "dcterms:identifier": "Binary/TrustDomain-IPS-PILGRIMAGE",
+      "dcterms:title": "TrustDomain-IPS-PILGRIMAGE",
+      "dcterms:type": "Other"
     },
     {
       "@id": "Endpoint-GDHCNParticipantDID-ALB-All.jsonld",
@@ -8204,6 +8042,204 @@
       ]
     },
     {
+      "@id": "CodeSystem-Actors.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Actors",
+      "dcterms:title": "WHO GDHCN Trust Actors CodeSystem",
+      "dcterms:description": "CodeSystem for SMART Trust actors that has usage codes for verification keys published to the Trust Network as defined by the [certificate governance](concepts_certificate_governance.html)",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Actors"
+      }
+    },
+    {
+      "@id": "CodeSystem-ConnectionTypes.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/ConnectionTypes",
+      "dcterms:title": "WHO GDHCN Connection Types",
+      "dcterms:description": "CodeSystem for GDHCN connection types",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/ConnectionTypes"
+      }
+    },
+    {
+      "@id": "CodeSystem-DAKComponents.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DAKComponents",
+      "dcterms:title": "DAK components",
+      "dcterms:description": "The ten components of a WHO SMART Guidelines Digital Adaptation Kit (DAK), as smart-base's DAK document kind lists them (smart-base document-kinds/dak.json). A Trust Domain's use cases point at these components. Move to smart-base once its DAK logical model publishes a code system for them.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DAKComponents"
+      }
+    },
+    {
+      "@id": "CodeSystem-DDCCTermsOfUse.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DDCCTermsOfUse",
+      "dcterms:title": "DDCC Trust Domain terms of use",
+      "dcterms:description": "The policy and regulatory standards of the DDCC Trust Domain, quoted from Annex I of the GDHCN Administrative and Operational Framework 1.2. GDHCN Participants confirm their readiness and intent to follow each one.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DDCCTermsOfUse"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains",
+      "dcterms:title": "WHO GDHCN Trust Domains",
+      "dcterms:description": "CodeSystem for define WHO GDHCN Trust Domains for Production environment.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-DEV.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-DEV",
+      "dcterms:title": "WHO GDHCN Trust Domains - DEV",
+      "dcterms:description": "CodeSystem for define WHO GDHCN Trust Domains for Development environment.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-DEV"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-UAT.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-UAT",
+      "dcterms:title": "WHO GDHCN Trust Domains - UAT",
+      "dcterms:description": "CodeSystem for define WHO GDHCN Trust Domains for User Acceptance Testing environment.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-UAT"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage",
+      "dcterms:title": "WHO GDHCN Key Usage CodeSystem",
+      "dcterms:description": "CodeSystem for GDHCN Key Usage that has usage codes for verification keys published to the Trust Network as defined by the [certificate governance](concepts_certificate_governance.html) for Production environment",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-DEV.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-DEV",
+      "dcterms:title": "WHO GDHCN Key Usage CodeSystem - DEV",
+      "dcterms:description": "CodeSystem for GDHCN Key Usage that has usage codes for verification keys published to the Trust Network as defined by the [certificate governance](concepts_certificate_governance.html) for Development environment",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-DEV"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-UAT.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-UAT",
+      "dcterms:title": "WHO GDHCN Key Usage CodeSystem - UAT",
+      "dcterms:description": "CodeSystem for GDHCN Key Usage that has usage codes for verification keys published to the Trust Network as defined by the [certificate governance](concepts_certificate_governance.html) for User Acceptance Testing environment",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-UAT"
+      }
+    },
+    {
+      "@id": "CodeSystem-Participants.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Participants",
+      "dcterms:title": "WHO GDHCN Trust Network Participants CodeSystem",
+      "dcterms:description": "CodeSystem for GDHCN Trust Network Participants which are not already included in the ISO-3166 three letter code system for Production environment",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Participants"
+      }
+    },
+    {
+      "@id": "CodeSystem-Participants-DEV.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Participants-DEV",
+      "dcterms:title": "WHO GDHCN Trust Network Participant - DEV",
+      "dcterms:description": "CodeSystem for GDHCN Trust Network Participants for Development environment",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystems/Participants-DEV"
+      }
+    },
+    {
+      "@id": "CodeSystem-Participants-UAT.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Participants-UAT",
+      "dcterms:title": "WHO GDHCN Trust Network Participant - UAT",
+      "dcterms:description": "CodeSystem for GDHCN Trust Network Participants for User Acceptance Testing environment",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystems/Participants-UAT"
+      }
+    },
+    {
+      "@id": "CodeSystem-PayloadTypes.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/PayloadTypes",
+      "dcterms:title": "WHO GDHCN Payload Types",
+      "dcterms:description": "CodeSystem for GDHCN Payload types",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/PayloadTypes"
+      }
+    },
+    {
+      "@id": "CodeSystem-RefMartCountryList.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/RefMartCountryList",
+      "dcterms:title": "WHO RefMart Jurisidiction List",
+      "dcterms:description": "CodeSystem for WHO Refmart Country and Jurisidiction List available at https://xmart-api-public.who.int/REFMART/REF_COUNTRY for Production environment",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/refmart/CodeSystems/REF_COUNTRY"
+      }
+    },
+    {
+      "@id": "CodeSystem-Transactions.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Transactions",
+      "dcterms:title": "WHO GDHCN Transactions CodeSystem",
+      "dcterms:description": "CodeSystem for GDHCN transactions that has usage codes for verification keys published to the Trust Network as defined by the [certificate governance](concepts_certificate_governance.html)",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Transactions"
+      }
+    },
+    {
+      "@id": "CodeSystem-WHORegionalOffices.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/WHORegionalOffices",
+      "dcterms:title": "WHO Regional Offices CodeSystem",
+      "dcterms:description": "CodeSystem for WHO Regional Offices",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/WHORegionalOffices"
+      }
+    },
+    {
+      "@id": "ConceptMap-ParticipantsToWHORegionalOffices.jsonld",
+      "@type": "fhir:ConceptMap",
+      "dcterms:identifier": "ConceptMap/ParticipantsToWHORegionalOffices",
+      "dcterms:title": "GDHCN Participants to WHO Regional Offices",
+      "dcterms:description": "ConceptMap from GDHCN Trust Network Production Participants to WHO Regional Offices.\nParticipants that are not WHO Member States or State Parties (e.g. international organizations\nor non-member territories) have no mapping and are grouped under Other Participants.",
+      "dcterms:type": "Terminology: Concept Maps",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ConceptMap/ParticipantsToWHORegionalOffices"
+      }
+    },
+    {
       "@id": "Requirements-DistributeBusinessRules.jsonld",
       "@type": "fhir:Requirements",
       "dcterms:identifier": "Requirements/DistributeBusinessRules",
@@ -8578,6 +8614,28 @@
       }
     },
     {
+      "@id": "StructureDefinition-TrustDomain.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/TrustDomain",
+      "dcterms:title": "GDHCN Trust Domain",
+      "dcterms:description": "A GDHCN Trust Domain. Its parts follow the definition in Section II of the GDHCN Administrative and Operational Framework, which says a Trust Domain consists of:\n\n- defined use cases and business processes related to the utilization of Verifiable Digital Health Certificates;\n- the open, interoperable technical specifications that identify or define the applicable Trusted Services and Verifiable Digital Health Certificates; and\n- a set of policy and regulatory standards describing expected behavior of GDHCN Participants.\n\nA Trust Domain also names its terms of use. This is the ValueSet of policies a participant may say it acts under, for example in the `termsOfUse` of a VHL Receiver's Verifiable Credential (see [TrustDomainPolicy](StructureDefinition-TrustDomainPolicy.html)).",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/StructureDefinition/TrustDomain"
+      }
+    },
+    {
+      "@id": "StructureDefinition-TrustDomainPolicy.jsonld",
+      "@type": "fhir:StructureDefinition",
+      "dcterms:identifier": "StructureDefinition/TrustDomainPolicy",
+      "dcterms:title": "GDHCN Trust Domain policy (VC termsOfUse entry)",
+      "dcterms:description": "One entry of a W3C Verifiable Credentials Data Model 2.0 `termsOfUse` (section 5.5) naming a policy of a GDHCN Trust Domain that the credential's issuer acts under. One example is a VHL Receiver's self-issued credential under the Verifiable Credential Option of IHE ITI VHL ITI-YY5.\n\nVC 2.0 requires each `termsOfUse` value to have a `type` and allows an `id`. The `type` is this logical model's canonical URL. The `id` is the policy: a code in a Trust Domain's terms-of-use ValueSet, written as `{CodeSystem canonical}#{code}`. A verifier finds the Trust Domain from the ValueSet that holds the policy.\n\n```json\n\"termsOfUse\": [{\n  \"type\": \"http://smart.who.int/trust/StructureDefinition/TrustDomainPolicy\",\n  \"id\": \"http://smart.who.int/ips-pilgrimage/CodeSystem/IPS.HAJJ.CONSENT#CONSENT-KSA\"\n}]\n```",
+      "dcterms:type": "Structures: Logical Models",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/StructureDefinition/TrustDomainPolicy"
+      }
+    },
+    {
       "@id": "ValueSet-Actors.jsonld",
       "@type": "fhir:ValueSet",
       "dcterms:identifier": "ValueSet/Actors",
@@ -8597,6 +8655,28 @@
       "dcterms:type": "Terminology: Value Sets",
       "schema:sameAs": {
         "@id": "http://smart.who.int/trust/ValueSet/ConnectionTypes"
+      }
+    },
+    {
+      "@id": "ValueSet-DAKComponents.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/DAKComponents",
+      "dcterms:title": "DAK components",
+      "dcterms:description": "All DAK components.",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ValueSet/DAKComponents"
+      }
+    },
+    {
+      "@id": "ValueSet-DDCCTermsOfUse.jsonld",
+      "@type": "fhir:ValueSet",
+      "dcterms:identifier": "ValueSet/DDCCTermsOfUse",
+      "dcterms:title": "DDCC Trust Domain terms of use",
+      "dcterms:description": "The policies of the DDCC Trust Domain that a participant may name in a VC termsOfUse entry (TrustDomainPolicy).",
+      "dcterms:type": "Terminology: Value Sets",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ValueSet/DDCCTermsOfUse"
       }
     },
     {
