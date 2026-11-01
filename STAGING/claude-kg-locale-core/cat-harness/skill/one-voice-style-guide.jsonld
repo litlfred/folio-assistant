@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/one-voice-style-guide.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/one-voice-style-guide",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "one-voice-style-guide",
+      "title": "One-Voice Style Guide — Author Voice Profile",
+      "description": "Author voice profile and narrative style guide. Reference when authoring or editing prose. Pairs with `one-voice-audit` (mechanical sweep for status leaks, emoji, and Unicode crashes).",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/package/authoring-core"
+      ],
+      "instructionsPath": "skills/authoring/authoring-core/one-voice-style-guide.md",
+      "instructionLines": 228,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-style-guide"
+    }
+  ]
+}

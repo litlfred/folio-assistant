@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/HumanVerdict",
+  "definitions": {
+    "HumanVerdict": {
+      "type": "string",
+      "enum": [
+        "true_positive",
+        "false_positive",
+        "unknown"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/HumanVerdictSchema.schema.json",
+  "title": "HumanVerdictSchema",
+  "description": "Generated from `HumanVerdictSchema` in schemas/sdlc/merge-queue.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  }
+}

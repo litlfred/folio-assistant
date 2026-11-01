@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/process/Process_HumanAgentDiscussion/node/A_Recommend.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/process/Process_HumanAgentDiscussion/node/A_Recommend",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Recommend one, and say what happens with no answer",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/process/Process_HumanAgentDiscussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/skill/human-agent-discussion"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/decision-audit.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/decision-audit",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "decision-audit",
+      "title": "A decision is not a finding, and neither is a substitute for the other",
+      "description": "Record why a decision was made, or why a finding in it was left. Required of whoever adjudicates a gate, and of the agent that assembles the citations for them. Every overrule of a mechanical finding carries a note, and every note cites corpus evidence.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/decision-audit.md",
+      "instructionLines": 93,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit"
+    }
+  ]
+}

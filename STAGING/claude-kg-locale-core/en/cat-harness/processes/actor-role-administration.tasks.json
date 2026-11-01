@@ -1,0 +1,330 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_ActorRoleAdministration",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
+ "tasks": {
+  "Task_AddActor": {
+   "id": "Task_AddActor",
+   "name": "Add an actor, and declare its kind",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_AddActor",
+   "lane": "Administrator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
+   "skills": [
+    {
+     "name": "role-model"
+    }
+   ],
+   "role": {
+    "name": "administrator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
+    "title": "Administrator",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "role-model"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "swimlane-glossary"
+     },
+     {
+      "name": "task-authorization"
+     }
+    ]
+   }
+  },
+  "Task_AssignRoles": {
+   "id": "Task_AssignRoles",
+   "name": "Open or close a role to an actor",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_AssignRoles",
+   "lane": "Administrator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
+   "skills": [
+    {
+     "name": "role-model"
+    }
+   ],
+   "role": {
+    "name": "administrator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
+    "title": "Administrator",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "role-model"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "swimlane-glossary"
+     },
+     {
+      "name": "task-authorization"
+     }
+    ]
+   }
+  },
+  "Task_GrantOrRevoke": {
+   "id": "Task_GrantOrRevoke",
+   "name": "Grant or revoke a permission",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_GrantOrRevoke",
+   "lane": "Administrator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
+   "skills": [
+    {
+     "name": "role-model"
+    }
+   ],
+   "role": {
+    "name": "administrator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
+    "title": "Administrator",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "role-model"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "swimlane-glossary"
+     },
+     {
+      "name": "task-authorization"
+     }
+    ]
+   }
+  },
+  "Task_RetireActor": {
+   "id": "Task_RetireActor",
+   "name": "Retire an actor — never delete one",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_RetireActor",
+   "lane": "Administrator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
+   "skills": [
+    {
+     "name": "deletion-requires-confirmation"
+    },
+    {
+     "name": "role-model"
+    }
+   ],
+   "role": {
+    "name": "administrator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
+    "title": "Administrator",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "role-model"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "swimlane-glossary"
+     },
+     {
+      "name": "task-authorization"
+     }
+    ]
+   }
+  },
+  "CallActivity_CodeChangeReview": {
+   "id": "CallActivity_CodeChangeReview",
+   "name": "Branch, gates, PR and review",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
+   "lane": "Administrator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Administrator",
+   "skills": [
+    {
+     "name": "prepare-merge"
+    },
+    {
+     "name": "continual-progress"
+    }
+   ],
+   "calls": {
+    "name": "Code change and review",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
+    "diagram": "code-change-review.html"
+   },
+   "role": {
+    "name": "administrator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
+    "title": "Administrator",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "confirmation-waiver"
+     },
+     {
+      "name": "deletion-requires-confirmation"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "role-model"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "swimlane-glossary"
+     },
+     {
+      "name": "task-authorization"
+     }
+    ]
+   }
+  },
+  "Task_RunKgAudit": {
+   "id": "Task_RunKgAudit",
+   "name": "Audit the graph [kg:audit]",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_RunKgAudit",
+   "lane": "Graph audit (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/lane/Lane_Audit",
+   "skills": [
+    {
+     "name": "role-model"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  }
+ }
+}

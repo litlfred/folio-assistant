@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/schema/tool-types.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/schema/tool-types",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "tool-types",
+      "title": "tool-types",
+      "summary": "The shared I/O type vocabulary Tool ports reference.",
+      "module": "schemas/tools/tool-types.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/tools/tool-types-schema.jsonld"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-types"
+    }
+  ]
+}

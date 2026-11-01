@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/process/Process_L2Dak/node/Task_Bpmn.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Bpmn.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Bpmn",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Business processes · BPMN 2.0",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/skill/bpmn-authoring",
+        "http://smart.who.int/base/skill/l2-component-edit-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B06"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B12"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

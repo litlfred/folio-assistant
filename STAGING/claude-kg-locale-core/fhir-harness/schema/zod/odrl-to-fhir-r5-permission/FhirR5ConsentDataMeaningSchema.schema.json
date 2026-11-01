@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/FhirR5ConsentDataMeaning",
+  "definitions": {
+    "FhirR5ConsentDataMeaning": {
+      "type": "string",
+      "enum": [
+        "instance",
+        "related",
+        "dependents",
+        "authoredby"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/odrl-to-fhir-r5-permission/FhirR5ConsentDataMeaningSchema.schema.json",
+  "title": "FhirR5ConsentDataMeaningSchema",
+  "description": "Generated from `FhirR5ConsentDataMeaningSchema` in schemas/odrl-to-fhir-r5-permission.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  }
+}

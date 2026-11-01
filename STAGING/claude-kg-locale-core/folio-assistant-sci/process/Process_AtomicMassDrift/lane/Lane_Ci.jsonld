@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-sci/process/Process_AtomicMassDrift/lane/Lane_Ci.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-sci/process/Process_AtomicMassDrift/lane/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "CI/CD Pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-sci/process/Process_AtomicMassDrift",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-sci/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_AtomicMassDrift/lane/Lane_Ci"
+    }
+  ]
+}

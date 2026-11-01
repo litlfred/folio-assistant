@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/skill/document-publishing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/skill/document-publishing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "document-publishing",
+      "title": "document-publishing",
+      "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
+      "instructionLines": 119,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-publishing"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/deployment-auth.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/deployment-auth",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "deployment-auth",
+      "title": "Deployment & Auth Skill",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/package/folio-core"
+      ],
+      "instructionsPath": "skills/tools/folio-core/deployment-auth.md",
+      "instructionLines": 195,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-auth"
+    }
+  ]
+}

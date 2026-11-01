@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfGit.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfGit",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Cloudflare git (Artifacts)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/process/Process_IrisCdnInitialLoad",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/role/cloudflare-git",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfGit"
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "$ref": "#/definitions/VectorAssembly",
+  "definitions": {
+    "VectorAssembly": {
+      "type": "object",
+      "properties": {
+        "drawings": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "background": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bbox": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "items": false,
+                "minItems": 4,
+                "maxItems": 4
+              },
+              "drawings": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "pageEdge": {
+                "type": "boolean"
+              },
+              "rendered": {
+                "type": "boolean"
+              },
+              "labels": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "bbox",
+              "drawings",
+              "pageEdge",
+              "rendered",
+              "labels"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "boxes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^b\\d+$"
+              },
+              "bbox": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "items": false,
+                "minItems": 4,
+                "maxItems": 4
+              },
+              "parent": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^b\\d+$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "labels": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "id",
+              "bbox",
+              "parent",
+              "labels"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "unlabelledClosedShapes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "connectors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^b\\d+$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "to": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^b\\d+$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "bbox": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "items": false,
+                "minItems": 4,
+                "maxItems": 4
+              }
+            },
+            "required": [
+              "from",
+              "to",
+              "bbox"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "between": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "outside": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "drawings",
+        "background",
+        "groups",
+        "boxes",
+        "unlabelledClosedShapes",
+        "connectors",
+        "between",
+        "outside"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-figure/VectorAssemblySchema.schema.json",
+  "title": "VectorAssemblySchema",
+  "description": "Generated from `VectorAssemblySchema` in schemas/content/vector-figure.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  }
+}

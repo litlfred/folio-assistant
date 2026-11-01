@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/process/Process_NarrativeReview/node/Task_AdjudicateVoice.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/process/Process_NarrativeReview/node/Task_AdjudicateVoice",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Adjudicate the voice findings",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/role/narrative-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/process/Process_NarrativeReview/lane/Lane_NarrativeReviewer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/voice-editorial-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/process/Process_CriterionAdjudication",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/process/Process_NarrativeReview#flow/F_N2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/process/Process_NarrativeReview#flow/F_N3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/node/Task_AdjudicateVoice"
+    }
+  ]
+}

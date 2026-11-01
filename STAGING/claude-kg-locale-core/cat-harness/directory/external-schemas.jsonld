@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/external-schemas.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/external-schemas",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "external-schemas",
+      "path": "external-schemas/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/external-schema"
+      ],
+      "description": "The specifications this instance depends on, one record per specification, each pinning the EDITION in use and carrying the operative terms DERIVED from the corpus rather than hand-listed. Owner, 2026-09-20: \"dont need to materalize, but should reference specific version being used\" and \"some schema that is operational should be in KG\". UNDECLARED UNTIL 2026-09-22, which is the dh4f shape inverted: dh4f is a declared directory nothing holds, reported as a clean scan; this was a held directory nothing declared, so every consumer that fans out over declared directories skipped a registry that pins four external namespaces. It was reachable only by the one script that hardcodes its path. `dependents: reproduce` because a dependent folio consumes its own specifications — it inherits the convention, an id and a relative path, not this instance's records.",
+      "readmePath": "external-schemas/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/external-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/external-schemas"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/tool-types/MountChoice.schema.json",
+  "title": "MountChoice",
+  "type": "string",
+  "pattern": "^[a-z0-9][a-z0-9-]*(?::[a-z0-9][a-z0-9-]*)?$",
+  "description": "A mount entry and instance to write a choice to, e.g. cat-harness or cat-harness:cat-harness-tools",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  }
+}

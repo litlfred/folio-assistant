@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Fetch the changed records and bitstream lists",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/skill/iris-rest-feed",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/skill/iris-dspace"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/process/Process_IrisCdnNightly#flow/N5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/process/Process_IrisCdnNightly#flow/N6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged"
+    }
+  ]
+}

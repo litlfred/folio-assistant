@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/content-graph.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/content-graph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "content-graph",
+      "title": "Content Graph — Editorial Organisation Skill",
+      "description": "Editorial graph analysis skill — builds a content graph from uses[], interprets, proofs, and examples relationships; builds a chapter/section topology graph; and applies heuristics to identify forward references, cross-section/cross-chapter coupling, and sections that are too sparse or too dense. Produces actionable reorganisation suggestions and can implement approved moves.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/package/authoring-core"
+      ],
+      "instructionsPath": "skills/authoring/authoring-core/content-graph.md",
+      "instructionLines": 470,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-graph"
+    }
+  ]
+}

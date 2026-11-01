@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/fhir-harness/skill/smart-launch.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/smart-launch.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/smart-launch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "smart-launch",
+      "title": "smart-launch",
+      "description": "How a browser app performs a SMART on FHIR launch — EHR launch and standalone launch — with the SMARTerFHIR library: `SmartLaunchHandler`, the `LAUNCH` and `EMR` enums, the scopes it requests per EHR vendor, how the redirect URI is computed, and where the token ends up. Written against a pinned upstream commit; read before wiring a launch page or a redirect page.",
+      "instructionsPath": "skills/fhir-client/smart-launch.md",
+      "instructionLines": 177,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

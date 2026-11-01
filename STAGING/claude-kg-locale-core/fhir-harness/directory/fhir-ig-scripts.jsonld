@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/fhir-harness/directory/fhir-ig-scripts.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-scripts.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-scripts",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "fhir-ig-scripts",
+      "path": "scripts/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "The IG site pipeline's code and the Liquid templates it renders with: `stage-ig-sites.ts` stages each instance's IG as its own just-the-docs site, `build-ig-site.ts` turns an IG's `input/` and `sushi-config.yaml` into that site (navigation, colour scheme, the lifted `site.data.fhir` artefact variables, and the Publisher-generated pages `toc` and `artifacts`), `ig-site-data.ts` lifts the IG's `_data`, and `ig-ast.ts` lists, checks, diffs and renders IG ASTs. Templates sit under `templates/`, beside the writer that reads them (`liquid-templates`). Undeclared until 2026-10-01 while the Tool nodes in `tools/` invoked every one of these files: a `.liquid` file in an undeclared directory is one no checker looks at, which is what declaring it fixes.",
+      "readmePath": "scripts/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-scripts"
+    }
+  ]
+}

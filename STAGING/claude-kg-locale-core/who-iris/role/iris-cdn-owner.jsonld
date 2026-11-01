@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/role/iris-cdn-owner.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/role/iris-cdn-owner",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "IRIS CDN owner",
+      "title": "IRIS CDN owner",
+      "notation": "iris-cdn-owner",
+      "description": "A person: decides the export's scope, budget and storage target. Nothing downstream widens what the owner approved.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/who-iris/skill/iris-cdn-exporter"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner"
+    }
+  ]
+}

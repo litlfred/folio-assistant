@@ -1,0 +1,20 @@
+{
+  "$ref": "#/definitions/DelimitedTextPath",
+  "definitions": {
+    "DelimitedTextPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+      "description": "A repository path to a delimited text (CSV or TSV) file."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/DelimitedTextPathSchema.schema.json",
+  "title": "DelimitedTextPathSchema",
+  "description": "Generated from `DelimitedTextPathSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  }
+}

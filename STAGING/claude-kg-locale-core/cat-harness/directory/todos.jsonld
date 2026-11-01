@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/todos.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/todos",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "todos",
+      "path": "todos/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/cat-harness/tree/cat/cat-harness/todos",
+        "kind": "branch",
+        "branch": "cat/cat-harness/todos",
+        "keyedBy": "tip",
+        "declaredIn": "declaration"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/todos"
+      ],
+      "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. `todos/todos.json` declares its nodes (`items`, `feedback`, `boards`, `positions`). REPOSITORY-scoped: it sits at the top of the checkout and is never overlaid by a dependency.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/todos"
+    }
+  ]
+}

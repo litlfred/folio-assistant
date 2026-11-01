@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/externalSchema/spar-doco-deo-cito.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/externalSchema/spar-doco-deo-cito",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#ExternalSchema",
+      "name": "spar-doco-deo-cito",
+      "title": "SPAR Ontologies: DoCO, DEO and CiTO",
+      "authority": "other",
+      "specVersion": "unpinned",
+      "specUse": "conforms",
+      "specUrl": "http://www.sparontologies.net/",
+      "namespace": [
+        "http://purl.org/spar/doco/",
+        "http://purl.org/spar/deo/",
+        "http://purl.org/spar/cito/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/spar-doco-deo-cito"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/process/Process_SgEndToEnd/node/EndEvent_AppBuilt.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_SgEndToEnd/node/EndEvent_AppBuilt.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/EndEvent_AppBuilt",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "L4 application built",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E28"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/process/Process_L2Dak/node/Call_BeanClose.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B21"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_4"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

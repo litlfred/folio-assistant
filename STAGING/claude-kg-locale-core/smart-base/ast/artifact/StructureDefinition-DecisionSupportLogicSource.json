@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "StructureDefinition-DecisionSupportLogicSource.jsonld",
+  "@type": "fhir:StructureDefinition",
+  "dcterms:identifier": "StructureDefinition/DecisionSupportLogicSource",
+  "schema:name": "DecisionSupportLogicSource",
+  "dcterms:title": "Decision Support Logic Source",
+  "dcterms:description": "Source reference for Decision Support Logic - exactly one of the following must be provided:\n- url (url data type): URL to retrieve DecisionSupportLogic definition from input/ or external source\n- canonical (canonical data type): Canonical URI pointing to the DecisionSupportLogic definition\n- instance: Inline DecisionSupportLogic instance data",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Structures: Logical Models",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/StructureDefinition/DecisionSupportLogicSource"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/StructureDefinition/DecisionSupportLogicSource--b42ed2f5.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "adadd67d5a648c250df28ba489c5f82f28cc3356"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

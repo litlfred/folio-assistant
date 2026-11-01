@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/asset/instance-readme.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/asset/instance-readme.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/asset/instance-readme",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "name": "instance-readme",
+      "path": "README.md",
+      "assetRole": "instance-readme",
+      "title": "smart-base",
+      "description": "What this layer holds, where each document came from, and how to re-derive an entry."
+    }
+  ]
+}

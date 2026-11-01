@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/skill/bib-human-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/skill/bib-human-review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "bib-human-review",
+      "title": "bib-human-review",
+      "description": "Human-validated bibliography workflow. Flag references that have not been human-reviewed against their source; drive the acquisition ladder (source-in-repo → acquire-legally → physical-library); open one GitHub issue per reference needing physical review (full project context + bibliographic data + page-photo request, assigned to the repo owner); hand off uploaded photos to the bib-photo-ingestion watcher. Use when auditing bib human-review status, ingesting an uploaded paper's results, or preparing a physical-review issue.",
+      "instructionsPath": "skills/library/cataloguing/bib-human-review.md",
+      "instructionLines": 76,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bib-human-review"
+    }
+  ]
+}

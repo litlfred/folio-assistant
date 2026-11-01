@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/skill/normative-statements.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/skill/normative-statements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "normative-statements",
+      "title": "normative-statements",
+      "instructionsPath": "skills/content/folio-document-adapter/normative-statements.md",
+      "instructionLines": 95,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/schema/skills/normative-statements/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/schema/skills/normative-statements/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/normative-statements"
+    }
+  ]
+}

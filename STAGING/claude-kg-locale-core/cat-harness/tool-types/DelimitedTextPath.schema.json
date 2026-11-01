@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/tool-types/DelimitedTextPath.schema.json",
+  "title": "DelimitedTextPath",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+  "description": "A repository path to a delimited text (CSV or TSV) file.",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  }
+}

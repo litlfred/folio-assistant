@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/process/Process_DIIG/node/GW_ProgressCheck8.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DIIG/node/GW_ProgressCheck8.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/node/GW_ProgressCheck8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Progress check 8.5: implementation on track?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_11"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_12",
+        "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_13"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    }
+  ]
+}

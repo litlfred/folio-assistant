@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/narrative-asserts-code.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/skill/narrative-asserts-code",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "narrative-asserts-code",
+      "title": "Does the prose say what the code does?",
+      "description": "Judge whether the prose side of a declared prose ↔ code pair still says what the code does, when the machine could not settle it. Reads the two mechanical signals first — staleness and resolvable claims — and settles what is left in one of three ways, sending a disagreement with a checker to adjudication. General: the Lean case is a specialisation with its own skill.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/narrative-asserts-code.md",
+      "instructionLines": 86,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/narrative-asserts-code"
+    }
+  ]
+}

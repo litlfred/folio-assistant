@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/role/l1-extraction-reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/role/l1-extraction-reviewer.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/role/l1-extraction-reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "L1 extraction reviewer",
+      "title": "L1 extraction reviewer",
+      "notation": "l1-extraction-reviewer",
+      "description": "Signs, or rejects, the exclusions an L1 extraction proposes: each normative-looking sentence of a WHO publication that the curation says is not a recommendation, an implementation practice or a remark. Until a person acting in this role signs an exclusion, its sentence stays unaccounted and coverage stays below 100 %. Owner ruling 3b, 2026-10-12: exclusions are signed by this named role, never by the agent that proposed them. Inherits the harness's generic reviewer and performs exclusion sign-off in `classify-and-code-content.bpmn` (bean 4nfs).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "http://smart.who.int/base/skill/classify-and-code-content",
+        "http://smart.who.int/base/skill/content-review",
+        "http://smart.who.int/base/skill/recommendation-extraction"
+      ]
+    }
+  ]
+}

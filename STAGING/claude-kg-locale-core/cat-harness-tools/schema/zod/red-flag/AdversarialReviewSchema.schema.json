@@ -1,0 +1,310 @@
+{
+  "$ref": "#/definitions/AdversarialReview",
+  "definitions": {
+    "AdversarialReview": {
+      "type": "object",
+      "properties": {
+        "reviewer": {
+          "type": "object",
+          "properties": {
+            "by": {
+              "type": "string",
+              "enum": [
+                "agent",
+                "human"
+              ]
+            },
+            "session": {
+              "type": "string",
+              "minLength": 1
+            },
+            "model": {
+              "default": null,
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "by",
+            "session"
+          ]
+        },
+        "author_sessions": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "skill_hash": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coverage": {
+          "type": "object",
+          "properties": {
+            "files_total": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "files_reviewed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "skipped": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "why": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "path",
+                  "why"
+                ]
+              }
+            },
+            "truncated": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "files_total",
+            "files_reviewed"
+          ]
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "unknown"
+          ]
+        },
+        "flags": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "security",
+                  "data-loss",
+                  "correctness",
+                  "false-green",
+                  "provenance",
+                  "scope-breach",
+                  "irreversible-action",
+                  "licence"
+                ]
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "critical",
+                  "major",
+                  "minor"
+                ]
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "blocking",
+                  "suggestion",
+                  "praise"
+                ]
+              },
+              "where": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence": {
+                "default": "",
+                "type": "string"
+              },
+              "detail": {
+                "type": "string"
+              },
+              "status": {
+                "default": "open",
+                "type": "string",
+                "enum": [
+                  "open",
+                  "resolved",
+                  "overridden"
+                ]
+              },
+              "resolution": {
+                "type": "object",
+                "properties": {
+                  "by": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "at": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "commit": {
+                    "type": "string"
+                  },
+                  "decision": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "by",
+                  "at",
+                  "reason"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "severity",
+              "weight",
+              "where"
+            ]
+          }
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "security",
+                  "data-loss",
+                  "correctness",
+                  "false-green",
+                  "provenance",
+                  "scope-breach",
+                  "irreversible-action",
+                  "licence"
+                ]
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "critical",
+                  "major",
+                  "minor"
+                ]
+              },
+              "weight": {
+                "type": "string",
+                "enum": [
+                  "blocking",
+                  "suggestion",
+                  "praise"
+                ]
+              },
+              "where": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence": {
+                "default": "",
+                "type": "string"
+              },
+              "detail": {
+                "type": "string"
+              },
+              "status": {
+                "default": "open",
+                "type": "string",
+                "enum": [
+                  "open",
+                  "resolved",
+                  "overridden"
+                ]
+              },
+              "resolution": {
+                "type": "object",
+                "properties": {
+                  "by": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "at": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "commit": {
+                    "type": "string"
+                  },
+                  "decision": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "by",
+                  "at",
+                  "reason"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "severity",
+              "weight",
+              "where"
+            ]
+          }
+        }
+      },
+      "required": [
+        "reviewer",
+        "skill_hash",
+        "at",
+        "coverage",
+        "result"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/AdversarialReviewSchema.schema.json",
+  "title": "AdversarialReviewSchema",
+  "description": "Generated from `AdversarialReviewSchema` in schemas/sdlc/red-flag.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  }
+}

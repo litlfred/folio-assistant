@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/directory/tools.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/tools.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/tools",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "tools",
+      "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/tools"
+      ],
+      "description": "smart-base's Tool nodes. The owner, 2026-09-22: \"things like dmn -> fhir questionnaire should be a tool. the skill/tools under smart-base should consolidate under the smart-base/tools/ directory under this repo\", serving \"want to slowly get smart-base back to a more conventional IG state w/o tooling\". THIS REVERSES NOTHING THIS FILE'S HEADER SAYS: the header refuses to VENDOR the upstream Python, and a Tool node is a declaration -- what the capability consumes, what it produces, which skill it satisfies -- not a copy of a line of it. Declare here, execute upstream, until the execution moves too. The two Library strippers are deliberately NOT here: they are not DAK-shaped and belong to `fhir-harness` by the placement question in `smart-stack-layering`, and filing them here to tidy the list would be a step's own name overruling the layering rule.",
+      "readmePath": "tools/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/tools"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/actor/ingestion-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/actor/ingestion-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "ingestion-agent",
+      "actorKind": "agent",
+      "title": "Ingestion engine",
+      "description": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material itself.",
+      "meta": {
+        "workflow": "processes/library/document-ingestion.bpmn#Lane_1"
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/cat-harness/role/ingestion-agent"
+      ],
+      "permissionName": [
+        "content-authoring"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ingestion-agent"
+    }
+  ]
+}

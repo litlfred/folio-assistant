@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/skill/confirm-harness.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/skill/confirm-harness",
+      "@type": "bootstrap:Skill",
+      "label": "confirm-harness",
+      "title": "Which harness, and where",
+      "description": "Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. It needs a person: the Requestor settles it, never the agent.",
+      "source": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/skills/confirm-harness.md",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/bootstrap/directory/skills"
+    }
+  ]
+}

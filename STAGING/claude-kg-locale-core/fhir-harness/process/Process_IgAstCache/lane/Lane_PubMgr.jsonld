@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/fhir-harness/process/Process_IgAstCache/lane/Lane_PubMgr.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_PubMgr.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/lane/Lane_PubMgr",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Publication manager (owner, or the agent the owner delegates to)",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    }
+  ]
+}

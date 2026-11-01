@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/process/Process_L2Dak/node/Task_ScopeDak.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-kg-locale-core/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/Task_ScopeDak.jsonld",
+  "staging": {
+    "branch": "claude/kg-locale-core",
+    "sha": "fa7ab05e1e73fd4dcc388e1aceac85d50d3da5a4",
+    "pr": "2868/merge",
+    "run": "41286336330"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Task_ScopeDak",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Scope the DAK",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/programme-manager",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Programme",
+      "requires": [
+        "http://smart.who.int/base/skill/content-plan"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B01"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B02"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}
