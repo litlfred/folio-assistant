@@ -79,6 +79,10 @@ jobs:
         run: |
           set -euo pipefail
           bun run cat mount:repin:standing --summary-file "$RUNNER_TEMP/repin.md"
+          # A moved layer can change its workspace package.json, and every CI
+          # job installs with --frozen-lockfile, so the train carries the
+          # refreshed bun.lock with its pins (train #2876 failed without it).
+          bun install
           git config user.name "repin-train[bot]"
           git config user.email "repin-train@users.noreply.github.com"
           git add -u
@@ -154,9 +158,13 @@ jobs:
             echo
             echo "<!-- repin-train:tree=$TREE -->"
           } > "$RUNNER_TEMP/body.md"
-          number=$(gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$BRANCH" \
-            --title "Re-pin train $STAMP" --label repin-train --body-file "$RUNNER_TEMP/body.md" \
-            | grep -oE '[0-9]+$')
+          if ! out=$(gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$BRANCH" \
+            --title "Re-pin train $STAMP" --label repin-train --body-file "$RUNNER_TEMP/body.md" 2>&1); then
+            echo "$out"
+            echo "::error::The train branch $BRANCH is pushed, but its PR could not be opened. If GitHub refused Actions creating PRs, set the PUSH_BRANCH_TRIGGERING_CI secret or open the PR by hand (issue #2873)."
+            exit 1
+          fi
+          number=$(printf '%s\n' "$out" | grep -oE '[0-9]+$' | tail -1)
           echo "number=$number" >> "$GITHUB_OUTPUT"
           echo "Opened train #$number from $BRANCH" >> "$GITHUB_STEP_SUMMARY"
           for old in $CLOSE; do
@@ -164,8 +172,9 @@ jobs:
               --comment "Replaced by train #$number: this train had new failures compared with fa main, and its pins were frozen."
           done
 
-      # A push made with GITHUB_TOKEN starts no pull_request workflow, so the
-      # gates are dispatched on the branch instead (the same fallback as
+      # A push made with GITHUB_TOKEN starts no pull_request workflow, so both
+      # workflows the verdict reads (the gates and the feature staging) are
+      # dispatched on the branch instead (the same fallback as
       # merge-main.yml's "Have CI judge the merge commit").
       - name: Have CI judge the train
         if: steps.open.outputs.number != ''
@@ -179,3 +188,4 @@ jobs:
             exit 0
           fi
           gh workflow run code-quality-gates.yml --repo "$GITHUB_REPOSITORY" --ref "$BRANCH"
+          gh workflow run feature-staging.yml --repo "$GITHUB_REPOSITORY" --ref "$BRANCH" -f branch="$BRANCH"
