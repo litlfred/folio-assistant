@@ -435,6 +435,16 @@
         "match": "bun run \"$S\" judge --before pages --after ./_site",
         "kind": "ci-only",
         "reason": "docs-site.yml's dependency-cone dry run (bean fwtz, folio-assistant#2647; `$S` is cat-harness-tools/scripts/docs-cone-dryrun.ts): `judge` compares the BUILT `_site` with the published gh-pages root and writes the verdict to the step summary, so it needs both trees, which exist only in the deploy job. A measurement logged beside the deploy (continue-on-error), never a verdict on the tree; its logic is pinned by docs-cone-dryrun.test.ts in `bun test`."
+      },
+      {
+        "match": "bun .github/scripts/repin-train.ts decide",
+        "kind": "ci-only",
+        "reason": "repin-train.yml's skip decision (issue #2873, owner card Q-SPD-3 B): it reads this repository's open and closed train PRs and their commit statuses through the GitHub API to decide whether a new train opens, so its inputs exist only in that scheduled job. A decision about PRs, never a verdict on the tree; its logic is pinned by test/workflows/repin-train.test.ts in `bun test`."
+      },
+      {
+        "match": "bun .github/scripts/repin-train.ts verdict",
+        "kind": "ci-only",
+        "reason": "repin-train-verdict.yml's no-new-failures status (issue #2873, owner card Q-SPD-3 B): it compares the check runs GitHub reported on a train head with those on main and WRITES a commit status and PR comment, so its inputs exist only after those runs finish. A write about other checks' results, never a verdict on the tree; its logic is pinned by test/workflows/repin-train.test.ts in `bun test`."
       }
     ]
   }
