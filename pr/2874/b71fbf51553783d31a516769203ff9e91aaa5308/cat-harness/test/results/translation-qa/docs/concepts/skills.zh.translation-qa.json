@@ -1,0 +1,106 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:zh/skills",
+  "block": "Skills & roles",
+  "locale": "zh",
+  "paths": {
+    "md": "docs/concepts/skills.md"
+  },
+  "po": "translations/zh/concepts/skills.po",
+  "source_hashes": {
+    "md": "93e6e9607d63",
+    "po": "184e42cf23ac"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "93e6e9607d63",
+          "po": "184e42cf23ac"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-01T11:36:47.406Z",
+        "reviewed_sha": "d993f397fdc867368830a9df4548058f661489dc",
+        "severity": "minor",
+        "metrics": {
+          "translated": 109,
+          "total": 146,
+          "pct": 75
+        },
+        "notes": "37 of 146 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "93e6e9607d63",
+          "po": "184e42cf23ac"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-01T11:36:47.409Z",
+        "reviewed_sha": "d993f397fdc867368830a9df4548058f661489dc",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "TBD — absent from: \"✅ lifecycle、agent、platform-bundle 以及 folio-document-adapter 技能；⏳ authoring-math \""
+          },
+          {
+            "text": "UN — absent from: \"面向联合国支持语言的本地化。\""
+          }
+        ],
+        "metrics": {
+          "checked": 109,
+          "missing": 2,
+          "missing_strict": 0,
+          "missing_acronyms": 2,
+          "glossary_broken": 0,
+          "glossary_resolved": 1
+        },
+        "notes": "2 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/zh/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how. 1 further acronym(s) are absent verbatim and the glossary accounts for each: LLM — the glossary marks it localised, so an absent verbatim form is expected."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "93e6e9607d63",
+          "po": "184e42cf23ac"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-01T11:36:47.412Z",
+        "reviewed_sha": "d993f397fdc867368830a9df4548058f661489dc",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 11,
+          "translated": 109
+        },
+        "notes": "11 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-11-01T11:36:47.413Z"
+}
