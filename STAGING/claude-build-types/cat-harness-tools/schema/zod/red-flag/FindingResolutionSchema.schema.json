@@ -1,0 +1,42 @@
+{
+  "$ref": "#/definitions/FindingResolution",
+  "definitions": {
+    "FindingResolution": {
+      "type": "object",
+      "properties": {
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commit": {
+          "type": "string"
+        },
+        "decision": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "by",
+        "at",
+        "reason"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/FindingResolutionSchema.schema.json",
+  "title": "FindingResolutionSchema",
+  "description": "Generated from `FindingResolutionSchema` in schemas/sdlc/red-flag.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

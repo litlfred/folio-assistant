@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/ThemeOverrideNote",
+  "definitions": {
+    "ThemeOverrideNote": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "field",
+        "source",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemeOverrideNoteSchema.schema.json",
+  "title": "ThemeOverrideNoteSchema",
+  "description": "Generated from `ThemeOverrideNoteSchema` in schemas/ui/theme.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MergeBase/node/Start_Merge.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MergeBase/node/Start_Merge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Base moved, or PR conflicted",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MergeBase",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MergeBase/lane/Lane_Command",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MergeBase#flow/m1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/Start_Merge"
+    }
+  ]
+}

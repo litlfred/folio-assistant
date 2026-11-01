@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_ReviewUses.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_ReviewUses",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Review the editorial dependencies",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_ContentChangeReviewCommittee",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/role/reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/skill/uses-editorial-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c11b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_ReviewUses"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/schema/outside-software.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/schema/outside-software",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "outside-software",
+      "title": "outside-software",
+      "summary": "Outside software — the core every record of somebody else's software shares:",
+      "module": "schemas/library/outside-software.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/outside-software"
+    }
+  ]
+}

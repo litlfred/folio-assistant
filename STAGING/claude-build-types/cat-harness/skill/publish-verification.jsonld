@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/skill/publish-verification.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/skill/publish-verification",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "publish-verification",
+      "title": "Publish verification, and the one alert",
+      "description": "Verify what a publish produced BEFORE it is deployed, and alert the publication manager whenever any step after the publish button fails — the verifier set, how to add a verifier, what is in scope, and how the publication manager triages the one alert.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/publish-verification.md",
+      "instructionLines": 89,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-verification"
+    }
+  ]
+}

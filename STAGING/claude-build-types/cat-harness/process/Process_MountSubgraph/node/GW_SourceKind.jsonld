@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MountSubgraph/node/GW_SourceKind.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MountSubgraph/node/GW_SourceKind",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Which source kind?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MountSubgraph#flow/F_M2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MountSubgraph#flow/F_M3",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MountSubgraph#flow/F_M4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MountSubgraph#flow/F_M5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MountSubgraph#flow/F_M10",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/process/Process_MountSubgraph#flow/F_M12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph/node/GW_SourceKind"
+    }
+  ]
+}

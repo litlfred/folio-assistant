@@ -1,0 +1,42 @@
+{
+  "$ref": "#/definitions/Placement",
+  "definitions": {
+    "Placement": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "coverage": {
+          "type": "number",
+          "minimum": 0
+        },
+        "imagesOnPage": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "page",
+        "coverage",
+        "imagesOnPage"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/PlacementSchema.schema.json",
+  "title": "PlacementSchema",
+  "description": "Generated from `PlacementSchema` in schemas/content/document-image.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$ref": "#/definitions/MountSignature",
+  "definitions": {
+    "MountSignature": {
+      "type": "object",
+      "properties": {
+        "network": {
+          "type": "string",
+          "minLength": 1
+        },
+        "keyId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "signedDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "network",
+        "keyId",
+        "signedDigest",
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/mount-trust/MountSignatureSchema.schema.json",
+  "title": "MountSignatureSchema",
+  "description": "Generated from `MountSignatureSchema` in schemas/kg/mount-trust.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/BeanId",
+  "definitions": {
+    "BeanId": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "A bean identifier, e.g. folio-assistant-1dfh"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/BeanIdSchema.schema.json",
+  "title": "BeanIdSchema",
+  "description": "Generated from `BeanIdSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

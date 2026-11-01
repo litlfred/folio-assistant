@@ -1,0 +1,26 @@
+{
+  "$ref": "#/definitions/ReadmeSection",
+  "definitions": {
+    "ReadmeSection": {
+      "type": "string",
+      "enum": [
+        "folio:toc",
+        "folio:lean-coverage",
+        "folio:lean-modules",
+        "folio:simulators",
+        "folio:workflows",
+        "skills:index"
+      ],
+      "description": "A generated README section, named by its marker."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ReadmeSectionSchema.schema.json",
+  "title": "ReadmeSectionSchema",
+  "description": "Generated from `ReadmeSectionSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/QaReportEntry",
+  "definitions": {
+    "QaReportEntry": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timestamp": {
+          "type": "string",
+          "minLength": 1
+        },
+        "details": {}
+      },
+      "required": [
+        "message",
+        "timestamp"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-report/QaReportEntrySchema.schema.json",
+  "title": "QaReportEntrySchema",
+  "description": "Generated from `QaReportEntrySchema` in schemas/sdlc/qa-report.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

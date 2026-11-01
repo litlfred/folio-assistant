@@ -1,0 +1,582 @@
+{
+  "$ref": "#/definitions/TabularRecords",
+  "definitions": {
+    "TabularRecords": {
+      "type": "object",
+      "properties": {
+        "@context": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"
+            },
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "const": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "@base": {
+                      "type": "string",
+                      "const": "https://litlfred.github.io/folio/"
+                    }
+                  },
+                  "required": [
+                    "@base"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "const": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "@base": {
+                      "type": "string",
+                      "const": "https://litlfred.github.io/folio-assistant/"
+                    }
+                  },
+                  "required": [
+                    "@base"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "pattern": "\\/ns\\/context\\/v1\\.jsonld$"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "@base": {
+                      "type": "string",
+                      "const": "https://litlfred.github.io/folio/"
+                    }
+                  },
+                  "required": [
+                    "@base"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "pattern": "\\/ns\\/context\\/v1\\.jsonld$"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "@base": {
+                      "type": "string",
+                      "const": "https://litlfred.github.io/folio-assistant/"
+                    }
+                  },
+                  "required": [
+                    "@base"
+                  ],
+                  "additionalProperties": false
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            }
+          ]
+        },
+        "$schema": {
+          "type": "string",
+          "const": "folio-tabular-records/v1"
+        },
+        "@id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "xlsx",
+            "ods",
+            "csv",
+            "fixed-width"
+          ]
+        },
+        "sheets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "headers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "rows": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "columns": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "shape_source": {
+                "type": "string",
+                "enum": [
+                  "dimension",
+                  "counted",
+                  "undetermined"
+                ]
+              },
+              "delimiter": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "delimiter_source": {
+                "type": "string",
+                "enum": [
+                  "sniffed",
+                  "undetermined"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "headers",
+              "rows",
+              "columns",
+              "shape_source"
+            ]
+          }
+        },
+        "n_sheets": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "header_vocabulary": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "narrative": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "lang": {
+                  "type": "string",
+                  "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$"
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "not-authored",
+                    "draft",
+                    "confirmed",
+                    "rejected"
+                  ]
+                },
+                "drafted_by": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "script",
+                        "agent",
+                        "human"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "model": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+                    },
+                    "session": {
+                      "type": "string"
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "skill": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^(?:[a-z][a-z0-9-]*\\/)?[a-z][a-z0-9-]*$",
+                      "description": "A skill reference, e.g. todo-manager or sdlc-core/todo-manager"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "id"
+                  ]
+                },
+                "drafted_at": {
+                  "type": "string"
+                },
+                "confirmed_by": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "script",
+                        "agent",
+                        "human"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "model": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+                    },
+                    "session": {
+                      "type": "string"
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "skill": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^(?:[a-z][a-z0-9-]*\\/)?[a-z][a-z0-9-]*$",
+                      "description": "A skill reference, e.g. todo-manager or sdlc-core/todo-manager"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "id"
+                  ]
+                },
+                "confirmed_at": {
+                  "type": "string"
+                },
+                "rejected_by": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "script",
+                        "agent",
+                        "human"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "model": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+                    },
+                    "session": {
+                      "type": "string"
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "skill": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^(?:[a-z][a-z0-9-]*\\/)?[a-z][a-z0-9-]*$",
+                      "description": "A skill reference, e.g. todo-manager or sdlc-core/todo-manager"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "id"
+                  ]
+                },
+                "rejected_at": {
+                  "type": "string"
+                },
+                "rejection_reason": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "text",
+                "state"
+              ]
+            },
+            {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "lang": {
+                    "type": "string",
+                    "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$"
+                  },
+                  "state": {
+                    "type": "string",
+                    "enum": [
+                      "not-authored",
+                      "draft",
+                      "confirmed",
+                      "rejected"
+                    ]
+                  },
+                  "drafted_by": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "script",
+                          "agent",
+                          "human"
+                        ]
+                      },
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "version": {
+                        "type": "string"
+                      },
+                      "model": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+                      },
+                      "session": {
+                        "type": "string"
+                      },
+                      "date": {
+                        "type": "string"
+                      },
+                      "skill": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^(?:[a-z][a-z0-9-]*\\/)?[a-z][a-z0-9-]*$",
+                        "description": "A skill reference, e.g. todo-manager or sdlc-core/todo-manager"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id"
+                    ]
+                  },
+                  "drafted_at": {
+                    "type": "string"
+                  },
+                  "confirmed_by": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "script",
+                          "agent",
+                          "human"
+                        ]
+                      },
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "version": {
+                        "type": "string"
+                      },
+                      "model": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+                      },
+                      "session": {
+                        "type": "string"
+                      },
+                      "date": {
+                        "type": "string"
+                      },
+                      "skill": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^(?:[a-z][a-z0-9-]*\\/)?[a-z][a-z0-9-]*$",
+                        "description": "A skill reference, e.g. todo-manager or sdlc-core/todo-manager"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id"
+                    ]
+                  },
+                  "confirmed_at": {
+                    "type": "string"
+                  },
+                  "rejected_by": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "script",
+                          "agent",
+                          "human"
+                        ]
+                      },
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "version": {
+                        "type": "string"
+                      },
+                      "model": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+                      },
+                      "session": {
+                        "type": "string"
+                      },
+                      "date": {
+                        "type": "string"
+                      },
+                      "skill": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^(?:[a-z][a-z0-9-]*\\/)?[a-z][a-z0-9-]*$",
+                        "description": "A skill reference, e.g. todo-manager or sdlc-core/todo-manager"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "id"
+                    ]
+                  },
+                  "rejected_at": {
+                    "type": "string"
+                  },
+                  "rejection_reason": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "text",
+                  "state"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "$schema",
+        "@id",
+        "source",
+        "format",
+        "sheets",
+        "n_sheets",
+        "header_vocabulary",
+        "narrative"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-records/TabularRecordsSchema.schema.json",
+  "title": "TabularRecordsSchema",
+  "description": "Generated from `TabularRecordsSchema` in schemas/library/tabular-records.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

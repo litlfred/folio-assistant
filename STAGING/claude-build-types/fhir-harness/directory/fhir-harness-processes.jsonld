@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/fhir-harness/directory/fhir-harness-processes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "fhir-harness-processes",
+      "path": "processes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/processes"
+      ],
+      "description": "The BPMN this layer OWNS, grouped by concern as the harness groups its own (`processes/<group>/`): `content/l3-fhir-pipeline.bpmn` and `content/ig-incremental-build.bpmn`, the FHIR IG pipeline and its incremental build. Moved up from cat-harness/processes/ by placement PR3 (bean `63wl`, owner rulings 2026-09-30), beside the IG skills they bind. `l3-fhir-pipeline.bpmn` still carries a documentary `bpmn:import` of smart-base's `l2-dak-authoring.bpmn` -- an upward reference one layer up, recorded rather than hidden (proposal §5, \"residuals one layer up\"). Declared WITH its files in one commit, per bean `dh4f`.",
+      "readmePath": "processes/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    }
+  ]
+}

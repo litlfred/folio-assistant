@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/Publication",
+  "definitions": {
+    "Publication": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "type": "string",
+          "enum": [
+            "github-pages",
+            "local-server",
+            "jurisdiction-endpoint",
+            "none"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "const": "draft"
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/PublicationSchema.schema.json",
+  "title": "PublicationSchema",
+  "description": "Generated from `PublicationSchema` in schemas/kg/cat-harness.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

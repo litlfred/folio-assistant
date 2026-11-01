@@ -1,0 +1,20 @@
+{
+  "$ref": "#/definitions/ProcessId",
+  "definitions": {
+    "ProcessId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "A BPMN process id, e.g. crdm-requirements"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ProcessIdSchema.schema.json",
+  "title": "ProcessIdSchema",
+  "description": "Generated from `ProcessIdSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

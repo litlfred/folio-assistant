@@ -1,0 +1,66 @@
+{
+  "$ref": "#/definitions/QaAttestationsBase",
+  "definitions": {
+    "QaAttestationsBase": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "qa-attestations/v1"
+        },
+        "family": {
+          "type": "string",
+          "enum": [
+            "kg-qa",
+            "block-qa",
+            "translation-qa",
+            "bib-verification",
+            "bib-human-review",
+            "requirement-signoff",
+            "certification",
+            "section-title",
+            "adversarial-review"
+          ]
+        },
+        "subject": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "id",
+            "path"
+          ]
+        }
+      },
+      "required": [
+        "$schema",
+        "family",
+        "subject"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/QaAttestationsBaseSchema.schema.json",
+  "title": "QaAttestationsBaseSchema",
+  "description": "Generated from `QaAttestationsBaseSchema` in schemas/sdlc/qa-attestations.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "$ref": "#/definitions/Provenance",
+  "definitions": {
+    "Provenance": {
+      "anyOf": [
+        {
+          "type": "string",
+          "const": "ingested"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "script",
+                "agent",
+                "human"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string"
+            },
+            "model": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+            },
+            "session": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string"
+            },
+            "skill": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?:[a-z][a-z0-9-]*\\/)?[a-z][a-z0-9-]*$",
+              "description": "A skill reference, e.g. todo-manager or sdlc-core/todo-manager"
+            }
+          },
+          "required": [
+            "kind",
+            "id"
+          ]
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/attribution/ProvenanceSchema.schema.json",
+  "title": "ProvenanceSchema",
+  "description": "Generated from `ProvenanceSchema` in schemas/content/attribution.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

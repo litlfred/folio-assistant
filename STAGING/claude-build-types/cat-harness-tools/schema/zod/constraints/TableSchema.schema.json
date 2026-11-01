@@ -1,0 +1,245 @@
+{
+  "$ref": "#/definitions/Table",
+  "definitions": {
+    "Table": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "audience": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "uses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "renamedFrom": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "foreshadows": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "companions": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "rendered": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "mime": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "blockIndex": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "hash": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "mime",
+              "url",
+              "blockIndex"
+            ]
+          }
+        },
+        "meta": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "simulator": {
+          "type": "object",
+          "properties": {
+            "ref": {
+              "type": "string",
+              "format": "starts_with",
+              "pattern": "^sim:.*"
+            },
+            "view": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "ref"
+          ]
+        },
+        "authorNotes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "status",
+                  "caveat",
+                  "note",
+                  "refined-framing",
+                  "deprecated"
+                ]
+              },
+              "date": {
+                "type": "string"
+              },
+              "body": {
+                "type": "string"
+              },
+              "see": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "body"
+            ]
+          }
+        },
+        "defines": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
+        "computation": {
+          "type": "object",
+          "properties": {
+            "engine": {
+              "type": "string",
+              "enum": [
+                "snappea",
+                "sympy",
+                "mpmath",
+                "sage",
+                "python",
+                "numpy",
+                "scipy",
+                "closed-form",
+                "python+mpmath",
+                "python+numpy+cvxpy",
+                "rust",
+                "python+rust"
+              ]
+            },
+            "script": {
+              "type": "string",
+              "minLength": 1
+            },
+            "witness": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "not_run",
+                "verified",
+                "failed",
+                "error",
+                "stale",
+                "experimental"
+              ]
+            },
+            "requires": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "engine",
+            "script",
+            "status"
+          ]
+        },
+        "lang": {
+          "type": "string"
+        },
+        "poSources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "kind": {
+          "type": "string",
+          "const": "table"
+        },
+        "label": {
+          "type": "string",
+          "format": "starts_with",
+          "pattern": "^tbl:.*"
+        },
+        "tex": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/TableSchema.schema.json",
+  "title": "TableSchema",
+  "description": "Generated from `TableSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

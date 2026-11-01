@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_Publication/node/Gateway_BuildMerge.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_Publication/node/Gateway_BuildMerge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Gateway_BuildMerge",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_Publication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_Publication#flow/G02",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_Publication#flow/G07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_Publication#flow/G03"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Gateway_BuildMerge"
+    }
+  ]
+}

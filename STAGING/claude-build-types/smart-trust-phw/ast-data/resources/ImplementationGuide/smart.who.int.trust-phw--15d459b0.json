@@ -1,0 +1,1342 @@
+{
+  "resourceType" : "ImplementationGuide",
+  "id" : "smart.who.int.trust-phw",
+  "meta" : {
+    "profile" : ["http://smart.who.int/base/StructureDefinition/SGImplementationGuide"]
+  },
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide smart.who.int.trust-phw</b></p><a name=\"smart.who.int.trust-phw\"> </a><a name=\"hcsmart.who.int.trust-phw\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"file://C:\\work\\ImplementationGuides\\ig-release\\who\\smart-base\\output/StructureDefinition-SGImplementationGuide.html\">SMART Guidelines ImplementationGuide</a></p></div><h2>trustphw</h2><p>The official URL for this implementation guide is: </p><pre>http://smart.who.int/trust-phw/ImplementationGuide/smart.who.int.trust-phw</pre><div><p>Describes common workflows and specifications for usage of personal health wallets on the WHO GDHCN Trust Network</p>\n</div></div>"
+  },
+  "url" : "http://smart.who.int/trust-phw/ImplementationGuide/smart.who.int.trust-phw",
+  "version" : "0.1.0",
+  "name" : "trustphw",
+  "title" : "GDHCN Trust Network - Personal Health Wallet",
+  "status" : "draft",
+  "experimental" : false,
+  "date" : "2026-10-30T17:37:34+01:00",
+  "publisher" : "WHO",
+  "contact" : [{
+    "name" : "WHO",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://who.int"
+    }]
+  }],
+  "description" : "Describes common workflows and specifications for usage of personal health wallets on the WHO GDHCN Trust Network",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
+  "packageId" : "smart.who.int.trust-phw",
+  "fhirVersion" : ["5.0.0"],
+  "dependsOn" : [{
+    "id" : "hl7ext",
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/implementationguide-dependency-comment",
+      "valueMarkdown" : "Automatically added as a dependency - all IGs depend on the HL7 Extension Pack"
+    }],
+    "uri" : "http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions",
+    "packageId" : "hl7.fhir.uv.extensions.r5",
+    "version" : "5.4.0"
+  },
+  {
+    "id" : "hl7_terminology",
+    "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
+    "packageId" : "hl7.terminology",
+    "version" : "5.5.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_cql",
+    "uri" : "http://hl7.org/fhir/uv/cql/ImplementationGuide/hl7.fhir.uv.cql",
+    "packageId" : "hl7.fhir.uv.cql",
+    "version" : "1.0.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_crmi",
+    "uri" : "http://hl7.org/fhir/uv/crmi/ImplementationGuide/hl7.fhir.uv.crmi",
+    "packageId" : "hl7.fhir.uv.crmi",
+    "version" : "1.0.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_sdc",
+    "uri" : "http://hl7.org/fhir/uv/sdc/ImplementationGuide/hl7.fhir.uv.sdc",
+    "packageId" : "hl7.fhir.uv.sdc",
+    "version" : "3.0.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_cpg",
+    "uri" : "http://hl7.org/fhir/uv/cpg/ImplementationGuide/hl7.fhir.uv.cpg",
+    "packageId" : "hl7.fhir.uv.cpg",
+    "version" : "2.0.0"
+  },
+  {
+    "id" : "hl7_fhir_us_cqfmeasures",
+    "uri" : "http://hl7.org/fhir/us/cqfmeasures/ImplementationGuide/hl7.fhir.us.cqfmeasures",
+    "packageId" : "hl7.fhir.us.cqfmeasures",
+    "version" : "5.0.0"
+  },
+  {
+    "id" : "hl7_fhir_uv_ips",
+    "uri" : "http://hl7.org/fhir/uv/ips/ImplementationGuide/hl7.fhir.uv.ips",
+    "packageId" : "hl7.fhir.uv.ips",
+    "version" : "2.0.0-ballot"
+  },
+  {
+    "id" : "IHE_ITI_mCSD",
+    "uri" : "https://profiles.ihe.net/ITI/mCSD/ImplementationGuide/ihe.iti.mcsd",
+    "packageId" : "ihe.iti.mcsd",
+    "version" : "3.8.0"
+  },
+  {
+    "id" : "IHE_ITI_PCF",
+    "uri" : "https://profiles.ihe.net/ITI/PCF/ImplementationGuide/ihe.iti.pcf",
+    "packageId" : "ihe.iti.pcf",
+    "version" : "1.1.0"
+  },
+  {
+    "id" : "IHE_ITI_VHL",
+    "uri" : "https://profiles.ihe.net/ITI/VHL/ImplementationGuide/ihe.iti.vhl",
+    "packageId" : "ihe.iti.vhl",
+    "version" : "1.0.0-comment"
+  },
+  {
+    "id" : "smart_who_int_pcmt",
+    "uri" : "http://smart.who.int/pcmt/ImplementationGuide/smart.who.int.pcmt",
+    "packageId" : "smart.who.int.pcmt",
+    "version" : "0.1.0"
+  },
+  {
+    "id" : "sb",
+    "uri" : "http://smart.who.int/base/ImplementationGuide/smart.who.int.base",
+    "packageId" : "smart.who.int.base",
+    "version" : "0.2.0",
+    "reason" : "This IG uses SMART base computable guideline capabilities"
+  },
+  {
+    "id" : "smart_who_int_pcmt_vaxprequal",
+    "uri" : "http://smart.who.int/pcmt-vaxprequal/ImplementationGuide/smart.who.int.pcmt-vaxprequal",
+    "packageId" : "smart.who.int.pcmt-vaxprequal",
+    "version" : "current"
+  }],
+  "definition" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-internal-dependency",
+      "valueCode" : "hl7.fhir.uv.tools.r5#1.3.0"
+    }],
+    "resource" : [{
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Requirements"
+      }],
+      "reference" : {
+        "reference" : "Requirements/accept-mtls-connection"
+      },
+      "name" : "Accept mTLS",
+      "description" : "Accept an mTLS in order to conduct further transactions under a secure channel",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ConceptMap"
+      }],
+      "reference" : {
+        "reference" : "ConceptMap/ICVP.Core.ConceptMap"
+      },
+      "name" : "ConceptMap to and from ICVP.Core Data Elements",
+      "description" : "Mapping to and from ICVP.Core Data Dictionary to other code systems.",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/ConsentRegistry"
+      },
+      "name" : "Consent Registry",
+      "description" : "[IHE PCF Consent Registry](https://profiles.ihe.net/ITI/PCF/volume-1.html#153112-consent-registry) actor",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCBundle"
+      },
+      "name" : "Digital Vaccination Certificate - Bundle",
+      "description" : "Digital Vaccination Certificate - Bundle",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCComposition"
+      },
+      "name" : "Digital Vaccination Certificate - Composition",
+      "description" : "Digital Vaccination Certificate - Composition",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCSDComposition"
+      },
+      "name" : "Digital Vaccination Certificate - Composition",
+      "description" : "Digital Vaccination Certificate - Composition",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/DisclosureStatements"
+      },
+      "name" : "Disclosure Statements",
+      "description" : "Disclosure Statements value set",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/DisclosureStatements"
+      },
+      "name" : "Disclosure Statements",
+      "description" : "Disclosure Statement Code System",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Requirements"
+      }],
+      "reference" : {
+        "reference" : "Requirements/distribute-pki-material"
+      },
+      "name" : "Distribute PKI material",
+      "description" : "Make received trust material available through a distrubution point to a Trust Network Participant",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DoseNumberCodeableConcept"
+      },
+      "name" : "DoseNumberCodeableConcept",
+      "description" : "Dose Number",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVC"
+      },
+      "name" : "DVC",
+      "description" : "Data elements for Digital Vaccination Certificate.",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/Immunization-uv-ips-DVC"
+      },
+      "name" : "DVC - Profile for Digital Vaccination Cards for Immunization for IPS.  Note that no Product Catalog has been set",
+      "description" : "This profile represents an IPS Immunization record that can be mapped onto a Digital Vaccine Certificates using the WHO PreQual Database",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCVaccineDetails"
+      },
+      "name" : "DVC - Vaccine Details",
+      "description" : "Vaccine Data elements for the Digital Vaccination Certificates",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/DVCVaccines"
+      },
+      "name" : "DVC - Vaccines",
+      "description" : "This value set includes codes from ICD",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/Immunization-uv-ips-PreQual"
+      },
+      "name" : "DVC - WHO PreQual Immunization for IPS",
+      "description" : "This profile represents an IPS Immunization record that can be mapped onto a Digital Vaccine Certificates using the WHO PreQual Database",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/Bundle-uv-ips-DVC"
+      },
+      "name" : "DVC Certificate - DVC Bundle for Digital Vaccine Certificates",
+      "description" : "Profile of the IPS Bundle for representing digital vaccination certificates",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/Bundle-uv-ips-PreQual"
+      },
+      "name" : "DVC Certificate - IPS Bundle for WHO PreQual Databae",
+      "description" : "Profile of the IPS Bundle for representing digital vaccination certificates from WHO PreQual Databae",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/Composition-uv-ips-DVC"
+      },
+      "name" : "DVC Certificate - IPS Composition ",
+      "description" : "Profile of the IPS Composition for representing digital vaccination certificates with",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/Composition-uv-ips-PreQual"
+      },
+      "name" : "DVC Certificate - IPS Composition for WHO PreQual Database",
+      "description" : "Profile of the IPS Composition for representing digital vaccination certificates with WHO PreQual Database",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCSDBundle"
+      },
+      "name" : "DVC document Bundle with Selective Disclosure",
+      "description" : "DVC document Bundle with Selective Disclosure for each entry",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical:abstract"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCMin"
+      },
+      "name" : "DVC HCERT Payload",
+      "description" : "Minimal DVC payload for use within an HCERT Payload",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCMinVaccineDetailsPreQual"
+      },
+      "name" : "DVC HCERT Payload for PreQual DB",
+      "description" : "DVC payload for a minimal DVC for use within an HCERT Payload using the WHO PreQual Vaccine Database",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical:abstract"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCMinVaccineDetails"
+      },
+      "name" : "DVC HCert Vaccine Details (Minimal)",
+      "description" : "DVC Vaccine Details for a minimal DVC payload for use within an HCERT Payload",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCImmunization"
+      },
+      "name" : "DVC Immunization",
+      "description" : "This profile represents a vaccination record for Digital Vaccine Certificates",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCSDImmunization"
+      },
+      "name" : "DVC Immunization with Selective Disclosure",
+      "description" : "DVC Immunization with Selective Disclosure",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Questionnaire"
+      }],
+      "reference" : {
+        "reference" : "Questionnaire/PreQual"
+      },
+      "name" : "DVC Model Questionnaire",
+      "description" : "Questionnaire for DVC Logical Model with the WHO PreQual DB",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCPatient"
+      },
+      "name" : "DVC Patient",
+      "description" : "DVC Patient",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCSDPatient"
+      },
+      "name" : "DVC Patient with Selective Disclosure",
+      "description" : "DVC Patient with Selective Disclosure",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/VaccineDetailsSD"
+      },
+      "name" : "DVC Vaccine Details with Selective Disclosure",
+      "description" : "DVC Vaccine Details with Selective Disclosure",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCSD"
+      },
+      "name" : "DVC with Selective Disclosure",
+      "description" : "DVC with Selective Disclosure",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Bundle"
+      }],
+      "reference" : {
+        "reference" : "Bundle/DVCDocExample"
+      },
+      "name" : "DVCDocExample",
+      "description" : "Example ICVP Document",
+      "isExample" : true,
+      "profile" : ["http://smart.who.int/trust-phw/StructureDefinition/DVCBundle"]
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Bundle"
+      }],
+      "reference" : {
+        "reference" : "Bundle/DVCDocSDExample"
+      },
+      "name" : "DVCDocSDExample",
+      "description" : "Example ICVP Document",
+      "isExample" : true,
+      "profile" : ["http://smart.who.int/trust-phw/StructureDefinition/DVCSDBundle"]
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/implementationguide-resource-format",
+        "valueCode" : "application/fhir+json"
+      },
+      {
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Binary"
+      }],
+      "reference" : {
+        "reference" : "Binary/DVCExample"
+      },
+      "name" : "DVCExample",
+      "description" : "Example DVC model",
+      "isExample" : true,
+      "profile" : ["http://smart.who.int/trust-phw/StructureDefinition/DVC"]
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCMinPreQual"
+      },
+      "name" : "DVCMinPreQual",
+      "description" : "DVC payload minimized  for use within an HCERT Payload with the WHO PreQual Vaccine Database",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Organization"
+      }],
+      "reference" : {
+        "reference" : "Organization/ExampleManufacturerOrg"
+      },
+      "name" : "ExampleManufacturerOrg",
+      "isExample" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/HealthLinkPayload"
+      },
+      "name" : "Health Link Payload (DRAFT)",
+      "description" : "Health Link Payload (DRAFT)\n\nA Health Link URI is generated from this payload according to the algorithm documented [here](https://build.fhir.org/ig/HL7/smart-health-cards-and-links/links-specification.html#smart-health-links-sharing-application-generates-a-smart-health-link-uri)",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/HL.TYPE"
+      },
+      "name" : "HL Type CodeSystem",
+      "description" : "CodeSystem for Health Link Type that has codes classifying type of Smart Health Link",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/HL.TYPE"
+      },
+      "name" : "HL.TYPE ValueSet ",
+      "description" : "ValueSet of HL Type Codes",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/Holder"
+      },
+      "name" : "Holder",
+      "description" : "Holder (person) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/ICVP.Core"
+      },
+      "name" : "ICVP.Core CodeSystem for Data Elements",
+      "description" : "CodeSystem for ICVP.Core Data Elements from the Digital ICVP Core Data Dictionary",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Requirements"
+      }],
+      "reference" : {
+        "reference" : "Requirements/initiate-mtls-connection"
+      },
+      "name" : "Initiate mTLS",
+      "description" : "Initiate an mTLS in order to conduct further transactions under a secure channel",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/Issuer"
+      },
+      "name" : "Issuer",
+      "description" : "Issuer (system) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCPreQual"
+      },
+      "name" : "PreQual",
+      "description" : "Data elements for the Digital Vaccine Certificate using WHO Vaccine PreQualification database",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/DVCVaccineDetailsPreQual"
+      },
+      "name" : "PreQual - Vaccine Details",
+      "description" : "Vaccine Data elements from the Pre Qual Database",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Requirements"
+      }],
+      "reference" : {
+        "reference" : "Requirements/provide-a-vhl-to-a-receiver"
+      },
+      "name" : "Provide VHL or VDHC",
+      "description" : "Is able to provide a VHL authorization mechanism or a VDHC to a VHL Receiver",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Requirements"
+      }],
+      "reference" : {
+        "reference" : "Requirements/publish-pki-material"
+      },
+      "name" : "Publish PKI material",
+      "description" : "Publish trust material to a Trust Anchor",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Requirements"
+      }],
+      "reference" : {
+        "reference" : "Requirements/receive-pki-material"
+      },
+      "name" : "Receive PKI material",
+      "description" : "Receive trust material from a Trust Network Participant, for distribution within the Trust Network",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Requirements"
+      }],
+      "reference" : {
+        "reference" : "Requirements/receive-a-vhl"
+      },
+      "name" : "Receive VHL or VDHC",
+      "description" : "Is able to receive a VHL authorization mechanism or a VDHC from a Holder",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/Receiver"
+      },
+      "name" : "Receiver",
+      "description" : "Receiver (system) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/DVCRelationshipStatus"
+      },
+      "name" : "Relationship Status for Contact in Patient",
+      "description" : "Relationship Status for Contact in Patient",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/DVCRelationshipStatus"
+      },
+      "name" : "Relationship Status for Contact in Patient",
+      "description" : "Relationship Status for Contact in Patient",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Requirements"
+      }],
+      "reference" : {
+        "reference" : "Requirements/retrieve-pki-material"
+      },
+      "name" : "Retrieve PKI material",
+      "description" : "Retrieve PKI material from a distribution point",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/SelectiveDisclosure"
+      },
+      "name" : "SelectiveDisclosure",
+      "description" : "Guidance that a document signing service with selective disclosure support (e.g. SD-JWT) should perform a selective disclosure of the content of the containing node of the extension in the JSON representation of the FHIR instance.\n\nThe code value should be from a code system containing appropriate disclosure statements for the use case.  The disclosure statement should describe the content that is to be disclosed at that node.  For example a code such as 'disclose-date-of-birth' or 'disclose-vaccine-history'.",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:extension"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/SGActorExt"
+      },
+      "name" : "SGActorExt",
+      "description" : "Smart Guidelines Actor Reference extension",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CodeSystem"
+      }],
+      "reference" : {
+        "reference" : "CodeSystem/DocumentationSections"
+      },
+      "name" : "Smart Guidelines Documentation Section",
+      "description" : "CodeSystem for Smart Guidelines Documentation Section to autogenerate documentation from artifacts",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/SmartHealthLink"
+      },
+      "name" : "Smart Health Link (DRAFT)",
+      "description" : "Smart Health Link URI (DRAFT)\n\nLogical Model to represent a SMART Health Link as its URI.  It is generated from the content of the SMART Health Link Payload.",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/SMARTHealthLinkPayload"
+      },
+      "name" : "SMART Health Link Payload (DRAFT)",
+      "description" : "SMART Health Link Payload (DRAFT)\n\nThis logical model constrains the Health Link Payload for a SMART Health Link\n\nA SMART Health Link URI is generated from this payload according to the algorithm documented [here](https://build.fhir.org/ig/HL7/smart-health-cards-and-links/links-specification.html#smart-health-links-sharing-application-generates-a-smart-health-link-uri)",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/TrustNetworkAnchor"
+      },
+      "name" : "Trust Network Anchor",
+      "description" : "Trust Anchor which receives and distributes PKI-material within a Trust Network",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/TrustNetworkParticipant"
+      },
+      "name" : "Trust Network Participant",
+      "description" : "Trust Network Participant which publishes and or receives PKI-material within a Trust Network",
+      "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:logical"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/VerifiableHealthLinkPayload"
+      },
+      "name" : "Verifiable Health Link Payload (DRAFT)",
+      "description" : "Verifiable Health Link Payload (DRAFT)\n\nThis logical model constrains the Health Link Payload for a Verifiable Health Link",
+      "isExample" : false
+    }],
+    "page" : {
+      "sourceUrl" : "toc.html",
+      "name" : "toc.html",
+      "title" : "Table of Contents",
+      "generation" : "html",
+      "page" : [{
+        "sourceUrl" : "index.html",
+        "name" : "index.html",
+        "title" : "Home",
+        "generation" : "markdown",
+        "page" : [{
+          "sourceUrl" : "changes.html",
+          "name" : "changes.html",
+          "title" : "Changes",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "dependencies.html",
+          "name" : "dependencies.html",
+          "title" : "Dependencies",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "references.html",
+          "name" : "references.html",
+          "title" : "References",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "adapting.html",
+          "name" : "adapting.html",
+          "title" : "Adapting Guidelines for Country use",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "license.html",
+          "name" : "license.html",
+          "title" : "License",
+          "generation" : "markdown"
+        }]
+      },
+      {
+        "sourceUrl" : "business-requirements.html",
+        "name" : "business-requirements.html",
+        "title" : "Business Requirements",
+        "generation" : "markdown",
+        "page" : [{
+          "sourceUrl" : "concepts.html",
+          "name" : "concepts.html",
+          "title" : "Concepts",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "personas.html",
+          "name" : "personas.html",
+          "title" : "Generic Personas",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "scenarios.html",
+          "name" : "scenarios.html",
+          "title" : "User Scenarios",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "business-processes.html",
+          "name" : "business-processes.html",
+          "title" : "Business Processes",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "dictionary.html",
+          "name" : "dictionary.html",
+          "title" : "Data Dictionary",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "decision-logic.html",
+          "name" : "decision-logic.html",
+          "title" : "Decision-support logic",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "indicators.html",
+          "name" : "indicators.html",
+          "title" : "Indicator and Performance Metrics",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "functional-requirements.html",
+          "name" : "functional-requirements.html",
+          "title" : "Functional Requirements",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "non-functional-requirements.html",
+          "name" : "non-functional-requirements.html",
+          "title" : "Non-functional Requirements",
+          "generation" : "markdown"
+        }]
+      },
+      {
+        "sourceUrl" : "data-models-and-exchange.html",
+        "name" : "data-models-and-exchange.html",
+        "title" : "Data Models and Exchange",
+        "generation" : "markdown",
+        "page" : [{
+          "sourceUrl" : "system-actors.html",
+          "name" : "system-actors.html",
+          "title" : "System Actors",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "sequence-diagrams.html",
+          "name" : "sequence-diagrams.html",
+          "title" : "Sequence Diagrams",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "transactions.html",
+          "name" : "transactions.html",
+          "title" : "Transactions",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "indicators-measures.html",
+          "name" : "indicators-measures.html",
+          "title" : "Indicators and Measures",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "codings.html",
+          "name" : "codings.html",
+          "title" : "Codings",
+          "generation" : "markdown"
+        }]
+      },
+      {
+        "sourceUrl" : "deployment.html",
+        "name" : "deployment.html",
+        "title" : "Deployment",
+        "generation" : "markdown",
+        "page" : [{
+          "sourceUrl" : "security-privacy.html",
+          "name" : "security-privacy.html",
+          "title" : "Security and Privacy Considerations",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "testing.html",
+          "name" : "testing.html",
+          "title" : "Testing",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "test-data.html",
+          "name" : "test-data.html",
+          "title" : "Test Data",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "reference-implementations.html",
+          "name" : "reference-implementations.html",
+          "title" : "Reference Implementations",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "trust_domain.html",
+          "name" : "trust_domain.html",
+          "title" : "Trust Domains",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "downloads.html",
+          "name" : "downloads.html",
+          "title" : "Downloads",
+          "generation" : "markdown"
+        }]
+      },
+      {
+        "sourceUrl" : "indices.html",
+        "name" : "indices.html",
+        "title" : "Indices",
+        "generation" : "markdown",
+        "page" : [{
+          "sourceUrl" : "artifacts.html",
+          "name" : "artifacts.html",
+          "title" : "Artifact Index",
+          "generation" : "html"
+        },
+        {
+          "sourceUrl" : "maps.html",
+          "name" : "maps.html",
+          "title" : "Mappings",
+          "generation" : "markdown"
+        }]
+      }]
+    },
+    "parameter" : [{
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "copyrightyear"
+      },
+      "value" : "2023+"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "releaselabel"
+      },
+      "value" : "ci-build"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "produce-jekyll-data"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "autoload-resources"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/capabilities"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/examples"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/extensions"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/models"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/operations"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/profiles"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/resources"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/vocabulary"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/maps"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/testing"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "input/history"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-resource"
+      },
+      "value" : "fsh-generated/resources"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-pages"
+      },
+      "value" : "template/config"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-pages"
+      },
+      "value" : "input/images"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "path-liquid"
+      },
+      "value" : "template/liquid"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "path-liquid"
+      },
+      "value" : "input/liquid"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "path-qa"
+      },
+      "value" : "temp/qa"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "path-temp"
+      },
+      "value" : "temp/pages"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "path-output"
+      },
+      "value" : "output"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/guide-parameter-code",
+        "code" : "path-tx-cache"
+      },
+      "value" : "input-cache/txcache"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "path-suppressed-warnings"
+      },
+      "value" : "input/ignoreWarnings.txt"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "path-history"
+      },
+      "value" : "http://smart.who.int/trust-phw/history.html"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "template-html"
+      },
+      "value" : "template-page.html"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "template-md"
+      },
+      "value" : "template-page-md.html"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "apply-contact"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "apply-context"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "apply-copyright"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "apply-jurisdiction"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "apply-license"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "apply-publisher"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "apply-version"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "apply-wg"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "active-tables"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "fmm-definition"
+      },
+      "value" : "http://hl7.org/fhir/versions.html#maturity"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "propagate-status"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "excludelogbinaryformat"
+      },
+      "value" : "true"
+    },
+    {
+      "code" : {
+        "system" : "http://hl7.org/fhir/tools/CodeSystem/ig-parameters",
+        "code" : "tabbed-snapshots"
+      },
+      "value" : "true"
+    }]
+  }
+}

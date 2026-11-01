@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/RemoteSyncConfig",
+  "definitions": {
+    "RemoteSyncConfig": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": [
+            "shallow-clone",
+            "sparse-checkout",
+            "subtree"
+          ]
+        },
+        "frequency": {
+          "type": "string",
+          "enum": [
+            "daily",
+            "weekly",
+            "monthly",
+            "manual"
+          ]
+        },
+        "autoUpdate": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "strategy",
+        "frequency",
+        "autoUpdate"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RemoteSyncConfigSchema.schema.json",
+  "title": "RemoteSyncConfigSchema",
+  "description": "Generated from `RemoteSyncConfigSchema` in schemas/kg/skill-package.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "$ref": "#/definitions/OdrlRule",
+  "definitions": {
+    "OdrlRule": {
+      "type": "object",
+      "properties": {
+        "assignee": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "constraint": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "leftOperand": {
+                "type": "string",
+                "enum": [
+                  "cat-harness:process",
+                  "cat-harness:task",
+                  "cat-harness:role",
+                  "odrl:purpose",
+                  "odrl:dateTime",
+                  "odrl:elapsedTime",
+                  "purpose",
+                  "dateTime",
+                  "elapsedTime"
+                ]
+              },
+              "operator": {
+                "type": "string",
+                "enum": [
+                  "odrl:eq",
+                  "odrl:neq",
+                  "odrl:isAnyOf",
+                  "odrl:isNoneOf",
+                  "odrl:lt",
+                  "odrl:lteq",
+                  "odrl:gt",
+                  "odrl:gteq",
+                  "odrl:isA",
+                  "eq",
+                  "neq",
+                  "isAnyOf",
+                  "isNoneOf",
+                  "lt",
+                  "lteq",
+                  "gt",
+                  "gteq",
+                  "isA"
+                ]
+              },
+              "rightOperand": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                ]
+              }
+            },
+            "required": [
+              "leftOperand",
+              "operator",
+              "rightOperand"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "duty": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uid": {
+                "type": "string",
+                "minLength": 1
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "odrl:delete",
+                  "odrl:attribute",
+                  "odrl:inform",
+                  "odrl:obtainConsent",
+                  "delete",
+                  "attribute",
+                  "inform",
+                  "obtainConsent"
+                ]
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1
+              },
+              "assigner": {
+                "type": "string",
+                "minLength": 1
+              },
+              "assignee": {
+                "type": "string",
+                "minLength": 1
+              },
+              "constraint": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "leftOperand": {
+                      "type": "string",
+                      "enum": [
+                        "cat-harness:process",
+                        "cat-harness:task",
+                        "cat-harness:role",
+                        "odrl:purpose",
+                        "odrl:dateTime",
+                        "odrl:elapsedTime",
+                        "purpose",
+                        "dateTime",
+                        "elapsedTime"
+                      ]
+                    },
+                    "operator": {
+                      "type": "string",
+                      "enum": [
+                        "odrl:eq",
+                        "odrl:neq",
+                        "odrl:isAnyOf",
+                        "odrl:isNoneOf",
+                        "odrl:lt",
+                        "odrl:lteq",
+                        "odrl:gt",
+                        "odrl:gteq",
+                        "odrl:isA",
+                        "eq",
+                        "neq",
+                        "isAnyOf",
+                        "isNoneOf",
+                        "lt",
+                        "lteq",
+                        "gt",
+                        "gteq",
+                        "isA"
+                      ]
+                    },
+                    "rightOperand": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "minItems": 1,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "leftOperand",
+                    "operator",
+                    "rightOperand"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "action"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "assignee",
+        "action"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/odrl/OdrlRuleSchema.schema.json",
+  "title": "OdrlRuleSchema",
+  "description": "Generated from `OdrlRuleSchema` in schemas/content/odrl.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

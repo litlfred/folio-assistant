@@ -1,0 +1,14 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/process/Process_CompleteInitialization/node/GW_AllDone.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/process/Process_CompleteInitialization/node/GW_AllDone",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Every checkable step done?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/process/Process_CompleteInitialization"
+    }
+  ]
+}

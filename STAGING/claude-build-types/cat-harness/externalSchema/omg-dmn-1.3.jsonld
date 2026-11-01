@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/externalSchema/omg-dmn-1.3.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/externalSchema/omg-dmn-1.3",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#ExternalSchema",
+      "name": "omg-dmn-1.3",
+      "title": "Decision Model and Notation (DMN)",
+      "authority": "OMG",
+      "specVersion": "1.3",
+      "specUse": "conforms",
+      "specUrl": "https://www.omg.org/spec/DMN/1.3/",
+      "namespace": [
+        "https://www.omg.org/spec/DMN/20191111/MODEL/",
+        "https://www.omg.org/spec/DMN/20191111/DMNDI/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dmn-1.3"
+    }
+  ]
+}

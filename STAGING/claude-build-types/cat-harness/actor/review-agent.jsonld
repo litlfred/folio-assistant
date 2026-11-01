@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/actor/review-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/actor/review-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "review-agent",
+      "actorKind": "agent",
+      "title": "Review Agent",
+      "description": "LLM agent performing NON-MECHANICAL validation — accuracy, voice, exposition, whether a change says what the editor meant. Judgement calls escalate to a human reviewer or SME.",
+      "meta": {
+        "lifecycle": [
+          "validate",
+          "review"
+        ],
+        "workflow": "processes/content/review-task.bpmn#Lane_Reviewer"
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/integration-watcher",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/feedback-provider"
+      ],
+      "permissionName": [
+        "review-comments"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/review-agent"
+    }
+  ]
+}

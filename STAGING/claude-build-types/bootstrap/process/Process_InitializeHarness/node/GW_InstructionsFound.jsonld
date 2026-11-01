@@ -1,0 +1,14 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/process/Process_InitializeHarness/node/GW_InstructionsFound.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/process/Process_InitializeHarness/node/GW_InstructionsFound",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Instructions there?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/process/Process_InitializeHarness"
+    }
+  ]
+}

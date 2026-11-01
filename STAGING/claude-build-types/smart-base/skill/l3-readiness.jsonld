@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-base/skill/l3-readiness.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/l3-readiness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/l3-readiness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "l3-readiness",
+      "title": "l3-readiness",
+      "description": "The check between stages 5 and 6 of smart-guideline-end-to-end (Gateway_L3Ready): may the agent write L3 assets yet? Yes only when every source of the use case has its L1 extraction, every L2 asset names the L1 node it rests on, every L3 artefact about to be written names the L2 asset it implements, and the review of each extraction and L2 asset has been requested. Returns the answer, every finding with the stage that fixes it, and what was checked. Read before writing any FSH, CQL or other L3 file for a guideline or an adaptation.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l3-readiness.md",
+      "instructionLines": 60,
+      "inputSchema": "http://smart.who.int/base/schema/skills/l3-readiness/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/l3-readiness/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

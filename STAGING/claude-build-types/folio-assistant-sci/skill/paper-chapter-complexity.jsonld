@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-sci/skill/paper-chapter-complexity.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-sci/skill/paper-chapter-complexity",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "paper-chapter-complexity",
+      "title": "Paper chapter complexity and block density",
+      "description": "The paper-folio half of the harness's chapter-complexity-review and block-density skills: the mathematical block-kind classifier for logical vs. storytelling backward edges, cross-paper uses[] filtering, and table-extraction and density rules for formal statement blocks.",
+      "instructionsPath": "skills/content/authoring-math/paper-chapter-complexity.md",
+      "instructionLines": 74,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-chapter-complexity"
+    }
+  ]
+}

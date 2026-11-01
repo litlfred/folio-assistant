@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/AssetSource",
+  "definitions": {
+    "AssetSource": {
+      "type": "object",
+      "properties": {
+        "instance": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "description": "A forge repository's full name, owner/name"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "instance",
+        "path"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-node/AssetSourceSchema.schema.json",
+  "title": "AssetSourceSchema",
+  "description": "Generated from `AssetSourceSchema` in schemas/kg/kg-node.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

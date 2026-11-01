@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/ingestion-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/ingestion-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Ingestion engine",
+      "title": "Ingestion engine",
+      "notation": "ingestion-agent",
+      "description": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/skill/asset-extraction",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/skill/kg-subscription",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/skill/library-ingestion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/skill/materialize-remote",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/skill/theme-art-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/skill/theme-ui-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/skill/upload-naming",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/skill/materialize-on-demand"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent"
+    }
+  ]
+}

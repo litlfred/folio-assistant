@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/who-iris/directory/who-iris-scenarios.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/who-iris/directory/who-iris-scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "who-iris-scenarios",
+      "path": "scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/scenarios"
+      ],
+      "description": "`scenarios/roles.json`: the roles the IRIS CDN export processes' lanes bind (owner, exporter agent, Cloudflare R2 and CDN, Cloudflare git, release signer, verifier). Each mechanical role inherits the harness role it specialises. Declared so the lanes resolve and the checkout's role graph sees them (folio-assistant#2781).",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/who-iris/directory/who-iris-scenarios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-scenarios"
+    }
+  ]
+}

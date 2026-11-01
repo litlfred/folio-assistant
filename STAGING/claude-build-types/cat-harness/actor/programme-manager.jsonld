@@ -1,0 +1,45 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/actor/programme-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/actor/programme-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "programme-manager",
+      "actorKind": "person",
+      "title": "Programme Manager",
+      "description": "Overall coordination and governance. Responsible for scope definition, team formation, resource allocation, timeline planning, and stakeholder engagement.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.ProgrammeManager",
+        "lifecycle": [
+          "plan",
+          "review",
+          "publish",
+          "feedback"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/certifier",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/programme-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/test-requester",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/role/translation-coordinator"
+      ],
+      "permissionName": [
+        "project-governance",
+        "release-authorization"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/programme-manager"
+    }
+  ]
+}

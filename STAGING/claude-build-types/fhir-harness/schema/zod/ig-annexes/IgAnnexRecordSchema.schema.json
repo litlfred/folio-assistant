@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/IgAnnexRecord",
+  "definitions": {
+    "IgAnnexRecord": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "string",
+          "minLength": 1
+        },
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "columns": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "page",
+        "file"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-annexes/IgAnnexRecordSchema.schema.json",
+  "title": "IgAnnexRecordSchema",
+  "description": "Generated from `IgAnnexRecordSchema` in schemas/ig-annexes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$ref": "#/definitions/Relationship",
+  "definitions": {
+    "Relationship": {
+      "type": "string",
+      "enum": [
+        "related-to",
+        "equivalent",
+        "source-is-narrower-than-target",
+        "source-is-broader-than-target",
+        "not-related-to"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/RelationshipSchema.schema.json",
+  "title": "RelationshipSchema",
+  "description": "Generated from `RelationshipSchema` in schemas/content/vocab-mapping.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

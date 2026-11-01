@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/ProvAssociation",
+  "definitions": {
+    "ProvAssociation": {
+      "type": "object",
+      "properties": {
+        "prov:agent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prov:hadRole": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prov:hadPlan": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*#[A-Za-z_][A-Za-z0-9_.-]*$"
+        }
+      },
+      "required": [
+        "prov:agent",
+        "prov:hadRole",
+        "prov:hadPlan"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/ProvAssociationSchema.schema.json",
+  "title": "ProvAssociationSchema",
+  "description": "Generated from `ProvAssociationSchema` in schemas/content/prov.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

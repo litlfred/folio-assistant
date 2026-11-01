@@ -1,0 +1,29 @@
+{
+  "$ref": "#/definitions/DakComponentSource",
+  "definitions": {
+    "DakComponentSource": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonical": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instance": {}
+      },
+      "additionalProperties": {}
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/dak/DakComponentSourceSchema.schema.json",
+  "title": "DakComponentSourceSchema",
+  "description": "Generated from `DakComponentSourceSchema` in schemas/dak.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

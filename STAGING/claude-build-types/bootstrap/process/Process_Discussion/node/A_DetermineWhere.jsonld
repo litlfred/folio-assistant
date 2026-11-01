@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/process/Process_Discussion/node/A_DetermineWhere.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/process/Process_Discussion/node/A_DetermineWhere",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Determine where you are: process, roles, context",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/process/Process_Discussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap/skill/discussion"
+    }
+  ]
+}

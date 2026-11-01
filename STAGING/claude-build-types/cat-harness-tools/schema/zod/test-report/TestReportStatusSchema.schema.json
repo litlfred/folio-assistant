@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/TestReportStatus",
+  "definitions": {
+    "TestReportStatus": {
+      "type": "string",
+      "enum": [
+        "running",
+        "completed",
+        "aborted"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-report/TestReportStatusSchema.schema.json",
+  "title": "TestReportStatusSchema",
+  "description": "Generated from `TestReportStatusSchema` in schemas/sdlc/test-report.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

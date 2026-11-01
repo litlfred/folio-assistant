@@ -1,0 +1,62 @@
+{
+  "$ref": "#/definitions/DcField",
+  "definitions": {
+    "DcField": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "default": "dc",
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        },
+        "qualifier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "values": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "language": {
+                "type": "string",
+                "minLength": 1
+              },
+              "authority": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "element",
+        "values"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/schema/zod/dublin-core/DcFieldSchema.schema.json",
+  "title": "DcFieldSchema",
+  "description": "Generated from `DcFieldSchema` in schemas/dublin-core.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}

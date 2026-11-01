@@ -1,0 +1,50 @@
+{
+  "$ref": "#/definitions/QueryParameterDef",
+  "definitions": {
+    "QueryParameterDef": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "string",
+            "iri",
+            "integer",
+            "boolean"
+          ]
+        },
+        "required": {
+          "default": false,
+          "type": "boolean"
+        },
+        "defaultValue": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/nquads-distribution/QueryParameterDefSchema.schema.json",
+  "title": "QueryParameterDefSchema",
+  "description": "Generated from `QueryParameterDefSchema` in schemas/kg/nquads-distribution.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "pr": "2871/merge",
+    "run": "41286633987"
+  }
+}
