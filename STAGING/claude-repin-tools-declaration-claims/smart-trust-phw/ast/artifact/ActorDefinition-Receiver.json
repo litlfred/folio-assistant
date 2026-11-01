@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-Receiver.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/Receiver",
+  "schema:name": "Receiver",
+  "dcterms:title": "Receiver",
+  "dcterms:description": "Receiver (system) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
+  "schema:version": "0.1.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/trust-phw/ActorDefinition/Receiver"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/ActorDefinition/Receiver--1a2f8491.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "9d78dac501a6aae9e428e84b6d58de80d2488d4f"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.trust-phw",
+    "schema:version": "0.1.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/trust-phw"
+    }
+  }
+}
