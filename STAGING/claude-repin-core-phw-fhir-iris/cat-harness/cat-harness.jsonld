@@ -370,10 +370,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-11-01T15:53:09.401Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7805d6026ca0bb8cc25f6ebe595d277d0b25f886",
-  "sourceCommitSha": "7805d6026ca0bb8cc25f6ebe595d277d0b25f886",
-  "sourceCommitAt": "2026-11-01T15:29:11Z",
+  "generatedAt": "2026-11-01T16:41:55.993Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2d165c1327319608ac906dd4db7d1933b69c6bc9",
+  "sourceCommitSha": "2d165c1327319608ac906dd4db7d1933b69c6bc9",
+  "sourceCommitAt": "2026-11-01T16:23:57Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -388,7 +388,7 @@
     "Lane": 175,
     "ProcessNode": 1029,
     "Tool": 167,
-    "Schema": 178,
+    "Schema": 177,
     "ExternalSchema": 28,
     "GraphTypology": 53,
     "Role": 44,
@@ -53524,16 +53524,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/viewer-nav-qa"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/schema/store-tool-results",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
-      "name": "store-tool-results",
-      "title": "store-tool-results",
-      "summary": "Typed results of the tools that read and write the harness's data stores —",
-      "module": "schemas/tools/store-tool-results.ts",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/directory/schemas",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/store-tool-results"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/schema/tool-invocation",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "tool-invocation",
@@ -84713,12 +84703,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/schema/viewer-nav-qa"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness.jsonld#schema/store-tool-results",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/schema/store-tool-results",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/schema/store-tool-results"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness.jsonld#schema/tool-invocation",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-core-phw-fhir-iris/cat-harness/schema/tool-invocation",
@@ -85573,8 +85557,8 @@
   ],
   "staging": {
     "branch": "claude/repin-core-phw-fhir-iris",
-    "sha": "7805d6026ca0bb8cc25f6ebe595d277d0b25f886",
+    "sha": "2d165c1327319608ac906dd4db7d1933b69c6bc9",
     "pr": "2869/merge",
-    "run": "41321457821"
+    "run": "41326128481"
   }
 }

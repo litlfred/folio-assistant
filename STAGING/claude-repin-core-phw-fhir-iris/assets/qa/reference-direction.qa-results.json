@@ -40,11 +40,11 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6217,
+          "occurrences": 6205,
           "allowed": 0,
-          "wrongDirection": 17,
-          "wrongDirectionFiles": 11,
-          "exempt": 6200,
+          "wrongDirection": 13,
+          "wrongDirectionFiles": 8,
+          "exempt": 6192,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -54,7 +54,7 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 12,
+      "count": 9,
       "entries": [
         {
           "file": "bootstrap/models/models.json",
@@ -63,18 +63,6 @@
         {
           "file": "cat-harness-tools/schemas/harness-root.ts",
           "target": "fhir-harness"
-        },
-        {
-          "file": "cat-harness-tools/schemas/kg/cat-harness.ts",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness-tools/scripts/check-standalone.ts",
-          "target": "folio-assistant-core"
-        },
-        {
-          "file": "cat-harness-tools/scripts/merge-conflict-patterns.ts",
-          "target": "folio-assistant-core"
         },
         {
           "file": "folio-assistant-core/scripts/diig-phases-svg.ts",
@@ -107,5 +95,5 @@
       ]
     }
   },
-  "total": 14
+  "total": 11
 }
