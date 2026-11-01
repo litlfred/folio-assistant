@@ -1,7 +1,7 @@
 ---
 # folio-assistant-i15r
 $schema: bean/1.0.0
-title: 'merge-main ran the PR branch's scripts while holding the bot token (held B-H1)'
+title: 'merge-main ran the PR branch''s scripts while holding the bot token (held B-H1)'
 status: completed
 type: bug
 priority: high
