@@ -382,8 +382,22 @@ jobs:
         # Each writer's skip-or-run line goes to a file the preview publishes
         # (STAGING/<slug>/writer-skip.txt): job logs cannot be read from
         # where the cone is measured (bean fwtz).
+        #
+        # A preview has no stamped QA working copy, so `uml:overview` builds one
+        # here (511 s of this step's 817 s on job 124708101507). Its
+        # `skill:register` step re-ran nine checks, 233 s of the same build on
+        # main's deploy (job 124653530529). The
+        # PR's own `Repository gates` run `skill:register:check`, which asks
+        # every one of them over the same tree, so the preview leaves them to it
+        # (CAT_SKILL_REGISTER_VERIFIED_BY_GATES, as layer-pr-checks does since
+        # 2026-10-23). The preview's skill-register record lists them as not
+        # run here, never as passed. The names come from skill-register's own
+        # CHECKS; if they cannot be read, every check runs, as before.
         run: |
           set -o pipefail
+          CAT_SKILL_REGISTER_VERIFIED_BY_GATES="$(bun -e 'import { CHECKS } from "./cat-harness-tools/scripts/skill-register.ts"; console.log(CHECKS.join(","))' 2>/dev/null || true)"
+          export CAT_SKILL_REGISTER_VERIFIED_BY_GATES
+          echo "skill:register checks left to the PR's gates: ${CAT_SKILL_REGISTER_VERIFIED_BY_GATES:-none}"
           bun run cat derive:publish 2>&1 | tee "$RUNNER_TEMP/derive.log"
 
       - name: Determine staging slug
@@ -1767,7 +1781,104 @@ jobs:
       # Halving this workflow's writes attacks that cause rather than
       # absorbing it. The three-attempt rebase loop is kept regardless: the
       # contention BETWEEN sessions is untouched, and is `yzsj`'s ground.
+      # Q-SPD-5c (owner card 2026-11-01 16:24Z, option A): hand the built site
+      # to the batched publisher (`staging-publish.yml`) instead of waiting at
+      # the gh-pages push gate on this runner. The publisher pushes every
+      # waiting preview in one commit per Pages window. If any part of the
+      # hand-off fails (or the publisher is not on main yet), the in-job deploy
+      # below runs exactly as before.
+      # Fast path (Q-SPD-5c follow-up). The publisher is a separate job, so it
+      # waits for a runner of its own: measured 2026-11-01 18:33Z, the first
+      # batch waited 8 min in the runner queue for a 2-min job, while the gate
+      # had been open for 40 min. So when the gate is open NOW and nothing is
+      # waiting for the publisher, this job pushes itself, as before. Anything
+      # unreadable means "hand off", never "push".
+      - name: Push from this job when the gate is open and nothing waits (Q-SPD-5c)
+        id: fastpath
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -eu
+          waiting=$(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
+            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")))] | length' | awk '{s+=$1} END{print s+0}')
+          busy=$(gh api "repos/$REPO/actions/workflows/staging-publish.yml/runs?per_page=10" \
+            --jq '[.workflow_runs[] | select(.status != "completed")] | length' 2>/dev/null || echo 1)
+          tip=$(gh api "repos/$REPO/commits/gh-pages" --jq '"\(.commit.committer.date)\t\(.commit.message | split("\n")[0])"')
+          open=$(TIP="$tip" bun -e '
+            import { decide } from "./cat-harness-tools/scripts/staging-push-gate.ts";
+            const [d, subject] = (process.env.TIP ?? "").split("\t");
+            const ms = Date.parse(d);
+            console.log(Number.isNaN(ms) ? "unknown" : decide({ committedMs: ms, subject }, Date.now()).open ? "yes" : "no");
+          ')
+          echo "gate open: $open; previews waiting for the publisher: $waiting; publisher runs not finished: $busy"
+          if [ "$open" = yes ] && [ "$waiting" = 0 ] && [ "$busy" = 0 ]; then
+            echo "direct=true" >> "$GITHUB_OUTPUT"
+            echo "nothing queued and the gate is open: pushing from this job"
+          fi
+
+      - name: Pack the preview for the batched publisher (Q-SPD-5c)
+        id: handoff
+        if: steps.fastpath.outputs.direct != 'true'
+        continue-on-error: true
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
+          PR: ${{ github.event.pull_request.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -eu
+          case "$STAGING_SLUG" in
+            ""|.|..|*/*|_retired) echo "::error::staging slug '$STAGING_SLUG' is not one safe path segment"; exit 1 ;;
+          esac
+          if [ -z "$(ls -A _site 2>/dev/null || true)" ]; then
+            echo "::error::the build produced an empty ./_site; nothing handed off"; exit 1
+          fi
+          H="$RUNNER_TEMP/staging-handoff"; rm -rf "$H"; mkdir -p "$H"
+          tar -C _site -cf "$H/site.tar" .
+          jq -n --arg slug "$STAGING_SLUG" --arg branch "$STAGING_BRANCH" --arg sha "$GITHUB_SHA" \
+            --arg pr "$PR" --arg run "$RUN_URL" \
+            '{slug: $slug, branch: $branch, sha: $sha, pr: (if $pr == "" then null else ($pr | tonumber) end), run: $run}' > "$H/meta.json"
+          echo "packed $(du -h "$H/site.tar" | cut -f1) for STAGING/$STAGING_SLUG"
+
+      - name: Queue the preview for the batched publisher (Q-SPD-5c)
+        id: handoff_upload
+        if: steps.handoff.outcome == 'success'
+        continue-on-error: true
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: staging-site-${{ steps.slug.outputs.slug }}
+          path: |
+            ${{ runner.temp }}/staging-handoff/site.tar
+            ${{ runner.temp }}/staging-handoff/meta.json
+          if-no-files-found: error
+          compression-level: 1
+          overwrite: true
+          retention-days: 1
+
+      - name: Wake the batched publisher (Q-SPD-5c)
+        id: handoff_dispatch
+        if: steps.handoff_upload.outcome == 'success'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SLUG: ${{ steps.slug.outputs.slug }}
+          ARTIFACT_ID: ${{ steps.handoff_upload.outputs.artifact-id }}
+        run: |
+          if gh workflow run staging-publish.yml --repo "$REPO" --ref main; then
+            echo "handed STAGING/$SLUG to the batched publisher"
+            exit 0
+          fi
+          # No publisher to take it: deploy in this job, and take the artifact
+          # back so a later publisher run cannot replace a newer preview with it.
+          [ -z "$ARTIFACT_ID" ] || gh api -X DELETE "repos/$REPO/actions/artifacts/$ARTIFACT_ID" || true
+          exit 1
+
       - name: Check out the publish branch
+        # Only for the in-job deploy, when the hand-off above did not happen.
+        if: steps.handoff_dispatch.outcome != 'success'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: gh-pages
@@ -1796,7 +1907,9 @@ jobs:
         with:
           script: |
             const out = `${process.env.RUNNER_TEMP}/staging-comment.md`;
-            const args = ['--state', 'queued', '--dir', 'pages', '--out', out];
+            const args = ['--state', 'queued', '--out', out];
+            // With the batched publisher there is no gh-pages checkout here.
+            if (require('fs').existsSync('pages/.git')) args.push('--dir', 'pages');
             const { readFileSync } = require('fs');
             await exec.exec('bun', ['run', 'cat-harness-tools/scripts/staging-push-gate.ts', 'comment', ...args]);
             let body = readFileSync(out, 'utf8');
@@ -1827,6 +1940,8 @@ jobs:
 
       - name: Deploy the preview and log the render, in one commit
         id: deploy
+        # Only when the hand-off to the batched publisher did not happen.
+        if: steps.handoff_dispatch.outcome != 'success'
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
@@ -2038,7 +2153,8 @@ jobs:
           done
 
       - name: Comment staging URL on PR
-        if: github.event_name == 'pull_request'
+        # The batched publisher posts this itself once its push lands.
+        if: github.event_name == 'pull_request' && steps.handoff_dispatch.outcome != 'success'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         # A `script:` block is JavaScript, and `${{ }}` is substituted into its
         # SOURCE TEXT before V8 parses it — so the hazard is the `run:` one in a

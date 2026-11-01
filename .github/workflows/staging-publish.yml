@@ -1,0 +1,119 @@
+name: Staging publish (batched gh-pages push)
+
+# Q-SPD-5c, owner card 2026-11-01 16:24Z, option A: "Build the batched
+# publisher". Each preview job (`feature-staging.yml`) uploads its built site
+# as the artifact `staging-site-<slug>` and dispatches this workflow, instead
+# of waiting at the gh-pages push gate on its own runner. This pushes every
+# waiting preview in ONE commit per Pages window, so N previews wait one window
+# rather than N. `.github/scripts/staging-publish.sh` explains the queue.
+#
+# The schedule is the safety net: a dispatch that failed, or a run that died,
+# leaves its artifacts queued, and the next tick publishes them. An empty
+# queue ends the run in its first step.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+
+permissions:
+  contents: write       # push gh-pages
+  pull-requests: write  # the "preview pushed" comment
+  actions: write        # read and delete the queued artifacts
+
+# One publisher at a time. A pending run is replaced by a newer one, which is
+# what a queue drained in full by every run wants; a running one is never
+# cancelled, since a run cancelled mid-push is a deploy dropped.
+concurrency:
+  group: staging-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Anything waiting?
+        id: queue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          n=$(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
+            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")))] | length' | awk '{s+=$1} END{print s+0}')
+          echo "waiting=$n" >> "$GITHUB_OUTPUT"
+          echo "staging-publish: $n preview artifact(s) waiting"
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        if: steps.queue.outputs.waiting != '0'
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        if: steps.queue.outputs.waiting != '0'
+        with:
+          bun-version: 1.4.4
+      - name: Cache remote mounts (bean cis1)
+        if: steps.queue.outputs.waiting != '0'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
+      - name: Mount the layers from the lock
+        if: steps.queue.outputs.waiting != '0'
+        run: bash .github/mount-from-lock.sh --root .
+      - name: Install deps
+        if: steps.queue.outputs.waiting != '0'
+        run: bun install --frozen-lockfile
+
+      - name: Check out the publish branch
+        if: steps.queue.outputs.waiting != '0'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: gh-pages
+          path: pages
+          persist-credentials: true
+
+      - name: Publish every waiting preview in one commit (Q-SPD-5c)
+        if: steps.queue.outputs.waiting != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: bash .github/scripts/staging-publish.sh
+
+      - name: Comment the staging URL on each PR
+        if: steps.queue.outputs.waiting != '0'
+        continue-on-error: true
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          script: |
+            // The same comment the preview job used to post after its own push:
+            // PUSHED, not live, with the time to check by (#1956).
+            const fs = require('fs');
+            const published = JSON.parse(fs.readFileSync(`${process.env.RUNNER_TEMP}/published.json`, 'utf8'));
+            const { owner, repo } = context.repo;
+            for (const p of published) {
+              if (!p.pr) continue;
+              const out = `${process.env.RUNNER_TEMP}/staging-comment-${p.slug}.md`;
+              await exec.exec('bun', ['run', 'cat-harness-tools/scripts/staging-push-gate.ts', 'comment',
+                '--state', 'pushed', '--pushed-at', p.pushed_at, '--out', out],
+                { env: { ...process.env, SLUG: p.slug, BRANCH: p.branch, SHA: p.sha } });
+              let body = fs.readFileSync(out, 'utf8');
+              body += `\n\n**CI results:** https://github.com/${owner}/${repo}/pull/${p.pr}/checks — the preview does not wait for them.\n`;
+              if (fs.existsSync(`pages/STAGING/${p.slug}/changes/index.html`)) {
+                const url = `https://${owner}.github.io/${repo}/STAGING/${p.slug}/changes/`;
+                body += `\n\n**What this branch changes:** ${url} — the changed sources, the rendered files in their dependency cone, and a QA list of files that differ from the published root but were not in the cone.\n`;
+              }
+              const comments = await github.paginate(github.rest.issues.listComments, {
+                owner, repo, issue_number: p.pr, per_page: 100,
+              });
+              const existing = comments.find(c =>
+                c.user.login === 'github-actions[bot]' &&
+                (c.body.includes('<!-- staging-preview-comment -->') || c.body.includes('Staging preview deployed'))
+              );
+              if (existing) {
+                await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+              } else {
+                await github.rest.issues.createComment({ owner, repo, issue_number: p.pr, body });
+              }
+            }
