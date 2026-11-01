@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-base/process/Process_DakL3Ig/node/EndEvent_IgPublished.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DakL3Ig/node/EndEvent_IgPublished.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/EndEvent_IgPublished",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "FHIR IG published",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
+      "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

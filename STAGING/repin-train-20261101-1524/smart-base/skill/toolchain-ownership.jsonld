@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-base/skill/toolchain-ownership.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/toolchain-ownership.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/toolchain-ownership",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "toolchain-ownership",
+      "title": "toolchain-ownership",
+      "description": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
+      "instructionLines": 137,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

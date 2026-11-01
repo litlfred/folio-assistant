@@ -1,0 +1,29 @@
+{
+  "$ref": "#/definitions/SectionRef",
+  "definitions": {
+    "SectionRef": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SectionRefSchema.schema.json",
+  "title": "SectionRefSchema",
+  "description": "Generated from `SectionRefSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  }
+}

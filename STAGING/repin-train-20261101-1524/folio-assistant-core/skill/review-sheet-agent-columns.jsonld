@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/skill/review-sheet-agent-columns.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/skill/review-sheet-agent-columns",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "review-sheet-agent-columns",
+      "title": "Keep the review sheet's Agent columns current",
+      "description": "Whenever an agent works on a change set of a folio whose review sheet is kept by the Tool `review-sheet-sync`, it writes the Agent tabs' columns for that change set and its comments as it goes: status, step, what it did, the PR, the staging page and its build, what the PR changed and when it finished. Use on every change-set edit, draft, PR, push, merge or close, in a sheet sync or not.",
+      "instructionsPath": "skills/content/folio-document-adapter/review-sheet-agent-columns.md",
+      "instructionLines": 121,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-agent-columns"
+    }
+  ]
+}

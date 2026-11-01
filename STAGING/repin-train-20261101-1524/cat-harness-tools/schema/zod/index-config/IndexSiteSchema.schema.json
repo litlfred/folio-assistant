@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/IndexSite",
+  "definitions": {
+    "IndexSite": {
+      "type": "object",
+      "properties": {
+        "landing": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agentRun": {
+          "type": "boolean"
+        },
+        "workflows": {
+          "type": "object",
+          "properties": {
+            "publish": {
+              "type": "string",
+              "pattern": "^[\\w.-]+\\.ya?ml$"
+            },
+            "stage": {
+              "type": "string",
+              "pattern": "^[\\w.-]+\\.ya?ml$"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/IndexSiteSchema.schema.json",
+  "title": "IndexSiteSchema",
+  "description": "Generated from `IndexSiteSchema` in schemas/kg/index-config.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  }
+}

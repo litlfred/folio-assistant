@@ -1,0 +1,115 @@
+{
+  "$ref": "#/definitions/DocumentKindCoverage",
+  "definitions": {
+    "DocumentKindCoverage": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "members": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "label"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "id",
+              "members"
+            ]
+          }
+        },
+        "unplaced": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "group": {
+                "type": "string",
+                "minLength": 1
+              },
+              "count": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "group",
+              "count"
+            ]
+          }
+        },
+        "generatedBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "subject",
+        "from",
+        "method",
+        "total",
+        "sections",
+        "unplaced",
+        "generatedBy",
+        "$schema"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-kind/DocumentKindCoverageSchema.schema.json",
+  "title": "DocumentKindCoverageSchema",
+  "description": "Generated from `DocumentKindCoverageSchema` in schemas/content/document-kind.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  }
+}

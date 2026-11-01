@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/process/Process_IrisCdnNightly/lane/Lane_CfGit.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/process/Process_IrisCdnNightly/lane/Lane_CfGit",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Cloudflare git (Artifacts)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/process/Process_IrisCdnNightly",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/role/cloudflare-git",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_CfGit"
+    }
+  ]
+}

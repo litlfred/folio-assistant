@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/SheetAnchor",
+  "definitions": {
+    "SheetAnchor": {
+      "type": "object",
+      "properties": {
+        "sheet": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cell": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Z]+[1-9]\\d*$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "row": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "column": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "sheet",
+        "cell",
+        "row",
+        "column"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-csvw/SheetAnchorSchema.schema.json",
+  "title": "SheetAnchorSchema",
+  "description": "Generated from `SheetAnchorSchema` in schemas/library/tabular-csvw.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  }
+}

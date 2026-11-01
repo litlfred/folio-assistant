@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-base/directory/smart-base-kg.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-kg.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-kg",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-base-kg",
+      "path": "kg/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "The SMART Guidelines knowledge-graph schema, L1 3.0, as Zod: `src/` (the L1 layer and its `l1-library` extension, the graph-document shape, `validate.ts`, `kgid.ts`, the offline JSON-LD loader and the emitters), `test/`, and `generated/l1/` (the ontology JSON, the document JSON Schema and the JSON-LD contexts, written by `src/emit.ts`), with its own `package.json` for `kg.yml`. The emitter also writes the IG's FSH (`input/fsh/models/KGL1*.fsh`, `input/fsh/codesystems/KG*.fsh`, `input/fsh/valuesets/KG*VS.fsh`), which stays at the repository root with the rest of the IG. Moved here from the repository root `kg/` on the owner's ruling F1 (2026-10-15): `scripts/l1-recommendation-candidates.ts` imports `kg/src/`, and a remote mount brings declared directories only, so a root `kg/` never arrived in an index.",
+      "readmePath": "kg/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-kg"
+    }
+  ]
+}

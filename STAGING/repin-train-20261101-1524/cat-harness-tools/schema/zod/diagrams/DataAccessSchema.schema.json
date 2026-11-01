@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/DataAccess",
+  "definitions": {
+    "DataAccess": {
+      "type": "object",
+      "properties": {
+        "elementId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationshipId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "read",
+            "write",
+            "access",
+            "readwrite",
+            "association"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "elementId",
+        "name",
+        "type",
+        "relationshipId",
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataAccessSchema.schema.json",
+  "title": "DataAccessSchema",
+  "description": "Generated from `DataAccessSchema` in archimate/schemas/diagrams.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  }
+}

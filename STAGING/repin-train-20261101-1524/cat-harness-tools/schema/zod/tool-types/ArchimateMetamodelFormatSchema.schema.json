@@ -1,0 +1,24 @@
+{
+  "$ref": "#/definitions/ArchimateMetamodelFormat",
+  "definitions": {
+    "ArchimateMetamodelFormat": {
+      "type": "string",
+      "enum": [
+        "text",
+        "json",
+        "dot",
+        "mmd"
+      ],
+      "description": "A plain-text report, archimate-metamodel/v1 JSON, Graphviz DOT, or a Mermaid class diagram."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ArchimateMetamodelFormatSchema.schema.json",
+  "title": "ArchimateMetamodelFormatSchema",
+  "description": "Generated from `ArchimateMetamodelFormatSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  }
+}

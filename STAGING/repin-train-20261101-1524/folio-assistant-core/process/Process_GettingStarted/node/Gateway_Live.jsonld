@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/process/Process_GettingStarted/node/Gateway_Live.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/process/Process_GettingStarted/node/Gateway_Live",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Is the site answering?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/process/Process_GettingStarted",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/role/publish-target",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/pages-live-gate.dmn#Decision_PagesLive",
+      "decidedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/decision/pages-live-gate/Decision_PagesLive",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/process/Process_GettingStarted#flow/Flow_probe"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/process/Process_GettingStarted#flow/Flow_live",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/process/Process_GettingStarted#flow/Flow_notyet",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/process/Process_GettingStarted#flow/Flow_unknown",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/process/Process_GettingStarted#flow/Flow_unprovisioned"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Gateway_Live"
+    }
+  ]
+}

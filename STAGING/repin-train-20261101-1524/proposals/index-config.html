@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../assets/js/vendor/lunr.min.js"></script><script src="../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>index.config.json: who controls index.html | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="index.config.json: who controls index.html" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="index.config.json: who controls index.html" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "proposals-index-config",
+    "src": "../assets/qa/proposals-index-config/page.translation.json",
+    "index": "../assets/qa/proposals-index-config/qa-index.json",
+    "list": "../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../folio-assistant-core/","jsonld":"../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../assets/harness/site.json"><meta name="fa-todo-src" content="../assets/todos/index.json"><meta name="fa-todo-graph" content="../todos.jsonld"><meta name="fa-zoom-src" content="../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content=".."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../assets/beans/index.json"><meta name="fa-processes-src" content="../subgraph/index.jsonld"><meta name="fa-build-src" content="../build.json"><meta name="fa-fsh-guts-src" content="../fsh-guts.json"><link rel="stylesheet" href="../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../assets/css/docs-ui.css?v=cae55c379753"><link rel="stylesheet" href="../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../assets/js/harness-data.js" defer></script><script src="../assets/js/vendor/qrcode.js" defer></script><script src="../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../assets/js/kg-render.js" defer></script><script src="../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../assets/js/docs-ui.js?v=a035cad021f3" defer></script><script src="../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../assets/js/work-plan.js" defer></script><script src="../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-giobbw31pa","here":"/proposals/index-config.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#1-the-problem","label":"The problem","icon":"1"},{"href":"#2-how-the-old-resolution-worked-still-the-fallback","label":"How the old resolution worked (still the fallback)","icon":"2"},{"href":"#3-the-schema-folio-index-configv1","label":"The schema: folio-index-config/v1","icon":"3"},{"href":"#4-resolution-order","label":"Resolution order","icon":"4"},{"href":"#5-the-mount-lock-indexlockjson","label":"The mount lock: index.lock.json","icon":"5"},{"href":"#6-the-reserved-index-stem","label":"The reserved index stem","icon":"6"},{"href":"#7-the-generated-gitignore-block","label":"The generated .gitignore block","icon":"7"},{"href":"#8-migration","label":"Migration","icon":"8"},{"href":"#9-out-of-scope","label":"Out of scope","icon":"9"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../proposals/">Proposals</a></li><li class="breadcrumb-nav-list-item"><span>index.config.json: who controls index.html</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 id="indexconfigjson-who-controls-indexhtml"><a href="#indexconfigjson-who-controls-indexhtml" class="anchor-heading" aria-labelledby="indexconfigjson-who-controls-indexhtml"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">index.config.json</code>: who controls <code class="language-plaintext highlighter-rouge">index.html</code></h1><p>The owner, 2026-10-07: <em>“migration to index.config.json
+importing <code class="language-plaintext highlighter-rouge">&lt;harness&gt;.config.json</code> information as needed”</em>. Later that evening: <em>“go
+ahead and start the migration NOW to index.config.json, /coordinate as
+needed”</em>. Issue #2483, bean <code class="language-plaintext highlighter-rouge">ymvt</code> under the separation epic <code class="language-plaintext highlighter-rouge">7x5n</code>. The
+governing skill is
+<a href="../reference/skill-instructions/index-config.html"><code class="language-plaintext highlighter-rouge">index-config</code></a>.</p><h2 id="1-the-problem"><a href="#1-the-problem" class="anchor-heading" aria-labelledby="1-the-problem"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The problem
+  
+  
+</h2><p>A checkout that instantiates several harnesses has <strong>one</strong> <code class="language-plaintext highlighter-rouge">&lt;base&gt;/index.html</code>.
+Until now, three facts about one checkout’s instantiation lived in N+1 files,
+and none of those files could be read as the whole answer:</p><div class="table-wrapper"><table><thead><tr><th>fact</th><th>where it lived</th><th>how it went wrong</th></tr></thead><tbody><tr><td>which harnesses are instantiated</td><td>inferred: every root <code class="language-plaintext highlighter-rouge">*.config.json</code> except <code class="language-plaintext highlighter-rouge">harness.config.json</code></td><td>five scripts re-implemented the scan; one did not exclude the legacy name</td></tr><tr><td>which one is <code class="language-plaintext highlighter-rouge">/</code></td><td>a <code class="language-plaintext highlighter-rouge">site.landing: true</code> flag, in any of those files</td><td>a reader has to open every config to learn the answer</td></tr><tr><td>where each comes from</td><td><code class="language-plaintext highlighter-rouge">remoteMounts</code> on <code class="language-plaintext highlighter-rouge">folio-assistant.json</code>, the root <strong>declaration</strong></td><td>a declaration travels with the harness; <em>where its mounts come from</em> is a fact about one checkout</td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">gen-landing-data.ts</code> also hard-wired its instance as the directory it sits
+in (<code class="language-plaintext highlighter-rouge">instanceRootFor(import.meta.dir)</code>), so the landing stickies were
+cat-harness’s because of where the script lived, not because of any
+decision.</p><p>The separation makes this urgent. The separated repositories (<code class="language-plaintext highlighter-rouge">bootstrap</code>,
+<code class="language-plaintext highlighter-rouge">bootstrap-tools</code>, and every harness cut out of this monorepo) each need a
+defined landing and mount set. Two forks carry a <code class="language-plaintext highlighter-rouge">&lt;fork&gt;.config.json</code> they
+inherited, and under the old rule each of those forks instantiates a harness
+it does not hold.</p><h2 id="2-how-the-old-resolution-worked-still-the-fallback"><a href="#2-how-the-old-resolution-worked-still-the-fallback" class="anchor-heading" aria-labelledby="2-how-the-old-resolution-worked-still-the-fallback"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. How the old resolution worked (still the fallback)
+  
+  
+</h2><ul><li><code class="language-plaintext highlighter-rouge">instantiatedHarnessNames(root)</code> returned the stem of each root
+<code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code>.</li><li><code class="language-plaintext highlighter-rouge">resolveLandingInstance(root)</code> returned:
+    <ul><li>the sole instance, when there was one;</li><li>the single flagged config;</li><li>a hub, when two or more configs were flagged;</li><li><code class="language-plaintext highlighter-rouge">ambiguous</code>, when none was flagged (<code class="language-plaintext highlighter-rouge">check:landing-instance</code> fails on
+this).</li></ul></li><li><code class="language-plaintext highlighter-rouge">rootInstanceName(root)</code> used the root declaration, then the landing.</li><li>Remote mounts came from the root declaration’s <code class="language-plaintext highlighter-rouge">remoteMounts</code>. The lock was
+<code class="language-plaintext highlighter-rouge">&lt;root-instance&gt;.mount-lock.json</code>.</li></ul><p><strong>All of this still applies when there is no <code class="language-plaintext highlighter-rouge">index.config.json</code>.</strong> A folio
+that has not migrated sees no change.</p><h2 id="3-the-schema-folio-index-configv1"><a href="#3-the-schema-folio-index-configv1" class="anchor-heading" aria-labelledby="3-the-schema-folio-index-configv1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. The schema: <code class="language-plaintext highlighter-rouge">folio-index-config/v1</code></h2><p><code class="language-plaintext highlighter-rouge">cat-harness/schemas/index-config.ts</code>:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folio-index-config/v1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"instances"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folio-assistant"</span><span class="p">,</span><span class="w"> </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"local"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness"</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-ig"</span><span class="p">,</span><span class="w"> </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"remote"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"repository"</span><span class="p">:</span><span class="w"> </span><span class="s2">"owner/my-ig"</span><span class="p">,</span><span class="w"> </span><span class="nl">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;40-char sha&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"overrides"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"my-ig"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"whole"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span><span class="p">,</span><span class="w"> </span><span class="nl">"trust"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"consent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span><span class="p">,</span><span class="w"> </span><span class="nl">"on"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span><span class="p">,</span><span class="w"> </span><span class="nl">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span><span class="p">,</span><span class="w"> </span><span class="nl">"evidence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"…"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"site"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"landing"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><ul><li><code class="language-plaintext highlighter-rouge">name</code>: an instance name. <code class="language-plaintext highlighter-rouge">index</code> (the reserved stem) and <code class="language-plaintext highlighter-rouge">hub</code> (the
+landing keyword) are refused. Each name appears once.</li><li><code class="language-plaintext highlighter-rouge">import?</code>: a root <code class="language-plaintext highlighter-rouge">&lt;file&gt;.config.json</code>. When absent, the entry imports
+<code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> if that file exists. A harness need not have a config.</li><li><code class="language-plaintext highlighter-rouge">source?</code>: absent means local at <code class="language-plaintext highlighter-rouge">&lt;name&gt;/</code>. Otherwise it takes one of two
+forms:
+    <ul><li><code class="language-plaintext highlighter-rouge">{ local: { at } }</code>, where <code class="language-plaintext highlighter-rouge">at</code> may be <code class="language-plaintext highlighter-rouge">.</code> for the root instance.</li><li><code class="language-plaintext highlighter-rouge">{ remote: … }</code>, which is <strong><code class="language-plaintext highlighter-rouge">RemoteMountSchema.omit({ harness })</code></strong>. It is
+reused, not restated, so it keeps <code class="language-plaintext highlighter-rouge">ref</code>, <code class="language-plaintext highlighter-rouge">overrides.&lt;name&gt;.whole</code> and
+<code class="language-plaintext highlighter-rouge">.path</code>, <code class="language-plaintext highlighter-rouge">note</code> and <code class="language-plaintext highlighter-rouge">trust.consent</code> exactly as the separation’s cutovers
+write them today. Any field a later PR adds (such as <code class="language-plaintext highlighter-rouge">track</code>, #2468) needs
+no edit here.</li></ul></li><li>Any other key in an entry is an inline <code class="language-plaintext highlighter-rouge">HarnessConfig</code> field. It overrides
+the imported one: objects merge key by key, and arrays and scalars are
+replaced.</li><li><code class="language-plaintext highlighter-rouge">site.landing?</code>: an instance the file lists, or <code class="language-plaintext highlighter-rouge">"hub"</code>. A name the file
+does not list is refused.</li></ul><p>The brief named the remote fields <code class="language-plaintext highlighter-rouge">pin</code>, <code class="language-plaintext highlighter-rouge">path</code> and <code class="language-plaintext highlighter-rouge">whole</code> at the top level.
+They are spelled <code class="language-plaintext highlighter-rouge">ref</code> and <code class="language-plaintext highlighter-rouge">overrides.&lt;name&gt;.{path,whole}</code> here, because those
+are the fields of the existing schema. A second spelling would need a
+converter in both directions, and it would be another place for the two to
+drift apart.</p><h2 id="4-resolution-order"><a href="#4-resolution-order" class="anchor-heading" aria-labelledby="4-resolution-order"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Resolution order
+  
+  
+</h2><p>Every reader below goes through a shared resolver in
+<code class="language-plaintext highlighter-rouge">schemas/harness-config.ts</code>, <code class="language-plaintext highlighter-rouge">schemas/index-config.ts</code> or
+<code class="language-plaintext highlighter-rouge">schemas/instance-roots.ts</code>:</p><ol><li><strong>Instantiated set</strong>:
+    <ul><li>If <code class="language-plaintext highlighter-rouge">index.config.json</code> exists, its <code class="language-plaintext highlighter-rouge">instances[].name</code>.</li><li>If it is unreadable, the reader <strong>throws</strong>. It never falls back to the
+scan the index replaced.</li><li>Otherwise, <code class="language-plaintext highlighter-rouge">rootConfigStems(root)</code>, which is the one root scan.</li></ul></li><li><strong>Effective config</strong> of an indexed instance: the imported file, overlaid by
+the inline fields (<code class="language-plaintext highlighter-rouge">effectiveInstanceConfig</code>).
+    <ul><li><code class="language-plaintext highlighter-rouge">readHarnessConfig(dir)</code> returns this when the nearest index, walking
+outward from the instance root, lists the instance.</li><li>The walk stops at the first directory that holds either the index or the
+instance’s own config.</li></ul></li><li><strong>Landing</strong>:
+    <ul><li>Index unreadable: <strong><code class="language-plaintext highlighter-rouge">invalid</code></strong>.</li><li>Index <code class="language-plaintext highlighter-rouge">site.landing</code> names a listed instance: that instance
+(<code class="language-plaintext highlighter-rouge">by: "index"</code>).</li><li><code class="language-plaintext highlighter-rouge">"hub"</code>: the hub.</li><li>An unlisted name: <strong><code class="language-plaintext highlighter-rouge">invalid</code></strong>. This is an error, never a silent
+fallback.</li><li>No <code class="language-plaintext highlighter-rouge">site.landing</code>: today’s sole/flag/hub/ambiguous rules, applied to the
+index’s instances and their <strong>effective</strong> configs, so an inline <code class="language-plaintext highlighter-rouge">site</code>
+counts.</li></ul></li><li><strong>Remote mounts</strong>: <code class="language-plaintext highlighter-rouge">readDeclaredMounts(instanceRoot)</code>.
+    <ul><li>With an index: its <code class="language-plaintext highlighter-rouge">source.remote</code> entries.</li><li>Without one: the declaration’s <code class="language-plaintext highlighter-rouge">remoteMounts</code>.</li><li><strong>Both carrying mounts throws, naming both files.</strong></li><li>The single writer is <code class="language-plaintext highlighter-rouge">writeDeclaredMounts</code>, which always writes the
+index.</li></ul></li><li><strong>Lock</strong>: <code class="language-plaintext highlighter-rouge">index.lock.json</code> first, then the legacy <code class="language-plaintext highlighter-rouge">*.mount-lock.json</code>.
+<strong>Both present is an error naming both.</strong></li></ol><p><code class="language-plaintext highlighter-rouge">check:landing-instance</code> reports the landing <strong>and</strong> whether the index agrees
+with the root <code class="language-plaintext highlighter-rouge">*.config.json</code> set:</p><ul><li>A root config the index does not import fails the check.</li><li>An <code class="language-plaintext highlighter-rouge">import</code> of a missing file fails the check.</li><li>An entry with no config is reported and does not fail.</li></ul><h2 id="5-the-mount-lock-indexlockjson"><a href="#5-the-mount-lock-indexlockjson" class="anchor-heading" aria-labelledby="5-the-mount-lock-indexlockjson"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. The mount lock: <code class="language-plaintext highlighter-rouge">index.lock.json</code></h2><p>The lock stays a <strong>separate, generated</strong> file. It records what the declared
+mounts resolved to, it is written only by <code class="language-plaintext highlighter-rouge">mount:remote</code>, and it is never
+hand-edited. That is why it is not folded into the index.</p><p>The owner renamed it from <code class="language-plaintext highlighter-rouge">folio-assistant.mount-lock.json</code> to
+<code class="language-plaintext highlighter-rouge">index.lock.json</code>, the companion of <code class="language-plaintext highlighter-rouge">index.config.json</code>. To keep the rename
+safe:</p><ul><li><strong>Writers</strong> write the new name. <code class="language-plaintext highlighter-rouge">mount:remote</code> renames a legacy lock onto
+the new name before rewriting it.</li><li><strong>Readers</strong> accept both names and refuse when both exist. The readers
+changed are:
+    <ul><li><code class="language-plaintext highlighter-rouge">mount-from-lock.ts</code> (which uses only <code class="language-plaintext highlighter-rouge">node:*</code>, so it restates the rule
+inline; a test holds the two together);</li><li><code class="language-plaintext highlighter-rouge">mountedInstanceRoots</code>, <code class="language-plaintext highlighter-rouge">mountLockFilename</code> and <code class="language-plaintext highlighter-rouge">mountLockPathFor</code> in
+<code class="language-plaintext highlighter-rouge">remote-mount.ts</code>;</li><li><code class="language-plaintext highlighter-rouge">mountedUnder</code> in <code class="language-plaintext highlighter-rouge">git-corpus.ts</code>;</li><li><code class="language-plaintext highlighter-rouge">mount:remote</code> and <code class="language-plaintext highlighter-rouge">mount:remote:check</code>;</li><li>the <code class="language-plaintext highlighter-rouge">publish.yml</code> replay guards;</li><li>the <code class="language-plaintext highlighter-rouge">paths:</code> filters in <code class="language-plaintext highlighter-rouge">docs-site</code>, <code class="language-plaintext highlighter-rouge">feature-staging</code> and
+<code class="language-plaintext highlighter-rouge">jsonld-gen-check</code>.</li></ul></li><li>The lock schema (<code class="language-plaintext highlighter-rouge">cat-harness-mount-lock/v1</code>) is <strong>unchanged</strong>. Only the
+file is renamed.</li></ul><h2 id="6-the-reserved-index-stem"><a href="#6-the-reserved-index-stem" class="anchor-heading" aria-labelledby="6-the-reserved-index-stem"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. The reserved <code class="language-plaintext highlighter-rouge">index</code> stem
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">index.config.json</code> ends in <code class="language-plaintext highlighter-rouge">.config.json</code>, so every “root <code class="language-plaintext highlighter-rouge">*.config.json</code> is
+a harness” scan would read a harness called <code class="language-plaintext highlighter-rouge">index</code>. The stem is reserved
+across the board:</p><ul><li><code class="language-plaintext highlighter-rouge">isReservedIndexFile</code> covers <code class="language-plaintext highlighter-rouge">index.config.json</code>, <code class="language-plaintext highlighter-rouge">index.lock.json</code> and
+<code class="language-plaintext highlighter-rouge">index.json</code>.</li><li><code class="language-plaintext highlighter-rouge">rootConfigStems</code> and <code class="language-plaintext highlighter-rouge">findDeclarationFile</code> skip those files.</li><li>The schema refuses an instance named <code class="language-plaintext highlighter-rouge">index</code>.</li></ul><p>The five re-implemented scans are folded into the shared helpers:</p><div class="table-wrapper"><table><thead><tr><th>script</th><th>now uses</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">check-avatar-instances.ts</code></td><td><code class="language-plaintext highlighter-rouge">instantiatedHarnessNames</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">check-folio-mount.ts</code></td><td><code class="language-plaintext highlighter-rouge">instantiatedHarnessNames</code> (which also fixes its missing legacy exclusion)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">check-instance-config.ts</code></td><td><code class="language-plaintext highlighter-rouge">rootConfigStems</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">scan-repo-content.ts</code></td><td>the shared <code class="language-plaintext highlighter-rouge">CONFIG_SUFFIX</code> + <code class="language-plaintext highlighter-rouge">isReservedIndexFile</code> (it had a duplicate <code class="language-plaintext highlighter-rouge">CONFIG_SUFFIX</code>)</td></tr><tr><td>the site builder in the layer above</td><td>the same pair</td></tr></tbody></table></div><h2 id="7-the-generated-gitignore-block"><a href="#7-the-generated-gitignore-block" class="anchor-heading" aria-labelledby="7-the-generated-gitignore-block"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. The generated <code class="language-plaintext highlighter-rouge">.gitignore</code> block
+  
+  
+</h2><p>The root <code class="language-plaintext highlighter-rouge">.gitignore</code> carries a marked block:</p><ul><li>It starts with <code class="language-plaintext highlighter-rouge"># BEGIN index mounts (generated from index.config.json — do not edit)</code>.</li><li>It ends with <code class="language-plaintext highlighter-rouge"># END index mounts</code>.</li><li>Between the markers it holds one <code class="language-plaintext highlighter-rouge">/&lt;path&gt;/</code> line per remote instance, using
+<code class="language-plaintext highlighter-rouge">overrides.&lt;name&gt;.path</code> or else <code class="language-plaintext highlighter-rouge">&lt;name&gt;/</code>, followed by every further
+instance root the lock records. A mount’s closure can land instances that
+the index never names, and those have to be ignored too.</li></ul><p>The block is written by:</p><ul><li><code class="language-plaintext highlighter-rouge">mount:remote</code> (from the planned closure before anything lands, and again
+from the lock afterwards);</li><li><code class="language-plaintext highlighter-rouge">writeDeclaredMounts</code>;</li><li><code class="language-plaintext highlighter-rouge">index-config:migrate --write</code>.</li></ul><p><strong>With an index, <code class="language-plaintext highlighter-rouge">mount:remote</code> no longer appends to <code class="language-plaintext highlighter-rouge">.git/info/exclude</code>.</strong> A
+local exclude is invisible to every other clone, so a path the committed block
+does not cover is reported as not ignored. Checkouts without an index keep
+today’s behaviour. <code class="language-plaintext highlighter-rouge">check:index-ignores</code> is the gate, and it is wired into
+<code class="language-plaintext highlighter-rouge">code-quality-gates.yml</code> beside <code class="language-plaintext highlighter-rouge">check:landing-instance</code>.</p><h2 id="8-migration"><a href="#8-migration" class="anchor-heading" aria-labelledby="8-migration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Migration
+  
+  
+</h2><p><strong>This repository, in this PR:</strong></p><ol><li>Write <code class="language-plaintext highlighter-rouge">index.config.json</code> with <code class="language-plaintext highlighter-rouge">bun run cat index-config:migrate --write</code>.
+It contains:
+    <ul><li>every configured instance (<code class="language-plaintext highlighter-rouge">folio-assistant</code> at <code class="language-plaintext highlighter-rouge">.</code>, <code class="language-plaintext highlighter-rouge">cat-harness</code>, the
+local harnesses above it, and the remote <code class="language-plaintext highlighter-rouge">bootstrap</code> and the separated
+harnesses that have a root config);</li><li>the remote <code class="language-plaintext highlighter-rouge">bootstrap-tools</code> and the other separated harnesses, which
+have no root config — <code class="language-plaintext highlighter-rouge">index.config.json</code> itself is the list;</li><li><code class="language-plaintext highlighter-rouge">site.landing: "cat-harness"</code>.</li></ul></li><li>Move every <code class="language-plaintext highlighter-rouge">remoteMounts</code> entry losslessly into <code class="language-plaintext highlighter-rouge">source.remote</code>, and remove
+it from <code class="language-plaintext highlighter-rouge">folio-assistant.json</code>.</li><li>Rename the lock: <code class="language-plaintext highlighter-rouge">git mv folio-assistant.mount-lock.json index.lock.json</code>.
+<code class="language-plaintext highlighter-rouge">bun run cat mount:lock</code> replays from the new name, and a test replays from
+each name.</li><li>Replace the hand-written mount lines in <code class="language-plaintext highlighter-rouge">.gitignore</code> with the generated
+block, keeping the explanatory comment above it.</li><li><strong>Keep every <code class="language-plaintext highlighter-rouge">&lt;harness&gt;.config.json</code>.</strong> Each one is imported. Removing them
+is a later step taken <strong>per harness</strong>, once its content has moved inline or
+it is clear that it never will. <code class="language-plaintext highlighter-rouge">cat-harness.config.json</code> still carries
+<code class="language-plaintext highlighter-rouge">site.landing: true</code>, which agrees with the index.</li></ol><p><strong>Re-run before merge.</strong> The separation keeps appending <code class="language-plaintext highlighter-rouge">remoteMounts</code> entries
+during its cutovers (core is the next mount). The converter is idempotent:</p><ul><li>On a re-run it moves only the entries added since the last run.</li><li>An entry the index already holds identically is dropped from the
+declaration.</li><li>An entry the index holds <strong>differently</strong> throws, and you reconcile it by
+hand.</li></ul><p>The plan is to merge <code class="language-plaintext highlighter-rouge">main</code> at the last moment, re-run
+<code class="language-plaintext highlighter-rouge">index-config:migrate --write</code>, and hold cutovers for that window.</p><p><strong>The separated repositories, in follow-up PRs, one per repository:</strong> run
+<code class="language-plaintext highlighter-rouge">bun run cat index-config:migrate --root &lt;clone&gt; --write</code>. It reads only that
+clone’s files. In one step it:</p><ul><li>writes the index;</li><li>writes the empty or populated ignore block;</li><li>moves any <code class="language-plaintext highlighter-rouge">remoteMounts</code>;</li><li>renames a legacy lock.</li></ul><p>A root config whose stem names no instance the clone declares or mounts is
+reported as an <code class="language-plaintext highlighter-rouge">unmatched-config</code> finding and is <strong>not imported</strong>. That covers
+a <code class="language-plaintext highlighter-rouge">&lt;fork&gt;.config.json</code> that a repository inherited from the fork it was cut
+from. The decision about the stray file is a person’s.</p><p><strong>New folios:</strong> <code class="language-plaintext highlighter-rouge">init-folio</code> writes an index listing its one instance at <code class="language-plaintext highlighter-rouge">.</code>.
+It writes no <code class="language-plaintext highlighter-rouge">site.landing</code>, because a sole instance needs none. It also
+writes the empty ignore block, so <code class="language-plaintext highlighter-rouge">check:index-ignores</code> holds from the first
+commit. <code class="language-plaintext highlighter-rouge">kg:instantiate</code> adds the harness it instantiates to an existing
+index.</p><h2 id="9-out-of-scope"><a href="#9-out-of-scope" class="anchor-heading" aria-labelledby="9-out-of-scope"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Out of scope
+  
+  
+</h2><ul><li><strong>Moving the landing stickies</strong> (bean <code class="language-plaintext highlighter-rouge">1yd7</code>). <code class="language-plaintext highlighter-rouge">gen-landing-data.ts</code> now
+asks the resolver which instance lands, instead of using its own location.
+It falls back to its own instance for a hub, and throws when the landing is
+undecided. That makes <code class="language-plaintext highlighter-rouge">1yd7</code> a data move with no wiring left to do.</li><li><strong>Route namespacing and mount-path collisions</strong> (bean <code class="language-plaintext highlighter-rouge">t4xb</code>). The index is
+where a per-instance path would be declared (<code class="language-plaintext highlighter-rouge">overrides.&lt;name&gt;.path</code>), and
+the ignore block follows it. The URL scheme itself is <code class="language-plaintext highlighter-rouge">t4xb</code>’s.</li><li><strong>A gate that no tracked file sits under a mount path.</strong> That belongs to
+#2468, which also adds <code class="language-plaintext highlighter-rouge">track</code>, <code class="language-plaintext highlighter-rouge">mount:update</code> and consent. Its writes go
+through <code class="language-plaintext highlighter-rouge">writeDeclaredMounts</code>.</li><li><strong>Retiring <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code> files.</strong> This is per harness and comes
+later, as described above.</li><li><strong><code class="language-plaintext highlighter-rouge">resolveHarnessConfigPath</code> honouring a custom <code class="language-plaintext highlighter-rouge">import</code> filename.</strong> The path
+resolver still answers <code class="language-plaintext highlighter-rouge">&lt;name&gt;.config.json</code>, while <code class="language-plaintext highlighter-rouge">readHarnessConfig</code> and
+<code class="language-plaintext highlighter-rouge">effectiveInstanceConfig</code> honour <code class="language-plaintext highlighter-rouge">import</code>. No entry in this repository uses
+a custom <code class="language-plaintext highlighter-rouge">import</code>.</li><li><strong>The BPMN prose in <code class="language-plaintext highlighter-rouge">mount-dependency.bpmn</code></strong>, which still names
+<code class="language-plaintext highlighter-rouge">&lt;instance&gt;.mount-lock.json</code>. That name is still read, so the text is not
+wrong. Changing it would regenerate the translations and the glossary, which
+is a separate change.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

@@ -1,0 +1,53 @@
+{
+  "$ref": "#/definitions/ThresholdBasis",
+  "definitions": {
+    "ThresholdBasis": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "const": "threshold"
+        },
+        "value": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "suppliedBy": {
+          "type": "string",
+          "const": "caller"
+        },
+        "coverage": {
+          "type": "number",
+          "minimum": 0
+        },
+        "imagesOnPage": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "method",
+        "value",
+        "suppliedBy",
+        "coverage",
+        "imagesOnPage",
+        "page"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/ThresholdBasisSchema.schema.json",
+  "title": "ThresholdBasisSchema",
+  "description": "Generated from `ThresholdBasisSchema` in schemas/content/document-image.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  }
+}

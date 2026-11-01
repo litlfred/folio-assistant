@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/ThemePartialPalette",
+  "definitions": {
+    "ThemePartialPalette": {
+      "type": "object",
+      "properties": {
+        "surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ink": {
+          "type": "string",
+          "minLength": 1
+        },
+        "edge": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gradientFrom": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gradientTo": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemePartialPaletteSchema.schema.json",
+  "title": "ThemePartialPaletteSchema",
+  "description": "Generated from `ThemePartialPaletteSchema` in schemas/ui/theme.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  }
+}

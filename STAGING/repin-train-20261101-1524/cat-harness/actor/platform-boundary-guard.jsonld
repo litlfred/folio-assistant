@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/cat-harness/actor/platform-boundary-guard.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/cat-harness/actor/platform-boundary-guard",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "platform-boundary-guard",
+      "actorKind": "agent",
+      "title": "Platform boundary guard",
+      "description": "Keeps folio-specific content out of platform code and platform code out of folios. Reads a change and judges whether a literal names one folio, whether a new content type needs an adapter or only a profile, and whether a node declares what it is. Its findings are advice: it does not accept a change into the corpus, which is the editor's lane. Acts as `code-reviewer` — the question it asks is whether the NODE is sound, which a passing test suite does not answer.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/cat-harness/role/code-reviewer"
+      ],
+      "permissionName": [
+        "qa-reporting"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/platform-boundary-guard"
+    }
+  ]
+}

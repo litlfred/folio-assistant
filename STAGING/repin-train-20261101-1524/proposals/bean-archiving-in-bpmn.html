@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../assets/js/vendor/lunr.min.js"></script><script src="../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bean archiving in BPMN — the terminal state nothing draws | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Bean archiving in BPMN — the terminal state nothing draws" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Bean archiving in BPMN — the terminal state nothing draws" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "proposals-bean-archiving-in-bpmn",
+    "src": "../assets/qa/proposals-bean-archiving-in-bpmn/page.translation.json",
+    "index": "../assets/qa/proposals-bean-archiving-in-bpmn/qa-index.json",
+    "list": "../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../folio-assistant-core/","jsonld":"../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../assets/harness/site.json"><meta name="fa-todo-src" content="../assets/todos/index.json"><meta name="fa-todo-graph" content="../todos.jsonld"><meta name="fa-zoom-src" content="../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content=".."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../assets/beans/index.json"><meta name="fa-processes-src" content="../subgraph/index.jsonld"><meta name="fa-build-src" content="../build.json"><meta name="fa-fsh-guts-src" content="../fsh-guts.json"><link rel="stylesheet" href="../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../assets/css/docs-ui.css?v=cae55c379753"><link rel="stylesheet" href="../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../assets/js/harness-data.js" defer></script><script src="../assets/js/vendor/qrcode.js" defer></script><script src="../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../assets/js/kg-render.js" defer></script><script src="../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../assets/js/docs-ui.js?v=a035cad021f3" defer></script><script src="../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../assets/js/work-plan.js" defer></script><script src="../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-giobbw31pa","here":"/proposals/bean-archiving-in-bpmn.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#outcome--where-the-ops-live-now-2026-10-24","label":"Outcome — where the ops live now (2026-10-24)"},{"href":"#what-the-engine-supports","label":"What the engine supports"},{"href":"#coverage--the-arc-is-drawn-and-it-stops-one-step-short","label":"Coverage — the arc is drawn, and it stops one step short"},{"href":"#the-finding-that-is-worse-than-a-missing-op","label":"The finding that is worse than a missing op"},{"href":"#two-smaller-defects-found-on-the-way","label":"Two smaller defects found on the way"},{"href":"#what-filling-it-in-involves","label":"What filling it in involves"},{"href":"#what-this-does-not-claim","label":"What this does NOT claim"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../proposals/">Proposals</a></li><li class="breadcrumb-nav-list-item"><span>Bean archiving in BPMN — the terminal state nothing draws</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 class="no_toc" id="bean-archiving-in-bpmn--the-terminal-state-nothing-draws"><a href="#bean-archiving-in-bpmn--the-terminal-state-nothing-draws" class="anchor-heading" aria-labelledby="bean-archiving-in-bpmn--the-terminal-state-nothing-draws"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Bean archiving in BPMN — the terminal state nothing draws
+  
+  
+</h1><p>Asked by the owner, 2026-09-20, on archiving 219 beans:</p><blockquote><p>make sure bpmn (sub)process on bean archiving wired up for process state
+management generally and specifically for things like publication pipeline,
+CRDM, SDLC… do analysis and create bean to fill in.</p></blockquote><p>Measured on <code class="language-plaintext highlighter-rouge">654a48c2</code>. The short answer is that it is wired up <strong>nowhere</strong>,
+and the more interesting finding is the second one below.</p><ol id="markdown-toc"><li><a href="#outcome--where-the-ops-live-now-2026-10-24" id="markdown-toc-outcome--where-the-ops-live-now-2026-10-24">Outcome — where the ops live now (2026-10-24)</a></li><li><a href="#what-the-engine-supports" id="markdown-toc-what-the-engine-supports">What the engine supports</a></li><li><a href="#coverage--the-arc-is-drawn-and-it-stops-one-step-short" id="markdown-toc-coverage--the-arc-is-drawn-and-it-stops-one-step-short">Coverage — the arc is drawn, and it stops one step short</a></li><li><a href="#the-finding-that-is-worse-than-a-missing-op" id="markdown-toc-the-finding-that-is-worse-than-a-missing-op">The finding that is worse than a missing op</a></li><li><a href="#two-smaller-defects-found-on-the-way" id="markdown-toc-two-smaller-defects-found-on-the-way">Two smaller defects found on the way</a></li><li><a href="#what-filling-it-in-involves" id="markdown-toc-what-filling-it-in-involves">What filling it in involves</a></li><li><a href="#what-this-does-not-claim" id="markdown-toc-what-this-does-not-claim">What this does NOT claim</a></li></ol><h2 id="outcome--where-the-ops-live-now-2026-10-24"><a href="#outcome--where-the-ops-live-now-2026-10-24" class="anchor-heading" aria-labelledby="outcome--where-the-ops-live-now-2026-10-24"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Outcome — where the ops live now (2026-10-24)
+  
+  
+</h2><p>All four questions below are settled. <strong>Archiving is a per-activity op</strong>
+(owner, 2026-10-20) — the sweep stays the floor. <strong><code class="language-plaintext highlighter-rouge">Process_BeanLifecycle</code> is
+called, and consolidated</strong> (owner, 2026-10-24, option A): its two halves are
+now called processes, and every process that works on a bean calls both.</p><div class="table-wrapper"><table><thead><tr><th></th><th>process</th><th>file</th><th>ops</th></tr></thead><tbody><tr><td>OPEN</td><td><code class="language-plaintext highlighter-rouge">Process_BeanOpen</code></td><td><code class="language-plaintext highlighter-rouge">processes/sdlc/bean-open.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">claim</code> — after check, create, whose bean; or leave it alone</td></tr><tr><td>CLOSE</td><td><code class="language-plaintext highlighter-rouge">Process_BeanClose</code></td><td><code class="language-plaintext highlighter-rouge">processes/sdlc/bean-close.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">resolve</code>, then <code class="language-plaintext highlighter-rouge">archive</code> on one activity shared by the done and scrapped outcomes; a blocker is noted and handed back</td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">Process_BeanLifecycle</code> is OPEN → work → CLOSE. Each bean-touching process
+calls OPEN where the bean becomes its own (then a <code class="language-plaintext highlighter-rouge">claimed</code> / <code class="language-plaintext highlighter-rouge">not yours</code>
+gateway, since the engine does not hand a called process’s end event back)
+and CLOSE straight before each end it reaches from there. The CRDM phases run
+on <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code>’s bean, which opens and closes it. Measured on
+main before the change: 19 <code class="language-plaintext highlighter-rouge">claim</code> ops in 18 diagrams, 13 <code class="language-plaintext highlighter-rouge">resolve</code> in 11,
+3 <code class="language-plaintext highlighter-rouge">archive</code> in 3; after it, one of each, all inside OPEN and CLOSE.
+<code class="language-plaintext highlighter-rouge">check:bean-calls</code> (run within <code class="language-plaintext highlighter-rouge">check:workflow-refs</code>) keeps it that way, and
+<code class="language-plaintext highlighter-rouge">todo-manager</code> § “Where the bean ops live” says how to call them.</p><p>The sections below are the 2026-09-20 analysis, kept as the record of why.</p><h2 id="what-the-engine-supports"><a href="#what-the-engine-supports" class="anchor-heading" aria-labelledby="what-the-engine-supports"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the engine supports
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">WORK_PLAN_OPS</code> in <code class="language-plaintext highlighter-rouge">cat-harness/src/workflow/bean-link.ts</code> is exactly three:</p><div class="table-wrapper"><table><thead><tr><th>op</th><th>what the engine does</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">claim</code></td><td>sets the bean <code class="language-plaintext highlighter-rouge">in-progress</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">note</code></td><td>appends</td></tr><tr><td><code class="language-plaintext highlighter-rouge">resolve</code></td><td>sets the bean <strong><code class="language-plaintext highlighter-rouge">completed</code></strong></td></tr></tbody></table></div><p>There is no fourth. <code class="language-plaintext highlighter-rouge">process-model.ts</code> refuses an unimplemented op by name,
+so a diagram <em>cannot</em> ask for archiving today — it would fail to load.</p><h2 id="coverage--the-arc-is-drawn-and-it-stops-one-step-short"><a href="#coverage--the-arc-is-drawn-and-it-stops-one-step-short" class="anchor-heading" aria-labelledby="coverage--the-arc-is-drawn-and-it-stops-one-step-short"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Coverage — the arc is drawn, and it stops one step short
+  
+  
+</h2><p><strong>25 of 38 diagrams</strong> carry a <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean&gt;</code> mark: 7 <code class="language-plaintext highlighter-rouge">claim</code>, 7 <code class="language-plaintext highlighter-rouge">note</code>,
+5 <code class="language-plaintext highlighter-rouge">resolve</code>.</p><p>The three the owner named all reach the terminal state and stop there:</p><div class="table-wrapper"><table><thead><tr><th>process</th><th>ops</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code> — the publication pipeline</td><td><code class="language-plaintext highlighter-rouge">claim</code> → <code class="language-plaintext highlighter-rouge">note</code> → <code class="language-plaintext highlighter-rouge">resolve</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">crdm-close.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">resolve</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code></td><td><code class="language-plaintext highlighter-rouge">claim</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code> — the SDLC diagram</td><td><code class="language-plaintext highlighter-rouge">claim</code> → <code class="language-plaintext highlighter-rouge">resolve</code></td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">resolve</code> sets <code class="language-plaintext highlighter-rouge">completed</code>, and <strong><code class="language-plaintext highlighter-rouge">completed</code> is precisely the status
+<code class="language-plaintext highlighter-rouge">beans archive</code> moves.</strong> So every one of these processes manufactures the
+condition and none of them discharges it. That is not a metaphor for how 219
+beans accumulated; it is the mechanism.</p><h2 id="the-finding-that-is-worse-than-a-missing-op"><a href="#the-finding-that-is-worse-than-a-missing-op" class="anchor-heading" aria-labelledby="the-finding-that-is-worse-than-a-missing-op"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The finding that is worse than a missing op
+  
+  
+</h2><p><strong><code class="language-plaintext highlighter-rouge">Process_BeanLifecycle</code> is called by nothing.</strong></p><p>The corpus has 19 <code class="language-plaintext highlighter-rouge">calledElement</code> references. Not one of them names it:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Process_BuildL1Kg  Process_CRDM_Close  Process_CRDM_Deliver  Process_CRDM_Issue
+Process_CRDM_Needs  Process_CRDM_Requirements  Process_CRDM_Signoff
+Process_CodeChangeReview  Process_CodeReview  Process_DeriveContent
+Process_Editing ×2  Process_EvidenceRetrieval  Process_ExtractStructure
+Process_L1Gate  Process_NarrativeReview  Process_Publication  Process_Review
+Process_UpstreamAdoption ×2  Process_VoiceReview
+</code></pre></div></div><p>So <code class="language-plaintext highlighter-rouge">bean-lifecycle.bpmn</code> — the one diagram that models what happens to a
+bean — <strong>is a picture, not a subprocess.</strong> The other processes interact with
+the work plan through per-activity <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean op&gt;</code> marks, which is a
+different mechanism entirely: the engine performs the op inline, and the
+lifecycle diagram is never entered.</p><p>That is why adding an <code class="language-plaintext highlighter-rouge">archive</code> op alone would not answer the owner’s
+question. The ask is <em>“wired up for process state management”</em>, and today
+there is no wiring to extend — there is a diagram nobody calls and a set of
+marks that know nothing about it.</p><h2 id="two-smaller-defects-found-on-the-way"><a href="#two-smaller-defects-found-on-the-way" class="anchor-heading" aria-labelledby="two-smaller-defects-found-on-the-way"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two smaller defects found on the way
+  
+  
+</h2><p><strong><code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean action="create"/&gt;</code></strong> appears in <code class="language-plaintext highlighter-rouge">bean-lifecycle.bpmn</code>. The
+loader reads <code class="language-plaintext highlighter-rouge">.op</code> and nothing else, and an absent <code class="language-plaintext highlighter-rouge">op</code> is <em>documented</em> as
+meaningful — <em>“the step touches the plan in some way the tools do not perform
+automatically”</em>. So a misspelled attribute is <strong>indistinguishable from a
+deliberate abstention</strong>. Whatever that step was meant to do, it does nothing
+and reports nothing.</p><p><strong>Archiving is named in no skill.</strong> <code class="language-plaintext highlighter-rouge">todo-manager.md</code>, <code class="language-plaintext highlighter-rouge">bean-coordination.md</code>
+and <code class="language-plaintext highlighter-rouge">bean-blocking.md</code> between them do not mention <code class="language-plaintext highlighter-rouge">beans archive</code> once. The
+only thing in the repository that notices an unarchived bean is the
+<code class="language-plaintext highlighter-rouge">bean-store</code> health check — which <em>reports and never acts</em>, and which was
+itself blind to the store from <code class="language-plaintext highlighter-rouge">#437</code> until <code class="language-plaintext highlighter-rouge">2tlx</code> repointed it, about an
+hour before the owner asked this question.</p><p>So the gap is three-layered and each layer hides the next: the engine cannot
+do it, no process asks for it, no skill says when, and the one check that
+would have said so could not see the store.</p><h2 id="what-filling-it-in-involves"><a href="#what-filling-it-in-involves" class="anchor-heading" aria-labelledby="what-filling-it-in-involves"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What filling it in involves
+  
+  
+</h2><p>Not a plan — the bean decides. But the shape is constrained by what is above:</p><ol><li><strong>An <code class="language-plaintext highlighter-rouge">archive</code> op</strong>, or a reasoned decision that archiving is <em>not</em> a
+per-activity operation. It is plausibly a periodic sweep rather than a
+step in any one process, in which case the answer is a scheduled process
+and not a fourth op — and that is the first question to settle, because
+it determines everything after it.</li><li><strong>Wiring <code class="language-plaintext highlighter-rouge">Process_BeanLifecycle</code> to something</strong>, or retiring it. A diagram
+nobody calls is the <code class="language-plaintext highlighter-rouge">plj1</code>/<code class="language-plaintext highlighter-rouge">dh4f</code> family again: it looks like coverage.</li><li><strong><code class="language-plaintext highlighter-rouge">action=</code> refused rather than ignored</strong>, so the next misspelling fails
+at load instead of reading as an abstention.</li><li><strong>A skill saying when</strong>, since <code class="language-plaintext highlighter-rouge">todo-manager</code> is the source of truth for
+the store and currently stops at <code class="language-plaintext highlighter-rouge">scrapped</code>.</li></ol><h2 id="what-this-does-not-claim"><a href="#what-this-does-not-claim" class="anchor-heading" aria-labelledby="what-this-does-not-claim"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this does NOT claim
+  
+  
+</h2><p>That the 219 beans were a defect. They were the correct state under the rules
+as written — <code class="language-plaintext highlighter-rouge">resolve</code> is where every process ends, and nothing said to go
+further. The defect is that no layer <em>could</em> have said so.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

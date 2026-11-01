@@ -1,0 +1,272 @@
+{
+  "$ref": "#/definitions/DeploymentDescription",
+  "definitions": {
+    "DeploymentDescription": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "topology": {
+          "type": "object",
+          "properties": {
+            "forge": {
+              "type": "string",
+              "enum": [
+                "none",
+                "github",
+                "self-hosted",
+                "jurisdiction-hosted"
+              ]
+            },
+            "network": {
+              "type": "string",
+              "enum": [
+                "internet",
+                "egress-restricted",
+                "air-gapped"
+              ]
+            },
+            "modelProvenance": {
+              "type": "string",
+              "enum": [
+                "open-weight-local",
+                "hosted",
+                "mixed"
+              ]
+            },
+            "outwardFacing": {
+              "type": "boolean"
+            },
+            "compute": {
+              "type": "string",
+              "enum": [
+                "workstation",
+                "vendor-cloud",
+                "jurisdiction-cloud",
+                "own-infrastructure"
+              ]
+            },
+            "toolSurface": {
+              "type": "string",
+              "enum": [
+                "mcp",
+                "cli",
+                "both"
+              ]
+            },
+            "modelCardinality": {
+              "type": "string",
+              "enum": [
+                "single",
+                "stack"
+              ]
+            },
+            "dataStores": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "hapi-fhir",
+                  "national-portal",
+                  "emr",
+                  "wallet"
+                ]
+              }
+            },
+            "visibility": {
+              "type": "string",
+              "enum": [
+                "public",
+                "private",
+                "internal"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "publicationHost": {
+          "type": "string",
+          "enum": [
+            "github-pages",
+            "local-server",
+            "jurisdiction-endpoint",
+            "none"
+          ]
+        },
+        "modes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "author",
+              "ingest",
+              "develop",
+              "test",
+              "qa-review",
+              "publish"
+            ]
+          }
+        },
+        "placements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "actor": {
+                "type": "string",
+                "minLength": 1
+              },
+              "host": {
+                "type": "string",
+                "enum": [
+                  "claude-code",
+                  "gemini-cli",
+                  "codex",
+                  "cursor",
+                  "antigravity",
+                  "copilot-cli",
+                  "copilot-agent",
+                  "github-actions",
+                  "gitlab-ci",
+                  "local"
+                ]
+              },
+              "reach": {
+                "type": "string",
+                "enum": [
+                  "internet",
+                  "egress-restricted",
+                  "air-gapped"
+                ]
+              },
+              "compute": {
+                "type": "string",
+                "enum": [
+                  "workstation",
+                  "vendor-cloud",
+                  "jurisdiction-cloud",
+                  "own-infrastructure"
+                ]
+              },
+              "toolSurface": {
+                "type": "string",
+                "enum": [
+                  "mcp",
+                  "cli",
+                  "both"
+                ]
+              },
+              "modelProvenance": {
+                "type": "string",
+                "enum": [
+                  "open-weight-local",
+                  "hosted",
+                  "mixed"
+                ]
+              },
+              "identity": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "provider"
+                ],
+                "additionalProperties": false
+              },
+              "credentials": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "enum": [
+                    "publish-site",
+                    "push-branch",
+                    "open-pull-request",
+                    "dispatch-workflow",
+                    "publish-package",
+                    "call-model-api",
+                    "provision-host",
+                    "authenticate-users",
+                    "list-secret-names",
+                    "sign-artefact",
+                    "sign-session"
+                  ]
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,79}$"
+                }
+              }
+            },
+            "required": [
+              "actor"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "jurisdiction": {
+          "type": "object",
+          "properties": {
+            "publicationBase": {
+              "type": "string",
+              "minLength": 1
+            },
+            "audience": {
+              "type": "string",
+              "enum": [
+                "public",
+                "authenticated",
+                "operator-only"
+              ]
+            },
+            "retention": {
+              "type": "string",
+              "minLength": 1
+            },
+            "residency": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "liveData": {
+          "type": "string",
+          "enum": [
+            "artefacts-only",
+            "may-hold-credentials"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "topology",
+        "modes",
+        "placements",
+        "liveData"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/deployment-description/DeploymentDescriptionSchema.schema.json",
+  "title": "DeploymentDescriptionSchema",
+  "description": "Generated from `DeploymentDescriptionSchema` in schemas/process/deployment-description.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  }
+}

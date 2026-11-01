@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/cat-harness/directory/tool-releases.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/cat-harness/directory/tool-releases",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "tool-releases",
+      "path": "tool-releases/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/tool-release"
+      ],
+      "title": "Tool releases",
+      "description": "The external tools this platform runs: one `folio-tool-release/v1` file per tool at one version, with the sha256 of its bytes, where to fetch it, its SPDX licence, how to run it and the runtimes that release needs; and one `folio-tool-profile/v1` file per named set of releases a run selects. A profile never names a runtime.",
+      "readmePath": "tool-releases/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/cat-harness/directory/tool-releases",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/tool-releases"
+    }
+  ]
+}

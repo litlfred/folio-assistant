@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/directory/who-iris-scenarios.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/directory/who-iris-scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "who-iris-scenarios",
+      "path": "scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/scenarios"
+      ],
+      "description": "`scenarios/roles.json`: the roles the IRIS CDN export processes' lanes bind (owner, exporter agent, Cloudflare R2 and CDN, Cloudflare git, release signer, verifier). Each mechanical role inherits the harness role it specialises. Declared so the lanes resolve and the checkout's role graph sees them (folio-assistant#2781).",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1524/who-iris/directory/who-iris-scenarios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-scenarios"
+    }
+  ]
+}

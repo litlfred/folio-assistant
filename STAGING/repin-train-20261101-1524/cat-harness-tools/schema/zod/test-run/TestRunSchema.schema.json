@@ -1,0 +1,233 @@
+{
+  "$ref": "#/definitions/TestRun",
+  "definitions": {
+    "TestRun": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-test-run/v1"
+        },
+        "skill": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "A skill name, e.g. todo-manager"
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "hash": {
+              "type": "string",
+              "minLength": 1
+            },
+            "inputs": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "hash",
+            "inputs"
+          ]
+        },
+        "process": {
+          "type": "object",
+          "properties": {
+            "hash": {
+              "type": "string",
+              "minLength": 1
+            },
+            "inputs": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "hash",
+            "inputs"
+          ]
+        },
+        "outcome": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "input": {},
+              "output": {}
+            },
+            "required": [
+              "input",
+              "output"
+            ]
+          }
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^req:[a-z0-9][a-z0-9-]*(#[A-Za-z0-9][A-Za-z0-9_.-]*(\\/[A-Za-z0-9][A-Za-z0-9_.-]*)?)?$"
+          }
+        },
+        "updated_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]*$"
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "sut": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "agent"
+                },
+                "actor": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "reach": {
+                  "type": "string",
+                  "enum": [
+                    "internet",
+                    "egress-restricted",
+                    "air-gapped",
+                    "unknown"
+                  ]
+                },
+                "model": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+                },
+                "configuration": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9-]*$"
+                }
+              },
+              "required": [
+                "kind",
+                "actor",
+                "version",
+                "reach",
+                "model",
+                "configuration"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "skill",
+                    "tool",
+                    "machine",
+                    "ig",
+                    "process"
+                  ]
+                },
+                "actor": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "reach": {
+                  "type": "string",
+                  "enum": [
+                    "internet",
+                    "egress-restricted",
+                    "air-gapped",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "actor",
+                "version",
+                "reach"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "runContext": {
+          "type": "object",
+          "properties": {
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "sha256"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "skill",
+        "subject",
+        "data",
+        "process",
+        "outcome",
+        "updated_at"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/TestRunSchema.schema.json",
+  "title": "TestRunSchema",
+  "description": "Generated from `TestRunSchema` in schemas/sdlc/test-run.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "b6be20d8a6e160fd041942a3d4f13fe1ea5a15fc",
+    "pr": "2876/merge",
+    "run": "41322715298"
+  }
+}
