@@ -370,10 +370,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-01T16:29:35.317Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2ddbec44fe05b8ebbd7ddcaee36a02890a07a252",
-  "sourceCommitSha": "2ddbec44fe05b8ebbd7ddcaee36a02890a07a252",
-  "sourceCommitAt": "2026-11-01T16:10:08Z",
+  "generatedAt": "2026-11-01T19:15:27.159Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a3d9a7ae0e98208a1b51296adaa71083fc84036b",
+  "sourceCommitSha": "a3d9a7ae0e98208a1b51296adaa71083fc84036b",
+  "sourceCommitAt": "2026-11-01T18:55:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -384,7 +384,7 @@
     "ProcessNode": 115,
     "GraphTypology": 24,
     "Role": 1,
-    "Subgraph": 28,
+    "Subgraph": 29,
     "Asset": 3,
     "Tool": 14
   },
@@ -5026,9 +5026,25 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
       ],
-      "description": "This layer's own scripts and their tests: document-kinds, the DAK components figure, the DTH term findings, the smart-kg L1 extraction and pin, and the fhir-harness exclusions check, and the L1 recommendation scenario candidates with the vocabulary reader they resolve against (bean kvd2), whose test fixtures and measles run sit under `scripts/fixtures/`. Declared at the cutover (bean hupw) so a remote mount brings them.",
+      "description": "This layer's own scripts and their tests: document-kinds, the DAK components figure, the DTH term findings, the smart-kg L1 extraction and pin, and the fhir-harness exclusions check, and the L1 recommendation scenario candidates with the vocabulary reader they resolve against (bean kvd2), whose test fixtures and measles run sit under `scripts/fixtures/`. It also holds `dth-init.ts`, which writes a new DTH repository's wiring and moved here from folio-assistant-core on 2026-11-01. Declared at the cutover (bean hupw) so a remote mount brings them.",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-scripts"
+    },
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-templates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-base-templates",
+      "path": "templates/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "Files this layer's tools WRITE INTO a repository they set up, kept as real files rather than strings inside a script. `dth/` holds the AGENTS.md, session-start hook, PR checks workflow and other wiring that `scripts/dth-init.ts` copies into a new DTH repository (`TEMPLATE_DIR`). They moved here from folio-assistant-core's `templates/dth/` on 2026-11-01, because they name smart-base and who-iris, which sit above core.",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-templates"
     },
     {
       "@id": "http://smart.who.int/base/directory/smart-base-kg",
@@ -7734,6 +7750,12 @@
       "sameAs": "http://smart.who.int/base/directory/smart-base-scripts"
     },
     {
+      "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-templates",
+      "deprecated": true,
+      "isReplacedBy": "http://smart.who.int/base/directory/smart-base-templates",
+      "sameAs": "http://smart.who.int/base/directory/smart-base-templates"
+    },
+    {
       "@id": "http://smart.who.int/base/smart-base.jsonld#directory/smart-base-kg",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/directory/smart-base-kg",
@@ -7784,8 +7806,8 @@
   ],
   "staging": {
     "branch": "claude/repin-tools-declaration-claims",
-    "sha": "2ddbec44fe05b8ebbd7ddcaee36a02890a07a252",
+    "sha": "a3d9a7ae0e98208a1b51296adaa71083fc84036b",
     "pr": "2864/merge",
-    "run": "41324919321"
+    "run": "41339046720"
   }
 }

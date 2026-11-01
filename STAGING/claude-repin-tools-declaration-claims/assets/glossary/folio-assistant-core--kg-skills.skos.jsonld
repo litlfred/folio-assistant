@@ -839,6 +839,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/review-log-watch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "review-log-watch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Poll a drafting review log (a Contributor Feedback sheet) and its folio repository's issues mechanically, with Tool `review-log-watch`, and start agent work only when a cell people set or an open issue changed. Each issue that no row links yet becomes a Contributor Feedback row, and a closed issue's row is hidden with its text struck through. Use on every wake of a review-log watcher, and when setting up a watcher for a new log."
+        }
+      ],
+      "skos:notation": "review-log-watch",
+      "dcterms:source": "folio-assistant-core/skills/content/folio-document-adapter/review-log-watch.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/kg-skills/review-sheet-agent-columns",
       "@type": "skos:Concept",
       "skos:inScheme": {

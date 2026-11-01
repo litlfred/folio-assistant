@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 14,
+      "count": 9,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -40,31 +40,7 @@
           "why": "no-tag"
         },
         {
-          "module": "../cat-harness-tools/schemas/harness-root.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness-tools/schemas/sdlc/harness-state.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness-tools/schemas/tools/harness-tools.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness-tools/schemas/tools/tool-helpers.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness-tools/archimate/schemas/diagrams.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness-tools/archimate/schemas/metamodel.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness-tools/archimate/schemas/slugs.ts",
+          "module": "../cat-harness-tools/schemas/sdlc/gates-report.ts",
           "why": "no-tag"
         },
         {
@@ -73,6 +49,10 @@
         },
         {
           "module": "../folio-assistant-core/schemas/figure-data.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../fhir-harness/schemas/ig-ast-lock.ts",
           "why": "no-tag"
         },
         {
@@ -87,5 +67,5 @@
       "entries": []
     }
   },
-  "total": 14
+  "total": 9
 }

@@ -370,10 +370,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-11-01T16:29:23.297Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2ddbec44fe05b8ebbd7ddcaee36a02890a07a252",
-  "sourceCommitSha": "2ddbec44fe05b8ebbd7ddcaee36a02890a07a252",
-  "sourceCommitAt": "2026-11-01T16:10:08Z",
+  "generatedAt": "2026-11-01T19:15:16.569Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a3d9a7ae0e98208a1b51296adaa71083fc84036b",
+  "sourceCommitSha": "a3d9a7ae0e98208a1b51296adaa71083fc84036b",
+  "sourceCommitAt": "2026-11-01T18:55:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -387,8 +387,8 @@
     "SequenceFlow": 1062,
     "Lane": 175,
     "ProcessNode": 1029,
-    "Tool": 167,
-    "Schema": 178,
+    "Tool": 168,
+    "Schema": 183,
     "ExternalSchema": 28,
     "GraphTypology": 53,
     "Role": 44,
@@ -3352,7 +3352,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
-      "instructionLines": 650,
+      "instructionLines": 629,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3640,7 +3640,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/merge-conflict-patterns.md",
-      "instructionLines": 939,
+      "instructionLines": 935,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4337,7 +4337,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/archimate-models.md",
-      "instructionLines": 287,
+      "instructionLines": 311,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -42358,6 +42358,67 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/tools/agent-memory.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tools/archimate-blocks.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
+      "name": "archimate-blocks",
+      "title": "Draw a document's tables and figures from its ArchiMate data, and check the model against the document's relationship rules",
+      "description": "For each table an instance's `cat-archimate.config.json` lists under `tables`, rewrites the block's Markdown table from an `archimate-relationship-rules/v1` file (`relationship-rules`: source, relationship, target, note; `relationship-types`: picture, verb, meaning), keeping the caption and footnotes. For each figure under `figures` that names an `svg`, writes the view as SVG (the same drawing as the view's page). For a rules table that names a `model`, reports the rules the model never uses, the relationships no rule covers, the rules ArchiMate's relationship table refuses, and the relationship types the rules use without a meaning. The rules are in charge: nothing is rewritten from the model.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat archimate:blocks"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The instance root whose config, models, rules and blocks are read.",
+            "required": true,
+            "arg": {
+              "flag": "--instance"
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Write nothing; exit 1 when a block or SVG is not what the data draws.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "strict",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Also exit 1 when the model has relationships no rule covers, or a rule is one ArchiMate does not allow.",
+            "required": false,
+            "arg": {
+              "flag": "--strict"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "blocks",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The rewritten table blocks and figure SVGs, at the paths the config names; the rules check on stdout."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/skill/archimate-models"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-blocks.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tools/archimate-check.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Tool",
       "name": "archimate-check",
@@ -53254,6 +53315,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/change-size"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/harness-state",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "harness-state",
+      "title": "harness-state",
+      "summary": "One harness's state as `harness:state` publishes it (`folio-harness-state/v1`).",
+      "module": "schemas/sdlc/harness-state.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/harness-state"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/health-report",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "health-report",
@@ -53600,6 +53671,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/workflow-tool-results",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "workflow-tool-results",
+      "title": "workflow-tool-results",
+      "summary": "Typed results of the workflow engine's tools (issue",
+      "module": "schemas/tools/workflow-tool-results.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/workflow-tool-results"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/board-positions",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "board-positions",
@@ -53791,6 +53872,36 @@
       "module": "archimate/schemas/archimate.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/directory/archimate",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/archimate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/diagrams",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "diagrams",
+      "title": "diagrams",
+      "summary": "Derived UML data class diagrams and sequence diagrams from an ArchiMate model",
+      "module": "archimate/schemas/diagrams.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/diagrams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/metamodel",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "metamodel",
+      "title": "metamodel",
+      "summary": "The metamodel a model actually uses, derived from the model and checked",
+      "module": "archimate/schemas/metamodel.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/metamodel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/rules",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "rules",
+      "title": "rules",
+      "summary": "`archimate-relationship-rules/v1`: the relationships a reference",
+      "module": "archimate/schemas/rules.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rules"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/openapi",
@@ -64999,6 +65110,120 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Triage"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF01",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF02",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF03",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF04",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF05",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF06",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF07",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/flow/WF08",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/node/StartEvent_Poll",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Task_Accept",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#process/Process_SgEndToEnd",
       "deprecated": true,
       "isReplacedBy": "http://smart.who.int/base/process/Process_SgEndToEnd",
@@ -66627,6 +66852,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-comments",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-comments"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#skill/review-log-watch",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-log-watch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-log-watch"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#skill/review-sheet-agent-columns",
@@ -82817,6 +83048,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tools/agent-memory.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/tools/archimate-blocks.jsonld",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tools/archimate-blocks.jsonld",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tools/archimate-blocks.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/tools/archimate-check.jsonld",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tools/archimate-check.jsonld",
@@ -84557,6 +84794,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/change-size"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#schema/harness-state",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/harness-state",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/harness-state"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#schema/health-report",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/health-report",
@@ -84761,6 +85004,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/tool"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#schema/workflow-tool-results",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/workflow-tool-results",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/workflow-tool-results"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#schema/board-positions",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/board-positions",
@@ -84873,6 +85122,24 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/archimate",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/archimate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#schema/diagrams",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/diagrams",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/diagrams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#schema/metamodel",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/metamodel",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/metamodel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#schema/rules",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/rules",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/rules"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#schema/openapi",
@@ -85579,8 +85846,8 @@
   ],
   "staging": {
     "branch": "claude/repin-tools-declaration-claims",
-    "sha": "2ddbec44fe05b8ebbd7ddcaee36a02890a07a252",
+    "sha": "a3d9a7ae0e98208a1b51296adaa71083fc84036b",
     "pr": "2864/merge",
-    "run": "41324919321"
+    "run": "41339046720"
   }
 }

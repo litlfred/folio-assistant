@@ -440,6 +440,24 @@
           "title": "Public comment channels and intake"
         },
         {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-log-watch",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Poll a drafting review log (a Contributor Feedback sheet) and its folio repository's issues mechanically, with Tool `review-log-watch`, and start agent work only when a cell people set or an open issue changed. Each issue that no row links yet becomes a Contributor Feedback row, and a closed issue's row is hidden with its text struck through. Use on every wake of a review-log watcher, and when setting up a watcher for a new log.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 148,
+          "instructionsPath": "skills/content/folio-document-adapter/review-log-watch.md",
+          "name": "review-log-watch",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fc0e055826c67432b7fdacd44e1c8432e63e8d0c3ef5d82552b1ef802ec093a1",
+            "bytes": 7181,
+            "sha256": "fc0e055826c67432b7fdacd44e1c8432e63e8d0c3ef5d82552b1ef802ec093a1"
+          },
+          "title": "Review-log watch"
+        },
+        {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-agent-columns",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
@@ -465,13 +483,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-          "instructionLines": 1279,
+          "instructionLines": 1286,
           "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
           "name": "review-sheet-script",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d3ce847d5e0e8d787ef97fbd3dfac1053c09f465aaa429867ddabd66c56fae12",
-            "bytes": 84026,
-            "sha256": "d3ce847d5e0e8d787ef97fbd3dfac1053c09f465aaa429867ddabd66c56fae12"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7a21b2b2eaaff191cbbc0bb1140ea0ce06492db47ccd841f52d143ccaeb7445c",
+            "bytes": 84493,
+            "sha256": "7a21b2b2eaaff191cbbc0bb1140ea0ce06492db47ccd841f52d143ccaeb7445c"
           },
           "title": "The review sheet's Apps Script"
         }

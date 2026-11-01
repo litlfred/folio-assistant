@@ -341,6 +341,12 @@ digraph "smart_base" {
     "grid_pkg_smart_base_smart_base_scripts_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_smart_base_smart_base_scripts_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_smart_base_smart_base_templates" {
+    label=<<b>smart-base/smart-base-templates</b><br/><i>«code»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_smart_base_smart_base_templates_code" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_code fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>code: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no validator registered</i></td></tr></table>>];
+    "grid_pkg_smart_base_smart_base_templates_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_smart_base_smart_base_templates_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_smart_base_smart_base_kg" {
     label=<<b>smart-base/smart-base-kg</b><br/><i>«code»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "n_smart_base_smart_base_kg_code" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_code fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>code: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no validator registered</i></td></tr></table>>];
@@ -379,7 +385,7 @@ digraph "smart_base" {
   }
   subgraph "cluster_pkg_smart_base_glossary" {
     label=<<b>smart-base/glossary</b><br/><i>«glossary»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
-    "smart_base_glossary_folio_glossary_v1_Term" [fillcolor="#e8f0ee", class="fa_uml_kind_glossary", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Term</b></td></tr><tr><td><i>«json: GlossarySchema»</i></td></tr><tr><td align="left">id [1] : string</td></tr><tr><td align="left">prefLabel [1] : string | map&lt;string&gt;</td></tr><tr><td align="left">altLabel [0..*] : string[]</td></tr><tr><td align="left">definition [0..1] : string | map&lt;string&gt;</td></tr><tr><td align="left">notation [0..1] : string</td></tr><tr><td align="left">scopeNote [0..1] : string</td></tr><tr><td align="left">broader [0..*] : string[]</td></tr><tr><td align="left">related [0..*] : string[]</td></tr><tr><td align="left">exactMatch [0..*] : string[]</td></tr><tr><td align="left">closeMatch [0..*] : string[]</td></tr><tr><td align="left">broadMatch [0..*] : string[]</td></tr><tr><td align="left">narrowMatch [0..*] : string[]</td></tr><tr><td align="left">requires [0..*] : string[]</td></tr><tr><td align="left">isDefinedBy [0..1] : string</td></tr><tr><td align="left">iri [0..1] : string</td></tr><tr><td align="left">focus [0..1] : object</td></tr><tr><td align="left">source [0..1] : string</td></tr><tr><td align="left">status [1] : authored | candidate | could-not-extract</td></tr><tr><td align="left">reason [0..1] : string</td></tr></table>>];
+    "smart_base_glossary_folio_glossary_v1_Term" [fillcolor="#e8f0ee", class="fa_uml_kind_glossary", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Term</b></td></tr><tr><td><i>«json: GlossarySchema»</i></td></tr><tr><td align="left">id [1] : string</td></tr><tr><td align="left">prefLabel [1] : string | map&lt;string&gt;</td></tr><tr><td align="left">altLabel [0..*] : string[]</td></tr><tr><td align="left">definition [0..1] : string | map&lt;string&gt;</td></tr><tr><td align="left">notation [0..1] : string</td></tr><tr><td align="left">scopeNote [0..1] : string</td></tr><tr><td align="left">editorialNote [0..1] : string</td></tr><tr><td align="left">broader [0..*] : string[]</td></tr><tr><td align="left">related [0..*] : string[]</td></tr><tr><td align="left">exactMatch [0..*] : string[]</td></tr><tr><td align="left">closeMatch [0..*] : string[]</td></tr><tr><td align="left">broadMatch [0..*] : string[]</td></tr><tr><td align="left">narrowMatch [0..*] : string[]</td></tr><tr><td align="left">requires [0..*] : string[]</td></tr><tr><td align="left">isDefinedBy [0..1] : string</td></tr><tr><td align="left">iri [0..1] : string</td></tr><tr><td align="left">focus [0..1] : object</td></tr><tr><td align="left">source [0..1] : string</td></tr><tr><td align="left">status [1] : authored | candidate | could-not-extract</td></tr><tr><td align="left">reason [0..1] : string</td></tr></table>>];
     "smart_base_glossary_folio_glossary_v1_folio_glossary_v1" [fillcolor="#e8f0ee", class="fa_uml_kind_glossary", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>folio-glossary/v1</b></td></tr><tr><td><i>«json: GlossarySchema»</i></td></tr><tr><td align="left">$schema [1] : &quot;folio-glossary/v1&quot;</td></tr><tr><td align="left">id [1] : string</td></tr><tr><td align="left">title [1] : string</td></tr><tr><td align="left">description [0..1] : string</td></tr><tr><td align="left">hasVersion [0..1] : string</td></tr><tr><td align="left">modified [0..1] : string</td></tr><tr><td align="left">source [0..1] : string</td></tr><tr><td align="left">license [0..1] : string</td></tr><tr><td align="left">terms [0..*] : Term[]</td></tr><tr><td align="left">ordered [0..1] : boolean</td></tr><tr><td align="left">members [0..*] : string[]</td></tr></table>>];
     "grid_pkg_smart_base_glossary_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_smart_base_glossary_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
@@ -710,6 +716,8 @@ digraph "smart_base" {
   "n_smart_base_smart_base_pipeline_code" -> "grid_pkg_smart_base_smart_base_pipeline_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_scripts_top" -> "n_smart_base_smart_base_scripts_code" [style=invis, class="kg-graph-anchor"];
   "n_smart_base_smart_base_scripts_code" -> "grid_pkg_smart_base_smart_base_scripts_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_smart_base_templates_top" -> "n_smart_base_smart_base_templates_code" [style=invis, class="kg-graph-anchor"];
+  "n_smart_base_smart_base_templates_code" -> "grid_pkg_smart_base_smart_base_templates_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_kg_top" -> "n_smart_base_smart_base_kg_code" [style=invis, class="kg-graph-anchor"];
   "n_smart_base_smart_base_kg_code" -> "grid_pkg_smart_base_smart_base_kg_bottom" [style=invis, class="kg-graph-anchor"];
   "smart_base_smart_base_skills_folio_voice_skill_v1_Source" -> "smart_base_smart_base_skills_folio_voice_skill_v1_Rule" [style=invis, class="kg-graph-anchor"];
@@ -768,10 +776,11 @@ digraph "smart_base" {
   "grid_pkg_smart_base_smart_base_findings_bottom" -> "grid_pkg_smart_base_smart_base_schemas_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_platform_bottom" -> "grid_pkg_smart_base_smart_base_pipeline_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_typologies_bottom" -> "grid_pkg_smart_base_smart_base_scripts_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_smart_base_smart_base_validators_bottom" -> "grid_pkg_smart_base_smart_base_kg_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_smart_base_smart_base_schemas_bottom" -> "grid_pkg_smart_base_smart_base_skills_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_smart_base_smart_base_pipeline_bottom" -> "grid_pkg_smart_base_smart_base_scenarios_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_smart_base_smart_base_scripts_bottom" -> "grid_pkg_smart_base_smart_base_code_lists_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_smart_base_validators_bottom" -> "grid_pkg_smart_base_smart_base_templates_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_smart_base_schemas_bottom" -> "grid_pkg_smart_base_smart_base_kg_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_smart_base_pipeline_bottom" -> "grid_pkg_smart_base_smart_base_skills_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_smart_base_scripts_bottom" -> "grid_pkg_smart_base_smart_base_scenarios_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_smart_base_smart_base_templates_bottom" -> "grid_pkg_smart_base_smart_base_code_lists_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_kg_bottom" -> "grid_pkg_smart_base_glossary_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_skills_bottom" -> "grid_pkg_smart_base_voices_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_base_smart_base_scenarios_bottom" -> "grid_pkg_smart_base_docs_source_top" [style=invis, class="kg-graph-anchor"];

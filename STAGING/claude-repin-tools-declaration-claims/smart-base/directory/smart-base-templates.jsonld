@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/smart-base/directory/smart-base-templates.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-templates.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "a3d9a7ae0e98208a1b51296adaa71083fc84036b",
+    "pr": "2864/merge",
+    "run": "41339046720"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-templates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-base-templates",
+      "path": "templates/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "Files this layer's tools WRITE INTO a repository they set up, kept as real files rather than strings inside a script. `dth/` holds the AGENTS.md, session-start hook, PR checks workflow and other wiring that `scripts/dth-init.ts` copies into a new DTH repository (`TEMPLATE_DIR`). They moved here from folio-assistant-core's `templates/dth/` on 2026-11-01, because they name smart-base and who-iris, which sit above core.",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-templates"
+    }
+  ]
+}

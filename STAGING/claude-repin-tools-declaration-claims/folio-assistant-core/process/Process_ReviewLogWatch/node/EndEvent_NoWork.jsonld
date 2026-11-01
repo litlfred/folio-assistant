@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "a3d9a7ae0e98208a1b51296adaa71083fc84036b",
+    "pr": "2864/merge",
+    "run": "41339046720"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Nothing changed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork"
+    }
+  ]
+}

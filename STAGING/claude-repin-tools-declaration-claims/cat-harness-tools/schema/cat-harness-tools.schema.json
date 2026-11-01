@@ -1350,6 +1350,18 @@
     "zod/change-size/ChangeSizeThresholdSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/change-size/ChangeSizeThresholdSchema.schema.json"
     },
+    "zod/gates-report/GatesReportSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/gates-report/GatesReportSchema.schema.json"
+    },
+    "zod/gates-report/GatesReportTypeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/gates-report/GatesReportTypeSchema.schema.json"
+    },
+    "zod/gates-report/MergedGatesReportSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/gates-report/MergedGatesReportSchema.schema.json"
+    },
+    "zod/gates-report/MergedGatesReportTypeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/gates-report/MergedGatesReportTypeSchema.schema.json"
+    },
     "zod/harness-state/HarnessBadgeSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessBadgeSchema.schema.json"
     },
@@ -2199,6 +2211,24 @@
     "zod/tool/ToolSelectionSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolSelectionSchema.schema.json"
     },
+    "zod/workflow-tool-results/EnabledStepSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/EnabledStepSchema.schema.json"
+    },
+    "zod/workflow-tool-results/WorkflowCompletionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowCompletionSchema.schema.json"
+    },
+    "zod/workflow-tool-results/WorkflowGateAnswerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowGateAnswerSchema.schema.json"
+    },
+    "zod/workflow-tool-results/WorkflowListingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowListingSchema.schema.json"
+    },
+    "zod/workflow-tool-results/WorkflowPositionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowPositionSchema.schema.json"
+    },
+    "zod/workflow-tool-results/WorkflowStartedSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowStartedSchema.schema.json"
+    },
     "zod/board-positions/BoardPositionSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/board-positions/BoardPositionSchema.schema.json"
     },
@@ -2367,6 +2397,9 @@
     "zod/archimate/ArchimateConfigSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigSchema.schema.json"
     },
+    "zod/archimate/ArchimateConfigTableSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigTableSchema.schema.json"
+    },
     "zod/archimate/ArchimateElementSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateElementSchema.schema.json"
     },
@@ -2427,6 +2460,15 @@
     "zod/metamodel/RelationshipTableSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/metamodel/RelationshipTableSchema.schema.json"
     },
+    "zod/rules/RelationshipRuleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rules/RelationshipRuleSchema.schema.json"
+    },
+    "zod/rules/RelationshipRulesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rules/RelationshipRulesSchema.schema.json"
+    },
+    "zod/rules/RelationshipTypeEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rules/RelationshipTypeEntrySchema.schema.json"
+    },
     "zod/openapi/OpenApiConfigDocumentSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/openapi/OpenApiConfigDocumentSchema.schema.json"
     },
@@ -2455,8 +2497,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
   "staging": {
     "branch": "claude/repin-tools-declaration-claims",
-    "sha": "2ddbec44fe05b8ebbd7ddcaee36a02890a07a252",
+    "sha": "a3d9a7ae0e98208a1b51296adaa71083fc84036b",
     "pr": "2864/merge",
-    "run": "41324919321"
+    "run": "41339046720"
   }
 }

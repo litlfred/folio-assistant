@@ -314,11 +314,12 @@
   flex-wrap: wrap; /* eight controls since the export group (#1270); a phone wraps them */
   align-items: center;
   gap: 0.3rem;
-  margin: 0.6em 0 0.2em;
+  margin: 0.3em 0 0.15em;
   font-size: 0.75rem;
 }
 
-.fa-figure-tools button {
+.fa-figure-tools button,
+.fa-figure-tools .fa-figure-open {
   white-space: nowrap;
   min-width: 1.9rem;
   padding: 0.15rem 0.45rem;
@@ -332,7 +333,9 @@
 }
 
 .fa-figure-tools button:hover,
-.fa-figure-tools button:focus-visible {
+.fa-figure-tools button:focus-visible,
+.fa-figure-tools .fa-figure-open:hover,
+.fa-figure-tools .fa-figure-open:focus-visible {
   border-color: var(--link-color, #7253ed);
   outline: none;
 }
@@ -346,6 +349,13 @@
    controls: one acts on the page, the other on a file. */
 .fa-figure-tools .fa-figure-export-start {
   margin-left: 0.6rem;
+}
+
+/* "Open ↗" is a link (#915) drawn like its neighbours, so middle-click and
+   "Open link in new tab" work on it as on any link. */
+.fa-figure-tools .fa-figure-open {
+  display: inline-block;
+  text-decoration: none;
 }
 
 .fa-figure-tools .fa-figure-status {
@@ -430,7 +440,7 @@
   overflow-x: auto;
   border: 1px solid rgba(128, 128, 128, 0.35);
   border-radius: 6px;
-  margin: 1em 0 0.4em;
+  margin: 0.4em 0 0.25em;
 }
 
 /* THE WHITE IS ON `.fa-figure-scope`, WHICH IS THE ONE CLASS BOTH KINDS GET.
@@ -453,7 +463,11 @@
  * with an extra click in front of it. */
 .fa-figure-scope {
   background: #fff !important;
-  padding: 0.5rem;
+  padding: 0.25rem;
+  /* Figures are centred (owner, 2026-11-01). An <img> or <svg> is inline, so
+     this centres the drawing in its card; SVG text uses text-anchor and is
+     not moved by it. */
+  text-align: center;
 }
 
 /* THE SAME WHITE, WITHOUT JAVASCRIPT — belt and braces for the rule above.
@@ -8887,4 +8901,91 @@ table[data-fa-filtered] tr[hidden] { display: none !important; }
     font-weight: 600;
     opacity: 0.75;
   }
+}
+
+/* ── Figure controls on hover, and one look for figures and tables ────────
+ *
+ * Owner, 2026-11-01: "on laptop, controls should only appear for any diagram
+ * like thing on mouse hover", "tighten up so take up vertical space/padding",
+ * "titles on diagrams and such should be centered and max take up 66% of
+ * width", "consistent style across all document like things", "figures
+ * should be centered", "above also applies to tables".
+ *
+ * Hover and a fine pointer means a laptop or desktop: there the controls
+ * float over the figure's top-right corner, take no row of their own, and
+ * show while the pointer is over the figure or focus is inside it (so the
+ * keyboard still reaches them). A touch screen has no hover, so it keeps the
+ * row above the figure. */
+.fa-figure-host {
+  position: relative;
+}
+@media (hover: hover) and (pointer: fine) {
+  .fa-figure-host > .fa-figure-tools {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    z-index: 3;
+    margin: 0;
+    padding: 0.2rem;
+    border-radius: 5px;
+    /* On the figure's white card in light and dark mode alike. */
+    background: #fff;
+    color: #1f2933;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.12s ease-in-out;
+  }
+  .fa-figure-host:hover > .fa-figure-tools,
+  .fa-figure-host:focus-within > .fa-figure-tools {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Every figure, diagram and table block of a document sits in one frame
+ * (render-markdown.ts, `.fa-numbered`), so all document sites share this
+ * look: the drawing or table centred, and the title and caption lines
+ * centred at no more than two thirds of the column. */
+.fa-numbered {
+  margin: 0.75em 0;
+}
+.fa-numbered > p {
+  max-width: 66%;
+  margin: 0.2em auto;
+  text-align: center;
+}
+.fa-numbered > p:has(> img),
+.fa-numbered > p:has(> svg),
+.fa-numbered > p:has(> object) {
+  max-width: none;
+}
+.fa-numbered > .table-wrapper,
+.fa-numbered > table {
+  margin-left: auto;
+  margin-right: auto;
+}
+.fa-numbered table {
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+.fa-numbered pre,
+.fa-numbered td,
+.fa-numbered th {
+  text-align: left;
+}
+@media (max-width: 49.99rem) {
+  .fa-numbered > p { max-width: none; }
+}
+
+/* A drawing moved inside a card it fits (drag pans, never rescales: owner,
+ * 2026-11-01 "i want it to pan") is clipped by the card rather than giving
+ * the card scroll room. */
+.fa-figure-scope.is-shifted {
+  overflow: hidden !important;
+}
+/* Every figure can be dragged now, so every figure shows the grab cursor. */
+.fa-figure-scope {
+  cursor: grab;
 }

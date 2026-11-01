@@ -1,0 +1,317 @@
+{
+  "$schema": "folio-harness-state/v1",
+  "harness": "smart-base",
+  "initialization": {
+    "position": "site:workflow",
+    "next": {
+      "step": "site:workflow",
+      "action": "add .github/workflows/pages.yml — bootstrap-tools' own is the pattern: stage the site with scripts/site.ts and commit it onto gh-pages as a full replace"
+    },
+    "counts": {
+      "done": 36,
+      "not-done": 1,
+      "could-not-determine": 3,
+      "stated": 0
+    },
+    "steps": [
+      {
+        "id": "declaration",
+        "namedBy": "smart-base",
+        "what": "smart-base.json parses",
+        "state": "done",
+        "detail": "smart-base 0.1.0"
+      },
+      {
+        "id": "needs:fhir-harness",
+        "namedBy": "smart-base",
+        "what": "fhir-harness, which smart-base needs, is beside it and parses",
+        "state": "done",
+        "detail": "fhir-harness"
+      },
+      {
+        "id": "needs:who-iris",
+        "namedBy": "smart-base",
+        "what": "who-iris, which smart-base needs, is beside it and parses",
+        "state": "done",
+        "detail": "who-iris"
+      },
+      {
+        "id": "directory:smart-base-site-docs",
+        "namedBy": "smart-base",
+        "what": "declared directory site-docs/ exists",
+        "state": "done",
+        "detail": "holds docs"
+      },
+      {
+        "id": "directory:smart-base-qa-checkers",
+        "namedBy": "smart-base",
+        "what": "declared directory qa-checkers/ exists",
+        "state": "done",
+        "detail": "holds qa-checkers"
+      },
+      {
+        "id": "directory:smart-base-block-kinds",
+        "namedBy": "smart-base",
+        "what": "declared directory block-kinds/ exists",
+        "state": "done",
+        "detail": "holds block-kinds"
+      },
+      {
+        "id": "directory:smart-base-content-adapters",
+        "namedBy": "smart-base",
+        "what": "declared directory content-adapters/ exists",
+        "state": "done",
+        "detail": "holds content-adapters"
+      },
+      {
+        "id": "directory:smart-base-translations",
+        "namedBy": "smart-base",
+        "what": "declared directory translations/ exists",
+        "state": "done",
+        "detail": "holds translation-sources"
+      },
+      {
+        "id": "directory:library",
+        "namedBy": "smart-base",
+        "what": "declared directory library/ exists",
+        "state": "done",
+        "detail": "holds library"
+      },
+      {
+        "id": "directory:l1-extraction-9789240116191-eng",
+        "namedBy": "smart-base",
+        "what": "declared directory l1-extractions/9789240116191-eng/ exists",
+        "state": "done",
+        "detail": "holds l1-extraction"
+      },
+      {
+        "id": "directory:methodologies",
+        "namedBy": "smart-base",
+        "what": "declared directory methodologies/ exists",
+        "state": "done",
+        "detail": "holds methodology"
+      },
+      {
+        "id": "directory:processes",
+        "namedBy": "smart-base",
+        "what": "declared directory methodologies/processes/ exists",
+        "state": "done",
+        "detail": "holds processes"
+      },
+      {
+        "id": "directory:smart-base-house-processes",
+        "namedBy": "smart-base",
+        "what": "declared directory processes/ exists",
+        "state": "done",
+        "detail": "holds processes"
+      },
+      {
+        "id": "directory:smart-base-artifact-index",
+        "namedBy": "smart-base",
+        "what": "declared directory fhir-artifact-index/ exists",
+        "state": "done",
+        "detail": "holds fhir-artifact-index"
+      },
+      {
+        "id": "directory:tools",
+        "namedBy": "smart-base",
+        "what": "declared directory tools/ exists",
+        "state": "done",
+        "detail": "holds tools"
+      },
+      {
+        "id": "directory:qa",
+        "namedBy": "smart-base",
+        "what": "declared directory test/results/ exists",
+        "state": "done",
+        "detail": "holds qa"
+      },
+      {
+        "id": "directory:smart-base-themes",
+        "namedBy": "smart-base",
+        "what": "declared directory themes/ exists",
+        "state": "done",
+        "detail": "holds themes"
+      },
+      {
+        "id": "directory:smart-base-docs",
+        "namedBy": "smart-base",
+        "what": "declared directory docs/ exists",
+        "state": "done",
+        "detail": "holds docs, ig-pages"
+      },
+      {
+        "id": "directory:smart-base-document-kinds",
+        "namedBy": "smart-base",
+        "what": "declared directory document-kinds/ exists",
+        "state": "done",
+        "detail": "holds document-kinds"
+      },
+      {
+        "id": "directory:smart-base-findings",
+        "namedBy": "smart-base",
+        "what": "declared directory findings/ exists",
+        "state": "done",
+        "detail": "holds docs"
+      },
+      {
+        "id": "directory:smart-base-platform",
+        "namedBy": "smart-base",
+        "what": "declared directory platform/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:smart-base-typologies",
+        "namedBy": "smart-base",
+        "what": "declared directory typologies/ exists",
+        "state": "done",
+        "detail": "holds typologies"
+      },
+      {
+        "id": "directory:smart-base-validators",
+        "namedBy": "smart-base",
+        "what": "declared directory validators/ exists",
+        "state": "done",
+        "detail": "holds validators"
+      },
+      {
+        "id": "directory:smart-base-schemas",
+        "namedBy": "smart-base",
+        "what": "declared directory schemas/ exists",
+        "state": "done",
+        "detail": "holds code, schemas"
+      },
+      {
+        "id": "directory:smart-base-pipeline",
+        "namedBy": "smart-base",
+        "what": "declared directory pipeline/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:smart-base-scripts",
+        "namedBy": "smart-base",
+        "what": "declared directory scripts/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:smart-base-templates",
+        "namedBy": "smart-base",
+        "what": "declared directory templates/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:smart-base-kg",
+        "namedBy": "smart-base",
+        "what": "declared directory kg/ exists",
+        "state": "done",
+        "detail": "holds code"
+      },
+      {
+        "id": "directory:smart-base-skills",
+        "namedBy": "smart-base",
+        "what": "declared directory skills/ exists",
+        "state": "done",
+        "detail": "holds skills"
+      },
+      {
+        "id": "directory:smart-base-scenarios",
+        "namedBy": "smart-base",
+        "what": "declared directory scenarios/ exists",
+        "state": "done",
+        "detail": "holds scenarios"
+      },
+      {
+        "id": "directory:smart-base-code-lists",
+        "namedBy": "smart-base",
+        "what": "declared directory code-lists/ exists",
+        "state": "done",
+        "detail": "holds code-list"
+      },
+      {
+        "id": "directory:glossary",
+        "namedBy": "smart-base",
+        "what": "declared directory glossary/ exists",
+        "state": "done",
+        "detail": "holds glossary"
+      },
+      {
+        "id": "asset:agent-instructions",
+        "namedBy": "smart-base",
+        "what": "declared agent-instructions AGENTS.md exists",
+        "state": "done",
+        "detail": "AGENTS.md"
+      },
+      {
+        "id": "asset:instance-readme",
+        "namedBy": "smart-base",
+        "what": "declared instance-readme README.md exists",
+        "state": "done",
+        "detail": "README.md"
+      },
+      {
+        "id": "asset:checkout-scripts",
+        "namedBy": "smart-base",
+        "what": "declared checkout-scripts package.json exists",
+        "state": "done",
+        "detail": "package.json"
+      },
+      {
+        "id": "readme",
+        "namedBy": "smart-base",
+        "what": "the root has a README.md (FR-8)",
+        "state": "done",
+        "detail": "README.md"
+      },
+      {
+        "id": "site:workflow",
+        "namedBy": "smart-base",
+        "what": "a workflow that builds the site and deploys it to GitHub Pages",
+        "state": "not-done",
+        "detail": "no workflow under .github/workflows/ publishes to the gh-pages branch",
+        "action": "add .github/workflows/pages.yml — bootstrap-tools' own is the pattern: stage the site with scripts/site.ts and commit it onto gh-pages as a full replace"
+      },
+      {
+        "id": "site:branch",
+        "namedBy": "smart-base",
+        "what": "a gh-pages branch exists on litlfred/smart-base, for Pages to serve",
+        "state": "could-not-determine",
+        "detail": "no `git` here to ask the remote",
+        "action": "create it: an orphan gh-pages holding a placeholder index.html and .nojekyll, pushed to https://github.com/litlfred/smart-base"
+      },
+      {
+        "id": "site:enabled",
+        "namedBy": "smart-base",
+        "what": "GitHub Pages is on for litlfred/smart-base, serving the gh-pages branch",
+        "state": "could-not-determine",
+        "detail": "no `gh` CLI here, so Pages could not be checked or enabled",
+        "action": "open https://github.com/litlfred/smart-base/settings/pages → \"Build and deployment\" → Source: \"Deploy from a branch\" → branch `gh-pages`, folder `/ (root)` (free for a public repository; the branch must exist first — site:branch). Then re-run the Pages workflow from the Actions tab, or push to main."
+      },
+      {
+        "id": "site:live",
+        "namedBy": "smart-base",
+        "what": "the site answers at https://litlfred.github.io/smart-base/, and its README page at https://litlfred.github.io/smart-base/README.html",
+        "state": "could-not-determine",
+        "detail": "https://litlfred.github.io/smart-base/ could not be reached from here; https://litlfred.github.io/smart-base/README.html could not be reached from here — an answer about the way here (a proxy, an access rule), not about the site",
+        "action": "open https://litlfred.github.io/smart-base/README.html in a browser"
+      }
+    ]
+  },
+  "health": {
+    "badges": [
+      {
+        "id": "initialization",
+        "state": "finding",
+        "label": "1 setup step(s) not done"
+      },
+      {
+        "id": "repository",
+        "state": "unknown",
+        "label": "no committed health report in this checkout"
+      }
+    ]
+  }
+}

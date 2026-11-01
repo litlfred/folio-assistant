@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/rules.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "a3d9a7ae0e98208a1b51296adaa71083fc84036b",
+    "pr": "2864/merge",
+    "run": "41339046720"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/rules",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "rules",
+      "title": "rules",
+      "summary": "`archimate-relationship-rules/v1`: the relationships a reference",
+      "module": "archimate/schemas/rules.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rules"
+    }
+  ]
+}
