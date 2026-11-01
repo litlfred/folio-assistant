@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/smart-base/directory/smart-base-document-kinds.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-document-kinds.jsonld",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-document-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-base-document-kinds",
+      "path": "document-kinds/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/document-kinds"
+      ],
+      "description": "WHO SMART document kinds: the DAK (a fixed structure, the ten components) and, to follow, L1 (semi-fixed) and the Digital Transformation Handbook (an L1 subtype).",
+      "readmePath": "document-kinds/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-document-kinds"
+    }
+  ]
+}

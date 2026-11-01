@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/skill/translation-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/skill/translation-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "translation-manager",
+      "title": "Translation manager",
+      "description": "Translation lifecycle management for folio content. Covers gettext PO/POT extraction and injection, TranslationNode manifests as KG nodes, official vs unofficial translations, staleness tracking, sign-off workflow, automatic badge rendering, and the poSources fallback resolution chain.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/translation-manager.md",
+      "instructionLines": 723,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager"
+    }
+  ]
+}

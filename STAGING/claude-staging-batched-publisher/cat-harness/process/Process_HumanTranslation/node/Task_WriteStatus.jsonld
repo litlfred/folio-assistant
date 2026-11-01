@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/process/Process_HumanTranslation/node/Task_WriteStatus.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/process/Process_HumanTranslation/node/Task_WriteStatus",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Write status.json (official)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/process/Process_HumanTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/process/Process_HumanTranslation#flow/F22"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/process/Process_HumanTranslation#flow/F23"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_WriteStatus"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/fhir-harness/process/Process_IgIncremental/lane/Lane_Author.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Author.jsonld",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "FHIR modeller / PR author (person + authoring agent)",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    }
+  ]
+}

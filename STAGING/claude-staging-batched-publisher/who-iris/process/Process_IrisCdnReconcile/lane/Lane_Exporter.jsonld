@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "IRIS CDN Exporter (agent)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/who-iris/process/Process_IrisCdnReconcile",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/who-iris/role/iris-cdn-exporter",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter"
+    }
+  ]
+}

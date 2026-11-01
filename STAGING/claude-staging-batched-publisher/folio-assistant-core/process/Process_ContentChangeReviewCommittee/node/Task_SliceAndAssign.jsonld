@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_SliceAndAssign.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_SliceAndAssign",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Slice the change and assign reviewers",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/process/Process_ContentChangeReviewCommittee",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/role/review-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Coordinator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/skill/review-heatmap",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/skill/rendered-impact"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_SliceAndAssign"
+    }
+  ]
+}

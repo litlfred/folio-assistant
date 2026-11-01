@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/QaReportSource",
+  "definitions": {
+    "QaReportSource": {
+      "type": "object",
+      "properties": {
+        "tool": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        },
+        "runUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "tool"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-report/QaReportSourceSchema.schema.json",
+  "title": "QaReportSourceSchema",
+  "description": "Generated from `QaReportSourceSchema` in schemas/sdlc/qa-report.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  }
+}

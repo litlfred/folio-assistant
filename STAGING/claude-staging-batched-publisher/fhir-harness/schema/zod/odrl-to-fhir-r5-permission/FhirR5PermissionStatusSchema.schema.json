@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/FhirR5PermissionStatus",
+  "definitions": {
+    "FhirR5PermissionStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "entered-in-error",
+        "draft",
+        "rejected"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/odrl-to-fhir-r5-permission/FhirR5PermissionStatusSchema.schema.json",
+  "title": "FhirR5PermissionStatusSchema",
+  "description": "Generated from `FhirR5PermissionStatusSchema` in schemas/odrl-to-fhir-r5-permission.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  }
+}

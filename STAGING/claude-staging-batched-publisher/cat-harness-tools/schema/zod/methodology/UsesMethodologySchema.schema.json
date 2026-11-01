@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/UsesMethodology",
+  "definitions": {
+    "UsesMethodology": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/methodology/UsesMethodologySchema.schema.json",
+  "title": "UsesMethodologySchema",
+  "description": "Generated from `UsesMethodologySchema` in schemas/process/methodology.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/SoftwareSource",
+  "definitions": {
+    "SoftwareSource": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "url"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "required": [
+            "type",
+            "url"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "oci"
+            },
+            "reference": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9.-]*(:[0-9]+)?(\\/[a-z0-9._-]+)+@sha256:([0-9a-f]{64})$"
+            }
+          },
+          "required": [
+            "type",
+            "reference"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/outside-software/SoftwareSourceSchema.schema.json",
+  "title": "SoftwareSourceSchema",
+  "description": "Generated from `SoftwareSourceSchema` in schemas/library/outside-software.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  }
+}

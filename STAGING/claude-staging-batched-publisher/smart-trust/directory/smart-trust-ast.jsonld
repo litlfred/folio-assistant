@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/smart-trust/smart-trust.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/smart-trust/directory/smart-trust-ast.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/smart-trust/smart-trust.jsonld",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/smart-trust/directory/smart-trust-ast",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-trust-ast",
+      "path": "fhir-ast/",
+      "contentSource": {
+        "kind": "family",
+        "branch": "cat/fhir-harness/fhir-ast/",
+        "keyFrom": "the IG's package id",
+        "familyRepository": "litlfred/smart-trust",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/ig-ast"
+      ],
+      "description": "WHO SMART Trust's IG Publisher AST, INGESTED here although the IG's source is not (owner, 2026-10-04: an IG's semi-static KG may stay remote, and its AST is still ingested into the folio). Read from the branch family cat/fhir-harness/fhir-ast/ on the IG's own repository (litlfred/smart-trust; it could instead be materialised onto a local branch here, by dropping `repository`), one branch per IG package id; this IG's member is cat/fhir-harness/fhir-ast/smart.who.int.trust. Restored by fhir-harness/scripts/ig-cache.sh; absent from the checkout by design. Bean lehh.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-batched-publisher/smart-trust/directory/smart-trust-ast",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-ast"
+    }
+  ]
+}

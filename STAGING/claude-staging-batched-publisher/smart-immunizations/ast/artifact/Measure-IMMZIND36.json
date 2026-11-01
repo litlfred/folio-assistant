@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "Measure-IMMZIND36.jsonld",
+  "@type": "fhir:Measure",
+  "dcterms:identifier": "Measure/IMMZIND36",
+  "schema:name": "IMMZIND36",
+  "dcterms:title": "IMMZIND36",
+  "dcterms:description": "IMMZ.IND.36 Drop-out rate of BCG to measles and rubella-containing vaccine 1st dose",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Other",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/Measure/IMMZIND36"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/Measure/IMMZIND36--963496a8.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "1f5b81da352b37240cbc53c8cce67bdef57d63f9"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

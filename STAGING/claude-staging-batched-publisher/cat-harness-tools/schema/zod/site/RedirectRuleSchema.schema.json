@@ -1,0 +1,53 @@
+{
+  "$ref": "#/definitions/RedirectRule",
+  "definitions": {
+    "RedirectRule": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string",
+          "pattern": "^(?!\\/)[^\\s]*$"
+        },
+        "to": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 301
+            },
+            {
+              "type": "number",
+              "const": 302
+            },
+            {
+              "type": "number",
+              "const": 307
+            },
+            {
+              "type": "number",
+              "const": 308
+            }
+          ]
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "status"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/RedirectRuleSchema.schema.json",
+  "title": "RedirectRuleSchema",
+  "description": "Generated from `RedirectRuleSchema` in schemas/kg/site.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  }
+}

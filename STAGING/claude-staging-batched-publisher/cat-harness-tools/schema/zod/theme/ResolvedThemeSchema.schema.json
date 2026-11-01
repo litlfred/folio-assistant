@@ -1,0 +1,549 @@
+{
+  "$ref": "#/definitions/ResolvedTheme",
+  "definitions": {
+    "ResolvedTheme": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "folio-theme/v1"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$"
+            },
+            "kind": {
+              "type": "string",
+              "const": "sticky"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "palette": {
+              "type": "object",
+              "properties": {
+                "surface": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ink": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "edge": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "accent": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "gradientFrom": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "gradientTo": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "surface",
+                "ink",
+                "edge",
+                "accent"
+              ],
+              "additionalProperties": false
+            },
+            "backdrop": {
+              "type": "object",
+              "properties": {
+                "imageRole": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "scrim": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "imageRole",
+                "scrim"
+              ],
+              "additionalProperties": false
+            },
+            "layouts": {
+              "type": "object",
+              "properties": {
+                "laptop": {
+                  "type": "object",
+                  "properties": {
+                    "minWidth": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "padding": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fontScale": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "minWidth",
+                    "padding",
+                    "fontScale"
+                  ],
+                  "additionalProperties": false
+                },
+                "mobile": {
+                  "type": "object",
+                  "properties": {
+                    "minWidth": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "padding": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fontScale": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "minWidth",
+                    "padding",
+                    "fontScale"
+                  ],
+                  "additionalProperties": false
+                },
+                "card": {
+                  "type": "object",
+                  "properties": {
+                    "minWidth": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "padding": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fontScale": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "minWidth",
+                    "padding",
+                    "fontScale"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "laptop",
+                "mobile",
+                "card"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "id",
+            "kind",
+            "name",
+            "palette",
+            "layouts"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "folio-theme/v1"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$"
+            },
+            "kind": {
+              "type": "string",
+              "const": "webpage"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "palette": {
+              "type": "object",
+              "properties": {
+                "surface": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ink": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "edge": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "accent": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "gradientFrom": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "gradientTo": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "surface",
+                "ink",
+                "edge",
+                "accent"
+              ],
+              "additionalProperties": false
+            },
+            "backdrop": {
+              "type": "object",
+              "properties": {
+                "imageRole": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "scrim": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "imageRole",
+                "scrim"
+              ],
+              "additionalProperties": false
+            },
+            "layouts": {
+              "type": "object",
+              "properties": {
+                "laptop": {
+                  "type": "object",
+                  "properties": {
+                    "minWidth": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "padding": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fontScale": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "minWidth",
+                    "padding",
+                    "fontScale"
+                  ],
+                  "additionalProperties": false
+                },
+                "mobile": {
+                  "type": "object",
+                  "properties": {
+                    "minWidth": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "padding": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fontScale": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "minWidth",
+                    "padding",
+                    "fontScale"
+                  ],
+                  "additionalProperties": false
+                },
+                "card": {
+                  "type": "object",
+                  "properties": {
+                    "minWidth": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "padding": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fontScale": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "minWidth",
+                    "padding",
+                    "fontScale"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "laptop",
+                "mobile",
+                "card"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "id",
+            "kind",
+            "name",
+            "palette",
+            "layouts"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "folio-theme/v1"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*$"
+            },
+            "kind": {
+              "type": "string",
+              "const": "publication"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "palette": {
+              "type": "object",
+              "properties": {
+                "surface": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ink": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "edge": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "accent": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "gradientFrom": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "gradientTo": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "surface",
+                "ink",
+                "edge",
+                "accent"
+              ],
+              "additionalProperties": false
+            },
+            "backdrop": {
+              "type": "object",
+              "properties": {
+                "imageRole": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "scrim": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "imageRole",
+                "scrim"
+              ],
+              "additionalProperties": false
+            },
+            "layouts": {
+              "type": "object",
+              "properties": {
+                "a4": {
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "height": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "margin": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fontScale": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "width",
+                    "height",
+                    "margin",
+                    "fontScale"
+                  ],
+                  "additionalProperties": false
+                },
+                "a5": {
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "height": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "margin": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fontScale": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "width",
+                    "height",
+                    "margin",
+                    "fontScale"
+                  ],
+                  "additionalProperties": false
+                },
+                "a5Landscape": {
+                  "type": "object",
+                  "properties": {
+                    "width": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "height": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "margin": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "fontScale": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "width",
+                    "height",
+                    "margin",
+                    "fontScale"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "a4",
+                "a5",
+                "a5Landscape"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "$schema",
+            "id",
+            "kind",
+            "name",
+            "palette",
+            "layouts"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ResolvedThemeSchema.schema.json",
+  "title": "ResolvedThemeSchema",
+  "description": "Generated from `ResolvedThemeSchema` in schemas/ui/theme.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  }
+}

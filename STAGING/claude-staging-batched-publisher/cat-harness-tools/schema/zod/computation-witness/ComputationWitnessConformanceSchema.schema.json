@@ -1,0 +1,110 @@
+{
+  "$ref": "#/definitions/ComputationWitnessConformance",
+  "definitions": {
+    "ComputationWitnessConformance": {
+      "type": "object",
+      "properties": {
+        "engine": {
+          "type": "string",
+          "enum": [
+            "snappea",
+            "snappy",
+            "sympy",
+            "mpmath",
+            "sage",
+            "python",
+            "numpy",
+            "scipy",
+            "closed-form",
+            "python+mpmath",
+            "python+numpy+cvxpy"
+          ]
+        },
+        "engineVersion": {
+          "type": "string"
+        },
+        "computedAt": {
+          "type": "string"
+        },
+        "assertions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "computed": {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              },
+              "expected": {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              },
+              "passed": {
+                "type": "boolean"
+              },
+              "tolerance": {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              },
+              "unit": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "computed",
+              "expected"
+            ],
+            "additionalProperties": {}
+          }
+        },
+        "commitSha": {
+          "type": "string"
+        },
+        "scriptCommitSha": {
+          "type": "string"
+        },
+        "scriptHash": {
+          "type": "string"
+        },
+        "scriptFile": {
+          "type": "string"
+        },
+        "auditOnly": {
+          "type": "string"
+        },
+        "allPassed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "engine",
+        "engineVersion",
+        "computedAt",
+        "assertions"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/computation-witness/ComputationWitnessConformanceSchema.schema.json",
+  "title": "ComputationWitnessConformanceSchema",
+  "description": "Generated from `ComputationWitnessConformanceSchema` in schemas/computation-witness.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  }
+}

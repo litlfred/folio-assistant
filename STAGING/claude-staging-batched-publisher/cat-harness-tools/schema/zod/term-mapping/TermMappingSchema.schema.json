@@ -1,0 +1,104 @@
+{
+  "$ref": "#/definitions/TermMapping",
+  "definitions": {
+    "TermMapping": {
+      "type": "object",
+      "properties": {
+        "term": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scheme": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "enum": [
+            "skos",
+            "fhir"
+          ]
+        },
+        "exact": {
+          "type": "string",
+          "enum": [
+            "mapped",
+            "unmapped",
+            "undetermined"
+          ]
+        },
+        "concept": {
+          "type": "string",
+          "enum": [
+            "mapped",
+            "unmapped",
+            "undetermined"
+          ]
+        },
+        "matches": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "uri": {
+                "type": "string",
+                "minLength": 1
+              },
+              "predicate": {
+                "type": "string",
+                "enum": [
+                  "skos:exactMatch",
+                  "skos:closeMatch",
+                  "skos:broadMatch",
+                  "skos:relatedMatch"
+                ]
+              },
+              "via": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scheme": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "uri",
+              "predicate",
+              "via",
+              "scheme"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "undetermined_reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "term",
+        "instance",
+        "scheme",
+        "target",
+        "exact",
+        "concept"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-mapping/TermMappingSchema.schema.json",
+  "title": "TermMappingSchema",
+  "description": "Generated from `TermMappingSchema` in schemas/content/term-mapping.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-batched-publisher",
+    "sha": "5952aad361e8c9b0975329b22b5385df129ab5ff",
+    "pr": "2884/merge",
+    "run": "41327090701"
+  }
+}
