@@ -1,86 +1,71 @@
-  writer skip: ON (records of aff8bfa0c89b, 35 writer(s))
-  handler:index runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ig-index:build runs: not recorded: git ls-remote is not a read-only command the cone replays [decided in 0.0s]
-  ran handler:index (reuse off) [2.1s]
-  uml:overview runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran ig-index:build (reuse off) [14.3s]
-  smart-base:document-kinds runs: its script, imports, audited environment or tools changed [decided in 0.0s]
+  writer skip: ON (no records: every writer runs)
+  ran handler:index (reuse off) [3.1s]
+  ran ig-index:build (reuse off) [15.3s]
   ran smart-base:document-kinds (reuse off) [0.4s]
+qa:refresh: kg:audit:all runs: no writer records from a full deploy
+qa:refresh: kg:detangle runs: no writer records from a full deploy
+qa:refresh: translation:block-qa runs: no writer records from a full deploy
+qa:refresh: qa-sweep:docs runs: no writer records from a full deploy
   voice gate: 42 criterion(s) skipped — this folio activates agent-skill-authoring (voice-overlay-address-adjudicator, voice-overlay-address-administrator, voice-overlay-address-author, voice-overlay-address-authoring-agent, voice-overlay-address-business-analyst, voice-overlay-address-clinical-sme, voice-overlay-address-code-reviewer, voice-overlay-address-compute-authoring-agent, voice-overlay-address-deep-researcher, voice-overlay-address-docs-authoring-agent, voice-overlay-address-editor, voice-overlay-address-editorial-authoring-agent, voice-overlay-address-evidence-agent, voice-overlay-address-feedback-provider, voice-overlay-address-ingestion-agent, voice-overlay-address-integration-watcher, voice-overlay-address-lean-authoring-agent, voice-overlay-address-librarian, voice-overlay-address-narrative-reviewer, voice-overlay-address-onboarding-agent, voice-overlay-address-platform-authoring-agent, voice-overlay-address-programme-manager, voice-overlay-address-proof-review-agent, voice-overlay-address-publication-manager, voice-overlay-address-qc-reviewer, voice-overlay-address-review-coordinator, voice-overlay-address-reviewer, voice-overlay-address-session-coordinator, voice-overlay-address-sibling-session, voice-overlay-address-stakeholder, voice-overlay-address-terminologist, voice-overlay-address-translation-adjudicator, voice-overlay-address-translation-coordinator, voice-overlay-address-translator, voice-overlay-address-user, voice-overlay-milnor, voice-overlay-technical-writer, voice-overlay-who-digital-health, voice-overlay-who-digital-transformation-handbook, voice-overlay-who-editorial, voice-overlay-who-guideline-development, voice-overlay-who-publication-design)
-  subgraph:jsonld runs: not recorded: the trace is 307526211 bytes, more than 268435456 [decided in 0.0s]
-  ran subgraph:jsonld (reuse off) [20.9s]
-  library:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  voices:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran voices:viz (reuse off) [0.6s]
-  theme:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran theme:viz (reuse off) [0.4s]
-  uploads:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran uploads:viz (reuse off) [1.6s]
-  document-kinds:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran document-kinds:viz (reuse off) [0.6s]
-  skills:docs runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran skills:docs (reuse off) [4.0s]
-  node-kinds runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran node-kinds (reuse off) [1.1s]
-  node-kind:pages runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran node-kind:pages (reuse off) [1.9s]
-  glossary:page runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran glossary:page (reuse off) [10.4s]
-  bibliography:page runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran bibliography:page (reuse off) [0.5s]
-  smart:pages runs: not recorded: the writer reads smart-base/docs/artifact and then rewrites it [decided in 0.0s]
-  ran smart:pages (reuse off) [0.6s]
-  jsonld:contexts runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran jsonld:contexts (reuse off) [1.1s]
-  tools:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  smart-base:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output [decided in 0.0s]
-  smart-trust:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output [decided in 0.0s]
-  smart-trust-phw:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output [decided in 0.0s]
-  ran smart-trust-phw:pages (reuse off) [0.5s]
-  ran smart-trust:pages (reuse off) [0.7s]
-  ran smart-base:pages (reuse off) [0.7s]
-  smart-base:l1-extraction:pages runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran smart-base:l1-extraction:pages (reuse off) [0.6s]
-  ran tools:viz (reuse off) [2.3s]
-  auto:docs runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran auto:docs (reuse off) [6.4s]
-  lsi:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran lsi:viz (reuse off) [2.1s]
-  translation:status runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran translation:status (reuse off) [0.8s]
-  openapi:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran openapi:viz (reuse off) [0.1s]
-  schema:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran schema:viz (reuse off) [2.3s]
-  methodologies:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran methodologies:viz (reuse off) [1.4s]
-  external-schemas:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran external-schemas:viz (reuse off) [4.4s]
-  subscriptions:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran subscriptions:viz (reuse off) [0.1s]
-  docs:pages runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran docs:pages (reuse off) [1.5s]
-  docs:harness runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran docs:harness (reuse off) [2.9s]
-  navbar:include runs: its script, imports, audited environment or tools changed [decided in 0.0s]
+qa:refresh: check:l1-complete runs: no writer records from a full deploy
+qa:refresh: p2:refusals runs: no writer records from a full deploy
+qa:refresh: lsi:index:cat-harness:skills runs: no writer records from a full deploy
+qa:refresh: lsi:index:library runs: no writer records from a full deploy
+qa:refresh: lsi:audit runs: no writer records from a full deploy
+qa:refresh: docs:pages runs: no writer records from a full deploy
+qa:refresh: viewer:nav:audit runs: no writer records from a full deploy
+qa:refresh: eval:crdm-detect runs: no writer records from a full deploy
+qa:refresh: root-scan-census runs: no writer records from a full deploy
+qa:refresh: skill:register runs: no writer records from a full deploy
+qa:refresh: term:mapping runs: no writer records from a full deploy
+qa:refresh: check:harness-state runs: no writer records from a full deploy
+qa:refresh: check:wireframes runs: no writer records from a full deploy
+qa:refresh: check:source-licence runs: no writer records from a full deploy
+qa:refresh: check:layout-norms runs: no writer records from a full deploy
+qa:refresh: check:rendered-labels runs: no writer records from a full deploy
+qa:refresh: check:lane-documentation runs: no writer records from a full deploy
+qa:refresh: check:methodology-evidence runs: no writer records from a full deploy
+qa:refresh: check:avatar-coverage runs: no writer records from a full deploy
+qa:refresh: check:unlinked-beans runs: no writer records from a full deploy
+qa:refresh: kg:export runs: no writer records from a full deploy
+qa:refresh: check:reference-direction runs: no writer records from a full deploy
+qa:refresh: audit:coverage runs: no writer records from a full deploy
+qa:refresh: readme:subgraphs runs: no writer records from a full deploy
+  ran subgraph:jsonld (reuse off) [26.4s]
+  ran voices:viz (reuse off) [0.8s]
+  ran theme:viz (reuse off) [0.6s]
+  ran uploads:viz (reuse off) [2.1s]
+  ran document-kinds:viz (reuse off) [0.8s]
+  ran skills:docs (reuse off) [5.1s]
+  ran node-kinds (reuse off) [1.3s]
+  ran node-kind:pages (reuse off) [2.3s]
+  ran glossary:page (reuse off) [13.7s]
+  ran bibliography:page (reuse off) [0.6s]
+  ran smart:pages (reuse off) [0.7s]
+  ran jsonld:contexts (reuse off) [1.4s]
+  ran smart-trust-phw:pages (reuse off) [0.6s]
+  ran smart-trust:pages (reuse off) [0.9s]
+  ran smart-base:pages (reuse off) [0.9s]
+  ran smart-base:l1-extraction:pages (reuse off) [0.7s]
+  ran tools:viz (reuse off) [2.9s]
+  ran auto:docs (reuse off) [8.8s]
+  ran lsi:viz (reuse off) [3.0s]
+  ran translation:status (reuse off) [1.3s]
+  ran openapi:viz (reuse off) [0.2s]
+  ran schema:viz (reuse off) [3.1s]
+  ran methodologies:viz (reuse off) [1.9s]
+  ran external-schemas:viz (reuse off) [5.2s]
+  ran subscriptions:viz (reuse off) [0.2s]
+  ran docs:pages (reuse off) [1.9s]
+  ran docs:harness (reuse off) [4.3s]
   ran navbar:include (reuse off) [0.1s]
-  kind:table runs: its script, imports, audited environment or tools changed [decided in 0.0s]
   ran kind:table (reuse off) [0.1s]
-  avatars:css runs: its script, imports, audited environment or tools changed [decided in 0.0s]
   ran avatars:css (reuse off) [0.1s]
-  themes:css runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran themes:css (reuse off) [0.4s]
-  folio:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran folio:viz (reuse off) [0.5s]
-  kg:viewer runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran kg:viewer (reuse off) [0.3s]
-  state:visualizer runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran state:visualizer (reuse off) [5.4s]
-  site:viz runs: not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git) [decided in 0.0s]
-  ran site:viz (reuse off) [1.6s]
-  slice:sqlite runs: not recorded: git status is not a read-only command the cone replays [decided in 0.0s]
-  ran slice:sqlite (reuse off) [8.1s]
-  render:bpmn runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran render:bpmn (reuse off) [3.7s]
-  processes:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran processes:viz (reuse off) [5.7s]
+  ran themes:css (reuse off) [0.5s]
+  ran folio:viz (reuse off) [0.6s]
+  ran kg:viewer (reuse off) [0.4s]
+  ran state:visualizer (reuse off) [7.7s]
+  ran site:viz (reuse off) [1.5s]
+  ran slice:sqlite (reuse off) [11.4s]
+  ran render:bpmn (reuse off) [6.1s]
+  ran processes:viz (reuse off) [7.8s]

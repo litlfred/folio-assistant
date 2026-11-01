@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 14,
+      "count": 17,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -44,6 +44,10 @@
           "why": "no-tag"
         },
         {
+          "module": "../cat-harness-tools/schemas/sdlc/harness-state.ts",
+          "why": "no-tag"
+        },
+        {
           "module": "../cat-harness-tools/schemas/tools/harness-tools.ts",
           "why": "no-tag"
         },
@@ -52,11 +56,19 @@
           "why": "no-tag"
         },
         {
+          "module": "../cat-harness-tools/schemas/tools/workflow-tool-results.ts",
+          "why": "no-tag"
+        },
+        {
           "module": "../cat-harness-tools/archimate/schemas/diagrams.ts",
           "why": "no-tag"
         },
         {
           "module": "../cat-harness-tools/archimate/schemas/metamodel.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../cat-harness-tools/archimate/schemas/rules.ts",
           "why": "no-tag"
         },
         {
@@ -87,5 +99,5 @@
       "entries": []
     }
   },
-  "total": 14
+  "total": 17
 }

@@ -104,7 +104,7 @@
           "parent": "folio-assistant-iirv",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.687
+          "cosine": 0.691
         },
         {
           "severity": "warning",
@@ -114,7 +114,7 @@
           "parent": "folio-assistant-5a3l",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.575
+          "cosine": 0.58
         },
         {
           "severity": "warning",
@@ -184,7 +184,7 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-iirv",
-          "cosine": 0.871
+          "cosine": 0.875
         },
         {
           "severity": "warning",
@@ -251,7 +251,7 @@
           "bean": "folio-assistant-pga6",
           "title": "Separation Phase III: L4/L5 Content, Tool and Test repos on the harness, plus current and future architecture write-up",
           "status": "todo",
-          "parent": "",
+          "parent": "folio-assistant-iirv",
           "basis": "none",
           "group": "folio-assistant-iirv",
           "cosine": 0.633
@@ -283,8 +283,8 @@
           "status": "in-progress",
           "parent": "",
           "basis": "none",
-          "group": "folio-assistant-sb31",
-          "cosine": 0.64
+          "group": "folio-assistant-iirv",
+          "cosine": 0.646
         },
         {
           "severity": "warning",
@@ -429,31 +429,32 @@
         {
           "severity": "warning",
           "group": "folio-assistant-iirv",
-          "size": 4,
-          "size_class": "small",
+          "size": 5,
+          "size_class": "candidate",
           "nearest_epic": "folio-assistant-iirv",
           "nearest_epic_title": "cat-harness / cat-harness-tools separation",
-          "mean_cosine": 0.692,
+          "mean_cosine": 0.685,
           "terms": [
             "placement proposal",
+            "open children",
+            "merged prs",
             "bootstrap bootstrap-tools",
             "phase iii",
             "separation arc",
-            "seeded shas",
-            "move workflows",
-            "instance move",
-            "remote mounts"
+            "group assignment",
+            "seeded shas"
           ],
           "beans": [
             "folio-assistant-6fez",
             "folio-assistant-9hxd",
             "folio-assistant-iirv",
-            "folio-assistant-pga6"
+            "folio-assistant-pga6",
+            "folio-assistant-sb31"
           ],
           "filed_under": [
             {
               "epic": "folio-assistant-iirv",
-              "beans": 1
+              "beans": 2
             }
           ],
           "known_processes": [
@@ -485,38 +486,6 @@
         },
         {
           "severity": "warning",
-          "group": "folio-assistant-sb31",
-          "size": 4,
-          "size_class": "small",
-          "nearest_epic": "folio-assistant-sb31",
-          "nearest_epic_title": "SECURITY REVIEW 2026-10-31, GROUP B: folio-assistant-core, folio-assistant-sci and folio-assistant",
-          "mean_cosine": 0.766,
-          "terms": [
-            "security severity",
-            "folio-assistant layers",
-            "flag categories",
-            "fixes wait",
-            "prs open",
-            "sop",
-            "go-ahead",
-            "red flag"
-          ],
-          "beans": [
-            "folio-assistant-aso6",
-            "folio-assistant-sb31",
-            "folio-assistant-vbhb",
-            "folio-assistant-wox6"
-          ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-sb31",
-              "beans": 3
-            }
-          ],
-          "known_processes": []
-        },
-        {
-          "severity": "warning",
           "group": "folio-assistant-33iz",
           "size": 3,
           "size_class": "small",
@@ -542,6 +511,37 @@
             {
               "epic": "folio-assistant-33iz",
               "beans": 2
+            }
+          ],
+          "known_processes": []
+        },
+        {
+          "severity": "warning",
+          "group": "folio-assistant-sb31",
+          "size": 3,
+          "size_class": "small",
+          "nearest_epic": "folio-assistant-sb31",
+          "nearest_epic_title": "SECURITY REVIEW 2026-10-31, GROUP B: folio-assistant-core, folio-assistant-sci and folio-assistant",
+          "mean_cosine": 0.809,
+          "terms": [
+            "security severity",
+            "flag categories",
+            "folio-assistant layers",
+            "fixes wait",
+            "sop",
+            "go-ahead",
+            "red flag",
+            "sci"
+          ],
+          "beans": [
+            "folio-assistant-aso6",
+            "folio-assistant-vbhb",
+            "folio-assistant-wox6"
+          ],
+          "filed_under": [
+            {
+              "epic": "folio-assistant-sb31",
+              "beans": 3
             }
           ],
           "known_processes": []

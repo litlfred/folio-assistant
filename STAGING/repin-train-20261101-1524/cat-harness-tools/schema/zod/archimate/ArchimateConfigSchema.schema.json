@@ -69,6 +69,10 @@
                   "same-elements",
                   "by-eye"
                 ]
+              },
+              "svg": {
+                "type": "string",
+                "pattern": "\\.svg$"
               }
             },
             "required": [
@@ -77,6 +81,44 @@
               "model",
               "view",
               "basis"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "block": {
+                "type": "string",
+                "pattern": "\\.md$"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "relationship-types",
+                  "relationship-rules"
+                ]
+              },
+              "rules": {
+                "type": "string",
+                "pattern": "\\.json$"
+              },
+              "model": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9._-]+$"
+              }
+            },
+            "required": [
+              "block",
+              "label",
+              "kind",
+              "rules"
             ],
             "additionalProperties": false
           }
@@ -95,8 +137,8 @@
   "description": "Generated from `ArchimateConfigSchema` in archimate/schemas/archimate.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "repin-train/20261101-1524",
-    "sha": "2d6558d432acdbb829ec4d306f7d0f9a4c55e6f1",
+    "sha": "df2c2b1241a5a637089041befd6abf1f2c1c78b3",
     "pr": "2876/merge",
-    "run": "41325886056"
+    "run": "41331800408"
   }
 }

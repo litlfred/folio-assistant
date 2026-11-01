@@ -1250,12 +1250,1531 @@
         "untrailered"
       ],
       "description": "The sessions that committed in a window, read from Claude-Session trailers."
+    },
+    "BeanQueryRows": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "propertyNames": {
+          "type": "string"
+        },
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "description": "The rows a bean SPARQL query returned, each variable to its value; bean IRIs are shortened to bean ids."
+    },
+    "HarnessStates": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "$schema": {
+            "type": "string",
+            "const": "folio-harness-state/v1"
+          },
+          "harness": {
+            "type": "string",
+            "minLength": 1
+          },
+          "initialization": {
+            "type": "object",
+            "properties": {
+              "position": {
+                "type": "string",
+                "minLength": 1
+              },
+              "next": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "step": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "action": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "step",
+                      "action"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "counts": {
+                "type": "object",
+                "properties": {
+                  "done": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "not-done": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "could-not-determine": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "stated": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "done",
+                  "not-done",
+                  "could-not-determine",
+                  "stated"
+                ],
+                "additionalProperties": false
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "namedBy": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "what": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "done",
+                        "not-done",
+                        "could-not-determine",
+                        "stated"
+                      ]
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "action": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "namedBy",
+                    "what",
+                    "state",
+                    "detail"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "position",
+              "next",
+              "counts",
+              "steps"
+            ],
+            "additionalProperties": false
+          },
+          "health": {
+            "type": "object",
+            "properties": {
+              "badges": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "enum": [
+                        "initialization",
+                        "repository"
+                      ]
+                    },
+                    "state": {
+                      "type": "string",
+                      "enum": [
+                        "ok",
+                        "finding",
+                        "unknown"
+                      ]
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "state",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "badges"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "$schema",
+          "harness",
+          "initialization",
+          "health"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Every harness's initialization position, next step and health badges, in name order."
+    },
+    "WorkflowListing": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "processes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "file": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "activities": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "file"
+            ]
+          }
+        },
+        "instances": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "running",
+                  "completed"
+                ]
+              },
+              "updatedAt": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "subject",
+              "status",
+              "updatedAt"
+            ]
+          }
+        }
+      },
+      "required": [
+        "processes",
+        "instances"
+      ],
+      "description": "The processes a folio defines (or why one cannot be read), and its open instances."
+    },
+    "WorkflowStarted": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "started": {
+          "type": "boolean"
+        },
+        "position": {
+          "type": "object",
+          "properties": {
+            "instance": {
+              "type": "string"
+            },
+            "process": {
+              "type": "string"
+            },
+            "processName": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "bean": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "running",
+                "completed"
+              ]
+            },
+            "enabled": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "activity"
+                      },
+                      "node": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "lane": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "roleSkills": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "skills": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "conventions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ref": {
+                              "type": "string"
+                            },
+                            "scope": {
+                              "type": "string",
+                              "enum": [
+                                "process",
+                                "lane",
+                                "activity"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "ref",
+                            "scope"
+                          ]
+                        }
+                      },
+                      "touchesWorkPlan": {
+                        "type": "boolean"
+                      },
+                      "documentation": {
+                        "type": "string"
+                      },
+                      "calledElement": {
+                        "type": "string"
+                      },
+                      "globalTask": {
+                        "type": "string"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "phase": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "context": {
+                        "type": "object",
+                        "properties": {
+                          "role": {
+                            "type": "string"
+                          },
+                          "roleStack": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "effectiveSkills": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "skills": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "conventions": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "ref": {
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": "string",
+                                  "enum": [
+                                    "process",
+                                    "lane",
+                                    "activity"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "ref",
+                                "scope"
+                              ]
+                            }
+                          },
+                          "carriedBeans": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "roleStack",
+                          "effectiveSkills",
+                          "skills",
+                          "conventions",
+                          "carriedBeans"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "node",
+                      "name",
+                      "skills",
+                      "conventions",
+                      "touchesWorkPlan",
+                      "context"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "decision"
+                      },
+                      "node": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "lane": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "outcomes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "computed": {
+                        "type": "object",
+                        "properties": {
+                          "decision": {
+                            "type": "string"
+                          },
+                          "facts": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "decision",
+                          "facts"
+                        ]
+                      },
+                      "phase": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "context": {
+                        "type": "object",
+                        "properties": {
+                          "role": {
+                            "type": "string"
+                          },
+                          "roleStack": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "effectiveSkills": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "skills": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "conventions": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "ref": {
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": "string",
+                                  "enum": [
+                                    "process",
+                                    "lane",
+                                    "activity"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "ref",
+                                "scope"
+                              ]
+                            }
+                          },
+                          "carriedBeans": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "roleStack",
+                          "effectiveSkills",
+                          "skills",
+                          "conventions",
+                          "carriedBeans"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "node",
+                      "name",
+                      "outcomes"
+                    ]
+                  }
+                ]
+              }
+            },
+            "done": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "node": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "outcome": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "node",
+                  "name"
+                ]
+              }
+            }
+          },
+          "required": [
+            "instance",
+            "process",
+            "processName",
+            "subject",
+            "status",
+            "enabled",
+            "done"
+          ],
+          "description": "A process instance: its subject, status, the steps enabled now with who performs them, and what is done."
+        }
+      },
+      "required": [
+        "started",
+        "position"
+      ],
+      "description": "Whether a new instance began (false: an open one was continued), and where it now is."
+    },
+    "WorkflowPosition": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "instance": {
+          "type": "string"
+        },
+        "process": {
+          "type": "string"
+        },
+        "processName": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "bean": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "running",
+            "completed"
+          ]
+        },
+        "enabled": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "activity"
+                  },
+                  "node": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "lane": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "roleSkills": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "skills": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "conventions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "ref": {
+                          "type": "string"
+                        },
+                        "scope": {
+                          "type": "string",
+                          "enum": [
+                            "process",
+                            "lane",
+                            "activity"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "ref",
+                        "scope"
+                      ]
+                    }
+                  },
+                  "touchesWorkPlan": {
+                    "type": "boolean"
+                  },
+                  "documentation": {
+                    "type": "string"
+                  },
+                  "calledElement": {
+                    "type": "string"
+                  },
+                  "globalTask": {
+                    "type": "string"
+                  },
+                  "inputs": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "phase": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "context": {
+                    "type": "object",
+                    "properties": {
+                      "role": {
+                        "type": "string"
+                      },
+                      "roleStack": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "effectiveSkills": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "skills": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "conventions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ref": {
+                              "type": "string"
+                            },
+                            "scope": {
+                              "type": "string",
+                              "enum": [
+                                "process",
+                                "lane",
+                                "activity"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "ref",
+                            "scope"
+                          ]
+                        }
+                      },
+                      "carriedBeans": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "roleStack",
+                      "effectiveSkills",
+                      "skills",
+                      "conventions",
+                      "carriedBeans"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind",
+                  "node",
+                  "name",
+                  "skills",
+                  "conventions",
+                  "touchesWorkPlan",
+                  "context"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "decision"
+                  },
+                  "node": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "lane": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "outcomes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "computed": {
+                    "type": "object",
+                    "properties": {
+                      "decision": {
+                        "type": "string"
+                      },
+                      "facts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "decision",
+                      "facts"
+                    ]
+                  },
+                  "phase": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "context": {
+                    "type": "object",
+                    "properties": {
+                      "role": {
+                        "type": "string"
+                      },
+                      "roleStack": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "effectiveSkills": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "skills": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "conventions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ref": {
+                              "type": "string"
+                            },
+                            "scope": {
+                              "type": "string",
+                              "enum": [
+                                "process",
+                                "lane",
+                                "activity"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "ref",
+                            "scope"
+                          ]
+                        }
+                      },
+                      "carriedBeans": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "roleStack",
+                      "effectiveSkills",
+                      "skills",
+                      "conventions",
+                      "carriedBeans"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind",
+                  "node",
+                  "name",
+                  "outcomes"
+                ]
+              }
+            ]
+          }
+        },
+        "done": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "node": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "outcome": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "node",
+              "name"
+            ]
+          }
+        }
+      },
+      "required": [
+        "instance",
+        "process",
+        "processName",
+        "subject",
+        "status",
+        "enabled",
+        "done"
+      ],
+      "description": "A process instance: its subject, status, the steps enabled now with who performs them, and what is done."
+    },
+    "WorkflowGateAnswer": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "allowed": {
+          "type": "boolean"
+        },
+        "gate": {
+          "type": "object",
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "relaxedBy": {
+              "type": "object",
+              "properties": {
+                "process": {
+                  "type": "string"
+                },
+                "activity": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "scope": {
+                  "type": "string"
+                },
+                "package": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "process",
+                "activity",
+                "reason",
+                "package"
+              ]
+            }
+          },
+          "required": [
+            "allowed",
+            "reason"
+          ]
+        },
+        "authorization": {
+          "type": "object",
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "advisory",
+                "strict"
+              ]
+            },
+            "authenticatedBy": {
+              "type": "string",
+              "enum": [
+                "github",
+                "http-gateway",
+                "asserted",
+                "none"
+              ]
+            },
+            "actor": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "account": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "assignment": {
+              "type": "string",
+              "enum": [
+                "eligible",
+                "unconstrained",
+                "not-eligible",
+                "no-role",
+                "unknown-actor"
+              ]
+            },
+            "authorized": {
+              "type": "string",
+              "enum": [
+                "permit",
+                "deny",
+                "unknown"
+              ]
+            },
+            "access": {
+              "type": "string",
+              "enum": [
+                "permit",
+                "deny",
+                "unknown"
+              ]
+            },
+            "findings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "allowed",
+            "mode",
+            "authenticatedBy",
+            "actor",
+            "assignment",
+            "authorized",
+            "findings"
+          ]
+        },
+        "namedActor": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "allowed",
+        "gate",
+        "authorization"
+      ],
+      "description": "May a step run now: the process gate and the task authorization, either of which refuses."
+    },
+    "WorkflowCompletion": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "object",
+          "properties": {
+            "instance": {
+              "type": "string"
+            },
+            "process": {
+              "type": "string"
+            },
+            "processName": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "bean": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "running",
+                "completed"
+              ]
+            },
+            "enabled": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "activity"
+                      },
+                      "node": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "lane": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "roleSkills": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "skills": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "conventions": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "ref": {
+                              "type": "string"
+                            },
+                            "scope": {
+                              "type": "string",
+                              "enum": [
+                                "process",
+                                "lane",
+                                "activity"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "ref",
+                            "scope"
+                          ]
+                        }
+                      },
+                      "touchesWorkPlan": {
+                        "type": "boolean"
+                      },
+                      "documentation": {
+                        "type": "string"
+                      },
+                      "calledElement": {
+                        "type": "string"
+                      },
+                      "globalTask": {
+                        "type": "string"
+                      },
+                      "inputs": {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "phase": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "context": {
+                        "type": "object",
+                        "properties": {
+                          "role": {
+                            "type": "string"
+                          },
+                          "roleStack": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "effectiveSkills": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "skills": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "conventions": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "ref": {
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": "string",
+                                  "enum": [
+                                    "process",
+                                    "lane",
+                                    "activity"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "ref",
+                                "scope"
+                              ]
+                            }
+                          },
+                          "carriedBeans": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "roleStack",
+                          "effectiveSkills",
+                          "skills",
+                          "conventions",
+                          "carriedBeans"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "node",
+                      "name",
+                      "skills",
+                      "conventions",
+                      "touchesWorkPlan",
+                      "context"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "const": "decision"
+                      },
+                      "node": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "lane": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "outcomes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "computed": {
+                        "type": "object",
+                        "properties": {
+                          "decision": {
+                            "type": "string"
+                          },
+                          "facts": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "decision",
+                          "facts"
+                        ]
+                      },
+                      "phase": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "context": {
+                        "type": "object",
+                        "properties": {
+                          "role": {
+                            "type": "string"
+                          },
+                          "roleStack": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "effectiveSkills": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "skills": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "conventions": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "ref": {
+                                  "type": "string"
+                                },
+                                "scope": {
+                                  "type": "string",
+                                  "enum": [
+                                    "process",
+                                    "lane",
+                                    "activity"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "ref",
+                                "scope"
+                              ]
+                            }
+                          },
+                          "carriedBeans": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "roleStack",
+                          "effectiveSkills",
+                          "skills",
+                          "conventions",
+                          "carriedBeans"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "node",
+                      "name",
+                      "outcomes"
+                    ]
+                  }
+                ]
+              }
+            },
+            "done": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "node": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "outcome": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "node",
+                  "name"
+                ]
+              }
+            }
+          },
+          "required": [
+            "instance",
+            "process",
+            "processName",
+            "subject",
+            "status",
+            "enabled",
+            "done"
+          ],
+          "description": "A process instance: its subject, status, the steps enabled now with who performs them, and what is done."
+        },
+        "authorization": {
+          "type": "object",
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "advisory",
+                "strict"
+              ]
+            },
+            "authenticatedBy": {
+              "type": "string",
+              "enum": [
+                "github",
+                "http-gateway",
+                "asserted",
+                "none"
+              ]
+            },
+            "actor": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "account": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "assignment": {
+              "type": "string",
+              "enum": [
+                "eligible",
+                "unconstrained",
+                "not-eligible",
+                "no-role",
+                "unknown-actor"
+              ]
+            },
+            "authorized": {
+              "type": "string",
+              "enum": [
+                "permit",
+                "deny",
+                "unknown"
+              ]
+            },
+            "access": {
+              "type": "string",
+              "enum": [
+                "permit",
+                "deny",
+                "unknown"
+              ]
+            },
+            "findings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "allowed",
+            "mode",
+            "authenticatedBy",
+            "actor",
+            "assignment",
+            "authorized",
+            "findings"
+          ]
+        },
+        "workPlan": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "position"
+      ],
+      "description": "The instance after a step was recorded, the authorization it was recorded under, and any work-plan change."
     }
   },
   "staging": {
     "branch": "repin-train/20261101-1524",
-    "sha": "2d6558d432acdbb829ec4d306f7d0f9a4c55e6f1",
+    "sha": "df2c2b1241a5a637089041befd6abf1f2c1c78b3",
     "pr": "2876/merge",
-    "run": "41325886056"
+    "run": "41331800408"
   }
 }

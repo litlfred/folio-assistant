@@ -242,6 +242,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigfigureschema.svg",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigFigureSchema.svg"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where `archimate-blocks` writes the view as SVG, relative to the instance root, so the block can show the model's own drawing instead of a picture of it. Absent, the figure is only linked to the view."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigFigureSchema.svg",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigfigureschema.view",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -372,6 +391,101 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigSchema.figures",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigschema.tables",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigSchema.tables"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document's tables that are drawn from data (`archimate-blocks`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigSchema.tables",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigtableschema.block",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigTableSchema.block"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document block holding the table, relative to the instance root."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigTableSchema.block",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigtableschema.label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigTableSchema.label"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the document calls it, e.g. `Table 3.3`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigTableSchema.label",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigtableschema.model",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigTableSchema.model"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The model whose relationships are checked against the rules (`archimate-blocks --check`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigTableSchema.model",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateconfigtableschema.rules",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateConfigTableSchema.rules"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `archimate-relationship-rules/v1` file, relative to the archimate directory."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateConfigTableSchema.rules",
       "skos:note": "candidate"
     },
     {
@@ -29765,6 +29879,272 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#StoreDef.realisedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.relationshipruleschema.note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RelationshipRuleSchema.note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why the rule is there, in the document's words."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RelationshipRuleSchema.note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.relationshiprulesschema.source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RelationshipRulesSchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the rules were taken from: a document block, an IRI."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RelationshipRulesSchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.relationshiptypeentryschema.icon",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RelationshipTypeEntrySchema.icon"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The notation picture, relative to the block, shown in the relationship-types table."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RelationshipTypeEntrySchema.icon",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.relationshiptypeentryschema.meaning",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RelationshipTypeEntrySchema.meaning"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What it represents, in the document's words (Markdown). Only entries with a meaning are rows of the relationship-types table; a type the rules use with no meaning is reported, since the document then uses a relationship it never explains."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RelationshipTypeEntrySchema.meaning",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.relationshiptypeentryschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RelationshipTypeEntrySchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the document calls it in a rule: `Realisation`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RelationshipTypeEntrySchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.relationshiptypeentryschema.type",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RelationshipTypeEntrySchema.type"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The ArchiMate relationship type, without `Relationship`: `Realization`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RelationshipTypeEntrySchema.type",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.relationshiptypeentryschema.verb",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RelationshipTypeEntrySchema.verb"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The verb the relationship-types table shows: `Realises`. Default: `name`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RelationshipTypeEntrySchema.verb",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.rulepattern.relationships",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RulePattern.relationships"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The relationships' ids."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RulePattern.relationships",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.rulescheck.checked",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RulesCheck.checked"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Relationships counted (those between two elements, Grouping's left out)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RulesCheck.checked",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.rulescheck.notallowed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RulesCheck.notAllowed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Rules ArchiMate's own relationship table does not allow."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RulesCheck.notAllowed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.rulescheck.uncovered",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RulesCheck.uncovered"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Model patterns no rule covers, most used first."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RulesCheck.uncovered",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.rulescheck.uncoveredcount",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RulesCheck.uncoveredCount"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many relationships those patterns hold."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RulesCheck.uncoveredCount",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.rulescheck.unexplained",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RulesCheck.unexplained"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Relationship types a rule uses that have no `meaning`, so the document never explains them."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RulesCheck.unexplained",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/rules.rulescheck.used",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RulesCheck.used"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Each rule and how often the model follows it; a count of 0 is a rule the model never uses."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/rules.ts#RulesCheck.used",
       "skos:note": "candidate"
     },
     {

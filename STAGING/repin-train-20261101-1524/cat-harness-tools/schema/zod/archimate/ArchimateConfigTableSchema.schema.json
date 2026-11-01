@@ -1,0 +1,49 @@
+{
+  "$ref": "#/definitions/ArchimateConfigTable",
+  "definitions": {
+    "ArchimateConfigTable": {
+      "type": "object",
+      "properties": {
+        "block": {
+          "type": "string",
+          "pattern": "\\.md$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "relationship-types",
+            "relationship-rules"
+          ]
+        },
+        "rules": {
+          "type": "string",
+          "pattern": "\\.json$"
+        },
+        "model": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]+$"
+        }
+      },
+      "required": [
+        "block",
+        "label",
+        "kind",
+        "rules"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigTableSchema.schema.json",
+  "title": "ArchimateConfigTableSchema",
+  "description": "Generated from `ArchimateConfigTableSchema` in archimate/schemas/archimate.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1524",
+    "sha": "df2c2b1241a5a637089041befd6abf1f2c1c78b3",
+    "pr": "2876/merge",
+    "run": "41331800408"
+  }
+}
