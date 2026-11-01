@@ -3615,6 +3615,10 @@ jobs:
           # field added to the Zod without regenerating leaves downstream
           # consumers validating against a stale contract.
           bun run cat ig-ast:schema:check
+          # The AST cache pins (fhir-harness#254, bean fwtz): every pin in
+          # ig-ast.lock.json names an IG this checkout mounts, from the
+          # repository index.lock.json mounts it from. No network.
+          bun run cat ig-ast:lock:check
           # The fsh-guts index is derived from a graph kept on a BRANCH, so it
           # is built at publish (derive:publish) and never committed: a
           # committed copy went stale on main and every PR when one state:push
