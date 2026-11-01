@@ -1926,10 +1926,42 @@ jobs:
       # waiting preview in one commit per Pages window. If any part of the
       # hand-off fails (or the publisher is not on main yet), the in-job deploy
       # below runs exactly as before.
+      # Fast path (Q-SPD-5c follow-up). The publisher is a separate job, so it
+      # waits for a runner of its own: measured 2026-11-01 18:33Z, the first
+      # batch waited 8 min in the runner queue for a 2-min job, while the gate
+      # had been open for 40 min. So when the gate is open NOW and nothing is
+      # waiting for the publisher, this job pushes itself, as before. Anything
+      # unreadable means "hand off", never "push".
+      - name: Push from this job when the gate is open and nothing waits (Q-SPD-5c)
+        id: fastpath
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -eu
+          waiting=$(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
+            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")))] | length' | awk '{s+=$1} END{print s+0}')
+          busy=$(gh api "repos/$REPO/actions/workflows/staging-publish.yml/runs?per_page=10" \
+            --jq '[.workflow_runs[] | select(.status != "completed")] | length' 2>/dev/null || echo 1)
+          tip=$(gh api "repos/$REPO/commits/gh-pages" --jq '"\(.commit.committer.date)\t\(.commit.message | split("\n")[0])"')
+          open=$(TIP="$tip" bun -e '
+            import { decide } from "./cat-harness-tools/scripts/staging-push-gate.ts";
+            const [d, subject] = (process.env.TIP ?? "").split("\t");
+            const ms = Date.parse(d);
+            console.log(Number.isNaN(ms) ? "unknown" : decide({ committedMs: ms, subject }, Date.now()).open ? "yes" : "no");
+          ')
+          echo "gate open: $open; previews waiting for the publisher: $waiting; publisher runs not finished: $busy"
+          if [ "$open" = yes ] && [ "$waiting" = 0 ] && [ "$busy" = 0 ]; then
+            echo "direct=true" >> "$GITHUB_OUTPUT"
+            echo "nothing queued and the gate is open: pushing from this job"
+          fi
+
       - name: Pack the preview for the batched publisher (Q-SPD-5c)
         id: handoff
-        # A verify run hands off only a build that replaces the agent's.
-        if: inputs.verify_pr == '' || steps.verify_agent.outputs.same == 'false' || steps.verify_agent.outputs.same == 'stale'
+        # A verify run hands off only a build that replaces the agent's; the
+        # fast path (#2891) pushes from this job instead when nothing waits.
+        if: steps.fastpath.outputs.direct != 'true' && (inputs.verify_pr == '' || steps.verify_agent.outputs.same == 'false' || steps.verify_agent.outputs.same == 'stale')
         continue-on-error: true
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
