@@ -124,11 +124,11 @@ jobs:
       - name: Build the mounted IG instances' pages (beans hupw, ksek)
         run: bun run cat smart:pages
       - name: Produce the QA working copy this run reads (beans 72a8, ksek)
-        run: |
-          bun run cat qa:working-copy || echo "::warning::qa:working-copy exited $?; continuing to post-merge:regen so index-scoped pairs are still checked and repaired"
+        continue-on-error: true
+        run: bun run cat qa:working-copy
       - name: Build the publish-time pages this run reads (B1, bean ksek)
-        run: |
-          bun run cat derive:publish || echo "::warning::derive:publish exited $?; continuing to post-merge:regen so index-scoped pairs are still checked and repaired"
+        continue-on-error: true
+        run: bun run cat derive:publish
       - name: Run post-merge regen
         env:
           GH_TOKEN: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}

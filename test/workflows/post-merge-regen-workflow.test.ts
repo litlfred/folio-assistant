@@ -20,6 +20,7 @@ interface Step {
   name?: string;
   uses?: string;
   run?: string;
+  "continue-on-error"?: boolean;
   env?: Record<string, string>;
 }
 interface Doc {
@@ -58,6 +59,8 @@ describe("post-merge-regen.yml builds the gates' inputs before running post-merg
     expect(qaCopyIdx).toBeGreaterThan(smartPagesIdx);
     expect(derivePublishIdx).toBeGreaterThan(qaCopyIdx);
     expect(derivePublishIdx).toBeLessThan(regenIdx);
+    expect(steps[qaCopyIdx]?.["continue-on-error"]).toBe(true);
+    expect(steps[derivePublishIdx]?.["continue-on-error"]).toBe(true);
   });
 
   test("sets QA_WORKING_COPY_BUILDING=1 on the regen step and preserves || code=$? reporting", () => {
