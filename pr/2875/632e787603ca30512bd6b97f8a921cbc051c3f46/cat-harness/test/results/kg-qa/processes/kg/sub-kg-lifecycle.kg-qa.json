@@ -1,0 +1,188 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_SubKgLifecycle",
+    "path": "processes/kg/sub-kg-lifecycle.bpmn"
+  },
+  "source_hash": "sha256:c56500aa974a05cd4a9ed60053452da22963a9f4712adf7ac5effafb3de1f940",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Brief",
+          "detail": "names skill \"opening-brief\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_PushDown",
+          "detail": "names skill \"graph-detanglement\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Report",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ConfirmCreate",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Repoint",
+          "detail": "names skill \"upstream-version-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ConfirmCutover",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Cutover",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_BeanClose",
+          "detail": "needs skill \"todo-manager\", but its lane's role \"administrator\" does not carry it."
+        },
+        {
+          "where": "Call_BeanClose_3",
+          "detail": "needs skill \"todo-manager\", but its lane's role \"administrator\" does not carry it."
+        },
+        {
+          "where": "Call_BeanClose_5",
+          "detail": "needs skill \"todo-manager\", but its lane's role \"administrator\" does not carry it."
+        },
+        {
+          "where": "Call_BeanClose_6",
+          "detail": "needs skill \"todo-manager\", but its lane's role \"administrator\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Call_BeanClose",
+          "detail": "task \"Close the bean\" requires skill \"todo-manager\", which role \"administrator\" (named by lane \"Administrator (owner)\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Call_BeanClose_3",
+          "detail": "task \"Close the bean\" requires skill \"todo-manager\", which role \"administrator\" (named by lane \"Administrator (owner)\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Call_BeanClose_5",
+          "detail": "task \"Close the bean\" requires skill \"todo-manager\", which role \"administrator\" (named by lane \"Administrator (owner)\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Call_BeanClose_6",
+          "detail": "task \"Close the bean\" requires skill \"todo-manager\", which role \"administrator\" (named by lane \"Administrator (owner)\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 17,
+    "fail": 3,
+    "n/a": 7,
+    "unknown": 0
+  }
+}
