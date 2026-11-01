@@ -566,7 +566,8 @@ jobs:
       actions: read
       checks: read
     outputs:
-      reuse: ${{ steps.decide.outputs.reuse }}
+      # `true` only when `inherited` confirms it too (Q-PIPE-1, #2899).
+      reuse: ${{ steps.decide.outputs.reuse == 'true' && steps.inherited.outputs.reuse == 'true' && 'true' || 'false' }}
       run_id: ${{ steps.decide.outputs.run_id }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -596,6 +597,20 @@ jobs:
           WORKFLOW: code-quality-gates.yml
           PRODUCER_JOB: QA working copy, built once for this run (not a gate)
         run: bash cat-harness-tools/scripts/verdict-reuse.sh
+
+      # Q-PIPE-1 (#2899): a PR's shards pass when every failure is main's too.
+      # Such a run concluded `success`, but it is not a green verdict on this
+      # tree, so it must not stand in for main's own run. Reuse is kept only
+      # when every job it would skip recorded no failure at all; anything that
+      # cannot be read is `reuse=false`, and the script exits 0 in every state.
+      - name: A reused run must have passed with no failure inherited from main (Q-PIPE-1)
+        id: inherited
+        if: ${{ steps.decide.outputs.reuse == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ steps.decide.outputs.run_id }}
+        run: python3 .github/scripts/cqg_judge.py reuse-check
 
   qa-working-copy:
     # bpmn-node: Task_QaWorkingCopy
@@ -955,6 +970,11 @@ jobs:
     needs: [qa-working-copy, verdict-reuse, publish-pages]
     if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+    env:
+      CQG_JOB_NAME: "TypeScript — bun test, shard ${{ matrix.shard }}/4"  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
     # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
@@ -980,9 +1000,12 @@ jobs:
     # NOT here: it never checks out, so this path does not exist for it, and it
     # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
     # the same, until bean `5p4m` removed them.)
+    # Q-PIPE-1 (#2899): `cqg-step.sh` runs each step through `gate-shell.sh`
+    # as before, and from the `--begin` step on records it instead of stopping
+    # at it; the job's last step judges the record against main's.
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -1111,9 +1134,19 @@ jobs:
           EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
+      - name: Judge each step from here against main's record (Q-PIPE-1)
+        run: bash .github/scripts/cqg-step.sh --begin
+
+      # The JUnit report names each failing test, so the verdict compares tests,
+      # not the step. It stays the job's last step (`check:red-gate-is-last`),
+      # so it gives the verdict itself (`CQG_VERDICT`).
       - name: bun test
         env:
-          BUN_OPTIONS: --shard=${{ matrix.shard }}/4
+          BUN_OPTIONS: --shard=${{ matrix.shard }}/4 --reporter=junit --reporter-outfile=${{ runner.temp }}/cqg/bun-junit.xml
+          CQG_TESTS: bun
+          CQG_JUNIT: ${{ runner.temp }}/cqg/bun-junit.xml
+          CQG_VERDICT: "true"
+          CQG_TOKEN: ${{ github.token }}
         run: bun test
 
   gates:
@@ -1255,6 +1288,11 @@ jobs:
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+    env:
+      CQG_JOB_NAME: Repository gates — workflows, skills, knowledge graph (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
     # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
@@ -1280,9 +1318,12 @@ jobs:
     # NOT here: it never checks out, so this path does not exist for it, and it
     # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
     # the same, until bean `5p4m` removed them.)
+    # Q-PIPE-1 (#2899): `cqg-step.sh` runs each step through `gate-shell.sh`
+    # as before, and from the `--begin` step on records it instead of stopping
+    # at it; the job's last step judges the record against main's.
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -1418,6 +1459,9 @@ jobs:
 
       - name: Java runtime the PlantUML release declares (#2744)
         uses: ./.github/actions/plantuml-java
+
+      - name: Judge each step from here against main's record (Q-PIPE-1)
+        run: bash .github/scripts/cqg-step.sh --begin
 
       # The base workflow processes are strict; a content package may relax a
       # step only by declaring it with a reason, and never a step the BPMN marks
@@ -1949,6 +1993,17 @@ jobs:
       - name: knowledge-graph audit
         run: bun run cat kg:audit:check
 
+      # Q-PIPE-1 (#2899). `!cancelled()` so it runs after a red step too; it
+      # fails when the record is incomplete, and on a PR when a failure is not
+      # main's too (see `.github/scripts/cqg_judge.py`).
+      - name: No new failures compared with main (Q-PIPE-1)
+        if: ${{ !cancelled() }}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CQG_JOB_STATUS: ${{ job.status }}
+        run: python3 .github/scripts/cqg_judge.py verdict
+
   gates-docs:
     # bpmn-node: Task_RepositoryGates
     name: Repository gates — instances, docs, translations (hard)
@@ -1963,6 +2018,11 @@ jobs:
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+    env:
+      CQG_JOB_NAME: Repository gates — instances, docs, translations (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
     # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
@@ -1988,9 +2048,12 @@ jobs:
     # NOT here: it never checks out, so this path does not exist for it, and it
     # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
     # the same, until bean `5p4m` removed them.)
+    # Q-PIPE-1 (#2899): `cqg-step.sh` runs each step through `gate-shell.sh`
+    # as before, and from the `--begin` step on records it instead of stopping
+    # at it; the job's last step judges the record against main's.
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -2150,6 +2213,9 @@ jobs:
         env:
           EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
+
+      - name: Judge each step from here against main's record (Q-PIPE-1)
+        run: bash .github/scripts/cqg-step.sh --begin
 
       # The same audit, over EVERY declared instance rather than the root alone.
       #
@@ -2949,7 +3015,13 @@ jobs:
       # `check:available-locales`). Each was correct and none of them scaled:
       # "put your gate above the drift" is a rule every future author has to be
       # told, while "the deliberate red is last" is a rule the file enforces.
+      #
+      # It is also where this job's verdict is given (Q-PIPE-1): no step may
+      # follow it, so it carries `CQG_VERDICT`.
       - name: translations have not drifted from their source
+        env:
+          CQG_VERDICT: "true"
+          CQG_TOKEN: ${{ github.token }}
         run: bun run cat translation:drift:check
 
   gates-standalone:
@@ -2968,6 +3040,11 @@ jobs:
     needs: verdict-reuse
     if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+    env:
+      CQG_JOB_NAME: Repository gates — cat-harness standalone ratchet (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
     # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
@@ -2993,9 +3070,12 @@ jobs:
     # NOT here: it never checks out, so this path does not exist for it, and it
     # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
     # the same, until bean `5p4m` removed them.)
+    # Q-PIPE-1 (#2899): `cqg-step.sh` runs each step through `gate-shell.sh`
+    # as before, and from the `--begin` step on records it instead of stopping
+    # at it; the job's last step judges the record against main's.
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -3084,6 +3164,9 @@ jobs:
         # still checks clean.
         run: bun run smart:pages
 
+      - name: Judge each step from here against main's record (Q-PIPE-1)
+        run: bash .github/scripts/cqg-step.sh --begin
+
       # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
       # its declared closure, laid out as sibling git repositories, `bun test`
       # run in cat-harness. 459 tests fail there today, most of them correct
@@ -3094,6 +3177,17 @@ jobs:
       # (an unstable listed test must not flip CI either way).
       - name: cat-harness fails standalone no more than its baseline
         run: bun run cat check:cat-harness-standalone
+
+      # Q-PIPE-1 (#2899). `!cancelled()` so it runs after a red step too; it
+      # fails when the record is incomplete, and on a PR when a failure is not
+      # main's too (see `.github/scripts/cqg_judge.py`).
+      - name: No new failures compared with main (Q-PIPE-1)
+        if: ${{ !cancelled() }}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CQG_JOB_STATUS: ${{ job.status }}
+        run: python3 .github/scripts/cqg_judge.py verdict
 
   gates-unrun:
     # bpmn-node: Task_UnrunGates
@@ -3116,6 +3210,11 @@ jobs:
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+    env:
+      CQG_JOB_NAME: Repository gates — registered, never run elsewhere (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
     # $GITHUB_STEP_SUMMARY — and so to the check run's `output.summary`, an
@@ -3141,9 +3240,12 @@ jobs:
     # NOT here: it never checks out, so this path does not exist for it, and it
     # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
     # the same, until bean `5p4m` removed them.)
+    # Q-PIPE-1 (#2899): `cqg-step.sh` runs each step through `gate-shell.sh`
+    # as before, and from the `--begin` step on records it instead of stopping
+    # at it; the job's last step judges the record against main's.
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -3258,6 +3360,9 @@ jobs:
 
       - name: Java runtime the PlantUML release declares (#2744)
         uses: ./.github/actions/plantuml-java
+
+      - name: Judge each step from here against main's record (Q-PIPE-1)
+        run: bash .github/scripts/cqg-step.sh --begin
 
       - name: gates that were registered and never run
         run: |
@@ -4141,6 +4246,17 @@ jobs:
           bun run cat schema:viz
           bun run cat uploads:viz
 
+      # Q-PIPE-1 (#2899). `!cancelled()` so it runs after a red step too; it
+      # fails when the record is incomplete, and on a PR when a failure is not
+      # main's too (see `.github/scripts/cqg_judge.py`).
+      - name: No new failures compared with main (Q-PIPE-1)
+        if: ${{ !cancelled() }}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CQG_JOB_STATUS: ${{ job.status }}
+        run: python3 .github/scripts/cqg_judge.py verdict
+
       # UN-FOLDED 2026-09-19, bean `folio-assistant-d2kp`.
       #
       # This was a CONTINUATION LINE of the step above: more-indented, so YAML
@@ -4212,6 +4328,7 @@ jobs:
   # Chromium comes from `playwright install --with-deps`, the same call
   # `docs-site` and `feature-staging` already make to render BPMN, so this
   # introduces no new capability requirement.
+
   e2e-scope:
     # bpmn-node: Task_E2E
     # (Whether the e2e shards run on this push; part of that task, as they are.)
@@ -4355,6 +4472,11 @@ jobs:
     needs: [verdict-reuse, e2e-scope, qa-working-copy, publish-pages]
     if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true && needs.e2e-scope.outputs.affected != 'false' }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+    env:
+      CQG_JOB_NAME: "End-to-end + accessibility, shard ${{ matrix.shard }}/3"  # this job's `name:`, to find its record on main
     strategy:
       # Every shard reports, so one red shard does not hide another's result.
       fail-fast: false
@@ -4385,9 +4507,12 @@ jobs:
     # NOT here: it never checks out, so this path does not exist for it, and it
     # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
     # the same, until bean `5p4m` removed them.)
+    # Q-PIPE-1 (#2899): `cqg-step.sh` runs each step through `gate-shell.sh`
+    # as before, and from the `--begin` step on records it instead of stopping
+    # at it; the job's last step judges the record against main's.
     defaults:
       run:
-        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+        shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
@@ -4461,6 +4586,9 @@ jobs:
       - name: Install Chromium
         run: npx --yes playwright install --with-deps chromium
 
+      - name: Judge each step from here against main's record (Q-PIPE-1)
+        run: bash .github/scripts/cqg-step.sh --begin
+
       # The suite generates what it needs under _kg/ if absent, so the
       # artefacts under test are the ones the deploy emits rather than a
       # committed fixture that could agree with the test and disagree with
@@ -4492,6 +4620,7 @@ jobs:
       # failed producer reaches these steps and stops the shard red, saying
       # why, rather than testing pages nobody built.
       - name: The QA working copy and the publish-time pages were built for this run
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}  # setup, not judged
         env:
           QA: ${{ needs.qa-working-copy.result }}
           PAGES: ${{ needs.publish-pages.result }}
@@ -4508,6 +4637,7 @@ jobs:
           path: ${{ runner.temp }}/qa-working-copy
 
       - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}  # setup, not judged
         env:
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
@@ -4519,6 +4649,7 @@ jobs:
           path: ${{ runner.temp }}/publish-pages
 
       - name: Restore the publish-time pages, byte-identical to the producer's (B1)
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}  # setup, not judged
         env:
           EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
@@ -4529,7 +4660,14 @@ jobs:
           # The pages were restored above; `e2e-global-setup.ts` builds them
           # itself only when this is unset, as it is in a local run.
           E2E_DERIVED: present
-        run: bunx playwright test -c cat-harness-tools/playwright.config.ts
+          # Q-PIPE-1: the JUnit report names each failing spec for the verdict.
+          # `--reporter` replaces the config's list + html, so both are kept.
+          CQG_TESTS: playwright
+          CQG_JUNIT: ${{ runner.temp }}/cqg/e2e-junit.xml
+          PLAYWRIGHT_JUNIT_OUTPUT_FILE: ${{ runner.temp }}/cqg/e2e-junit.xml
+          PLAYWRIGHT_HTML_OUTPUT_DIR: ${{ github.workspace }}/playwright-report
+          PLAYWRIGHT_HTML_OPEN: never
+        run: bunx playwright test -c cat-harness-tools/playwright.config.ts --reporter=list,html,junit
 
       # KEEP THE REPORT WHEN THE JOB GOES RED — bean `yqc4`.
       #
@@ -4549,7 +4687,8 @@ jobs:
       # and 3 took ~2 min and passed. `error` here would add a second, louder
       # failure on top of the real one and point at the wrong step.
       - name: Keep the Playwright report
-        if: failure()
+        # `CQG_FAILED`: a judged step failed and was recorded (Q-PIPE-1).
+        if: ${{ failure() || env.CQG_FAILED == 'true' }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: playwright-report-shard-${{ matrix.shard }}
@@ -4567,6 +4706,17 @@ jobs:
       - name: windows .bat wrappers are current
         if: matrix.shard == 1
         run: bun run cat bat:sync:check
+
+      # Q-PIPE-1 (#2899). `!cancelled()` so it runs after a red step too; it
+      # fails when the record is incomplete, and on a PR when a failure is not
+      # main's too (see `.github/scripts/cqg_judge.py`).
+      - name: No new failures compared with main (Q-PIPE-1)
+        if: ${{ !cancelled() }}
+        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CQG_JOB_STATUS: ${{ job.status }}
+        run: python3 .github/scripts/cqg_judge.py verdict
 
   skill-registration-chain:
     # bpmn-node: Task_SkillChain
