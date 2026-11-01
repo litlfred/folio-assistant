@@ -7,6 +7,5 @@ Part of [Folio Assistant](../README.md) 0.1.0, declared as `issue-marks`, holdin
 
 | file | what it is | used by |
 |---|---|---|
-| [`litlfred-folio-assistant-203.json`](litlfred-folio-assistant-203.json) | data |  |
 | [`litlfred-folio-assistant-223.json`](litlfred-folio-assistant-223.json) | data |  |
 <!-- kg:subgraph:end -->
