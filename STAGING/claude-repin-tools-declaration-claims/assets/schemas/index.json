@@ -2152,6 +2152,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/sdlc/harness-state.ts",
+      "instance": "cat-harness-tools",
+      "name": "harness-state",
+      "graphNode": "undeclared",
+      "summary": "One harness's state as `harness:state` publishes it (`folio-harness-state/v1`).",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/sdlc/health-report.ts",
       "instance": "cat-harness-tools",
       "name": "health-report",
@@ -48777,6 +48785,224 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessBadge",
+      "name": "HarnessBadge",
+      "module": "cat-harness-tools/schemas/sdlc/harness-state.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessBadgeSchema",
+      "name": "HarnessBadgeSchema",
+      "module": "cat-harness-tools/schemas/sdlc/harness-state.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.enum([\"initialization\", \"repository\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "state",
+          "type": "z.enum(HARNESS_BADGE_STATES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "HARNESS_BADGE_STATES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessState",
+      "name": "HarnessState",
+      "module": "cat-harness-tools/schemas/sdlc/harness-state.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStateIndexSchema",
+      "name": "HarnessStateIndexSchema",
+      "module": "cat-harness-tools/schemas/sdlc/harness-state.ts",
+      "kind": "zod-object",
+      "doc": "The list of harnesses in `--out`, for a page that shows them all.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(HARNESS_STATE_INDEX_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "harnesses",
+          "type": "z.array(z.object({ harness: z.string().min(1), file: z.string().min(1), position: z.string().min(1) }).strict())",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "HARNESS_STATE_INDEX_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStateSchema",
+      "name": "HarnessStateSchema",
+      "module": "cat-harness-tools/schemas/sdlc/harness-state.ts",
+      "kind": "zod-object",
+      "doc": "One harness's state, as the deploy publishes it.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(HARNESS_STATE_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "harness",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "initialization",
+          "type": "z .object({ position: z.string().min(1), next: z.object({ step: z.string().min(1), action: z.string() }).strict().nulla…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "health",
+          "type": "z.object({ badges: z.array(HarnessBadgeSchema) }).strict()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessBadgeSchema",
+        "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStepSchema",
+        "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStepState"
+      ],
+      "unresolved": [],
+      "external": [
+        "HARNESS_STATE_SCHEMA",
+        "HARNESS_STEP_STATES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStatesSchema",
+      "name": "HarnessStatesSchema",
+      "module": "cat-harness-tools/schemas/sdlc/harness-state.ts",
+      "kind": "zod-array",
+      "doc": "`harness:state --json`: every harness's state, in name order.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStepSchema",
+      "name": "HarnessStepSchema",
+      "module": "cat-harness-tools/schemas/sdlc/harness-state.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "namedBy",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "what",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "state",
+          "type": "z.enum(HARNESS_STEP_STATES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "detail",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "action",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "HARNESS_STEP_STATES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStepState",
+      "name": "HarnessStepState",
+      "module": "cat-harness-tools/schemas/sdlc/harness-state.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/sdlc/health-report.ts#HealthCheckResult",
       "name": "HealthCheckResult",
       "module": "cat-harness-tools/schemas/sdlc/health-report.ts",
@@ -59311,6 +59537,20 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/tools/store-tool-results.ts#BeanQueryRowsSchema",
+      "name": "BeanQueryRowsSchema",
+      "module": "cat-harness-tools/schemas/tools/store-tool-results.ts",
+      "kind": "zod-array",
+      "doc": "`bean_query` with `format: json` (`QueryResultRow[]`): one object per SPARQL solution, bean IRIs shortened to ids.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -90649,6 +90889,30 @@
       "from": "cat-harness-tools/schemas/sdlc/change-size.ts#ChangeSizeBreakdown",
       "to": "cat-harness-tools/schemas/sdlc/change-size.ts#ChangeSizeThreshold",
       "via": "threshold",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStateSchema",
+      "to": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessBadgeSchema",
+      "via": "health",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStateSchema",
+      "to": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStepSchema",
+      "via": "initialization",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStateSchema",
+      "to": "cat-harness-tools/schemas/sdlc/harness-state.ts#HarnessStepState",
+      "via": "initialization",
       "kind": "field",
       "optional": false,
       "array": false

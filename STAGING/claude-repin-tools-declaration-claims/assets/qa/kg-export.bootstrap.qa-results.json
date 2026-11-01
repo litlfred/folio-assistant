@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 13,
+      "count": 14,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -41,6 +41,10 @@
         },
         {
           "module": "../cat-harness-tools/schemas/harness-root.ts",
+          "why": "no-tag"
+        },
+        {
+          "module": "../cat-harness-tools/schemas/sdlc/harness-state.ts",
           "why": "no-tag"
         },
         {
@@ -83,5 +87,5 @@
       "entries": []
     }
   },
-  "total": 13
+  "total": 14
 }

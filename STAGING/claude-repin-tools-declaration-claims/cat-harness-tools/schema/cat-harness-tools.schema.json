@@ -1350,6 +1350,21 @@
     "zod/change-size/ChangeSizeThresholdSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/change-size/ChangeSizeThresholdSchema.schema.json"
     },
+    "zod/harness-state/HarnessBadgeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessBadgeSchema.schema.json"
+    },
+    "zod/harness-state/HarnessStateIndexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStateIndexSchema.schema.json"
+    },
+    "zod/harness-state/HarnessStateSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStateSchema.schema.json"
+    },
+    "zod/harness-state/HarnessStatesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStatesSchema.schema.json"
+    },
+    "zod/harness-state/HarnessStepSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStepSchema.schema.json"
+    },
     "zod/health-report/HealthCheckResultSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/health-report/HealthCheckResultSchema.schema.json"
     },
@@ -1899,6 +1914,9 @@
     "zod/store-tool-results/BeanCommitSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/BeanCommitSchema.schema.json"
     },
+    "zod/store-tool-results/BeanQueryRowsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/BeanQueryRowsSchema.schema.json"
+    },
     "zod/store-tool-results/DrainQueueSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/DrainQueueSchema.schema.json"
     },
@@ -2437,8 +2455,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
   "staging": {
     "branch": "claude/repin-tools-declaration-claims",
-    "sha": "b263663393360d9ad3d45a6796ca2f765364c954",
+    "sha": "2ddbec44fe05b8ebbd7ddcaee36a02890a07a252",
     "pr": "2864/merge",
-    "run": "41320930284"
+    "run": "41324919321"
   }
 }

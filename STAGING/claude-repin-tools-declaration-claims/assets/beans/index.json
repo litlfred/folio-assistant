@@ -69,14 +69,14 @@
     {
       "id": "folio-assistant-75c5",
       "title": "INGEST: volume-separation acceptance run on the GDZ Invent. Math. volume",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "low",
       "parent": "folio-assistant-slw1",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-30T12:45:00Z",
-      "updatedAt": "2026-10-31T02:41:00Z",
+      "updatedAt": "2026-11-01T15:47:00Z",
       "preview": "Bean for cat-harness-tools#132. The arm and its scoring are merged (cat-harness-tools#801, `scripts/volume-separation.py`), and its 7 tests pass on main 9434d65.\n\n## Done when\n- [x] at least 3 voter model runs over the GDZ Invent. Math. volume, scored against qou's hand cut. This needs qou access, and qou PRs wait for the owner.\n- [x] a span a person has confirmed becomes one entry per article, wi",
       "file": "beans/defs/folio-assistant-75c5--volume-separation-acceptance-run-gdz.md"
     },
@@ -307,6 +307,20 @@
       "updatedAt": "2026-11-01T06:25:00Z",
       "preview": "## Why\n\nA file generated from the WHOLE repository goes stale on `main` when two PRs merge one after the other. Each PR regenerated it for its own branch, and neither copy includes the other PR's change. A direct push or web upload has the same effect. Post-merge regen (bean `ey1c`) repairs this after the fact, but it cannot open its repair PR here: `GitHub Actions is not permitted to create or ap",
       "file": "beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md"
+    },
+    {
+      "id": "folio-assistant-pga6",
+      "title": "Separation Phase III: L4/L5 Content, Tool and Test repos on the harness, plus current and future architecture write-up",
+      "status": "todo",
+      "type": "task",
+      "priority": "low",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-01T15:47:00Z",
+      "updatedAt": "2026-11-01T15:47:00Z",
+      "preview": "Split from folio-assistant#223 (\"separation of concerns\"), closed on the owner's card Q-S6-2 \"A. Close + bean for Phase III\" (2026-11-01 15:45Z, thread \"Sweep old proposal issues\", https://claude.ai/code/session_01Qmmkt4armXsG8JwtkMqMEW).\n\nPhases I and II of #223 are done: epic 7x5n (separation arc) is completed, and epic iirv has only 6fez (library regroup) left. Two parts of #223 were never star",
+      "file": "beans/defs/folio-assistant-pga6--separation-phase-iii-and-architecture-doc.md"
     },
     {
       "id": "folio-assistant-r29x",
