@@ -38,6 +38,10 @@ updates:
       - "/.github/scripts"
     schedule:
       interval: weekly
+    # A release must be a week old before it is proposed: most hijacked
+    # releases are caught and pulled within days (security audit, 2026-11-01).
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 3
     groups:
       minor-and-patch:
@@ -57,8 +61,17 @@ updates:
   # chain this repo had no eyes on at all.
   - package-ecosystem: github-actions
     directory: "/"
+    # Shared litlfred workflows follow index.lock.json (`bun run cat
+    # workflow-pins`), never Dependabot: a bump here would split a call from
+    # the layer commit the lock mounts.
+    ignore:
+      - dependency-name: "litlfred/*"
     schedule:
       interval: weekly
+    # A release must be a week old before it is proposed: most hijacked
+    # releases are caught and pulled within days (security audit, 2026-11-01).
+    cooldown:
+      default-days: 7
     open-pull-requests-limit: 5
     groups:
       actions:
