@@ -2,7 +2,7 @@
 # folio-assistant-vbhb
 $schema: bean/1.0.0
 title: 'sci and folio-assistant pin tools and workflows to moving refs'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-security
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T08:24:00Z
+updated_at: 2026-11-01T22:10:00Z
 parent: folio-assistant-sb31
 ---
 
@@ -33,3 +33,5 @@ Third-party actions in both repos are all SHA-pinned (cat-harness-tools `pin-act
 _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
 
 _2026-10-31T08:24:00Z_ — PRs open: https://github.com/litlfred/folio-assistant-sci/pull/158 (SHA-pins `litlfred/cat-harness-tools/.github/workflows/layer-*.yml` in `sci`) and https://github.com/litlfred/folio-assistant/pull/2829 (pins `sagemath/sagemath@sha256:310dfe23fc786f3a5a06a7b0387c60201ec79b32c0db941b7624505ee5edb565` in `.mcp.json` and `.github/workflows/wrapper-tests.yml`).
+
+_2026-11-01T22:10:00Z_ — Completed: folio-assistant part merged in litlfred/folio-assistant#2829 (merge `cbd4361`): `.mcp.json` and `wrapper-tests.yml` pin `sagemath/sagemath` by `@sha256:` digest. sci part merged earlier in folio-assistant-sci#158. MVP security review, session https://claude.ai/code/session_01Qmmkt7zjJDpkdmxtXvQWTS

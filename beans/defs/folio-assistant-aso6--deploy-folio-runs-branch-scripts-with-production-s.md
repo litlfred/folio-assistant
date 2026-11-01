@@ -2,7 +2,7 @@
 # folio-assistant-aso6
 $schema: bean/1.0.0
 title: 'deploy-folio runs branch scripts with production secrets and no permissions block'
-status: in-progress
+status: completed
 type: bug
 priority: high
 tags:
@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-security
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T08:24:00Z
+updated_at: 2026-11-01T22:10:00Z
 parent: folio-assistant-sb31
 ---
 
@@ -38,3 +38,5 @@ Fixed in litlfred/folio-assistant#2827 (merge `666bac2`): top-level read-only pe
 **Owner action still needed:** move HETZNER_API_TOKEN and the OAuth secrets into the `production` environment and add a required reviewer.
 
 _2026-10-31T08:24:00Z_ — `deploy-folio.yml`, `pyhecke.yml`, `pyodide-smoke.yml`, and `pyhecke-native-wheels.yml` merged in https://github.com/litlfred/folio-assistant/pull/2827 (`666bac2be`); PR open for the remaining workflow (`copilot-setup-steps.yml`) top-level `permissions: contents: read` and test coverage across all workflows in `.github/workflows/`: https://github.com/litlfred/folio-assistant/pull/2829.
+
+_2026-11-01T22:10:00Z_ — Completed: the last workflow without a top-level `permissions:` block (`copilot-setup-steps.yml`) and a test over every workflow merged in litlfred/folio-assistant#2829 (`cbd4361`). The owner action (move the deploy secrets into the `production` environment with a required reviewer) was deferred by the owner on 2026-11-01 21:20Z and is tracked as `folio-assistant-nbp9`. MVP security review, session https://claude.ai/code/session_01Qmmkt7zjJDpkdmxtXvQWTS

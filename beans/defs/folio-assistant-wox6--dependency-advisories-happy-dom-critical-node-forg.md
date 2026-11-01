@@ -2,7 +2,7 @@
 # folio-assistant-wox6
 $schema: bean/1.0.0
 title: 'Dependency advisories: happy-dom critical, node-forge, zod, undici'
-status: in-progress
+status: completed
 type: bug
 priority: high
 tags:
@@ -10,7 +10,7 @@ tags:
     - security-review-2026-10-31
     - red-flag-security
 created_at: 2026-10-31T04:01:56Z
-updated_at: 2026-10-31T08:24:00Z
+updated_at: 2026-11-01T22:10:00Z
 parent: folio-assistant-sb31
 ---
 
@@ -44,3 +44,5 @@ _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a
 sci part fixed in litlfred/folio-assistant-sci#156 (merge `0729230`): happy-dom 21.0.4, zod ^4.6.7; sci audit 32 to 27 (0 critical). Still open: node-forge and zod 3 via the fhir-harness expo chain, undici 5.29 via jsonld, express-chain advisories via @modelcontextprotocol/sdk.
 
 _2026-10-31T08:24:00Z_ — `@happy-dom/global-registrator` `21.0.4` and `zod` `^4.6.7` merged in https://github.com/litlfred/folio-assistant-sci/pull/156 (`0729230`) and https://github.com/litlfred/folio-assistant/pull/2828 (`68fc69cca`); PRs open with full `overrides` (`node-forge`, `body-parser`, `@fastify/busboy`, `qs`, `fast-uri`, `undici`, `zod`) reducing `bun audit` high/critical advisories to 0 in both repos: https://github.com/litlfred/folio-assistant-sci/pull/158 and https://github.com/litlfred/folio-assistant/pull/2829.
+
+_2026-11-01T22:10:00Z_ — Completed: litlfred/folio-assistant#2829 merged (`cbd4361`) with `overrides` for node-forge, body-parser, @fastify/busboy, qs, fast-uri, undici and zod. `bun audit` on the merged tree: 7 advisories, 0 critical, 0 high (5 moderate, 2 low). Re-check 2026-11-01: core 2 (0 high), tools 3 (0 high). MVP security review, session https://claude.ai/code/session_01Qmmkt7zjJDpkdmxtXvQWTS
