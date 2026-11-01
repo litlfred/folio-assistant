@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/smart-base/skill/ig-artifact-ingestion.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/ig-artifact-ingestion.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/ig-artifact-ingestion",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "ig-artifact-ingestion",
+      "title": "ig-artifact-ingestion",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
+      "instructionLines": 267,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

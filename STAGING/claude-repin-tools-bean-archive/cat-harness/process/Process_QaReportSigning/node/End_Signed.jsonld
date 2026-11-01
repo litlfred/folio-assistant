@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/process/Process_QaReportSigning/node/End_Signed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/process/Process_QaReportSigning/node/End_Signed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Report attested and stored",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/role/validation-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/process/Process_QaReportSigning#flow/S10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/End_Signed"
+    }
+  ]
+}

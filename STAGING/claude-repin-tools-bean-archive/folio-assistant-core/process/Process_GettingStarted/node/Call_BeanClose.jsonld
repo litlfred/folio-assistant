@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_GettingStarted/node/Call_BeanClose.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_GettingStarted/node/Call_BeanClose",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_GettingStarted",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/role/publish-target",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_GettingStarted#flow/Flow_done1",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_GettingStarted#flow/Flow_done2",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_GettingStarted#flow/Flow_done3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_GettingStarted#flow/SF_Bean_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Call_BeanClose"
+    }
+  ]
+}

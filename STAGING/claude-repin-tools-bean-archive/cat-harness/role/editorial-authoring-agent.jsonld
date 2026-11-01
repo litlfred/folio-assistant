@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/role/editorial-authoring-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/role/editorial-authoring-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Editorial authoring agent",
+      "title": "Editorial authoring agent",
+      "notation": "editorial-authoring-agent",
+      "description": "The authoring agent in the editorial lane: auditing a block's prose, structure and sourcing rather than writing new subject matter.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/skill/block-density",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/skill/chapter-complexity-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/skill/readability-editing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/skill/scientific-accuracy",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/skill/one-voice-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/skill/md-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/skill/html-rendering-qc",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/skill/markdown-render-check",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/skill/exposition-swarm-drain",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/skill/todo-review"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/editorial-authoring-agent"
+    }
+  ]
+}

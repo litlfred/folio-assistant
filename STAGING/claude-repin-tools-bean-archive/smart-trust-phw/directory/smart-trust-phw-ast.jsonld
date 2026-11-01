@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/smart-trust-phw/directory/smart-trust-phw-ast.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/smart-trust-phw/directory/smart-trust-phw-ast",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-trust-phw-ast",
+      "path": "fhir-ast/",
+      "contentSource": {
+        "kind": "family",
+        "branch": "cat/fhir-harness/fhir-ast/",
+        "keyFrom": "the IG's package id",
+        "familyRepository": "litlfred/smart-trust-phw",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/ig-ast"
+      ],
+      "description": "WHO SMART Trust Personal Health Wallet's IG Publisher AST, INGESTED here although the IG's source is not (owner, 2026-10-04: an IG's semi-static KG may stay remote, and its AST is still ingested into the folio). Read from the branch family cat/fhir-harness/fhir-ast/ on the IG's own repository (litlfred/smart-trust-phw), one branch per IG package id; this IG's member is cat/fhir-harness/fhir-ast/smart.who.int.trust-phw. Restored by fhir-harness/scripts/ig-cache.sh; absent from the checkout by design. Bean nr5p.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/smart-trust-phw/directory/smart-trust-phw-ast",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-ast"
+    }
+  ]
+}

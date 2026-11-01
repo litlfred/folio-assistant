@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_ContentChangeReview/node/Task_DescribeChange.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_ContentChangeReview/node/Task_DescribeChange",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Describe the desired change",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_ContentChangeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Author",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_ContentChangeReview#flow/f1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_ContentChangeReview#flow/f2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_DescribeChange"
+    }
+  ]
+}

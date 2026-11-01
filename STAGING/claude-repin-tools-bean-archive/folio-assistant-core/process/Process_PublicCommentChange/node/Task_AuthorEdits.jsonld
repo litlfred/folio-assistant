@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Edit the document as decided, on a feature branch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_PublicCommentChange",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Author",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/skill/public-comment"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToAuthor",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_QaFailed"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/process/Process_PublicCommentChange#flow/Flow_ToChangeSet"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits"
+    }
+  ]
+}

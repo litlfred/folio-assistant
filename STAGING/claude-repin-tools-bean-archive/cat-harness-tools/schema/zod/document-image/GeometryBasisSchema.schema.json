@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/GeometryBasis",
+  "definitions": {
+    "GeometryBasis": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "const": "geometry"
+        },
+        "coverage": {
+          "type": "number",
+          "minimum": 0
+        },
+        "imagesOnPage": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "method",
+        "coverage",
+        "imagesOnPage",
+        "page"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/GeometryBasisSchema.schema.json",
+  "title": "GeometryBasisSchema",
+  "description": "Generated from `GeometryBasisSchema` in schemas/content/document-image.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  }
+}

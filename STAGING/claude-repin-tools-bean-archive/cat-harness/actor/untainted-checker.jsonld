@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/actor/untainted-checker.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/actor/untainted-checker",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "untainted-checker",
+      "actorKind": "agent",
+      "title": "Untainted checker",
+      "description": "The dispatched party that renders an artefact independently — a back-translation, an independent finding — given only what `UntaintedDispatch.checker_sees` allows and nothing that would let it shortcut. It RULES ON NOTHING: its witness carries `result: \"n/a\"` and the intermediate text a reader needs to ask 'on what basis?'. It deliberately does NOT hold `qa-reporting`, and that absence is the point — a checker that emits a verdict is comparing a thing with its own paraphrase of itself, and `check:qa-reviewer-permission` refuses it structurally rather than by convention.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/role/feedback-provider",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/role/qc-reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/role/untainted-checker"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/untainted-checker"
+    }
+  ]
+}

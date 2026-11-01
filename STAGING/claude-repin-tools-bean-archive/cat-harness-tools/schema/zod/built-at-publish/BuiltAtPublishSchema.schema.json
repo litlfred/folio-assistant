@@ -1,0 +1,73 @@
+{
+  "$ref": "#/definitions/BuiltAtPublish",
+  "definitions": {
+    "BuiltAtPublish": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9:_-]+$"
+          }
+        },
+        "because": {
+          "type": "string",
+          "enum": [
+            "checkout",
+            "state"
+          ]
+        },
+        "from": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "directory": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reads": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "index": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "path",
+        "writer",
+        "because",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/built-at-publish/BuiltAtPublishSchema.schema.json",
+  "title": "BuiltAtPublishSchema",
+  "description": "Generated from `BuiltAtPublishSchema` in schemas/kg/built-at-publish.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  }
+}

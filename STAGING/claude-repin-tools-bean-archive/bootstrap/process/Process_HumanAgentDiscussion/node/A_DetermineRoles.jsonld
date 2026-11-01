@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineRoles.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineRoles",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Determine the roles: which you act as, and the person's",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/process/Process_HumanAgentDiscussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/skill/human-agent-discussion"
+    }
+  ]
+}

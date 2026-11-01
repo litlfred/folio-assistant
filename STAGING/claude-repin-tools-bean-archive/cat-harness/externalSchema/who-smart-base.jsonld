@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/externalSchema/who-smart-base.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/externalSchema/who-smart-base",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#ExternalSchema",
+      "name": "who-smart-base",
+      "title": "WHO SMART Guidelines base IG",
+      "authority": "other",
+      "specVersion": "v1.0.0",
+      "specUse": "reads",
+      "specUrl": "https://smart.who.int/base/",
+      "namespace": [
+        "http://smart.who.int/base/StructureDefinition/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/who-smart-base"
+    }
+  ]
+}

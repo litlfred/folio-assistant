@@ -1,0 +1,258 @@
+{
+  "$ref": "#/definitions/GraphTypologyNode",
+  "definitions": {
+    "GraphTypologyNode": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-graph-typology/v1"
+        },
+        "kind": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layer": {
+          "type": "string",
+          "const": "core"
+        },
+        "perInstance": {
+          "type": "boolean",
+          "const": true
+        },
+        "newInstanceSource": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "branch"
+            },
+            "keyedBy": {
+              "type": "string",
+              "enum": [
+                "tip"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "keyedBy"
+          ],
+          "additionalProperties": false
+        },
+        "renderable": {
+          "type": "boolean"
+        },
+        "shownOnPublishedPages": {
+          "type": "boolean",
+          "const": true
+        },
+        "recordsWork": {
+          "type": "boolean"
+        },
+        "holds": {
+          "type": "string",
+          "enum": [
+            "content",
+            "context",
+            "state",
+            "derived"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "validatorNotApplicable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nodeSchemas": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "validator": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "generated": {
+                    "type": "boolean",
+                    "const": true
+                  },
+                  "derived": {
+                    "type": "boolean",
+                    "const": true
+                  }
+                },
+                "required": [
+                  "validator"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "shape": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "generated": {
+                    "type": "boolean",
+                    "const": true
+                  },
+                  "derived": {
+                    "type": "boolean",
+                    "const": true
+                  }
+                },
+                "required": [
+                  "shape"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "external": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "generated": {
+                    "type": "boolean",
+                    "const": true
+                  },
+                  "derived": {
+                    "type": "boolean",
+                    "const": true
+                  }
+                },
+                "required": [
+                  "external"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "generated": {
+                    "type": "boolean",
+                    "const": true
+                  },
+                  "derived": {
+                    "type": "boolean",
+                    "const": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "declarationFile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "concernGroups": {
+          "type": "boolean",
+          "const": true
+        },
+        "within": {
+          "type": "string",
+          "minLength": 1
+        },
+        "avatar": {
+          "type": "object",
+          "properties": {
+            "glyph": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tone": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 359
+            },
+            "reads": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "glyph",
+            "tone",
+            "reads"
+          ],
+          "additionalProperties": false
+        },
+        "tileIcon": {
+          "type": "string",
+          "minLength": 1
+        },
+        "published": {
+          "type": "boolean",
+          "const": false
+        },
+        "skillBearing": {
+          "type": "boolean",
+          "const": true
+        },
+        "kgContent": {
+          "type": "boolean",
+          "const": true
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "renderableNote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anyLayer": {
+          "type": "boolean",
+          "const": true
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "$schema",
+        "kind",
+        "renderable",
+        "holds",
+        "summary"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/graph-typology-node/GraphTypologyNodeSchema.schema.json",
+  "title": "GraphTypologyNodeSchema",
+  "description": "Generated from `GraphTypologyNodeSchema` in schemas/kg/graph-typology-node.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  }
+}

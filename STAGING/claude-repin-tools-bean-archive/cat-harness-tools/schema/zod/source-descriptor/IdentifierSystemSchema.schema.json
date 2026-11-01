@@ -1,0 +1,39 @@
+{
+  "$ref": "#/definitions/IdentifierSystem",
+  "definitions": {
+    "IdentifierSystem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authoritative": {
+          "type": "boolean"
+        },
+        "example": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "authoritative"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/source-descriptor/IdentifierSystemSchema.schema.json",
+  "title": "IdentifierSystemSchema",
+  "description": "Generated from `IdentifierSystemSchema` in schemas/library/source-descriptor.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  }
+}

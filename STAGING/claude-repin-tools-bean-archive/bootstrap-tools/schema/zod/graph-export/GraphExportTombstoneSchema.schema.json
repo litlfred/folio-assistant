@@ -1,0 +1,42 @@
+{
+  "$ref": "#/definitions/GraphExportTombstone",
+  "definitions": {
+    "GraphExportTombstone": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "deprecated": {
+          "type": "boolean",
+          "const": true
+        },
+        "isReplacedBy": {
+          "type": "string",
+          "format": "uri"
+        },
+        "sameAs": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "@id",
+        "deprecated",
+        "isReplacedBy",
+        "sameAs"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap-tools/schema/zod/graph-export/GraphExportTombstoneSchema.schema.json",
+  "title": "GraphExportTombstoneSchema",
+  "description": "Generated from `GraphExportTombstoneSchema` in schemas/graph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  }
+}

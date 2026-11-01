@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/capability/docling.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/capability/docling",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "docling",
+      "name": "Docling (layout-aware PDF parsing)",
+      "description": "IBM's MIT-licensed document parser: layout analysis, TableFormer table structure, formula enrichment. Stage 3 of docs/proposals/rag-document-ingestion.md §10 — the ~20 documents pypdf cannot serve (7 no-TOC, 17 unsectioned, 7 likely-scanned) plus the WHO L1 guidelines, where boxed recommendations and GRADE tables are layout facts. IMPORTANT: `pip install docling` succeeds but a first parse fetches weights from huggingface.co, which returns `CONNECT tunnel failed, response 403` under organisation policy (re-measured 2026-08-26). So the import is NOT the capability, and this probe does not stop there: it passes when the weights are already cached locally, and otherwise falls back to a 5-second reachability check. A sandboxed session therefore reports ABSENT and a workstation with models downloaded passes offline and instantly. Run it where egress allows and commit the artefacts.",
+      "detection": {
+        "method": "command",
+        "command": "python3 -c 'import docling' && { [ -d \"$HOME/.cache/docling/models\" ] || curl -sf --max-time 5 -o /dev/null https://huggingface.co; }"
+      },
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/cat-harness/capability/python3"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/docling"
+    }
+  ]
+}

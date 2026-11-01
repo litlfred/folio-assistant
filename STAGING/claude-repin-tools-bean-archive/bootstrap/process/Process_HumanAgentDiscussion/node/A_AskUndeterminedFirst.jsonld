@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/process/Process_HumanAgentDiscussion/node/A_AskUndeterminedFirst.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/process/Process_HumanAgentDiscussion/node/A_AskUndeterminedFirst",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Ask first about what could not be determined",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/process/Process_HumanAgentDiscussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-bean-archive/bootstrap/skill/human-agent-discussion"
+    }
+  ]
+}

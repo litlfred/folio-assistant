@@ -1,0 +1,33 @@
+{
+  "$ref": "#/definitions/TaskRef",
+  "definitions": {
+    "TaskRef": {
+      "type": "object",
+      "properties": {
+        "process": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+          "description": "A BPMN process element id, e.g. Process_CRDM"
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "process",
+        "task"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo/TaskRefSchema.schema.json",
+  "title": "TaskRefSchema",
+  "description": "Generated from `TaskRefSchema` in schemas/sdlc/todo.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-bean-archive",
+    "sha": "3cb8916c24f6fe4569042ced445bb64de0219a5e",
+    "pr": "2872/merge",
+    "run": "41300507891"
+  }
+}
