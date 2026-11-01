@@ -60,12 +60,21 @@ export interface Verdict {
  * baseline commit does not fail a check of the same name; that includes a
  * check main does not run at all (a PR-only check failing is new).
  */
+/**
+ * A hard gate that main runs must have run on the train too. Until it shows
+ * up, the train is pending, not green: the verdict can fire when one workflow
+ * finishes before the gates workflow has created its checks (fa#2890 at
+ * 260dbf8 went green with only the staging checks present).
+ */
+export const isRequired = (name: string): boolean => /\(hard\)/.test(name);
+
 export function compare(train: readonly CheckRun[], main: readonly CheckRun[]): Verdict {
   const t = newestByName(train);
   const m = newestByName(main);
   const pending: string[] = [];
   const newFailures: string[] = [];
   const knownFailures: string[] = [];
+  for (const name of m.keys()) if (isRequired(name) && !t.has(name)) pending.push(name);
   for (const [name, run] of t) {
     if (run.status !== "completed") {
       pending.push(name);

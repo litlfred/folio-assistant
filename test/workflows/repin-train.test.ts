@@ -55,6 +55,12 @@ describe("no new failures compared with main", () => {
   test("no checks at all is never green", () => {
     expect(compare([], []).state).toBe("pending");
   });
+
+  test("waits for a hard gate main runs that has not started on the train", () => {
+    const v = compare([run("stage", "success")], [run("Repository gates (hard)", "success"), run("deploy", "success")]);
+    expect(v.state).toBe("pending");
+    expect(v.pending).toEqual(["Repository gates (hard)"]);
+  });
 });
 
 describe("main's baseline is read one check at a time", () => {
