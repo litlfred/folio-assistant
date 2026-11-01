@@ -1,0 +1,177 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_AskThePerson",
+    "path": "processes/process/ask-the-person.bpmn"
+  },
+  "source_hash": "sha256:8396c9f09c29ce7d08a2ba8199350ee9a34acd8f4e2450bee149064bbb988a57",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Compose",
+          "detail": "names skill \"ask-the-person\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Compose",
+          "detail": "names skill \"decision-comparison\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_HandBack",
+          "detail": "names skill \"hand-back-to-discussion\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_WriteInChat",
+          "detail": "names skill \"ask-the-person\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_OfferCard",
+          "detail": "names skill \"ask-the-person\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "U_Choose",
+          "detail": "names skill \"interaction-modality\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Record",
+          "detail": "names skill \"ask-the-person\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Record",
+          "detail": "names skill \"symbiotic-interaction\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ProceedOnDefault",
+          "detail": "names skill \"ask-the-person\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_HandBack",
+          "detail": "needs skill \"hand-back-to-discussion\", but its lane's role \"authoring-agent\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_HandBack",
+          "detail": "task \"Hand it back to the discussion\" requires skill \"hand-back-to-discussion\", which role \"authoring-agent\" (named by lane \"Agent\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_HandBack",
+          "detail": "\"Hand it back to the discussion\" names skill \"hand-back-to-discussion\", which owns hand-back-to-discussion.bpmn, but is a plain task. Make it a <bpmn:callActivity calledElement=\"…\"> so the diagram descends into that process, or declare <cat-harness.processes:no-call reason=\"…\"/> saying why it only uses the skill."
+        }
+      ]
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 14,
+    "fail": 4,
+    "n/a": 9,
+    "unknown": 0
+  }
+}
