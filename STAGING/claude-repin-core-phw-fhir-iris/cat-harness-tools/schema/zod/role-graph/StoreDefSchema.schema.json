@@ -1,0 +1,69 @@
+{
+  "$ref": "#/definitions/StoreDef",
+  "definitions": {
+    "StoreDef": {
+      "type": "object",
+      "properties": {
+        "holds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "api": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "style": {
+                "type": "string",
+                "enum": [
+                  "openapi",
+                  "fhir-capability",
+                  "graphql",
+                  "cli",
+                  "json-schema-files",
+                  "git"
+                ]
+              },
+              "document": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tools": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "style"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "realisedBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "published": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/StoreDefSchema.schema.json",
+  "title": "StoreDefSchema",
+  "description": "Generated from `StoreDefSchema` in schemas/process/role-graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-core-phw-fhir-iris",
+    "sha": "7805d6026ca0bb8cc25f6ebe595d277d0b25f886",
+    "pr": "2869/merge",
+    "run": "41321457821"
+  }
+}
