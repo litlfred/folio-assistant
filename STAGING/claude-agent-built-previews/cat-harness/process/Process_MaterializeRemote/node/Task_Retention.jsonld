@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/process/Process_MaterializeRemote/node/Task_Retention.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "d637d498ea9fd26061d84e987f1b497dad8fd414",
+    "pr": "2885/merge",
+    "run": "41328519933"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/process/Process_MaterializeRemote/node/Task_Retention",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "RETENTION what expires this copy",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/process/Process_MaterializeRemote",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/materialize-remote"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/process/Process_MaterializeRemote#flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/process/Process_MaterializeRemote#flow/Flow_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Retention"
+    }
+  ]
+}

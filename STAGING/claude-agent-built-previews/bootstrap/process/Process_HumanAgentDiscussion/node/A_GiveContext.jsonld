@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/process/Process_HumanAgentDiscussion/node/A_GiveContext.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/process/Process_HumanAgentDiscussion/node/A_GiveContext",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Say what is being decided, and why it matters now",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/process/Process_HumanAgentDiscussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/skill/human-agent-discussion"
+    }
+  ]
+}

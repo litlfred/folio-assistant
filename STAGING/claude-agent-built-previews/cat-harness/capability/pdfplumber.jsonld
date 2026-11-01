@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/capability/pdfplumber.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "d637d498ea9fd26061d84e987f1b497dad8fd414",
+    "pr": "2885/merge",
+    "run": "41328519933"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/capability/pdfplumber",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "pdfplumber",
+      "name": "pdfplumber (deterministic table extraction)",
+      "description": "Pure-Python PDF geometry reader, the default backend of scripts/pdf-tables.py. Extracts ruled and alignment-based tables with exact column edges and bounding boxes, which pdf-structure/v1 does not model. No model weights and no egress after install, so unlike Docling it runs in a sandboxed session. Install: pip install pdfplumber.",
+      "detection": {
+        "method": "command",
+        "command": "python3 -c 'import pdfplumber'"
+      },
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/capability/python3"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/pdfplumber"
+    }
+  ]
+}

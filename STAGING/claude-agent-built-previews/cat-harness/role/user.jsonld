@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/role/user.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "d637d498ea9fd26061d84e987f1b497dad8fd414",
+    "pr": "2885/merge",
+    "run": "41328519933"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/role/user",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "User",
+      "title": "User",
+      "notation": "user",
+      "description": "The person the assistant is working for. States intent, answers the questions the agent cannot decide from the filesystem, and confirms anything irreversible.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/adjudication",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/dispatch-agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/folio-init",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/getting-started",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/interaction-modality",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/kg-affordances",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/kg-subscription",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/materialize-remote",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/repo-conversion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/merge-to-main",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/agent-permissions"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/user"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/smart-base/skill/transcription-verbatim.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/transcription-verbatim.jsonld",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "d637d498ea9fd26061d84e987f1b497dad8fd414",
+    "pr": "2885/merge",
+    "run": "41328519933"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/transcription-verbatim",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "transcription-verbatim",
+      "title": "transcription-verbatim",
+      "description": "Check L1 authored from pictures (a schedule poster, a slide deck: a source with no usable text layer) against the image narratives and transcriptions it names: every statement verbatim in one of them, every transcription word corroborated by the entry's text layer unless listed under inspectionOnly, and unique keys. A step of recommendation-extraction, in place of recommendation-candidates when that step found no normative sentence; the `l1-transcription-verbatim` Tool satisfies it.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/transcription-verbatim.md",
+      "instructionLines": 57,
+      "inputSchema": "http://smart.who.int/base/schema/skills/transcription-verbatim/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/transcription-verbatim/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

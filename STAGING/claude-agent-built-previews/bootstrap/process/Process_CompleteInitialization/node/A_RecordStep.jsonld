@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/process/Process_CompleteInitialization/node/A_RecordStep.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/process/Process_CompleteInitialization/node/A_RecordStep",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Record the step in its state",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/process/Process_CompleteInitialization",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/bootstrap/skill/initialization-steps"
+    }
+  ]
+}

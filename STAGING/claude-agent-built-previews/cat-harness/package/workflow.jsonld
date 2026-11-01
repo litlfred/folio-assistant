@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/package/workflow.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "d637d498ea9fd26061d84e987f1b497dad8fd414",
+    "pr": "2885/merge",
+    "run": "41328519933"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/package/workflow",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "name": "workflow",
+      "version": "0.1.0",
+      "description": "BPMN navigation and workflow management: how a process is authored, where an instance keeps its position, and which store answers which question. Split out of folio-core, which held 97 skills — a package that holds everything is one nobody can be pointed at.",
+      "path": "skills/process/workflow",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/bpmn-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/bpmn-detangle",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/bpmn-processes",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/deterministic-and-agentic",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/dmn-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/process-state",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/render-kg-to-cdn",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/session-context",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/session-state-machine",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/specification-compiled-agents",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/skill/workflow-state"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/package/workflow"
+    }
+  ]
+}

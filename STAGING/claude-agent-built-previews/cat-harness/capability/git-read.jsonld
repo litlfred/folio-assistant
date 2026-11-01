@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/capability/git-read.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/agent-built-previews",
+    "sha": "d637d498ea9fd26061d84e987f1b497dad8fd414",
+    "pr": "2885/merge",
+    "run": "41328519933"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-agent-built-previews/cat-harness/capability/git-read",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "git-read",
+      "name": "Git Read",
+      "description": "Ability to read the Git repository — history, refs and working tree. Required by every skill that reasons about what changed. It was referenced by 17 skills and declared by NO capability until 2026-09-20, when executing the degradation model found it on the first run (bean folio-assistant-ahvw): a reference-shaped value resolving to nothing, so those skills could not be shown to run at all.",
+      "detection": {
+        "method": "command",
+        "command": "git rev-parse --git-dir"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-read"
+    }
+  ]
+}
