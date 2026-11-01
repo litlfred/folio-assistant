@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/process/Process_GettingStarted/node/Task_ConfirmImport.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/process/Process_GettingStarted/node/Task_ConfirmImport",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Import what, where, and who does it",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/process/Process_GettingStarted",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/process/Process_GettingStarted/lane/Lane_User",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/skill/repo-conversion",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/skill/dispatch-agent"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/process/Process_GettingStarted#flow/Flow_chosen"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/process/Process_GettingStarted#flow/Flow_confirm"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ConfirmImport"
+    }
+  ]
+}

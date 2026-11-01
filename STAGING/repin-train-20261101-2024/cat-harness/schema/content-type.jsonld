@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/schema/content-type.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/schema/content-type",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "content-type",
+      "title": "content-type",
+      "summary": "What a repository IS — the markers it carries, as a resolvable set.",
+      "module": "schemas/content/content-type.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/content-type"
+    }
+  ]
+}

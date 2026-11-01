@@ -1,0 +1,78 @@
+{
+  "$ref": "#/definitions/SessionSweep",
+  "definitions": {
+    "SessionSweep": {
+      "type": "object",
+      "properties": {
+        "since": {
+          "type": "string"
+        },
+        "commitsScanned": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "sessions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "session": {
+                "type": "string"
+              },
+              "commits": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "first": {
+                "type": "string"
+              },
+              "last": {
+                "type": "string"
+              },
+              "branches": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "latestSubject": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "session",
+              "commits",
+              "first",
+              "last",
+              "branches",
+              "latestSubject"
+            ]
+          }
+        },
+        "untrailered": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "since",
+        "commitsScanned",
+        "sessions",
+        "untrailered"
+      ],
+      "description": "The sessions that committed in a window, read from Claude-Session trailers."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/SessionSweepSchema.schema.json",
+  "title": "SessionSweepSchema",
+  "description": "Generated from `SessionSweepSchema` in schemas/tools/store-tool-results.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  }
+}

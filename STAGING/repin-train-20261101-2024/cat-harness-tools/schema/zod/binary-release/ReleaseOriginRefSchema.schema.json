@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/ReleaseOriginRef",
+  "definitions": {
+    "ReleaseOriginRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "github-release",
+            "package-registry",
+            "workflow-artifact",
+            "pages-site"
+          ]
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "repository"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseOriginRefSchema.schema.json",
+  "title": "ReleaseOriginRefSchema",
+  "description": "Generated from `ReleaseOriginRefSchema` in schemas/sdlc/binary-release.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  }
+}

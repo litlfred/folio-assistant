@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/package/large-datasets.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/package/large-datasets",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "name": "large-datasets",
+      "version": "0.1.0",
+      "description": "Taking a usable subset of a corpus this instance will never hold, and refreshing it. Named here rather than inferred from the directory: every instance's skills live in a directory called `skills`, so a package id taken from the basename collides with every other one. See bean `nlvl` for the measurement and `bootstrap/skills` for the precedent this follows.",
+      "path": "skills/library/large-datasets",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/skill/copy-out-materialized",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/skill/kg-subscription",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/skill/materialize-on-demand",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/skill/materialize-remote",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/skill/sample-import"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/package/large-datasets"
+    }
+  ]
+}

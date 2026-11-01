@@ -1,0 +1,49 @@
+{
+  "$ref": "#/definitions/HealthThreshold",
+  "definitions": {
+    "HealthThreshold": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ]
+        }
+      },
+      "required": [
+        "metric",
+        "value",
+        "unit",
+        "basis",
+        "severity"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/health-report/HealthThresholdSchema.schema.json",
+  "title": "HealthThresholdSchema",
+  "description": "Generated from `HealthThresholdSchema` in schemas/sdlc/health-report.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  }
+}

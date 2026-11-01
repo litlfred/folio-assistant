@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/WireframeUse",
+  "definitions": {
+    "WireframeUse": {
+      "type": "string",
+      "enum": [
+        "design",
+        "as-is"
+      ],
+      "description": "Why a wireframe is drawn: `design` for a new or changed surface, `as-is` for an existing visualiser."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/WireframeUseSchema.schema.json",
+  "title": "WireframeUseSchema",
+  "description": "Generated from `WireframeUseSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  }
+}

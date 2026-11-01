@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Proof Editor (Coordinator) | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Proof Editor (Coordinator)" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Proof Editor (Coordinator)" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-proof-editor",
+    "src": "../../assets/qa/reference-skill-instructions-proof-editor/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-proof-editor/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=2ed7923cda66"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=52e4c68c64c7" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/proof-editor.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#overview","label":"Overview"},{"href":"#when-to-use-this-skill","label":"When to Use This Skill"},{"href":"#principle-suggestions-not-edits","label":"Principle: suggestions, not edits"},{"href":"#workflow","label":"Workflow","children":[{"href":"#phase-1--scope--intake","label":"Phase 1 — Scope & intake","depth":1},{"href":"#phase-2--dispatch-specialists-in-parallel","label":"Phase 2 — Dispatch specialists in parallel","depth":1},{"href":"#phase-3--synthesize","label":"Phase 3 — Synthesize","depth":1},{"href":"#phase-4--produce-action-plan","label":"Phase 4 — Produce action plan","depth":1},{"href":"#phase-5--handoff","label":"Phase 5 — Handoff","depth":1}],"fold":"5 sub-sections"},{"href":"#output-format","label":"Output format"},{"href":"#coordination-rules","label":"Coordination rules"},{"href":"#integration","label":"Integration"},{"href":"#checklist","label":"Checklist"},{"href":"#harness-skills-that-dispatch-here","label":"Harness skills that dispatch here"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Proof Editor (Coordinator)</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-editor.md"><code class="language-plaintext highlighter-rouge">folio-assistant-sci/skills/content/folio-paper-adapter/proof-editor.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/proof-editor.md" class="fa-edit-source" data-fa-link="edit" data-src="folio-assistant-sci/skills/content/folio-paper-adapter/proof-editor.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="proof-editor-coordinator"><a href="#proof-editor-coordinator" class="anchor-heading" aria-labelledby="proof-editor-coordinator"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Proof Editor (Coordinator)
+  
+  
+</h1><h2 id="overview"><a href="#overview" class="anchor-heading" aria-labelledby="overview"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Overview
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">proof-editor</code> is the top-level orchestrator for proof quality. It
+does <strong>not</strong> do original analysis — it dispatches to specialist
+skills, synthesizes their reports, and produces a single prioritized
+action plan for the author.</p><p>Specialists it coordinates:</p><div class="table-wrapper"><table><thead><tr><th>Specialist</th><th>Contribution</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">proof-gap-audit</code></td><td>Intra- and inter-proof gaps (existence, uniqueness, bridges)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">lean-proof-review</code></td><td>Lean correctness, style, axiom soundness</td></tr><tr><td><code class="language-plaintext highlighter-rouge">lean-completeness-audit</code></td><td>LaTeX→Lean coverage (what’s stated but not formalized)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">proof-simplifier</code></td><td>Overlong/brittle Lean proofs, tactic cleanup</td></tr><tr><td><code class="language-plaintext highlighter-rouge">proof-conciseness</code></td><td>Tighten narrative (human) proofs — cut verbosity without cutting reasoning</td></tr><tr><td><code class="language-plaintext highlighter-rouge">proof-exposition-review</code></td><td>Retrospective integration — does this proof use content added since it was written?</td></tr><tr><td><code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code></td><td>Does the Lean sibling prove the same thing the narrative claims?</td></tr><tr><td><code class="language-plaintext highlighter-rouge">proof-triage</code></td><td><code class="language-plaintext highlighter-rouge">sorry</code> inventory and priority ordering</td></tr><tr><td><code class="language-plaintext highlighter-rouge">remark-audit</code></td><td>Dangling remarks whose formalization is owed</td></tr><tr><td><code class="language-plaintext highlighter-rouge">content-block-review</code></td><td>Structural integrity of the block graph</td></tr><tr><td><code class="language-plaintext highlighter-rouge">category-theory</code></td><td>Diagrammatic / universal-property checks</td></tr></tbody></table></div><h2 id="when-to-use-this-skill"><a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
+  
+  
+</h2><ul><li>Author asks: “review my proofs”, “audit this chapter”, “what needs
+fixing before merge”, “help me finish this proof”</li><li>Before opening a PR that touches proof blocks</li><li>Post-merge sweep after a large formalization effort</li><li>When a reviewer flags multiple concerns and the author wants a
+consolidated response plan</li><li><strong>Not</strong> for a single narrow task (e.g. “fix this sorry”) — use the
+specialist directly</li></ul><h2 id="principle-suggestions-not-edits"><a href="#principle-suggestions-not-edits" class="anchor-heading" aria-labelledby="principle-suggestions-not-edits"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Principle: suggestions, not edits
+  
+  
+</h2><p>The editor coordinates — it <strong>does not apply changes</strong>. Every
+recommendation goes back to the author with:</p><ol><li>A clear description of the gap / issue</li><li>The proposed fix (diff, new block, new lemma, etc.)</li><li>The specialist skill responsible for implementing it</li><li>Dependency ordering (what must be done first)</li></ol><p>The author then decides which suggestions to accept and invokes the
+relevant specialist (or asks the editor to dispatch).</p><h2 id="workflow"><a href="#workflow" class="anchor-heading" aria-labelledby="workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow
+  
+  
+</h2><h3 id="phase-1--scope--intake"><a href="#phase-1--scope--intake" class="anchor-heading" aria-labelledby="phase-1--scope--intake"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 1 — Scope &amp; intake
+  
+  
+</h3><p>Determine the scope and check the user’s role:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. What is the target? (block | chapter | paper | branch-diff)
+2. What is the user's role? (reader | collaborator | owner)
+3. Which specialists are allowed for that role?
+4. Is there prior review data in proof-objects.json or from the
+   agent-review pipeline? (avoid re-running expensive analyses)
+</code></pre></div></div><h3 id="phase-2--dispatch-specialists-in-parallel"><a href="#phase-2--dispatch-specialists-in-parallel" class="anchor-heading" aria-labelledby="phase-2--dispatch-specialists-in-parallel"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 2 — Dispatch specialists in parallel
+  
+  
+</h3><p>Launch specialist agents <strong>in parallel</strong> (single message, multiple
+<code class="language-plaintext highlighter-rouge">Agent</code> tool calls). Each agent runs its own skill on the scoped
+target.</p><p>Default dispatch fan-out:</p><div class="table-wrapper"><table><thead><tr><th>Target scope</th><th>Agents launched</th></tr></thead><tbody><tr><td>Single proof block</td><td><code class="language-plaintext highlighter-rouge">proof-gap-audit</code>, <code class="language-plaintext highlighter-rouge">lean-proof-review</code>, <code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code></td></tr><tr><td>Chapter</td><td>above + <code class="language-plaintext highlighter-rouge">lean-completeness-audit</code>, <code class="language-plaintext highlighter-rouge">proof-simplifier</code>, <code class="language-plaintext highlighter-rouge">proof-conciseness</code>, <code class="language-plaintext highlighter-rouge">remark-audit</code></td></tr><tr><td>Paper / branch-diff</td><td>above + <code class="language-plaintext highlighter-rouge">proof-triage</code>, <code class="language-plaintext highlighter-rouge">proof-exposition-review</code>, <code class="language-plaintext highlighter-rouge">lean-witness-audit</code>, <code class="language-plaintext highlighter-rouge">content-block-review</code></td></tr></tbody></table></div><p>Notes:</p><ul><li><code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code> runs at every tier — it is the
+only skill that catches Class A “stub weakening” (<code class="language-plaintext highlighter-rouge">theorem foo : True
+:= trivial</code> while the narrative claims something substantial).</li><li><code class="language-plaintext highlighter-rouge">proof-conciseness</code> operates on <code class="language-plaintext highlighter-rouge">.md</code> proof bodies; chapter scope is
+the natural dispatch point for paper-wide tone consistency.</li><li><code class="language-plaintext highlighter-rouge">proof-exposition-review</code> and <code class="language-plaintext highlighter-rouge">lean-witness-audit</code> are paper-scope
+retrospective audits; they are cheap to run on a branch diff because
+they self-scope to changed blocks.</li></ul><p>Ask each agent to produce its report in the standard format with
+severity levels and concrete remediation suggestions.</p><h3 id="phase-3--synthesize"><a href="#phase-3--synthesize" class="anchor-heading" aria-labelledby="phase-3--synthesize"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 3 — Synthesize
+  
+  
+</h3><p>Merge specialist reports into a single finding set:</p><ol><li><strong>Deduplicate</strong>: the same issue flagged by two skills counts once.
+Example: a <code class="language-plaintext highlighter-rouge">sorry</code> without <code class="language-plaintext highlighter-rouge">-- Ref:</code> is flagged by both
+<code class="language-plaintext highlighter-rouge">proof-triage</code> and <code class="language-plaintext highlighter-rouge">lean-proof-review</code> — keep the more specific.</li><li><strong>Cluster</strong>: group findings by affected block so the author can
+address each block in one pass.</li><li><strong>Order by dependency</strong>: if fixing block $A$ invalidates a fix to
+block $B$ downstream, schedule $A$ first.</li><li><strong>Rank by severity</strong>:
+    <ul><li><code class="language-plaintext highlighter-rouge">critical</code>: proof invalid as written, circular dep, conjectural
+propagation violation</li><li><code class="language-plaintext highlighter-rouge">major</code>: missing lemma, uniqueness/existence gap, broken chain</li><li><code class="language-plaintext highlighter-rouge">minor</code>: style, verbosity, hand-wave that’s defensible</li></ul></li><li><strong>Attach ownership</strong>: which specialist skill should the author
+invoke to apply the fix?</li></ol><h3 id="phase-4--produce-action-plan"><a href="#phase-4--produce-action-plan" class="anchor-heading" aria-labelledby="phase-4--produce-action-plan"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 4 — Produce action plan
+  
+  
+</h3><p>Deliver a single markdown document with the structure shown under
+<a href="#output-format">Output format</a>. Include:</p><ul><li>Executive summary (counts, blockers)</li><li>Per-block findings in dependency order</li><li>Concrete suggested edits (diffs, new lemma statements, etc.)</li><li>Dispatch table: which skill to invoke for each fix</li><li>Links to affected files (GitHub blob URLs on the current branch, per
+AGENTS.md)</li></ul><h3 id="phase-5--handoff"><a href="#phase-5--handoff" class="anchor-heading" aria-labelledby="phase-5--handoff"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 5 — Handoff
+  
+  
+</h3><p>Present the plan to the author. Offer a numbered list of next
+actions so the author can reply with “1” or “1,3,5”. Do <strong>not</strong>
+begin applying fixes without explicit approval.</p><p>If the author says “apply all” or “go ahead”:</p><ol><li>Dispatch each fix to its owner skill, in dependency order</li><li>After each batch, re-run the relevant specialists to confirm the
+gap is closed</li><li>Produce a delivery summary per <code class="language-plaintext highlighter-rouge">.claude/skills/local/delivery-summary.md</code></li></ol><h2 id="output-format"><a href="#output-format" class="anchor-heading" aria-labelledby="output-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Output format
+  
+  
+</h2><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## Proof Editor Report: &lt;scope&gt;</span>
+
+<span class="gu">### Executive Summary</span>
+<span class="p">-</span> Blocks reviewed: N
+<span class="p">-</span> Critical findings: N (blockers)
+<span class="p">-</span> Major findings: N
+<span class="p">-</span> Minor findings: N
+<span class="p">-</span> Estimated fix order: <span class="nt">&lt;dependency-ordered</span> <span class="na">list</span> <span class="na">of</span> <span class="na">block</span> <span class="na">labels</span><span class="nt">&gt;</span>
+
+<span class="gu">### Findings (in dependency order)</span>
+
+<span class="gu">#### 1. `prop:harmonic-decomp` — 2 critical, 1 major</span>
+<span class="gs">**GitHub**</span>: <span class="nt">&lt;repo-url&gt;</span>/blob/<span class="nt">&lt;branch&gt;</span>/content/.../harmonic-decomp.md
+<span class="p">
+-</span> [critical, proof-gap-audit] Existence of harmonic representative
+  asserted but not constructed. Proof says "choose $h <span class="se">\i</span>n <span class="se">\k</span>er <span class="se">\D</span>elta$"
+  with no argument for non-emptiness.
+<span class="p">  -</span> <span class="gs">**Fix**</span>: add lemma <span class="sb">`lem:harmonic-nonempty`</span> showing
+    <span class="sb">`ker Δ ≠ ∅`</span> via spectral decomposition, or cite [author2004].
+<span class="p">  -</span> <span class="gs">**Owner skill**</span>: <span class="sb">`formalizer`</span> (+ <span class="sb">`lean-generation`</span> for the stub)
+<span class="p">
+-</span> [critical, lean-proof-review] <span class="sb">`sorry`</span> at line 83 missing <span class="sb">`-- Ref:`</span>.
+<span class="p">  -</span> <span class="gs">**Fix**</span>: add <span class="sb">`-- Ref: [author2004] https://doi.org/...`</span> or replace
+    with a proof.
+<span class="p">  -</span> <span class="gs">**Owner skill**</span>: <span class="sb">`proof-triage`</span>
+<span class="p">
+-</span> [major, proof-simplifier] 40-line proof uses <span class="sb">`simp only`</span> with 12
+  lemmas; <span class="sb">`aesop`</span> closes the goal.
+<span class="p">  -</span> <span class="gs">**Fix**</span>: replace with <span class="sb">`aesop`</span> + comment noting the specific
+    lemmas for readers.
+<span class="p">  -</span> <span class="gs">**Owner skill**</span>: <span class="sb">`proof-simplifier`</span>
+
+<span class="gu">#### 2. `thm:lifting-exists` — 1 major</span>
+...
+
+<span class="gu">### Dispatch Table</span>
+
+| Fix # | Block | Owner skill | Blocked by |
+|-------|-------|------------|-----------|
+| 1.1 | prop:harmonic-decomp | formalizer | — |
+| 1.2 | prop:harmonic-decomp | proof-triage | 1.1 |
+| 1.3 | prop:harmonic-decomp | proof-simplifier | 1.2 |
+| 2.1 | thm:lifting-exists | formalizer | 1.1 |
+
+<span class="gu">### Next Actions (pick a number)</span>
+<span class="p">1.</span> Apply all critical fixes in order (dispatches 1.1, 1.2, 2.1)
+<span class="p">2.</span> Apply all fixes (critical + major + minor)
+<span class="p">3.</span> Apply only fix 1.1 (the blocking existence gap)
+<span class="p">4.</span> Show me the suggested diff for fix 1.3 before deciding
+<span class="p">5.</span> Skip the report — I'll handle it manually
+</code></pre></div></div><h2 id="coordination-rules"><a href="#coordination-rules" class="anchor-heading" aria-labelledby="coordination-rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Coordination rules
+  
+  
+</h2><ul><li><strong>Role gating</strong>: route findings only to skills the user’s role can
+invoke. A <code class="language-plaintext highlighter-rouge">reader</code> gets a report but cannot dispatch
+<code class="language-plaintext highlighter-rouge">collaborator</code>-only fixers.</li><li><strong>Idempotence</strong>: running the editor twice on an unchanged branch
+should produce the same report. Cache specialist outputs via
+<code class="language-plaintext highlighter-rouge">proof-objects.json</code> review entries when possible.</li><li><strong>No silent edits</strong>: the editor never writes to <code class="language-plaintext highlighter-rouge">.ts</code>, <code class="language-plaintext highlighter-rouge">.md</code>, or
+<code class="language-plaintext highlighter-rouge">.lean</code> files. Dispatch skills do that, under author approval.</li><li><strong>Honest confidence</strong>: if a specialist reports low confidence
+(&lt; 0.7), surface that to the author — don’t smooth it over.</li><li><strong>Link every finding</strong> to a GitHub blob URL, per
+<a href="../../reference/skill-instructions/turn-reporting.html"><code class="language-plaintext highlighter-rouge">turn-reporting</code></a> §”Asking for review means
+linking the artefact”. Default to <code class="language-plaintext highlighter-rouge">.md</code> for block
+citations; include <code class="language-plaintext highlighter-rouge">.lean</code> sibling when the finding is Lean-specific.</li><li><strong>Downstream-consumer sync.</strong> When a finding touches a proposition
+consumed by a derived chain (e.g. an algorithm or appendix block
+whose <code class="language-plaintext highlighter-rouge">uses[]</code> cites the proposition), include in the action plan a
+check that the consuming block still cites the (possibly-modified)
+proposition correctly. If the proof edit changes the proposition
+statement or its name, every consumer’s <code class="language-plaintext highlighter-rouge">uses[]</code> and any
+<em>Correctness conditions</em> section must update in the same PR.</li></ul><h2 id="integration"><a href="#integration" class="anchor-heading" aria-labelledby="integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Integration
+  
+  
+</h2><ul><li><strong>Invoked by</strong>: <code class="language-plaintext highlighter-rouge">editor</code> skill (top-level router) when the user
+asks for proof review / audit at chapter or paper scope</li><li><strong>Dispatches</strong>: all skills listed under <a href="#overview">Overview</a></li><li><strong>Produces</strong>: single action plan; no file edits</li><li><strong>Follows up</strong>: <code class="language-plaintext highlighter-rouge">delivery-summary</code> after approved fixes are applied</li></ul><h2 id="checklist"><a href="#checklist" class="anchor-heading" aria-labelledby="checklist"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Checklist
+  
+  
+</h2><ul class="task-list"><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Scope and user role identified</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Specialists dispatched in parallel (not sequentially)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Findings deduplicated across specialists</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Clustered by block, ordered by dependency</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Severity levels assigned (critical / major / minor)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Each finding has a concrete suggested fix and owner skill</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />GitHub blob URLs included (<code class="language-plaintext highlighter-rouge">.md</code> default, <code class="language-plaintext highlighter-rouge">.lean</code> for formal gaps)</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Author presented with numbered next-action choices</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No edits made without explicit author approval</li><li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Glossary-term findings (defterm/refterm violations) routed to the
+    authoring skill (<code class="language-plaintext highlighter-rouge">md-authoring</code> or <code class="language-plaintext highlighter-rouge">scientific-accuracy</code>) plus
+    <code class="language-plaintext highlighter-rouge">local/glossary-build</code> for the codemod/build pass</li></ul><h2 id="harness-skills-that-dispatch-here"><a href="#harness-skills-that-dispatch-here" class="anchor-heading" aria-labelledby="harness-skills-that-dispatch-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Harness skills that dispatch here
+  
+  
+</h2><p>This layer sits above cat-harness, so the link points down from here. The
+harness skills below describe this one generically and name no science skill
+(bean <code class="language-plaintext highlighter-rouge">syiq</code>).</p><ul><li><code class="language-plaintext highlighter-rouge">integration-watcher</code>: its lifecycle §4c applies the synthesis rules of §3 here, which hold in every domain.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

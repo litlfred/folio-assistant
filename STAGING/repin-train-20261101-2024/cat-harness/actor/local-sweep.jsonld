@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/actor/local-sweep.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/actor/local-sweep",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "local-sweep",
+      "actorKind": "system",
+      "title": "Local sweep",
+      "description": "The same QA sweep programs as `ci-pipeline`, run on a contributor's or agent's machine rather than in CI. It runs a fixed program and exercises no judgement. It is a SEPARATE actor because the verdict it produces rests on a working tree nobody else can reconstruct: a CI verdict is reproducible from the commit it records, while a local one may rest on an uncommitted edit. Recording which one ruled is what keeps `reviewed_sha` an address rather than a decoration.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/role/build-pipeline",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/role/validation-pipeline",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/cat-harness/role/feedback-provider"
+      ],
+      "permissionName": [
+        "qa-reporting"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/local-sweep"
+    }
+  ]
+}

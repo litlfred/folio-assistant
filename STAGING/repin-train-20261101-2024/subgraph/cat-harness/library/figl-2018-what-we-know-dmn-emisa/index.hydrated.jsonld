@@ -1,0 +1,79 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/figl-2018-what-we-know-dmn-emisa/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/figl-2018-what-we-know-dmn-emisa/manifest.jsonld",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/figl-2018-what-we-know-dmn-emisa/manifest.jsonld",
+      "title": "What we know and what we do not know about DMN (Extended Abstract)"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/figl-2018-what-we-know-dmn-emisa/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/figl-2018-what-we-know-dmn-emisa/blocks/prose-page-001",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/figl-2018-what-we-know-dmn-emisa/blocks/prose-page-001.jsonld",
+          "title": "Page 1"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/figl-2018-what-we-know-dmn-emisa/blocks/prose-page-002",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/figl-2018-what-we-know-dmn-emisa/blocks/prose-page-002.jsonld",
+          "title": "Page 2"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/figl-2018-what-we-know-dmn-emisa/blocks/prose-page-003",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/figl-2018-what-we-know-dmn-emisa/blocks/prose-page-003.jsonld",
+          "title": "Page 3"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/figl-2018-what-we-know-dmn-emisa/blocks",
+      "path": "library/figl-2018-what-we-know-dmn-emisa/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/figl-2018-what-we-know-dmn-emisa/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/figl-2018-what-we-know-dmn-emisa/sections/page-001",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/figl-2018-what-we-know-dmn-emisa/sections/page-001.jsonld",
+          "title": "Page 1"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/figl-2018-what-we-know-dmn-emisa/sections/page-002",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/figl-2018-what-we-know-dmn-emisa/sections/page-002.jsonld",
+          "title": "Page 2"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/figl-2018-what-we-know-dmn-emisa/sections/page-003",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/figl-2018-what-we-know-dmn-emisa/sections/page-003.jsonld",
+          "title": "Page 3"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/figl-2018-what-we-know-dmn-emisa/sections",
+      "path": "library/figl-2018-what-we-know-dmn-emisa/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/figl-2018-what-we-know-dmn-emisa",
+  "path": "library/figl-2018-what-we-know-dmn-emisa/"
+}

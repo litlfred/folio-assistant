@@ -1,0 +1,178 @@
+{
+  "$ref": "#/definitions/ComputationWitness",
+  "definitions": {
+    "ComputationWitness": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "engine": {
+          "anyOf": [
+            {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "engineVersion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "computedAt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "commitSha": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scriptFile": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scriptHash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scriptCommitSha": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "contentBlock": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "auditOnly": {
+          "type": [
+            "string",
+            "boolean",
+            "null"
+          ]
+        },
+        "durationMs": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "allPassed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "assertions": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "computed": {},
+                      "expected": {},
+                      "passed": {
+                        "type": [
+                          "boolean",
+                          "null"
+                        ]
+                      },
+                      "tolerance": {
+                        "type": [
+                          "number",
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "unit": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "source": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "additionalProperties": {}
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          ]
+        },
+        "caveats": {},
+        "parameters": {},
+        "data": {},
+        "precisionMetadata": {}
+      },
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/computation-witness/ComputationWitnessSchema.schema.json",
+  "title": "ComputationWitnessSchema",
+  "description": "Generated from `ComputationWitnessSchema` in schemas/computation-witness.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  }
+}

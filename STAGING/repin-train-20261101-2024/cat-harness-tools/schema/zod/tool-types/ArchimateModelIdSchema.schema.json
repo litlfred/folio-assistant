@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/ArchimateModelId",
+  "definitions": {
+    "ArchimateModelId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "description": "An ArchiMate model's id in cat-archimate.config.json, e.g. 0.2.0"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ArchimateModelIdSchema.schema.json",
+  "title": "ArchimateModelIdSchema",
+  "description": "Generated from `ArchimateModelIdSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  }
+}

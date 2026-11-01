@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/process/Process_HumanAgentDiscussion/node/A_RecordAnswer.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/process/Process_HumanAgentDiscussion/node/A_RecordAnswer",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Record the answer, and who gave it",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/process/Process_HumanAgentDiscussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/skill/human-agent-discussion"
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "$ref": "#/definitions/StateManifest",
+  "definitions": {
+    "StateManifest": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "state-manifest/v1"
+            },
+            "keyedBy": {
+              "type": "string",
+              "const": "tip"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "active",
+                "store",
+                "seed",
+                "retired"
+              ]
+            },
+            "authoritative": {
+              "type": "boolean"
+            },
+            "subgraph": {
+              "type": "string",
+              "minLength": 1
+            },
+            "note": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "type": "object",
+              "properties": {
+                "ref": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{40}$"
+                }
+              },
+              "required": [
+                "ref",
+                "sha"
+              ],
+              "additionalProperties": {}
+            },
+            "seededAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "refreshedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "graphs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tree": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  },
+                  "files": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "path"
+                ],
+                "additionalProperties": {}
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "keyedBy",
+            "status",
+            "authoritative",
+            "source",
+            "graphs"
+          ],
+          "additionalProperties": {}
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "state-manifest/v1"
+            },
+            "keyedBy": {
+              "type": "string",
+              "const": "route"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "active",
+                "store",
+                "seed",
+                "retired"
+              ]
+            },
+            "authoritative": {
+              "type": "boolean"
+            },
+            "seededFrom": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "seededAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "writer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "gate": {
+              "type": "string",
+              "minLength": 1
+            },
+            "bean": {
+              "type": "string",
+              "minLength": 1
+            },
+            "directories": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "path"
+                ],
+                "additionalProperties": {}
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "keyedBy",
+            "status",
+            "authoritative",
+            "seededFrom",
+            "seededAt",
+            "writer",
+            "gate",
+            "directories"
+          ],
+          "additionalProperties": {}
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/state-manifest/StateManifestSchema.schema.json",
+  "title": "StateManifestSchema",
+  "description": "Generated from `StateManifestSchema` in schemas/kg/state-manifest.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  }
+}

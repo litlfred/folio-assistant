@@ -1,0 +1,65 @@
+{
+  "$ref": "#/definitions/PdfPageLabel",
+  "definitions": {
+    "PdfPageLabel": {
+      "type": "object",
+      "properties": {
+        "physical": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "pdf-labels",
+                "printed",
+                "interpolated",
+                "contents"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "physical",
+        "label",
+        "source",
+        "confidence",
+        "evidence"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pdf-structure/PdfPageLabelSchema.schema.json",
+  "title": "PdfPageLabelSchema",
+  "description": "Generated from `PdfPageLabelSchema` in schemas/ui/pdf-structure.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  }
+}

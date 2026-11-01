@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/process/Process_InitializeHarness/node/A_LogInstallStart.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/process/Process_InitializeHarness/node/A_LogInstallStart",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Log the start of the install",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/process/Process_InitializeHarness",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/skill/log-message",
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-2024/bootstrap/process/Process_LogMessage"
+    }
+  ]
+}

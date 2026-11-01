@@ -1,0 +1,343 @@
+{
+  "$ref": "#/definitions/HarnessConfig",
+  "definitions": {
+    "HarnessConfig": {
+      "type": "object",
+      "properties": {
+        "contentType": {
+          "type": "string"
+        },
+        "interactivity": {
+          "type": "string"
+        },
+        "adapter": {
+          "type": "string"
+        },
+        "adapterModule": {
+          "type": "string"
+        },
+        "harness": {
+          "type": "object",
+          "properties": {
+            "interaction": {
+              "default": "cat-harness/memory/interaction.json",
+              "type": "string"
+            }
+          }
+        },
+        "translation": {
+          "type": "object",
+          "properties": {
+            "defaultLocale": {
+              "default": "en",
+              "type": "string"
+            },
+            "supportedLocales": {
+              "default": [
+                "ar",
+                "zh",
+                "en",
+                "fr",
+                "ru",
+                "es"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "translationDir": {
+              "default": "translations",
+              "type": "string"
+            },
+            "officialOnly": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        },
+        "dependencies": {
+          "type": "object",
+          "properties": {
+            "folioAssistant": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "version": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "git": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "ref": {
+                    "type": "string"
+                  },
+                  "provides": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "skills",
+                        "content",
+                        "translations"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "site": {
+          "type": "object",
+          "properties": {
+            "landing": {
+              "type": "boolean"
+            },
+            "build": {
+              "type": "object",
+              "properties": {
+                "home": {
+                  "type": "string"
+                },
+                "pre": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+                  }
+                },
+                "sourceSteps": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+                  }
+                },
+                "siteSteps": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "subgraphSources": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "directory"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "branch"
+                  },
+                  "branch": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                  },
+                  "keyedBy": {
+                    "type": "string",
+                    "enum": [
+                      "commit",
+                      "tip",
+                      "route",
+                      "route-family",
+                      "family"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind",
+                  "branch",
+                  "keyedBy"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "family"
+                  },
+                  "branchPrefix": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+\\/$"
+                  },
+                  "keyFrom": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "repository": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "branchPrefix",
+                  "keyFrom"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "remote"
+                  },
+                  "repository": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$"
+                  },
+                  "ref": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  },
+                  "upstreamPath": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                  },
+                  "tool": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "repository",
+                  "ref"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "npm"
+                  },
+                  "package": {
+                    "type": "string",
+                    "pattern": "^(@[a-z0-9-~][a-z0-9-._~]*\\/)?[a-z0-9-~][a-z0-9-._~]*$"
+                  },
+                  "version": {
+                    "type": "string",
+                    "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.-]+)?$"
+                  },
+                  "integrity": {
+                    "type": "string"
+                  },
+                  "upstreamPath": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                  },
+                  "tool": {
+                    "default": "npm",
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "package",
+                  "version"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "const": "hydrated"
+                  },
+                  "repository": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$"
+                  },
+                  "ref": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                  },
+                  "harness": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$"
+                  },
+                  "subgraph": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9_-][A-Za-z0-9._-]*(?:\\/[A-Za-z0-9_-][A-Za-z0-9._-]*)*\\/?$"
+                  },
+                  "tool": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "repository",
+                  "ref",
+                  "harness",
+                  "subgraph"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/HarnessConfigSchema.schema.json",
+  "title": "HarnessConfigSchema",
+  "description": "Generated from `HarnessConfigSchema` in schemas/kg/harness-config.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-2024",
+    "sha": "d807c63e982e33bb2f581f18262da2e0740f368d",
+    "pr": "repin-train/20261101-2024",
+    "run": "41346712128"
+  }
+}
