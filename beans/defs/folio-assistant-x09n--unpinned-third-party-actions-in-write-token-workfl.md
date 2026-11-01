@@ -2,11 +2,11 @@
 # folio-assistant-x09n
 $schema: bean/1.0.0
 title: 'Unpinned third-party actions in write-token workflows (smart-base, smart-ra, smart-immunizations)'
-status: in-progress
+status: completed
 type: bug
 priority: high
 created_at: 2026-10-31T04:20:00Z
-updated_at: 2026-10-31T04:22:00Z
+updated_at: 2026-11-01T19:40:00Z
 parent: folio-assistant-33iz
 tags:
     - security
@@ -34,3 +34,5 @@ _2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a
 _2026-10-31T04:22Z_ — Third-party actions, the WHO smart-html release call and the ig-publisher-base image are pinned by SHA or digest: smart-base#253 (f573a4e), smart-ra#175 (78e81c6), smart-immunizations#104 (200a9ba). Still open: (1) litlfred first-party reusable workflows stay `@main` by convention (pin-actions treats them as first-party; nothing re-pins workflow SHAs); (2) smart-ra `fhirbuild.yml` → WHO smart-base `fhirbuild.yml@main` is not pinned, because `site-publisher.ts detectPublisher` matches `^\s*uses:\s*(\S+)\s*$` and would stop seeing a caller with a trailing `# ref` comment, so it needs a cat-harness-tools change first; (3) dropping `id-token: write` from smart-ra release.yml was not done. Session https://claude.ai/code/session_01Qmmkt67jRwiqwomTe2Sw4b
 
 _2026-10-31T08:25Z_ — Remaining `smart-ra` items (`id-token: write` dropped in `release.yml`, `fhirbuild.yml` pointed at first-party `litlfred/smart-base/.github/workflows/fhirbuild.yml@main`) opened in https://github.com/litlfred/smart-ra/pull/181; `docker run` digest pin in `smart-base` `ghbuild.yml` opened in https://github.com/litlfred/smart-base/pull/255.
+
+_2026-11-01T19:40Z_ — Completed: smart-ra#181 merged (418d12f), the last open PR; smart-base#255 and smart-immunizations#105 merged 2026-10-31. Session https://claude.ai/code/session_01Qmmkt7h4RWc6UwiBW5kbZ2
