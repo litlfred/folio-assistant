@@ -2,11 +2,11 @@
 # folio-assistant-negd
 $schema: bean/1.0.0
 title: 'COMPUTABLE DSAs: public agreement + ODRL, referenced by hash; GDHCN trust; one PDP (#2702, option D)'
-status: in-progress
+status: completed
 type: epic
 priority: normal
 created_at: 2026-10-30T14:05:00Z
-updated_at: 2026-10-31T16:53:00Z
+updated_at: 2026-11-01T07:40:00Z
 ---
 
 Workplan: `/mnt/project-files/dsa-analysis/missing-building-blocks-workplan.md` (analysis: `computable-dsa-analysis.md`, same folder). Issue: litlfred/folio-assistant#2702. Owner chose Option D on 2026-10-30 13:58Z.
@@ -54,3 +54,5 @@ Blocks B1–B14, milestones M1 (in-instance, B1–B4), M2 (server-to-server, B5�
 - **[smart-trust#100](https://github.com/litlfred/smart-trust/pull/100)** (`claude/dsa-rows-point-to-phw`, head `0515ac3`, `MERGEABLE` / `CLEAN`): DSA processes page points P4, P5, P11–P13 to `smart-trust-phw` processes D–H.
 - **[smart-trust-phw#14](https://github.com/litlfred/smart-trust-phw/pull/14)** (`claude/pilgrimage-worked-example`, head `6ed509e`, `MERGEABLE` / `CLEAN`): Worked example applying processes A, B, C, F, and I to IPS Pilgrimage (Hajj) with two FHIR R4 `IHE.PCF.consentIntermediate` Consents and gaps G1–G9.
 - **[smart-trust-phw#18](https://github.com/litlfred/smart-trust-phw/pull/18)** (`x80s/batch-phw-ihe-pcf-vhl`, head `3e77ff6`, `MERGEABLE` / `CLEAN`): 22 English draft block summaries for `library/ihe-iti-pcf-1-1-0` and `library/ihe-iti-vhl-1-0-0-comment` (`x80s`).
+
+_2026-11-01T07:40:00Z_ — Closed: All 18 child beans are `completed`. The last one, `q7dh` (DSA hash check against the official contexts, plus the `check-dsa-hash` Tool), was completed on 2026-10-31 at 20:26Z after folio-assistant-core#303, cat-harness#818 and cat-harness-tools#1034 merged. Blocks B1-B14 and the PCF/VHL tracks in the rollup above are all done. Closed by the bean drain tidy-up (sibling S3, https://claude.ai/code/session_01Qmmkt5KrQTMk55GWX1YUtj), on the owner's go-ahead for Q-S3-2.

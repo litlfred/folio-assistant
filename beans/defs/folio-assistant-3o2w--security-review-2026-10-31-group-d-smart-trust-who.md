@@ -2,14 +2,14 @@
 # folio-assistant-3o2w
 $schema: bean/1.0.0
 title: 'SECURITY REVIEW 2026-10-31, group D: smart-trust, who-iris, dth-hrh, bootstrap'
-status: in-progress
+status: completed
 type: epic
 priority: high
 tags:
     - security-review-2026-10-31
     - security
 created_at: 2026-10-31T04:10:00Z
-updated_at: 2026-10-31T08:21:00Z
+updated_at: 2026-11-01T07:40:00Z
 ---
 
 The owner asked (2026-10-31 03:51Z, thread "Security review all harnessed KG code") for a full QA and security review of all code harnessed in a KG, with findings recorded per the SOPs. This epic holds group D's public findings. The sibling epic for cat-harness and cat-harness-tools is `cat-tools-sr31` in the cat-harness-tools store.
@@ -33,3 +33,5 @@ _2026-10-31T08:21:00Z_ — Open PRs for all 7 Group D beans (DO NOT MERGE until 
 - `litlfred/who-iris`: https://github.com/litlfred/who-iris/pull/143 (`hto2`, `a3fj`)
 - `litlfred/dth-hrh`: https://github.com/litlfred/dth-hrh/pull/62 (`vj2d`, `hto2`, `a3fj`)
 - `litlfred/bootstrap`: https://github.com/litlfred/bootstrap/pull/34 (`dnrj`)
+
+_2026-11-01T07:40:00Z_ — Closed: All 14 child beans are `completed`: the seven public Group D findings and the seven held findings H1-H7 (fixed in who-iris#140 and smart-trust#98). The four review PRs listed above were recorded on the children as merged on 2026-10-31 by 20:26Z. Closed by the bean drain tidy-up (sibling S3, https://claude.ai/code/session_01Qmmkt5KrQTMk55GWX1YUtj), on the owner's go-ahead for Q-S3-2.
