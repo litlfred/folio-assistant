@@ -1,0 +1,63 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Smart Guidelines Decision Table Actions Schema API",
+    "description": "JSON Schema for Smart Guidelines Decision Table Actions ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-DecisionTableActions.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-DecisionTableActions",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-DecisionTableActions.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-DecisionTableActions",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-DecisionTableActions.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-DecisionTableActions": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-DecisionTableActions.schema.json",
+        "title": "Smart Guidelines Decision Table Actions Schema",
+        "description": "JSON Schema for Smart Guidelines Decision Table Actions ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://smart.who.int/base/CodeSystem/DecisionTableActions"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "output",
+              "guidance",
+              "annotation"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the Smart Guidelines Decision Table Actions ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-DecisionTableActions.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-DecisionTableActions.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/DecisionTableActions",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-11-01T11:54:04+00:00"
+      }
+    }
+  }
+}

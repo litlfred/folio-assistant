@@ -1902,23 +1902,8 @@
     },
     "gates-undeclared": {
       "summary": "A gate CI runs whose script carries no @covers line. Reported and never failed by default (--require-all fails it): the gap is real, and hiding it would render an unmeasured corpus as clean.",
-      "count": 2,
-      "entries": [
-        {
-          "command": "bun .github/scripts/repin-train.ts verdict --sha \"$SHA\"",
-          "scripts": [
-            ".github/scripts/repin-train.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        },
-        {
-          "command": "bun .github/scripts/repin-train.ts decide --tree \"$TREE\" | tee -a \"$GITHUB_OUTPUT\"",
-          "scripts": [
-            ".github/scripts/repin-train.ts"
-          ],
-          "why": "no @covers line in its docblock"
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
@@ -2037,7 +2022,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. An UPPER bound while gates remain undeclared: 2 of 280 have not said what they cover.",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 280 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },
@@ -2047,5 +2032,5 @@
       "entries": []
     }
   },
-  "total": 112
+  "total": 110
 }

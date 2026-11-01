@@ -1,0 +1,588 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-ISCO08ValueSet.displays.json",
+  "title": "ISCO-08 Value Set Display Values",
+  "description": "Display values for ISCO-08 Value Set ValueSet codes. Generated from FHIR expansions. Keys are code fragments (the part after '#' in the canonical IRI). The full IRI can be reconstructed as system + '#' + code.",
+  "type": "object",
+  "properties": {
+    "fhir:displays": {
+      "type": "object",
+      "description": "Multilingual display values for ValueSet codes keyed by code fragment",
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "description": "Display values for a specific code fragment by language",
+          "properties": {
+            "en": {
+              "type": "string",
+              "description": "English display value"
+            }
+          },
+          "patternProperties": {
+            "^[a-z]{2}(-[A-Z]{2})?$": {
+              "type": "string",
+              "description": "Display value in the specified language (ISO 639-1 code)"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "fhir:displays"
+  ],
+  "additionalProperties": true,
+  "fhir:displays": {
+    "0": {
+      "en": "Armed Forces Occupations"
+    },
+    "1": {
+      "en": "Managers"
+    },
+    "2": {
+      "en": "Professionals"
+    },
+    "3": {
+      "en": "Technicians and Associate Professionals"
+    },
+    "4": {
+      "en": "Clerical Support Workers"
+    },
+    "5": {
+      "en": "Service and Sales Workers"
+    },
+    "6": {
+      "en": "Skilled Agricultural, Forestry and Fishery Workers"
+    },
+    "7": {
+      "en": "Craft and Related Trades Workers"
+    },
+    "8": {
+      "en": "Plant and Machine Operators and Assemblers"
+    },
+    "9": {
+      "en": "Elementary Occupations"
+    },
+    "11": {
+      "en": "Chief Executives, Senior Officials and Legislators"
+    },
+    "12": {
+      "en": "Administrative and Commercial Managers"
+    },
+    "13": {
+      "en": "Production and Specialised Services Managers"
+    },
+    "14": {
+      "en": "Hospitality, Retail and Other Services Managers"
+    },
+    "21": {
+      "en": "Science and Engineering Professionals"
+    },
+    "22": {
+      "en": "Health Professionals"
+    },
+    "23": {
+      "en": "Teaching Professionals"
+    },
+    "24": {
+      "en": "Business and Administration Professionals"
+    },
+    "25": {
+      "en": "Information and Communications Technology Professionals"
+    },
+    "26": {
+      "en": "Legal, Social and Cultural Professionals"
+    },
+    "31": {
+      "en": "Science and Engineering Associate Professionals"
+    },
+    "32": {
+      "en": "Health Associate Professionals"
+    },
+    "33": {
+      "en": "Business and Administration Associate Professionals"
+    },
+    "34": {
+      "en": "Legal, Social, Cultural and Related Associate Professionals"
+    },
+    "35": {
+      "en": "Information and Communications Technicians"
+    },
+    "41": {
+      "en": "General and Keyboard Clerks"
+    },
+    "42": {
+      "en": "Customer Services Clerks"
+    },
+    "43": {
+      "en": "Numerical and Material Recording Clerks"
+    },
+    "44": {
+      "en": "Other Clerical Support Workers"
+    },
+    "51": {
+      "en": "Personal Service Workers"
+    },
+    "52": {
+      "en": "Sales Workers"
+    },
+    "53": {
+      "en": "Personal Care Workers"
+    },
+    "54": {
+      "en": "Protective Services Workers"
+    },
+    "61": {
+      "en": "Market-oriented Skilled Agricultural Workers"
+    },
+    "62": {
+      "en": "Market-oriented Skilled Forestry, Fishery and Hunting Workers"
+    },
+    "63": {
+      "en": "Subsistence Farmers, Fishers, Hunters and Gatherers"
+    },
+    "71": {
+      "en": "Building and Related Trades Workers, Excluding Electricians"
+    },
+    "72": {
+      "en": "Metal, Machinery and Related Trades Workers"
+    },
+    "73": {
+      "en": "Handicraft and Printing Workers"
+    },
+    "74": {
+      "en": "Electrical and Electronic Trades Workers"
+    },
+    "75": {
+      "en": "Food Processing, Wood Working, Garment and Other Craft and Related Trades Workers"
+    },
+    "81": {
+      "en": "Stationary Plant and Machine Operators"
+    },
+    "82": {
+      "en": "Assemblers"
+    },
+    "83": {
+      "en": "Drivers and Mobile Plant Operators"
+    },
+    "91": {
+      "en": "Cleaners and Helpers"
+    },
+    "92": {
+      "en": "Agricultural, Forestry and Fishery Labourers"
+    },
+    "93": {
+      "en": "Labourers in Mining, Construction, Manufacturing and Transport"
+    },
+    "94": {
+      "en": "Food Preparation Assistants"
+    },
+    "95": {
+      "en": "Street and Related Sales and Service Workers"
+    },
+    "96": {
+      "en": "Refuse Workers and Other Elementary Workers"
+    },
+    "111": {
+      "en": "Legislators and Senior Officials"
+    },
+    "112": {
+      "en": "Managing Directors and Chief Executives"
+    },
+    "121": {
+      "en": "Business Services and Administration Managers"
+    },
+    "122": {
+      "en": "Sales, Marketing and Development Managers"
+    },
+    "211": {
+      "en": "Physical and Earth Science Professionals"
+    },
+    "212": {
+      "en": "Mathematicians, Actuaries and Statisticians"
+    },
+    "213": {
+      "en": "Life Science Professionals"
+    },
+    "214": {
+      "en": "Engineering Professionals (excluding Electrotechnology)"
+    },
+    "215": {
+      "en": "Electrotechnology Engineers"
+    },
+    "216": {
+      "en": "Architects, Planners, Surveyors and Designers"
+    },
+    "221": {
+      "en": "Medical Doctors"
+    },
+    "222": {
+      "en": "Nursing and Midwifery Professionals"
+    },
+    "223": {
+      "en": "Traditional and Complementary Medicine Professionals"
+    },
+    "224": {
+      "en": "Paramedical Practitioners"
+    },
+    "225": {
+      "en": "Veterinarians"
+    },
+    "226": {
+      "en": "Other Health Professionals"
+    },
+    "231": {
+      "en": "University and Higher Education Teachers"
+    },
+    "232": {
+      "en": "Vocational Education Teachers"
+    },
+    "233": {
+      "en": "Secondary Education Teachers"
+    },
+    "234": {
+      "en": "Primary School and Early Childhood Teachers"
+    },
+    "235": {
+      "en": "Other Teaching Professionals"
+    },
+    "311": {
+      "en": "Physical and Engineering Science Technicians"
+    },
+    "312": {
+      "en": "Mining, Manufacturing and Construction Supervisors"
+    },
+    "313": {
+      "en": "Process Control Technicians"
+    },
+    "314": {
+      "en": "Life Science Technicians and Related Associate Professionals"
+    },
+    "315": {
+      "en": "Ship and Aircraft Controllers and Technicians"
+    },
+    "321": {
+      "en": "Medical and Pharmaceutical Technicians"
+    },
+    "322": {
+      "en": "Nursing and Midwifery Associate Professionals"
+    },
+    "323": {
+      "en": "Traditional and Complementary Medicine Associate Professionals"
+    },
+    "324": {
+      "en": "Veterinary Technicians and Assistants"
+    },
+    "325": {
+      "en": "Other Health Associate Professionals"
+    },
+    "411": {
+      "en": "General Office Clerks"
+    },
+    "412": {
+      "en": "Secretaries (general)"
+    },
+    "413": {
+      "en": "Keyboard Operators"
+    },
+    "511": {
+      "en": "Travel Attendants, Conductors and Guides"
+    },
+    "512": {
+      "en": "Cooks"
+    },
+    "513": {
+      "en": "Waiters and Bartenders"
+    },
+    "514": {
+      "en": "Hairdressers, Beauticians and Related Workers"
+    },
+    "515": {
+      "en": "Building and Housekeeping Supervisors"
+    },
+    "516": {
+      "en": "Other Personal Services Workers"
+    },
+    "711": {
+      "en": "Building Frame and Related Trades Workers"
+    },
+    "712": {
+      "en": "Building Finishers and Related Trades Workers"
+    },
+    "713": {
+      "en": "Painters, Building Structure Cleaners and Related Trades Workers"
+    },
+    "811": {
+      "en": "Mining and Mineral Processing Plant Operators"
+    },
+    "812": {
+      "en": "Metal Processing and Finishing Plant Operators"
+    },
+    "813": {
+      "en": "Chemical and Photographic Products Plant and Machine Operators"
+    },
+    "911": {
+      "en": "Domestic, Hotel and Office Cleaners and Helpers"
+    },
+    "912": {
+      "en": "Vehicle, Window, Laundry and Other Hand Cleaning Workers"
+    },
+    "913": {
+      "en": "Helpers in Food Preparation"
+    },
+    "1111": {
+      "en": "Legislators"
+    },
+    "1112": {
+      "en": "Senior Government Officials"
+    },
+    "1113": {
+      "en": "Traditional Chiefs and Heads of Villages"
+    },
+    "1114": {
+      "en": "Senior Officials of Special-Interest Organizations"
+    },
+    "1120": {
+      "en": "Managing Directors and Chief Executives"
+    },
+    "1211": {
+      "en": "Finance Managers"
+    },
+    "1212": {
+      "en": "Human Resource Managers"
+    },
+    "1213": {
+      "en": "Policy and Planning Managers"
+    },
+    "1219": {
+      "en": "Business Services and Administration Managers Not Elsewhere Classified"
+    },
+    "1221": {
+      "en": "Sales and Marketing Managers"
+    },
+    "1222": {
+      "en": "Advertising and Public Relations Managers"
+    },
+    "1223": {
+      "en": "Research and Development Managers"
+    },
+    "2111": {
+      "en": "Physicists and Astronomers"
+    },
+    "2112": {
+      "en": "Meteorologists"
+    },
+    "2113": {
+      "en": "Chemists"
+    },
+    "2114": {
+      "en": "Geologists and Geophysicists"
+    },
+    "2120": {
+      "en": "Mathematicians, Actuaries and Statisticians"
+    },
+    "2131": {
+      "en": "Biologists, Botanists, Zoologists and Related Professionals"
+    },
+    "2132": {
+      "en": "Farming, Forestry and Fisheries Advisers"
+    },
+    "2133": {
+      "en": "Environmental Protection Professionals"
+    },
+    "2141": {
+      "en": "Industrial and Production Engineers"
+    },
+    "2142": {
+      "en": "Civil Engineers"
+    },
+    "2143": {
+      "en": "Environmental Engineers"
+    },
+    "2144": {
+      "en": "Mechanical Engineers"
+    },
+    "2145": {
+      "en": "Chemical Engineers"
+    },
+    "2146": {
+      "en": "Mining Engineers, Metallurgists and Related Professionals"
+    },
+    "2149": {
+      "en": "Engineering Professionals Not Elsewhere Classified"
+    },
+    "2151": {
+      "en": "Electrical Engineers"
+    },
+    "2152": {
+      "en": "Electronics Engineers"
+    },
+    "2153": {
+      "en": "Telecommunications Engineers"
+    },
+    "2161": {
+      "en": "Building Architects"
+    },
+    "2162": {
+      "en": "Landscape Architects"
+    },
+    "2163": {
+      "en": "Product and Garment Designers"
+    },
+    "2164": {
+      "en": "Town and Traffic Planners"
+    },
+    "2165": {
+      "en": "Cartographers and Surveyors"
+    },
+    "2166": {
+      "en": "Graphic and Multimedia Designers"
+    },
+    "2211": {
+      "en": "Generalist Medical Practitioners"
+    },
+    "2212": {
+      "en": "Specialist Medical Practitioners"
+    },
+    "2221": {
+      "en": "Nursing Professionals"
+    },
+    "2222": {
+      "en": "Midwifery Professionals"
+    },
+    "2230": {
+      "en": "Traditional and Complementary Medicine Professionals"
+    },
+    "2240": {
+      "en": "Paramedical Practitioners"
+    },
+    "2250": {
+      "en": "Veterinarians"
+    },
+    "2261": {
+      "en": "Dentists"
+    },
+    "2262": {
+      "en": "Pharmacists"
+    },
+    "2263": {
+      "en": "Environmental and Occupational Health and Hygiene Professionals"
+    },
+    "2264": {
+      "en": "Physiotherapists"
+    },
+    "2265": {
+      "en": "Dietitians and Nutritionists"
+    },
+    "2266": {
+      "en": "Audiologists and Speech Therapists"
+    },
+    "2267": {
+      "en": "Optometrists and Ophthalmic Opticians"
+    },
+    "2269": {
+      "en": "Health Professionals Not Elsewhere Classified"
+    },
+    "3111": {
+      "en": "Chemical and Physical Science Technicians"
+    },
+    "3112": {
+      "en": "Civil Engineering Technicians"
+    },
+    "3113": {
+      "en": "Electrical Engineering Technicians"
+    },
+    "3114": {
+      "en": "Electronics Engineering Technicians"
+    },
+    "3115": {
+      "en": "Mechanical Engineering Technicians"
+    },
+    "3116": {
+      "en": "Chemical Engineering Technicians"
+    },
+    "3117": {
+      "en": "Mining and Metallurgical Technicians"
+    },
+    "3118": {
+      "en": "Draughtspersons"
+    },
+    "3119": {
+      "en": "Physical and Engineering Science Technicians Not Elsewhere Classified"
+    },
+    "4110": {
+      "en": "General Office Clerks"
+    },
+    "4120": {
+      "en": "Secretaries (general)"
+    },
+    "4131": {
+      "en": "Typists and Word Processing Operators"
+    },
+    "4132": {
+      "en": "Data Entry Clerks"
+    },
+    "5111": {
+      "en": "Travel Attendants and Travel Stewards"
+    },
+    "5112": {
+      "en": "Transport Conductors"
+    },
+    "5113": {
+      "en": "Travel Guides"
+    },
+    "6111": {
+      "en": "Field Crop and Vegetable Growers"
+    },
+    "6112": {
+      "en": "Tree and Shrub Crop Growers"
+    },
+    "6113": {
+      "en": "Gardeners, Horticultural and Nursery Growers"
+    },
+    "6114": {
+      "en": "Mixed Crop Growers"
+    },
+    "7111": {
+      "en": "House Builders"
+    },
+    "7112": {
+      "en": "Bricklayers and Related Workers"
+    },
+    "7113": {
+      "en": "Stonemasons, Stone Cutters, Splitters and Carvers"
+    },
+    "7114": {
+      "en": "Concrete Placers, Concrete Finishers and Related Workers"
+    },
+    "8111": {
+      "en": "Miners and Quarriers"
+    },
+    "8112": {
+      "en": "Mineral and Stone Processing Plant Operators"
+    },
+    "8113": {
+      "en": "Well Drillers and Borers and Related Workers"
+    },
+    "9111": {
+      "en": "Domestic Cleaners and Helpers"
+    },
+    "9112": {
+      "en": "Cleaners and Helpers in Offices, Hotels and Other Establishments"
+    },
+    "9211": {
+      "en": "Crop Farm Labourers"
+    },
+    "9212": {
+      "en": "Livestock Farm Labourers"
+    },
+    "9213": {
+      "en": "Mixed Crop and Livestock Farm Labourers"
+    }
+  },
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/ISCO08ValueSet",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-11-01T11:54:05+00:00"
+}
