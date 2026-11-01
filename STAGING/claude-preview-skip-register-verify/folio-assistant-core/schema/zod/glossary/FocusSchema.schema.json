@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/Focus",
+  "definitions": {
+    "Focus": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Organization",
+            "FormalOrganization",
+            "OrganizationalUnit",
+            "OrganizationalCollaboration"
+          ]
+        },
+        "iri": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/\\S+$"
+        },
+        "homepage": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/\\S+$"
+        },
+        "subOrganizationOf": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "sameAs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/\\S+$"
+          }
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-core/schema/zod/glossary/FocusSchema.schema.json",
+  "title": "FocusSchema",
+  "description": "Generated from `FocusSchema` in schemas/glossary.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  }
+}

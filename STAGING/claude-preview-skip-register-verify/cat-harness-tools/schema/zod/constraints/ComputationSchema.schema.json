@@ -1,0 +1,76 @@
+{
+  "$ref": "#/definitions/Computation",
+  "definitions": {
+    "Computation": {
+      "type": "object",
+      "properties": {
+        "engine": {
+          "type": "string",
+          "enum": [
+            "snappea",
+            "sympy",
+            "mpmath",
+            "sage",
+            "python",
+            "numpy",
+            "scipy",
+            "closed-form",
+            "python+mpmath",
+            "python+numpy+cvxpy",
+            "rust",
+            "python+rust"
+          ]
+        },
+        "script": {
+          "type": "string",
+          "minLength": 1
+        },
+        "witness": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_run",
+            "verified",
+            "failed",
+            "error",
+            "stale",
+            "experimental"
+          ]
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "engine",
+        "script",
+        "status"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ComputationSchema.schema.json",
+  "title": "ComputationSchema",
+  "description": "Generated from `ComputationSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  }
+}

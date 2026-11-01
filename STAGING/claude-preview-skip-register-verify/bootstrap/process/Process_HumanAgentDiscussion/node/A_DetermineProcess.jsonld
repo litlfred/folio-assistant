@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineProcess.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineProcess",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Determine the process and task, or that you are idle",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_HumanAgentDiscussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/skill/human-agent-discussion"
+    }
+  ]
+}

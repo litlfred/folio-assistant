@@ -1,0 +1,145 @@
+{
+  "$ref": "#/definitions/CapabilityDefinition",
+  "definitions": {
+    "CapabilityDefinition": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "detection": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "command"
+                },
+                "command": {
+                  "type": "string"
+                },
+                "expectExitCode": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "method",
+                "command"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "env-var"
+                },
+                "variable": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "method",
+                "variable"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "file-exists"
+                },
+                "path": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "method",
+                "path"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "mcp-probe"
+                },
+                "endpoint": {
+                  "type": "string"
+                },
+                "healthPath": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "method",
+                "endpoint"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "always"
+                }
+              },
+              "required": [
+                "method"
+              ]
+            }
+          ]
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fallbackTo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "satisfies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^req:[a-z0-9-]+#[a-z0-9-]+$"
+          }
+        },
+        "setupSkill": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "A skill name, e.g. todo-manager"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "detection"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/CapabilityDefinitionSchema.schema.json",
+  "title": "CapabilityDefinitionSchema",
+  "description": "Generated from `CapabilityDefinitionSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  }
+}

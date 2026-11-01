@@ -1,0 +1,40 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/process/Process_CRDM_Deliver/node/A_Implement.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/process/Process_CRDM_Deliver/node/A_Implement",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Phase 6: Implement (feature branch + PR)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/process/Process_CRDM_Deliver",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/process/Process_CRDM_Deliver/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/skill/prepare-merge"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_1b",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_7",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver/node/A_Implement"
+    }
+  ]
+}

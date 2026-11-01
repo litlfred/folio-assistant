@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_CompleteInitialization/node/A_AskPerson.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_CompleteInitialization/node/A_AskPerson",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Ask the person to do what only they can",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_CompleteInitialization",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/skill/human-agent-discussion",
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_HumanAgentDiscussion"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/role/compute-authoring-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/role/compute-authoring-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Compute authoring agent",
+      "title": "Compute authoring agent",
+      "notation": "compute-authoring-agent",
+      "description": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/skill/compute-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/skill/compute-author",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/skill/ffi-roundtrip-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/skill/lean-witness-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/skill/witnessed-values",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/skill/verify-local-substrate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/skill/simulator",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/skill/simulator-math-audit"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/compute-authoring-agent"
+    }
+  ]
+}

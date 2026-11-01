@@ -1,0 +1,322 @@
+{
+  "$ref": "#/definitions/TermAdjudication",
+  "definitions": {
+    "TermAdjudication": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "subject": {
+              "type": "object",
+              "properties": {
+                "scheme": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "term": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9._-]*$"
+                },
+                "target": {
+                  "type": "string",
+                  "enum": [
+                    "skos",
+                    "fhir"
+                  ]
+                },
+                "observed": {
+                  "type": "object",
+                  "properties": {
+                    "exact": {
+                      "type": "string",
+                      "const": "unmapped"
+                    },
+                    "concept": {
+                      "type": "string",
+                      "enum": [
+                        "mapped",
+                        "unmapped"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "exact",
+                    "concept"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "scheme",
+                "term",
+                "target",
+                "observed"
+              ],
+              "additionalProperties": false
+            },
+            "decidedBy": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedAt": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "outcome": {
+              "type": "string",
+              "const": "change-prose"
+            },
+            "concept": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/"
+            },
+            "authorisedLabel": {
+              "type": "string",
+              "minLength": 1
+            },
+            "changed": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "subject",
+            "decidedBy",
+            "decidedAt",
+            "outcome",
+            "concept",
+            "authorisedLabel",
+            "changed"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "subject": {
+              "type": "object",
+              "properties": {
+                "scheme": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "term": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9._-]*$"
+                },
+                "target": {
+                  "type": "string",
+                  "enum": [
+                    "skos",
+                    "fhir"
+                  ]
+                },
+                "observed": {
+                  "type": "object",
+                  "properties": {
+                    "exact": {
+                      "type": "string",
+                      "const": "unmapped"
+                    },
+                    "concept": {
+                      "type": "string",
+                      "enum": [
+                        "mapped",
+                        "unmapped"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "exact",
+                    "concept"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "scheme",
+                "term",
+                "target",
+                "observed"
+              ],
+              "additionalProperties": false
+            },
+            "decidedBy": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedAt": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "outcome": {
+              "type": "string",
+              "const": "local-term"
+            },
+            "localTerm": {
+              "type": "object",
+              "properties": {
+                "glossary": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9._-]*$"
+                }
+              },
+              "required": [
+                "glossary",
+                "id"
+              ],
+              "additionalProperties": false
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "relation": {
+              "type": "string",
+              "enum": [
+                "closeMatch",
+                "broadMatch",
+                "narrowMatch",
+                "none"
+              ]
+            },
+            "concept": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/"
+            }
+          },
+          "required": [
+            "subject",
+            "decidedBy",
+            "decidedAt",
+            "outcome",
+            "localTerm",
+            "reason",
+            "relation"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "subject": {
+              "type": "object",
+              "properties": {
+                "scheme": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "term": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9._-]*$"
+                },
+                "target": {
+                  "type": "string",
+                  "enum": [
+                    "skos",
+                    "fhir"
+                  ]
+                },
+                "observed": {
+                  "type": "object",
+                  "properties": {
+                    "exact": {
+                      "type": "string",
+                      "const": "unmapped"
+                    },
+                    "concept": {
+                      "type": "string",
+                      "enum": [
+                        "mapped",
+                        "unmapped"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "exact",
+                    "concept"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "scheme",
+                "term",
+                "target",
+                "observed"
+              ],
+              "additionalProperties": false
+            },
+            "decidedBy": {
+              "type": "string",
+              "minLength": 1
+            },
+            "decidedAt": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "outcome": {
+              "type": "string",
+              "const": "vocabulary-wrong"
+            },
+            "vocabulary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "domain": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "concept": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/"
+            }
+          },
+          "required": [
+            "subject",
+            "decidedBy",
+            "decidedAt",
+            "outcome",
+            "vocabulary",
+            "domain",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-adjudication/TermAdjudicationSchema.schema.json",
+  "title": "TermAdjudicationSchema",
+  "description": "Generated from `TermAdjudicationSchema` in schemas/content/term-adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  }
+}

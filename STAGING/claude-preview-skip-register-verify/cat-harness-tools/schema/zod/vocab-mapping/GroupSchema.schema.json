@@ -1,0 +1,331 @@
+{
+  "$ref": "#/definitions/Group",
+  "definitions": {
+    "Group": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "display": {
+                "type": "string"
+              },
+              "valueSet": {
+                "type": "string",
+                "minLength": 1
+              },
+              "noMap": {
+                "type": "boolean"
+              },
+              "target": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "display": {
+                      "type": "string"
+                    },
+                    "valueSet": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "relationship": {
+                      "type": "string",
+                      "enum": [
+                        "related-to",
+                        "equivalent",
+                        "source-is-narrower-than-target",
+                        "source-is-broader-than-target",
+                        "not-related-to"
+                      ]
+                    },
+                    "equivalence": {
+                      "type": "string",
+                      "enum": [
+                        "relatedto",
+                        "equivalent",
+                        "equal",
+                        "wider",
+                        "subsumes",
+                        "narrower",
+                        "specializes",
+                        "inexact",
+                        "unmatched",
+                        "disjoint"
+                      ]
+                    },
+                    "comment": {
+                      "type": "string"
+                    },
+                    "property": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "value": {}
+                            },
+                            "required": [
+                              "type",
+                              "value"
+                            ]
+                          },
+                          "extra": {
+                            "type": "object",
+                            "propertyNames": {
+                              "type": "string"
+                            },
+                            "additionalProperties": {}
+                          }
+                        },
+                        "required": [
+                          "code",
+                          "value"
+                        ]
+                      }
+                    },
+                    "dependsOn": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "attribute": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "value": {}
+                            },
+                            "required": [
+                              "type",
+                              "value"
+                            ]
+                          },
+                          "valueSet": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "system": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "display": {
+                            "type": "string"
+                          },
+                          "extra": {
+                            "type": "object",
+                            "propertyNames": {
+                              "type": "string"
+                            },
+                            "additionalProperties": {}
+                          }
+                        },
+                        "required": [
+                          "attribute"
+                        ]
+                      }
+                    },
+                    "product": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "attribute": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "value": {}
+                            },
+                            "required": [
+                              "type",
+                              "value"
+                            ]
+                          },
+                          "valueSet": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "system": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "display": {
+                            "type": "string"
+                          },
+                          "extra": {
+                            "type": "object",
+                            "propertyNames": {
+                              "type": "string"
+                            },
+                            "additionalProperties": {}
+                          }
+                        },
+                        "required": [
+                          "attribute"
+                        ]
+                      }
+                    },
+                    "key": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "authority": {
+                      "type": "string",
+                      "enum": [
+                        "authoritative",
+                        "derived"
+                      ]
+                    },
+                    "derivedFrom": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "transform": {
+                      "type": "string",
+                      "enum": [
+                        "copy",
+                        "flag",
+                        "code"
+                      ]
+                    },
+                    "extra": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": [
+                    "relationship"
+                  ]
+                }
+              },
+              "extra": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {}
+              }
+            }
+          }
+        },
+        "unmapped": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "use-source-code",
+                "fixed",
+                "other-map"
+              ]
+            },
+            "code": {
+              "type": "string"
+            },
+            "display": {
+              "type": "string"
+            },
+            "valueSet": {
+              "type": "string"
+            },
+            "relationship": {
+              "type": "string",
+              "enum": [
+                "related-to",
+                "equivalent",
+                "source-is-narrower-than-target",
+                "source-is-broader-than-target",
+                "not-related-to"
+              ]
+            },
+            "otherMap": {
+              "type": "string"
+            },
+            "extra": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "mode"
+          ]
+        },
+        "extra": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "element"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/GroupSchema.schema.json",
+  "title": "GroupSchema",
+  "description": "Generated from `GroupSchema` in schemas/content/vocab-mapping.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  }
+}

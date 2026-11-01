@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/skill/ui-accessibility.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/skill/ui-accessibility",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "ui-accessibility",
+      "title": "All UI must follow accessibility guidelines",
+      "description": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, why an automated pass is not the standard, and what a rendering built client-side owes a reader — there is no no-JavaScript floor here, and the two gates that look like one are narrower than their names.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/ui-accessibility.md",
+      "instructionLines": 187,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ui-accessibility"
+    }
+  ]
+}

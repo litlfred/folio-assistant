@@ -1,0 +1,75 @@
+{
+  "$ref": "#/definitions/ChangeSizeThreshold",
+  "definitions": {
+    "ChangeSizeThreshold": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string",
+          "const": "effective_lines"
+        },
+        "limit": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "unit": {
+          "type": "string",
+          "const": "effective_lines"
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "report",
+            "block"
+          ]
+        },
+        "weights": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "prose_kg": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "code",
+            "prose_kg"
+          ]
+        },
+        "exemptions": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "metric",
+        "limit",
+        "unit",
+        "basis",
+        "mode",
+        "weights",
+        "exemptions"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/change-size/ChangeSizeThresholdSchema.schema.json",
+  "title": "ChangeSizeThresholdSchema",
+  "description": "Generated from `ChangeSizeThresholdSchema` in schemas/sdlc/change-size.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  }
+}

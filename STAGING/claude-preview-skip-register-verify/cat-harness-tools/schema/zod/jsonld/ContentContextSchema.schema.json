@@ -1,0 +1,122 @@
+{
+  "$ref": "#/definitions/ContentContext",
+  "definitions": {
+    "ContentContext": {
+      "anyOf": [
+        {
+          "type": "string",
+          "const": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string",
+              "const": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@base": {
+                  "type": "string",
+                  "const": "https://litlfred.github.io/folio/"
+                }
+              },
+              "required": [
+                "@base"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string",
+              "const": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@base": {
+                  "type": "string",
+                  "const": "https://litlfred.github.io/folio-assistant/"
+                }
+              },
+              "required": [
+                "@base"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string",
+              "pattern": "\\/ns\\/context\\/v1\\.jsonld$"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@base": {
+                  "type": "string",
+                  "const": "https://litlfred.github.io/folio/"
+                }
+              },
+              "required": [
+                "@base"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "string",
+              "pattern": "\\/ns\\/context\\/v1\\.jsonld$"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@base": {
+                  "type": "string",
+                  "const": "https://litlfred.github.io/folio-assistant/"
+                }
+              },
+              "required": [
+                "@base"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/jsonld/ContentContextSchema.schema.json",
+  "title": "ContentContextSchema",
+  "description": "Generated from `ContentContextSchema` in schemas/kg/jsonld.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  }
+}

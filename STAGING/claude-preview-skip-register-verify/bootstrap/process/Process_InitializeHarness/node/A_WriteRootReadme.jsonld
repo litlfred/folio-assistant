@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_InitializeHarness/node/A_WriteRootReadme.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_InitializeHarness/node/A_WriteRootReadme",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Write the root README, if it is not there",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_InitializeHarness",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/skill/root-readme"
+    }
+  ]
+}

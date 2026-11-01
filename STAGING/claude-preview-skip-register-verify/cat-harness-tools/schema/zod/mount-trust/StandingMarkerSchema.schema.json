@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/StandingMarker",
+  "definitions": {
+    "StandingMarker": {
+      "type": "object",
+      "properties": {
+        "follows": {
+          "type": "string",
+          "pattern": "^(?!-)(?!.*\\.\\.)[A-Za-z0-9._/-]+$"
+        },
+        "consentAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}"
+        },
+        "require": {
+          "type": "string",
+          "const": "green"
+        }
+      },
+      "required": [
+        "follows",
+        "consentAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/mount-trust/StandingMarkerSchema.schema.json",
+  "title": "StandingMarkerSchema",
+  "description": "Generated from `StandingMarkerSchema` in schemas/kg/mount-trust.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  }
+}

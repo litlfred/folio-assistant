@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/role/test-requester.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/role/test-requester",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Test requester",
+      "title": "Test requester",
+      "notation": "test-requester",
+      "description": "Asks for a system under test to be certified against a named `test-plan/v1` (plan id and version). It may BE the system under test, or speak for it, and that is exactly why it carries no lane after the request: the requester never tests, checks or certifies, so the system never writes a verdict about itself (`untainted-verification`; the `test-sut-not-self-judged` criterion). Lane `Lane_Requester` in `test-plan-execution.bpmn`, bean `3o5b`.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/cat-harness/skill/test-plan-execution"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/test-requester"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_HumanAgentDiscussion/node/GW_WhichQuestion.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_HumanAgentDiscussion/node/GW_WhichQuestion",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Was that the caller's question, or a precondition?",
+      "type": "bpmn:exclusiveGateway",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_HumanAgentDiscussion"
+    }
+  ]
+}

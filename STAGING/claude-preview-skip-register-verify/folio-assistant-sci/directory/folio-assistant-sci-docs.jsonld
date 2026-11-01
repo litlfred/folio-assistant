@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/directory/folio-assistant-sci-docs.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/directory/folio-assistant-sci-docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "folio-assistant-sci-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/docs"
+      ],
+      "description": "This instance's own reader-facing pages: the guide to writing a paper, which documents this instance's own process (`processes/content/authoring-a-paper.bpmn`). Moved here from the harness below on 2026-10-23 (wrong-direction move M7). Composed THROUGH just-the-docs (`composed: true`, as the content core's own docs directory is), so its pages land in the platform's site under this instance's name with the sidebar, search and layout. `docs.json` here declares the `docs-source` the platform's one docs-page run reads (owner ruling A1, 2026-10-23): each `source/<group>-<slug>/` renders into `<group>/<slug>.md` beside it, and `compose-docs` leaves `source/` itself out.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/folio-assistant-sci/directory/folio-assistant-sci-docs",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/folio-assistant-sci-docs"
+    }
+  ]
+}

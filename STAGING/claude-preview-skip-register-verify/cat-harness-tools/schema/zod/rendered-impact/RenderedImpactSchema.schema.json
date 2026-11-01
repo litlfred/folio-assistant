@@ -1,0 +1,140 @@
+{
+  "$ref": "#/definitions/RenderedImpact",
+  "definitions": {
+    "RenderedImpact": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "rendered-impact/v1"
+        },
+        "renderer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "cone",
+            "build-diff"
+          ]
+        },
+        "site": {
+          "type": "string"
+        },
+        "base": {
+          "type": "string"
+        },
+        "head": {
+          "type": "string"
+        },
+        "inputs": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "change": {
+                "type": "string",
+                "enum": [
+                  "changed",
+                  "added",
+                  "removed"
+                ]
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "content",
+                  "data",
+                  "index"
+                ]
+              },
+              "via": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "anchors": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "hash": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "path",
+              "change",
+              "role"
+            ]
+          }
+        },
+        "undetermined": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "input": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scope": {
+                "default": "unknown",
+                "type": "string",
+                "enum": [
+                  "unknown",
+                  "all"
+                ]
+              },
+              "hash": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "input",
+              "reason"
+            ]
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "renderer",
+        "method",
+        "files"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rendered-impact/RenderedImpactSchema.schema.json",
+  "title": "RenderedImpactSchema",
+  "description": "Generated from `RenderedImpactSchema` in schemas/ui/rendered-impact.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  }
+}

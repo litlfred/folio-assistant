@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_Discussion/node/A_ListLocations.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_Discussion/node/A_ListLocations",
+      "@type": "bootstrap:ProcessNode",
+      "label": "List the locations this could install to",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/process/Process_Discussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/bootstrap/skill/confirm-harness"
+    }
+  ]
+}

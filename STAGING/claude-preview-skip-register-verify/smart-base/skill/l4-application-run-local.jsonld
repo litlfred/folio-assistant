@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/smart-base/skill/l4-application-run-local.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-skip-register-verify/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/l4-application-run-local.jsonld",
+  "staging": {
+    "branch": "claude/preview-skip-register-verify",
+    "sha": "92ad6433a39cf8b2db2bdee1a991bb84e3f38b95",
+    "pr": "2867/merge",
+    "run": "41285492454"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/l4-application-run-local",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "l4-application-run-local",
+      "title": "l4-application-run-local",
+      "description": "Run an L4 application that is already built, on the agent's own machine, against a clean IG build, so a person can try or demonstrate it before anything is hosted. Read before starting a local copy of an L4 app for a review, a demo or a country adaptation check.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/l4-application-run-local.md",
+      "instructionLines": 41,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}
