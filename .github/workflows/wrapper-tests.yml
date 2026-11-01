@@ -400,7 +400,7 @@ jobs:
     # Sage Docker image is ~3 GB; cap the job and skip on draft PRs.
     if: github.event.pull_request.draft != true
     container:
-      image: sagemath/sagemath:latest
+      image: sagemath/sagemath@sha256:310dfe23fc786f3a5a06a7b0387c60201ec79b32c0db941b7624505ee5edb565 # latest
       options: --user root
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
