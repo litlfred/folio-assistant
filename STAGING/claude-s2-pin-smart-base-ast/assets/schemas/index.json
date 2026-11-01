@@ -195,7 +195,7 @@
       "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
       "instance": "cat-harness-tools",
       "name": "diagrams",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "Derived UML data class diagrams and sequence diagrams from an ArchiMate model",
       "isTest": false
     },
@@ -203,7 +203,7 @@
       "module": "cat-harness-tools/archimate/schemas/metamodel.ts",
       "instance": "cat-harness-tools",
       "name": "metamodel",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "The metamodel a model actually uses, derived from the model and checked",
       "isTest": false
     },
@@ -211,7 +211,7 @@
       "module": "cat-harness-tools/archimate/schemas/rules.ts",
       "instance": "cat-harness-tools",
       "name": "rules",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "`archimate-relationship-rules/v1`: the relationships a reference",
       "isTest": false
     },
@@ -219,7 +219,8 @@
       "module": "cat-harness-tools/archimate/schemas/slugs.ts",
       "instance": "cat-harness-tools",
       "name": "slugs",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "path functions for ArchiMate pages; no schema",
       "summary": "Readable page paths for ArchiMate views and elements.",
       "isTest": false
     },
@@ -828,7 +829,8 @@
       "module": "cat-harness-tools/schemas/harness-root.ts",
       "instance": "cat-harness-tools",
       "name": "harness-root",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "functions that locate the harness instance; no schema",
       "summary": "Where the cat-harness instance lives: the directory holding `cat-harness.json`.",
       "isTest": false
     },
@@ -2148,7 +2150,7 @@
       "module": "cat-harness-tools/schemas/sdlc/harness-state.ts",
       "instance": "cat-harness-tools",
       "name": "harness-state",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "One harness's state as `harness:state` publishes it (`folio-harness-state/v1`).",
       "isTest": false
     },
@@ -2582,7 +2584,8 @@
       "module": "cat-harness-tools/schemas/tools/harness-tools.ts",
       "instance": "cat-harness-tools",
       "name": "harness-tools",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "a reader over the harness's Tool folders; the Tool node's schema is `tool.ts`",
       "summary": "The cat-harness instance's Tool nodes — its `tools` graph.",
       "isTest": false
     },
@@ -2615,7 +2618,8 @@
       "module": "cat-harness-tools/schemas/tools/tool-helpers.ts",
       "instance": "cat-harness-tools",
       "name": "tool-helpers",
-      "graphNode": "undeclared",
+      "graphNode": "none",
+      "reason": "helpers the Tool folders share; no schema",
       "summary": "Helpers the harness's Tool folders share. Not a Tool, and declares none: a",
       "isTest": false
     },
@@ -2680,7 +2684,7 @@
       "module": "cat-harness-tools/schemas/tools/workflow-tool-results.ts",
       "instance": "cat-harness-tools",
       "name": "workflow-tool-results",
-      "graphNode": "undeclared",
+      "graphNode": "schema",
       "summary": "Typed results of the workflow engine's tools (issue",
       "isTest": false
     },

@@ -370,10 +370,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-11-01T17:53:57.536Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/64a5f6e38ac066b4a176d2088dcd54d841863155",
-  "sourceCommitSha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
-  "sourceCommitAt": "2026-11-01T17:30:27Z",
+  "generatedAt": "2026-11-01T18:33:06.371Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fb1c92f6cdd729c4553f7688a9a5cf5669bad3c0",
+  "sourceCommitSha": "fb1c92f6cdd729c4553f7688a9a5cf5669bad3c0",
+  "sourceCommitAt": "2026-11-01T18:10:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -388,7 +388,7 @@
     "Lane": 175,
     "ProcessNode": 1029,
     "Tool": 167,
-    "Schema": 178,
+    "Schema": 183,
     "ExternalSchema": 28,
     "GraphTypology": 53,
     "Role": 44,
@@ -53254,6 +53254,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/change-size"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/harness-state",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "harness-state",
+      "title": "harness-state",
+      "summary": "One harness's state as `harness:state` publishes it (`folio-harness-state/v1`).",
+      "module": "schemas/sdlc/harness-state.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/harness-state"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/health-report",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "health-report",
@@ -53600,6 +53610,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/workflow-tool-results",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "workflow-tool-results",
+      "title": "workflow-tool-results",
+      "summary": "Typed results of the workflow engine's tools (issue",
+      "module": "schemas/tools/workflow-tool-results.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/workflow-tool-results"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/board-positions",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "board-positions",
@@ -53791,6 +53811,36 @@
       "module": "archimate/schemas/archimate.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/directory/archimate",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/archimate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/diagrams",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "diagrams",
+      "title": "diagrams",
+      "summary": "Derived UML data class diagrams and sequence diagrams from an ArchiMate model",
+      "module": "archimate/schemas/diagrams.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/diagrams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/metamodel",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "metamodel",
+      "title": "metamodel",
+      "summary": "The metamodel a model actually uses, derived from the model and checked",
+      "module": "archimate/schemas/metamodel.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/metamodel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/rules",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "rules",
+      "title": "rules",
+      "summary": "`archimate-relationship-rules/v1`: the relationships a reference",
+      "module": "archimate/schemas/rules.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/directory/archimate",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rules"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/openapi",
@@ -84551,6 +84601,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/change-size"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness.jsonld#schema/harness-state",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/harness-state",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/harness-state"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness.jsonld#schema/health-report",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/health-report",
@@ -84755,6 +84811,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/tool"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness.jsonld#schema/workflow-tool-results",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/workflow-tool-results",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/workflow-tool-results"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness.jsonld#schema/board-positions",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/board-positions",
@@ -84867,6 +84929,24 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/archimate",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/archimate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness.jsonld#schema/diagrams",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/diagrams",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/diagrams"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness.jsonld#schema/metamodel",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/metamodel",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/metamodel"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness.jsonld#schema/rules",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/rules",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/schema/rules"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness.jsonld#schema/openapi",
@@ -85573,8 +85653,8 @@
   ],
   "staging": {
     "branch": "claude/s2-pin-smart-base-ast",
-    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "sha": "fb1c92f6cdd729c4553f7688a9a5cf5669bad3c0",
     "pr": "2887/merge",
-    "run": "41331813578"
+    "run": "41335188874"
   }
 }

@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "5d798c70ac966c639c12d5910530a68a02e31d2c",
+    "head": "c5d0c5bfcb350f13ead6bc287a7d2aba713aa363",
     "changes": [
       {
         "path": ".github/workflows/feature-staging.yml",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/feature-staging.yml",
-        "ref": "5d798c70ac966c639c12d5910530a68a02e31d2c",
+        "ref": "c5d0c5bfcb350f13ead6bc287a7d2aba713aa363",
         "mounted": true
       },
       {
@@ -18,7 +18,7 @@
         "status": "added",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/preview-verify-sweep.yml",
-        "ref": "5d798c70ac966c639c12d5910530a68a02e31d2c",
+        "ref": "c5d0c5bfcb350f13ead6bc287a7d2aba713aa363",
         "mounted": true
       },
       {
@@ -26,7 +26,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "5d798c70ac966c639c12d5910530a68a02e31d2c",
+        "ref": "c5d0c5bfcb350f13ead6bc287a7d2aba713aa363",
         "mounted": true
       }
     ],
@@ -43,8 +43,8 @@
   "qa": {
     "status": "not-base",
     "beforeCommit": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "baseCommit": "b7aa5d0f8eb19f691e32408697ef996f8bfc871f",
-    "measured": 24200,
+    "baseCommit": "c523aef7ef222128e37d491177683993da532fbd",
+    "measured": 24257,
     "notInCone": [
       {
         "path": "api/classes/folio-assistant_schemas_kind-validator.ValidatorRefError.html",
@@ -16013,6 +16013,12 @@
         "via": []
       },
       {
+        "path": "assets/auto-docs/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/beans/index.json",
         "change": "changed",
         "role": "data",
@@ -16034,6 +16040,48 @@
         "path": "assets/css/just-the-docs-light.css.map",
         "change": "changed",
         "role": "index",
+        "via": []
+      },
+      {
+        "path": "assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness/library.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness/library.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/fhir-harness/library.svg",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -16086,6 +16134,24 @@
       },
       {
         "path": "assets/img/uml/overview/smart-trust-phw.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-trust-phw/library.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-trust-phw/library.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/smart-trust-phw/library.svg",
         "change": "changed",
         "role": "data",
         "via": []
@@ -16145,6 +16211,42 @@
         "via": []
       },
       {
+        "path": "assets/img/uml/overview/who-iris.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris/library.dot",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris/library.landscape.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/img/uml/overview/who-iris/library.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/library/entries/9789240010567-eng.doc.json",
         "change": "changed",
         "role": "data",
@@ -16152,6 +16254,18 @@
       },
       {
         "path": "assets/library/entries/9789240016514-eng.doc.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/9789240081291-eng.doc.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/9789240081291-eng.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -16271,7 +16385,67 @@
         "via": []
       },
       {
+        "path": "assets/library/entries/c2pa-2026-specification-2-5.doc.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/c2pa-2026-specification-2-5.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/cucumber-2024-gherkin-reference.doc.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/cucumber-2024-gherkin-reference.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/library/entries/facilityanalysisguide-immunization.doc.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/hl7-2023-fhir-r5-testplan.doc.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/hl7-2023-fhir-r5-testplan.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/ihe-iti-pcf-1-1-0.doc.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/ihe-iti-pcf-1-1-0.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/ihe-iti-vhl-1-0-0-comment.doc.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/ihe-iti-vhl-1-0-0-comment.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -16296,6 +16470,18 @@
       },
       {
         "path": "assets/library/entries/immunization-summary-table-4.doc.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/isaitb-2026-interoperability-test-bed-readme.doc.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/library/entries/isaitb-2026-interoperability-test-bed-readme.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -16415,6 +16601,12 @@
         "via": []
       },
       {
+        "path": "assets/schemas/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/slices/beans.524c89c544460519668b05b6662126923e9eb5e7fb706c13cd53b9d416450524.sqlite3",
         "change": "added",
         "role": "data",
@@ -16433,13 +16625,25 @@
         "via": []
       },
       {
-        "path": "assets/slices/kg.f4e016927c6a5536c3b06d8112ccc4b776f12996287dd05e8a3ad0246a4a77c6.sqlite3",
+        "path": "assets/slices/kg.073d4e2a240950534333f63cf29963ecb01a082c1f2800fd980821375910f457.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
       },
       {
         "path": "assets/slices/kg.sqlite3.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/slices/library.a7a4cfb910dc66411b4080d19e6a0c378a491af96a5137bcfc8d867aaada8281.sqlite3",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/slices/library.sqlite3.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -20609,9 +20813,21 @@
         "via": []
       },
       {
+        "path": "docs/who-iris/iris-cdn-deployment.md",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "docs/who-iris/iris-cdn-export.html",
         "change": "changed",
         "role": "content",
+        "via": []
+      },
+      {
+        "path": "docs/who-iris/iris-cdn-export.md",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -46475,7 +46691,19 @@
         "via": []
       },
       {
+        "path": "smart-base/fhir-artifact-index/menu.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "smart-base/fhir-artifact-index/package.tgz",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "smart-base/fhir-artifact-index/releases.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -70031,6 +70259,18 @@
         "via": []
       },
       {
+        "path": "smart-trust-phw/PHW.F.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "smart-trust-phw/PHW.I.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "smart-trust-phw/StructureDefinition-DVC.html",
         "change": "changed",
         "role": "content",
@@ -73769,6 +74009,12 @@
         "via": []
       },
       {
+        "path": "smart-trust-phw/example-pilgrimage.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "smart-trust-phw/feedback.html",
         "change": "changed",
         "role": "content",
@@ -73776,6 +74022,12 @@
       },
       {
         "path": "smart-trust-phw/fhir-artifact-index/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "smart-trust-phw/fhir-artifact-index/menu.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -73938,6 +74190,12 @@
       },
       {
         "path": "smart-trust-phw/testing.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust-phw/toc.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -83153,7 +83411,19 @@
         "via": []
       },
       {
+        "path": "smart-trust/fhir-artifact-index/menu.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "smart-trust/fhir-artifact-index/package.tgz",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "smart-trust/fhir-artifact-index/releases.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -83330,6 +83600,72 @@
         "path": "smart-trust/use_cases.html",
         "change": "changed",
         "role": "content",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/library/9789240010567-eng/figure-data/index.hydrated.jsonld",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/library/9789240010567-eng/figure-data/index.jsonld",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/library/9789240010567-eng/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/library/9789240010567-eng/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/library/9789240116191-eng/figure-data/index.hydrated.jsonld",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/library/9789240116191-eng/figure-data/index.jsonld",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/library/9789240116191-eng/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/library/9789240116191-eng/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/library/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/skills/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/who-iris/skills/index.jsonld",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -85730,7 +86066,7 @@
       },
       {
         "dir": "assets",
-        "count": 264,
+        "count": 265,
         "sample": [
           "assets/beans/burndown.json",
           "assets/harnesses/bootstrap-tools.json",
