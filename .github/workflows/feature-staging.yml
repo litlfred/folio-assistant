@@ -1544,7 +1544,10 @@ jobs:
           # locale with no workflow edit, and so the gates and the deploy run
           # the same command. Each document's node `@id`s are the core's --
           # a translation is not a new term.
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --out-dir "./_site/${STUB}"
+          # `--core`: the document kg-export wrote above, read rather than built a
+          # second time (bean fwtz: 19 s of this step on main). An older tools
+          # pin ignores the flag and builds it, as before.
+          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --core "./_site/${STUB}/${STUB}.jsonld" --out-dir "./_site/${STUB}"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_DIR}"
             cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
