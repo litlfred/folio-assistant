@@ -6,7 +6,7 @@ status: todo
 type: task
 created_at: 2026-10-02T06:31:22Z
 updated_at: 2026-10-24T08:25:00Z
-parent: folio-assistant-5a3l
+parent: folio-assistant-rwmf
 ---
 
 From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §2.3–2.4 (D3=A). Register three graph kinds: credential-needs (context), credential-profile (context), credential-registry (state). Write the needs for every secret in §1.1. The profile is personal-github with the App (D1=A). Declare sign-artefact as a need with no supply yet (D4=A). bootstrap-tools carries its own file, tagged with $schema and with no import (falsifier 4). Contains no values. Not built yet.
@@ -25,3 +25,5 @@ _2026-10-24T08:25:00Z_ — Owner re-asked (structured question Q4, 08:19Z, optio
 
 
 _2026-10-16T10:10:00Z_ — Store sync (owner, 2026-10-16 10:05Z, "1 2"): front matter taken from the folio-assistant copy, which carries the later evidence-backed change; notes only the cat-harness copy had are kept above. Session https://claude.ai/code/session_01K9Xi9QSxCNYju8QNu7EuHg.
+
+_2026-11-01T20:50Z_ — Moved under folio-assistant-rwmf: the old epic closes (owner card Q-DQ-1 A). Session https://claude.ai/code/session_01Qmmkt7h4RWc6UwiBW5kbZ2

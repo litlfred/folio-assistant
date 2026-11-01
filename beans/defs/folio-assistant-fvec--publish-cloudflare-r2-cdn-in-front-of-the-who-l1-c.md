@@ -7,7 +7,7 @@ type: task
 priority: low
 created_at: 2026-10-24T08:25:00Z
 updated_at: 2026-10-24T08:25:00Z
-parent: folio-assistant-5a3l
+parent: folio-assistant-rwmf
 ---
 
 Owner, 2026-10-24 (structured question Q1 on `l9v6`): *"B for now, cloudfare in future"*. `l9v6` closed with GitHub Pages alone as the present outcome. This bean holds the future layer it named: Cloudflare R2 storage plus the Cloudflare CDN in front of the published origin, as slide 2 of `cat-harness/library/kg-folio-asst-2026-09-30` draws it (#1614).
@@ -25,3 +25,5 @@ Not started, and not to start until a trigger below fires. The considered option
 - [ ] credentials are declared as needs, not values (see `9hxd`, deferred), and the owner supplies them
 
 Session https://claude.ai/code/session_01FABZmtqnNeBaTcHsXrtyK7.
+
+_2026-11-01T20:50Z_ — Moved under folio-assistant-rwmf: the old epic closes (owner card Q-DQ-1 A). Session https://claude.ai/code/session_01Qmmkt7h4RWc6UwiBW5kbZ2

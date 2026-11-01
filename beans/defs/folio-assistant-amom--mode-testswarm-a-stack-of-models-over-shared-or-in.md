@@ -7,7 +7,7 @@ type: feature
 priority: normal
 created_at: 2026-09-19T08:55:37Z
 updated_at: 2026-10-30T12:00:00Z
-parent: folio-assistant-5a3l
+parent: folio-assistant-rwmf
 ---
 
 From [#363](https://github.com/litlfred/folio-assistant/issues/363): "test/swarm
@@ -90,3 +90,5 @@ Five gaps remain:
 5. A spec-kit `SC-` to plan-case link.
 
 Answers Q2-Q5 are recorded there. Q1 (spec-kit or CRDM) is open.
+
+_2026-11-01T20:50Z_ — Moved under folio-assistant-rwmf: the old epic closes (owner card Q-DQ-1 A). Session https://claude.ai/code/session_01Qmmkt7h4RWc6UwiBW5kbZ2
