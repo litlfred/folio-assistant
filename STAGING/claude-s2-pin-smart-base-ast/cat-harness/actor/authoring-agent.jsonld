@@ -1,0 +1,41 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/actor/authoring-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/actor/authoring-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "authoring-agent",
+      "actorKind": "agent",
+      "title": "Authoring Agent",
+      "description": "LLM agent that drafts and revises a PROPOSED change to a content block. It never commits: its output enters the HCI validation pipeline and the editor accepts, revises or discards it.",
+      "meta": {
+        "lifecycle": [
+          "author"
+        ],
+        "workflow": "processes/sdlc/code-change-review.bpmn#Lane_Agent"
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/role/authoring-agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/role/sibling-session",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/role/docs-authoring-agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/role/editorial-authoring-agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/role/platform-authoring-agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/role/session-coordinator",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/role/merge-steward"
+      ],
+      "permissionName": [
+        "content-authoring"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/authoring-agent"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/skill/associate-harness.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/skill/associate-harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "associate-harness",
+      "title": "Associate a harness",
+      "description": "Declare a harness this one knows about and does not hold (`associatedHarnesses`): a folio in another repository, published at its own site. Referenced, never loaded, never materialized. Issue #1146.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/associate-harness.md",
+      "instructionLines": 90,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/associate-harness"
+    }
+  ]
+}

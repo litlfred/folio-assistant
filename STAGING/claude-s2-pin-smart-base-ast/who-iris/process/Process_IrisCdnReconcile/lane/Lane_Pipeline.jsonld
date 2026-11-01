@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Build pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/who-iris/process/Process_IrisCdnReconcile",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/who-iris/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline"
+    }
+  ]
+}

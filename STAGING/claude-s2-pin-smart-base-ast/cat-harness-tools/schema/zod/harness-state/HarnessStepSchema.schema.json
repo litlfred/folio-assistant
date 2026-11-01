@@ -1,0 +1,53 @@
+{
+  "$ref": "#/definitions/HarnessStep",
+  "definitions": {
+    "HarnessStep": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "namedBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "what": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "done",
+            "not-done",
+            "could-not-determine",
+            "stated"
+          ]
+        },
+        "detail": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "namedBy",
+        "what",
+        "state",
+        "detail"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStepSchema.schema.json",
+  "title": "HarnessStepSchema",
+  "description": "Generated from `HarnessStepSchema` in schemas/sdlc/harness-state.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

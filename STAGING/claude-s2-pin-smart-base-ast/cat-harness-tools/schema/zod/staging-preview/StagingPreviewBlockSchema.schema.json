@@ -1,0 +1,102 @@
+{
+  "$ref": "#/definitions/StagingPreviewBlock",
+  "definitions": {
+    "StagingPreviewBlock": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "minLength": 1
+        },
+        "branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pr": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "issue": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "builtAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed": {
+          "type": "object",
+          "properties": {
+            "bytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "files": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "liveness": {
+              "type": "string",
+              "enum": [
+                "live",
+                "dead",
+                "unknown"
+              ]
+            },
+            "signals": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "observedAt": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "bytes",
+            "files",
+            "liveness",
+            "observedAt"
+          ]
+        },
+        "retiredOn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retiredReason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "slug",
+        "branch",
+        "commit",
+        "builtAt"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/staging-preview/StagingPreviewBlockSchema.schema.json",
+  "title": "StagingPreviewBlockSchema",
+  "description": "Generated from `StagingPreviewBlockSchema` in schemas/sdlc/staging-preview.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

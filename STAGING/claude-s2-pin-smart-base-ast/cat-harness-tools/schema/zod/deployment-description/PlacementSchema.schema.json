@@ -1,0 +1,111 @@
+{
+  "$ref": "#/definitions/Placement",
+  "definitions": {
+    "Placement": {
+      "type": "object",
+      "properties": {
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host": {
+          "type": "string",
+          "enum": [
+            "claude-code",
+            "gemini-cli",
+            "codex",
+            "cursor",
+            "antigravity",
+            "copilot-cli",
+            "copilot-agent",
+            "github-actions",
+            "gitlab-ci",
+            "local"
+          ]
+        },
+        "reach": {
+          "type": "string",
+          "enum": [
+            "internet",
+            "egress-restricted",
+            "air-gapped"
+          ]
+        },
+        "compute": {
+          "type": "string",
+          "enum": [
+            "workstation",
+            "vendor-cloud",
+            "jurisdiction-cloud",
+            "own-infrastructure"
+          ]
+        },
+        "toolSurface": {
+          "type": "string",
+          "enum": [
+            "mcp",
+            "cli",
+            "both"
+          ]
+        },
+        "modelProvenance": {
+          "type": "string",
+          "enum": [
+            "open-weight-local",
+            "hosted",
+            "mixed"
+          ]
+        },
+        "identity": {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "provider"
+          ],
+          "additionalProperties": false
+        },
+        "credentials": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "enum": [
+              "publish-site",
+              "push-branch",
+              "open-pull-request",
+              "dispatch-workflow",
+              "publish-package",
+              "call-model-api",
+              "provision-host",
+              "authenticate-users",
+              "list-secret-names",
+              "sign-artefact",
+              "sign-session"
+            ]
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,79}$"
+          }
+        }
+      },
+      "required": [
+        "actor"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/deployment-description/PlacementSchema.schema.json",
+  "title": "PlacementSchema",
+  "description": "Generated from `PlacementSchema` in schemas/process/deployment-description.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

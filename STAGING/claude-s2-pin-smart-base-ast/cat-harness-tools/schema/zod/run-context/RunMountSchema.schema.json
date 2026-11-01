@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/RunMount",
+  "definitions": {
+    "RunMount": {
+      "type": "object",
+      "properties": {
+        "instance": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      },
+      "required": [
+        "instance",
+        "repository",
+        "sha"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/run-context/RunMountSchema.schema.json",
+  "title": "RunMountSchema",
+  "description": "Generated from `RunMountSchema` in schemas/sdlc/run-context.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

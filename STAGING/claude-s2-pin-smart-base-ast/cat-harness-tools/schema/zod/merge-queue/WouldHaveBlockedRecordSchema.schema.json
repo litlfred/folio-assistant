@@ -1,0 +1,116 @@
+{
+  "$ref": "#/definitions/WouldHaveBlockedRecord",
+  "definitions": {
+    "WouldHaveBlockedRecord": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-would-have-blocked/v1"
+        },
+        "headSha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "prNumber": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "evaluatedAt": {
+          "type": "string"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "rule": {
+                "type": "string"
+              },
+              "severity": {
+                "type": "string",
+                "const": "blocking"
+              },
+              "explanation": {
+                "type": "string"
+              },
+              "humanVerdict": {
+                "type": "string",
+                "enum": [
+                  "true_positive",
+                  "false_positive",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "rule",
+              "severity",
+              "explanation"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "warnedFindings": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "confirmedTruePositives": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "confirmedFalsePositives": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "unknownCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "empiricalFpr": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "warnedFindings",
+            "confirmedTruePositives",
+            "confirmedFalsePositives",
+            "unknownCount"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "headSha",
+        "prNumber",
+        "evaluatedAt",
+        "findings",
+        "metrics"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/WouldHaveBlockedRecordSchema.schema.json",
+  "title": "WouldHaveBlockedRecordSchema",
+  "description": "Generated from `WouldHaveBlockedRecordSchema` in schemas/sdlc/merge-queue.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

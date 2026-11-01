@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/LsiUnitProviderDeclaration",
+  "definitions": {
+    "LsiUnitProviderDeclaration": {
+      "type": "object",
+      "properties": {
+        "graphKind": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "export": {
+          "type": "string",
+          "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$"
+        }
+      },
+      "required": [
+        "graphKind",
+        "module",
+        "export"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/LsiUnitProviderDeclarationSchema.schema.json",
+  "title": "LsiUnitProviderDeclarationSchema",
+  "description": "Generated from `LsiUnitProviderDeclarationSchema` in schemas/kg/cat-harness.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

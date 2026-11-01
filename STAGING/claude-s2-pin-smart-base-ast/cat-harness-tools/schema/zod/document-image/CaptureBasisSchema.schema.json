@@ -1,0 +1,53 @@
+{
+  "$ref": "#/definitions/CaptureBasis",
+  "definitions": {
+    "CaptureBasis": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "const": "capture"
+        },
+        "producer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "creator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coverage": {
+          "type": "number",
+          "minimum": 0
+        },
+        "imagesOnPage": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "method",
+        "producer",
+        "creator",
+        "coverage",
+        "imagesOnPage",
+        "page"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/CaptureBasisSchema.schema.json",
+  "title": "CaptureBasisSchema",
+  "description": "Generated from `CaptureBasisSchema` in schemas/content/document-image.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

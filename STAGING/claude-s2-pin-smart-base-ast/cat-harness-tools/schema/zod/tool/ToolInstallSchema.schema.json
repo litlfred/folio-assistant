@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/ToolInstall",
+  "definitions": {
+    "ToolInstall": {
+      "type": "object",
+      "properties": {
+        "cli": {
+          "type": "string"
+        },
+        "container": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string"
+        },
+        "none": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolInstallSchema.schema.json",
+  "title": "ToolInstallSchema",
+  "description": "Generated from `ToolInstallSchema` in schemas/tools/tool.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

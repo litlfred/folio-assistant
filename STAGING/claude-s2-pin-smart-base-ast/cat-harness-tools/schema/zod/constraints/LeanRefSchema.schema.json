@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/LeanRef",
+  "definitions": {
+    "LeanRef": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sorryFree": {
+          "type": "boolean"
+        },
+        "mathlibLinks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validation": {
+          "type": "string",
+          "enum": [
+            "not_checked",
+            "stub",
+            "trivial",
+            "external",
+            "validated",
+            "error",
+            "leanok",
+            "axioms_only"
+          ]
+        },
+        "leanHash": {
+          "type": "string"
+        },
+        "witnessed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "ref"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/LeanRefSchema.schema.json",
+  "title": "LeanRefSchema",
+  "description": "Generated from `LeanRefSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

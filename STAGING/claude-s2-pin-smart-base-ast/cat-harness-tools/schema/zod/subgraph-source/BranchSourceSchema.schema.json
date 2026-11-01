@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/BranchSource",
+  "definitions": {
+    "BranchSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "branch"
+        },
+        "branch": {
+          "type": "string",
+          "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+        },
+        "keyedBy": {
+          "type": "string",
+          "enum": [
+            "commit",
+            "tip",
+            "route",
+            "route-family",
+            "family"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "branch",
+        "keyedBy"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/BranchSourceSchema.schema.json",
+  "title": "BranchSourceSchema",
+  "description": "Generated from `BranchSourceSchema` in schemas/kg/subgraph-source.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

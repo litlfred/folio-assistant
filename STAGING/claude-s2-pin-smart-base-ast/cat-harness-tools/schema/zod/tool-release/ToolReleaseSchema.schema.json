@@ -1,0 +1,206 @@
+{
+  "$ref": "#/definitions/ToolRelease",
+  "definitions": {
+    "ToolRelease": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[^\\s@/]+$"
+        },
+        "digest": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "const": "sha256"
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "verifiedAt": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "algorithm",
+            "digest"
+          ],
+          "additionalProperties": false
+        },
+        "source": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "url"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "type",
+                "url"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "oci"
+                },
+                "reference": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9.-]*(:[0-9]+)?(\\/[a-z0-9._-]+)+@sha256:([0-9a-f]{64})$"
+                }
+              },
+              "required": [
+                "type",
+                "reference"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "licence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "licenceSource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "$schema": {
+          "type": "string",
+          "const": "folio-tool-release/v1"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "tool",
+            "runtime"
+          ]
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "jar",
+            "archive",
+            "binary",
+            "oci-image",
+            "toolchain-file"
+          ]
+        },
+        "platform": {
+          "type": "object",
+          "properties": {
+            "os": {
+              "type": "string",
+              "enum": [
+                "linux",
+                "darwin",
+                "windows"
+              ]
+            },
+            "arch": {
+              "type": "string",
+              "enum": [
+                "x64",
+                "arm64"
+              ]
+            },
+            "distribution": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9.-]*$"
+            }
+          },
+          "required": [
+            "os",
+            "arch"
+          ],
+          "additionalProperties": false
+        },
+        "runtimes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "release": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9._-]*@[^\\s@/]+$"
+              },
+              "inject": {
+                "type": "string",
+                "enum": [
+                  "JAVA_HOME",
+                  "PATH"
+                ]
+              }
+            },
+            "required": [
+              "release",
+              "inject"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "entry": {
+          "type": "object",
+          "properties": {
+            "template": {
+              "type": "string",
+              "minLength": 1
+            },
+            "home": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "template"
+          ],
+          "additionalProperties": false
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "digest",
+        "source",
+        "licence",
+        "licenceSource",
+        "$schema",
+        "role",
+        "kind",
+        "runtimes",
+        "entry"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolReleaseSchema.schema.json",
+  "title": "ToolReleaseSchema",
+  "description": "Generated from `ToolReleaseSchema` in schemas/tools/tool-release.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/ToolInvoke",
+  "definitions": {
+    "ToolInvoke": {
+      "type": "object",
+      "properties": {
+        "shell": {
+          "type": "string"
+        },
+        "container": {
+          "type": "string"
+        },
+        "mcp": {
+          "type": "object",
+          "properties": {
+            "tool": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "tool"
+          ]
+        },
+        "inProcess": {
+          "type": "object",
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "register": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "module"
+          ]
+        },
+        "manual": {
+          "type": "boolean",
+          "const": true
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolInvokeSchema.schema.json",
+  "title": "ToolInvokeSchema",
+  "description": "Generated from `ToolInvokeSchema` in schemas/tools/tool.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

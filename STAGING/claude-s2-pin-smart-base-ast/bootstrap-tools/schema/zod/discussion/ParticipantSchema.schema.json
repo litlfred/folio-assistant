@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/Participant",
+  "definitions": {
+    "Participant": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "person",
+            "agent"
+          ]
+        },
+        "id": {
+          "description": "Session id, handle or name, where one is known. Absent is normal for a person.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/bootstrap-tools/schema/zod/discussion/ParticipantSchema.schema.json",
+  "title": "ParticipantSchema",
+  "description": "Generated from `ParticipantSchema` in schemas/discussion.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  }
+}

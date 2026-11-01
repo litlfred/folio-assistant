@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/folio-assistant-sci/directory/folio-assistant-sci-editor-checkers.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/folio-assistant-sci/directory/folio-assistant-sci-editor-checkers",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "folio-assistant-sci-editor-checkers",
+      "path": "editor-checkers/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/editor-checkers"
+      ],
+      "description": "The ✍ suggest editor's checks and Crepe settings for this instance's content profiles, one folio-editor-checker/v1 node per profile naming the code (`path.ts#Export`) the editor loads. Today it holds one node: `paper-latex`, the LaTeX syntax checker and the Crepe repairs for paper math (bean folio-assistant-4dx7). The kind is declared in typologies/editor-checkers.json and its validator in validators/editor-checker.json.",
+      "readmePath": "editor-checkers/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/folio-assistant-sci/directory/folio-assistant-sci-editor-checkers",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/folio-assistant-sci-editor-checkers"
+    }
+  ]
+}

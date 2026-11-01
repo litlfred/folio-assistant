@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/folio-assistant-core/decision/review-coverage-gate/Decision_ReviewCoverageGate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/s2-pin-smart-base-ast",
+    "sha": "64a5f6e38ac066b4a176d2088dcd54d841863155",
+    "pr": "2887/merge",
+    "run": "41331813578"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/folio-assistant-core/decision/review-coverage-gate/Decision_ReviewCoverageGate",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Decision",
+      "name": "Every changed block and rendered page reviewed?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/content/decisions/review-coverage-gate.dmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-s2-pin-smart-base-ast/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/decision/review-coverage-gate/Decision_ReviewCoverageGate"
+    }
+  ]
+}
