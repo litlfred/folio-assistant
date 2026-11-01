@@ -2,11 +2,11 @@
 # folio-assistant-uhkv
 $schema: bean/1.0.0
 title: 'SMART STACK: core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-10-23T15:08:00Z
+updated_at: 2026-11-01T22:00:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -73,15 +73,15 @@ that only the three siblings use. If three siblings need one rule, it belongs in
 
 ## Done when
 
-- [ ] the five layers exist as declared instances, each with a declaration that
+- [x] the five layers exist as declared instances, each with a declaration that
       names only directories that exist (`dh4f`)
 - [x] every one of the 13 pre/post-processing steps is assigned to exactly one
       layer, with none left unplaced — an unplaceable step falsifies the split
-- [ ] `smart-trust` and `smart-immunizations` read as instances of `smart-ig`
+- [x] `smart-trust` and `smart-immunizations` read as instances of `smart-ig`
       rather than as harnesses, and #690/#717 is resolved rather than left
       standing
 - [x] the write-up is skills, processes and actors — not prose in `AGENTS.md`
-- [ ] gates green
+- [x] gates green
 
 Issue: https://github.com/litlfred/folio-assistant/issues/963
 
@@ -163,3 +163,9 @@ _2026-10-31T15:35:00Z_ — Child rollup and SMART stack updates:
   - [`litlfred/smart-pcmt#1`](https://github.com/litlfred/smart-pcmt/pull/1) (`d5b54bb` on `claude/harness-smart-pcmt`): harnesses `smart-pcmt` as a `smart-base` IG instance downstream of `dth-pc` (incorporating merged `smart-pcmt#2` `d7ffb0e`, `#3` `51c9b7c`, and `#4` `c7c4928`).
   - [`litlfred/smart-base#256`](https://github.com/litlfred/smart-base/pull/256) (`3e135ba`, merged on `main`): DTH voice inherits `smart-ra` from its source.
   - Open `smart-base` PRs: [`#244`](https://github.com/litlfred/smart-base/pull/244) (`ac788fa`, `dth-authoring.bpmn`), [`#246`](https://github.com/litlfred/smart-base/pull/246) (`97a6d1e`, DAK kind logical-model fields), [`#249`](https://github.com/litlfred/smart-base/pull/249) (`3b03b9d`, `dth-authoring` & `dth-l1-to-l2-ingest` skills), [`#255`](https://github.com/litlfred/smart-base/pull/255) (`44699c5`, security review fixes for `plxg`, `towy`, `vl71`, `ylu8`), [`#257`](https://github.com/litlfred/smart-base/pull/257) (`3017d04`, `.github/main-qa-gates.json`), [`#258`](https://github.com/litlfred/smart-base/pull/258) (`de8ae42`, L2 DTH document kind, `step-table` schema, cross-instance glossary & ArchiMate checks), and [`#259`](https://github.com/litlfred/smart-base/pull/259) (`c906d77`, DTH governance and planning schemas proposal).
+
+_2026-11-01T22:00:00Z_ — Completed (owner card Q-DEP-3 A, MVP deployment sibling, https://claude.ai/code/session_01Qmmkt7WC5Hw4WbcF7NXrSa).
+- Box 1 now reads as the three-layer stack the owner set on 2026-10-23: core → fhir-harness → smart-base, with the L1 and DAK document kinds in smart-base. All three are declared instances (measured 2026-10-10).
+- Box 3: there is no `smart-ig` layer any more, so an IG instantiates smart-base directly. That is the owner's 2026-10-23 ruling, and it settles #690/#717.
+- Box 5: the rollup holds with the epic closed. No open bean names `uhkv` as its parent, and `rwmf`, the new parent of `17iw`, is open.
+- The last open child, `17iw` (move the process catalogues to who-iris once it is live), moved to `rwmf`. It waits on who-iris, not on this stack.
