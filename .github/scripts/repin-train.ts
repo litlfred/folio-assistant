@@ -2,6 +2,10 @@
 /**
  * repin-train — the decisions behind the 2-hour re-pin train (issue #2873).
  *
+ * @module .github/scripts/repin-train
+ * @graphNode none — a scheduled maintenance step over this index's own re-pin PRs
+ * @covers none — it judges check runs GitHub already reported; it audits no node kind.
+ *
  * Owner, 2026-11-01, card Q-SPD-3 B: re-pins stop chasing new merges. Every
  * two hours ONE train resolves each layer's newest `main` commit, writes those
  * pins once, and opens one PR. Nothing moves that PR's pins again. A train PR
