@@ -1,0 +1,109 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:fr/accessibility",
+  "block": "Accessibility",
+  "locale": "fr",
+  "paths": {
+    "md": "docs/start/accessibility.md"
+  },
+  "po": "translations/fr/start/accessibility.po",
+  "source_hashes": {
+    "md": "3a9064ec2f62",
+    "po": "9261b88a5fa6"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "3a9064ec2f62",
+          "po": "9261b88a5fa6"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-01T18:24:12.042Z",
+        "reviewed_sha": "fb1c92f6cdd729c4553f7688a9a5cf5669bad3c0",
+        "severity": "minor",
+        "metrics": {
+          "translated": 102,
+          "total": 117,
+          "pct": 87
+        },
+        "notes": "15 of 117 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "3a9064ec2f62",
+          "po": "9261b88a5fa6"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-01T18:24:12.044Z",
+        "reviewed_sha": "fb1c92f6cdd729c4553f7688a9a5cf5669bad3c0",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "EU — absent from: \"marchés publics dans l'UE\""
+          },
+          {
+            "text": "US — absent from: \"marchés publics fédéraux aux États-Unis\""
+          },
+          {
+            "text": "US — absent from: \"la même chose, aux États-Unis\""
+          }
+        ],
+        "metrics": {
+          "checked": 102,
+          "missing": 3,
+          "missing_strict": 0,
+          "missing_acronyms": 3,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        },
+        "notes": "3 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/fr/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "3a9064ec2f62",
+          "po": "9261b88a5fa6"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-01T18:24:12.047Z",
+        "reviewed_sha": "fb1c92f6cdd729c4553f7688a9a5cf5669bad3c0",
+        "severity": "minor",
+        "metrics": {
+          "echoed": 5,
+          "translated": 102
+        },
+        "notes": "5 string(s) are byte-identical to the source. That is right for a proper noun and wrong for a sentence, which is why this warns rather than fails."
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-11-01T18:24:12.049Z"
+}
