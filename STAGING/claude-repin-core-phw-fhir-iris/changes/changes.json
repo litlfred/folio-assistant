@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "9a8868d277de5a577a7d9c038c5f16e1ae3d008f",
+    "head": "9ccff24b8698333a5eec49183f7d82db25789ab4",
     "changes": [
       {
         "path": "index.config.json",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "9a8868d277de5a577a7d9c038c5f16e1ae3d008f",
+        "ref": "9ccff24b8698333a5eec49183f7d82db25789ab4",
         "mounted": true
       },
       {
@@ -18,7 +18,16 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "9a8868d277de5a577a7d9c038c5f16e1ae3d008f",
+        "ref": "9ccff24b8698333a5eec49183f7d82db25789ab4",
+        "mounted": true
+      },
+      {
+        "path": "fhir-harness/.github/workflows/ig-ast-refresh.yml",
+        "status": "modified",
+        "repository": "litlfred/fhir-harness",
+        "upstreamPath": ".github/workflows/ig-ast-refresh.yml",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
+        "instance": "fhir-harness",
         "mounted": true
       },
       {
@@ -26,7 +35,7 @@
         "status": "modified",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "bun.lock",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -35,7 +44,7 @@
         "status": "added",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "library/cucumber-2024-gherkin-reference/summaries.json",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -44,7 +53,7 @@
         "status": "added",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "library/hl7-2023-fhir-r5-testplan/summaries.json",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -53,7 +62,7 @@
         "status": "added",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "library/isaitb-2026-interoperability-test-bed-readme/summaries.json",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -62,7 +71,7 @@
         "status": "modified",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "package.json",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -71,7 +80,7 @@
         "status": "added",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "schemas/ig-ast-lock.test.ts",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -80,7 +89,7 @@
         "status": "added",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "schemas/ig-ast-lock.ts",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -89,7 +98,7 @@
         "status": "modified",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "schemas/ig-releases.test.ts",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -98,7 +107,7 @@
         "status": "modified",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "schemas/ig-releases.ts",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -107,7 +116,7 @@
         "status": "modified",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "scripts/build-ig-indexes.test.ts",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -116,7 +125,25 @@
         "status": "modified",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "scripts/build-ig-indexes.ts",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
+        "instance": "fhir-harness",
+        "mounted": true
+      },
+      {
+        "path": "fhir-harness/scripts/ig-api-gen.test.ts",
+        "status": "modified",
+        "repository": "litlfred/fhir-harness",
+        "upstreamPath": "scripts/ig-api-gen.test.ts",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
+        "instance": "fhir-harness",
+        "mounted": true
+      },
+      {
+        "path": "fhir-harness/scripts/ig-api-gen.ts",
+        "status": "modified",
+        "repository": "litlfred/fhir-harness",
+        "upstreamPath": "scripts/ig-api-gen.ts",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -125,7 +152,7 @@
         "status": "added",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "scripts/ig-ast-pin.ts",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -134,7 +161,7 @@
         "status": "modified",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "scripts/ig-cache.sh",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -143,7 +170,7 @@
         "status": "modified",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "scripts/ingest-ig-releases.ts",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -152,7 +179,7 @@
         "status": "modified",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "scripts/terminology-map.test.ts",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -161,7 +188,7 @@
         "status": "modified",
         "repository": "litlfred/fhir-harness",
         "upstreamPath": "scripts/terminology-sw.js",
-        "ref": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
+        "ref": "69af94db28dcab16786eb6f7d556a65a9a914232",
         "instance": "fhir-harness",
         "mounted": true
       },
@@ -193,11 +220,83 @@
         "mounted": true
       },
       {
+        "path": "index.config.json",
+        "status": "modified",
+        "repository": "litlfred/smart-trust-phw",
+        "upstreamPath": "index.config.json",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
+        "instance": "smart-trust-phw",
+        "mounted": false
+      },
+      {
+        "path": "input/business-processes/PHW.F.bpmn",
+        "status": "modified",
+        "repository": "litlfred/smart-trust-phw",
+        "upstreamPath": "input/business-processes/PHW.F.bpmn",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
+        "instance": "smart-trust-phw",
+        "mounted": false
+      },
+      {
+        "path": "input/business-processes/PHW.F.svg",
+        "status": "modified",
+        "repository": "litlfred/smart-trust-phw",
+        "upstreamPath": "input/business-processes/PHW.F.svg",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
+        "instance": "smart-trust-phw",
+        "mounted": false
+      },
+      {
+        "path": "input/business-processes/PHW.I.bpmn",
+        "status": "modified",
+        "repository": "litlfred/smart-trust-phw",
+        "upstreamPath": "input/business-processes/PHW.I.bpmn",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
+        "instance": "smart-trust-phw",
+        "mounted": false
+      },
+      {
+        "path": "input/business-processes/PHW.I.svg",
+        "status": "modified",
+        "repository": "litlfred/smart-trust-phw",
+        "upstreamPath": "input/business-processes/PHW.I.svg",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
+        "instance": "smart-trust-phw",
+        "mounted": false
+      },
+      {
+        "path": "input/dmn/PHW.DT.AgreementAccess.dmn",
+        "status": "added",
+        "repository": "litlfred/smart-trust-phw",
+        "upstreamPath": "input/dmn/PHW.DT.AgreementAccess.dmn",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
+        "instance": "smart-trust-phw",
+        "mounted": false
+      },
+      {
+        "path": "input/images/PHW.F.svg",
+        "status": "modified",
+        "repository": "litlfred/smart-trust-phw",
+        "upstreamPath": "input/images/PHW.F.svg",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
+        "instance": "smart-trust-phw",
+        "mounted": false
+      },
+      {
+        "path": "input/images/PHW.I.svg",
+        "status": "modified",
+        "repository": "litlfred/smart-trust-phw",
+        "upstreamPath": "input/images/PHW.I.svg",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
+        "instance": "smart-trust-phw",
+        "mounted": false
+      },
+      {
         "path": "input/pagecontent/business-processes.md",
         "status": "modified",
         "repository": "litlfred/smart-trust-phw",
         "upstreamPath": "input/pagecontent/business-processes.md",
-        "ref": "dafc9cabff9d012cfd60491b7a60264ab5311251",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
         "instance": "smart-trust-phw",
         "mounted": false
       },
@@ -206,7 +305,7 @@
         "status": "added",
         "repository": "litlfred/smart-trust-phw",
         "upstreamPath": "input/pagecontent/example-pilgrimage.md",
-        "ref": "dafc9cabff9d012cfd60491b7a60264ab5311251",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
         "instance": "smart-trust-phw",
         "mounted": false
       },
@@ -215,7 +314,7 @@
         "status": "added",
         "repository": "litlfred/smart-trust-phw",
         "upstreamPath": "library/ihe-iti-pcf-1-1-0/summaries.json",
-        "ref": "dafc9cabff9d012cfd60491b7a60264ab5311251",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
         "instance": "smart-trust-phw",
         "mounted": true
       },
@@ -224,7 +323,7 @@
         "status": "added",
         "repository": "litlfred/smart-trust-phw",
         "upstreamPath": "library/ihe-iti-vhl-1-0-0-comment/summaries.json",
-        "ref": "dafc9cabff9d012cfd60491b7a60264ab5311251",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
         "instance": "smart-trust-phw",
         "mounted": true
       },
@@ -233,7 +332,7 @@
         "status": "modified",
         "repository": "litlfred/smart-trust-phw",
         "upstreamPath": "sushi-config.yaml",
-        "ref": "dafc9cabff9d012cfd60491b7a60264ab5311251",
+        "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
         "instance": "smart-trust-phw",
         "mounted": false
       },
@@ -567,8 +666,8 @@
         "instance": "fhir-harness",
         "repository": "litlfred/fhir-harness",
         "from": "45e42a76d66cf4f1d976cbd1c4a263980ce248b8",
-        "to": "6bc0b5f5904590faf58005abe09ea40cea29fc96",
-        "files": 16
+        "to": "69af94db28dcab16786eb6f7d556a65a9a914232",
+        "files": 19
       },
       {
         "instance": "folio-assistant-core",
@@ -581,8 +680,8 @@
         "instance": "smart-trust-phw",
         "repository": "litlfred/smart-trust-phw",
         "from": "665b9f42e6c463bc7b365518c7fea99df5e02746",
-        "to": "dafc9cabff9d012cfd60491b7a60264ab5311251",
-        "files": 5
+        "to": "172f7a67c1a9addd23e5e42482b027b21c284ced",
+        "files": 13
       },
       {
         "instance": "who-iris",
@@ -638,6 +737,18 @@
         "reason": "the staging cone carries fhir-harness/fhir-ig-scripts (the branch changes fhir-harness/scripts/build-ig-indexes.ts); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
         "hash": "694d35d2e5829c6d9df97c768bbdf8df22398c339a8b10831b3c008108b06660"
+      },
+      {
+        "input": "fhir-harness/scripts/ig-api-gen.test.ts",
+        "reason": "the staging cone carries fhir-harness/fhir-ig-scripts (the branch changes fhir-harness/scripts/ig-api-gen.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "c552475bf9d30fe1664de98ce2dab488cd4c3584c68bc26cf7045386115f8f49"
+      },
+      {
+        "input": "fhir-harness/scripts/ig-api-gen.ts",
+        "reason": "the staging cone carries fhir-harness/fhir-ig-scripts (the branch changes fhir-harness/scripts/ig-api-gen.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "87f434f67f8abdcd15c947a0e6024e5e691dc48bcc357a801d7935e26c431840"
       },
       {
         "input": "fhir-harness/scripts/ig-ast-pin.ts",
@@ -807,7 +918,7 @@
     "status": "known",
     "beforeCommit": "03fc12e00c4357a25ddb1f9f6255d48fe403174d",
     "baseCommit": "03fc12e00c4357a25ddb1f9f6255d48fe403174d",
-    "measured": 19941,
+    "measured": 19946,
     "notInCone": [
       {
         "path": "api/classes/folio-assistant_schemas_kind-validator.ValidatorRefError.html",
@@ -17359,6 +17470,18 @@
       },
       {
         "path": "assets/schemas/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/slices/beans.555dad98c2e4f640a325cff5829a55a7706f717a469d67b012990c45a72342a1.sqlite3",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/slices/beans.sqlite3.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -39456,6 +39579,18 @@
         "via": []
       },
       {
+        "path": "smart-trust-phw/PHW.F.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "smart-trust-phw/PHW.I.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "smart-trust-phw/StructureDefinition-DVC.html",
         "change": "changed",
         "role": "content",
@@ -52559,7 +52694,7 @@
       },
       {
         "dir": "assets",
-        "count": 264,
+        "count": 265,
         "sample": [
           "assets/beans/burndown.json",
           "assets/harnesses/bootstrap-tools.json",
