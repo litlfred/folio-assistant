@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-31T10:10:00Z
-updated_at: 2026-10-31T11:45:30Z
+updated_at: 2026-11-01T07:50:00Z
 ---
 
 Owner, 2026-10-31 (thread "Improve BPMN quality checks from research"): review a Gemini discussion on evidence-based BPMN style, and have the connected agent (agy) download and ingest every referenced article so the authoring rules and the diagram lint rules cite the papers, not Gemini's summary of them.
@@ -214,3 +214,10 @@ If a paper cannot be fetched, record the URL tried and the error, and move on.
 | 23 | `arxiv-1603.07466v1` | **Full text** (`pdf-structure`) | Preprint (arXiv, 16 pp.) | `LicenseRef-arXiv-Nonexclusive-Distrib-1.0` | `arXiv:1603.07466v1` / `10.1007/978-3-319-45348-4_13` | `https://arxiv.org/pdf/1603.07466.pdf` | `8fb29d478d249ef4709fb464821a5b9004e5504d546fb4b120e4475f5140425f` | **No human study.** Algorithmic benchmark in `dmn-js` across **9 large synthetic DMN tables** (`499–1,506` rules, `3, 5, 7` columns) generated from Kaggle credit dataset | Geometric sweep-line algorithms detect overlapping rules in **`200–30,736 ms`** and missing rules in **`160–18,263 ms`** (**Table 2 p. 15**), reporting **`110–812` maximal overlap sets** vs. Signavio's **`679–62,217` redundant overlap pairs** and **`117–726` missing rules** vs. Signavio's **`563–43,552`** (**Table 3 p. 16**). |
 | 24 | `arxiv-2005.09998v1` | **Full text** (`pdf-structure`) | Preprint (arXiv, 15 pp.) | `LicenseRef-arXiv-Nonexclusive-Distrib-1.0` | `arXiv:2005.09998v1` / `10.1007/978-3-030-57977-7_2` | `https://arxiv.org/pdf/2005.09998.pdf` | `7d932034e53ae5c09d88485809486429020717c395b52e2d6826539c78ae7e6b` | Expressiveness & compactness benchmark across **21 DM Community challenges**, comparing **cDMN** against **OpenRules** and **Corticon** | **cDMN solves 19 of 21 challenges (90.5%)** vs. **12/21** for OpenRules and **12/21** for Corticon (Section 7.4 p. 12); universal quantification (`E*` constraint tables) collapses $O(n)$ and $O(n^2)$ rule tables into **1 row**, dramatically reducing cell counts (**Table 2 p. 13**). |
 | 25 | `arxiv-2505.11701v2` | **Full text** (`pdf-structure`) | Preprint (arXiv, 15 pp.) | `LicenseRef-arXiv-Nonexclusive-Distrib-1.0` | `arXiv:2505.11701v2` | `https://arxiv.org/pdf/2505.11701.pdf` | `e05cd1965defcdd468eccbb4ae63d275af9133854a3c93d2fb78b1fd71da1936` | Graduate BPM course case study (**24 student groups, 14 BPMN redesign submissions, 9 BPR decision rules** as DMN triples) + TAM survey | **Table 1 (p. 10):** **GPT-4o + DMN** achieves **Precision `0.91`, Recall `0.90`, F1 `0.91`, Accuracy `0.87`** vs. **GPT-4o + CoT** (**Precision `0.36`, F1 `0.53`**); **Gemini 1.5 Pro + DMN** achieves **F1 `0.71`** vs. **CoT `0.62`**. TAM Perceived Usefulness medians **$\ge 5.5 / 7$** (**Fig. 11 p. 12**). |
+
+---
+
+## Landed on `litlfred/cat-harness` `main` — _2026-11-01T07:50:00Z_
+
+- **[`litlfred/cat-harness#849`](https://github.com/litlfred/cat-harness/pull/849)** (`feat/e0jh-bpmn-comprehension-papers`, merge commit `430b14abb355e46a93ca1aeeb44d0697ad999136`, merged `2026-11-01T07:46:18Z`): Ingested all 25 BPMN and DMN comprehension research papers (`10` open-access/preprint full-text `pdf-structure` entries + `15` publisher-copyright `referenced.json` bibliographic & empirical-findings entries) under `library/<slug>/`.
+- **[`litlfred/cat-harness#846`](https://github.com/litlfred/cat-harness/pull/846)** (`claude/bpmn-readability-rules`, merge commit `aab54064053b14e6e6010433a967fe232f3da54f`, merged `2026-11-01T07:45:22Z`): Updated `bpmn-authoring` readability rules from the comprehension research.
