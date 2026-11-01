@@ -1,0 +1,94 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:es/contributing",
+  "block": "Contributing",
+  "locale": "es",
+  "paths": {
+    "md": "docs/start/contributing.md"
+  },
+  "po": "translations/es/start/contributing.po",
+  "source_hashes": {
+    "md": "66de1fc2437f",
+    "po": "ec0559b531bc"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "66de1fc2437f",
+          "po": "ec0559b531bc"
+        },
+        "result": "fail",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-01T21:46:47.364Z",
+        "reviewed_sha": "5a4e8c01a5ca6e8821461407ac499b36604a8883",
+        "severity": "major",
+        "metrics": {
+          "translated": 6,
+          "total": 16,
+          "pct": 38
+        },
+        "notes": "10 of 16 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "66de1fc2437f",
+          "po": "ec0559b531bc"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-01T21:46:47.368Z",
+        "reviewed_sha": "5a4e8c01a5ca6e8821461407ac499b36604a8883",
+        "metrics": {
+          "checked": 6,
+          "missing": 0,
+          "missing_strict": 0,
+          "missing_acronyms": 0,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        }
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "66de1fc2437f",
+          "po": "ec0559b531bc"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "323002ff9a9b",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-01T21:46:47.371Z",
+        "reviewed_sha": "5a4e8c01a5ca6e8821461407ac499b36604a8883",
+        "metrics": {
+          "echoed": 0,
+          "translated": 6
+        }
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-11-01T21:46:47.373Z"
+}
