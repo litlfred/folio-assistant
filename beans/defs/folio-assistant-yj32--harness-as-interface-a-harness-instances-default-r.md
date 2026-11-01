@@ -2,11 +2,11 @@
 # folio-assistant-yj32
 $schema: bean/1.0.0
 title: 'HARNESS AS INTERFACE: a harness instance''s default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system'
-status: todo
+status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-20T13:47:14Z
-updated_at: 2026-10-05T04:57:14Z
+updated_at: 2026-11-01T23:10:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -133,11 +133,11 @@ designing them separately is how they end up disagreeing:
 
 ## Done when
 
-- [ ] The workflow and its subprocesses exist as BPMN under the `cat-harness`
+- [x] The workflow and its subprocesses exist as BPMN under the `cat-harness`
       graph, with `<folio:skill ref>` on every agent-lane activity, and they
       follow/enable the publication review process rather than sitting beside it.
-- [ ] A harness instance renders its docs on its own theme's ground.
-- [ ] The four child beans are designed against this rather than separately.
+- [x] A harness instance renders its docs on its own theme's ground.
+- [x] The four child beans are designed against this rather than separately.
 
 ## Not started
 
@@ -309,3 +309,13 @@ appear on a surface its declaration excludes.
 **This is one of this epic's open questions**, closed. Its other two — *"what IS the writable store"* and *"KG-DS"* — were already answered and struck through in this bean on 2026-09-20. **What remains open on `yj32` is one question: where does the background live?** — a theme's `backdrop` is sticky-scoped today, and making it the docs page ground is a different CSS surface and possibly a different crop set, since a sticky's crop is chosen for a CARD.
 
 _2026-11-01T09:55:00Z_ — Checked for closing; it stays open. All its children are `completed` or `scrapped` (done-when box 3 is met), but two boxes are not: no BPMN for this workflow exists under `cat-harness/processes/`, and a harness instance does not yet render its docs on its theme's ground (a theme `backdrop` is still sticky-scoped in `site-chrome/assets/css/docs-ui.css`). The owner's open question, "where does the background live?", is still unanswered. `r29x` (paused) now hangs from here, moved from the closed `vke6`. Session https://claude.ai/code/session_01Qmmkt6XTBi8PdXZBc7NTER.
+
+## 2026-11-01 — all three boxes met (owner card Q-DEP-2 A)
+
+The owner answered "where does the background live?" on card Q-DEP-2: **A, behind every docs page** of the harness (21:36Z, MVP deployment sibling thread, https://claude.ai/code/session_01Qmmkt7WC5Hw4WbcF7NXrSa).
+
+- Box 1: `cat-harness/processes/ui/harness-default-rendering.bpmn` (cat-harness#939, merged). Build pipeline, board renderer and reviewer lanes; every activity names its skill; a reader with a write tool proposes into core's content change review, one without leaves feedback. `check:workflow-refs` 7/7.
+- Box 2: cat-harness-tools#1345 (each harness tile carries `pageGround`: scopes and its theme's three crops) and cat-harness#938 (`head_custom.html` sets the art behind the harness's pages under two scrims of the page's colour), both merged. Measured in a local build: home and cat-harness pages show grumpy cyborg agents, a core page grumpy cat, bootstrap's page CatBootstrap. Text and links stay within 0.1:1 of the plain page's contrast. It reaches the live site with the next re-pin.
+- Box 3: every child was already `completed` or `scrapped`.
+
+**Stays `in-progress` as a container.** `supn` (box 3, owner Q-DEP-1 A: waits on R29) and `r29x` (paused) still hang here, and `check:bean-rollup` refuses a completed parent over open children. Close it when those two close or move.
