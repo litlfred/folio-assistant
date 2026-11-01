@@ -374,10 +374,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-01T08:23:22.441Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/37580ff9727bc10fb39ac29e339a377d70fc6d36",
-  "sourceCommitSha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
-  "sourceCommitAt": "2026-11-01T07:54:28Z",
+  "generatedAt": "2026-11-01T21:22:55.852Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/52104a46669cffa0eb1301979898fc364c93dbb7",
+  "sourceCommitSha": "52104a46669cffa0eb1301979898fc364c93dbb7",
+  "sourceCommitAt": "2026-11-01T20:42:27Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -407,20 +407,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/render-kg-to-github-pages"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/skill/bootstrap-contract-semver",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
-      "name": "bootstrap-contract-semver",
-      "title": "Bootstrap contract semver",
-      "description": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one.",
-      "instructionsPath": "skills/bootstrap-contract-semver.md",
-      "instructionLines": 108,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/directory/bootstrap-tools-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/bootstrap-contract-semver"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/skill/github-pages",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
       "name": "github-pages",
@@ -433,6 +419,20 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/directory/bootstrap-tools-skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/github-pages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/skill/bootstrap-contract-semver",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "bootstrap-contract-semver",
+      "title": "Bootstrap contract semver",
+      "description": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one.",
+      "instructionsPath": "skills/bootstrap-contract-semver.md",
+      "instructionLines": 108,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/directory/bootstrap-tools-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/bootstrap-contract-semver"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/process/Process_RenderKgToGitHubPages",
@@ -1035,16 +1035,16 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/skill/render-kg-to-github-pages"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/bootstrap-tools.jsonld#skill/bootstrap-contract-semver",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/skill/bootstrap-contract-semver",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/skill/bootstrap-contract-semver"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/bootstrap-tools.jsonld#skill/github-pages",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/skill/github-pages",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/skill/github-pages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/bootstrap-tools.jsonld#skill/bootstrap-contract-semver",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/skill/bootstrap-contract-semver",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/skill/bootstrap-contract-semver"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/bootstrap-tools/bootstrap-tools.jsonld#process/Process_RenderKgToGitHubPages",
@@ -1265,8 +1265,8 @@
   ],
   "staging": {
     "branch": "claude/build-types",
-    "sha": "37580ff9727bc10fb39ac29e339a377d70fc6d36",
+    "sha": "52104a46669cffa0eb1301979898fc364c93dbb7",
     "pr": "2871/merge",
-    "run": "41286633987"
+    "run": "41348246692"
   }
 }

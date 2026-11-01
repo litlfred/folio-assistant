@@ -218,7 +218,7 @@ prime</code> gives an agent its context through a GraphQL query engine.</li><li>
 lists unblocked work, <code class="language-plaintext highlighter-rouge">bd update --claim</code> claims atomically, <code class="language-plaintext highlighter-rouge">bd prime</code>
 injects context. Stored in <strong>Dolt</strong> (a version-controlled SQL database,
 embedded by default) and synced through git remotes (<code class="language-plaintext highlighter-rouge">refs/dolt/data</code>).</li></ul><p><strong>Difference.</strong> Both are the store. What folio-assistant adds on top is the
-coordination discipline (<a href="https://github.com/litlfred/folio-assistant/blob/HEAD/build/writer-cone/outputs/skills_docs/4f8d2c74773d3be1a329b663bc1c71b1a16de366/files/cat-harness/docs/reference/skill-instructions/bean-coordination.md" data-fa-pin=".">bean-coordination</a>:
+coordination discipline (<a href="https://github.com/litlfred/folio-assistant/blob/HEAD/build/writer-cone/outputs/skills_docs/aff8bfa0c89bee023e19cc129f430ed51ab8ea8d/files/cat-harness/docs/reference/skill-instructions/bean-coordination.md" data-fa-pin=".">bean-coordination</a>:
 claim before you work, a claim announces rather than reserves, never delete a
 bean) and the link between a bean and a running process instance.
 Beads’ atomic claim (and, from v1.3, leases) is the stronger primitive where
@@ -274,7 +274,7 @@ author. Code is MIT; the <strong>name is a trademark</strong> — “compatible 
 allowed, “BMad” in a product name is not.</p><p><strong>Closest to the role model.</strong> <strong>Difference:</strong> a BMAD agent <em>is</em> a persona;
 here nothing <em>is</em> a reviewer — an actor <em>acts as</em> a role for the duration of
 a lane, and its permissions sit on the actor, not the role
-(<a href="https://github.com/litlfred/folio-assistant/blob/HEAD/build/writer-cone/outputs/skills_docs/4f8d2c74773d3be1a329b663bc1c71b1a16de366/files/cat-harness/docs/reference/skill-instructions/role-model.md" data-fa-pin=".">role-model</a>). BMAD’s gating is
+(<a href="https://github.com/litlfred/folio-assistant/blob/HEAD/build/writer-cone/outputs/skills_docs/aff8bfa0c89bee023e19cc129f430ed51ab8ea8d/files/cat-harness/docs/reference/skill-instructions/role-model.md" data-fa-pin=".">role-model</a>). BMAD’s gating is
 prose plus a front-matter state machine in its unattended loop; here a step is
 enabled or refused by the BPMN engine. <strong>Worth borrowing:</strong> the
 scale-adaptive path choice, and regenerating a status file from the artefacts
@@ -316,7 +316,7 @@ stating precisely: leanblueprint’s <code class="language-plaintext highlighter
 dependency graph, whereas here the <strong>editorial</strong> relation (<code class="language-plaintext highlighter-rouge">uses[]</code>, what a
 reader must have read) and the <strong>formal</strong> one (derived from <code class="language-plaintext highlighter-rouge">lean.ref</code>) are
 kept apart, and <code class="language-plaintext highlighter-rouge">uses[]</code> is never populated from Lean
-(<a href="https://github.com/litlfred/folio-assistant/blob/HEAD/build/writer-cone/outputs/skills_docs/4f8d2c74773d3be1a329b663bc1c71b1a16de366/files/cat-harness/docs/reference/skill-instructions/uses-editorial-review.md" data-fa-pin=".">uses-editorial-review</a>).</p><h3 id="verso"><a href="#verso" class="anchor-heading" aria-labelledby="verso"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verso
+(<a href="https://github.com/litlfred/folio-assistant/blob/HEAD/build/writer-cone/outputs/skills_docs/aff8bfa0c89bee023e19cc129f430ed51ab8ea8d/files/cat-harness/docs/reference/skill-instructions/uses-editorial-review.md" data-fa-pin=".">uses-editorial-review</a>).</p><h3 id="verso"><a href="#verso" class="anchor-heading" aria-labelledby="verso"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verso
   
   
 </h3><p><a href="https://github.com/leanprover/verso">leanprover/verso</a> — Lean’s own
@@ -335,7 +335,7 @@ platform can carry non-Lean content types.</p><h2 id="agent-memory-and-knowledge
 that agents read and write over MCP.</p><p><strong>Difference:</strong> Basic Memory is one general-purpose memory graph. Here each
 directory declares the <em>kind</em> of graph it holds and whether a process
 produces, reads or writes it
-(<a href="https://github.com/litlfred/folio-assistant/blob/HEAD/build/writer-cone/outputs/skills_docs/4f8d2c74773d3be1a329b663bc1c71b1a16de366/files/cat-harness/docs/reference/skill-instructions/content-context-and-state-graphs.md" data-fa-pin=".">content, context and state graphs</a>).</p><h2 id="general-agent-frameworks"><a href="#general-agent-frameworks" class="anchor-heading" aria-labelledby="general-agent-frameworks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> General agent frameworks
+(<a href="https://github.com/litlfred/folio-assistant/blob/HEAD/build/writer-cone/outputs/skills_docs/aff8bfa0c89bee023e19cc129f430ed51ab8ea8d/files/cat-harness/docs/reference/skill-instructions/content-context-and-state-graphs.md" data-fa-pin=".">content, context and state graphs</a>).</p><h2 id="general-agent-frameworks"><a href="#general-agent-frameworks" class="anchor-heading" aria-labelledby="general-agent-frameworks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> General agent frameworks
   
   
 </h2><p>Added 2026-09-23, same session, on the owner’s request. These overlap more
