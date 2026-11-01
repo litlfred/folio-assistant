@@ -83,6 +83,11 @@ jobs:
           # job installs with --frozen-lockfile, so the train carries the
           # refreshed bun.lock with its pins (train #2876 failed without it).
           bun install
+          # The re-pin can rewrite the litlfred/*@sha calls in .github/workflows
+          # (check:workflow-pins, tools#1353). The train's token may not push
+          # workflow files (owner, Q-PIN-6 C), so those bumps come as their own
+          # PRs and the train leaves the workflows as main has them.
+          git checkout -- .github/workflows
           git config user.name "repin-train[bot]"
           git config user.email "repin-train@users.noreply.github.com"
           git add -u
