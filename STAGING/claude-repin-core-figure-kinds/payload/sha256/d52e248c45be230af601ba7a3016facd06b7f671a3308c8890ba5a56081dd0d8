@@ -577,11 +577,9 @@ the change set is flagged. The script adds the column itself, inside its
 locked run (so no other refresh writes by a shifted position), and keeps its
 Yes/No dropdown.
 
-To confirm **one comment at a time** (owner, 2026-10-31, option A "a
-checkbox per comment"), an Editor ticks the Orange **Confirmed (committee)**
-checkbox on Review Public Comments, right of Disposition. A ticked comment
-counts as confirmed whatever its change set's Yes/No says. The script adds
-this column too, inside the same locked run, with its checkboxes.
+There is no per-comment checkbox (owner, 2026-10-31 21:49Z, Q "Confirming
+dispositions": "C. Yes/No only"); the Yes/No per change set, typed comment
+numbers, and a comment's own Disposition are the only ways to confirm.
 
 ## Where the agent is: Agent step (owner, 2026-10-31)
 
