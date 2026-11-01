@@ -7,7 +7,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { compare, decide, type CheckRun, type TrainPr } from "../../.github/scripts/repin-train.ts";
+import { baselineByName, compare, decide, type CheckRun, type TrainPr } from "../../.github/scripts/repin-train.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 let nextId = 1;
@@ -54,6 +54,22 @@ describe("no new failures compared with main", () => {
 
   test("no checks at all is never green", () => {
     expect(compare([], []).state).toBe("pending");
+  });
+});
+
+describe("main's baseline is read one check at a time", () => {
+  test("a check the newest main commit skipped takes its answer from an older commit", () => {
+    const newest = [run("deploy", "success")];
+    const older = [run("Repository gates (hard)", "failure"), run("deploy", "failure")];
+    const base = baselineByName([newest, older]);
+    expect(base.find((r) => r.name === "Repository gates (hard)")?.conclusion).toBe("failure");
+    expect(base.find((r) => r.name === "deploy")?.conclusion).toBe("success");
+    expect(compare([run("Repository gates (hard)", "failure")], base).knownFailures).toEqual(["Repository gates (hard)"]);
+  });
+
+  test("a check still running on the newest commit keeps the older finished answer", () => {
+    const base = baselineByName([[run("bun test (1)", null, "in_progress")], [run("bun test (1)", "failure")]]);
+    expect(base.map((r) => r.conclusion)).toEqual(["failure"]);
   });
 });
 

@@ -187,16 +187,30 @@ export async function checkRuns(api: Api, repo: string, sha: string): Promise<Ch
 }
 
 /**
- * Main's baseline: the newest of its last commits whose checks have all
- * finished. A commit still being checked would hide failures main has.
+ * Main's baseline, ONE CHECK NAME AT A TIME: for each check, its newest
+ * finished run among main's last commits (newest first). Not one commit's
+ * runs: main's commits do not all run the same checks (a deploy-only merge
+ * runs a handful), so a whole-commit baseline made every gate that commit
+ * skipped look "new" on the train (fa#2876 at df1156c). A check still running
+ * on a newer commit does not hide the older finished answer.
  */
+export function baselineByName(newestFirst: ReadonlyArray<readonly CheckRun[]>): CheckRun[] {
+  const out = new Map<string, CheckRun>();
+  for (const runs of newestFirst) {
+    for (const r of newestByName(runs.filter((x) => x.status === "completed")).values()) {
+      if (!out.has(r.name)) out.set(r.name, r);
+    }
+  }
+  return [...out.values()];
+}
+
 export async function mainBaseline(api: Api, repo: string, depth = 15): Promise<{ sha: string; runs: CheckRun[] } | undefined> {
   const commits = await api.get<Array<{ sha: string }>>(`/repos/${repo}/commits?sha=main&per_page=${depth}`);
-  for (const { sha } of commits) {
-    const runs = await checkRuns(api, repo, sha);
-    if (runs.length > 0 && runs.every((r) => r.status === "completed")) return { sha, runs };
-  }
-  return undefined;
+  const perCommit: CheckRun[][] = [];
+  for (const { sha } of commits) perCommit.push(await checkRuns(api, repo, sha));
+  const runs = baselineByName(perCommit);
+  if (runs.length === 0 || commits.length === 0) return undefined;
+  return { sha: commits[0].sha, runs };
 }
 
 async function statusOf(api: Api, repo: string, sha: string): Promise<TrainPr["verdict"]> {
