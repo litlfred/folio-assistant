@@ -2,11 +2,11 @@
 # folio-assistant-75c5
 $schema: bean/1.0.0
 title: 'INGEST: volume-separation acceptance run on the GDZ Invent. Math. volume'
-status: in-progress
+status: completed
 type: task
 priority: low
 created_at: 2026-10-30T12:45:00Z
-updated_at: 2026-10-31T02:41:00Z
+updated_at: 2026-11-01T15:47:00Z
 parent: folio-assistant-slw1
 ---
 
@@ -30,3 +30,5 @@ _2026-10-31T02:41:00Z_ — Completed the GDZ *Invent. Math.* 106 (`PPN356556735_
 - **PR**: `litlfred/cat-harness-tools#1060` (`test/fixtures/volume-separation/gdz-invent-math-106/` + acceptance test in `scripts/tests/volume-separation.test.ts`; no scan pages, PDFs, or OCR texts copied).
 - **Issue comment**: https://github.com/litlfred/cat-harness-tools/issues/132#issuecomment-6537917226
 - **Results**: 3 blind voters (`gemini-2.5-flash-lite`, `gemini-2.5-flash`, `gemini-2.5-pro`) over the 673-page GDZ OCR queue (`GDZOCR` XML + `tesseract` blank-page verification). Majority vote (`>= 2/3`) quarantined all 9 of `flash-lite`'s journal-page vs PDF-page drift starts into `undetermined` and proposed **26/26 exact spans** (`starts P/R = 1.0/1.0`, `ends P/R = 1.0/1.0`) against the 26-article content-page cut (11 trailing blank verso pages excluded), **4/4 exact spans** on `qou` `c61cfb205d`'s 4 hand-cut articles (`traczyk1991-periodic-knots` PDF 80–91, `schechtman-varchenko1991-arrangements` PDF 146–201, `cherednik1991-kz-dunkl` PDF 418–438 omitting blank PDF 439, `ram1991-frobenius-formula` PDF 468–495), and `26/26` starts / `15/26` ends against the raw GDZ METS/IIIF outline (`LOG_0007`..`LOG_0049`, which attaches the 11 trailing blank verso pages to the preceding article).
+
+_2026-11-01T15:47Z (thread "Sweep old proposal issues", https://claude.ai/code/session_01Qmmkt4armXsG8JwtkMqMEW)_. Completed on the owner's card Q-S6-1 "A. Close issue, bean done" (2026-11-01 15:45Z). The GDZ acceptance run passed (26/26 exact spans; 4/4 against qou's hand cut), recorded in cat-harness-tools#1060. cat-harness-tools#132 is closed.
