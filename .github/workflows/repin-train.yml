@@ -172,8 +172,9 @@ jobs:
               --comment "Replaced by train #$number: this train had new failures compared with fa main, and its pins were frozen."
           done
 
-      # A push made with GITHUB_TOKEN starts no pull_request workflow, so the
-      # gates are dispatched on the branch instead (the same fallback as
+      # A push made with GITHUB_TOKEN starts no pull_request workflow, so both
+      # workflows the verdict reads (the gates and the feature staging) are
+      # dispatched on the branch instead (the same fallback as
       # merge-main.yml's "Have CI judge the merge commit").
       - name: Have CI judge the train
         if: steps.open.outputs.number != ''
@@ -187,3 +188,4 @@ jobs:
             exit 0
           fi
           gh workflow run code-quality-gates.yml --repo "$GITHUB_REPOSITORY" --ref "$BRANCH"
+          gh workflow run feature-staging.yml --repo "$GITHUB_REPOSITORY" --ref "$BRANCH" -f branch="$BRANCH"

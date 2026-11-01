@@ -104,6 +104,11 @@ describe("the workflows", () => {
     expect(install).toBeLessThan(train.indexOf("git add -u"));
   });
 
+  test("without a bot token, the train starts both workflows the verdict reads", () => {
+    expect(train).toContain("gh workflow run code-quality-gates.yml");
+    expect(train).toContain("gh workflow run feature-staging.yml");
+  });
+
   test("the verdict judges only train branches", () => {
     expect(verdict).toContain("startsWith(github.event.workflow_run.head_branch, 'repin-train/')");
   });
