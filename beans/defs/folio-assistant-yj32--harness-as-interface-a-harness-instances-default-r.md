@@ -307,3 +307,5 @@ what a declared-and-resolving viewer does, and it does not make any graph
 appear on a surface its declaration excludes.
 
 **This is one of this epic's open questions**, closed. Its other two — *"what IS the writable store"* and *"KG-DS"* — were already answered and struck through in this bean on 2026-09-20. **What remains open on `yj32` is one question: where does the background live?** — a theme's `backdrop` is sticky-scoped today, and making it the docs page ground is a different CSS surface and possibly a different crop set, since a sticky's crop is chosen for a CARD.
+
+_2026-11-01T09:55:00Z_ — Checked for closing; it stays open. All its children are `completed` or `scrapped` (done-when box 3 is met), but two boxes are not: no BPMN for this workflow exists under `cat-harness/processes/`, and a harness instance does not yet render its docs on its theme's ground (a theme `backdrop` is still sticky-scoped in `site-chrome/assets/css/docs-ui.css`). The owner's open question, "where does the background live?", is still unanswered. `r29x` (paused) now hangs from here, moved from the closed `vke6`. Session https://claude.ai/code/session_01Qmmkt6XTBi8PdXZBc7NTER.

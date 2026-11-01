@@ -5,8 +5,8 @@ title: 'R29 (PAUSED by owner): todos and sticky notes reference things across KG
 status: todo
 type: task
 created_at: 2026-10-30T19:50:00Z
-updated_at: 2026-10-30T19:50:00Z
-parent: folio-assistant-vke6
+updated_at: 2026-11-01T09:55:00Z
+parent: folio-assistant-yj32
 ---
 
 Split out of `folio-assistant-95sk` on 2026-10-30, when 95sk closed with R24, R27 and R28 met. The wording comes from `cat-harness/docs/architecture/folio-board-requirements.md` §"The folio is a convention, not a page — R24 to R29":
@@ -19,3 +19,5 @@ Split out of `folio-assistant-95sk` on 2026-10-30, when 95sk closed with R24, R2
 
 - [ ] todos and sticky notes are one kind
 - [ ] a todo/sticky can carry a reference into another instance's KG, and the reference resolves
+
+_2026-11-01T09:55:00Z_ — Moved from `vke6` (closed, the split is done) to `yj32`, the epic for the board and its todos. Still PAUSED; nothing else changed.
