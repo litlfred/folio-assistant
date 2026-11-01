@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_CRDM/node/Call_BeanClose.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_CRDM/node/Call_BeanClose",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_CRDM",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_CRDM/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_BeanClose",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_CRDM#flow/SF_Bean_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_BeanClose"
+    }
+  ]
+}

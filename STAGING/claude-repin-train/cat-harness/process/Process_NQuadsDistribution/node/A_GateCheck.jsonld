@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_NQuadsDistribution/node/A_GateCheck.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_NQuadsDistribution/node/A_GateCheck",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "CI Gate Verification: Audit Manifest & Schemas",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_NQuadsDistribution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_NQuadsDistribution/lane/Lane_Ci",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/named-query-execution"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_NQuadsDistribution#flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_NQuadsDistribution#flow/Flow_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution/node/A_GateCheck"
+    }
+  ]
+}

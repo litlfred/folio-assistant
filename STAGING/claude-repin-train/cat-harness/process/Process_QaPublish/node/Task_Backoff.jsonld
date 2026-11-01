@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_QaPublish/node/Task_Backoff.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_QaPublish/node/Task_Backoff",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Back off",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_QaPublish/lane/Lane_Ci",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_QaPublish#flow/P08"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_QaPublish#flow/P09"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/node/Task_Backoff"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/instance-kinds.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/instance-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "instance-kinds",
+      "title": "Instance kinds — naming one, and what a new kind must declare",
+      "description": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH typology must declare. Read before naming a new instance, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/instance-kinds.md",
+      "instructionLines": 289,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/instance-kinds"
+    }
+  ]
+}

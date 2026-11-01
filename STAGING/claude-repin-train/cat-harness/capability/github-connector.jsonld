@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/capability/github-connector.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/capability/github-connector",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "github-connector",
+      "name": "GitHub connector (host-provided)",
+      "description": "Ability to reach the forge through a connector the HOST supplies — an MCP server the agent did not configure and cannot inspect. DISTINCT FROM github-api: the agent holds no credential of its own, so what it may do is whatever the connector was granted, and that is knowable only by trying. An mcp-probe against the server is therefore the honest detection: it answers 'is the connector reachable', which is the only question this capability can settle. It does NOT answer 'may I write' — that is a permission on the actor, and a session can hold this capability and still be refused. Declared 2026-09-20 alongside github-api, on the owner's answer that the write path is several tools chosen by capability and permission.",
+      "detection": {
+        "method": "mcp-probe",
+        "endpoint": "github"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/github-connector"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "$ref": "#/definitions/RunRelease",
+  "definitions": {
+    "RunRelease": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "provisioned"
+            },
+            "release": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9._-]*@[^\\s@/]+$"
+            },
+            "digest": {
+              "type": "object",
+              "properties": {
+                "algorithm": {
+                  "type": "string",
+                  "const": "sha256"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "verifiedAt": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "algorithm",
+                "digest"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "state",
+            "release",
+            "digest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "could-not-provision"
+            },
+            "release": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9._-]*@[^\\s@/]+$"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expected": {
+              "type": "object",
+              "properties": {
+                "algorithm": {
+                  "type": "string",
+                  "const": "sha256"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "verifiedAt": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "algorithm",
+                "digest"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "state",
+            "release",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/run-context/RunReleaseSchema.schema.json",
+  "title": "RunReleaseSchema",
+  "description": "Generated from `RunReleaseSchema` in schemas/sdlc/run-context.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  }
+}

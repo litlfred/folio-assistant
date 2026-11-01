@@ -1,0 +1,39 @@
+{
+  "$ref": "#/definitions/TestAssertion",
+  "definitions": {
+    "TestAssertion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "required",
+            "informative"
+          ]
+        },
+        "expectation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestAssertionSchema.schema.json",
+  "title": "TestAssertionSchema",
+  "description": "Generated from `TestAssertionSchema` in schemas/sdlc/test-plan.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  }
+}

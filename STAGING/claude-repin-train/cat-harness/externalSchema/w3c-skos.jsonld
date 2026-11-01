@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/externalSchema/w3c-skos.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/externalSchema/w3c-skos",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#ExternalSchema",
+      "name": "w3c-skos",
+      "title": "SKOS Simple Knowledge Organization System Reference",
+      "authority": "W3C",
+      "specVersion": "2009-08-18",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/2009/REC-skos-reference-20090818/",
+      "namespace": [
+        "http://www.w3.org/2004/02/skos/core#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-skos"
+    }
+  ]
+}

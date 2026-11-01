@@ -1,0 +1,351 @@
+{
+  "$ref": "#/definitions/SlidesAccessibility",
+  "definitions": {
+    "SlidesAccessibility": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-slides-accessibility/v1"
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "mimetype_sniffed": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "file",
+            "sha256",
+            "mimetype_sniffed"
+          ],
+          "additionalProperties": false
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "pptx",
+            "odp"
+          ]
+        },
+        "slides": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "checks": {
+          "type": "object",
+          "properties": {
+            "slide-titles": {
+              "type": "object",
+              "properties": {
+                "criterion": {
+                  "type": "string"
+                },
+                "pass": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "fail": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "failing_slides": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  }
+                }
+              },
+              "required": [
+                "criterion",
+                "pass",
+                "fail",
+                "failing_slides"
+              ],
+              "additionalProperties": false
+            },
+            "alt-text": {
+              "type": "object",
+              "properties": {
+                "criterion": {
+                  "type": "string"
+                },
+                "pictures": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "ok": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "decorative": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "missing": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "auto-generated": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "filename": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "failing": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "slide": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      },
+                      "media": {
+                        "type": "string"
+                      },
+                      "verdict": {
+                        "type": "string",
+                        "enum": [
+                          "missing",
+                          "auto-generated",
+                          "filename"
+                        ]
+                      },
+                      "alt": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "slide",
+                      "media",
+                      "verdict",
+                      "alt"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "criterion",
+                "pictures",
+                "ok",
+                "decorative",
+                "missing",
+                "auto-generated",
+                "filename",
+                "failing"
+              ],
+              "additionalProperties": false
+            },
+            "language": {
+              "type": "object",
+              "properties": {
+                "criterion": {
+                  "type": "string"
+                },
+                "languages": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "scope": {
+                  "type": "string",
+                  "enum": [
+                    "per-run",
+                    "default-style",
+                    "none"
+                  ]
+                },
+                "pass": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "criterion",
+                "languages",
+                "scope",
+                "pass"
+              ],
+              "additionalProperties": false
+            },
+            "document-title": {
+              "type": "object",
+              "properties": {
+                "criterion": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "pass": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "criterion",
+                "title",
+                "pass"
+              ],
+              "additionalProperties": false
+            },
+            "speaker-notes": {
+              "type": "object",
+              "properties": {
+                "criterion": {
+                  "type": "string"
+                },
+                "slides_with_notes": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  }
+                }
+              },
+              "required": [
+                "criterion",
+                "slides_with_notes"
+              ],
+              "additionalProperties": false
+            },
+            "hidden-slides": {
+              "type": "object",
+              "properties": {
+                "slides": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  }
+                }
+              },
+              "required": [
+                "slides"
+              ],
+              "additionalProperties": false
+            },
+            "reading-order": {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "type": "string",
+                  "const": "undetermined"
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "state",
+                "why"
+              ],
+              "additionalProperties": {}
+            },
+            "images-of-text": {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "type": "string",
+                  "const": "undetermined"
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "state",
+                "why"
+              ],
+              "additionalProperties": {}
+            },
+            "contrast": {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "type": "string",
+                  "const": "undetermined"
+                },
+                "why": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "state",
+                "why"
+              ],
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "slide-titles",
+            "alt-text",
+            "language",
+            "document-title",
+            "speaker-notes",
+            "hidden-slides",
+            "reading-order",
+            "images-of-text",
+            "contrast"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "$schema",
+        "source",
+        "format",
+        "slides",
+        "checks"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/slides-accessibility/SlidesAccessibilitySchema.schema.json",
+  "title": "SlidesAccessibilitySchema",
+  "description": "Generated from `SlidesAccessibilitySchema` in schemas/ui/slides-accessibility.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  }
+}

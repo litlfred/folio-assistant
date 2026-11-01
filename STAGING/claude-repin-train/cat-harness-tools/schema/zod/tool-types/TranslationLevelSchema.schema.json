@@ -1,0 +1,24 @@
+{
+  "$ref": "#/definitions/TranslationLevel",
+  "definitions": {
+    "TranslationLevel": {
+      "type": "string",
+      "enum": [
+        "block",
+        "section",
+        "chapter",
+        "folio"
+      ],
+      "description": "What a translation sign-off covers."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/TranslationLevelSchema.schema.json",
+  "title": "TranslationLevelSchema",
+  "description": "Generated from `TranslationLevelSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  }
+}

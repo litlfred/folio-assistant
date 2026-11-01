@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/role/board-renderer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/role/board-renderer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Board renderer",
+      "title": "Board renderer",
+      "notation": "board-renderer",
+      "description": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane — it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/board-windows",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/board-diagram-interchange",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/harness-tiles",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/deletion-requires-confirmation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/visualizer-loading",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/pdf-inline-viewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/liquid-templates",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/incremental-render"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/tool-types/MathRenderer.schema.json",
+  "title": "MathRenderer",
+  "type": "string",
+  "enum": [
+    "katex",
+    "mathjax"
+  ],
+  "description": "The browser-side math renderer.",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  }
+}

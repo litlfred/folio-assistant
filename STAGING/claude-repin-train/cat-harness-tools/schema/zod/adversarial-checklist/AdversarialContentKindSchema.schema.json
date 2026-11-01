@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/AdversarialContentKind",
+  "definitions": {
+    "AdversarialContentKind": {
+      "type": "string",
+      "enum": [
+        "tool",
+        "schema",
+        "skill",
+        "process"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/adversarial-checklist/AdversarialContentKindSchema.schema.json",
+  "title": "AdversarialContentKindSchema",
+  "description": "Generated from `AdversarialContentKindSchema` in schemas/sdlc/adversarial-checklist.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  }
+}

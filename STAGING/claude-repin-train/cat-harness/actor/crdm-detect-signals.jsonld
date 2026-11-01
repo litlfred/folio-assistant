@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/actor/crdm-detect-signals.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/actor/crdm-detect-signals",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "crdm-detect-signals",
+      "actorKind": "system",
+      "title": "crdm-detect phrase signals",
+      "description": "The mechanical implementation of the crdm-detect skill's phrase signals (cat-harness-tools src/crdm/detect-signals.ts): given an issue's text it says whether the text reads as a feature request, and in which categories. Declared as a system under test for dogfood test plan #1 (bean folio-assistant-ff09). It never judges its own output: case verdicts come from comparing it with the corpus's adjudicated labels, written by a tester that is not this actor. Air-gapped: it reads text and nothing else.",
+      "reach": "air-gapped",
+      "systemUnderTest": {
+        "kind": "skill",
+        "version": "1"
+      },
+      "hasCapability": [],
+      "mayTakeRole": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/crdm-detect-signals"
+    }
+  ]
+}

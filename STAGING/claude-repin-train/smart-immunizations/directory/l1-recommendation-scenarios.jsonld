@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/smart-immunizations/smart-immunizations.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/smart-immunizations/directory/l1-recommendation-scenarios.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/smart-immunizations/smart-immunizations.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/smart-immunizations/directory/l1-recommendation-scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "l1-recommendation-scenarios",
+      "path": "examples/l1-recommendation-scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/l1-extraction"
+      ],
+      "description": "The measles L1 recommendation-scenarios worked example (`measles/`: the 2017 position paper's L1 recommendations, the immunization vocabulary and mapping it resolves against, and the L2 scenario candidates `l1-recommendation-scenarios.ts` derives from them), moved here from smart-base by its 0c679ec (owner, Q2 of the folio-assistant#2529 reference-direction review: \"Move it\"), and out of library/ on 2026-10-15 (owner: \"Mount it everywhere\"). It is smart-base's `l1-extraction` kind, not a library entry.",
+      "readmePath": "examples/l1-recommendation-scenarios/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/smart-immunizations/directory/l1-recommendation-scenarios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/l1-recommendation-scenarios"
+    }
+  ]
+}

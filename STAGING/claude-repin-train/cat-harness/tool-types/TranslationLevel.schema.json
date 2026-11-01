@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/tool-types/TranslationLevel.schema.json",
+  "title": "TranslationLevel",
+  "type": "string",
+  "enum": [
+    "block",
+    "section",
+    "chapter",
+    "folio"
+  ],
+  "description": "What a translation sign-off covers.",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  }
+}

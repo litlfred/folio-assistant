@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/bootstrap-tools/role/site-publisher.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/bootstrap-tools/role/site-publisher",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Site Publisher",
+      "title": "Site Publisher",
+      "notation": "site-publisher",
+      "description": "Renders a Knowledge Graph — the whole of it, or a list of its Subgraphs — for GitHub Pages at a publication root URL, has it deployed, checks what is served, and reports the push's status with one message. Performed by an agent running these tools, or by a Pages workflow running the same commands; the steps and the report are the same either way. It does not decide WHICH root URL or WHICH Subgraphs: whoever started the process says, and a staging root and a release root are the same process with a different answer.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent",
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/bootstrap-tools/skill/render-kg-to-github-pages"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/role/site-publisher"
+    }
+  ]
+}

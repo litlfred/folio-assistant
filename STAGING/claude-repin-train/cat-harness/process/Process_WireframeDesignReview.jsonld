@@ -1,0 +1,158 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Wireframe design review",
+      "summary": "WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice.",
+      "description": "WireGen (methodologies/wiregen) made executable: a written design intent, at least two mid-fidelity candidates each with a web AND a mobile layout, mechanical checks, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. A wireframe is part of the design process for adjudication (owner, 2026-09-23). Operating skill: wireframe-design-review. Issue #1023. The same mechanical checks back the as-is wireframe every declared visualiser owes, which `check:wireframes` runs.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/ui/wireframe-design-review.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/ui/wireframe-design-review.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/assets/img/workflows/wireframe-design-review.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/Start_WDR"
+      ],
+      "nodeCount": 11,
+      "flowCount": 13,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/Start_WDR",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/D_Intent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/D_Intent",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/D_Candidates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/D_Candidates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/D_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/D_Check",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/GW_Checks",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/GW_Checks",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/R_Review",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/GW_Checks",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/D_Candidates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/R_Review",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/GW_Agree",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/GW_Agree",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/Call_Adjudicate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/GW_Agree",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/Call_Choose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/Call_Adjudicate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/Call_Choose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/Call_Choose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/GW_Iterate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/GW_Iterate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/D_Intent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/GW_Iterate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/process/Process_WireframeDesignReview/node/End_WDR",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_13"
+    }
+  ]
+}

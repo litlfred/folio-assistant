@@ -1,0 +1,72 @@
+{
+  "$ref": "#/definitions/DakSwimlaneMap",
+  "definitions": {
+    "DakSwimlaneMap": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "dak-swimlanes/v1"
+        },
+        "annexOf": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "iris": {
+          "type": "string",
+          "pattern": "^10665\\/[0-9]+$"
+        },
+        "section": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*#[a-z0-9][a-z0-9-]*$"
+        },
+        "personas": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "notPersonas": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "annexOf",
+        "label",
+        "section",
+        "personas",
+        "notPersonas"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/dak-annexes/DakSwimlaneMapSchema.schema.json",
+  "title": "DakSwimlaneMapSchema",
+  "description": "Generated from `DakSwimlaneMapSchema` in schemas/dak-annexes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  }
+}

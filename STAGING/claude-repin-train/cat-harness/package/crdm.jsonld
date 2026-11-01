@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/package/crdm.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/package/crdm",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "name": "crdm",
+      "version": "0.1.0",
+      "description": "CRDM — the requirements methodology: how a feature request becomes agreed, signed-off requirements. Its seven skills — three governing the methodology, three detailing a single phase (needs assessment, the requirements template, impact analysis), and one for eliciting requirements from a recorded walkthrough; its eight diagrams live in the instance's own `processes/`. RELOCATED 2026-09-22 from `methodologies/crdm/` on the owner's \"dont bury sub-graph assets\", which also brought this package into skill QA for the first time: bean `lps0` measured that `kg-audit`'s `skillFiles()` walks a hardcoded `skills/`, so while these three sat under `methodologies/` they were silently outside it — and `check:skills` had never validated this manifest, which is why it was missing every field below.",
+      "path": "skills/sdlc/crdm",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/crdm-data-model",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/crdm-detect",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/crdm-impact-analysis",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/crdm-needs-assessment",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/crdm-recorded-walkthrough",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/crdm-requirements-template",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/skill/crdm-requirements-workflow"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm"
+    }
+  ]
+}

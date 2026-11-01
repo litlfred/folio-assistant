@@ -1,0 +1,52 @@
+{
+  "$ref": "#/definitions/SiteRoutes",
+  "definitions": {
+    "SiteRoutes": {
+      "type": "object",
+      "properties": {
+        "release": {
+          "type": "string",
+          "pattern": "^(?!\\/)[^\\s]*$"
+        },
+        "previews": {
+          "type": "string",
+          "pattern": "^(?!\\/)[^\\s]*$"
+        },
+        "subSites": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^(?!\\/)[^\\s]*$"
+              },
+              "instance": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "path",
+              "instance"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "release"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/SiteRoutesSchema.schema.json",
+  "title": "SiteRoutesSchema",
+  "description": "Generated from `SiteRoutesSchema` in schemas/kg/site.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  }
+}

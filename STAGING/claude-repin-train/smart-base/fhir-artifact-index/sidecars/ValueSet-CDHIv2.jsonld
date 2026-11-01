@@ -1,0 +1,575 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://smart.who.int/base/ValueSet-CDHIv2.jsonld",
+    "name": "http://www.w3.org/2000/01/rdf-schema#label",
+    "fhir": "https://smart.who.int/base/DataTypes.jsonld#",
+    "id": "@id",
+    "generatedAt": {
+      "@id": "http://www.w3.org/ns/prov#generatedAtTime",
+      "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "fhir:CodeSystem": {
+      "@type": "@id"
+    },
+    "cs": "http://smart.who.int/base/CodeSystem-CDHIv2"
+  },
+  "@id": "http://smart.who.int/base/ValueSet-CDHIv2.jsonld",
+  "@type": "http://www.w3.org/ns/prov#Entity",
+  "generatedAt": "2026-11-01T11:32:47.515Z",
+  "@graph": [
+    {
+      "id": "#1",
+      "name": "Persons"
+    },
+    {
+      "id": "#1.1",
+      "name": "Targeted communication to Persons"
+    },
+    {
+      "id": "#1.1.1",
+      "name": "Transmit health event alerts to specific population group(s)"
+    },
+    {
+      "id": "#1.1.2",
+      "name": "Transmit targeted health information to person(s) based on health status or demographics"
+    },
+    {
+      "id": "#1.1.3",
+      "name": "Transmit targeted alerts and reminders to person(s)"
+    },
+    {
+      "id": "#1.1.4",
+      "name": "Transmit diagnostics result, or availability of result, to person(s)"
+    },
+    {
+      "id": "#1.2",
+      "name": "Untargeted communication to Persons"
+    },
+    {
+      "id": "#1.2.1",
+      "name": "Transmit untargeted health information to an undefined population"
+    },
+    {
+      "id": "#1.2.2",
+      "name": "Transmit untargeted health event alerts to undefined group"
+    },
+    {
+      "id": "#1.3",
+      "name": "Person to Person communication"
+    },
+    {
+      "id": "#1.3.1",
+      "name": "Peer group for individuals"
+    },
+    {
+      "id": "#1.4",
+      "name": "Personal health tracking"
+    },
+    {
+      "id": "#1.4.1",
+      "name": "Access by the individual to own medical or summary health records"
+    },
+    {
+      "id": "#1.4.2",
+      "name": "Self monitoring of health or diagnostic data by the individual"
+    },
+    {
+      "id": "#1.4.3",
+      "name": "Active data capture/documentation by an individual"
+    },
+    {
+      "id": "#1.4.4",
+      "name": "Access by the individual to verifiable documentation of a health event or health status"
+    },
+    {
+      "id": "#1.5",
+      "name": "Person based reporting"
+    },
+    {
+      "id": "#1.5.1",
+      "name": "Reporting of health system feedback by persons"
+    },
+    {
+      "id": "#1.5.2",
+      "name": "Reporting of public health events by persons"
+    },
+    {
+      "id": "#1.6",
+      "name": "On demand communication with persons"
+    },
+    {
+      "id": "#1.6.1",
+      "name": "Look-up of information on health and health services by individuals"
+    },
+    {
+      "id": "#1.6.2",
+      "name": "Simulated human-like conversations with individual(s)"
+    },
+    {
+      "id": "#1.7",
+      "name": "Person-centred financial transactions"
+    },
+    {
+      "id": "#1.7.1",
+      "name": "Transmit or manage out-of-pocket payments by individuals"
+    },
+    {
+      "id": "#1.7.2",
+      "name": "Transmit or manage vouchers to individuals for health services"
+    },
+    {
+      "id": "#1.7.3",
+      "name": "Transmit or manage incentives to individuals for health services"
+    },
+    {
+      "id": "#1.8",
+      "name": "Person-centred consent management"
+    },
+    {
+      "id": "#1.8.1",
+      "name": "Manage provision and withdrawal of consent by individuals"
+    },
+    {
+      "id": "#2",
+      "name": "Healthcare providers"
+    },
+    {
+      "id": "#2.1",
+      "name": "Identification and registration of persons"
+    },
+    {
+      "id": "#2.1.1",
+      "name": "Verify a person's unique identity"
+    },
+    {
+      "id": "#2.1.2",
+      "name": "Enrol person(s) for health services/clinical care plan"
+    },
+    {
+      "id": "#2.2",
+      "name": "Person-centred health records"
+    },
+    {
+      "id": "#2.2.1",
+      "name": "Longitudinal tracking of person's health status and services"
+    },
+    {
+      "id": "#2.2.2",
+      "name": "Manage person-centred structured clinical records"
+    },
+    {
+      "id": "#2.2.3",
+      "name": "Manage person-centred unstructured clinical records (e.g. notes, images, documents)"
+    },
+    {
+      "id": "#2.2.4",
+      "name": "Routine health indicator data collection and management"
+    },
+    {
+      "id": "#2.3",
+      "name": "Healthcare provider decision support"
+    },
+    {
+      "id": "#2.3.1",
+      "name": "Provide prompts and alerts based according to protocol"
+    },
+    {
+      "id": "#2.3.2",
+      "name": "Provide checklist according to protocol"
+    },
+    {
+      "id": "#2.3.3",
+      "name": "Screen persons by risk or other health status"
+    },
+    {
+      "id": "#2.4",
+      "name": "Telemedicine"
+    },
+    {
+      "id": "#2.4.1",
+      "name": "Consultations between remote person and healthcare provider"
+    },
+    {
+      "id": "#2.4.2",
+      "name": "Remote monitoring of person's health or diagnostic data by provider"
+    },
+    {
+      "id": "#2.4.3",
+      "name": "Transmission of medical data (e.g. images, notes, and videos) to healthcare provider"
+    },
+    {
+      "id": "#2.4.4",
+      "name": "Consultations for case management between healthcare providers"
+    },
+    {
+      "id": "#2.5",
+      "name": "Healthcare provider communication"
+    },
+    {
+      "id": "#2.5.1",
+      "name": "Communication from healthcare provider to supervisor(s)"
+    },
+    {
+      "id": "#2.5.2",
+      "name": "Communication and performance feedback to healthcare provider(s)"
+    },
+    {
+      "id": "#2.5.3",
+      "name": "Transmit routine news and workflow notifications to healthcare provider(s)"
+    },
+    {
+      "id": "#2.5.4",
+      "name": "Transmit non-routine health event alerts to healthcare provider(s)"
+    },
+    {
+      "id": "#2.5.5",
+      "name": "Peer group for healthcare providers"
+    },
+    {
+      "id": "#2.5.6",
+      "name": "Generative AI for tailored content creation"
+    },
+    {
+      "id": "#2.6",
+      "name": "Referral coordination"
+    },
+    {
+      "id": "#2.6.1",
+      "name": "Coordinate emergency response and transport"
+    },
+    {
+      "id": "#2.6.2",
+      "name": "Manage referrals between points of service within health sector"
+    },
+    {
+      "id": "#2.6.3",
+      "name": "Manage referrals between health and other sectors (social services, police, justice, economic support schemes)"
+    },
+    {
+      "id": "#2.7",
+      "name": "Scheduling and activity planning for healthcare providers"
+    },
+    {
+      "id": "#2.7.1",
+      "name": "Identify persons in need of services"
+    },
+    {
+      "id": "#2.7.2",
+      "name": "Schedule healthcare provider's activities"
+    },
+    {
+      "id": "#2.8",
+      "name": "Healthcare provider training"
+    },
+    {
+      "id": "#2.8.1",
+      "name": "Provide training content to healthcare provider(s)"
+    },
+    {
+      "id": "#2.8.2",
+      "name": "Assess capacity of healthcare provider(s)"
+    },
+    {
+      "id": "#2.9",
+      "name": "Prescription and medication management"
+    },
+    {
+      "id": "#2.9.1",
+      "name": "Transmit or track prescription orders"
+    },
+    {
+      "id": "#2.9.2",
+      "name": "Track individual's medication consumption"
+    },
+    {
+      "id": "#2.9.3",
+      "name": "Report adverse drug effects"
+    },
+    {
+      "id": "#2.10",
+      "name": "Laboratory and diagnostics imaging management"
+    },
+    {
+      "id": "#2.10.1",
+      "name": "Transmit person's diagnostic result to healthcare provider"
+    },
+    {
+      "id": "#2.10.2",
+      "name": "Transmit and track diagnostic orders"
+    },
+    {
+      "id": "#2.10.3",
+      "name": "Capture diagnostic results from digital devices"
+    },
+    {
+      "id": "#2.10.4",
+      "name": "Track biological specimens"
+    },
+    {
+      "id": "#2.11",
+      "name": "Healthcare provider financial transactions"
+    },
+    {
+      "id": "#2.11.1",
+      "name": "Verify individual's health coverage and financing scheme membership"
+    },
+    {
+      "id": "#2.11.2",
+      "name": "Receive payments from individuals"
+    },
+    {
+      "id": "#3",
+      "name": "Health management and support personnel"
+    },
+    {
+      "id": "#3.1",
+      "name": "Human resource management"
+    },
+    {
+      "id": "#3.1.1",
+      "name": "List health workforce cadres and related identification information"
+    },
+    {
+      "id": "#3.1.2",
+      "name": "Monitor performance of healthcare provider(s)"
+    },
+    {
+      "id": "#3.1.3",
+      "name": "Manage registration/certification of healthcare provider(s)"
+    },
+    {
+      "id": "#3.1.4",
+      "name": "Record training credentials of healthcare provider(s)"
+    },
+    {
+      "id": "#3.1.5",
+      "name": "Manage health workforce activities"
+    },
+    {
+      "id": "#3.2",
+      "name": "Supply chain management"
+    },
+    {
+      "id": "#3.2.1",
+      "name": "Manage inventory and distribution of health commodities"
+    },
+    {
+      "id": "#3.2.2",
+      "name": "Notify stock levels of health commodities"
+    },
+    {
+      "id": "#3.2.3",
+      "name": "Monitor cold-chain sensitive commodities"
+    },
+    {
+      "id": "#3.2.4",
+      "name": "Register licensed drugs and health commodities"
+    },
+    {
+      "id": "#3.2.5",
+      "name": "Manage procurement of commodities"
+    },
+    {
+      "id": "#3.2.6",
+      "name": "Report counterfeit or substandard drugs by persons"
+    },
+    {
+      "id": "#3.3",
+      "name": "Public health event notification"
+    },
+    {
+      "id": "#3.3.1",
+      "name": "Notification of public health events from point of diagnosis"
+    },
+    {
+      "id": "#3.4",
+      "name": "Civil Registration and Vital Statistics (CRVS)"
+    },
+    {
+      "id": "#3.4.1",
+      "name": "Notify, register and certify birth event"
+    },
+    {
+      "id": "#3.4.2",
+      "name": "Notify, register and certify death event"
+    },
+    {
+      "id": "#3.5",
+      "name": "Health system financial management"
+    },
+    {
+      "id": "#3.5.1",
+      "name": "Register and verify health coverage scheme membership of persons"
+    },
+    {
+      "id": "#3.5.2",
+      "name": "Track and manage insurance billing and claims processes"
+    },
+    {
+      "id": "#3.5.3",
+      "name": "Transmit and manage payments to health facilities"
+    },
+    {
+      "id": "#3.5.4",
+      "name": "Transmit and manage routine payroll payment to healthcare provider(s)"
+    },
+    {
+      "id": "#3.5.5",
+      "name": "Transmit or manage financial incentives to healthcare provider(s)"
+    },
+    {
+      "id": "#3.5.6",
+      "name": "Manage and plan budget allocations, revenue and expenditures"
+    },
+    {
+      "id": "#3.5.7",
+      "name": "Determine level of subsidies for health coverage schemes"
+    },
+    {
+      "id": "#3.5.8",
+      "name": "Collect health insurance contributions"
+    },
+    {
+      "id": "#3.6",
+      "name": "Equipment and asset management"
+    },
+    {
+      "id": "#3.6.1",
+      "name": "Monitor status and maintenance of health equipment"
+    },
+    {
+      "id": "#3.6.2",
+      "name": "Track regulation and licensing of medical equipment"
+    },
+    {
+      "id": "#3.7",
+      "name": "Facility management"
+    },
+    {
+      "id": "#3.7.1",
+      "name": "List health facilities and related information"
+    },
+    {
+      "id": "#3.7.2",
+      "name": "Assess health facilities"
+    },
+    {
+      "id": "#3.8",
+      "name": "Person-centred health certificate management"
+    },
+    {
+      "id": "#3.8.1",
+      "name": "Register and store current health certificate information"
+    },
+    {
+      "id": "#3.8.2",
+      "name": "Retrieve and validate current health certificate information"
+    },
+    {
+      "id": "#3.8.3",
+      "name": "Revoke and update health certificate"
+    },
+    {
+      "id": "#4",
+      "name": "Data services"
+    },
+    {
+      "id": "#4.1",
+      "name": "Data Management"
+    },
+    {
+      "id": "#4.1.1",
+      "name": "Form creation for data acquisition"
+    },
+    {
+      "id": "#4.1.2",
+      "name": "Data storage and aggregation"
+    },
+    {
+      "id": "#4.1.3",
+      "name": "Data synthesis and visualizations"
+    },
+    {
+      "id": "#4.1.4",
+      "name": "Automated analysis of data to generate new information or predictions on future events"
+    },
+    {
+      "id": "#4.2",
+      "name": "Data coding"
+    },
+    {
+      "id": "#4.2.1",
+      "name": "Parse unstructured data into structured data"
+    },
+    {
+      "id": "#4.2.2",
+      "name": "Merge, de-duplicate and curate coded datasets or terminologies"
+    },
+    {
+      "id": "#4.2.3",
+      "name": "Classify disease codes or cause of mortality"
+    },
+    {
+      "id": "#4.3",
+      "name": "Geospatial information management"
+    },
+    {
+      "id": "#4.3.1",
+      "name": "Map location of health facilities/structures and households"
+    },
+    {
+      "id": "#4.3.2",
+      "name": "Map location of health event"
+    },
+    {
+      "id": "#4.3.3",
+      "name": "Map location of persons and settlements"
+    },
+    {
+      "id": "#4.3.4",
+      "name": "Map location of healthcare provider(s)"
+    },
+    {
+      "id": "#4.3.5",
+      "name": "Map health and health indicator data to geographic data"
+    },
+    {
+      "id": "#4.4",
+      "name": "Data exchange and interoperability"
+    },
+    {
+      "id": "#4.4.1",
+      "name": "Point-to-point data integration"
+    },
+    {
+      "id": "#4.4.2",
+      "name": "Standards-compliant interoperability"
+    },
+    {
+      "id": "#4.4.3",
+      "name": "Message routing"
+    },
+    {
+      "id": "#4.5",
+      "name": "Data governance compliance"
+    },
+    {
+      "id": "#4.5.1",
+      "name": "Authentication and authorisation"
+    },
+    {
+      "id": "#4.5.2",
+      "name": "Data privacy protection"
+    },
+    {
+      "id": "#4.5.3",
+      "name": "Data consent and provenance"
+    },
+    {
+      "id": "#4.5.4",
+      "name": "Trust architecture"
+    }
+  ],
+  "fhir:CodeSystem": "cs"
+}

@@ -1,0 +1,152 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-train",
+    "sha": "d993f397fdc867368830a9df4548058f661489dc",
+    "pr": "2874/merge",
+    "run": "41301925989"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Contributor feedback on a working draft",
+      "summary": "A document is still being written, and the Authoring Committee gives feedback on it in a shared Contributor Feedback sheet.",
+      "description": "A document is still being written, and the Authoring Committee gives\nfeedback on it in a shared Contributor Feedback sheet. This is what\nhappens to ONE change set, one row of that sheet: a member starts it\nwith a title, the sections it is about and their feedback; the agent\nproposes a direction; an Editor lets the agent edit; the agent makes the\nedit in the row's one pull request, whose staging preview shows what\nchanged; the committee answers on the row; and an Editor lets the agent\nmerge. If the row's feedback changes after the agent wrote its\nproposal, the proposal is marked stale and the row's Ready for agent\ngoes back to No, so the agent proposes again and an Editor decides\nagain. The sheet's colours follow the lanes: Blue for the committee,\nGreen for the agent, Orange for the Editor. Skill: review-sheet-script.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/contributor-feedback.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/contributor-feedback.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/assets/img/workflows/contributor-feedback.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/StartEvent_Feedback"
+      ],
+      "nodeCount": 12,
+      "flowCount": 13,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF01",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/StartEvent_Feedback",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_StartRow",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF02",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_StartRow",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Propose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF03",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Propose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForAgent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF04",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForAgent",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_EditInPullRequest",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF05",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_EditInPullRequest",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_AnswerPreview",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF06",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_AnswerPreview",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_FeedbackChanged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF07",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "changed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_FeedbackChanged",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Propose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF08",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "agreed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_FeedbackChanged",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_QaGate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_QaGate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_QaPassed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "failed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_QaPassed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_EditInPullRequest",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "passed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_QaPassed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForMerge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF09",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForMerge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-train/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10"
+    }
+  ]
+}
