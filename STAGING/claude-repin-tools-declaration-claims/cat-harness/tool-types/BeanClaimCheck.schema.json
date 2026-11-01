@@ -1,0 +1,192 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/tool-types/BeanClaimCheck.schema.json",
+  "title": "BeanClaimCheck",
+  "type": "object",
+  "properties": {
+    "bean": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "claimed",
+        "would-claim",
+        "skip-recent-commit",
+        "skip-claim-note",
+        "skip-open-pr",
+        "skip-closed",
+        "unknown"
+      ]
+    },
+    "copies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "repo": {
+            "type": "string"
+          },
+          "ref": {
+            "type": "string"
+          },
+          "recent": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "author": {
+                  "type": "string"
+                },
+                "at": {
+                  "type": "string"
+                },
+                "subject": {
+                  "type": "string"
+                },
+                "session": {
+                  "type": "string"
+                },
+                "agent": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "author",
+                "at",
+                "subject",
+                "agent"
+              ]
+            }
+          },
+          "status": {
+            "type": "string"
+          },
+          "claimCommit": {
+            "type": "string"
+          },
+          "pushAttempts": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "repo",
+          "ref",
+          "recent"
+        ]
+      }
+    },
+    "openWork": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "path",
+                "prefix",
+                "bean"
+              ]
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ]
+        },
+        "checkedAt": {
+          "type": "string"
+        },
+        "hits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "repo": {
+                "type": "string"
+              },
+              "where": {
+                "type": "string",
+                "enum": [
+                  "default-branch",
+                  "open-pr"
+                ]
+              },
+              "pr": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              },
+              "head": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "match": {
+                "type": "string",
+                "enum": [
+                  "file",
+                  "title",
+                  "body",
+                  "branch"
+                ]
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "repo",
+              "where",
+              "match"
+            ]
+          }
+        },
+        "unread": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "query",
+        "checkedAt",
+        "hits",
+        "unread"
+      ],
+      "description": "Where a path, prefix or bean id exists on main or an open PR head; `unread` names what could not be read."
+    },
+    "reason": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "bean",
+    "state",
+    "copies",
+    "openWork",
+    "reason"
+  ],
+  "description": "Whether a bean was claimed, or why it was skipped, with what each copy of the work plan showed.",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "7323cf531c16a3690e21ca4ffe25569652121243",
+    "pr": "2864/merge",
+    "run": "41305105088"
+  }
+}

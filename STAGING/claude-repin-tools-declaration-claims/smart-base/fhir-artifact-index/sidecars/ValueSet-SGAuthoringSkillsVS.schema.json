@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-SGAuthoringSkillsVS.schema.json",
+  "title": "SMART Guidelines Authoring Skills ValueSet Schema",
+  "description": "JSON Schema for SMART Guidelines Authoring Skills ValueSet ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+  "type": "object",
+  "required": [
+    "system",
+    "code"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "system": {
+      "type": "string",
+      "const": "http://smart.who.int/base/CodeSystem/SGAuthoringSkills"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "can-review-l1-guidelines",
+        "can-interpret-clinical-recommendations",
+        "can-identify-health-interventions",
+        "can-author-personas",
+        "can-author-user-scenarios",
+        "can-author-business-processes",
+        "can-author-data-dictionary",
+        "can-author-decision-logic",
+        "can-author-scheduling-logic",
+        "can-author-indicators",
+        "can-author-functional-requirements",
+        "can-validate-dak-content",
+        "can-author-logical-models",
+        "can-author-fhir-profiles",
+        "can-author-questionnaires",
+        "can-author-cql",
+        "can-author-structure-maps",
+        "can-author-plan-definitions",
+        "can-author-actor-definitions",
+        "can-author-example-scenarios",
+        "can-author-measures",
+        "can-author-fhir-requirements",
+        "can-author-test-cases",
+        "can-review-terminology",
+        "can-map-concepts",
+        "can-author-code-systems",
+        "can-author-value-sets",
+        "can-author-concept-maps",
+        "can-run-qa-checks",
+        "can-review-checklist",
+        "can-validate-artifact-conformance",
+        "can-validate-l3-functionality",
+        "can-configure-ig",
+        "can-build-ig",
+        "can-manage-releases",
+        "can-manage-governance",
+        "can-translate-content",
+        "can-review-translations",
+        "can-review-and-approve-content",
+        "can-scope-dak",
+        "can-manage-stakeholders",
+        "can-plan-iterations"
+      ]
+    }
+  },
+  "narrative": "This schema validates Coding-shaped objects for the SMART Guidelines Authoring Skills ValueSet ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-SGAuthoringSkillsVS.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+  "fhir:displays": "http://smart.who.int/base/ValueSet-SGAuthoringSkillsVS.displays.json",
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/SGAuthoringSkillsVS",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-11-01T11:54:06+00:00"
+}

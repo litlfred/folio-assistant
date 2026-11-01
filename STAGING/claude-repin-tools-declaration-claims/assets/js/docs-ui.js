@@ -10629,6 +10629,12 @@
     // events rather than mouse events, so a touch drag works the same way.
     var drag = null;
     var panned = false;
+    // A grab on a figure that fits zooms it by one more 100% for every
+    // GROW_PX of sideways drag, so it grows smoothly instead of jumping.
+    var GROW_PX = 400;
+    // It grows until the drawing is 15% wider than its card, so the pan that
+    // follows has room to move rather than stopping at once at the edge.
+    var GROW_UNTIL = 1.15;
 
     scope.addEventListener("pointerdown", function (e) {
       if (e.button !== 0) return;
@@ -10666,23 +10672,33 @@
       if (!drag.moved && Math.abs(dx) >= Math.abs(dy) &&
           scope.scrollWidth <= scope.clientWidth + 1 && step < ZOOM_STEPS.length - 1) {
         // Owner, 2026-11-01, card Q-DRAG1 "B. Nothing moves": a figure that
-        // fits its card has no room to pan, so a sideways drag on it did
-        // nothing. Zoom in around the press point until it overflows, then pan from
-        // there, so the first drag always moves the drawing.
-        var z0 = ZOOM_STEPS[step];
-        var box = scope.getBoundingClientRect();
-        var px = drag.x - box.left + scope.scrollLeft;
-        // A drawing narrower than its card needs more than one step before
-        // it overflows; scrollWidth is read after each step, so it is real.
-        do {
-          step++;
-          apply();
-        } while (scope.scrollWidth <= scope.clientWidth + 1 && step < ZOOM_STEPS.length - 1);
-        var ratio = ZOOM_STEPS[step] / z0;
-        scope.scrollLeft = Math.max(0, px * ratio - (drag.x - box.left));
-        drag.sl = scope.scrollLeft;
-        drag.x = e.clientX;
-        dx = 0;
+        // fits its card has no room to pan, so a sideways drag did nothing.
+        // The drag now zooms it in, around the press point, a little at a
+        // time as the pointer moves, and pans once it overflows. Jumping
+        // whole zoom steps on the first move took a narrow drawing to 200%
+        // at once ("jumps to 200% size as soon as you grab").
+        var box0 = scope.getBoundingClientRect();
+        drag.grow = { z0: ZOOM_STEPS[step], at: drag.x - box0.left, px: drag.x - box0.left + scope.scrollLeft };
+      }
+      if (drag.grow) {
+        var g = drag.grow;
+        var z = Math.min(ZOOM_STEPS[ZOOM_STEPS.length - 1], g.z0 * (1 + Math.abs(dx) / GROW_PX));
+        scope.style.setProperty("--fa-zoom", String(z));
+        level.textContent = Math.round(z * 100) + "%";
+        scope.scrollLeft = Math.max(0, g.px * (z / g.z0) - g.at);
+        drag.moved = true;
+        scope.classList.add("is-panning");
+        if (scope.scrollWidth > scope.clientWidth * GROW_UNTIL || z >= ZOOM_STEPS[ZOOM_STEPS.length - 1]) {
+          // Room to pan now: the buttons step on from the nearest step below.
+          while (step < ZOOM_STEPS.length - 1 && ZOOM_STEPS[step + 1] <= z) step++;
+          out.disabled = false;
+          markPannable();
+          drag.grow = null;
+          drag.sl = scope.scrollLeft;
+          drag.x = e.clientX;
+        }
+        e.preventDefault();
+        return;
       }
       drag.moved = true;
       scope.classList.add("is-panning");

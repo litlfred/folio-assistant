@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 12,
+      "count": 14,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -52,6 +52,10 @@
           "why": "no-tag"
         },
         {
+          "module": "../cat-harness-tools/archimate/schemas/diagrams.ts",
+          "why": "no-tag"
+        },
+        {
           "module": "../cat-harness-tools/archimate/schemas/metamodel.ts",
           "why": "no-tag"
         },
@@ -68,6 +72,10 @@
           "why": "no-tag"
         },
         {
+          "module": "../fhir-harness/schemas/ig-ast-lock.ts",
+          "why": "no-tag"
+        },
+        {
           "module": "../smart-base/schemas/dak-annexes.ts",
           "why": "no-tag"
         }
@@ -79,5 +87,5 @@
       "entries": []
     }
   },
-  "total": 12
+  "total": 14
 }

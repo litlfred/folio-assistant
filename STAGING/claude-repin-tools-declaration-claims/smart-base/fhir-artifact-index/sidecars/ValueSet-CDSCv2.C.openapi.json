@@ -1,0 +1,72 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Services and Application Types: Registries and Directories Schema API",
+    "description": "JSON Schema for Services and Application Types: Registries and Directories ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-CDSCv2.C.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-CDSCv2.C",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-CDSCv2.C.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-CDSCv2.C",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-CDSCv2.C.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-CDSCv2.C": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-CDSCv2.C.schema.json",
+        "title": "Services and Application Types: Registries and Directories Schema",
+        "description": "JSON Schema for Services and Application Types: Registries and Directories ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://smart.who.int/base/CodeSystem/CDSCv2"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "C",
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6",
+              "C7",
+              "C8",
+              "C9",
+              "C10",
+              "C11"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the Services and Application Types: Registries and Directories ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-CDSCv2.C.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-CDSCv2.C.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDSCv2.C",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-11-01T11:54:04+00:00"
+      }
+    }
+  }
+}

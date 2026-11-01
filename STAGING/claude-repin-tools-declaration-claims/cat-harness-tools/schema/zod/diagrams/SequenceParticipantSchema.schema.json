@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/SequenceParticipant",
+  "definitions": {
+    "SequenceParticipant": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "elementId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceParticipantSchema.schema.json",
+  "title": "SequenceParticipantSchema",
+  "description": "Generated from `SequenceParticipantSchema` in archimate/schemas/diagrams.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-declaration-claims",
+    "sha": "7323cf531c16a3690e21ca4ffe25569652121243",
+    "pr": "2864/merge",
+    "run": "41305105088"
+  }
+}

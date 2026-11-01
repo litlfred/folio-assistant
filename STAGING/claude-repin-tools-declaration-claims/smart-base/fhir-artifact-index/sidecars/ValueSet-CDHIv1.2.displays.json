@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-CDHIv1.2.displays.json",
+  "title": "Digital Health Interventions for Health Workers Display Values",
+  "description": "Display values for Digital Health Interventions for Health Workers ValueSet codes. Generated from FHIR expansions. Keys are code fragments (the part after '#' in the canonical IRI). The full IRI can be reconstructed as system + '#' + code.",
+  "type": "object",
+  "properties": {
+    "fhir:displays": {
+      "type": "object",
+      "description": "Multilingual display values for ValueSet codes keyed by code fragment",
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "description": "Display values for a specific code fragment by language",
+          "properties": {
+            "en": {
+              "type": "string",
+              "description": "English display value"
+            }
+          },
+          "patternProperties": {
+            "^[a-z]{2}(-[A-Z]{2})?$": {
+              "type": "string",
+              "description": "Display value in the specified language (ISO 639-1 code)"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "fhir:displays"
+  ],
+  "additionalProperties": true,
+  "fhir:displays": {
+    "2.0": {
+      "en": "Health workers"
+    },
+    "2.1": {
+      "en": "Client identification and registration"
+    },
+    "2.1.1": {
+      "en": "Verify client unique identity"
+    },
+    "2.1.2": {
+      "en": "Enrol client for health services/clinical care plan"
+    },
+    "2.2": {
+      "en": "Client health records"
+    },
+    "2.2.1": {
+      "en": "Longitudinal tracking of clients’ health status and services"
+    },
+    "2.2.2": {
+      "en": "Manage client’s structured clinical records"
+    },
+    "2.2.3": {
+      "en": "Manage client’s unstructured clinical records"
+    },
+    "2.2.4": {
+      "en": "Routine health indicator data collection and management"
+    },
+    "2.3": {
+      "en": "Health worker decision support"
+    },
+    "2.3.1": {
+      "en": "Provide prompts and alerts based according to protocol"
+    },
+    "2.3.2": {
+      "en": "Provide checklist according to protocol"
+    },
+    "2.3.3": {
+      "en": "Screen clients by risk or other health status"
+    },
+    "2.4": {
+      "en": "Telemedicine"
+    },
+    "2.4.1": {
+      "en": "Consultations between remote client and health worker"
+    },
+    "2.4.2": {
+      "en": "Remote monitoring of client health or diagnostic data by provider"
+    },
+    "2.4.3": {
+      "en": "Transmission of medical data to health worker"
+    },
+    "2.4.4": {
+      "en": "Consultations for case management between health worker(s)"
+    },
+    "2.5": {
+      "en": "Health worker communication"
+    },
+    "2.5.1": {
+      "en": "Communication from health worker(s) to supervisor"
+    },
+    "2.5.2": {
+      "en": "Communication and performance feedback to health worker(s)"
+    },
+    "2.5.3": {
+      "en": "Transmit routine news and workflow notifications to health worker(s)"
+    },
+    "2.5.4": {
+      "en": "Transmit non‐routine health event alerts to health worker(s)"
+    },
+    "2.5.5": {
+      "en": "Peer group for health workers"
+    },
+    "2.6": {
+      "en": "Referral co‐ordination"
+    },
+    "2.6.1": {
+      "en": "Coordinate emergency response and transport"
+    },
+    "2.6.2": {
+      "en": "Manage referrals between points of service within health sector"
+    },
+    "2.6.3": {
+      "en": "Manage referrals between health and other sectors"
+    },
+    "2.7": {
+      "en": "Health worker activity planning and scheduling"
+    },
+    "2.7.1": {
+      "en": "Identify client(s) in need of services"
+    },
+    "2.7.2": {
+      "en": "Schedule health worker's activities"
+    },
+    "2.8": {
+      "en": "Health worker training"
+    },
+    "2.8.1": {
+      "en": "Provide training content to health worker(s)"
+    },
+    "2.8.2": {
+      "en": "Assess capacity of health worker(s)"
+    },
+    "2.9": {
+      "en": "Prescription and medication management"
+    },
+    "2.9.1": {
+      "en": "Transmit or track prescription orders"
+    },
+    "2.9.2": {
+      "en": "Track client's medication consumption"
+    },
+    "2.9.3": {
+      "en": "Report adverse drug events"
+    },
+    "2.10": {
+      "en": "Laboratory and Diagnostics Imaging Management"
+    },
+    "2.10.1": {
+      "en": "Transmit diagnostic result to health worker"
+    },
+    "2.10.2": {
+      "en": "Transmit and track diagnostic orders"
+    },
+    "2.10.3": {
+      "en": "Capture diagnostic results from digital devices"
+    },
+    "2.10.4": {
+      "en": "Track biological specimens"
+    }
+  },
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDHIv1.2",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-11-01T11:54:03+00:00"
+}

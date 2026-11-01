@@ -374,14 +374,14 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-01T09:49:04.491Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
-  "sourceCommitSha": "25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
-  "sourceCommitAt": "2026-11-01T09:24:36Z",
+  "generatedAt": "2026-11-01T12:32:08.533Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7323cf531c16a3690e21ca4ffe25569652121243",
+  "sourceCommitSha": "7323cf531c16a3690e21ca4ffe25569652121243",
+  "sourceCommitAt": "2026-11-01T12:09:17Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "Skill": 45,
+    "Skill": 46,
     "Decision": 4,
     "Task": 1,
     "Process": 25,
@@ -529,7 +529,7 @@
       "title": "The review sheet's Apps Script",
       "description": "Build, install and reuse the Google Apps Script that keeps a review sheet's links and joined columns current (Tool `review-sheet-sync`). Public-comment mode: comment numbers, sections, pages and lines link into the frozen review draft, and Review Change Sets joins its comments. Drafting mode: one Contributor Feedback tab where each row is a change set with its own GitHub issue, and Sections pick from the document's table of contents. Use when setting up either sheet for a document, when its links are missing or stale, or after a tab, header, anchor or draft link changes.",
       "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
-      "instructionLines": 1259,
+      "instructionLines": 1279,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -600,7 +600,7 @@
       "name": "public-comment",
       "title": "public-comment",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
-      "instructionLines": 604,
+      "instructionLines": 607,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/schema/skills/public-comment/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/schema/skills/public-comment/output.schema.json",
       "hasInstructions": true,
@@ -735,6 +735,20 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/directory/core-skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-profiles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-sheet-agent-columns",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "review-sheet-agent-columns",
+      "title": "Keep the review sheet's Agent columns current",
+      "description": "Whenever an agent works on a change set of a folio whose review sheet is kept by the Tool `review-sheet-sync`, it writes the Agent tabs' columns for that change set and its comments as it goes: status, step, what it did, the PR, the staging page and its build, what the PR changed and when it finished. Use on every change-set edit, draft, PR, push, merge or close, in a sheet sync or not.",
+      "instructionsPath": "skills/content/folio-document-adapter/review-sheet-agent-columns.md",
+      "instructionLines": 121,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-agent-columns"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/document-structure",
@@ -14842,7 +14856,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/qa"
       ],
-      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 7 files across processes (1), scenarios (1), skills (1), tools (4). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "description": "What auditing THIS instance produced, kept so a consumer can tell \"never audited\" from \"audited clean\". Stored on the `qa-reports` branch keyed by commit (`storage`), not committed: a local run writes the working copy here and `.gitignore` keeps it out of the checkout (bean 7mwa) — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 7 files across processes (1), scenarios (1), skills (1), tools (4). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it. Since `storage` was added, a reader resolves it from the store rather than the checkout, so its absence on disk reads as `unknown`, not clean.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/qa"
@@ -16509,6 +16523,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/folio-content-profiles",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/folio-content-profiles"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/folio-assistant-core.jsonld#skill/review-sheet-agent-columns",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-sheet-agent-columns",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-sheet-agent-columns"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/folio-assistant-core.jsonld#skill/document-structure",
@@ -22105,8 +22125,8 @@
   ],
   "staging": {
     "branch": "claude/repin-tools-declaration-claims",
-    "sha": "25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
+    "sha": "7323cf531c16a3690e21ca4ffe25569652121243",
     "pr": "2864/merge",
-    "run": "41293015265"
+    "run": "41305105088"
   }
 }

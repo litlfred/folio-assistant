@@ -375,14 +375,14 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateelement.folder",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateelementschema.folder",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateElement.folder"
+          "@value": "ArchimateElementSchema.folder"
         }
       ],
       "skos:definition": [
@@ -390,18 +390,18 @@
           "@value": "The folder path it is filed under in the model tree."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElement.folder",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElementSchema.folder",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateelement.type",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateelementschema.type",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateElement.type"
+          "@value": "ArchimateElementSchema.type"
         }
       ],
       "skos:definition": [
@@ -409,18 +409,18 @@
           "@value": "The ArchiMate type without Archi's prefix: `ApplicationComponent`."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElement.type",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElementSchema.type",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimatemodel.archiversion",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimatemodelschema.archiversion",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateModel.archiVersion"
+          "@value": "ArchimateModelSchema.archiVersion"
         }
       ],
       "skos:definition": [
@@ -428,18 +428,18 @@
           "@value": "Archi's model `version` attribute — the tool's file version, not the model's."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModel.archiVersion",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModelSchema.archiVersion",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimaterelationship.accesstype",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimaterelationshipschema.accesstype",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateRelationship.accessType"
+          "@value": "ArchimateRelationshipSchema.accessType"
         }
       ],
       "skos:definition": [
@@ -447,18 +447,18 @@
           "@value": "Access only: `write` (Archi's default), `read`, `access` or `readwrite`."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationship.accessType",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationshipSchema.accessType",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimaterelationship.directed",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimaterelationshipschema.directed",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateRelationship.directed"
+          "@value": "ArchimateRelationshipSchema.directed"
         }
       ],
       "skos:definition": [
@@ -466,18 +466,37 @@
           "@value": "Association only."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationship.directed",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationshipSchema.directed",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimaterelationship.strength",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimaterelationshipschema.source",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateRelationship.strength"
+          "@value": "ArchimateRelationshipSchema.source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An element's id, or another relationship's."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationshipSchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimaterelationshipschema.strength",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateRelationshipSchema.strength"
         }
       ],
       "skos:definition": [
@@ -485,18 +504,18 @@
           "@value": "Influence only: the strength, e.g. `+` or `--`."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationship.strength",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationshipSchema.strength",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimaterelationship.type",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimaterelationshipschema.type",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateRelationship.type"
+          "@value": "ArchimateRelationshipSchema.type"
         }
       ],
       "skos:definition": [
@@ -504,37 +523,18 @@
           "@value": "The relationship type without prefix or suffix: `Composition`, `Serving`."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationship.type",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationshipSchema.type",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateview.properties",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewconnectionschema.bendpoints",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateView.properties"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The view's own properties — a `slug` one chooses its page path (`slugs.ts`)."
-        }
-      ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateView.properties",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewconnection.bendpoints",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ArchimateViewConnection.bendpoints"
+          "@value": "ArchimateViewConnectionSchema.bendpoints"
         }
       ],
       "skos:definition": [
@@ -542,18 +542,18 @@
           "@value": "Archi's relative bendpoints: offsets from the source's and the target's centres."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnection.bendpoints",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnectionSchema.bendpoints",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewconnection.relationship",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewconnectionschema.relationship",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateViewConnection.relationship"
+          "@value": "ArchimateViewConnectionSchema.relationship"
         }
       ],
       "skos:definition": [
@@ -561,18 +561,18 @@
           "@value": "The relationship it shows; absent for a plain line between a note and a box."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnection.relationship",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnectionSchema.relationship",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewnode.alternate",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewnodeschema.alternate",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateViewNode.alternate"
+          "@value": "ArchimateViewNodeSchema.alternate"
         }
       ],
       "skos:definition": [
@@ -580,18 +580,18 @@
           "@value": "Archi's `type=\"1\"`: the element drawn as its figure's alternate."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNode.alternate",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNodeSchema.alternate",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewnode.parent",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewnodeschema.parent",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateViewNode.parent"
+          "@value": "ArchimateViewNodeSchema.parent"
         }
       ],
       "skos:definition": [
@@ -599,18 +599,18 @@
           "@value": "The diagram object it is drawn inside, if any."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNode.parent",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNodeSchema.parent",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewnode.ref",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewnodeschema.ref",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateViewNode.ref"
+          "@value": "ArchimateViewNodeSchema.ref"
         }
       ],
       "skos:definition": [
@@ -618,18 +618,18 @@
           "@value": "The element it shows (`element`), or the view it refers to (`view-ref`)."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNode.ref",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNodeSchema.ref",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewnode.text",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewnodeschema.text",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
       },
       "skos:prefLabel": [
         {
-          "@value": "ArchimateViewNode.text"
+          "@value": "ArchimateViewNodeSchema.text"
         }
       ],
       "skos:definition": [
@@ -637,7 +637,26 @@
           "@value": "A group's label, or a note's text."
         }
       ],
-      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNode.text",
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNodeSchema.text",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/archimate.archimateviewschema.properties",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ArchimateViewSchema.properties"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The view's own properties — a `slug` one chooses its page path (`slugs.ts`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewSchema.properties",
       "skos:note": "candidate"
     },
     {
@@ -7823,6 +7842,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.awaitingcitation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectory.awaitingCitation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Entry slugs of a `library` admitted while no methodology cites them yet; their summaries still drain. See the schema field (bean `e0jh`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectory.awaitingCitation",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.coverage",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -8029,6 +8067,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectory.writer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.awaitingcitation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.awaitingCitation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Entry slugs of a `library` the owner asked to hold that no methodology cites YET. The platform library holds only sources its methodologies cite (`library-ref.test.ts` in folio-assistant-core); a source ingested ahead of the methodology text that will cite it is listed here, by name, until it is cited and leaves the list. Unlike {@link heldEntries} this does NOT hold the entry's summaries back: its blocks still drain. Listed, never derived, so a source cannot become admitted by accident (bean `e0jh`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectoryShape.awaitingCitation",
       "skos:note": "candidate"
     },
     {
@@ -29331,6 +29388,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/role-graph.roledef.store",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RoleDef.store"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Present when this role is a DATA STORE: a place where things are kept, played by a mechanical actor (owner, 2026-11-01, Q-DS-1 A). It stays a Role, so its `skills` are still its contract (owner, 2026-10-16), and the role id is the store id a diagram's `dataStoreReference` points at (Q-DS-3 A). See {@link StoreDef}."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef.store",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/role-graph.roledef.title",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -29575,6 +29651,120 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#SkillProvenance.via",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/role-graph.storeapi.document",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StoreApi.document"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The API's own document: a URL or an instance-relative path. Held as the API's authors wrote it, never restated (the `openapi` subgraph's rule). Absent for `cli`, which names its tools instead."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#StoreApi.document",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/role-graph.storeapi.tools",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StoreApi.tools"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For `cli`: the harness tool ids that read or write the store."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#StoreApi.tools",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/role-graph.storedef.api",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StoreDef.api"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its interfaces, one per transport."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#StoreDef.api",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/role-graph.storedef.holds",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StoreDef.holds"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The typologies (graph kinds) it holds, by id, e.g. `bean-defs`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#StoreDef.holds",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/role-graph.storedef.published",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StoreDef.published"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether what it keeps reaches a published graph. The activity log does not."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#StoreDef.published",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields/role-graph.storedef.realisedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StoreDef.realisedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The actor that plays it, e.g. `beans`, `git`, `google-sheets`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#StoreDef.realisedBy",
       "skos:note": "candidate"
     },
     {

@@ -1,0 +1,84 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Digital Health Interventions for Clients Schema API",
+    "description": "JSON Schema for Digital Health Interventions for Clients ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-CDHIv1.1.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-CDHIv1.1",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-CDHIv1.1.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-CDHIv1.1",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-CDHIv1.1.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-CDHIv1.1": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/base/ValueSet-CDHIv1.1.schema.json",
+        "title": "Digital Health Interventions for Clients Schema",
+        "description": "JSON Schema for Digital Health Interventions for Clients ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://smart.who.int/base/CodeSystem/CDHIv1"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "1.0",
+              "1.1",
+              "1.1.1",
+              "1.1.2",
+              "1.1.3",
+              "1.1.4",
+              "1.2",
+              "1.2.1",
+              "1.2.2",
+              "1.3",
+              "1.3.1",
+              "1.4",
+              "1.4.1",
+              "1.4.2",
+              "1.4.3",
+              "1.5",
+              "1.5.1",
+              "1.5.2",
+              "1.6",
+              "1.6.1",
+              "1.7",
+              "1.7.1",
+              "1.7.2",
+              "1.7.3"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the Digital Health Interventions for Clients ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-CDHIv1.1.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/base/ValueSet-CDHIv1.1.displays.json",
+        "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDHIv1.1",
+        "fhir:version": "0.3.0",
+        "fhir:expansionTimestamp": "2026-11-01T11:54:03+00:00"
+      }
+    }
+  }
+}

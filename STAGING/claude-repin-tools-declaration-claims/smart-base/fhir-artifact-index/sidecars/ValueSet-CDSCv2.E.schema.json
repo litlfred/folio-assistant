@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://smart.who.int/base/ValueSet-CDSCv2.E.schema.json",
+  "title": "Services and Application Types: Surveillance and Response Schema",
+  "description": "JSON Schema for Services and Application Types: Surveillance and Response ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+  "type": "object",
+  "required": [
+    "system",
+    "code"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "system": {
+      "type": "string",
+      "const": "http://smart.who.int/base/CodeSystem/CDSCv2"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "E",
+        "E1",
+        "E2"
+      ]
+    }
+  },
+  "narrative": "This schema validates Coding-shaped objects for the Services and Application Types: Surveillance and Response ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/base/ValueSet-CDSCv2.E.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+  "fhir:displays": "http://smart.who.int/base/ValueSet-CDSCv2.E.displays.json",
+  "fhir:valueSet": "http://smart.who.int/base/ValueSet/CDSCv2.E",
+  "fhir:version": "0.3.0",
+  "fhir:expansionTimestamp": "2026-11-01T11:54:04+00:00"
+}

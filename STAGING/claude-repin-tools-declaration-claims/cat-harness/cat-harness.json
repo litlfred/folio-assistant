@@ -370,10 +370,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-11-01T09:48:52.836Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
-  "sourceCommitSha": "25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
-  "sourceCommitAt": "2026-11-01T09:24:36Z",
+  "generatedAt": "2026-11-01T12:31:59.757Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7323cf531c16a3690e21ca4ffe25569652121243",
+  "sourceCommitSha": "7323cf531c16a3690e21ca4ffe25569652121243",
+  "sourceCommitAt": "2026-11-01T12:09:17Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -388,7 +388,7 @@
     "Lane": 175,
     "ProcessNode": 1029,
     "Tool": 167,
-    "Schema": 177,
+    "Schema": 178,
     "ExternalSchema": 28,
     "GraphTypology": 53,
     "Role": 44,
@@ -3470,7 +3470,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
-      "instructionLines": 770,
+      "instructionLines": 786,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/skills/staging-review/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/skills/staging-review/output.schema.json",
       "hasInstructions": true,
@@ -3523,7 +3523,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
-      "instructionLines": 527,
+      "instructionLines": 540,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -53524,6 +53524,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/viewer-nav-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/store-tool-results",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "store-tool-results",
+      "title": "store-tool-results",
+      "summary": "Typed results of the tools that read and write the harness's data stores —",
+      "module": "schemas/tools/store-tool-results.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/store-tool-results"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/tool-invocation",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "tool-invocation",
@@ -55970,7 +55980,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/library"
       ],
-      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to the IRIS replica, milnorlink to the science layer) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to the content core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good. THE AGENT-SKILL CORPUS JOINED IT on 2026-10-01 (owner ruling: agent-skills dissolves into cat-harness's concern groups; bean `j7ql`): the 14 documents listed in `heldEntries` — vendor skill documentation (ASSERTION: a publisher describing its own product) and three arXiv papers (EVIDENCE: a measurement somebody else can repeat); each entry's `structure.json` carries its publisher, which is how a reader tells the two kinds apart. They sit flat here until placement PR8 (bean `f8wp`) regroups `library/` into `library/<group>/<slug>/`; the audit (#1778) assigns them conduct (10), sdlc (`hmans-2026-beans-readme`), tools (`mcp-2026-specification-2026-07-28`) and content (the two RFCs). Their summaries stay HELD, per entry, on the owner's 2026-09-24 ruling (bean `x80s`: 'Library summaries for agent-skills entries — No, keep held back'), which was stated about these documents and not about this directory.",
+      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to the IRIS replica, milnorlink to the science layer) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to the content core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good. THE AGENT-SKILL CORPUS JOINED IT on 2026-10-01 (owner ruling: agent-skills dissolves into cat-harness's concern groups; bean `j7ql`): the 14 documents listed in `heldEntries` — vendor skill documentation (ASSERTION: a publisher describing its own product) and three arXiv papers (EVIDENCE: a measurement somebody else can repeat); each entry's `structure.json` carries its publisher, which is how a reader tells the two kinds apart. They sit flat here until placement PR8 (bean `f8wp`) regroups `library/` into `library/<group>/<slug>/`; the audit (#1778) assigns them conduct (10), sdlc (`hmans-2026-beans-readme`), tools (`mcp-2026-specification-2026-07-28`) and content (the two RFCs). Their summaries stay HELD, per entry, on the owner's 2026-09-24 ruling (bean `x80s`: 'Library summaries for agent-skills entries — No, keep held back'), which was stated about these documents and not about this directory. THE BPMN AND DMN COMPREHENSION PAPERS JOINED IT on 2026-11-01 (bean `e0jh`, ingested at the owner's request in f23c13b and 6725d1d): the 25 entries in `awaitingCitation`, behind the BPMN and DMN modelling guidance. No methodology cites them yet, so they are admitted by name until one does; unlike `heldEntries`, their summaries still drain.",
       "readmePath": "library/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/directory/library",
@@ -66617,6 +66627,12 @@
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-comments",
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-comments"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#skill/review-sheet-agent-columns",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-sheet-agent-columns",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/folio-assistant-core/skill/review-sheet-agent-columns"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#skill/review-sheet-script",
@@ -84703,6 +84719,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/viewer-nav-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#schema/store-tool-results",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/store-tool-results",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/store-tool-results"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness.jsonld#schema/tool-invocation",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-declaration-claims/cat-harness/schema/tool-invocation",
@@ -85557,8 +85579,8 @@
   ],
   "staging": {
     "branch": "claude/repin-tools-declaration-claims",
-    "sha": "25af8dd678b9f7dc5416cbbbd0262c84481ecca1",
+    "sha": "7323cf531c16a3690e21ca4ffe25569652121243",
     "pr": "2864/merge",
-    "run": "41293015265"
+    "run": "41305105088"
   }
 }

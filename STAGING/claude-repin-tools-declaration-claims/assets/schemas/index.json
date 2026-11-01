@@ -207,6 +207,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "instance": "cat-harness-tools",
+      "name": "diagrams",
+      "graphNode": "undeclared",
+      "summary": "Derived UML data class diagrams and sequence diagrams from an ArchiMate model",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/archimate/schemas/metamodel.ts",
       "instance": "cat-harness-tools",
       "name": "metamodel",
@@ -2578,6 +2586,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/tools/store-tool-results.ts",
+      "instance": "cat-harness-tools",
+      "name": "store-tool-results",
+      "graphNode": "schema",
+      "summary": "Typed results of the tools that read and write the harness's data stores —",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/tools/tool-folders.test.ts",
       "instance": "cat-harness-tools",
       "name": "tool-folders.test",
@@ -2987,6 +3003,21 @@
       "instance": "fhir-harness",
       "name": "ig-ast-dependencies",
       "graphNode": "schema",
+      "isTest": false
+    },
+    {
+      "module": "fhir-harness/schemas/ig-ast-lock.test.ts",
+      "instance": "fhir-harness",
+      "name": "ig-ast-lock.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "fhir-harness/schemas/ig-ast-lock.ts",
+      "instance": "fhir-harness",
+      "name": "ig-ast-lock",
+      "graphNode": "undeclared",
+      "summary": "`ig-ast.lock.json` (`ig-ast-lock/v1`): the AST cache commit each IG's",
       "isTest": false
     },
     {
@@ -6752,48 +6783,61 @@
       "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElement",
       "name": "ArchimateElement",
       "module": "cat-harness-tools/archimate/schemas/archimate.ts",
-      "kind": "interface",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElementSchema",
+      "name": "ArchimateElementSchema",
+      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "zod-object",
       "fields": [
         {
           "name": "id",
-          "type": "string",
+          "type": "z.string().min(1)",
           "optional": false,
           "array": false
         },
         {
           "name": "type",
-          "type": "string",
+          "type": "z.string().min(1)",
           "optional": false,
           "array": false,
           "doc": "The ArchiMate type without Archi's prefix: `ApplicationComponent`."
         },
         {
           "name": "name",
-          "type": "string",
+          "type": "z.string()",
           "optional": false,
           "array": false
         },
         {
           "name": "layer",
-          "type": "ArchimateLayer",
+          "type": "z.enum(ARCHIMATE_LAYERS)",
           "optional": false,
           "array": false
         },
         {
           "name": "documentation",
-          "type": "string",
+          "type": "z.string().optional()",
           "optional": true,
           "array": false
         },
         {
           "name": "properties",
-          "type": "ArchimateProperty[]",
+          "type": "z.array(ArchimatePropertySchema)",
           "optional": false,
           "array": true
         },
         {
           "name": "folder",
-          "type": "string[]",
+          "type": "z.array(z.string())",
           "optional": false,
           "array": true,
           "doc": "The folder path it is filed under in the model tree."
@@ -6802,11 +6846,13 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateLayer",
-        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty"
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimatePropertySchema"
       ],
       "unresolved": [],
-      "external": [],
+      "external": [
+        "ARCHIMATE_LAYERS",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -6826,89 +6872,8 @@
       "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModel",
       "name": "ArchimateModel",
       "module": "cat-harness-tools/archimate/schemas/archimate.ts",
-      "kind": "interface",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "name",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "archiVersion",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "Archi's model `version` attribute — the tool's file version, not the model's."
-        },
-        {
-          "name": "documentation",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "properties",
-          "type": "ArchimateProperty[]",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "elements",
-          "type": "ArchimateElement[]",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "relationships",
-          "type": "ArchimateRelationship[]",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "views",
-          "type": "ArchimateView[]",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElement",
-        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty",
-        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationship",
-        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateView"
-      ],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty",
-      "name": "ArchimateProperty",
-      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
-      "kind": "interface",
-      "fields": [
-        {
-          "name": "key",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "optional": false,
-          "array": false
-        }
-      ],
+      "kind": "type-alias",
+      "fields": [],
       "extendsNames": [],
       "values": [],
       "refs": [],
@@ -6917,72 +6882,197 @@
       "exported": true
     },
     {
-      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationship",
-      "name": "ArchimateRelationship",
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModelSchema",
+      "name": "ArchimateModelSchema",
       "module": "cat-harness-tools/archimate/schemas/archimate.ts",
-      "kind": "interface",
+      "kind": "zod-object",
       "fields": [
         {
           "name": "id",
-          "type": "string",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "archiVersion",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Archi's model `version` attribute — the tool's file version, not the model's."
+        },
+        {
+          "name": "documentation",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "properties",
+          "type": "z.array(ArchimatePropertySchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "elements",
+          "type": "z.array(ArchimateElementSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "relationships",
+          "type": "z.array(ArchimateRelationshipSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "views",
+          "type": "z.array(ArchimateViewSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElementSchema",
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimatePropertySchema",
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationshipSchema",
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty",
+      "name": "ArchimateProperty",
+      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimatePropertySchema",
+      "name": "ArchimatePropertySchema",
+      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "key",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "value",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationship",
+      "name": "ArchimateRelationship",
+      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationshipSchema",
+      "name": "ArchimateRelationshipSchema",
+      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
           "optional": false,
           "array": false
         },
         {
           "name": "type",
-          "type": "string",
+          "type": "z.string().min(1)",
           "optional": false,
           "array": false,
           "doc": "The relationship type without prefix or suffix: `Composition`, `Serving`."
         },
         {
           "name": "source",
-          "type": "string",
+          "type": "z.string().min(1)",
           "optional": false,
-          "array": false
+          "array": false,
+          "doc": "An element's id, or another relationship's."
         },
         {
           "name": "target",
-          "type": "string",
+          "type": "z.string().min(1)",
           "optional": false,
           "array": false
         },
         {
           "name": "name",
-          "type": "string",
+          "type": "z.string().optional()",
           "optional": true,
           "array": false
         },
         {
           "name": "documentation",
-          "type": "string",
+          "type": "z.string().optional()",
           "optional": true,
           "array": false
         },
         {
           "name": "accessType",
-          "type": "\"write\" | \"read\" | \"access\" | \"readwrite\"",
+          "type": "z.enum([\"write\", \"read\", \"access\", \"readwrite\"]).optional()",
           "optional": true,
           "array": false,
           "doc": "Access only: `write` (Archi's default), `read`, `access` or `readwrite`."
         },
         {
           "name": "directed",
-          "type": "boolean",
+          "type": "z.boolean().optional()",
           "optional": true,
           "array": false,
           "doc": "Association only."
         },
         {
           "name": "strength",
-          "type": "string",
+          "type": "z.string().optional()",
           "optional": true,
           "array": false,
           "doc": "Influence only: the strength, e.g. `+` or `--`."
         },
         {
           "name": "properties",
-          "type": "ArchimateProperty[]",
+          "type": "z.array(ArchimatePropertySchema)",
           "optional": false,
           "array": true
         }
@@ -6990,75 +7080,23 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty"
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimatePropertySchema"
       ],
       "unresolved": [],
-      "external": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
       "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateView",
       "name": "ArchimateView",
       "module": "cat-harness-tools/archimate/schemas/archimate.ts",
-      "kind": "interface",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "name",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "viewpoint",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "documentation",
-          "type": "string",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "properties",
-          "type": "ArchimateProperty[]",
-          "optional": false,
-          "array": true,
-          "doc": "The view's own properties — a `slug` one chooses its page path (`slugs.ts`)."
-        },
-        {
-          "name": "folder",
-          "type": "string[]",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "nodes",
-          "type": "ArchimateViewNode[]",
-          "optional": false,
-          "array": true
-        },
-        {
-          "name": "connections",
-          "type": "ArchimateViewConnection[]",
-          "optional": false,
-          "array": true
-        }
-      ],
+      "kind": "type-alias",
+      "fields": [],
       "extendsNames": [],
       "values": [],
-      "refs": [
-        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty",
-        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnection",
-        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNode"
-      ],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -7067,42 +7105,8 @@
       "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnection",
       "name": "ArchimateViewConnection",
       "module": "cat-harness-tools/archimate/schemas/archimate.ts",
-      "kind": "interface",
-      "doc": "A line on a diagram. Its ends are diagram ids — a node's, or another connection's.",
-      "fields": [
-        {
-          "name": "id",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "relationship",
-          "type": "string",
-          "optional": true,
-          "array": false,
-          "doc": "The relationship it shows; absent for a plain line between a note and a box."
-        },
-        {
-          "name": "source",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "target",
-          "type": "string",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "bendpoints",
-          "type": "Array<{ startX: number; startY: number; endX: number; endY: number }>",
-          "optional": false,
-          "array": false,
-          "doc": "Archi's relative bendpoints: offsets from the source's and the target's centres."
-        }
-      ],
+      "kind": "type-alias",
+      "fields": [],
       "extendsNames": [],
       "values": [],
       "refs": [],
@@ -7111,78 +7115,140 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnectionSchema",
+      "name": "ArchimateViewConnectionSchema",
+      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "zod-object",
+      "doc": "A line on a diagram. Its ends are diagram ids — a node's, or another connection's.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "relationship",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The relationship it shows; absent for a plain line between a note and a box."
+        },
+        {
+          "name": "source",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "target",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bendpoints",
+          "type": "z.array(z.object({ startX: z.number(), startY: z.number(), endX: z.number(), endY: z.number() }).strict())",
+          "optional": false,
+          "array": true,
+          "doc": "Archi's relative bendpoints: offsets from the source's and the target's centres."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNode",
       "name": "ArchimateViewNode",
       "module": "cat-harness-tools/archimate/schemas/archimate.ts",
-      "kind": "interface",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNodeSchema",
+      "name": "ArchimateViewNodeSchema",
+      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "zod-object",
       "doc": "A box on a diagram, its bounds absolute.",
       "fields": [
         {
           "name": "id",
-          "type": "string",
+          "type": "z.string().min(1)",
           "optional": false,
           "array": false
         },
         {
           "name": "kind",
-          "type": "\"element\" | \"group\" | \"note\" | \"view-ref\"",
+          "type": "z.enum([\"element\", \"group\", \"note\", \"view-ref\"])",
           "optional": false,
           "array": false
         },
         {
           "name": "ref",
-          "type": "string",
+          "type": "z.string().optional()",
           "optional": true,
           "array": false,
           "doc": "The element it shows (`element`), or the view it refers to (`view-ref`)."
         },
         {
           "name": "text",
-          "type": "string",
+          "type": "z.string().optional()",
           "optional": true,
           "array": false,
           "doc": "A group's label, or a note's text."
         },
         {
           "name": "x",
-          "type": "number",
+          "type": "z.number()",
           "optional": false,
           "array": false
         },
         {
           "name": "y",
-          "type": "number",
+          "type": "z.number()",
           "optional": false,
           "array": false
         },
         {
           "name": "w",
-          "type": "number",
+          "type": "z.number()",
           "optional": false,
           "array": false
         },
         {
           "name": "h",
-          "type": "number",
+          "type": "z.number()",
           "optional": false,
           "array": false
         },
         {
           "name": "parent",
-          "type": "string",
+          "type": "z.string().optional()",
           "optional": true,
           "array": false,
           "doc": "The diagram object it is drawn inside, if any."
         },
         {
           "name": "fill",
-          "type": "string",
+          "type": "z.string().optional()",
           "optional": true,
           "array": false
         },
         {
           "name": "alternate",
-          "type": "boolean",
+          "type": "z.boolean().optional()",
           "optional": true,
           "array": false,
           "doc": "Archi's `type=\"1\"`: the element drawn as its figure's alternate."
@@ -7192,13 +7258,839 @@
       "values": [],
       "refs": [],
       "unresolved": [],
-      "external": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewSchema",
+      "name": "ArchimateViewSchema",
+      "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "viewpoint",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "documentation",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "properties",
+          "type": "z.array(ArchimatePropertySchema)",
+          "optional": false,
+          "array": true,
+          "doc": "The view's own properties — a `slug` one chooses its page path (`slugs.ts`)."
+        },
+        {
+          "name": "folder",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "nodes",
+          "type": "z.array(ArchimateViewNodeSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "connections",
+          "type": "z.array(ArchimateViewConnectionSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimatePropertySchema",
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnectionSchema",
+        "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNodeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
       "id": "cat-harness-tools/archimate/schemas/archimate.ts#X",
       "name": "X",
       "module": "cat-harness-tools/archimate/schemas/archimate.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#DataAccess",
+      "name": "DataAccess",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#DataAccessSchema",
+      "name": "DataAccessSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "elementId",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "relationshipId",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.enum([\"read\", \"write\", \"access\", \"readwrite\", \"association\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#DataAttribute",
+      "name": "DataAttribute",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#DataAttributeSchema",
+      "name": "DataAttributeSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "cardinality",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.enum([\"logical-model\", \"property\", \"documentation\"])",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#DataClass",
+      "name": "DataClass",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#DataClassSchema",
+      "name": "DataClassSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "documentation",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "logicalModel",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "skosConcept",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "attributes",
+          "type": "z.array(DataAttributeSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "accessedBy",
+          "type": "z.array(DataAccessSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/archimate/schemas/diagrams.ts#DataAccessSchema",
+        "cat-harness-tools/archimate/schemas/diagrams.ts#DataAttributeSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#DataModel",
+      "name": "DataModel",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#DataModelSchema",
+      "name": "DataModelSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(DATA_MODEL_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "model",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "classes",
+          "type": "z.array(DataClassSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "relationships",
+          "type": "z.array(DataRelationshipSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "problems",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/archimate/schemas/diagrams.ts#DataClassSchema",
+        "cat-harness-tools/archimate/schemas/diagrams.ts#DataRelationshipSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DATA_MODEL_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#DataRelationship",
+      "name": "DataRelationship",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#DataRelationshipSchema",
+      "name": "DataRelationshipSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "target",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "cardinality",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#FshLogicalField",
+      "name": "FshLogicalField",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#FshLogicalFieldSchema",
+      "name": "FshLogicalFieldSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "cardinality",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#FshLogicalModel",
+      "name": "FshLogicalModel",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#FshLogicalModelSchema",
+      "name": "FshLogicalModelSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "parent",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "fields",
+          "type": "z.array(FshLogicalFieldSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/archimate/schemas/diagrams.ts#FshLogicalFieldSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceDiagram",
+      "name": "SequenceDiagram",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceDiagramSchema",
+      "name": "SequenceDiagramSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "z.enum([\"view\", \"interaction\", \"flow\", \"bpmn\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "viewId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "participants",
+          "type": "z.array(SequenceParticipantSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "messages",
+          "type": "z.array(SequenceMessageSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceMessageSchema",
+        "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceParticipantSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceMessage",
+      "name": "SequenceMessage",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceMessageKind",
+      "name": "SequenceMessageKind",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceMessageKindSchema",
+      "name": "SequenceMessageKindSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "triggering",
+        "flow",
+        "interaction",
+        "serving",
+        "access",
+        "bpmn-flow",
+        "bpmn-message"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceMessageSchema",
+      "name": "SequenceMessageSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "from",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "to",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "SequenceMessageKindSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "relationshipId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "interactionId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceMessageKindSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceParticipant",
+      "name": "SequenceParticipant",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceParticipantSchema",
+      "name": "SequenceParticipantSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "elementId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceSet",
+      "name": "SequenceSet",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceSetSchema",
+      "name": "SequenceSetSchema",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(SEQUENCE_SET_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "model",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sequences",
+          "type": "z.array(SequenceDiagramSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceDiagramSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "SEQUENCE_SET_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/archimate/schemas/diagrams.ts#X",
+      "name": "X",
+      "module": "cat-harness-tools/archimate/schemas/diagrams.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -24540,6 +25432,13 @@
           "doc": "Entry slugs of a `library` held back from the summary drain while the rest of it drains. See the schema field (bean `j7ql`)."
         },
         {
+          "name": "awaitingCitation",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "Entry slugs of a `library` admitted while no methodology cites them yet; their summaries still drain. See the schema field (bean `e0jh`)."
+        },
+        {
           "name": "theme",
           "type": "ThemeRef",
           "optional": true,
@@ -24637,6 +25536,13 @@
           "optional": true,
           "array": true,
           "doc": "Entry slugs (`<library>/<slug>/`) held back from the summary drain while"
+        },
+        {
+          "name": "awaitingCitation",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Entry slugs of a `library` the owner asked to hold that no methodology"
         },
         {
           "name": "visualisedAs",
@@ -45163,6 +46069,13 @@
           "optional": true,
           "array": false,
           "doc": "Minimum model capabilities required by this role when performed by an agent/model."
+        },
+        {
+          "name": "store",
+          "type": "StoreDef",
+          "optional": true,
+          "array": false,
+          "doc": "Present when this role is a DATA STORE: a place where things are kept,"
         }
       ],
       "extendsNames": [],
@@ -45170,7 +46083,8 @@
       "refs": [
         "cat-harness-tools/schemas/conduct/model-capabilities.ts#ModelCapabilities",
         "cat-harness-tools/schemas/kg/skill-package.ts#ActorKind",
-        "cat-harness-tools/schemas/process/role-graph.ts#FormerName"
+        "cat-harness-tools/schemas/process/role-graph.ts#FormerName",
+        "cat-harness-tools/schemas/process/role-graph.ts#StoreDef"
       ],
       "unresolved": [],
       "external": [],
@@ -45251,6 +46165,12 @@
           "type": "ModelCapabilitiesSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "store",
+          "type": "StoreDefSchema.optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -45258,6 +46178,7 @@
       "refs": [
         "cat-harness-tools/schemas/conduct/model-capabilities.ts#ModelCapabilitiesSchema",
         "cat-harness-tools/schemas/process/role-graph.ts#FormerNameSchema",
+        "cat-harness-tools/schemas/process/role-graph.ts#StoreDefSchema",
         "cat-harness-tools/schemas/tools/tool-types.ts#SkillNameSchema"
       ],
       "unresolved": [
@@ -45530,6 +46451,178 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#StoreApi",
+      "name": "StoreApi",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "interface",
+      "doc": "One documented interface of a store.",
+      "fields": [
+        {
+          "name": "style",
+          "type": "StoreApiStyle",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "document",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The API's own document: a URL or an instance-relative path. Held as the"
+        },
+        {
+          "name": "tools",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "For `cli`: the harness tool ids that read or write the store."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/role-graph.ts#StoreApiStyle"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#StoreApiSchema",
+      "name": "StoreApiSchema",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "style",
+          "type": "z.enum(STORE_API_STYLES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "document",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "tools",
+          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "STORE_API_STYLES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#StoreApiStyle",
+      "name": "StoreApiStyle",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#StoreDef",
+      "name": "StoreDef",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "interface",
+      "doc": "What a store keeps and how it is reached. Its behaviour is NOT here: that is",
+      "fields": [
+        {
+          "name": "holds",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "The typologies (graph kinds) it holds, by id, e.g. `bean-defs`."
+        },
+        {
+          "name": "api",
+          "type": "StoreApi[]",
+          "optional": true,
+          "array": true,
+          "doc": "Its interfaces, one per transport."
+        },
+        {
+          "name": "realisedBy",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The actor that plays it, e.g. `beans`, `git`, `google-sheets`."
+        },
+        {
+          "name": "published",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Whether what it keeps reaches a published graph. The activity log does not."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/role-graph.ts#StoreApi"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#StoreDefSchema",
+      "name": "StoreDefSchema",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "holds",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "api",
+          "type": "z.array(StoreApiSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "realisedBy",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "published",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/role-graph.ts#StoreApiSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -58144,6 +59237,361 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/tools/store-tool-results.ts#BeanClaimCheckSchema",
+      "name": "BeanClaimCheckSchema",
+      "module": "cat-harness-tools/schemas/tools/store-tool-results.ts",
+      "kind": "zod-object",
+      "doc": "`bean-claim-check --json` (`ClaimCheck`).",
+      "fields": [
+        {
+          "name": "bean",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "state",
+          "type": "z.enum(CLAIM_STATES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "copies",
+          "type": "z.array( z.object({ repo: z.string(), ref: z.string(), recent: z.array(BeanCommitSchema.extend({ agent: z.string() })),…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "openWork",
+          "type": "OpenWorkLookupSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/tools/store-tool-results.ts#BeanCommitSchema",
+        "cat-harness-tools/schemas/tools/store-tool-results.ts#OpenWorkLookupSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "CLAIM_STATES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/tools/store-tool-results.ts#BeanCommitSchema",
+      "name": "BeanCommitSchema",
+      "module": "cat-harness-tools/schemas/tools/store-tool-results.ts",
+      "kind": "zod-object",
+      "doc": "A commit on a bean's file (`Commit` in `scripts/lib/bean-drain.ts`).",
+      "fields": [
+        {
+          "name": "author",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "at",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "subject",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "session",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/tools/store-tool-results.ts#DrainQueueSchema",
+      "name": "DrainQueueSchema",
+      "module": "cat-harness-tools/schemas/tools/store-tool-results.ts",
+      "kind": "zod-object",
+      "doc": "`drain-queue --json` (`Queue`).",
+      "fields": [
+        {
+          "name": "refreshedAt",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sources",
+          "type": "z.array(z.object({ repo: z.string(), ref: z.string(), sha: z.string() }))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "byOwner",
+          "type": "z.array(z.object({ owner: z.string(), beans: z.array(QueueEntrySchema) }))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "spare",
+          "type": "z.array(QueueEntrySchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "excluded",
+          "type": "z.array(z.object({ id: z.string(), reason: z.enum(EXCLUSIONS), detail: z.string().optional() }))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "disagreements",
+          "type": "z.array(z.object({ id: z.string(), byCopy: z.record(z.string(), z.string()), used: z.string() }))",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/tools/store-tool-results.ts#QueueEntrySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "EXCLUSIONS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/tools/store-tool-results.ts#OpenWorkHitSchema",
+      "name": "OpenWorkHitSchema",
+      "module": "cat-harness-tools/schemas/tools/store-tool-results.ts",
+      "kind": "zod-object",
+      "doc": "One place open work was found (`LookupHit`).",
+      "fields": [
+        {
+          "name": "repo",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "where",
+          "type": "z.enum([\"default-branch\", \"open-pr\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pr",
+          "type": "z.number().int().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "head",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "author",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "createdAt",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "match",
+          "type": "z.enum([\"file\", \"title\", \"body\", \"branch\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "paths",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/tools/store-tool-results.ts#OpenWorkLookupSchema",
+      "name": "OpenWorkLookupSchema",
+      "module": "cat-harness-tools/schemas/tools/store-tool-results.ts",
+      "kind": "zod-object",
+      "doc": "`open-work-lookup --json` (`Lookup`). `unread` lists what could not be read, so empty hits are never absence.",
+      "fields": [
+        {
+          "name": "query",
+          "type": "z.object({ kind: z.enum([\"path\", \"prefix\", \"bean\"]), value: z.string() })",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "checkedAt",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "hits",
+          "type": "z.array(OpenWorkHitSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unread",
+          "type": "z.array(z.string())",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/tools/store-tool-results.ts#OpenWorkHitSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/tools/store-tool-results.ts#QueueEntrySchema",
+      "name": "QueueEntrySchema",
+      "module": "cat-harness-tools/schemas/tools/store-tool-results.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "type",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "priority",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lastTouch",
+          "type": "z.object({ author: z.string(), at: z.string(), agent: z.string() }).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "skip",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/tools/store-tool-results.ts#SessionSweepSchema",
+      "name": "SessionSweepSchema",
+      "module": "cat-harness-tools/schemas/tools/store-tool-results.ts",
+      "kind": "zod-object",
+      "doc": "`sibling-sessions --json` (`SessionSweep`).",
+      "fields": [
+        {
+          "name": "since",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "commitsScanned",
+          "type": "z.number().int()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sessions",
+          "type": "z.array( z.object({ session: z.string(), commits: z.number().int(), first: z.string(), last: z.string(), branches: z.ar…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "untrailered",
+          "type": "z.number().int()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/tools/tool-folders.ts#ToolDefinitionFile",
       "name": "ToolDefinitionFile",
       "module": "cat-harness-tools/schemas/tools/tool-folders.ts",
@@ -68603,6 +70051,135 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast-lock.ts#IgAstLock",
+      "name": "IgAstLock",
+      "module": "fhir-harness/schemas/ig-ast-lock.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast-lock.ts#IgAstLockSchema",
+      "name": "IgAstLockSchema",
+      "module": "fhir-harness/schemas/ig-ast-lock.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_AST_LOCK_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "pins",
+          "type": "z.array(IgAstPinSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "IG_AST_LOCK_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPin",
+      "name": "IgAstPin",
+      "module": "fhir-harness/schemas/ig-ast-lock.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema",
+      "name": "IgAstPinSchema",
+      "module": "fhir-harness/schemas/ig-ast-lock.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The IG instance, as `index.lock.json` names it."
+        },
+        {
+          "name": "repository",
+          "type": "z.string().regex(/^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The repository the cache branch lives in: the IG's own."
+        },
+        {
+          "name": "branch",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The cache branch the commit was read from, for the reader; the commit is what is fetched."
+        },
+        {
+          "name": "sha",
+          "type": "Sha",
+          "optional": false,
+          "array": false,
+          "doc": "The pinned cache commit."
+        },
+        {
+          "name": "sourceRevision",
+          "type": "Sha.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The IG commit the AST says it was compiled from (`manifest.json` `inputs.sourceRevision`), when it says."
+        },
+        {
+          "name": "consent",
+          "type": "z .object({ by: z.string().min(1), on: z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/), /** Where the owner said yes: date, tim…",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "fhir-harness/schemas/ig-ast-lock.ts#Sha"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-ast-lock.ts#Sha",
+      "name": "Sha",
+      "module": "fhir-harness/schemas/ig-ast-lock.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "fhir-harness/schemas/ig-ast-plan.schema.json#IGASTRebuildPlanIgAstPlanV1",
@@ -82541,81 +84118,145 @@
       "array": true
     },
     {
-      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElement",
-      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateLayer",
-      "via": "layer",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
-      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElement",
-      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty",
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElementSchema",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimatePropertySchema",
       "via": "properties",
       "kind": "field",
       "optional": false,
       "array": true
     },
     {
-      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModel",
-      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElement",
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModelSchema",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateElementSchema",
       "via": "elements",
       "kind": "field",
       "optional": false,
       "array": true
     },
     {
-      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModel",
-      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty",
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModelSchema",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimatePropertySchema",
       "via": "properties",
       "kind": "field",
       "optional": false,
       "array": true
     },
     {
-      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModel",
-      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationship",
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModelSchema",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationshipSchema",
       "via": "relationships",
       "kind": "field",
       "optional": false,
       "array": true
     },
     {
-      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModel",
-      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateView",
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateModelSchema",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewSchema",
       "via": "views",
       "kind": "field",
       "optional": false,
       "array": true
     },
     {
-      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationship",
-      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty",
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateRelationshipSchema",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimatePropertySchema",
       "via": "properties",
       "kind": "field",
       "optional": false,
       "array": true
     },
     {
-      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateView",
-      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateProperty",
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewSchema",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimatePropertySchema",
       "via": "properties",
       "kind": "field",
       "optional": false,
       "array": true
     },
     {
-      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateView",
-      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnection",
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewSchema",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewConnectionSchema",
       "via": "connections",
       "kind": "field",
       "optional": false,
       "array": true
     },
     {
-      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateView",
-      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNode",
+      "from": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewSchema",
+      "to": "cat-harness-tools/archimate/schemas/archimate.ts#ArchimateViewNodeSchema",
       "via": "nodes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/diagrams.ts#DataClassSchema",
+      "to": "cat-harness-tools/archimate/schemas/diagrams.ts#DataAccessSchema",
+      "via": "accessedBy",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/diagrams.ts#DataClassSchema",
+      "to": "cat-harness-tools/archimate/schemas/diagrams.ts#DataAttributeSchema",
+      "via": "attributes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/diagrams.ts#DataModelSchema",
+      "to": "cat-harness-tools/archimate/schemas/diagrams.ts#DataClassSchema",
+      "via": "classes",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/diagrams.ts#DataModelSchema",
+      "to": "cat-harness-tools/archimate/schemas/diagrams.ts#DataRelationshipSchema",
+      "via": "relationships",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/diagrams.ts#FshLogicalModelSchema",
+      "to": "cat-harness-tools/archimate/schemas/diagrams.ts#FshLogicalFieldSchema",
+      "via": "fields",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceDiagramSchema",
+      "to": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceMessageSchema",
+      "via": "messages",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceDiagramSchema",
+      "to": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceParticipantSchema",
+      "via": "participants",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceMessageSchema",
+      "to": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceMessageKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceSetSchema",
+      "to": "cat-harness-tools/archimate/schemas/diagrams.ts#SequenceDiagramSchema",
+      "via": "sequences",
       "kind": "field",
       "optional": false,
       "array": true
@@ -88653,6 +90294,14 @@
       "array": true
     },
     {
+      "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef",
+      "to": "cat-harness-tools/schemas/process/role-graph.ts#StoreDef",
+      "via": "store",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDefSchema",
       "to": "cat-harness-tools/schemas/conduct/model-capabilities.ts#ModelCapabilitiesSchema",
       "via": "requiredCapabilities",
@@ -88675,6 +90324,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDefSchema",
+      "to": "cat-harness-tools/schemas/process/role-graph.ts#StoreDefSchema",
+      "via": "store",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDefSchema",
@@ -88754,6 +90411,30 @@
       "via": "skills",
       "kind": "field",
       "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/role-graph.ts#StoreApi",
+      "to": "cat-harness-tools/schemas/process/role-graph.ts#StoreApiStyle",
+      "via": "style",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/role-graph.ts#StoreDef",
+      "to": "cat-harness-tools/schemas/process/role-graph.ts#StoreApi",
+      "via": "api",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/role-graph.ts#StoreDefSchema",
+      "to": "cat-harness-tools/schemas/process/role-graph.ts#StoreApiSchema",
+      "via": "api",
+      "kind": "field",
+      "optional": true,
       "array": true
     },
     {
@@ -90901,6 +92582,46 @@
       "array": true
     },
     {
+      "from": "cat-harness-tools/schemas/tools/store-tool-results.ts#BeanClaimCheckSchema",
+      "to": "cat-harness-tools/schemas/tools/store-tool-results.ts#BeanCommitSchema",
+      "via": "copies",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/tools/store-tool-results.ts#BeanClaimCheckSchema",
+      "to": "cat-harness-tools/schemas/tools/store-tool-results.ts#OpenWorkLookupSchema",
+      "via": "openWork",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/tools/store-tool-results.ts#DrainQueueSchema",
+      "to": "cat-harness-tools/schemas/tools/store-tool-results.ts#QueueEntrySchema",
+      "via": "byOwner",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/tools/store-tool-results.ts#DrainQueueSchema",
+      "to": "cat-harness-tools/schemas/tools/store-tool-results.ts#QueueEntrySchema",
+      "via": "spare",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/tools/store-tool-results.ts#OpenWorkLookupSchema",
+      "to": "cat-harness-tools/schemas/tools/store-tool-results.ts#OpenWorkHitSchema",
+      "via": "hits",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness-tools/schemas/tools/tool-invocation.ts#InvocationContextSchema",
       "to": "cat-harness-tools/schemas/process/process-element-id.ts#ProcessElementIdSchema",
       "via": "process",
@@ -92576,6 +94297,30 @@
       "from": "fhir-harness/schemas/ig-artifact-jsonld.ts#IgDefinedTermSchema",
       "to": "fhir-harness/schemas/ig-artifact-jsonld.ts#IdRef",
       "via": "schema:inDefinedTermSet",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-ast-lock.ts#IgAstLockSchema",
+      "to": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema",
+      "via": "pins",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema",
+      "to": "fhir-harness/schemas/ig-ast-lock.ts#Sha",
+      "via": "sha",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "fhir-harness/schemas/ig-ast-lock.ts#IgAstPinSchema",
+      "to": "fhir-harness/schemas/ig-ast-lock.ts#Sha",
+      "via": "sourceRevision",
       "kind": "field",
       "optional": true,
       "array": false
