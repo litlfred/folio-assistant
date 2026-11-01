@@ -1,0 +1,244 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_SwotAnalysis",
+    "path": "processes/process/swot-analysis.bpmn"
+  },
+  "source_hash": "sha256:1e35c8b53ebf439e5104b60cddf104ef7c9d2ebb65e6ecf5f3ee1f0accbd8f9a",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_FrameSubject",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ScanExternal",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ScanInternal",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_GroupReview",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_RecordAmbiguous",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Cross",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_HandOff",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_FrameSubject",
+          "detail": "needs skill \"swot-analysis\", but its lane's role \"business-analyst\" does not carry it."
+        },
+        {
+          "where": "A_ScanExternal",
+          "detail": "needs skill \"swot-analysis\", but its lane's role \"business-analyst\" does not carry it."
+        },
+        {
+          "where": "A_ScanInternal",
+          "detail": "needs skill \"swot-analysis\", but its lane's role \"business-analyst\" does not carry it."
+        },
+        {
+          "where": "A_GroupReview",
+          "detail": "needs skill \"swot-analysis\", but its lane's role \"stakeholder\" does not carry it."
+        },
+        {
+          "where": "A_RecordAmbiguous",
+          "detail": "needs skill \"swot-analysis\", but its lane's role \"business-analyst\" does not carry it."
+        },
+        {
+          "where": "A_Cross",
+          "detail": "needs skill \"swot-analysis\", but its lane's role \"business-analyst\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_FrameSubject",
+          "detail": "task \"Name the subject and the level\" requires skill \"swot-analysis\", which role \"business-analyst\" (named by lane \"Business analyst\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_ScanExternal",
+          "detail": "task \"Scan the environment opportunities and threats\" requires skill \"swot-analysis\", which role \"business-analyst\" (named by lane \"Business analyst\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_ScanInternal",
+          "detail": "task \"Scan the subject strengths and weaknesses\" requires skill \"swot-analysis\", which role \"business-analyst\" (named by lane \"Business analyst\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_GroupReview",
+          "detail": "task \"Pool knowledge across participants\" requires skill \"swot-analysis\", which role \"stakeholder\" (named by lane \"Stakeholder\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_RecordAmbiguous",
+          "detail": "task \"Record what did not classify cleanly\" requires skill \"swot-analysis\", which role \"business-analyst\" (named by lane \"Business analyst\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Cross",
+          "detail": "task \"Cross the axes into SO, WO, ST, WT\" requires skill \"swot-analysis\", which role \"business-analyst\" (named by lane \"Business analyst\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-through-node": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 24,
+    "fail": 3,
+    "n/a": 10,
+    "unknown": 0
+  }
+}
