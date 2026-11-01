@@ -20,7 +20,11 @@
               "by": "litlfred",
               "on": "2026-11-01",
               "ref": "1b2228331caf3d3b5a8a3f0d289d69f584f4b8a4",
-              "evidence": "Owner litlfred, 2026-11-01 19:36:32Z, project chat: '+6hr window' (merge and re-pin window, to 2026-11-02 01:36Z). Re-pinned on folio-assistant#2864 (fa#2781) to cat-harness main 1b22283 (#931 sdlc-core skills cite core by URL, #927)."
+              "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
+              "standing": {
+                "follows": "main",
+                "consentAt": "2026-11-01"
+              }
             },
             "standing": {
               "follows": "main",
@@ -58,7 +62,11 @@
               "by": "litlfred",
               "on": "2026-11-01",
               "ref": "104badb8d571b15bb3b0dfc561df266069a82966",
-              "evidence": "Owner litlfred, 2026-11-01 19:36:32Z, project chat: '+6hr window' (merge and re-pin window, to 2026-11-02 01:36Z). Re-pinned on folio-assistant#2864 (fa#2781) to cat-harness-tools main 104badb (#1319 pdf.js, #1322 ig-ast:lock:check declared)."
+              "evidence": "Owner litlfred, 2026-11-01 19:36:32Z, project chat: '+6hr window' (merge and re-pin window, to 2026-11-02 01:36Z). Re-pinned on folio-assistant#2864 (fa#2781) to cat-harness-tools main 104badb (#1319 pdf.js, #1322 ig-ast:lock:check declared; newer than the train pin f92092e).",
+              "standing": {
+                "follows": "main",
+                "consentAt": "2026-11-01"
+              }
             },
             "standing": {
               "follows": "main",
@@ -75,7 +83,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-core",
-          "ref": "7885df2b651f86efa105da9523db79a26c35e0f4",
+          "ref": "3f108a365974316a03a402e68fac536ebe051bbe",
           "overrides": {
             "folio-assistant-core": {
               "whole": true
@@ -86,8 +94,12 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-01",
-              "ref": "7885df2b651f86efa105da9523db79a26c35e0f4",
-              "evidence": "Owner litlfred, 2026-11-01 17:27:04Z, project chat: '+3hrs' (merge and re-pin window, to 20:27Z), and Q-S1-5 A (16:52Z, move dth init to smart-base). Re-pinned on folio-assistant#2864 (fa#2781) to folio-assistant-core main 7885df2 (#497, dth init moved to smart-base)."
+              "ref": "3f108a365974316a03a402e68fac536ebe051bbe",
+              "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
+              "standing": {
+                "follows": "main",
+                "consentAt": "2026-11-01"
+              }
             },
             "standing": {
               "follows": "main",
@@ -156,14 +168,18 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-trust",
-          "ref": "f5446e720f9fcb5a8994db77f829172555b2f7ef",
+          "ref": "49a044639e318bbb4e6105d5ce4855ed3873009e",
           "overrides": {
             "smart-trust": {
               "path": "smart-trust",
               "directories": [
                 "smart-trust-artifact-index",
                 "smart-trust-openapi",
-                "smart-trust-document-kinds"
+                "smart-trust-document-kinds",
+                "library",
+                "smart-trust-catalogue",
+                "glossary",
+                "smart-trust-translations"
               ]
             }
           },
@@ -171,9 +187,13 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-31",
-              "ref": "f5446e720f9fcb5a8994db77f829172555b2f7ef",
-              "evidence": "Owner litlfred, 2026-10-31 04:17:29Z: card 'Merge the security fix PRs now, then repin and rerender?', answer 'A. Merge all and repin' (project thread 'Security review all harnessed KG code'; cat-harness-tools#1082 #1085 #1086). Main tips: cat-harness-tools f07c534 (#1083 pins+deps, #1087 path/shell, #1088 server/auth), cat-harness ef4750e (#840 action pins), fhir-harness ab2d071 (#244), smart-base d1cfa96 (#251 #253), smart-immunizations 200a9ba (#104), who-iris 887aeea (#140), smart-trust f5446e7 (#98), folio-assistant-core 789f854 (#336 #338 #339). Standing rule, litlfred 2026-10-29 07:20Z: merge ready litlfred PRs without waiting for green."
+              "on": "2026-11-01",
+              "ref": "49a044639e318bbb4e6105d5ce4855ed3873009e",
+              "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
+              "standing": {
+                "follows": "main",
+                "consentAt": "2026-11-01"
+              }
             },
             "standing": {
               "follows": "main",
@@ -191,7 +211,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-trust-phw",
-          "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
+          "ref": "c405be741c73abdeb09474106e9b79cfd7ec75cb",
           "overrides": {
             "smart-trust-phw": {
               "path": "smart-trust-phw",
@@ -208,8 +228,12 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-01",
-              "ref": "172f7a67c1a9addd23e5e42482b027b21c284ced",
-              "evidence": "Owner litlfred, 2026-11-01 07:27:13Z, \"+3hrs merge + repin\" (window to 10:27Z); re-pin to main tips requested for #2702 (session_01Qmmkt8XGaYRhVSNVtpws5L). main tip 172f7a6 (smart-trust-phw#21)."
+              "ref": "c405be741c73abdeb09474106e9b79cfd7ec75cb",
+              "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
+              "standing": {
+                "follows": "main",
+                "consentAt": "2026-11-01"
+              }
             },
             "standing": {
               "follows": "main",
@@ -257,7 +281,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/bootstrap-tools",
-          "ref": "dbc45a331e47d3bf3a27041363edb4eb2b787a07",
+          "ref": "ed547a9ab77e8445f13f52fe2152d6e82776bcaf",
           "overrides": {
             "bootstrap-tools": {
               "whole": true
@@ -268,8 +292,12 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-01",
-              "ref": "dbc45a331e47d3bf3a27041363edb4eb2b787a07",
-              "evidence": "Owner litlfred, 2026-11-01 10:53:15Z, project chat: '+3 hrs' (functional merge+repin window, to 16:37Z). Re-pinned on folio-assistant#2864 (fa#2781) to bootstrap-tools main dbc45a3 (#61 reference by URL; #63 left out, its renderer differs in CI)."
+              "ref": "ed547a9ab77e8445f13f52fe2152d6e82776bcaf",
+              "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
+              "standing": {
+                "follows": "main",
+                "consentAt": "2026-11-01"
+              }
             },
             "standing": {
               "follows": "main",
@@ -286,7 +314,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/who-iris",
-          "ref": "8928b5acf6f6a390f7b57b9f91425eeca423c2d2",
+          "ref": "9ce0140479ea97fbb327ce8517b5e9a1ff1bd0a5",
           "overrides": {
             "who-iris": {
               "whole": true
@@ -297,8 +325,12 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-01",
-              "ref": "8928b5acf6f6a390f7b57b9f91425eeca423c2d2",
-              "evidence": "Owner litlfred, 2026-11-01 07:27:13Z, \"+3hrs merge + repin\" (window to 10:27Z); re-pin to main tips requested for #2702 (session_01Qmmkt8XGaYRhVSNVtpws5L). main tip 8928b5a."
+              "ref": "9ce0140479ea97fbb327ce8517b5e9a1ff1bd0a5",
+              "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
+              "standing": {
+                "follows": "main",
+                "consentAt": "2026-11-01"
+              }
             },
             "standing": {
               "follows": "main",
@@ -374,7 +406,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-immunizations",
-          "ref": "200a9ba19880e35483d9f6f645acbc78d3528400",
+          "ref": "2768c232ce6aacef9f3c1963c1f79e0624ef0bda",
           "overrides": {
             "smart-immunizations": {
               "path": "smart-immunizations",
@@ -390,9 +422,13 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-10-31",
-              "ref": "200a9ba19880e35483d9f6f645acbc78d3528400",
-              "evidence": "Owner litlfred, 2026-10-31 04:17:29Z: card 'Merge the security fix PRs now, then repin and rerender?', answer 'A. Merge all and repin' (project thread 'Security review all harnessed KG code'; cat-harness-tools#1082 #1085 #1086). Main tips: cat-harness-tools f07c534 (#1083 pins+deps, #1087 path/shell, #1088 server/auth), cat-harness ef4750e (#840 action pins), fhir-harness ab2d071 (#244), smart-base d1cfa96 (#251 #253), smart-immunizations 200a9ba (#104), who-iris 887aeea (#140), smart-trust f5446e7 (#98), folio-assistant-core 789f854 (#336 #338 #339). Standing rule, litlfred 2026-10-29 07:20Z: merge ready litlfred PRs without waiting for green."
+              "on": "2026-11-01",
+              "ref": "2768c232ce6aacef9f3c1963c1f79e0624ef0bda",
+              "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
+              "standing": {
+                "follows": "main",
+                "consentAt": "2026-11-01"
+              }
             },
             "standing": {
               "follows": "main",

@@ -5,6 +5,10 @@ name: Copilot Setup Steps
 # work on any session in this repository.
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
   # ── The job MUST be named `copilot-setup-steps` ──────────────────────────
   copilot-setup-steps:
