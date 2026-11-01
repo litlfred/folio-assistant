@@ -750,7 +750,18 @@ jobs:
         # `qa:working-copy` is the two. Without it they report
         # could-not-determine. `gates.ts` runs the same script as a precondition
         # locally, and so does not list it as a gate.
-        run: bun run cat qa:working-copy
+        #
+        # The build's `skill:register` step re-ran nine checks (233 s on
+        # docs-site job 124653530529) that `gates-kg` asks again over this same
+        # tree with `skill:register:check`, so they are left to it
+        # (CAT_SKILL_REGISTER_VERIFIED_BY_GATES, as layer-pr-checks and the
+        # preview do; #2865). The record lists them as not run here, never as
+        # passed. If the names cannot be read, every check runs, as before.
+        run: |
+          CAT_SKILL_REGISTER_VERIFIED_BY_GATES="$(bun -e 'import { CHECKS } from "./cat-harness-tools/scripts/skill-register.ts"; console.log(CHECKS.join(","))' 2>/dev/null || true)"
+          export CAT_SKILL_REGISTER_VERIFIED_BY_GATES
+          echo "skill:register checks left to gates-kg: ${CAT_SKILL_REGISTER_VERIFIED_BY_GATES:-none}"
+          bun run cat qa:working-copy
 
       - name: Pack everything the build wrote, with its manifest (bean jtfk)
         id: pack
