@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>/prepare-merge-auto | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="/prepare-merge-auto" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="/prepare-merge-auto" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-prepare-merge-auto",
+    "src": "../../assets/qa/reference-skill-instructions-prepare-merge-auto/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-prepare-merge-auto/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=2ed7923cda66"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=9ffac52f2026" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/prepare-merge-auto.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#workflow","label":"Workflow","children":[{"href":"#phase-0-sibling-coordination","label":"Phase 0: Sibling coordination","depth":1},{"href":"#phase-1-prepare-merge-steps-16","label":"Phase 1: /prepare-merge (steps 1–6)","depth":1},{"href":"#phase-1b-wait-for-reviews--status-briefing","label":"Phase 1b: Wait for reviews + status briefing","depth":1},{"href":"#phase-2-resolve-review-comments","label":"Phase 2: Resolve review comments","depth":1},{"href":"#phase-3-structured-user-questions-only-when-blocked","label":"Phase 3: Structured user questions (only when blocked)","depth":1},{"href":"#phase-4-merge","label":"Phase 4: Merge","depth":1},{"href":"#phase-5-post-merge-coordination","label":"Phase 5: Post-merge coordination","depth":1}],"fold":"7 sub-sections"},{"href":"#error-handling","label":"Error handling"},{"href":"#anti-patterns","label":"Anti-patterns"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>/prepare-merge-auto</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/prepare-merge-auto.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/prepare-merge-auto.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/prepare-merge-auto.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/prepare-merge-auto.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="prepare-merge-auto--autonomous-merge-pipeline"><a href="#prepare-merge-auto--autonomous-merge-pipeline" class="anchor-heading" aria-labelledby="prepare-merge-auto--autonomous-merge-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /prepare-merge-auto — Autonomous merge pipeline
+  
+  
+</h1><p>Runs the full <code class="language-plaintext highlighter-rouge">/prepare-merge</code> workflow PLUS:</p><ol><li><strong>Sibling coordination</strong> (before starting)</li><li><strong>Review-comment resolution</strong> (after reviews land)</li><li><strong>Structured user questions</strong> (only when genuinely blocked)</li><li><strong>Merge</strong> (after all comments resolved), through
+<a href="../../reference/skill-instructions/merge-to-main.html"><code class="language-plaintext highlighter-rouge">merge-to-main</code></a>: “autonomous” covers the preparation,
+never the authorisation</li></ol><h2 id="workflow"><a href="#workflow" class="anchor-heading" aria-labelledby="workflow"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow
+  
+  
+</h2><h3 id="phase-0-sibling-coordination"><a href="#phase-0-sibling-coordination" class="anchor-heading" aria-labelledby="phase-0-sibling-coordination"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 0: Sibling coordination
+  
+  
+</h3><p>Before starting the merge pipeline, identify sibling change proposals
+(pull requests, PRs) whose scope overlaps this branch’s files: list the open
+ones with the <em>list change proposals</em> <a href="../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each">forge-operation Tool</a>.</p><p>For each sibling PR that touches the same files or content domain:</p><ul><li>Post a brief coordination comment: “Starting prepare-merge on
+#<this-PR>; touches <files>. Review welcome if you'd like to
+check for conflicts before merge."</files></this-PR></li><li>Do NOT wait for responses — this is a courtesy notification, not
+a blocking request.</li></ul><h3 id="phase-1-prepare-merge-steps-16"><a href="#phase-1-prepare-merge-steps-16" class="anchor-heading" aria-labelledby="phase-1-prepare-merge-steps-16"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 1: /prepare-merge (steps 1–6)
+  
+  
+</h3><p>Execute the full <code class="language-plaintext highlighter-rouge">/prepare-merge</code> skill (rebase, integrate, one-voice,
+build, final rebase, request reviews). All steps must succeed
+before proceeding.</p><h3 id="phase-1b-wait-for-reviews--status-briefing"><a href="#phase-1b-wait-for-reviews--status-briefing" class="anchor-heading" aria-labelledby="phase-1b-wait-for-reviews--status-briefing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 1b: Wait for reviews + status briefing
+  
+  
+</h3><p><strong>Wait for Copilot and Gemini reviews to land</strong> before proceeding.
+Do NOT skip ahead — the reviews are the input to Phase 2.</p><p><strong>Wait protocol (15-minute window):</strong></p><ol><li>After requesting reviews in Phase 1, poll for Copilot’s
+check-run status every 30 seconds (up to 15 minutes) — the <code class="language-plaintext highlighter-rouge">github</code>
+Tool, <em>read change proposal</em> (check runs).
+Look for the <code class="language-plaintext highlighter-rouge">copilot-pull-request-reviewer</code> check run:
+    <ul><li><code class="language-plaintext highlighter-rouge">"status": "queued"</code> or <code class="language-plaintext highlighter-rouge">"status": "in_progress"</code> → reviewer
+has noticed the PR; keep polling every 30s</li><li><code class="language-plaintext highlighter-rouge">"status": "completed"</code> → reviews are in, proceed immediately</li><li>No check run after 2 minutes → reviewer did not trigger for
+this file type (e.g. skill-only PRs with no code); proceed
+with 0 comments</li></ul></li><li><p>For Gemini: check the PR’s issue comments with the <em>read change proposal</em> <a href="../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each">forge-operation Tool</a> (comments).
+If a <code class="language-plaintext highlighter-rouge">gemini-code-assist[bot]</code> comment contains “daily quota
+limit”, note “Gemini: quota exhausted” and proceed without
+waiting further.</p></li><li><strong>15-minute hard cap</strong>: if neither reviewer has completed after
+15 minutes, proceed with whatever comments have landed. Note
+“Copilot: timed out (15 min)” in the briefing.</li></ol><p>Once reviews arrive (or the 15-minute cap is reached), give the
+user a concise <strong>status briefing</strong>:</p><ol><li><strong>PR identity</strong>: “#N — title” with clickable URL</li><li><strong>Branch</strong>: <code class="language-plaintext highlighter-rouge">branch-name</code> → <code class="language-plaintext highlighter-rouge">main</code></li><li><strong>Scope</strong>: files changed, additions/deletions, commits</li><li><strong>Review comments received</strong>: total count, by reviewer, with
+1-line summary of each thread:
+```
+Review comments (5 total — Copilot: 3, Gemini: 2):
+    <ol><li>[Copilot] line 42 engine.py — threshold mismatch</li><li>[Copilot] line 98 engine.py — unused variable</li><li>[Copilot] line 173 engine.py — spelling fix</li><li>[Gemini] line 15 table.md — missing citation</li><li>[Gemini] line 88 table.md — ambiguous wording
+```</li></ol></li><li><strong>Disposition plan</strong>: for each comment, state the planned
+action (accept / modify / reject / escalate) BEFORE making
+changes — so the user can redirect:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Plan: accept 1,2,3; accept-with-modification 4; reject 5
+(reason: standard term per §7a)
+</code></pre></div></div></li><li><strong>CI status</strong>: green / failing / pending</li></ol><p>The user can reply with overrides (e.g. “reject 4”, “skip 2,3”).
+If no override within ~30 seconds, proceed with the stated plan.</p><h3 id="phase-2-resolve-review-comments"><a href="#phase-2-resolve-review-comments" class="anchor-heading" aria-labelledby="phase-2-resolve-review-comments"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 2: Resolve review comments
+  
+  
+</h3><p>After the briefing (and any user overrides), triage each thread:</p><div class="table-wrapper"><table><thead><tr><th>Classification</th><th>Action</th></tr></thead><tbody><tr><td><strong>accept</strong></td><td>Apply the suggested fix, commit, push.</td></tr><tr><td><strong>accept-with-modification</strong></td><td>Apply a modified version, commit with explanation.</td></tr><tr><td><strong>reject-with-reason</strong></td><td>Reply on the thread with the reason (e.g. “intentional — see §X”).</td></tr><tr><td><strong>escalate</strong></td><td>Cannot resolve autonomously — proceed to Phase 3.</td></tr></tbody></table></div><p>For each resolved thread, commit the fix with message:
+<code class="language-plaintext highlighter-rouge">fix(PR #N): address &lt;reviewer&gt; thread r&lt;id&gt; — &lt;1-line summary&gt;</code></p><p>Push after each batch of resolutions.</p><h3 id="phase-3-structured-user-questions-only-when-blocked"><a href="#phase-3-structured-user-questions-only-when-blocked" class="anchor-heading" aria-labelledby="phase-3-structured-user-questions-only-when-blocked"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 3: Structured user questions (only when blocked)
+  
+  
+</h3><p>If any review comment requires a judgment call (ambiguous intent,
+architectural decision, multiple valid approaches), use
+<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> with:</p><ul><li><strong>Rich context</strong> per AGENTS.md user-accessibility rules:
+    <ul><li>Quote the exact comment + file path + line number</li><li>Show the current code vs proposed change (preview)</li><li>State trade-offs for each option</li><li>Default to <code class="language-plaintext highlighter-rouge">multiSelect: true</code> unless choices are mutually exclusive</li><li>Prefix with 🟡</li></ul></li><li><strong>Batch questions</strong> — collect ALL blocked items into a single
+<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> call (up to 4 questions) rather than asking
+one at a time.</li></ul><h3 id="phase-4-merge"><a href="#phase-4-merge" class="anchor-heading" aria-labelledby="phase-4-merge"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 4: Merge
+  
+  
+</h3><p>After all review comments are resolved (or the user has answered
+all escalated questions):</p><ol><li>Run <code class="language-plaintext highlighter-rouge">bun run scripts/run-validate.ts content/&lt;paper&gt;</code> one final time.</li><li><strong>Run the <a href="../../reference/skill-instructions/merge-to-main.html"><code class="language-plaintext highlighter-rouge">merge-to-main</code></a> sub-process</strong>
+(<code class="language-plaintext highlighter-rouge">processes/sdlc/merge-to-main.bpmn</code>). In order: read the head’s evidence
+live (CI per owed job on the head SHA, mergeability, review state and
+Claude Approvals where the repository runs it); a repository with no CI is
+<code class="language-plaintext highlighter-rouge">none</code>, never green; find the owner’s authorisation for THIS merge, and ask
+with the evidence when there is none; record it; then merge pinned to the
+head, with <code class="language-plaintext highlighter-rouge">merge_method: "merge"</code> unless told otherwise. Having invoked
+this skill is not the authorisation, and neither is a broad instruction
+such as “fix all issues until green”.</li><li><strong>CRITICAL:</strong> DO NOT DELETE THE BRANCH EVER! If using the GitHub CLI, DO NOT pass <code class="language-plaintext highlighter-rouge">--delete-branch</code>. If using the GitHub API, ensure the branch is preserved.</li><li>Report the merge SHA + URL, and the authorisation it was made under.</li></ol><h3 id="phase-5-post-merge-coordination"><a href="#phase-5-post-merge-coordination" class="anchor-heading" aria-labelledby="phase-5-post-merge-coordination"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 5: Post-merge coordination
+  
+  
+</h3><p>After merge:</p><ul><li>Post a brief update on any sibling PRs that were notified in
+Phase 0: “PR #<N> merged; <files> updated on main. Please rebase
+if needed."</files></N></li><li>Unsubscribe from the merged PR’s activity.</li></ul><h2 id="error-handling"><a href="#error-handling" class="anchor-heading" aria-labelledby="error-handling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Error handling
+  
+  
+</h2><ul><li>If <code class="language-plaintext highlighter-rouge">/prepare-merge</code> fails at any step, STOP and report the
+blocker. Do not request reviews on a broken branch.</li><li>If CI fails after pushing review fixes, investigate and fix
+before merging.</li><li>If the user doesn’t respond to Phase 3 questions within the
+session, leave the PR open with a summary comment listing the
+unresolved items.</li></ul><h2 id="anti-patterns"><a href="#anti-patterns" class="anchor-heading" aria-labelledby="anti-patterns"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Anti-patterns
+  
+  
+</h2><ul><li>Do NOT merge without resolving review comments (even if CI is green).</li><li>Do NOT merge without the owner’s authorisation for that merge, recorded
+(<a href="../../reference/skill-instructions/merge-to-main.html"><code class="language-plaintext highlighter-rouge">merge-to-main</code></a>). Green CI is evidence, not permission.</li><li><strong>Do NOT read “no checks” as “nothing red”.</strong> A PR with ZERO check runs
+renders identically to one whose checks have not started. Match the PR’s
+<code class="language-plaintext highlighter-rouge">head_sha</code> against the branch’s workflow-run list before calling it green,
+and re-run the workflows by dispatch when no run exists for that sha.
+Measured six times here (bean <code class="language-plaintext highlighter-rouge">3pqn</code>), twice on one PR in eight minutes.
+Same rule, with the evidence and the procedure, in
+<a href="../../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge.md</code></a> §Guardrails; change one and change
+the other — that file records what happened the last time a rule lived in
+only one of these two.</li><li>Do NOT squash unless the user explicitly says “squash”.</li><li>Do NOT skip sibling coordination — it prevents post-merge conflicts.</li><li>Do NOT ask trivial questions in Phase 3 — only genuinely ambiguous
+decisions warrant user input.</li><li><strong>Do NOT delete the branch after merging</strong> — and not at any other time either,
+without explicit assent from the user or the repository owner. Same rule, same
+wording, in <a href="../../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge.md</code></a> §Guardrails; change one and
+change the other.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/content-change-review-make.html">Make the content change</a></td><td>Commit, push, update PR</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

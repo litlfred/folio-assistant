@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/skill/npm-kg-distribution.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/skill/npm-kg-distribution",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "npm-kg-distribution",
+      "title": "NPM Knowledge Graph Distribution",
+      "description": "Package, release, distribute, and retrieve Knowledge Graphs using npm tooling and tarballs: declare `package.json` as an authored pre-packaging asset in the Knowledge Graph, build `.tgz` packages via `bun pm pack`, record publications as `folio-binary-release/v1` state documents hosted on GitHub binary releases, and retrieve remote Knowledge Graphs using `npm install` for both unhydrated source graph and hydrated materialized graph views.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/npm-kg-distribution.md",
+      "instructionLines": 218,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/npm-kg-distribution"
+    }
+  ]
+}

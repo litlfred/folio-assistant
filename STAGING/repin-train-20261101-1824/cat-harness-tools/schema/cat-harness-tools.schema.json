@@ -1,0 +1,2504 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/cat-harness-tools.schema.json",
+  "title": "cat-harness-tools schemas",
+  "description": "The schemas instance `cat-harness-tools` publishes: its declaration, which is a CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — listed in `$defs` by `$id`.",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/cat-harness.schema.json"
+    }
+  ],
+  "$defs": {
+    "zod/computation-witness/ComputationWitnessConformanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/computation-witness/ComputationWitnessConformanceSchema.schema.json"
+    },
+    "zod/computation-witness/ComputationWitnessSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/computation-witness/ComputationWitnessSchema.schema.json"
+    },
+    "zod/computation-witness/WitnessAssertionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/computation-witness/WitnessAssertionSchema.schema.json"
+    },
+    "zod/constraints/ActorDefinitionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ActorDefinitionSchema.schema.json"
+    },
+    "zod/constraints/ActorKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ActorKindSchema.schema.json"
+    },
+    "zod/constraints/AlgorithmSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/AlgorithmSchema.schema.json"
+    },
+    "zod/constraints/AuthorNoteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/AuthorNoteSchema.schema.json"
+    },
+    "zod/constraints/BlockBaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/BlockBaseSchema.schema.json"
+    },
+    "zod/constraints/BlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/BlockSchema.schema.json"
+    },
+    "zod/constraints/CapabilityDefinitionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/CapabilityDefinitionSchema.schema.json"
+    },
+    "zod/constraints/CapabilityDetectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/CapabilityDetectionSchema.schema.json"
+    },
+    "zod/constraints/ChapterRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ChapterRefSchema.schema.json"
+    },
+    "zod/constraints/ChapterSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ChapterSchema.schema.json"
+    },
+    "zod/constraints/CodeRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/CodeRefSchema.schema.json"
+    },
+    "zod/constraints/CompanionsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/CompanionsSchema.schema.json"
+    },
+    "zod/constraints/ComputationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ComputationSchema.schema.json"
+    },
+    "zod/constraints/ConformanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ConformanceSchema.schema.json"
+    },
+    "zod/constraints/DegradationStrategySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/DegradationStrategySchema.schema.json"
+    },
+    "zod/constraints/DependencyKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/DependencyKindSchema.schema.json"
+    },
+    "zod/constraints/DiagramSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/DiagramSchema.schema.json"
+    },
+    "zod/constraints/DockerRequirementsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/DockerRequirementsSchema.schema.json"
+    },
+    "zod/constraints/DocumentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/DocumentSchema.schema.json"
+    },
+    "zod/constraints/EquationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/EquationSchema.schema.json"
+    },
+    "zod/constraints/ExampleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ExampleSchema.schema.json"
+    },
+    "zod/constraints/FeedbackItemSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/FeedbackItemSchema.schema.json"
+    },
+    "zod/constraints/FigureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/FigureSchema.schema.json"
+    },
+    "zod/constraints/FolioSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/FolioSchema.schema.json"
+    },
+    "zod/constraints/HookCommandSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/HookCommandSchema.schema.json"
+    },
+    "zod/constraints/HookEventSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/HookEventSchema.schema.json"
+    },
+    "zod/constraints/IdentitySourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/IdentitySourceSchema.schema.json"
+    },
+    "zod/constraints/LeanRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/LeanRefSchema.schema.json"
+    },
+    "zod/constraints/LifecycleStageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/LifecycleStageSchema.schema.json"
+    },
+    "zod/constraints/PaperRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/PaperRefSchema.schema.json"
+    },
+    "zod/constraints/PaperSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/PaperSchema.schema.json"
+    },
+    "zod/constraints/ProseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ProseSchema.schema.json"
+    },
+    "zod/constraints/ProvableBaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/ProvableBaseSchema.schema.json"
+    },
+    "zod/constraints/RecommendationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RecommendationSchema.schema.json"
+    },
+    "zod/constraints/RemarkSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RemarkSchema.schema.json"
+    },
+    "zod/constraints/RemotePackageRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RemotePackageRefSchema.schema.json"
+    },
+    "zod/constraints/RemoteSkillRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RemoteSkillRecordSchema.schema.json"
+    },
+    "zod/constraints/RemoteSyncConfigSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RemoteSyncConfigSchema.schema.json"
+    },
+    "zod/constraints/RemoteSyncStrategySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RemoteSyncStrategySchema.schema.json"
+    },
+    "zod/constraints/RequirementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RequirementSchema.schema.json"
+    },
+    "zod/constraints/RequirementStatementRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RequirementStatementRefSchema.schema.json"
+    },
+    "zod/constraints/RequirementStatementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RequirementStatementSchema.schema.json"
+    },
+    "zod/constraints/RoleAssignmentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RoleAssignmentSchema.schema.json"
+    },
+    "zod/constraints/SectionRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SectionRefSchema.schema.json"
+    },
+    "zod/constraints/SectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SectionSchema.schema.json"
+    },
+    "zod/constraints/SessionHookSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SessionHookSchema.schema.json"
+    },
+    "zod/constraints/SimulatorSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SimulatorSchema.schema.json"
+    },
+    "zod/constraints/SkillCapabilityRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillCapabilityRefSchema.schema.json"
+    },
+    "zod/constraints/SkillDefinitionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillDefinitionSchema.schema.json"
+    },
+    "zod/constraints/SkillDependencySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillDependencySchema.schema.json"
+    },
+    "zod/constraints/SkillPackageManifestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillPackageManifestSchema.schema.json"
+    },
+    "zod/constraints/SkillPackageRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillPackageRefSchema.schema.json"
+    },
+    "zod/constraints/SkillRegistrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillRegistrySchema.schema.json"
+    },
+    "zod/constraints/SkillSchemaRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillSchemaRefSchema.schema.json"
+    },
+    "zod/constraints/SystemUnderTestFacetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SystemUnderTestFacetSchema.schema.json"
+    },
+    "zod/constraints/TableSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/TableSchema.schema.json"
+    },
+    "zod/constraints/TodoItemSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/TodoItemSchema.schema.json"
+    },
+    "zod/interaction/InteractionNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/interaction/InteractionNodeSchema.schema.json"
+    },
+    "zod/interaction/InteractionProfileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/interaction/InteractionProfileSchema.schema.json"
+    },
+    "zod/memory/MeasurementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/memory/MeasurementSchema.schema.json"
+    },
+    "zod/memory/MemoryNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/memory/MemoryNodeSchema.schema.json"
+    },
+    "zod/model-capabilities/ModelCapabilitiesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/model-capabilities/ModelCapabilitiesSchema.schema.json"
+    },
+    "zod/model-capabilities/ModelConfigSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/model-capabilities/ModelConfigSchema.schema.json"
+    },
+    "zod/waiver/WaiverNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/waiver/WaiverNodeSchema.schema.json"
+    },
+    "zod/waiver/WaiverScopeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/waiver/WaiverScopeSchema.schema.json"
+    },
+    "zod/attribution/AttributionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/attribution/AttributionSchema.schema.json"
+    },
+    "zod/attribution/ProvenanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/attribution/ProvenanceSchema.schema.json"
+    },
+    "zod/block-summary/BlockSummariesSidecarSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/block-summary/BlockSummariesSidecarSchema.schema.json"
+    },
+    "zod/block-summary/BlockSummarySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/block-summary/BlockSummarySchema.schema.json"
+    },
+    "zod/document-image/CaptureBasisSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/CaptureBasisSchema.schema.json"
+    },
+    "zod/document-image/DocumentImageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/DocumentImageSchema.schema.json"
+    },
+    "zod/document-image/GeometryBasisSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/GeometryBasisSchema.schema.json"
+    },
+    "zod/document-image/ImageBasisSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/ImageBasisSchema.schema.json"
+    },
+    "zod/document-image/ImagesSidecarSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/ImagesSidecarSchema.schema.json"
+    },
+    "zod/document-image/InspectionBasisSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/InspectionBasisSchema.schema.json"
+    },
+    "zod/document-image/PlacementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/PlacementSchema.schema.json"
+    },
+    "zod/document-image/ThresholdBasisSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/ThresholdBasisSchema.schema.json"
+    },
+    "zod/document-kind/DocumentKindCoverageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-kind/DocumentKindCoverageSchema.schema.json"
+    },
+    "zod/document-kind/DocumentKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-kind/DocumentKindSchema.schema.json"
+    },
+    "zod/document-kind/DocumentKindSectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-kind/DocumentKindSectionSchema.schema.json"
+    },
+    "zod/document-kind/DocumentKindSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-kind/DocumentKindSourceSchema.schema.json"
+    },
+    "zod/document-structure/DocumentStructureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/DocumentStructureSchema.schema.json"
+    },
+    "zod/document-structure/NotebookSectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/NotebookSectionSchema.schema.json"
+    },
+    "zod/document-structure/NotebookSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/NotebookSourceSchema.schema.json"
+    },
+    "zod/document-structure/NotebookStructureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/NotebookStructureSchema.schema.json"
+    },
+    "zod/document-structure/TextFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/TextFileSchema.schema.json"
+    },
+    "zod/document-structure/TextSectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/TextSectionSchema.schema.json"
+    },
+    "zod/document-structure/TextSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/TextSourceSchema.schema.json"
+    },
+    "zod/document-structure/TextStructureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/TextStructureSchema.schema.json"
+    },
+    "zod/document-structure/TextUpstreamSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-structure/TextUpstreamSchema.schema.json"
+    },
+    "zod/extraction/ExtractedAssetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/extraction/ExtractedAssetSchema.schema.json"
+    },
+    "zod/extraction/ExtractionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/extraction/ExtractionSchema.schema.json"
+    },
+    "zod/figure-description/FigureDescriptionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/figure-description/FigureDescriptionSchema.schema.json"
+    },
+    "zod/figure-description/FigureDescriptionsFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/figure-description/FigureDescriptionsFileSchema.schema.json"
+    },
+    "zod/landing-sticky/LandingLinkSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/landing-sticky/LandingLinkSchema.schema.json"
+    },
+    "zod/landing-sticky/LandingStickySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/landing-sticky/LandingStickySchema.schema.json"
+    },
+    "zod/narrative/NarrativeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/narrative/NarrativeSchema.schema.json"
+    },
+    "zod/narrative/NarrativeSlotSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/narrative/NarrativeSlotSchema.schema.json"
+    },
+    "zod/odrl/OdrlConstraintSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/odrl/OdrlConstraintSchema.schema.json"
+    },
+    "zod/odrl/OdrlDutySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/odrl/OdrlDutySchema.schema.json"
+    },
+    "zod/odrl/OdrlPolicySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/odrl/OdrlPolicySchema.schema.json"
+    },
+    "zod/odrl/OdrlRuleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/odrl/OdrlRuleSchema.schema.json"
+    },
+    "zod/pinned-terminology/PinnedConceptSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pinned-terminology/PinnedConceptSchema.schema.json"
+    },
+    "zod/pinned-terminology/PinnedTerminologySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pinned-terminology/PinnedTerminologySchema.schema.json"
+    },
+    "zod/prov/ProvActivitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/ProvActivitySchema.schema.json"
+    },
+    "zod/prov/ProvAgreementDistributionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/ProvAgreementDistributionSchema.schema.json"
+    },
+    "zod/prov/ProvAssociationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/ProvAssociationSchema.schema.json"
+    },
+    "zod/prov/ProvConsentDecisionRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/ProvConsentDecisionRecordSchema.schema.json"
+    },
+    "zod/prov/ProvConsentRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/ProvConsentRefSchema.schema.json"
+    },
+    "zod/prov/ProvDecisionRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/ProvDecisionRecordSchema.schema.json"
+    },
+    "zod/prov/ProvGrantCredentialSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/ProvGrantCredentialSchema.schema.json"
+    },
+    "zod/prov/ProvUsedSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/ProvUsedSchema.schema.json"
+    },
+    "zod/prov/Sha256HexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/Sha256HexSchema.schema.json"
+    },
+    "zod/prov/SpdxChecksumSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/prov/SpdxChecksumSchema.schema.json"
+    },
+    "zod/section-verdicts/SectionVerdictFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/section-verdicts/SectionVerdictFileSchema.schema.json"
+    },
+    "zod/section-verdicts/SectionVerdictSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/section-verdicts/SectionVerdictSchema.schema.json"
+    },
+    "zod/sticky-contribution/InitiationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/sticky-contribution/InitiationSchema.schema.json"
+    },
+    "zod/sticky-contribution/StickyContributionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/sticky-contribution/StickyContributionSchema.schema.json"
+    },
+    "zod/sticky-contribution/StickyLinkSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/sticky-contribution/StickyLinkSchema.schema.json"
+    },
+    "zod/sticky-contribution/StickyTextSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/sticky-contribution/StickyTextSchema.schema.json"
+    },
+    "zod/sticky-contribution/TextBoxSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/sticky-contribution/TextBoxSchema.schema.json"
+    },
+    "zod/term-adjudication/ChangeProseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-adjudication/ChangeProseSchema.schema.json"
+    },
+    "zod/term-adjudication/LocalTermSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-adjudication/LocalTermSchema.schema.json"
+    },
+    "zod/term-adjudication/TermAdjudicationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-adjudication/TermAdjudicationSchema.schema.json"
+    },
+    "zod/term-adjudication/TermAdjudicationsFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-adjudication/TermAdjudicationsFileSchema.schema.json"
+    },
+    "zod/term-adjudication/VocabularyWrongSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-adjudication/VocabularyWrongSchema.schema.json"
+    },
+    "zod/term-mapping/ConceptMatchSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-mapping/ConceptMatchSchema.schema.json"
+    },
+    "zod/term-mapping/MappingScopeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-mapping/MappingScopeSchema.schema.json"
+    },
+    "zod/term-mapping/TermMappingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-mapping/TermMappingSchema.schema.json"
+    },
+    "zod/term-mapping/TermMappingsFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/term-mapping/TermMappingsFileSchema.schema.json"
+    },
+    "zod/translation/TranslationConfigSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/translation/TranslationConfigSchema.schema.json"
+    },
+    "zod/translation/TranslationNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/translation/TranslationNodeSchema.schema.json"
+    },
+    "zod/translation/TranslationStatusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/translation/TranslationStatusSchema.schema.json"
+    },
+    "zod/vector-figure/AssemblyBasisSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-figure/AssemblyBasisSchema.schema.json"
+    },
+    "zod/vector-figure/VectorAssemblySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-figure/VectorAssemblySchema.schema.json"
+    },
+    "zod/vector-figure/VectorBoxSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-figure/VectorBoxSchema.schema.json"
+    },
+    "zod/vector-figure/VectorConnectorSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-figure/VectorConnectorSchema.schema.json"
+    },
+    "zod/vector-figure/VectorFigureBasisSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-figure/VectorFigureBasisSchema.schema.json"
+    },
+    "zod/vector-figure/VectorFigureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-figure/VectorFigureSchema.schema.json"
+    },
+    "zod/vector-figure/VectorFiguresSidecarSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-figure/VectorFiguresSidecarSchema.schema.json"
+    },
+    "zod/vector-labels/BBoxSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-labels/BBoxSchema.schema.json"
+    },
+    "zod/vector-labels/VectorFigurePageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-labels/VectorFigurePageSchema.schema.json"
+    },
+    "zod/vector-labels/VectorLabelSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-labels/VectorLabelSchema.schema.json"
+    },
+    "zod/vector-labels/VectorLabelsSidecarSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vector-labels/VectorLabelsSidecarSchema.schema.json"
+    },
+    "zod/vocab-mapping/DependencySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/DependencySchema.schema.json"
+    },
+    "zod/vocab-mapping/ElementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/ElementSchema.schema.json"
+    },
+    "zod/vocab-mapping/GroupSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/GroupSchema.schema.json"
+    },
+    "zod/vocab-mapping/R4EquivalenceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/R4EquivalenceSchema.schema.json"
+    },
+    "zod/vocab-mapping/RelationshipSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/RelationshipSchema.schema.json"
+    },
+    "zod/vocab-mapping/ScopeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/ScopeSchema.schema.json"
+    },
+    "zod/vocab-mapping/TargetPropertySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/TargetPropertySchema.schema.json"
+    },
+    "zod/vocab-mapping/TargetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/TargetSchema.schema.json"
+    },
+    "zod/vocab-mapping/TypedValueSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/TypedValueSchema.schema.json"
+    },
+    "zod/vocab-mapping/UnmappedSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/UnmappedSchema.schema.json"
+    },
+    "zod/vocab-mapping/VocabMappingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/VocabMappingSchema.schema.json"
+    },
+    "zod/voice-skill/VoiceInstructionsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voice-skill/VoiceInstructionsSchema.schema.json"
+    },
+    "zod/voice-skill/VoiceSkillRuleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voice-skill/VoiceSkillRuleSchema.schema.json"
+    },
+    "zod/voice-skill/VoiceSkillSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voice-skill/VoiceSkillSchema.schema.json"
+    },
+    "zod/voices/VoiceApplicabilitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoiceApplicabilitySchema.schema.json"
+    },
+    "zod/voices/VoiceConfigSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoiceConfigSchema.schema.json"
+    },
+    "zod/voices/VoicePatternSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoicePatternSchema.schema.json"
+    },
+    "zod/voices/VoiceProfileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoiceProfileSchema.schema.json"
+    },
+    "zod/voices/VoiceRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoiceRefSchema.schema.json"
+    },
+    "zod/voices/VoiceRuleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoiceRuleSchema.schema.json"
+    },
+    "zod/voices/VoiceRuleSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoiceRuleSourceSchema.schema.json"
+    },
+    "zod/voices/VoiceSupersessionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoiceSupersessionSchema.schema.json"
+    },
+    "zod/voices/VoiceTargetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoiceTargetSchema.schema.json"
+    },
+    "zod/voices/VoiceTerminologySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voices/VoiceTerminologySchema.schema.json"
+    },
+    "zod/withheld/WithheldEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/withheld/WithheldEntrySchema.schema.json"
+    },
+    "zod/withheld/WithheldGateSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/withheld/WithheldGateSchema.schema.json"
+    },
+    "zod/withheld/WithheldSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/withheld/WithheldSchema.schema.json"
+    },
+    "zod/block-kind-node/BlockKindNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/block-kind-node/BlockKindNodeSchema.schema.json"
+    },
+    "zod/built-at-publish/BuiltAtPublishCauseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/built-at-publish/BuiltAtPublishCauseSchema.schema.json"
+    },
+    "zod/built-at-publish/BuiltAtPublishListSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/built-at-publish/BuiltAtPublishListSchema.schema.json"
+    },
+    "zod/built-at-publish/BuiltAtPublishSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/built-at-publish/BuiltAtPublishSchema.schema.json"
+    },
+    "zod/carried-note/ArtefactRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/carried-note/ArtefactRefSchema.schema.json"
+    },
+    "zod/carried-note/CarriedNoteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/carried-note/CarriedNoteSchema.schema.json"
+    },
+    "zod/carried-note/ExternalIdentitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/carried-note/ExternalIdentitySchema.schema.json"
+    },
+    "zod/carried-note/KgRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/carried-note/KgRefSchema.schema.json"
+    },
+    "zod/carried-note/NoteTagsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/carried-note/NoteTagsSchema.schema.json"
+    },
+    "zod/carried-note/TaskRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/carried-note/TaskRefSchema.schema.json"
+    },
+    "zod/cat-harness/AssociatedHarnessSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/AssociatedHarnessSchema.schema.json"
+    },
+    "zod/cat-harness/CatHarnessDeclarationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/CatHarnessDeclarationSchema.schema.json"
+    },
+    "zod/cat-harness/ContentAdapterDeclarationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/ContentAdapterDeclarationSchema.schema.json"
+    },
+    "zod/cat-harness/ContentDirectorySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/ContentDirectorySchema.schema.json"
+    },
+    "zod/cat-harness/ContentTypeTranslationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/ContentTypeTranslationSchema.schema.json"
+    },
+    "zod/cat-harness/DirectoryStorageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/DirectoryStorageSchema.schema.json"
+    },
+    "zod/cat-harness/ExactVersionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/ExactVersionSchema.schema.json"
+    },
+    "zod/cat-harness/GateExemptionsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/GateExemptionsSchema.schema.json"
+    },
+    "zod/cat-harness/GlassStripPinSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/GlassStripPinSchema.schema.json"
+    },
+    "zod/cat-harness/GlassStripSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/GlassStripSchema.schema.json"
+    },
+    "zod/cat-harness/GraphNodeDirectorySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/GraphNodeDirectorySchema.schema.json"
+    },
+    "zod/cat-harness/HarnessVisualiserSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/HarnessVisualiserSchema.schema.json"
+    },
+    "zod/cat-harness/InstanceGitSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/InstanceGitSourceSchema.schema.json"
+    },
+    "zod/cat-harness/InstanceLocationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/InstanceLocationSchema.schema.json"
+    },
+    "zod/cat-harness/InstanceSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/InstanceSourceSchema.schema.json"
+    },
+    "zod/cat-harness/KnownSubstrateSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/KnownSubstrateSchema.schema.json"
+    },
+    "zod/cat-harness/LsiUnitProviderDeclarationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/LsiUnitProviderDeclarationSchema.schema.json"
+    },
+    "zod/cat-harness/NavbarIconsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/NavbarIconsSchema.schema.json"
+    },
+    "zod/cat-harness/PublicationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/PublicationSchema.schema.json"
+    },
+    "zod/cat-harness/RemoteGraphSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/RemoteGraphSchema.schema.json"
+    },
+    "zod/cat-harness/RenderExemptionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/RenderExemptionSchema.schema.json"
+    },
+    "zod/cat-harness/SubgraphCoverageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/SubgraphCoverageSchema.schema.json"
+    },
+    "zod/cat-harness/SubscriptionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/SubscriptionSchema.schema.json"
+    },
+    "zod/cat-harness/TileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/TileSchema.schema.json"
+    },
+    "zod/cat-harness/TopologySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/TopologySchema.schema.json"
+    },
+    "zod/cat-harness/TranslatableFormatSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/TranslatableFormatSchema.schema.json"
+    },
+    "zod/cat-harness/VisualisationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/VisualisationSchema.schema.json"
+    },
+    "zod/cat-harness/VisualiserDeclarationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/VisualiserDeclarationSchema.schema.json"
+    },
+    "zod/concern-groups/ConcernGroupCodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/concern-groups/ConcernGroupCodeSchema.schema.json"
+    },
+    "zod/concern-groups/ConcernGroupsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/concern-groups/ConcernGroupsSchema.schema.json"
+    },
+    "zod/content-adapter-node/ContentAdapterNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/content-adapter-node/ContentAdapterNodeSchema.schema.json"
+    },
+    "zod/contribution-nodes/OwnCodeRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/contribution-nodes/OwnCodeRefSchema.schema.json"
+    },
+    "zod/contribution-nodes/PipelinePluginNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/contribution-nodes/PipelinePluginNodeSchema.schema.json"
+    },
+    "zod/contribution-nodes/QaCheckerNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/contribution-nodes/QaCheckerNodeSchema.schema.json"
+    },
+    "zod/external-schema/ExternalSchemaSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/external-schema/ExternalSchemaSchema.schema.json"
+    },
+    "zod/fsh-guts/FshGutsNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/fsh-guts/FshGutsNodeSchema.schema.json"
+    },
+    "zod/graph-typology-node/GraphTypologyNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/graph-typology-node/GraphTypologyNodeSchema.schema.json"
+    },
+    "zod/graph-typology-node/KindAvatarSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/graph-typology-node/KindAvatarSchema.schema.json"
+    },
+    "zod/harness-config/ExactVersionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/ExactVersionSchema.schema.json"
+    },
+    "zod/harness-config/FolioAssistantDependencySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/FolioAssistantDependencySchema.schema.json"
+    },
+    "zod/harness-config/HarnessConfigDependenciesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/HarnessConfigDependenciesSchema.schema.json"
+    },
+    "zod/harness-config/HarnessConfigSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/HarnessConfigSchema.schema.json"
+    },
+    "zod/harness-config/HarnessDirsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/HarnessDirsSchema.schema.json"
+    },
+    "zod/harness-config/HarnessSiteBuildSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/HarnessSiteBuildSchema.schema.json"
+    },
+    "zod/harness-config/HarnessSiteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/HarnessSiteSchema.schema.json"
+    },
+    "zod/harness-config/TranslationConfigSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-config/TranslationConfigSchema.schema.json"
+    },
+    "zod/id-lookup/CatalogueNodeReadSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/id-lookup/CatalogueNodeReadSchema.schema.json"
+    },
+    "zod/id-lookup/IdLookupManifestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/id-lookup/IdLookupManifestSchema.schema.json"
+    },
+    "zod/id-lookup/NamespaceIndexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/id-lookup/NamespaceIndexSchema.schema.json"
+    },
+    "zod/id-lookup/ShardSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/id-lookup/ShardSchema.schema.json"
+    },
+    "zod/index-config/IndexConfigSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/IndexConfigSchema.schema.json"
+    },
+    "zod/index-config/IndexContentTypeIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/IndexContentTypeIdSchema.schema.json"
+    },
+    "zod/index-config/IndexInstanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/IndexInstanceSchema.schema.json"
+    },
+    "zod/index-config/IndexSiteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/IndexSiteSchema.schema.json"
+    },
+    "zod/index-config/InstanceSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/InstanceSourceSchema.schema.json"
+    },
+    "zod/index-config/RemoteSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/index-config/RemoteSourceSchema.schema.json"
+    },
+    "zod/jsonld-prefixes/JsonldPrefixSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/jsonld-prefixes/JsonldPrefixSchema.schema.json"
+    },
+    "zod/jsonld-prefixes/JsonldPrefixTableSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/jsonld-prefixes/JsonldPrefixTableSchema.schema.json"
+    },
+    "zod/jsonld-prefixes/NamespaceIriSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/jsonld-prefixes/NamespaceIriSchema.schema.json"
+    },
+    "zod/jsonld/ContentContextSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/jsonld/ContentContextSchema.schema.json"
+    },
+    "zod/kg-node/AssetSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-node/AssetSourceSchema.schema.json"
+    },
+    "zod/kg-node/DeclarationScopeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-node/DeclarationScopeSchema.schema.json"
+    },
+    "zod/kg-node/ImageRegionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-node/ImageRegionSchema.schema.json"
+    },
+    "zod/kg-node/KgAssetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-node/KgAssetSchema.schema.json"
+    },
+    "zod/kg-node/KgImageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-node/KgImageSchema.schema.json"
+    },
+    "zod/materialization-state/FixitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/materialization-state/FixitySchema.schema.json"
+    },
+    "zod/mount-trust/MountConsentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/mount-trust/MountConsentSchema.schema.json"
+    },
+    "zod/mount-trust/MountSignatureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/mount-trust/MountSignatureSchema.schema.json"
+    },
+    "zod/mount-trust/MountTrustBasisSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/mount-trust/MountTrustBasisSchema.schema.json"
+    },
+    "zod/mount-trust/MountTrustSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/mount-trust/MountTrustSchema.schema.json"
+    },
+    "zod/mount-trust/StandingConsentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/mount-trust/StandingConsentSchema.schema.json"
+    },
+    "zod/mount-trust/StandingMarkerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/mount-trust/StandingMarkerSchema.schema.json"
+    },
+    "zod/node-kind-index/UnkindedBaselineEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/node-kind-index/UnkindedBaselineEntrySchema.schema.json"
+    },
+    "zod/nquads-distribution/NQuadsDistributionManifestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/nquads-distribution/NQuadsDistributionManifestSchema.schema.json"
+    },
+    "zod/nquads-distribution/NQuadsPartitionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/nquads-distribution/NQuadsPartitionSchema.schema.json"
+    },
+    "zod/nquads-distribution/NamedQueryDefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/nquads-distribution/NamedQueryDefSchema.schema.json"
+    },
+    "zod/nquads-distribution/NamedQueryRequestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/nquads-distribution/NamedQueryRequestSchema.schema.json"
+    },
+    "zod/nquads-distribution/NamedQueryResponseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/nquads-distribution/NamedQueryResponseSchema.schema.json"
+    },
+    "zod/nquads-distribution/QueryParameterDefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/nquads-distribution/QueryParameterDefSchema.schema.json"
+    },
+    "zod/remote-mount/CommitShaSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/remote-mount/CommitShaSchema.schema.json"
+    },
+    "zod/remote-mount/LockedDirectorySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/remote-mount/LockedDirectorySchema.schema.json"
+    },
+    "zod/remote-mount/LockedInstanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/remote-mount/LockedInstanceSchema.schema.json"
+    },
+    "zod/remote-mount/MountDefaultsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/remote-mount/MountDefaultsSchema.schema.json"
+    },
+    "zod/remote-mount/MountLockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/remote-mount/MountLockSchema.schema.json"
+    },
+    "zod/remote-mount/MountOverrideSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/remote-mount/MountOverrideSchema.schema.json"
+    },
+    "zod/remote-mount/MountPathSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/remote-mount/MountPathSchema.schema.json"
+    },
+    "zod/remote-mount/RemoteMountSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/remote-mount/RemoteMountSchema.schema.json"
+    },
+    "zod/remote-mount/RemoteMountsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/remote-mount/RemoteMountsSchema.schema.json"
+    },
+    "zod/repo-full-name/RepoFullNameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/repo-full-name/RepoFullNameSchema.schema.json"
+    },
+    "zod/semantic-zoom/KindZoomSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/semantic-zoom/KindZoomSchema.schema.json"
+    },
+    "zod/semantic-zoom/SemanticZoomSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/semantic-zoom/SemanticZoomSchema.schema.json"
+    },
+    "zod/site/BasicCdnSiteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/BasicCdnSiteSchema.schema.json"
+    },
+    "zod/site/CdnSiteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/CdnSiteSchema.schema.json"
+    },
+    "zod/site/HeaderRuleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/HeaderRuleSchema.schema.json"
+    },
+    "zod/site/MimeTypeRuleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/MimeTypeRuleSchema.schema.json"
+    },
+    "zod/site/RedirectRuleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/RedirectRuleSchema.schema.json"
+    },
+    "zod/site/SiteBuiltFromSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/SiteBuiltFromSchema.schema.json"
+    },
+    "zod/site/SiteRoutesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/SiteRoutesSchema.schema.json"
+    },
+    "zod/site/SubSiteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/SubSiteSchema.schema.json"
+    },
+    "zod/skill-package/ActorDefinitionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/ActorDefinitionSchema.schema.json"
+    },
+    "zod/skill-package/ActorKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/ActorKindSchema.schema.json"
+    },
+    "zod/skill-package/CapabilityDefinitionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/CapabilityDefinitionSchema.schema.json"
+    },
+    "zod/skill-package/CapabilityDetectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/CapabilityDetectionSchema.schema.json"
+    },
+    "zod/skill-package/ConformanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/ConformanceSchema.schema.json"
+    },
+    "zod/skill-package/DegradationStrategySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/DegradationStrategySchema.schema.json"
+    },
+    "zod/skill-package/DependencyKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/DependencyKindSchema.schema.json"
+    },
+    "zod/skill-package/DockerRequirementsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/DockerRequirementsSchema.schema.json"
+    },
+    "zod/skill-package/HookCommandSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/HookCommandSchema.schema.json"
+    },
+    "zod/skill-package/HookEventSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/HookEventSchema.schema.json"
+    },
+    "zod/skill-package/IdentitySourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/IdentitySourceSchema.schema.json"
+    },
+    "zod/skill-package/LifecycleStageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/LifecycleStageSchema.schema.json"
+    },
+    "zod/skill-package/RemotePackageRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RemotePackageRefSchema.schema.json"
+    },
+    "zod/skill-package/RemoteSkillRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RemoteSkillRecordSchema.schema.json"
+    },
+    "zod/skill-package/RemoteSyncConfigSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RemoteSyncConfigSchema.schema.json"
+    },
+    "zod/skill-package/RemoteSyncStrategySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RemoteSyncStrategySchema.schema.json"
+    },
+    "zod/skill-package/RequirementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RequirementSchema.schema.json"
+    },
+    "zod/skill-package/RequirementStatementRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RequirementStatementRefSchema.schema.json"
+    },
+    "zod/skill-package/RequirementStatementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RequirementStatementSchema.schema.json"
+    },
+    "zod/skill-package/RoleAssignmentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RoleAssignmentSchema.schema.json"
+    },
+    "zod/skill-package/SessionHookSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SessionHookSchema.schema.json"
+    },
+    "zod/skill-package/SkillCapabilityRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SkillCapabilityRefSchema.schema.json"
+    },
+    "zod/skill-package/SkillDefinitionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SkillDefinitionSchema.schema.json"
+    },
+    "zod/skill-package/SkillDependencySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SkillDependencySchema.schema.json"
+    },
+    "zod/skill-package/SkillPackageManifestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SkillPackageManifestSchema.schema.json"
+    },
+    "zod/skill-package/SkillPackageRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SkillPackageRefSchema.schema.json"
+    },
+    "zod/skill-package/SkillRegistrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SkillRegistrySchema.schema.json"
+    },
+    "zod/skill-package/SkillSchemaRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SkillSchemaRefSchema.schema.json"
+    },
+    "zod/skill-package/SystemUnderTestFacetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SystemUnderTestFacetSchema.schema.json"
+    },
+    "zod/skill-topics/SkillTopicSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-topics/SkillTopicSchema.schema.json"
+    },
+    "zod/skill-topics/SkillTopicsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-topics/SkillTopicsSchema.schema.json"
+    },
+    "zod/skill-topics/SkillsDirectoryEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-topics/SkillsDirectoryEntrySchema.schema.json"
+    },
+    "zod/state-manifest/BranchStatusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/state-manifest/BranchStatusSchema.schema.json"
+    },
+    "zod/state-manifest/RouteManifestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/state-manifest/RouteManifestSchema.schema.json"
+    },
+    "zod/state-manifest/StateManifestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/state-manifest/StateManifestSchema.schema.json"
+    },
+    "zod/state-manifest/TipManifestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/state-manifest/TipManifestSchema.schema.json"
+    },
+    "zod/subgraph-manifest/PayloadIriSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/PayloadIriSchema.schema.json"
+    },
+    "zod/subgraph-manifest/PayloadLinkSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/PayloadLinkSchema.schema.json"
+    },
+    "zod/subgraph-manifest/PayloadSidecarSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/PayloadSidecarSchema.schema.json"
+    },
+    "zod/subgraph-manifest/Sha256HexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/Sha256HexSchema.schema.json"
+    },
+    "zod/subgraph-manifest/SubgraphHydratedNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/SubgraphHydratedNodeSchema.schema.json"
+    },
+    "zod/subgraph-manifest/SubgraphHydratedSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/SubgraphHydratedSchema.schema.json"
+    },
+    "zod/subgraph-manifest/SubgraphIndexFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/SubgraphIndexFileSchema.schema.json"
+    },
+    "zod/subgraph-manifest/SubgraphIndexManifestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/SubgraphIndexManifestSchema.schema.json"
+    },
+    "zod/subgraph-manifest/SubgraphIndexNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/SubgraphIndexNodeSchema.schema.json"
+    },
+    "zod/subgraph-manifest/SubgraphIndexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/SubgraphIndexSchema.schema.json"
+    },
+    "zod/subgraph-manifest/SubgraphIriSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/SubgraphIriSchema.schema.json"
+    },
+    "zod/subgraph-manifest/SubgraphMemberSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/SubgraphMemberSchema.schema.json"
+    },
+    "zod/subgraph-manifest/SubgraphPointerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-manifest/SubgraphPointerSchema.schema.json"
+    },
+    "zod/subgraph-source/BranchNameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/BranchNameSchema.schema.json"
+    },
+    "zod/subgraph-source/BranchPrefixSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/BranchPrefixSchema.schema.json"
+    },
+    "zod/subgraph-source/BranchSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/BranchSourceSchema.schema.json"
+    },
+    "zod/subgraph-source/DirectorySourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/DirectorySourceSchema.schema.json"
+    },
+    "zod/subgraph-source/FamilySourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/FamilySourceSchema.schema.json"
+    },
+    "zod/subgraph-source/HydratedSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/HydratedSourceSchema.schema.json"
+    },
+    "zod/subgraph-source/KeyedBySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/KeyedBySchema.schema.json"
+    },
+    "zod/subgraph-source/NewInstanceSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/NewInstanceSourceSchema.schema.json"
+    },
+    "zod/subgraph-source/NpmSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/NpmSourceSchema.schema.json"
+    },
+    "zod/subgraph-source/RemoteSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/RemoteSourceSchema.schema.json"
+    },
+    "zod/subgraph-source/RouteMemberSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/RouteMemberSchema.schema.json"
+    },
+    "zod/subgraph-source/SubgraphSourceOverridesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/SubgraphSourceOverridesSchema.schema.json"
+    },
+    "zod/subgraph-source/SubgraphSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/SubgraphSourceSchema.schema.json"
+    },
+    "zod/substrate-snapshot/SubscriptionKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/substrate-snapshot/SubscriptionKindSchema.schema.json"
+    },
+    "zod/substrate-snapshot/SubstrateSnapshotSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/substrate-snapshot/SubstrateSnapshotSchema.schema.json"
+    },
+    "zod/validator-node/ValidatorNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/validator-node/ValidatorNodeSchema.schema.json"
+    },
+    "zod/archive-contents/ArchiveContentsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archive-contents/ArchiveContentsSchema.schema.json"
+    },
+    "zod/archive-contents/ArchiveEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archive-contents/ArchiveEntrySchema.schema.json"
+    },
+    "zod/code-list/CodeListSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/code-list/CodeListSchema.schema.json"
+    },
+    "zod/code-list/CodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/code-list/CodeSchema.schema.json"
+    },
+    "zod/code-list/CodeSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/code-list/CodeSourceSchema.schema.json"
+    },
+    "zod/glossary-ledger/LedgerEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/glossary-ledger/LedgerEntrySchema.schema.json"
+    },
+    "zod/glossary-ledger/LedgerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/glossary-ledger/LedgerSchema.schema.json"
+    },
+    "zod/intake/IntakeClassificationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/intake/IntakeClassificationSchema.schema.json"
+    },
+    "zod/intake/IntakeFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/intake/IntakeFileSchema.schema.json"
+    },
+    "zod/intake/IntakeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/intake/IntakeSchema.schema.json"
+    },
+    "zod/intake/IntakeSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/intake/IntakeSourceSchema.schema.json"
+    },
+    "zod/library-keywords/KeywordsFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/library-keywords/KeywordsFileSchema.schema.json"
+    },
+    "zod/library-nodes/LibraryBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/library-nodes/LibraryBlockSchema.schema.json"
+    },
+    "zod/library-nodes/LibrarySectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/library-nodes/LibrarySectionSchema.schema.json"
+    },
+    "zod/library-nodes/LibrarySourceDocumentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/library-nodes/LibrarySourceDocumentSchema.schema.json"
+    },
+    "zod/outside-software/OutsideSoftwareCoreSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/outside-software/OutsideSoftwareCoreSchema.schema.json"
+    },
+    "zod/outside-software/Sha512DigestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/outside-software/Sha512DigestSchema.schema.json"
+    },
+    "zod/outside-software/SoftwareDigestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/outside-software/SoftwareDigestSchema.schema.json"
+    },
+    "zod/outside-software/SoftwareSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/outside-software/SoftwareSourceSchema.schema.json"
+    },
+    "zod/outside-software/SoftwareUrlSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/outside-software/SoftwareUrlSourceSchema.schema.json"
+    },
+    "zod/outside-software/SoftwareVersionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/outside-software/SoftwareVersionSchema.schema.json"
+    },
+    "zod/outside-software/SpdxLicenceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/outside-software/SpdxLicenceSchema.schema.json"
+    },
+    "zod/recording/RecogniserSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/recording/RecogniserSchema.schema.json"
+    },
+    "zod/recording/RecordingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/recording/RecordingSchema.schema.json"
+    },
+    "zod/recording/TranscriptSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/recording/TranscriptSchema.schema.json"
+    },
+    "zod/recording/TranscriptSegmentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/recording/TranscriptSegmentSchema.schema.json"
+    },
+    "zod/referenced-source/FileSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/referenced-source/FileSourceSchema.schema.json"
+    },
+    "zod/referenced-source/PublishedSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/referenced-source/PublishedSourceSchema.schema.json"
+    },
+    "zod/referenced-source/ReferencedLinkSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/referenced-source/ReferencedLinkSchema.schema.json"
+    },
+    "zod/referenced-source/ReferencedSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/referenced-source/ReferencedSourceSchema.schema.json"
+    },
+    "zod/software-library/LayerNameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/software-library/LayerNameSchema.schema.json"
+    },
+    "zod/software-library/LibraryNameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/software-library/LibraryNameSchema.schema.json"
+    },
+    "zod/software-library/SoftwareLibrarySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/software-library/SoftwareLibrarySchema.schema.json"
+    },
+    "zod/software-library/VendoredSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/software-library/VendoredSchema.schema.json"
+    },
+    "zod/source-descriptor/IdentifierSystemSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/source-descriptor/IdentifierSystemSchema.schema.json"
+    },
+    "zod/source-descriptor/SourceDescriptorSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/source-descriptor/SourceDescriptorSchema.schema.json"
+    },
+    "zod/source-licence/SourceLicenceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/source-licence/SourceLicenceSchema.schema.json"
+    },
+    "zod/source-provenance/SignatureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/source-provenance/SignatureSchema.schema.json"
+    },
+    "zod/source-provenance/SourceProvenanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/source-provenance/SourceProvenanceSchema.schema.json"
+    },
+    "zod/tabular-csvw/CsvwColumnSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-csvw/CsvwColumnSchema.schema.json"
+    },
+    "zod/tabular-csvw/CsvwTableSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-csvw/CsvwTableSchema.schema.json"
+    },
+    "zod/tabular-csvw/ExtentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-csvw/ExtentSchema.schema.json"
+    },
+    "zod/tabular-csvw/SheetAnchorSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-csvw/SheetAnchorSchema.schema.json"
+    },
+    "zod/tabular-csvw/TabularCsvwSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-csvw/TabularCsvwSchema.schema.json"
+    },
+    "zod/tabular-csvw/TabularCsvwTablesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-csvw/TabularCsvwTablesSchema.schema.json"
+    },
+    "zod/tabular-csvw/TabularStubSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-csvw/TabularStubSchema.schema.json"
+    },
+    "zod/tabular-records/TabularRecordsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-records/TabularRecordsSchema.schema.json"
+    },
+    "zod/tabular-records/TabularSheetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tabular-records/TabularSheetSchema.schema.json"
+    },
+    "zod/theme-art-intake/ArtDeclarationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme-art-intake/ArtDeclarationSchema.schema.json"
+    },
+    "zod/translation-tools/ContentTypeTranslationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/translation-tools/ContentTypeTranslationSchema.schema.json"
+    },
+    "zod/translation-tools/TranslatableFormatSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/translation-tools/TranslatableFormatSchema.schema.json"
+    },
+    "zod/actor-reach/ActorReachSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/actor-reach/ActorReachSchema.schema.json"
+    },
+    "zod/convention/ConventionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/convention/ConventionSchema.schema.json"
+    },
+    "zod/decision-methodology-context/DataTypeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/DataTypeSchema.schema.json"
+    },
+    "zod/decision-methodology-context/DecisionContextSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/DecisionContextSchema.schema.json"
+    },
+    "zod/decision-methodology-context/MethodologyRecommendationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/MethodologyRecommendationSchema.schema.json"
+    },
+    "zod/decision-methodology-context/MethodologySelectionResultSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/MethodologySelectionResultSchema.schema.json"
+    },
+    "zod/decision-methodology-context/QuestionTypeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/QuestionTypeSchema.schema.json"
+    },
+    "zod/decision-methodology-context/ReversibilitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/ReversibilitySchema.schema.json"
+    },
+    "zod/decision-methodology-context/TimeConstraintSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/TimeConstraintSchema.schema.json"
+    },
+    "zod/decision-methodology-context/UncertaintySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/UncertaintySchema.schema.json"
+    },
+    "zod/decision-request/DecisionOptionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-request/DecisionOptionSchema.schema.json"
+    },
+    "zod/decision-request/DecisionRequestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-request/DecisionRequestSchema.schema.json"
+    },
+    "zod/deployment-description/DeploymentDescriptionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/deployment-description/DeploymentDescriptionSchema.schema.json"
+    },
+    "zod/deployment-description/JurisdictionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/deployment-description/JurisdictionSchema.schema.json"
+    },
+    "zod/deployment-description/PlacementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/deployment-description/PlacementSchema.schema.json"
+    },
+    "zod/methodology/MethodologyFrontMatterSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/methodology/MethodologyFrontMatterSchema.schema.json"
+    },
+    "zod/methodology/UsesMethodologySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/methodology/UsesMethodologySchema.schema.json"
+    },
+    "zod/process-element-id/ProcessElementIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/process-element-id/ProcessElementIdSchema.schema.json"
+    },
+    "zod/role-graph/ActorDefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/ActorDefSchema.schema.json"
+    },
+    "zod/role-graph/FormerNameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/FormerNameSchema.schema.json"
+    },
+    "zod/role-graph/PermissionDefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/PermissionDefSchema.schema.json"
+    },
+    "zod/role-graph/PermissionVocabularySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/PermissionVocabularySchema.schema.json"
+    },
+    "zod/role-graph/RoleDefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/RoleDefSchema.schema.json"
+    },
+    "zod/role-graph/RoleExtensionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/RoleExtensionSchema.schema.json"
+    },
+    "zod/role-graph/RoleGraphSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/RoleGraphSchema.schema.json"
+    },
+    "zod/role-graph/RoleRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/RoleRefSchema.schema.json"
+    },
+    "zod/role-graph/StoreApiSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/StoreApiSchema.schema.json"
+    },
+    "zod/role-graph/StoreDefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/StoreDefSchema.schema.json"
+    },
+    "zod/user-story/UserStoryGraphSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-story/UserStoryGraphSchema.schema.json"
+    },
+    "zod/user-story/UserStorySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-story/UserStorySchema.schema.json"
+    },
+    "zod/adversarial-checklist/AdversarialChecklistItemSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/adversarial-checklist/AdversarialChecklistItemSchema.schema.json"
+    },
+    "zod/adversarial-checklist/AdversarialContentKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/adversarial-checklist/AdversarialContentKindSchema.schema.json"
+    },
+    "zod/artifact-store/ArtifactStoreSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/artifact-store/ArtifactStoreSchema.schema.json"
+    },
+    "zod/bean-graph/BeanFrontMatterSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/bean-graph/BeanFrontMatterSchema.schema.json"
+    },
+    "zod/bean-graph/BeanGraphNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/bean-graph/BeanGraphNodeSchema.schema.json"
+    },
+    "zod/bean-graph/BeanGraphSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/bean-graph/BeanGraphSchema.schema.json"
+    },
+    "zod/bean-graph/BeanTargetsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/bean-graph/BeanTargetsSchema.schema.json"
+    },
+    "zod/bean-graph/MilestonePlanSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/bean-graph/MilestonePlanSchema.schema.json"
+    },
+    "zod/bean-graph/MilestoneRollupSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/bean-graph/MilestoneRollupSchema.schema.json"
+    },
+    "zod/bean-note/BeanNoteFrontMatterSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/bean-note/BeanNoteFrontMatterSchema.schema.json"
+    },
+    "zod/binary-release/AssetDispositionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/AssetDispositionSchema.schema.json"
+    },
+    "zod/binary-release/BinaryReleaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/BinaryReleaseSchema.schema.json"
+    },
+    "zod/binary-release/ReleaseAssetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseAssetSchema.schema.json"
+    },
+    "zod/binary-release/ReleaseDigestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseDigestSchema.schema.json"
+    },
+    "zod/binary-release/ReleaseIdentitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseIdentitySchema.schema.json"
+    },
+    "zod/binary-release/ReleaseOriginRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseOriginRefSchema.schema.json"
+    },
+    "zod/binary-release/ReleaseOriginSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseOriginSchema.schema.json"
+    },
+    "zod/change-size/ChangeSizeThresholdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/change-size/ChangeSizeThresholdSchema.schema.json"
+    },
+    "zod/gates-report/GatesReportSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/gates-report/GatesReportSchema.schema.json"
+    },
+    "zod/gates-report/GatesReportTypeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/gates-report/GatesReportTypeSchema.schema.json"
+    },
+    "zod/gates-report/MergedGatesReportSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/gates-report/MergedGatesReportSchema.schema.json"
+    },
+    "zod/gates-report/MergedGatesReportTypeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/gates-report/MergedGatesReportTypeSchema.schema.json"
+    },
+    "zod/harness-state/HarnessBadgeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessBadgeSchema.schema.json"
+    },
+    "zod/harness-state/HarnessStateIndexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStateIndexSchema.schema.json"
+    },
+    "zod/harness-state/HarnessStateSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStateSchema.schema.json"
+    },
+    "zod/harness-state/HarnessStatesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStatesSchema.schema.json"
+    },
+    "zod/harness-state/HarnessStepSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStepSchema.schema.json"
+    },
+    "zod/health-report/HealthCheckResultSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/health-report/HealthCheckResultSchema.schema.json"
+    },
+    "zod/health-report/HealthFindingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/health-report/HealthFindingSchema.schema.json"
+    },
+    "zod/health-report/HealthMeasurementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/health-report/HealthMeasurementSchema.schema.json"
+    },
+    "zod/health-report/HealthReportSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/health-report/HealthReportSchema.schema.json"
+    },
+    "zod/health-report/HealthThresholdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/health-report/HealthThresholdSchema.schema.json"
+    },
+    "zod/health-report/PagesServingObservationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/health-report/PagesServingObservationSchema.schema.json"
+    },
+    "zod/health-report/PagesServingUrlSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/health-report/PagesServingUrlSchema.schema.json"
+    },
+    "zod/kg-qa/KgCriterionEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-qa/KgCriterionEntrySchema.schema.json"
+    },
+    "zod/kg-qa/KgFindingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-qa/KgFindingSchema.schema.json"
+    },
+    "zod/kg-qa/KgQaManifestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-qa/KgQaManifestSchema.schema.json"
+    },
+    "zod/kg-qa/KgQaReportSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/kg-qa/KgQaReportSchema.schema.json"
+    },
+    "zod/log-entry/LogEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/log-entry/LogEntrySchema.schema.json"
+    },
+    "zod/log-entry/LogExecutionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/log-entry/LogExecutionSchema.schema.json"
+    },
+    "zod/log-entry/LogReferenceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/log-entry/LogReferenceSchema.schema.json"
+    },
+    "zod/merge-queue/AgenticPromotionCriteriaSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/AgenticPromotionCriteriaSchema.schema.json"
+    },
+    "zod/merge-queue/BeanIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/BeanIdSchema.schema.json"
+    },
+    "zod/merge-queue/EjectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/EjectionSchema.schema.json"
+    },
+    "zod/merge-queue/HoldSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/HoldSchema.schema.json"
+    },
+    "zod/merge-queue/HumanVerdictSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/HumanVerdictSchema.schema.json"
+    },
+    "zod/merge-queue/MemberFactsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/MemberFactsSchema.schema.json"
+    },
+    "zod/merge-queue/MergeQueueEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/MergeQueueEntrySchema.schema.json"
+    },
+    "zod/merge-queue/PlacementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/PlacementSchema.schema.json"
+    },
+    "zod/merge-queue/PriorityClassSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/PriorityClassSchema.schema.json"
+    },
+    "zod/merge-queue/QueueStatusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/QueueStatusSchema.schema.json"
+    },
+    "zod/merge-queue/ReleaseAuthoritySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/ReleaseAuthoritySchema.schema.json"
+    },
+    "zod/merge-queue/ReleaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/ReleaseSchema.schema.json"
+    },
+    "zod/merge-queue/TrainMemberEvidenceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/TrainMemberEvidenceSchema.schema.json"
+    },
+    "zod/merge-queue/WouldHaveBlockedFindingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/WouldHaveBlockedFindingSchema.schema.json"
+    },
+    "zod/merge-queue/WouldHaveBlockedMetricsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/WouldHaveBlockedMetricsSchema.schema.json"
+    },
+    "zod/merge-queue/WouldHaveBlockedRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/WouldHaveBlockedRecordSchema.schema.json"
+    },
+    "zod/merge-review/AgenticPromotionCriteriaSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/AgenticPromotionCriteriaSchema.schema.json"
+    },
+    "zod/merge-review/BeanIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/BeanIdSchema.schema.json"
+    },
+    "zod/merge-review/EjectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/EjectionSchema.schema.json"
+    },
+    "zod/merge-review/HoldSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/HoldSchema.schema.json"
+    },
+    "zod/merge-review/HumanVerdictSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/HumanVerdictSchema.schema.json"
+    },
+    "zod/merge-review/MemberFactsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/MemberFactsSchema.schema.json"
+    },
+    "zod/merge-review/MergeQueueEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/MergeQueueEntrySchema.schema.json"
+    },
+    "zod/merge-review/PlacementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/PlacementSchema.schema.json"
+    },
+    "zod/merge-review/PriorityClassSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/PriorityClassSchema.schema.json"
+    },
+    "zod/merge-review/QueueStatusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/QueueStatusSchema.schema.json"
+    },
+    "zod/merge-review/ReleaseAuthoritySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/ReleaseAuthoritySchema.schema.json"
+    },
+    "zod/merge-review/ReleaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/ReleaseSchema.schema.json"
+    },
+    "zod/merge-review/TrainMemberEvidenceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/TrainMemberEvidenceSchema.schema.json"
+    },
+    "zod/merge-review/WouldHaveBlockedFindingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/WouldHaveBlockedFindingSchema.schema.json"
+    },
+    "zod/merge-review/WouldHaveBlockedMetricsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/WouldHaveBlockedMetricsSchema.schema.json"
+    },
+    "zod/merge-review/WouldHaveBlockedRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-review/WouldHaveBlockedRecordSchema.schema.json"
+    },
+    "zod/python-deps/PythonDepSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/python-deps/PythonDepSchema.schema.json"
+    },
+    "zod/qa-attestations/AdversarialReviewAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/AdversarialReviewAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/AttestationSubjectSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/AttestationSubjectSchema.schema.json"
+    },
+    "zod/qa-attestations/AttestedEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/AttestedEntrySchema.schema.json"
+    },
+    "zod/qa-attestations/BaseAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/BaseAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/BibHumanReviewAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/BibHumanReviewAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/BibLedgerRowSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/BibLedgerRowSchema.schema.json"
+    },
+    "zod/qa-attestations/BibReviewRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/BibReviewRecordSchema.schema.json"
+    },
+    "zod/qa-attestations/BibReviewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/BibReviewSchema.schema.json"
+    },
+    "zod/qa-attestations/BibVerificationAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/BibVerificationAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/BibVerificationRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/BibVerificationRecordSchema.schema.json"
+    },
+    "zod/qa-attestations/BlockAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/BlockAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/CertificationAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/CertificationAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/CertificationEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/CertificationEntrySchema.schema.json"
+    },
+    "zod/qa-attestations/CertificationSignatureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/CertificationSignatureSchema.schema.json"
+    },
+    "zod/qa-attestations/CertificationSignerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/CertificationSignerSchema.schema.json"
+    },
+    "zod/qa-attestations/CriteriaAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/CriteriaAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/KgAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/KgAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/PairAttestationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/PairAttestationSchema.schema.json"
+    },
+    "zod/qa-attestations/QaAttestationsBaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/QaAttestationsBaseSchema.schema.json"
+    },
+    "zod/qa-attestations/QaAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/QaAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/RequirementSignoffAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/RequirementSignoffAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/SectionTitleAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/SectionTitleAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/SectionTitleVerdictSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/SectionTitleVerdictSchema.schema.json"
+    },
+    "zod/qa-attestations/TranslationAttestationsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/TranslationAttestationsSchema.schema.json"
+    },
+    "zod/qa-attestations/VoiceReviewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/VoiceReviewSchema.schema.json"
+    },
+    "zod/qa-report/QaReportEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-report/QaReportEntrySchema.schema.json"
+    },
+    "zod/qa-report/QaReportFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-report/QaReportFileSchema.schema.json"
+    },
+    "zod/qa-report/QaReportProducerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-report/QaReportProducerSchema.schema.json"
+    },
+    "zod/qa-report/QaReportSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-report/QaReportSchema.schema.json"
+    },
+    "zod/qa-report/QaReportSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-report/QaReportSourceSchema.schema.json"
+    },
+    "zod/qa-report/QaReportStatusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-report/QaReportStatusSchema.schema.json"
+    },
+    "zod/qa-report/QaReportToolchainSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-report/QaReportToolchainSchema.schema.json"
+    },
+    "zod/qa-review/AdversarialFindingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/AdversarialFindingSchema.schema.json"
+    },
+    "zod/qa-review/AdversarialReviewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/AdversarialReviewSchema.schema.json"
+    },
+    "zod/qa-review/AuditNoteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/AuditNoteSchema.schema.json"
+    },
+    "zod/qa-review/CitationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/CitationSchema.schema.json"
+    },
+    "zod/qa-review/DecisionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/DecisionSchema.schema.json"
+    },
+    "zod/qa-review/FindingResolutionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/FindingResolutionSchema.schema.json"
+    },
+    "zod/qa-review/FindingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/FindingSchema.schema.json"
+    },
+    "zod/qa-review/MergeReviewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/MergeReviewSchema.schema.json"
+    },
+    "zod/qa-review/OverrideDecisionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/OverrideDecisionSchema.schema.json"
+    },
+    "zod/qa-review/OverruleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/OverruleSchema.schema.json"
+    },
+    "zod/qa-review/QaReviewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/QaReviewSchema.schema.json"
+    },
+    "zod/qa-review/RedFlagCategorySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/RedFlagCategorySchema.schema.json"
+    },
+    "zod/qa-review/RedFlagGateStateSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/RedFlagGateStateSchema.schema.json"
+    },
+    "zod/qa-review/ReviewCoverageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/ReviewCoverageSchema.schema.json"
+    },
+    "zod/qa-review/ReviewerRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/ReviewerRefSchema.schema.json"
+    },
+    "zod/red-flag/AdversarialFindingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/AdversarialFindingSchema.schema.json"
+    },
+    "zod/red-flag/AdversarialReviewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/AdversarialReviewSchema.schema.json"
+    },
+    "zod/red-flag/FindingResolutionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/FindingResolutionSchema.schema.json"
+    },
+    "zod/red-flag/MergeReviewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/MergeReviewSchema.schema.json"
+    },
+    "zod/red-flag/OverrideDecisionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/OverrideDecisionSchema.schema.json"
+    },
+    "zod/red-flag/RedFlagCategorySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/RedFlagCategorySchema.schema.json"
+    },
+    "zod/red-flag/RedFlagGateStateSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/RedFlagGateStateSchema.schema.json"
+    },
+    "zod/red-flag/ReviewCoverageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/ReviewCoverageSchema.schema.json"
+    },
+    "zod/red-flag/ReviewerRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/ReviewerRefSchema.schema.json"
+    },
+    "zod/ref-window/RefWindowSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/ref-window/RefWindowSchema.schema.json"
+    },
+    "zod/ref-window/WatchedRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/ref-window/WatchedRefSchema.schema.json"
+    },
+    "zod/ref-window/WriteRequestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/ref-window/WriteRequestSchema.schema.json"
+    },
+    "zod/run-context/RunContextRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/run-context/RunContextRefSchema.schema.json"
+    },
+    "zod/run-context/RunContextSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/run-context/RunContextSchema.schema.json"
+    },
+    "zod/run-context/RunInvokerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/run-context/RunInvokerSchema.schema.json"
+    },
+    "zod/run-context/RunMountSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/run-context/RunMountSchema.schema.json"
+    },
+    "zod/run-context/RunMountsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/run-context/RunMountsSchema.schema.json"
+    },
+    "zod/run-context/RunReleaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/run-context/RunReleaseSchema.schema.json"
+    },
+    "zod/session-context/ActorRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/session-context/ActorRefSchema.schema.json"
+    },
+    "zod/session-context/OpenInstanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/session-context/OpenInstanceSchema.schema.json"
+    },
+    "zod/session-context/SessionContextSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/session-context/SessionContextSchema.schema.json"
+    },
+    "zod/session-survey/SessionSurveySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/session-survey/SessionSurveySchema.schema.json"
+    },
+    "zod/session-survey/SurveyAxisSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/session-survey/SurveyAxisSchema.schema.json"
+    },
+    "zod/spec-template/SpecTemplateFrontMatterSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/spec-template/SpecTemplateFrontMatterSchema.schema.json"
+    },
+    "zod/staging-preview/StagingDeployFactsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/staging-preview/StagingDeployFactsSchema.schema.json"
+    },
+    "zod/staging-preview/StagingPreviewBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/staging-preview/StagingPreviewBlockSchema.schema.json"
+    },
+    "zod/staging-preview/StagingPreviewNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/staging-preview/StagingPreviewNodeSchema.schema.json"
+    },
+    "zod/staging-preview/StagingSweepFactsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/staging-preview/StagingSweepFactsSchema.schema.json"
+    },
+    "zod/staging/StagingComparisonSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/staging/StagingComparisonSchema.schema.json"
+    },
+    "zod/staging/StagingPageComparisonSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/staging/StagingPageComparisonSchema.schema.json"
+    },
+    "zod/sweep-mark/SweepMarkSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/sweep-mark/SweepMarkSchema.schema.json"
+    },
+    "zod/test-data/DecisionSupportWorkedCaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/DecisionSupportWorkedCaseSchema.schema.json"
+    },
+    "zod/test-data/FixedSetReviewMetadataSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/FixedSetReviewMetadataSchema.schema.json"
+    },
+    "zod/test-data/FixedTestDataRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/FixedTestDataRecordSchema.schema.json"
+    },
+    "zod/test-data/FixedTestDataSetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/FixedTestDataSetSchema.schema.json"
+    },
+    "zod/test-data/GeneratedTestDataSetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/GeneratedTestDataSetSchema.schema.json"
+    },
+    "zod/test-data/IndicatorCohortCaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/IndicatorCohortCaseSchema.schema.json"
+    },
+    "zod/test-data/ReviewedAtSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/ReviewedAtSchema.schema.json"
+    },
+    "zod/test-data/SmeReviewerIdentitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/SmeReviewerIdentitySchema.schema.json"
+    },
+    "zod/test-data/SmeSubjectKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/SmeSubjectKindSchema.schema.json"
+    },
+    "zod/test-data/SmeTestCaseVerdictSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/SmeTestCaseVerdictSchema.schema.json"
+    },
+    "zod/test-data/SmeVerdictOutcomeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/SmeVerdictOutcomeSchema.schema.json"
+    },
+    "zod/test-data/TestDataContentTypeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/TestDataContentTypeSchema.schema.json"
+    },
+    "zod/test-data/TestDataSetIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/TestDataSetIdSchema.schema.json"
+    },
+    "zod/test-data/TestDataSetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/TestDataSetSchema.schema.json"
+    },
+    "zod/test-data/TestDataSpecialisationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-data/TestDataSpecialisationSchema.schema.json"
+    },
+    "zod/test-plan/DmnRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/DmnRefSchema.schema.json"
+    },
+    "zod/test-plan/FixedTestDataSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/FixedTestDataSchema.schema.json"
+    },
+    "zod/test-plan/GeneratedTestDataSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/GeneratedTestDataSchema.schema.json"
+    },
+    "zod/test-plan/SutKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/SutKindSchema.schema.json"
+    },
+    "zod/test-plan/TestAssertionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestAssertionSchema.schema.json"
+    },
+    "zod/test-plan/TestCaseIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestCaseIdSchema.schema.json"
+    },
+    "zod/test-plan/TestDataRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestDataRefSchema.schema.json"
+    },
+    "zod/test-plan/TestPlanCaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestPlanCaseSchema.schema.json"
+    },
+    "zod/test-plan/TestPlanDependencySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestPlanDependencySchema.schema.json"
+    },
+    "zod/test-plan/TestPlanExitCriteriaSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestPlanExitCriteriaSchema.schema.json"
+    },
+    "zod/test-plan/TestPlanIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestPlanIdSchema.schema.json"
+    },
+    "zod/test-plan/TestPlanSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestPlanSchema.schema.json"
+    },
+    "zod/test-plan/TestPlanScopeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestPlanScopeSchema.schema.json"
+    },
+    "zod/test-plan/TestPlanStatusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-plan/TestPlanStatusSchema.schema.json"
+    },
+    "zod/test-report/TestCaseVerdictSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-report/TestCaseVerdictSchema.schema.json"
+    },
+    "zod/test-report/TestReportRollupSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-report/TestReportRollupSchema.schema.json"
+    },
+    "zod/test-report/TestReportRunRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-report/TestReportRunRefSchema.schema.json"
+    },
+    "zod/test-report/TestReportSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-report/TestReportSchema.schema.json"
+    },
+    "zod/test-report/TestReportStatusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-report/TestReportStatusSchema.schema.json"
+    },
+    "zod/test-report/TestReviewerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-report/TestReviewerSchema.schema.json"
+    },
+    "zod/test-run/HashBasisSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/HashBasisSchema.schema.json"
+    },
+    "zod/test-run/SutRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/SutRefSchema.schema.json"
+    },
+    "zod/test-run/TestCaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/TestCaseSchema.schema.json"
+    },
+    "zod/test-run/TestPlanRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/TestPlanRefSchema.schema.json"
+    },
+    "zod/test-run/TestRunSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/test-run/TestRunSchema.schema.json"
+    },
+    "zod/todo-graph/TodoGraphNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo-graph/TodoGraphNodeSchema.schema.json"
+    },
+    "zod/todo-graph/TodoGraphSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo-graph/TodoGraphSchema.schema.json"
+    },
+    "zod/todo-index/TodoIndexItemSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo-index/TodoIndexItemSchema.schema.json"
+    },
+    "zod/todo-index/TodoIndexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo-index/TodoIndexSchema.schema.json"
+    },
+    "zod/todo-index/TodoRelationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo-index/TodoRelationSchema.schema.json"
+    },
+    "zod/todo-index/TodoTargetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo-index/TodoTargetSchema.schema.json"
+    },
+    "zod/todo/ArtefactRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo/ArtefactRefSchema.schema.json"
+    },
+    "zod/todo/ExternalIdentitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo/ExternalIdentitySchema.schema.json"
+    },
+    "zod/todo/KgRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo/KgRefSchema.schema.json"
+    },
+    "zod/todo/TaskRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo/TaskRefSchema.schema.json"
+    },
+    "zod/todo/TodoNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo/TodoNodeSchema.schema.json"
+    },
+    "zod/todo/TodoTagsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/todo/TodoTagsSchema.schema.json"
+    },
+    "zod/viewer-nav-qa/ViewerNavFlagSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/viewer-nav-qa/ViewerNavFlagSchema.schema.json"
+    },
+    "zod/viewer-nav-qa/ViewerNavPageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/viewer-nav-qa/ViewerNavPageSchema.schema.json"
+    },
+    "zod/viewer-nav-qa/ViewerNavQaSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/viewer-nav-qa/ViewerNavQaSchema.schema.json"
+    },
+    "zod/viewer-nav-qa/ViewerNavVerdictSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/viewer-nav-qa/ViewerNavVerdictSchema.schema.json"
+    },
+    "zod/store-tool-results/BeanClaimCheckSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/BeanClaimCheckSchema.schema.json"
+    },
+    "zod/store-tool-results/BeanCommitSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/BeanCommitSchema.schema.json"
+    },
+    "zod/store-tool-results/BeanQueryRowsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/BeanQueryRowsSchema.schema.json"
+    },
+    "zod/store-tool-results/DrainQueueSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/DrainQueueSchema.schema.json"
+    },
+    "zod/store-tool-results/OpenWorkHitSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/OpenWorkHitSchema.schema.json"
+    },
+    "zod/store-tool-results/OpenWorkLookupSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/OpenWorkLookupSchema.schema.json"
+    },
+    "zod/store-tool-results/SessionSweepSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/SessionSweepSchema.schema.json"
+    },
+    "zod/tool-id/ToolIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-id/ToolIdSchema.schema.json"
+    },
+    "zod/tool-invocation/InvocationAuthoritySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-invocation/InvocationAuthoritySchema.schema.json"
+    },
+    "zod/tool-invocation/InvocationContextSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-invocation/InvocationContextSchema.schema.json"
+    },
+    "zod/tool-invocation/InvocationOutcomeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-invocation/InvocationOutcomeSchema.schema.json"
+    },
+    "zod/tool-invocation/ToolInvocationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-invocation/ToolInvocationSchema.schema.json"
+    },
+    "zod/tool-profile/ToolProfileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-profile/ToolProfileSchema.schema.json"
+    },
+    "zod/tool-release/RuntimeInjectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/RuntimeInjectionSchema.schema.json"
+    },
+    "zod/tool-release/ToolEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolEntrySchema.schema.json"
+    },
+    "zod/tool-release/ToolNameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolNameSchema.schema.json"
+    },
+    "zod/tool-release/ToolPlatformSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolPlatformSchema.schema.json"
+    },
+    "zod/tool-release/ToolReleaseKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolReleaseKindSchema.schema.json"
+    },
+    "zod/tool-release/ToolReleaseRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolReleaseRefSchema.schema.json"
+    },
+    "zod/tool-release/ToolReleaseRoleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolReleaseRoleSchema.schema.json"
+    },
+    "zod/tool-release/ToolReleaseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolReleaseSchema.schema.json"
+    },
+    "zod/tool-release/ToolReleaseSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolReleaseSourceSchema.schema.json"
+    },
+    "zod/tool-release/ToolRuntimeRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolRuntimeRefSchema.schema.json"
+    },
+    "zod/tool-release/ToolVersionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-release/ToolVersionSchema.schema.json"
+    },
+    "zod/tool-run/ToolRunRecordSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-run/ToolRunRecordSchema.schema.json"
+    },
+    "zod/tool-types/ArchimateMetamodelFormatSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ArchimateMetamodelFormatSchema.schema.json"
+    },
+    "zod/tool-types/ArchimateModelIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ArchimateModelIdSchema.schema.json"
+    },
+    "zod/tool-types/BeanIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/BeanIdSchema.schema.json"
+    },
+    "zod/tool-types/BeanStatusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/BeanStatusSchema.schema.json"
+    },
+    "zod/tool-types/BranchSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/BranchSchema.schema.json"
+    },
+    "zod/tool-types/ChangeProposalNumberSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ChangeProposalNumberSchema.schema.json"
+    },
+    "zod/tool-types/CommitShaSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/CommitShaSchema.schema.json"
+    },
+    "zod/tool-types/ContentTypeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ContentTypeSchema.schema.json"
+    },
+    "zod/tool-types/CountSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/CountSchema.schema.json"
+    },
+    "zod/tool-types/DecisionFactsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/DecisionFactsSchema.schema.json"
+    },
+    "zod/tool-types/DelimitedTextPathSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/DelimitedTextPathSchema.schema.json"
+    },
+    "zod/tool-types/DocIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/DocIdSchema.schema.json"
+    },
+    "zod/tool-types/DpiSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/DpiSchema.schema.json"
+    },
+    "zod/tool-types/FilesystemPathSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/FilesystemPathSchema.schema.json"
+    },
+    "zod/tool-types/FlagSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/FlagSchema.schema.json"
+    },
+    "zod/tool-types/GitLabUsernameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/GitLabUsernameSchema.schema.json"
+    },
+    "zod/tool-types/IdListSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/IdListSchema.schema.json"
+    },
+    "zod/tool-types/IgCacheActionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/IgCacheActionSchema.schema.json"
+    },
+    "zod/tool-types/InstanceIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/InstanceIdSchema.schema.json"
+    },
+    "zod/tool-types/LakeCacheActionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/LakeCacheActionSchema.schema.json"
+    },
+    "zod/tool-types/LatexEngineSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/LatexEngineSchema.schema.json"
+    },
+    "zod/tool-types/LinkModeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/LinkModeSchema.schema.json"
+    },
+    "zod/tool-types/LinkStyleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/LinkStyleSchema.schema.json"
+    },
+    "zod/tool-types/LocaleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/LocaleSchema.schema.json"
+    },
+    "zod/tool-types/LoginSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/LoginSchema.schema.json"
+    },
+    "zod/tool-types/MarkdownSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/MarkdownSchema.schema.json"
+    },
+    "zod/tool-types/MathRendererSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/MathRendererSchema.schema.json"
+    },
+    "zod/tool-types/MountChoiceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/MountChoiceSchema.schema.json"
+    },
+    "zod/tool-types/MountSeedSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/MountSeedSchema.schema.json"
+    },
+    "zod/tool-types/NamespaceLayerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/NamespaceLayerSchema.schema.json"
+    },
+    "zod/tool-types/NodeIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/NodeIdSchema.schema.json"
+    },
+    "zod/tool-types/PackageNameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/PackageNameSchema.schema.json"
+    },
+    "zod/tool-types/PinnedRepoSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/PinnedRepoSchema.schema.json"
+    },
+    "zod/tool-types/PortSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/PortSchema.schema.json"
+    },
+    "zod/tool-types/PreferenceActionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/PreferenceActionSchema.schema.json"
+    },
+    "zod/tool-types/PreviewFormatSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/PreviewFormatSchema.schema.json"
+    },
+    "zod/tool-types/PrintModeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/PrintModeSchema.schema.json"
+    },
+    "zod/tool-types/ProcessIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ProcessIdSchema.schema.json"
+    },
+    "zod/tool-types/ProvActivitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ProvActivitySchema.schema.json"
+    },
+    "zod/tool-types/ReadmeSectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ReadmeSectionSchema.schema.json"
+    },
+    "zod/tool-types/RenderEventSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/RenderEventSchema.schema.json"
+    },
+    "zod/tool-types/RenderFormatSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/RenderFormatSchema.schema.json"
+    },
+    "zod/tool-types/RenderScopeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/RenderScopeSchema.schema.json"
+    },
+    "zod/tool-types/RepoFullNameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/RepoFullNameSchema.schema.json"
+    },
+    "zod/tool-types/RepoPathSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/RepoPathSchema.schema.json"
+    },
+    "zod/tool-types/ReviewThreadIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ReviewThreadIdSchema.schema.json"
+    },
+    "zod/tool-types/ScriptNameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/ScriptNameSchema.schema.json"
+    },
+    "zod/tool-types/SkillNameSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/SkillNameSchema.schema.json"
+    },
+    "zod/tool-types/SkillRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/SkillRefSchema.schema.json"
+    },
+    "zod/tool-types/SlugSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/SlugSchema.schema.json"
+    },
+    "zod/tool-types/SurfaceRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/SurfaceRefSchema.schema.json"
+    },
+    "zod/tool-types/TextSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/TextSchema.schema.json"
+    },
+    "zod/tool-types/TimeWindowSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/TimeWindowSchema.schema.json"
+    },
+    "zod/tool-types/TimestampSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/TimestampSchema.schema.json"
+    },
+    "zod/tool-types/TranslationLevelSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/TranslationLevelSchema.schema.json"
+    },
+    "zod/tool-types/UrlSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/UrlSchema.schema.json"
+    },
+    "zod/tool-types/WireframeUseSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/WireframeUseSchema.schema.json"
+    },
+    "zod/tool-types/WorkbookPathSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/WorkbookPathSchema.schema.json"
+    },
+    "zod/tool/ToolArgSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolArgSchema.schema.json"
+    },
+    "zod/tool/ToolDefinitionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolDefinitionSchema.schema.json"
+    },
+    "zod/tool/ToolDownstreamSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolDownstreamSchema.schema.json"
+    },
+    "zod/tool/ToolIdSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolIdSchema.schema.json"
+    },
+    "zod/tool/ToolInputSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolInputSchema.schema.json"
+    },
+    "zod/tool/ToolInstallSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolInstallSchema.schema.json"
+    },
+    "zod/tool/ToolInvokeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolInvokeSchema.schema.json"
+    },
+    "zod/tool/ToolMaintainsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolMaintainsSchema.schema.json"
+    },
+    "zod/tool/ToolOutputSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolOutputSchema.schema.json"
+    },
+    "zod/tool/ToolPortSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolPortSchema.schema.json"
+    },
+    "zod/tool/ToolRemedySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolRemedySchema.schema.json"
+    },
+    "zod/tool/ToolRenderSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolRenderSchema.schema.json"
+    },
+    "zod/tool/ToolRequiresSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolRequiresSchema.schema.json"
+    },
+    "zod/tool/ToolSelectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool/ToolSelectionSchema.schema.json"
+    },
+    "zod/workflow-tool-results/EnabledStepSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/EnabledStepSchema.schema.json"
+    },
+    "zod/workflow-tool-results/WorkflowCompletionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowCompletionSchema.schema.json"
+    },
+    "zod/workflow-tool-results/WorkflowGateAnswerSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowGateAnswerSchema.schema.json"
+    },
+    "zod/workflow-tool-results/WorkflowListingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowListingSchema.schema.json"
+    },
+    "zod/workflow-tool-results/WorkflowPositionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowPositionSchema.schema.json"
+    },
+    "zod/workflow-tool-results/WorkflowStartedSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowStartedSchema.schema.json"
+    },
+    "zod/board-positions/BoardPositionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/board-positions/BoardPositionSchema.schema.json"
+    },
+    "zod/board-positions/BoardPositionsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/board-positions/BoardPositionsSchema.schema.json"
+    },
+    "zod/board/BoardFilterSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/board/BoardFilterSchema.schema.json"
+    },
+    "zod/board/BoardSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/board/BoardSchema.schema.json"
+    },
+    "zod/diff-renderers/DiffRendererSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diff-renderers/DiffRendererSchema.schema.json"
+    },
+    "zod/note-anchor/AlsoAboutSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/note-anchor/AlsoAboutSchema.schema.json"
+    },
+    "zod/note-anchor/BlockAnchorSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/note-anchor/BlockAnchorSchema.schema.json"
+    },
+    "zod/note-anchor/NoAnchorSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/note-anchor/NoAnchorSchema.schema.json"
+    },
+    "zod/note-anchor/NoteAnchorSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/note-anchor/NoteAnchorSchema.schema.json"
+    },
+    "zod/note-anchor/PageAnchorSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/note-anchor/PageAnchorSchema.schema.json"
+    },
+    "zod/pdf-structure/PdfDiagnosticsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pdf-structure/PdfDiagnosticsSchema.schema.json"
+    },
+    "zod/pdf-structure/PdfFigureEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pdf-structure/PdfFigureEntrySchema.schema.json"
+    },
+    "zod/pdf-structure/PdfMetadataSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pdf-structure/PdfMetadataSchema.schema.json"
+    },
+    "zod/pdf-structure/PdfPageLabelSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pdf-structure/PdfPageLabelSchema.schema.json"
+    },
+    "zod/pdf-structure/PdfSectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pdf-structure/PdfSectionSchema.schema.json"
+    },
+    "zod/pdf-structure/PdfSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pdf-structure/PdfSourceSchema.schema.json"
+    },
+    "zod/pdf-structure/PdfStructureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pdf-structure/PdfStructureSchema.schema.json"
+    },
+    "zod/pdf-structure/PdfTocEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/pdf-structure/PdfTocEntrySchema.schema.json"
+    },
+    "zod/render-log/RenderLogEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/render-log/RenderLogEntrySchema.schema.json"
+    },
+    "zod/render-log/RenderSubjectSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/render-log/RenderSubjectSchema.schema.json"
+    },
+    "zod/rendered-impact/RenderedFileSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rendered-impact/RenderedFileSchema.schema.json"
+    },
+    "zod/rendered-impact/RenderedImpactSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rendered-impact/RenderedImpactSchema.schema.json"
+    },
+    "zod/rendered-impact/RenderedMeasuredSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rendered-impact/RenderedMeasuredSchema.schema.json"
+    },
+    "zod/rendered-impact/UndeterminedSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rendered-impact/UndeterminedSchema.schema.json"
+    },
+    "zod/site-indexes/BeanIndexItemSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/BeanIndexItemSchema.schema.json"
+    },
+    "zod/site-indexes/BeanIndexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/BeanIndexSchema.schema.json"
+    },
+    "zod/site-indexes/BlockSummaryViewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/BlockSummaryViewSchema.schema.json"
+    },
+    "zod/site-indexes/FolioGraphProjectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/FolioGraphProjectionSchema.schema.json"
+    },
+    "zod/site-indexes/LibraryDocumentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryDocumentSchema.schema.json"
+    },
+    "zod/site-indexes/LibraryDocumentViewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryDocumentViewSchema.schema.json"
+    },
+    "zod/site-indexes/LibraryEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryEntrySchema.schema.json"
+    },
+    "zod/site-indexes/LibraryIndexEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryIndexEntrySchema.schema.json"
+    },
+    "zod/site-indexes/LibraryIndexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/LibraryIndexSchema.schema.json"
+    },
+    "zod/site-indexes/MilestonePlanSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/MilestonePlanSchema.schema.json"
+    },
+    "zod/site-indexes/MilestoneRollupSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/MilestoneRollupSchema.schema.json"
+    },
+    "zod/site-indexes/QaIndexBadgeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/QaIndexBadgeSchema.schema.json"
+    },
+    "zod/site-indexes/QaIndexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/QaIndexSchema.schema.json"
+    },
+    "zod/site-indexes/QaTranslationPagesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/QaTranslationPagesSchema.schema.json"
+    },
+    "zod/site-indexes/SchemaGraphIndexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/SchemaGraphIndexSchema.schema.json"
+    },
+    "zod/site-indexes/TranslationStatusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/TranslationStatusSchema.schema.json"
+    },
+    "zod/site-indexes/VoicesIndexSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/VoicesIndexSchema.schema.json"
+    },
+    "zod/slides-accessibility/SlidesAccessibilitySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/slides-accessibility/SlidesAccessibilitySchema.schema.json"
+    },
+    "zod/theme/PrintGeometrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/PrintGeometrySchema.schema.json"
+    },
+    "zod/theme/ResolvedThemeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ResolvedThemeSchema.schema.json"
+    },
+    "zod/theme/ThemeBackdropSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemeBackdropSchema.schema.json"
+    },
+    "zod/theme/ThemeGeometrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemeGeometrySchema.schema.json"
+    },
+    "zod/theme/ThemeOverrideNoteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemeOverrideNoteSchema.schema.json"
+    },
+    "zod/theme/ThemePaletteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemePaletteSchema.schema.json"
+    },
+    "zod/theme/ThemePartialPaletteSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemePartialPaletteSchema.schema.json"
+    },
+    "zod/theme/ThemeRefSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemeRefSchema.schema.json"
+    },
+    "zod/theme/ThemeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemeSchema.schema.json"
+    },
+    "zod/theme/ThemedTodoFieldsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/theme/ThemedTodoFieldsSchema.schema.json"
+    },
+    "zod/tile-count/TileCountsSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tile-count/TileCountsSchema.schema.json"
+    },
+    "zod/archimate/ArchimateConfigFigureSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigFigureSchema.schema.json"
+    },
+    "zod/archimate/ArchimateConfigModelSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigModelSchema.schema.json"
+    },
+    "zod/archimate/ArchimateConfigSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigSchema.schema.json"
+    },
+    "zod/archimate/ArchimateConfigTableSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigTableSchema.schema.json"
+    },
+    "zod/archimate/ArchimateElementSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateElementSchema.schema.json"
+    },
+    "zod/archimate/ArchimateModelSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateModelSchema.schema.json"
+    },
+    "zod/archimate/ArchimatePropertySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimatePropertySchema.schema.json"
+    },
+    "zod/archimate/ArchimateRelationshipSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateRelationshipSchema.schema.json"
+    },
+    "zod/archimate/ArchimateViewConnectionSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateViewConnectionSchema.schema.json"
+    },
+    "zod/archimate/ArchimateViewNodeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateViewNodeSchema.schema.json"
+    },
+    "zod/archimate/ArchimateViewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateViewSchema.schema.json"
+    },
+    "zod/diagrams/DataAccessSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataAccessSchema.schema.json"
+    },
+    "zod/diagrams/DataAttributeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataAttributeSchema.schema.json"
+    },
+    "zod/diagrams/DataClassSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataClassSchema.schema.json"
+    },
+    "zod/diagrams/DataModelSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataModelSchema.schema.json"
+    },
+    "zod/diagrams/DataRelationshipSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/DataRelationshipSchema.schema.json"
+    },
+    "zod/diagrams/FshLogicalFieldSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/FshLogicalFieldSchema.schema.json"
+    },
+    "zod/diagrams/FshLogicalModelSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/FshLogicalModelSchema.schema.json"
+    },
+    "zod/diagrams/SequenceDiagramSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceDiagramSchema.schema.json"
+    },
+    "zod/diagrams/SequenceMessageKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceMessageKindSchema.schema.json"
+    },
+    "zod/diagrams/SequenceMessageSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceMessageSchema.schema.json"
+    },
+    "zod/diagrams/SequenceParticipantSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceParticipantSchema.schema.json"
+    },
+    "zod/diagrams/SequenceSetSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/diagrams/SequenceSetSchema.schema.json"
+    },
+    "zod/metamodel/RelationshipTableSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/metamodel/RelationshipTableSchema.schema.json"
+    },
+    "zod/rules/RelationshipRuleSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rules/RelationshipRuleSchema.schema.json"
+    },
+    "zod/rules/RelationshipRulesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rules/RelationshipRulesSchema.schema.json"
+    },
+    "zod/rules/RelationshipTypeEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rules/RelationshipTypeEntrySchema.schema.json"
+    },
+    "zod/openapi/OpenApiConfigDocumentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/openapi/OpenApiConfigDocumentSchema.schema.json"
+    },
+    "zod/openapi/OpenApiConfigSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/openapi/OpenApiConfigSchema.schema.json"
+    },
+    "zod/openapi/OpenApiDocumentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/openapi/OpenApiDocumentSchema.schema.json"
+    },
+    "zod/openapi/OpenApiProvenanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/openapi/OpenApiProvenanceSchema.schema.json"
+    },
+    "zod/openapi/OpenApiRenderedDocumentSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/openapi/OpenApiRenderedDocumentSchema.schema.json"
+    },
+    "zod/openapi/OpenApiRenderedProvenanceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/openapi/OpenApiRenderedProvenanceSchema.schema.json"
+    },
+    "zod/openapi/OpenApiRenderedSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/openapi/OpenApiRenderedSourceSchema.schema.json"
+    },
+    "zod/openapi/OpenApiSourceSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/openapi/OpenApiSourceSchema.schema.json"
+    }
+  },
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  }
+}

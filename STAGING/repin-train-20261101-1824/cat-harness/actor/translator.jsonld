@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/actor/translator.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/actor/translator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "translator",
+      "actorKind": "person",
+      "title": "Translator",
+      "description": "Localization specialist who adapts content for UN-supported languages.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.Translator",
+        "lifecycle": [
+          "author"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/cat-harness/role/translator"
+      ],
+      "permissionName": [
+        "translation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/translator"
+    }
+  ]
+}

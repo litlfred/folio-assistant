@@ -1,0 +1,74 @@
+{
+  "$ref": "#/definitions/BlockAttestations",
+  "definitions": {
+    "BlockAttestations": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "qa-attestations/v1"
+        },
+        "family": {
+          "type": "string",
+          "const": "block-qa"
+        },
+        "subject": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "id",
+            "path"
+          ]
+        },
+        "criteria": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "family",
+        "subject",
+        "criteria"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/BlockAttestationsSchema.schema.json",
+  "title": "BlockAttestationsSchema",
+  "description": "Generated from `BlockAttestationsSchema` in schemas/sdlc/qa-attestations.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  }
+}

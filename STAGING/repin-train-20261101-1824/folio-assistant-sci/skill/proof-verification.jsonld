@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/skill/proof-verification.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/skill/proof-verification",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "proof-verification",
+      "title": "proof-verification",
+      "instructionsPath": "skills/content/authoring-math/proof-verification.md",
+      "instructionLines": 69,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/schema/skills/proof-verification/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/schema/skills/proof-verification/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-verification"
+    }
+  ]
+}

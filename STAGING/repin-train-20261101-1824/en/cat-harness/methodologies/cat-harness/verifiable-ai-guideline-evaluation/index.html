@@ -1,0 +1,449 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../../../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../../../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../../../../assets/js/vendor/lunr.min.js"></script><script src="../../../../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Verifiable AI guideline evaluation — multi-measurement debiased inference, peer councils, and hybrid no-gold-standard bounds for clinical guidelines | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Verifiable AI guideline evaluation — multi-measurement debiased inference, peer councils, and hybrid no-gold-standard bounds for clinical guidelines" /><meta property="og:locale" content="en_US" /><meta name="description" content="Evaluating language models, knowledge-graph pipelines, and multi-agent systems on clinical guidelines (such as WHO SMART Guidelines L1 -&gt; L2/L3 authoring, editing, and national adaptation…" /><meta property="og:description" content="Evaluating language models, knowledge-graph pipelines, and multi-agent systems on clinical guidelines (such as WHO SMART Guidelines L1 -&gt; L2/L3 authoring, editing, and national adaptation…" /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Verifiable AI guideline evaluation — multi-measurement debiased inference, peer councils, and hybrid no-gold-standard bounds for clinical guidelines" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "en-cat-harness-methodologies-cat-harness-verifiable-ai-guideline-evaluation-index",
+    "src": "../../../../../assets/qa/en-cat-harness-methodologies-cat-harness-verifiable-ai-guideline-evaluation-index/page.translation.json",
+    "index": "../../../../../assets/qa/en-cat-harness-methodologies-cat-harness-verifiable-ai-guideline-evaluation-index/qa-index.json",
+    "list": "../../../../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../../../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../../../folio-assistant-core/","jsonld":"../../../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../../../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../../../build.json"><meta name="fa-fsh-guts-src" content="../../../../../fsh-guts.json"><link rel="stylesheet" href="../../../../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../../../../assets/css/docs-ui.css?v=2ed7923cda66"><link rel="stylesheet" href="../../../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../../../assets/js/harness-data.js" defer></script><script src="../../../../../assets/js/vendor/qrcode.js" defer></script><script src="../../../../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../../../../assets/js/kg-render.js" defer></script><script src="../../../../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../../../../assets/js/docs-ui.js?v=9ffac52f2026" defer></script><script src="../../../../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../../../../assets/js/work-plan.js" defer></script><script src="../../../../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../../../../assets/css/navbar.css"><script src="../../../../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../../../assets/page-layout.css" data-fa-page-layout><script src="../../../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../../../.." data-fa-to-root="../../../../..">{"data":"rail-giobbw31pa","here":"/en/cat-harness/methodologies/cat-harness/verifiable-ai-guideline-evaluation/","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#1-the-load-bearing-idea-in-one-sentence","label":"The Load-Bearing Idea, in One Sentence","icon":"1"},{"href":"#2-the-methodological-quadriad","label":"The Methodological Quadriad","icon":"2","children":[{"href":"#pillar-i-information-limits--noise-disentanglement","label":"Pillar I: Information Limits & Noise Disentanglement","depth":1},{"href":"#pillar-ii-debiased-inference-without-gold-standards-dmm","label":"Pillar II: Debiased Inference without Gold Standards (DMM)","depth":1},{"href":"#pillar-iii-peer-councils--on-manifold-logic-verification","label":"Pillar III: Peer Councils & On-Manifold Logic Verification","depth":1},{"href":"#pillar-iv-empirical-discrepancy--extraction-benchmarking","label":"Pillar IV: Empirical Discrepancy & Extraction Benchmarking","depth":1}],"fold":"4 sub-sections"},{"href":"#3-discrepancy-analysis-in-l1-l2-l3-authoring-editing-and-adaptation","label":"Discrepancy Analysis in L1, L2, L3 Authoring, Editing, and Adaptation","icon":"3","children":[{"href":"#where-recommendation-discrepancies-arise-and-fit","label":"Where Recommendation Discrepancies Arise and Fit","depth":1}],"fold":"1 sub-section"},{"href":"#4-integration-with-core-bpmn-workflows","label":"Integration with Core BPMN Workflows","icon":"4","children":[{"href":"#specific-workflow-gating-points","label":"Specific Workflow Gating Points","depth":1}],"fold":"1 sub-section"},{"href":"#5-resolution-of-research-questions-r1-to-r7","label":"Resolution of Research Questions R1 to R7","icon":"5","children":[{"href":"#r1-immunization-l1---l2l3-reproduction--conflict-register","label":"R1: Immunization L1 -> L2/L3 Reproduction & Conflict Register","depth":1},{"href":"#r2-hiv-prep-clinical-complexity-axis-unlabelled-generation","label":"R2: HIV PrEP Clinical Complexity Axis (Unlabelled Generation)","depth":1},{"href":"#r3-knowledge-graph-value-add-route-b-vs-route-a","label":"R3: Knowledge Graph Value Add (Route B vs Route A)","depth":1},{"href":"#r4-baseline-characterization-route-0-vs-routes-a--b","label":"R4: Baseline Characterization (Route 0 vs Routes A & B)","depth":1},{"href":"#r5-layered-validation-feasibility--phrasing-coverage","label":"R5: Layered Validation Feasibility & Phrasing Coverage","depth":1},{"href":"#r6-proprietary-vs-open-source-kg-pipelines","label":"R6: Proprietary vs Open-Source KG Pipelines","depth":1},{"href":"#r7-frontier-vs-open-weight-models--benchmark-integrity","label":"R7: Frontier vs Open-Weight Models & Benchmark Integrity","depth":1}],"fold":"7 sub-sections"},{"href":"#6-artifact--manifest-specifications","label":"Artifact & Manifest Specifications","icon":"6","children":[{"href":"#conflict-register-schema-folio-clinical-conflictv1","label":"Conflict Register Schema (folio-clinical-conflict/v1)","depth":1},{"href":"#benchmark-run-manifest-schema-schemasevaluation-run-manifestts","label":"Benchmark Run Manifest Schema (schemas/evaluation-run-manifest.ts)","depth":1}],"fold":"2 sub-sections"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><div id="main-content" class="main-content"><main><style>
+.mv-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
+  font-weight:600;white-space:nowrap;border:1px solid currentColor}
+/* Bean rtuo: light-page inks measured 2.06-2.71:1 on the default dark page
+   (#27262b). Dark inks by default; the light scheme keeps the originals. */
+.mv-ingested{color:#5cd3bd}  /* 8.23:1 on #27262b */
+.mv-cited{color:#e6bd52}     /* 8.41:1 */
+.mv-dangling{color:#ff9486}  /* 7.03:1 */
+:root[data-fa-scheme="light"] .mv-ingested{color:#0d6e5e}
+:root[data-fa-scheme="light"] .mv-cited{color:#8a6100}
+:root[data-fa-scheme="light"] .mv-dangling{color:#a8200f}
+.mv-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
+.mv-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
+.mv-stat b{display:block;font-size:1.25rem;line-height:1.2}
+.mv-stat span{font-size:.75rem;opacity:.75}
+.mv-scroll-hint{display:none;font-size:.78rem;color:var(--muted,#888);margin:-.5rem 0 .5rem}
+@media (max-width: 799.98px) {
+  .mv-scroll-hint{display:block}
+  .table-wrapper {
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+  }
+  @supports (animation-timeline: scroll()) {
+    .table-wrapper {
+      mask-image: linear-gradient(to right,
+        transparent 0, #000 var(--fa-cue-l),
+        #000 calc(100% - var(--fa-cue-r)), transparent 100%);
+      animation: fa-scroll-cue linear both;
+      animation-timeline: scroll(self inline);
+    }
+  }
+}
+@property --fa-cue-l { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --fa-cue-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@keyframes fa-scroll-cue {
+  0%   { --fa-cue-l: 0px;    --fa-cue-r: 2.5rem; }
+  12%  { --fa-cue-l: 2.5rem; }
+  88%  { --fa-cue-r: 2.5rem; }
+  100% { --fa-cue-l: 2.5rem; --fa-cue-r: 0px; }
+}
+</style><p><a href="../../">← All methodologies</a></p><p><code class="language-plaintext highlighter-rouge">verifiable-ai-guideline-evaluation</code> — declared by <code class="language-plaintext highlighter-rouge">cat-harness</code> — <span class="mv-tag mv-ingested">source held</span></p><p><strong>Applies when.</strong> <strong>Evaluating language models, knowledge-graph pipelines, and multi-agent systems on clinical guidelines (such as WHO SMART Guidelines L1 -&gt; L2/L3 authoring, editing, and national adaptation processes, and L5 clinical workflow adherence) where gold-standard ground truth is absent, scarce, or historically conflicting, and human SME capacity is a critical bottleneck.</strong> Use it to: (1) benchmark model adherence to clinical workflows without relying on naive LLM-as-a-judge; (2) detect and classify discrepancies in clinical recommendations (extraneous advice, omissions of contraindications, timing deviations, and cross-guideline contradictions); (3) measure the fidelity and reproducibility of automated L2 (DAK) and L3 (FHIR/CQL) authoring; (4) insulate authoring from the MCQA vs free-form generative performance cliff; (5) separate intentional national/local guideline adaptation from unintentional hallucination; (6) isolate the marginal causal contribution of Knowledge Graphs (Route B vs Route A); (7) structure layered validation (mechanical -&gt; agentic -&gt; human SME) to protect clinical expert time; (8) operationalize automated discrepancy gating across core BPMN workflows. Not for simple single-assertion syntax checks (use mechanical compiler gates like <code class="language-plaintext highlighter-rouge">cql-translation</code> or <code class="language-plaintext highlighter-rouge">sushi</code>), and not for general software unit tests.</p><p><strong>Origin.</strong> Synthesized from eight peer-reviewed and open-access mathematical foundations for objective evaluation in the absence of gold standards and public health guideline verification: (1) David Nordfors, “The Metanym Game: An LLM Benchmark Without Ground Truth That Rises With the Models It Measures” (arXiv:2606.21008v4, 2026) — SVD of peer ratings, separating generation from evaluation skill, and swept calibration anchors; (2) Naoki Egami &amp; Sooahn Shin, “Debiased Inference for AI-Generated Data without Gold-Standard Labels: Identification via Multiple Imperfect Measurements” (arXiv:2608.18294v2, 2026, MIT) — DMM framework via CP tensor decomposition conditioned on unit-level text features; (3) Yan Liu &amp; Abhinav K. Jha, “How accurately can quantitative imaging methods be ranked without ground truth: An upper bound on no-gold-standard evaluation” (arXiv:2403.16873v1, 2024, SPIE/WashU) — Cramér-Rao bound on ranking error; (4) Yan Liu &amp; Abhinav K. Jha, “Extending Regression Without Truth to Integrate Ground-Truth Measurements for Evaluating Quantitative Imaging Methods with Patient Data” (arXiv:2603.27124v1, 2026, WashU) — semi-supervised joint likelihood; (5) Ziping Liu, Zekun Li, Joyce C. Mhlanga, Barry A. Siegel &amp; Abhinav K. Jha, “No-gold-standard evaluation of quantitative imaging methods in the presence of correlated noise” (arXiv:2203.02010v1, 2022, SPIE/WashU) — off-diagonal error covariance modeling; (6) Kaivalya Rawal, Zihao Fu, Eoin Delaney &amp; Chris Russell, “Evaluating Model Explanations without Ground Truth” (arXiv:2505.10399v1, FAccT 2025, Oxford) — AXE on-manifold fidelity and anti-fairwashing principles; (7) Joshua Harris et al., UK Health Security Agency, “Evaluating Large Language Models for Public Health Classification and Extraction Tasks” (arXiv:2405.14766v2, 2025) — benchmarked recommendation extraction and clinical classification across 11 LLMs; (8) Joshua Harris et al., UK Health Security Agency, “HEALTHY LLMS? BENCHMARKING LLM KNOWLEDGE OF UK GOVERNMENT PUBLIC HEALTH INFORMATION” (arXiv:2505.06046v4, 2026) — PubHealthBench: 8,000+ questions across 687 government guidance documents, quantifying the MCQA-to-freeform degradation cliff and taxonomy of recommendation discrepancies.</p><p><strong>Ingested sources:</strong></p><ul><li><a href="../../../library/cat-harness/#cat-harness%2Farxiv-2606.21008v3"><code class="language-plaintext highlighter-rouge">library/arxiv-2606.21008v3</code></a> · <a href="../../../library/cat-harness/arxiv-2606.21008v3/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/arxiv-2606.21008v3/README.md">item page</a> · <a href="https://arxiv.org/abs/2606.21008v3">source</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Farxiv-2608.18294v2"><code class="language-plaintext highlighter-rouge">library/arxiv-2608.18294v2</code></a> · <a href="../../../library/cat-harness/arxiv-2608.18294v2/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/arxiv-2608.18294v2/README.md">item page</a> · <a href="https://arxiv.org/abs/2608.18294v2">source</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Farxiv-2403.16873v1"><code class="language-plaintext highlighter-rouge">library/arxiv-2403.16873v1</code></a> · <a href="../../../library/cat-harness/arxiv-2403.16873v1/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/arxiv-2403.16873v1/README.md">item page</a> · <a href="https://arxiv.org/abs/2403.16873v1">source</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Farxiv-260327124v1"><code class="language-plaintext highlighter-rouge">library/arxiv-260327124v1</code></a> · <a href="../../../library/cat-harness/arxiv-260327124v1/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/arxiv-260327124v1/README.md">item page</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Farxiv-2203.02010v1"><code class="language-plaintext highlighter-rouge">library/arxiv-2203.02010v1</code></a> · <a href="../../../library/cat-harness/arxiv-2203.02010v1/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/arxiv-2203.02010v1/README.md">item page</a> · <a href="https://arxiv.org/abs/2203.02010v1">source</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Farxiv-2505.10399v1"><code class="language-plaintext highlighter-rouge">library/arxiv-2505.10399v1</code></a> · <a href="../../../library/cat-harness/arxiv-2505.10399v1/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/arxiv-2505.10399v1/README.md">item page</a> · <a href="https://arxiv.org/abs/2505.10399v1">source</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Farxiv-2405.14766v2"><code class="language-plaintext highlighter-rouge">library/arxiv-2405.14766v2</code></a> · <a href="../../../library/cat-harness/arxiv-2405.14766v2/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/arxiv-2405.14766v2/README.md">item page</a> · <a href="https://arxiv.org/abs/2405.14766v2">source</a></li><li><a href="../../../library/cat-harness/#cat-harness%2Farxiv-2505.06046v4"><code class="language-plaintext highlighter-rouge">library/arxiv-2505.06046v4</code></a> · <a href="../../../library/cat-harness/arxiv-2505.06046v4/">view</a> · <a href="https://github.com/litlfred/cat-harness/blob/main/library/arxiv-2505.06046v4/README.md">item page</a> · <a href="https://arxiv.org/abs/2505.06046v4">source</a></li></ul><p><strong>Node file:</strong> <a href="https://github.com/litlfred/cat-harness/blob/main/methodologies/verifiable-ai-guideline-evaluation.md">verifiable-ai-guideline-evaluation.md</a></p><hr /><h1 id="verifiable-ai-guideline-evaluation-multi-measurement-debiased-inference-peer-councils-and-hybrid-bounds"><a href="#verifiable-ai-guideline-evaluation-multi-measurement-debiased-inference-peer-councils-and-hybrid-bounds" class="anchor-heading" aria-labelledby="verifiable-ai-guideline-evaluation-multi-measurement-debiased-inference-peer-councils-and-hybrid-bounds"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verifiable AI Guideline Evaluation: Multi-Measurement Debiased Inference, Peer Councils, and Hybrid Bounds
+  
+  
+</h1><p><strong>Adopted 2026-10-08</strong> (bean <code class="language-plaintext highlighter-rouge">folio-assistant-tn3d</code>, issue <a href="https://github.com/litlfred/folio-assistant/issues/2513">#2513</a>).
+Expanded with UK Health Security Agency (UKHSA) public health benchmark evidence and recommendation discrepancy analysis.
+All eight foundational sources were ingested into <code class="language-plaintext highlighter-rouge">library/</code> and verified before this methodology was adopted.</p><hr /><h2 id="1-the-load-bearing-idea-in-one-sentence"><a href="#1-the-load-bearing-idea-in-one-sentence" class="anchor-heading" aria-labelledby="1-the-load-bearing-idea-in-one-sentence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. The Load-Bearing Idea, in One Sentence
+  
+  
+</h2><blockquote><p><strong>Clinical AI cannot be verified by uncalibrated model self-grading or exhaustive expert inspection: rigorous evaluation without gold standards requires decomposing multi-model error covariances, conditioning on document complexity, anchoring against known benchmark fragments, verifying decision logic on-manifold, and gating recommendation discrepancies through structured DAK decision models before executable code generation.</strong></p></blockquote><hr /><h2 id="2-the-methodological-quadriad"><a href="#2-the-methodological-quadriad" class="anchor-heading" aria-labelledby="2-the-methodological-quadriad"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. The Methodological Quadriad
+  
+  
+</h2><p>Traditional evaluation paradigms fail in healthcare guidelines:</p><ul><li><em>Naive Gold Standards</em> do not exist for newly authored guidelines (e.g. HIV PrEP L2/L3), while historical guidelines (e.g. Immunization) contain real-world conflicting statements across publication years.</li><li><em>Uncalibrated LLM-as-a-Judge</em> suffers from cardinal rating drift (one rater’s “8” is another’s “6”), peer collusion, and shared prompt/inductive biases.</li><li><em>The Recognition vs Generation Illusion</em>: UKHSA’s PubHealthBench (<code class="language-plaintext highlighter-rouge">arXiv:2505.06046v4</code>) demonstrates that while frontier models achieve &gt;90% on Multiple Choice Question Answering (MCQA), their generative accuracy collapses to 57–74% in free-form clinical guidance advice. Direct generative authoring from narrative L1 prose into executable L3 logic is therefore inherently hazardous.</li><li><em>Exhaustive Human SME Review</em> is economically impossible: WHO clinical panels cannot manually verify thousands of generated CQL lines, FHIR StructureDefinitions, and decision logic rows.</li></ul><p>This methodology combines four rigorous statistical and empirical pillars into an integrated evaluation engine:</p><pre><code class="language-mermaid">flowchart TD
+    subgraph "Pillar I: Information Limits &amp; Noise Disentanglement"
+        CRB["CRB Upper Bounds\n(Liu &amp; Jha 2024)\nSample-size threshold P"]
+        CN["Correlated Noise RWT\n(Liu et al. 2022)\nOff-diagonal covariance C"]
+        HYB["Hybrid Likelihood\n(Liu &amp; Jha 2026)\nAnchoring Q known cases"]
+    end
+
+    subgraph "Pillar II: Debiased Multi-Model Latent Inference"
+        DMM["DMM Framework\n(Egami &amp; Shin 2026)\nCP Tensor Decomposition"]
+        COND["Conditioning Features D_i\nText embeddings + Disagreement"]
+    end
+
+    subgraph "Pillar III: Peer Councils &amp; Logic Verification"
+        SVD["SVD Rating Matrix\n(Nordfors 2026)\nGenerator V vs Evaluator U"]
+        ANCHOR["Swept Calibration Anchors\nPinned score = 7/10"]
+        AXE["AXE On-Manifold Fidelity\n(Rawal et al. 2025)\nSurrogate k-NN Emulation"]
+    end
+
+    subgraph "Pillar IV: Empirical Discrepancy &amp; Extraction Benchmarking"
+        REC["Guidance Recommendation Extraction\n(UKHSA / Harris 2025)\nNormative vs Descriptive Classification"]
+        DISC["Discrepancy Taxonomy &amp; FreeForm Cliff\n(PubHealthBench / Harris 2026)\nExtraneous | Omission | Contradiction"]
+    end
+
+    CRB --&gt; HYB
+    CN --&gt; DMM
+    HYB --&gt; DMM
+    COND --&gt; DMM
+    DMM --&gt; SVD
+    ANCHOR --&gt; SVD
+    AXE --&gt; SVD
+    REC --&gt; DISC
+    DISC --&gt; AXE
+    DISC --&gt; DMM
+</code></pre><h3 id="pillar-i-information-limits--noise-disentanglement"><a href="#pillar-i-information-limits--noise-disentanglement" class="anchor-heading" aria-labelledby="pillar-i-information-limits--noise-disentanglement"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pillar I: Information Limits &amp; Noise Disentanglement
+  
+  
+</h3><ol><li><strong>The Cramér-Rao Bound for Ranking (Liu &amp; Jha 2024, <code class="language-plaintext highlighter-rouge">2403.16873</code>)</strong>:
+Parameterizes measurement systems as $\hat{a}<em>{p,k} = u_k a_p + v_k + \epsilon</em>{p,k}$, where $\text{NSR}_k = \sigma_k / u_k$.
+The Fisher Information Matrix $\mathcal{I}(\Gamma)$ dictates the theoretical upper bound on correctly ranking models without ground truth. If the number of guideline recommendations $P$ is below this threshold, ranking outcomes is statistically meaningless.</li><li><strong>Accounting for Correlated Noise (Liu et al. 2022, <code class="language-plaintext highlighter-rouge">2203.02010</code>)</strong>:
+Models joint errors across pipelines sharing foundation models via covariance matrix $\mathbf{C}$ with off-diagonal elements $\sigma_{k, k’}$.
+Disentangles genuine precision from shared training biases, preventing hallucinated consensus from being mistaken for clinical truth.</li><li><strong>Hybrid Ground-Truth Integration (Liu &amp; Jha 2026, <code class="language-plaintext highlighter-rouge">2603.27124</code>)</strong>:
+Combines unlabelled guideline extractions ($P$ patient/recommendation cases) with verified historical guideline fragments ($Q$ ground-truth anchors, e.g. validated immunization schedules):
+\(\mathcal{L}_{\text{total}}(\Theta, \Sigma, \Omega) = \mathcal{L}_{\text{unlabelled}} + \mathcal{L}_{\text{ground\_truth}}\)
+Anchoring scale $u_k$ and bias $v_k$ with $Q$ known cases reduces parameter variance by over 70%, enabling high-precision ranking on small corpora.</li></ol><h3 id="pillar-ii-debiased-inference-without-gold-standards-dmm"><a href="#pillar-ii-debiased-inference-without-gold-standards-dmm" class="anchor-heading" aria-labelledby="pillar-ii-debiased-inference-without-gold-standards-dmm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pillar II: Debiased Inference without Gold Standards (DMM)
+  
+  
+</h3><p><em>(Egami &amp; Shin 2026, <code class="language-plaintext highlighter-rouge">2608.18294</code>)</em>
+When evaluating downstream clinical workflow adherence or automated DAK generation across $J \ge 3$ imperfect AI models:</p><ul><li>Latent true labels $X^*$ are identified via CANDECOMP/PARAFAC (CP) tensor decomposition without human labels.</li><li><strong>Conditioning Set ($D_i$)</strong>: To preserve conditional independence ($X^{(1)} \perp \dots \perp X^{(J)} \mid X^*, D_i, W_i$), the evaluation explicitly conditions on guideline unit features:
+    <ul><li>Clinical complexity metrics (syntactic tree depth, clinical concept density, drug-drug interaction count).</li><li>Dense text embeddings of the input recommendation.</li><li>Multi-model disagreement scores (measuring task ambiguity).</li></ul></li><li>Yields $\sqrt{n}$-consistent and asymptotically normal downstream parameters $\beta$, allowing rigorous hypothesis testing (e.g. testing if Route B with KG significantly outperforms Route A without KG).</li></ul><h3 id="pillar-iii-peer-councils--on-manifold-logic-verification"><a href="#pillar-iii-peer-councils--on-manifold-logic-verification" class="anchor-heading" aria-labelledby="pillar-iii-peer-councils--on-manifold-logic-verification"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pillar III: Peer Councils &amp; On-Manifold Logic Verification
+  
+  
+</h3><ol><li><strong>SVD Council of Peers &amp; Swept Anchors (Nordfors 2026, <code class="language-plaintext highlighter-rouge">2606.21008</code>)</strong>:
+    <ul><li>Multi-model evaluation matrix $M \in \mathbb{R}^{E \times G}$ is decomposed via SVD ($M = U \Sigma V^T$). Right singular vectors $V$ measure pure generator authoring capability; left singular vectors $U$ measure rater evaluation competence.</li><li><strong>Swept Calibration Anchors</strong>: Every evaluation call includes an anonymized, constant reference artifact pinned at score 7/10. This anchors evaluator scale drift and restores discriminative dynamic range at the ceiling.</li></ul></li><li><strong>AXE: On-Manifold Logic Fidelity &amp; Anti-Fairwashing (Rawal et al. 2025, <code class="language-plaintext highlighter-rouge">2505.10399</code>)</strong>:
+    <ul><li>Evaluates extracted DAK decision tables and CQL expressions by testing whether the identified input variables allow an on-manifold surrogate (e.g. local $k$-NN) to emulate the actual recommendation output.</li><li>Adheres to three core principles: <em>Local Contextualization</em>, <em>Model Relativism</em>, and <em>On-Manifold Evaluation</em>.</li><li>Detects “fairwashing” and rationale hallucinations: catches when an LLM claims a clinical action was governed by valid guideline criteria when it was actually driven by irrelevant context tokens.</li></ul></li></ol><h3 id="pillar-iv-empirical-discrepancy--extraction-benchmarking"><a href="#pillar-iv-empirical-discrepancy--extraction-benchmarking" class="anchor-heading" aria-labelledby="pillar-iv-empirical-discrepancy--extraction-benchmarking"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pillar IV: Empirical Discrepancy &amp; Extraction Benchmarking
+  
+  
+</h3><p><em>(Harris et al. 2025 <code class="language-plaintext highlighter-rouge">2405.14766</code>, Harris et al. 2026 <code class="language-plaintext highlighter-rouge">2505.06046</code>)</em></p><ol><li><strong>Guidance Recommendation Classification</strong>:
+    <ul><li>Demonstrates that extracting actionable clinical guidance requires discrete classification of narrative text chunks into normative recommendations (specific, actionable instructions/requests conditioned on patient state) versus descriptive clinical background.</li></ul></li><li><strong>The MCQA vs Free-Form Generative Cliff</strong>:
+    <ul><li>SOTA LLMs achieve &gt;90% on MCQA extraction benchmarks but drop below 75% on free-form generation, with clinical guidance demonstrating the steepest drop (o1=71%, GPT-4.1=65%, GPT-4o=60%, Claude Sonnet 3.7=57%).</li><li>Unconstrained generative pipelines introduce critical errors even when models possess underlying factual knowledge.</li></ul></li><li><strong>Tripartite Taxonomy of Recommendation Discrepancies</strong>:
+    <ul><li><strong>Type 1: Extraneous Advice</strong>: Adding clinical actions, supplementary tests, or unapproved prophylactic measures not grounded in source guidance.</li><li><strong>Type 2: Omission of Critical Criteria</strong>: Omitting vital eligibility criteria, laboratory monitoring gates, or contraindications (e.g., immunosuppression, pregnancy).</li><li><strong>Type 3: Contradiction &amp; Timing Deviations</strong>: Recommending clinical interventions too early (premature treatment before diagnosis) or too late (waiting periods contradicting urgent notification mandates), or making statements directly conflicting with official policy.</li></ul></li><li><strong>Temporal Update Asynchrony</strong>:
+    <ul><li>Evaluates performance degradation when guidelines undergo periodic updates (e.g. 31% of UKHSA guidance updated in 2024 post-training cutoff). Static models persistently emit superseded clinical advice unless bound to declared knowledge graph nodes.</li></ul></li></ol><hr /><h2 id="3-discrepancy-analysis-in-l1-l2-l3-authoring-editing-and-adaptation"><a href="#3-discrepancy-analysis-in-l1-l2-l3-authoring-editing-and-adaptation" class="anchor-heading" aria-labelledby="3-discrepancy-analysis-in-l1-l2-l3-authoring-editing-and-adaptation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Discrepancy Analysis in L1, L2, L3 Authoring, Editing, and Adaptation
+  
+  
+</h2><p>The WHO SMART Guidelines framework establishes a three-layer translation hierarchy:</p><ul><li><strong>L1</strong>: Narrative clinical guidelines (WHO recommendations, national health ministry guidance).</li><li><strong>L2</strong>: Digital Adaptation Kit (DAK) — human-readable, machine-processable operational artifacts (Personas, Workflows/BPMN, Data Dictionary, Decision Tables/DMN, Indicators).</li><li><strong>L3</strong>: Computable FHIR / CQL Implementation Guides (Profiles, ValueSets, PlanDefinitions, Library logic).</li></ul><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+---------------------------------------------------------------------------------------------------+
+| L1: Narrative Clinical Guidelines (WHO &amp; National MOH Guidance)                                   |
+| - Unstructured text, multi-guideline publications, historical revisions                           |
+| - Challenge: Chunk extraction, identifying normative recommendations, cross-guideline conflicts  |
++---------------------------------------------------------------------------------------------------+
+                                                  |
+                  [UKHSA Recommendation Extractor + AXE Discrepancy Gating]
+                                                  v
++---------------------------------------------------------------------------------------------------+
+| L2: Digital Adaptation Kit (DAK) — The Insulating Bridge                                          |
+| - DMN Decision Tables: Condition-Action matrices with explicit boundaries                         |
+| - BPMN Workflows: Deterministic activity sequences eliminating intervention timing errors         |
+| - Core Data Dictionary: Standardized concepts, LOINC/SNOMED codes, FHIR logical models            |
+| - Adaptation Register: Separates intentional national adaptation from accidental hallucination    |
++---------------------------------------------------------------------------------------------------+
+                                                  |
+                     [Deterministic Compiler Gates: cql-translation &amp; sushi]
+                                                  v
++---------------------------------------------------------------------------------------------------+
+| L3: Executable FHIR Implementation Guide &amp; CQL Library                                            |
+| - StructureDefinitions, PlanDefinitions, deterministic CQL evaluation engine                      |
+| - Fully shielded from LLM free-form generative hallucination cliff (MCQA vs FreeForm Gap)         |
++---------------------------------------------------------------------------------------------------+
+</code></pre></div></div><h3 id="where-recommendation-discrepancies-arise-and-fit"><a href="#where-recommendation-discrepancies-arise-and-fit" class="anchor-heading" aria-labelledby="where-recommendation-discrepancies-arise-and-fit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where Recommendation Discrepancies Arise and Fit
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>Layer</th><th>Nature of Discrepancy</th><th>Mechanism for Detection &amp; Resolution</th></tr></thead><tbody><tr><td><strong>L1 Authoring &amp; Intake</strong></td><td><strong>Narrative Ambiguity &amp; Cross-Source Contradiction</strong>: Divergence between WHO global guidelines and national guidance (e.g. UKHSA), or between historical editions (e.g. Measles 9mo endemic vs 6mo outbreak).</td><td><strong>UKHSA Recommendation Classifier</strong> filters text chunks for actionable recommendations. <strong>AXE on-manifold testing</strong> identifies mutual exclusion between source assertions. Contradictions are parked in the <strong>Conflict Register</strong> (<code class="language-plaintext highlighter-rouge">folio-clinical-conflict/v1</code>) rather than papered over by LLM consensus.</td></tr><tr><td><strong>L2 DAK Authoring</strong></td><td><strong>Logic Omissions &amp; Intervention Timing Errors</strong>: The primary free-form failure modes identified in PubHealthBench (o1 suggesting interventions too early or too late, or omitting contraindications).</td><td><strong>DMN Decision Tables</strong> force all conditions to be explicit; missing branches or uncovered input combinations are caught structurally. <strong>BPMN Workflows</strong> strictly fix temporal execution gates, eliminating timing drift.</td></tr><tr><td><strong>L2 National Adaptation</strong></td><td><strong>Intentional Contextual Adaptation vs Hallucinated Drift</strong>: National guideline adaptations adjust thresholds based on local disease burden, drug availability, and diagnostics.</td><td>The framework cross-references adaptations against the <strong>DAK Adaptation Register</strong>. Intentional adjustments citing local epidemiological features ($D_i$) are accepted; ungrounded deviations are flagged as Type 1 or Type 3 discrepancies.</td></tr><tr><td><strong>L3 Executable Authoring</strong></td><td><strong>Code Synthesis Deviations</strong>: Direct L1 $\to$ L3 translation fails due to the 25–43% generative error cliff.</td><td>L3 FHIR <code class="language-plaintext highlighter-rouge">PlanDefinition</code> and CQL logic are generated <strong>mechanically</strong> from L2 DMN decision tables and Data Dictionaries, completely bypassing generative free-form prompts for clinical logic.</td></tr></tbody></table></div><hr /><h2 id="4-integration-with-core-bpmn-workflows"><a href="#4-integration-with-core-bpmn-workflows" class="anchor-heading" aria-labelledby="4-integration-with-core-bpmn-workflows"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Integration with Core BPMN Workflows
+  
+  
+</h2><p>The evaluation framework maps directly onto the executable BPMN workflows declared in core workflow processes:</p><pre><code class="language-mermaid">sequenceDiagram
+    autonumber
+    participant Lib as Library Ingestion (ingest-derive-content.bpmn)
+    participant Ret as Evidence Retrieval (evidence-retrieval.bpmn)
+    participant DAK as DAK Authoring (l2-dak-authoring.bpmn)
+    participant Rev as Change Review (content-change-review.bpmn)
+    participant HCI as Clinical SME (editing-hci-validation.bpmn)
+
+    Lib-&gt;&gt;Ret: Extract candidate recommendation chunks (UKHSA classifier)
+    Ret-&gt;&gt;DAK: Multi-guideline context (Dense + TF-IDF hybrid retrieval)
+    DAK-&gt;&gt;Rev: Draft DMN decision tables, BPMN flows, and data dictionaries
+    Note over Rev: Automated Discrepancy Gate: Check for Extraneous, Omission, Timing Contradiction
+    alt Discrepancy Detected
+        Rev-&gt;&gt;HCI: Route to Conflict Register (folio-clinical-conflict/v1)
+        HCI--&gt;&gt;DAK: SME adjudication: Intentional Adaptation vs Correction
+    else Clean Verification
+        Rev--&gt;&gt;DAK: Approve for L3 compilation (SUSHI / CQL compiler)
+    end
+</code></pre><h3 id="specific-workflow-gating-points"><a href="#specific-workflow-gating-points" class="anchor-heading" aria-labelledby="specific-workflow-gating-points"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Specific Workflow Gating Points
+  
+  
+</h3><ol><li><strong>Ingest and derive content process (<code class="language-plaintext highlighter-rouge">ingest-derive-content.bpmn</code>)</strong>:
+    <ul><li>Executes UKHSA-style <em>Guidance Recommendation Classification</em> (<code class="language-plaintext highlighter-rouge">2405.14766</code>) on ingested L1 sections.</li><li>Tags text chunks carrying actionable clinical recommendations with <code class="language-plaintext highlighter-rouge">folio-guidance-recommendation/v1</code>.</li></ul></li><li><strong>Evidence retrieval process (<code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code>)</strong>:
+    <ul><li>Executes hybrid retrieval combining dense text embeddings (<code class="language-plaintext highlighter-rouge">text-embedding-3-large</code>) and sparse lexical scoring (TF-IDF), reproducing the PubHealthBench multi-chunk context retrieval architecture to provide complete reference grounding for clinical questions.</li></ul></li><li><strong>Document and DAK authoring processes (<code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code> &amp; <code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code>)</strong>:
+    <ul><li>Translates extracted L1 recommendations into DAK decision tables (<code class="language-plaintext highlighter-rouge">dmn-authoring</code>) and workflows (<code class="language-plaintext highlighter-rouge">bpmn-authoring</code>).</li><li>Ensures clinical conditions are isolated in decision tables prior to executable coding.</li></ul></li><li><strong>Content change review process (<code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>)</strong>:
+    <ul><li>Acts as <strong>Layer 2 (Agentic Council &amp; Discrepancy Gate)</strong>:
+        <ul><li>Runs AXE on-manifold verification on proposed DMN logic.</li><li>Performs multi-model consistency checking across $J \ge 3$ model families.</li><li>Classifies candidate diffs against the tripartite discrepancy taxonomy (Extraneous, Omission, Contradiction).</li></ul></li></ul></li><li><strong>Editing and HCI validation process (<code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code>)</strong>:
+    <ul><li>Acts as <strong>Layer 3 (Human SME Triage)</strong>:
+        <ul><li>Displays curated packets containing only genuine clinical conflicts, ungrounded discrepancies, and declared national adaptation choices.</li><li>Eliminates SME fatigue by ensuring all mechanical syntax and agentic consensus checks are cleared beforehand.</li></ul></li></ul></li></ol><hr /><h2 id="5-resolution-of-research-questions-r1-to-r7"><a href="#5-resolution-of-research-questions-r1-to-r7" class="anchor-heading" aria-labelledby="5-resolution-of-research-questions-r1-to-r7"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Resolution of Research Questions R1 to R7
+  
+  
+</h2><h3 id="r1-immunization-l1---l2l3-reproduction--conflict-register"><a href="#r1-immunization-l1---l2l3-reproduction--conflict-register" class="anchor-heading" aria-labelledby="r1-immunization-l1---l2l3-reproduction--conflict-register"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R1: Immunization L1 -&gt; L2/L3 Reproduction &amp; Conflict Register
+  
+  
+</h3><ul><li><strong>Evaluation Protocol</strong>: Use human-authored L2/L3 artifacts in reference SMART guideline implementations (such as immunization packages) as known ground-truth anchors $Q$. Apply Hybrid RWT (<code class="language-plaintext highlighter-rouge">2603.27124</code>) to estimate extraction precision $\sigma_k$ and scale $u_k$.</li><li><strong>Conflict Register Discipline</strong>: When source guideline documents contradict each other (e.g. vaccination age thresholds in endemic vs outbreak settings):
+    <ol><li>The pipeline does NOT invent a synthetic harmonization.</li><li>AXE (<code class="language-plaintext highlighter-rouge">2505.10399</code>) tests both candidate decision table branches on-manifold. If they emulate divergent recommendations from the same clinical input, a conflict is detected.</li><li>The conflict is logged directly to the <strong>Conflict Register</strong> (<code class="language-plaintext highlighter-rouge">folio-clinical-conflict/v1</code>) with: verbatim sources, conflict typology, proposed DAK handling rule, and audit trail, parked for Layer 3 SME adjudication.</li></ol></li></ul><h3 id="r2-hiv-prep-clinical-complexity-axis-unlabelled-generation"><a href="#r2-hiv-prep-clinical-complexity-axis-unlabelled-generation" class="anchor-heading" aria-labelledby="r2-hiv-prep-clinical-complexity-axis-unlabelled-generation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R2: HIV PrEP Clinical Complexity Axis (Unlabelled Generation)
+  
+  
+</h3><ul><li><strong>Evaluation Protocol</strong>: HIV PrEP represents new content with high clinical branching and no human L2/L3 ground truth.</li><li>Apply DMM (<code class="language-plaintext highlighter-rouge">2608.18294</code>) with $J \ge 3$ distinct model families. Condition on dense clinical text embeddings and sentence complexity metrics ($D_i$) to guarantee valid asymptotic inference without ground truth.</li><li>Verify via CRB bounds (<code class="language-plaintext highlighter-rouge">2403.16873</code>) that the number of extracted rules $P$ meets the ranking stability threshold.</li><li>Measure both L1 graph capture (via <code class="language-plaintext highlighter-rouge">l1-coverage.ts</code>) and downstream DAK products separately (DEC-007).</li></ul><h3 id="r3-knowledge-graph-value-add-route-b-vs-route-a"><a href="#r3-knowledge-graph-value-add-route-b-vs-route-a" class="anchor-heading" aria-labelledby="r3-knowledge-graph-value-add-route-b-vs-route-a"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R3: Knowledge Graph Value Add (Route B vs Route A)
+  
+  
+</h3><ul><li><strong>Evaluation Protocol</strong>: Compare Route B (Skills + Knowledge Graph) vs Route A (Skills alone, no KG) across identical model endpoints.</li><li>Model joint errors using Correlated Noise RWT (<code class="language-plaintext highlighter-rouge">2203.02010</code>) to eliminate foundation model correlation.</li><li>Compute the reduction in Noise-to-Signal Ratio ($\text{NSR}_B$ vs $\text{NSR}_A$).</li><li>Sub-question R3.1: Decompose value across DAK components: Core Data Dictionary (binding correctness), Decision Tables (completeness), and BPMN processes (deadlock avoidance).</li></ul><h3 id="r4-baseline-characterization-route-0-vs-routes-a--b"><a href="#r4-baseline-characterization-route-0-vs-routes-a--b" class="anchor-heading" aria-labelledby="r4-baseline-characterization-route-0-vs-routes-a--b"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R4: Baseline Characterization (Route 0 vs Routes A &amp; B)
+  
+  
+</h3><ul><li><strong>Evaluation Protocol</strong>: Benchmark Route 0 (raw unguided LLM) to establish the error baseline.</li><li>Quantify failure modes: schema hallucination, non-existent FHIR attributes, uncompilable CQL expressions, and AXE-detected fairwashing.</li><li>Incorporate PubHealthBench findings demonstrating that unguided zero-shot free-form generation exhibits up to a 43% failure rate on complex clinical guidance.</li></ul><h3 id="r5-layered-validation-feasibility--phrasing-coverage"><a href="#r5-layered-validation-feasibility--phrasing-coverage" class="anchor-heading" aria-labelledby="r5-layered-validation-feasibility--phrasing-coverage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R5: Layered Validation Feasibility &amp; Phrasing Coverage
+  
+  
+</h3><ul><li><strong>Evaluation Protocol</strong>: Track filtering efficacy across the three validation layers.</li><li>Measure SME review time per packet (target: $&gt;80\%$ reduction in SME hours).</li><li>Compute agentic agreement with final human verdicts ($\kappa$ and DMM misclassification rates).</li><li>Test phrasing coverage by evaluating variations of clinical prompt phrasing against standardized DAK personas.</li></ul><h3 id="r6-proprietary-vs-open-source-kg-pipelines"><a href="#r6-proprietary-vs-open-source-kg-pipelines" class="anchor-heading" aria-labelledby="r6-proprietary-vs-open-source-kg-pipelines"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R6: Proprietary vs Open-Source KG Pipelines
+  
+  
+</h3><ul><li><strong>Evaluation Protocol</strong>: Feed identical L1 corpora into proprietary vs open-source KG extraction pipelines.</li><li>Benchmark node precision, relation recall, and graph completeness using RWT with correlated error correction.</li><li>Evaluate whether the marginal performance delta of proprietary pipelines justifies the vendor dependency and infrastructure cost.</li></ul><h3 id="r7-frontier-vs-open-weight-models--benchmark-integrity"><a href="#r7-frontier-vs-open-weight-models--benchmark-integrity" class="anchor-heading" aria-labelledby="r7-frontier-vs-open-weight-models--benchmark-integrity"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> R7: Frontier vs Open-Weight Models &amp; Benchmark Integrity
+  
+  
+</h3><ul><li><strong>Evaluation Protocol</strong>: Run cross-model evaluation across frontier APIs (Claude 3.7, GPT-4o, Gemini 2.0 Pro) and open-weight models (Llama 3.3 70B, DeepSeek V3, Qwen 2.5).</li><li>Apply SVD factorisation and swept calibration anchors (<code class="language-plaintext highlighter-rouge">2606.21008</code>) to eliminate evaluator grading drift.</li><li>Test whether open-weight models under Route B (with KG constraint enforcement) achieve parity with unassisted frontier models under Route A.</li></ul><hr /><h2 id="6-artifact--manifest-specifications"><a href="#6-artifact--manifest-specifications" class="anchor-heading" aria-labelledby="6-artifact--manifest-specifications"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Artifact &amp; Manifest Specifications
+  
+  
+</h2><h3 id="conflict-register-schema-folio-clinical-conflictv1"><a href="#conflict-register-schema-folio-clinical-conflictv1" class="anchor-heading" aria-labelledby="conflict-register-schema-folio-clinical-conflictv1"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Conflict Register Schema (<code class="language-plaintext highlighter-rouge">folio-clinical-conflict/v1</code>)
+  
+  
+</h3><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folio-clinical-conflict/v1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"conflictId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CONF-IMM-0042"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"doc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"library/arxiv-260327124v1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"section"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"statement"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Administer first dose at 9 months in endemic settings."</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"doc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"library/arxiv-2203.02010v1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"section"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"statement"</span><span class="p">:</span><span class="w"> </span><span class="s2">"In outbreak settings, supplementary dose given from 6 months."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"conflictType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contextual_exception_vs_general_rule"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"discrepancyClass"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contradiction_and_timing_deviation"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"proposedHandlingRule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Differentiate endemic baseline schedule from outbreak supplementary schedule in DAK decision table."</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parked_for_sme"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"axeVerification"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"fidelityScore"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.94</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"onManifold"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"smeDecision"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"auditTrail"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-10-08T10:30:00Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eval-harness"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><h3 id="benchmark-run-manifest-schema-schemasevaluation-run-manifestts"><a href="#benchmark-run-manifest-schema-schemasevaluation-run-manifestts" class="anchor-heading" aria-labelledby="benchmark-run-manifest-schema-schemasevaluation-run-manifestts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Benchmark Run Manifest Schema (<code class="language-plaintext highlighter-rouge">schemas/evaluation-run-manifest.ts</code>)
+  
+  
+</h3><ul><li>Pinned model identifiers, temperatures ($T=0$), and random seeds.</li><li>Declared route (Route 0, Route A, Route B).</li><li>Swept anchor calibration portfolio vector.</li><li>DMM unit conditioning vector ($D_i$).</li><li>Discrepancy evaluation settings (MCQA vs FreeForm prompt modes, reference guidance chunks).</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script type="module">
+  
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.esm.min.mjs';
+  
+
+  var config = /* Mermaid configuration for this docs site.
+
+   just-the-docs interpolates this file's contents directly into
+   `var config = <here>; mermaid.initialize(config);`
+   — see that theme's `_includes/components/mermaid.html` — so this must be a
+   bare JavaScript object literal. No `export`, no statements, no semicolon.
+
+   DIAGRAMS ARE ALWAYS LIGHT, IN BOTH COLOUR SCHEMES. The site's stylesheet
+   follows the reader's choice; the drawings do not. They render in Mermaid's
+   light palette on a white card supplied by `.fa-figure-wrap`
+   (site-chrome/assets/css/docs-ui.css), exactly like the BPMN exports beside them,
+   which carry their own white backdrop and cannot follow a scheme at all.
+
+   This reverses a decision made an hour earlier in this session, and the
+   reversal is the whole point of the comment. Setting `theme: "dark"` did fix
+   the ORIGINAL complaint — pale nodes glaring on a dark page — and replaced it
+   with a worse one: dark-on-dark, the diagram's own near-black background
+   dissolving into the page and the text with it. Owner's call, and it is the
+   right one: a schematic is a figure, figures are printed on white, and one
+   consistent treatment across BPMN and Mermaid beats two that each look
+   correct only in one mode.
+
+   Consequence worth knowing: the palette no longer depends on the reader's
+   scheme, so the header's light/dark toggle does not need to re-render
+   anything and no longer reloads the page on diagram pages.
+
+   The PARENTHESES are load-bearing. A bare `{ "theme": ... }` at the start of
+   a statement parses as a BLOCK, not an object, so eslint rejects it with
+   "';' expected" — and eslint lints this file, which is free syntax checking
+   worth keeping. `var config = ({ ... });` is exactly as valid as without
+   them, so the wrapper costs nothing and buys the linter. */
+(({
+  "theme": "default",
+  "themeVariables": {
+    /* Match the card the diagram sits on, so its own backdrop and the
+       wrapper's are the same white rather than two near-whites with a seam. */
+    "background": "#ffffff"
+  },
+  /* Long swimlane labels wrap rather than forcing the diagram wider than the
+     zoom controls can usefully bring back. */
+  "flowchart": { "useMaxWidth": true }
+}))
+;
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script></body></html>

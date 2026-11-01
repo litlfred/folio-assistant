@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/smart-base/directory/smart-base-artifact-index.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-artifact-index.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-artifact-index",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-base-artifact-index",
+      "path": "fhir-artifact-index/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/fhir-artifact-index"
+      ],
+      "description": "The IG's artefact index. `index.json`, `menu.json`, `releases.json`, `package.tgz` and `sidecars/` are NOT COMMITTED: fhir-harness's `ig-index:build` writes them at publish from the IG's AST (`builtAtPublish`, fhir-harness#124; `sidecars/` via this layer's `ig-site:sidecars` step, bean `4u5d`), as smart-immunizations' are. Until then they were reconstructed by the retired `ingest:ig` from smart.who.int.base v0.3.0 (FHIR 4.0.1), with the DAK API surface committed under `dak/` (retired in bean `4u5d`). What stays committed here is `upstream-report-CDHIv1toCDHIv2.md` and `README.md`. The four CDHI/CDSC ConceptMaps -- the v1-to-v2 crosswalks and the two hierarchy maps -- are indexed `referenced`: the index says where they are and holds none of their rows. Materializing one is `materialize-remote.bpmn`, not a flag. Issue #877, bean `cpmo`. UNTIL plan Q4 (bean `rbz3`, 2026-10-02) IT ALSO HELD `chrome.json`; the chrome is the TEMPLATE's styling, so it now lives in `themes/` beside the template's theme, and ships with the harness. When it was here, it was a THIRD provenance in one directory rather than a second copy of an existing one: `index.json` is harvested from an IG's published output, `menu.json` (smart-trust's) is read from its `sushi-config.yaml`, and `chrome.json` is resolved from the `fhir.template` packages its `ig.ini` names -- `fhir.base.template` and `who.template.root`, separate repositories the IG merely depends on. An IG declares its appearance in NO file it owns, which is why the chrome could not be folded into either of the other two. It lives at smart-base so every WHO SMART IG (through `smart-ig`) inherits one answer instead of each re-copying it; `schemas/ig-chrome.ts` carries why the consumer NAMES this instance rather than walking `needs` to it, and the layering gap that forces it, which is `nsbb`'s.",
+      "readmePath": "fhir-artifact-index/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-artifact-index"
+    }
+  ]
+}

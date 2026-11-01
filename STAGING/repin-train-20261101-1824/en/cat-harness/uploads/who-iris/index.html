@@ -1,0 +1,402 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../../../assets/js/vendor/lunr.min.js"></script><script src="../../../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>uploads — the intake queue — who-iris | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="uploads — the intake queue — who-iris" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="uploads — the intake queue — who-iris" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "en-cat-harness-uploads-who-iris-index.html",
+    "src": "../../../../assets/qa/en-cat-harness-uploads-who-iris-index.html/page.translation.json",
+    "index": "../../../../assets/qa/en-cat-harness-uploads-who-iris-index.html/qa-index.json",
+    "list": "../../../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../../folio-assistant-core/","jsonld":"../../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../../build.json"><meta name="fa-fsh-guts-src" content="../../../../fsh-guts.json"><link rel="stylesheet" href="../../../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../../../assets/css/docs-ui.css?v=2ed7923cda66"><link rel="stylesheet" href="../../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../../assets/js/harness-data.js" defer></script><script src="../../../../assets/js/vendor/qrcode.js" defer></script><script src="../../../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../../../assets/js/kg-render.js" defer></script><script src="../../../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../../../assets/js/docs-ui.js?v=9ffac52f2026" defer></script><script src="../../../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../../../assets/js/work-plan.js" defer></script><script src="../../../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><style id="fa-instance-theme" data-instance="who-iris">
+  /* IRIS — declared by instance who-iris, theme iris-web. */
+  :root {
+  --sidebar-color: #008dc9;
+  --link-color: #008dc9;
+  --border-color: #ced4da;
+  }
+</style><link rel="stylesheet" href="../../../../assets/css/navbar.css"><script src="../../../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../../assets/page-layout.css" data-fa-page-layout><script src="../../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../../.." data-fa-to-root="../../../..">{"data":"rail-giobbw31pa","here":"/en/cat-harness/uploads/who-iris/"}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><div id="main-content" class="main-content"><main><style>
+.up-page{--line:rgba(127,127,127,.4);--card:rgba(127,127,127,.12);
+      --wait:#e3b341;--waitbg:rgba(210,153,34,.18);--ing:#56d364;--ingbg:rgba(63,185,80,.16)}
+:root[data-fa-scheme="light"] .up-page{--wait:#7d5300;--waitbg:#fff8c5;--ing:#116329;--ingbg:#dafbe1}
+.up-page h1{margin:0 0 .25rem}
+.up-page .sub{margin:0 0 1.25rem}
+.up-page .badges{display:flex;gap:.75rem;flex-wrap:wrap;margin:0 0 1.5rem}
+.up-page .badge{background:var(--card);border:1px solid var(--line);border-radius:.5rem;padding:.6rem .9rem;min-width:7rem}
+.up-page .badge b{display:block;font-size:1.6rem;line-height:1.1}
+.up-page .badge span{font-size:.8rem}
+.up-page .badge.lead{border:2px solid var(--wait);background:var(--waitbg)}
+.up-page .badge.lead b{color:var(--wait)}
+.up-page .badge.lead .lead-tag{display:inline-block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:.08rem .35rem;border-radius:.25rem;border:1px solid var(--wait);background:var(--card);vertical-align:middle;margin-left:.4rem}
+.up-page table{display:table;border-collapse:collapse;width:100%;font-size:.9rem}
+.up-page th,.up-page td{text-align:left;padding:.45rem .6rem;border:0;border-bottom:1px solid var(--line);vertical-align:top;background:transparent}
+.up-page th{user-select:none;white-space:nowrap;font-weight:600}
+.up-page th button{border:0;background:transparent;padding:0;font:inherit;font-weight:600;color:inherit;cursor:pointer;text-align:inherit;white-space:nowrap}
+.up-page th button:hover{text-decoration:underline;opacity:1}
+.up-page th button:focus-visible{outline:2px solid var(--wait);outline-offset:2px;border-radius:.2rem}
+.up-page td.num,.up-page th.num{text-align:right;font-variant-numeric:tabular-nums}
+.up-page td.size,.up-page th.size,.up-page .size{white-space:nowrap;min-width:6rem}
+.up-page tr.group-row th,.up-page tr.group-row td{background:var(--card);font-size:.82rem;font-weight:600;padding:.35rem .6rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:left}
+.up-page .capture-tag{display:inline-block;font-size:.7rem;font-weight:600;padding:.05rem .35rem;border-radius:.25rem;background:var(--card);border:1px solid var(--line);color:inherit;vertical-align:middle;margin-left:.35rem}
+.up-page .capture-name{font-style:italic}
+.up-page .pill{display:inline-block;border-radius:1rem;padding:.05rem .55rem;font-size:.78rem;font-weight:600}
+.up-page .pill.waiting{background:var(--waitbg);color:var(--wait)}
+.up-page .pill.ingested{background:var(--ingbg);color:var(--ing)}
+.up-page .kind{font-size:.78rem}
+.up-page .empty{background:var(--card);border:1px dashed var(--line);border-radius:.5rem;padding:1.5rem}
+.up-page .add{background:var(--card);border:1px solid var(--line);border-radius:.5rem;padding:.9rem 1.1rem;margin:1rem 0}
+.up-page .add h2{font-size:1rem;margin:0 0 .4rem}
+.up-page .add p{margin:.35rem 0;font-size:.9rem}
+.up-page .add pre{border:1px solid var(--line);border-radius:.35rem;padding:.55rem .7rem;overflow-x:auto;margin:.4rem 0;font-size:.85em}
+.up-page .up-page-subjects ul { list-style:none; display:flex; flex-wrap:wrap; gap:.25rem 1rem; margin:0 0 1rem; padding:0; font-size:.9rem; }
+.up-page .up-page-subjects li { margin:0; padding:0; }
+.up-page .up-page-subjects li::before { content:none; }
+.up-page .up-page-subjects [aria-current] { font-weight:600; }
+</style><div class="up-page"><h1 id="up-title"><a href="#up-title" class="anchor-heading" aria-labelledby="up-title"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> uploads — the intake queue
+  
+  
+</h1><nav class="up-page-subjects" aria-label="Instances"><ul><li><a href="../">All instances</a></li><li><a href="../cat-harness/">cat-harness</a></li><li><a href="../folio-assistant-core/">folio-assistant-core</a></li><li><span aria-current="page">who-iris</span></li></ul></nav><p class="sub">Raw files as dropped, before ingestion. A source here is <strong>not</strong>
+reachable by the corpus checklist, which searches <code>library/</code> only — so a file
+waiting here makes a clean grep read as &ldquo;nobody has done this&rdquo;.</p><div class="badges" id="badges"></div><div id="add"></div><div id="body"></div></div><script>
+var SRC = "../../../../assets/library/index.json";
+var SCOPE = "who-iris";
+function $(i){ return document.getElementById(i); }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function size(n){ return n >= 1048576 ? (n/1048576).toFixed(1)+" MB" : Math.round(n/1024)+" KB"; }
+function inScope(x){ return !SCOPE || x.instance === SCOPE; }
+function state(u){ return u.ingestedBy ? "ingested" : "waiting"; }
+function isRawCapture(u){
+  return !u.title && (/^ChatGPT[-_ ]Image/i.test(u.file) || /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.test(u.file));
+}
+
+var ITEMS = [], QUEUES = [], sortKey = "state", sortAsc = true;
+
+var COLS = [
+  { k:"file",    t:"File",     num:false },
+  { k:"kind",    t:"Unit",     num:false },
+  { k:"state",   t:"State",    num:false },
+  { k:"ext",     t:"Type",     num:false },
+  { k:"bytes",   t:"Size",     num:true  },
+  { k:"instance",t:"Queue",    num:false }
+];
+
+function cell(u, k){
+  if (k === "state") {
+    var s = state(u);
+    return '<span class="pill '+s+'">'+s+'</span>' +
+      (u.ingestedBy ? ' <span class="kind">'+esc(u.ingestedBy)+'</span>' : '');
+  }
+  if (k === "kind") {
+    return '<span class="kind">'+esc(u.kind)+
+      (u.kind === "intake" && u.declaredFiles ? ' &middot; '+u.declaredFiles+' file(s)' : '')+'</span>';
+  }
+  if (k === "bytes") return size(u.bytes);
+  if (k === "file") {
+    var isRaw = isRawCapture(u);
+    var rawTag = isRaw ? ' <span class="capture-tag">raw capture</span>' : '';
+    var nameCls = isRaw ? ' class="capture-name"' : '';
+    return '<span' + nameCls + '>' + esc(u.file) + '</span>' + rawTag +
+      (u.title ? '<br><span class="kind">'+esc(u.title)+'</span>' : '');
+  }
+  if (k === "ext") return u.ext ? '<code>'+esc(u.ext)+'</code>' : '<span class="kind">&mdash;</span>';
+  return esc(u[k]);
+}
+
+function sorted(){
+  var rows = ITEMS.filter(inScope).slice();
+  rows.sort(function(a,b){
+    if (sortKey === "state") {
+      var sa = state(a) === "waiting" ? 0 : 1;
+      var sb = state(b) === "waiting" ? 0 : 1;
+      if (sa !== sb) return sortAsc ? sa - sb : sb - sa;
+      var ra = isRawCapture(a) ? 1 : 0;
+      var rb = isRawCapture(b) ? 1 : 0;
+      if (ra !== rb) return ra - rb;
+      var fa = String(a.file || "").toLowerCase();
+      var fb = String(b.file || "").toLowerCase();
+      return fa < fb ? -1 : fa > fb ? 1 : 0;
+    }
+    var x = a[sortKey];
+    var y = b[sortKey];
+    if (typeof x === "number" && typeof y === "number") return sortAsc ? x-y : y-x;
+    x = String(x).toLowerCase(); y = String(y).toLowerCase();
+    return sortAsc ? (x<y?-1:x>y?1:0) : (x<y?1:x>y?-1:0);
+  });
+  return rows;
+}
+
+function render(){
+  var qs = QUEUES.filter(inScope);
+  var waiting = qs.reduce(function(n,q){ return n + q.uningested; }, 0);
+  var total   = qs.reduce(function(n,q){ return n + q.total; }, 0);
+  var ingested= qs.reduce(function(n,q){ return n + q.ingested; }, 0);
+  // The uningested count LEADS, because it is the one that makes a clean
+  // corpus grep lie. A total would read as reassurance.
+  $("badges").innerHTML =
+    '<div class="badge lead" role="status" aria-label="'+waiting+' waiting to be ingested">' +
+      '<b><span class="lead-icon" aria-hidden="true">&#x23f3; </span>'+waiting+
+      '<span class="lead-tag">action needed</span></b>' +
+      '<span>waiting to be ingested</span>' +
+    '</div>' +
+    '<div class="badge"><b>'+ingested+'</b><span>ingested into library/</span></div>' +
+    '<div class="badge"><b>'+total+'</b><span>queued units</span></div>' +
+    '<div class="badge"><b>'+qs.length+'</b><span>queue(s)</span></div>';
+
+  // ── ADDING TO THE QUEUE — the owner's 2026-09-23 ruling: a COMMIT FROM A
+  // CHECKOUT. So the affordance is the path and the command, not a button: a
+  // published page cannot write to somebody's working tree, and a control
+  // that looked like it could would be the dead link pb04 forbids, one layer
+  // up.
+  //
+  // NO BACKTICKS IN THIS COMMENT. It sits inside the page template literal,
+  // and one here ends the string and turns the rest of the file into
+  // TypeScript — which is what happened on the first draft, failing at a line
+  // far from the mistake. The same warning is already written twice elsewhere
+  // in this repository, which is how I knew where to look.
+  //
+  // PER QUEUE, because there are three with different paths. A single
+  // hardcoded "put it in uploads/" would be wrong for two of them — the same
+  // defect as ingest's printed -o, which named one directory for two arms
+  // that wanted different ones (#1050).
+  //
+  // AND NO --library VALUE IS PRINTED, which is the part that had to be
+  // measured rather than assumed. A sibling convention (<instance>/library)
+  // looks obvious and the corpus contradicts it in ALL THREE queues:
+  // uploads/ has landed files in agent-skills (5) AND the DAK base layer (7);
+  // cat-harness/uploads in cat-harness (5) AND the formal-math layer (1);
+  // the IRIS replica's uploads in none at all, where the convention would have
+  // confidently said that replica's library. A QUEUE HAS NO SINGLE DESTINATION —
+  // the choice is per document, which is exactly why ingest itself refuses to
+  // guess it. The page says the same thing the tool says.
+  $("add").innerHTML = qs.length === 0 ? "" :
+    '<div class="add"><h2>Adding a source</h2>' +
+    '<p>Sources are added by <b>committing them from a checkout</b> — this page shows the queue, it cannot write to it.</p>' +
+    qs.map(function(q){
+      return '<p>Into <code>' + q.dir + '/</code>:</p>' +
+        '<pre>cp YOUR-FILE.pdf ' + q.dir + '/\n' +
+        'git add ' + q.dir + '/YOUR-FILE.pdf &amp;&amp; git commit\n' +
+        'bun run cat ingest ' + q.dir + '/YOUR-FILE.pdf --library &lt;destination&gt;</pre>';
+    }).join("") +
+    '<p><code>--library</code> is <b>chosen, never derived</b>: files from one queue have been ingested into several libraries, so a queue does not determine a destination. <code>ingest</code> lists the declared ones and refuses to guess.</p>' +
+    '</div>';
+
+  var rows = sorted();
+  if (!rows.length) {
+    // An empty queue is a DETERMINED answer and is not an error: nothing is
+    // waiting. It is rendered as calm rather than as a gap.
+    $("body").innerHTML = '<div class="empty">Nothing in the queue. Every source that arrived has been ingested into <code>library/</code>.</div>';
+    return;
+  }
+  var h = '<table><thead><tr>' + COLS.map(function(c){
+    var isSorted = sortKey === c.k;
+    var sortAttr = isSorted ? (sortAsc ? ' aria-sort="ascending"' : ' aria-sort="descending"') : ' aria-sort="none"';
+    var mark = isSorted ? (sortAsc ? " \u25b4" : " \u25be") : "";
+    var thCls = (c.num ? "num " : "") + (c.k === "bytes" ? "size " : "") + "col-" + c.k;
+    return '<th class="'+thCls+'"'+sortAttr+' data-k="'+c.k+'"><button type="button" data-k="'+c.k+'">'+esc(c.t)+mark+'</button></th>';
+  }).join("") + '</tr></thead>';
+
+  if (sortKey === "state") {
+    var waitingRows = rows.filter(function(u){ return state(u) === "waiting"; });
+    var ingestedRows = rows.filter(function(u){ return state(u) === "ingested"; });
+    var groups = sortAsc ?
+      [ { name: "Waiting to be ingested", rows: waitingRows }, { name: "Ingested into library/", rows: ingestedRows } ] :
+      [ { name: "Ingested into library/", rows: ingestedRows }, { name: "Waiting to be ingested", rows: waitingRows } ];
+    groups.forEach(function(g){
+      if (!g.rows.length) return;
+      h += '<tbody><tr class="group-row"><th colspan="6" scope="colgroup">' + esc(g.name) + ' &middot; <span class="kind">' + g.rows.length + ' unit(s)</span></th></tr>';
+      h += g.rows.map(function(u){
+        var isRaw = isRawCapture(u);
+        return '<tr' + (isRaw ? ' class="raw-capture"' : '') + '>' + COLS.map(function(c){
+          var cls = (c.num ? "num " : "") + (c.k === "bytes" ? "size " : "") + "col-" + c.k;
+          return '<td class="'+cls+'">'+cell(u,c.k)+'</td>';
+        }).join("") + '</tr>';
+      }).join("");
+      h += '</tbody>';
+    });
+  } else {
+    h += '<tbody>' + rows.map(function(u){
+      var isRaw = isRawCapture(u);
+      return '<tr' + (isRaw ? ' class="raw-capture"' : '') + '>' + COLS.map(function(c){
+        var cls = (c.num ? "num " : "") + (c.k === "bytes" ? "size " : "") + "col-" + c.k;
+        return '<td class="'+cls+'">'+cell(u,c.k)+'</td>';
+      }).join("") + '</tr>';
+    }).join("") + '</tbody>';
+  }
+  h += '</table>';
+  $("body").innerHTML = h;
+
+  Array.prototype.forEach.call(document.querySelectorAll("th[data-k]"), function(th){
+    th.addEventListener("click", function(){
+      var k = th.getAttribute("data-k");
+      if (k === sortKey) sortAsc = !sortAsc; else { sortKey = k; sortAsc = true; }
+      render();
+    });
+  });
+}
+
+fetch(SRC).then(function(r){ return r.json(); }).then(function(d){
+  // The library projection, read for its QUEUE HALF ONLY. "d.entries" is
+  // deliberately untouched: rendering it here is how this becomes a second
+  // library viewer, which is the thing the owner ruled against.
+  // (No backticks in this comment on purpose -- it lives INSIDE the generator's
+  //  template literal, where one would end the string. It already did once.)
+  ITEMS = d.uploads || []; QUEUES = d.queues || []; render();
+}).catch(function(e){
+  // A failed fetch and an empty queue are OPPOSITE facts and must not look
+  // alike — the same rule the todo board states for its own index.
+  $("body").innerHTML = '<div class="empty">Could not read the queue projection (<code>'+esc(SRC)+
+    '</code>). This is not the same as an empty queue.</div>';
+  console.error(e);
+});
+</script></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

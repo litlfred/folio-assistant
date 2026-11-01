@@ -1,0 +1,39 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-1511-04055v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "A Visual Analysis of the Process of Process Modeling",
+      "dcterms:creator": [
+        "Claes1, Jan",
+        "2",
+        "Vanderfeesten2, Irene",
+        "Pinggera3, Jakob",
+        "Reijers2, Hajo A.",
+        "Weber3, Barbara",
+        "Poels1, Geert"
+      ],
+      "dcterms:issued": "D:20151111",
+      "bibo:doi": "10.1007/s10257-014-0245-4",
+      "dcterms:identifier": "https://doi.org/10.1007/s10257-014-0245-4",
+      "dcterms:abstract": "The construction of business process models has become an important requisite in the analysis and optimization of processes. The success of the analysis and optimization efforts heavily depends on the quality of the models. Therefore, a research domain emerged that studies the process of process modeling. This paper contributes to this research by presenting a way of visualizing the different steps a modeler undertakes to construct a process model, in a so-called PPMChart. The graphical representation lowers the cognitive efforts to discover properties of the modeling process, which facilitates the research and the development of theory, training and tool support for improving model quality. The paper contains an extensive overview of applications of the tool that demonstrate its usefulness for research and practice and discusses the observations from the visualization in relation to other work. The visualization was evaluated through a qualitative study that confirmed its usefulness and added value compared to the Dotted Chart on which the visualization was inspired.",
+      "dcterms:source": "cat-harness/library/arxiv-1511-04055v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-1511-04055v1"
+    }
+  ]
+}

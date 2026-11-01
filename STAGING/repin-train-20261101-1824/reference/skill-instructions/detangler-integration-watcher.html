@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>/detangler-integration-watcher | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="/detangler-integration-watcher" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="/detangler-integration-watcher" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-detangler-integration-watcher",
+    "src": "../../assets/qa/reference-skill-instructions-detangler-integration-watcher/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-detangler-integration-watcher/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=2ed7923cda66"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=9ffac52f2026" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/detangler-integration-watcher.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#scope-editorial-edges-only","label":"Scope: editorial edges only"},{"href":"#an-intra-section-swap-is-not-a-mechanical-fix","label":"An intra-section swap is not a mechanical fix"},{"href":"#slot-a--goal-statement","label":"Slot A — Goal statement","children":[{"href":"#preview-chapter-exclusion-strict","label":"Preview-chapter exclusion (STRICT)","depth":1},{"href":"#story-coherence-strict","label":"Story coherence (STRICT)","depth":1}],"fold":"2 sub-sections"},{"href":"#slot-b--3-trigger-filter","label":"Slot B — §3 trigger filter"},{"href":"#slot-c--4b-dispatch-table","label":"Slot C — §4b dispatch table"},{"href":"#slot-d--4c-finding-taxonomy","label":"Slot D — §4c finding taxonomy","children":[{"href":"#excluded-forward-reference-patterns-strict","label":"Excluded forward-reference patterns (STRICT)","depth":1}],"fold":"1 sub-section"},{"href":"#slot-e--4d-discharge-bands","label":"Slot E — §4d discharge bands"},{"href":"#slot-f--4e-author-ask-templates","label":"Slot F — §4e author-ask templates"},{"href":"#slot-g--5a-backlog-discovery","label":"Slot G — §5a backlog discovery"},{"href":"#slot-h--5b-prioritisation","label":"Slot H — §5b prioritisation"},{"href":"#slot-i--6-invariants","label":"Slot I — §6 invariants"},{"href":"#domain-specific-anti-patterns-extends-parent","label":"Domain-specific anti-patterns (extends parent)"},{"href":"#harness-skills-that-dispatch-here","label":"Harness skills that dispatch here"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>/detangler-integration-watcher</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/content/folio-paper-adapter/detangler-integration-watcher.md"><code class="language-plaintext highlighter-rouge">folio-assistant-sci/skills/content/folio-paper-adapter/detangler-integration-watcher.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/folio-assistant-sci/skills/content/folio-paper-adapter/detangler-integration-watcher.md" class="fa-edit-source" data-fa-link="edit" data-src="folio-assistant-sci/skills/content/folio-paper-adapter/detangler-integration-watcher.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="detangler-integration-watcher"><a href="#detangler-integration-watcher" class="anchor-heading" aria-labelledby="detangler-integration-watcher"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> /detangler-integration-watcher
+  
+  
+</h1><p>A concrete instance of <code class="language-plaintext highlighter-rouge">local/integration-watcher</code>. The parent encodes
+the shared mechanics. This file fills the nine domain-specific slots A–I.</p><h2 id="scope-editorial-edges-only"><a href="#scope-editorial-edges-only" class="anchor-heading" aria-labelledby="scope-editorial-edges-only"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Scope: editorial edges only
+  
+  
+</h2><p>Every metric this watcher owns — forward references, graph energy, edge
+span, section bands, topic coherence, dependency cycles — is computed
+over the <strong>editorial</strong> relation (<code class="language-plaintext highlighter-rouge">uses[]</code>), and must stay that way.
+Ordering is a question about <em>reading order</em>, so folding in formal Lean
+dependencies would make the answers wrong rather than richer: a <code class="language-plaintext highlighter-rouge">simp</code>
+lemma invoked mid-proof implies nothing about where a section belongs.</p><p>The formal relation is a separate edge kind in
+<code class="language-plaintext highlighter-rouge">pipeline/content-graph.ts</code>; pass <code class="language-plaintext highlighter-rouge">"editorial"</code> explicitly when
+querying it from this watcher. The <code class="language-plaintext highlighter-rouge">uses</code> QA axis owns whether <code class="language-plaintext highlighter-rouge">uses[]</code>
+is <em>well used</em> — that is <code class="language-plaintext highlighter-rouge">uses-editorial-review</code>, not this watcher.</p><h2 id="an-intra-section-swap-is-not-a-mechanical-fix"><a href="#an-intra-section-swap-is-not-a-mechanical-fix" class="anchor-heading" aria-labelledby="an-intra-section-swap-is-not-a-mechanical-fix"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An intra-section swap is not a mechanical fix
+  
+  
+</h2><p>Reordering blocks to clear forward references is the obvious discharge
+for a <code class="language-plaintext highlighter-rouge">detangler-no-forward-ref</code> finding, and it is <strong>not</strong> safe to
+apply unread. Run over a real paper, an unconstrained search cleared 66
+of 236 forward references — and a narrative review of its 53 moves found
+<strong>18 of them made the paper worse</strong>. Reducing the metric and improving
+the reading are different objectives, and they diverge often enough that
+the difference is not a rounding error.</p><p>Constrain the search first. Each of these exists because a move broke
+something a reader would hit:</p><div class="table-wrapper"><table><thead><tr><th>constraint</th><th>what it prevents</th></tr></thead><tbody><tr><td>a block never leaves its section</td><td>section membership decides which heading a block appears under — that is a rewrite, not a reordering</td></tr><tr><td>the section’s first unit and any <code class="language-plaintext highlighter-rouge">meta.position: "opening"</code> block are pinned</td><td>a block landing above the framing prose it presupposes</td></tr><tr><td>a block may not precede one it <code class="language-plaintext highlighter-rouge">interprets</code></td><td>splitting a narrative pair; <code class="language-plaintext highlighter-rouge">interprets</code> pairs blocks whose slugs share no prefix, so no family rule catches it</td></tr><tr><td>forward references over prose may not rise — both <code class="language-plaintext highlighter-rouge">[text](#label)</code> and backticked <code class="language-plaintext highlighter-rouge">kind:slug</code></td><td>stranding a block from a dependency <code class="language-plaintext highlighter-rouge">uses[]</code> never declared. Count both forms: a block naming its prerequisite only in code spans is invisible to a link-only scan</td></tr><tr><td>families are atomic: <code class="language-plaintext highlighter-rouge">X</code> with <code class="language-plaintext highlighter-rouge">X-proof</code>, <code class="language-plaintext highlighter-rouge">X-interpretation</code>, <code class="language-plaintext highlighter-rouge">X-tableN-data</code></td><td>a proposition separated from its proof</td></tr><tr><td>a unit headed by a descendant of a block in the same section is pinned</td><td>an <em>already-detached</em> child wandering further from its parent</td></tr><tr><td>comments never move; the entry beneath a comment is pinned</td><td>a note re-attaching to a block it was not written about. Some of these describe the block below; others describe a block that was moved away and is no longer there. Text alone does not tell them apart</td></tr></tbody></table></div><p>Prose references are a <strong>guard, not an objective</strong>. Minimising them
+would be authoring <code class="language-plaintext highlighter-rouge">uses[]</code> by inference, which is the failure mode the
+<code class="language-plaintext highlighter-rouge">uses</code> axis exists to prevent.</p><p>Even fully constrained, the search cannot see authored order, and this
+is what escalation is for. Every one of these was found only by reading:</p><ul><li>a section intro that narrates a sequence — “the analysis proceeds in
+three stages. <strong>First</strong> … <strong>Second</strong> …”, a hand-numbered 1–5 arc,
+“<strong>Finally</strong>, the classical limit demonstrates…” — which the move
+falsifies;</li><li>a block opening on a <strong>bare anaphor</strong> (“<strong>These axioms</strong> carry direct
+physical meanings…”, “they are <strong>its</strong> surrounding vocabulary”);</li><li>a <strong>definite article</strong> pointing at something introduced above (“<strong>the</strong>
+terminal Skein resolution”, “the confinement category”) with no
+<code class="language-plaintext highlighter-rouge">uses[]</code> edge behind it;</li><li>the previous block <strong>closing by announcing</strong> the next (“Iterating this
+categorical jet construction generates the recursive brane tower”);</li><li>a block that self-labels “(forward reference)” — the edge is authored.</li></ul><p>So: propose, review, then apply — never apply and then review. Record
+each veto <strong>with its reason, per block</strong>, in a pin list the next run
+reads; the reasons live in the prose, not the manifests, and rediscovering
+them costs a full reading every time. Expect the reviewed yield to be
+roughly a third of what the raw metric promises, and prefer it.</p><p><strong>Setup:</strong> use <code class="language-plaintext highlighter-rouge">NAME=detangler-integration-watcher</code> everywhere the
+parent’s §1 references <code class="language-plaintext highlighter-rouge">${NAME}</code>. Files at
+<code class="language-plaintext highlighter-rouge">beans/detangler-integration-watcher-queue.json</code> and
+<code class="language-plaintext highlighter-rouge">beans/detangler-integration-watcher-ledger.md</code>.</p><p><strong>Additional baseline cache.</strong> Beyond the parent’s §1 setup, cache a
+graph baseline so per-event deltas are comparable:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span> <span class="nb">cd </span>content <span class="o">&amp;&amp;</span> python3 pipeline/content-graph-analysis.py <span class="nt">--json</span> <span class="o">)</span> <span class="se">\</span>
+  <span class="o">&gt;</span> /tmp/_detangler_watcher_graph_baseline.json 2&gt;/dev/null
+</code></pre></div></div><p>Refresh after a clean event (see Slot D).</p><h2 id="slot-a--goal-statement"><a href="#slot-a--goal-statement" class="anchor-heading" aria-labelledby="slot-a--goal-statement"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot A — Goal statement
+  
+  
+</h2><p>Zero new logical forward references on landing commits (<strong>excluding
+refs sourced from preview chapters — see below</strong>), no section pushed
+out of the block-count band, no new cross-chapter forward edges, no new
+topic-mixed blocks, and the reorganization map updated alongside every
+move. The section graph trends toward lower energy. Forward edges that
+exist for architectural reasons (deliberate cross-chapter callbacks) are
+accepted and recorded as <code class="language-plaintext highlighter-rouge">wontfix: architectural</code>.</p><h3 id="preview-chapter-exclusion-strict"><a href="#preview-chapter-exclusion-strict" class="anchor-heading" aria-labelledby="preview-chapter-exclusion-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Preview-chapter exclusion (STRICT)
+  
+  
+</h3><p>Forward references whose <strong>source</strong> lives in a <em>preview chapter</em> are
+info-only — never findings, never invariant violations. Preview chapters
+preview future material (an introduction motivates the work) or are
+reference lookups (a notation/symbol index); forward refs from them are
+the expected reading pattern. Maintain the preview list per project
+(default: introduction, notation). Apply the filter in Slots B, C, D, I.</p><h3 id="story-coherence-strict"><a href="#story-coherence-strict" class="anchor-heading" aria-labelledby="story-coherence-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Story coherence (STRICT)
+  
+  
+</h3><p><strong>Detanglement is not just edge counting.</strong> Every section and every
+chapter must tell <strong>a single coherent story</strong> — a narrative arc that
+motivates the blocks inside and connects to the surrounding sections /
+chapters. Sections that are <em>collections of blocks sharing keywords</em> but
+not a narrative are tangle by another name. The watcher enforces:</p><ol><li><p><strong>Each section has its own story.</strong> Its title names the story (and
+the label must not be generic — see <code class="language-plaintext highlighter-rouge">generic-section-name</code>); its
+first block is a <code class="language-plaintext highlighter-rouge">prose</code> lead establishing what the section is about,
+what the reader just left, and a one-sentence preview of what comes
+next (non-binding — no forward <code class="language-plaintext highlighter-rouge">uses[]</code> required). Block ordering
+follows the story (definitions → propositions → proofs → remarks /
+examples), not authoring order.</p><p><strong>Lead length scales with section size:</strong></p><div class="table-wrapper"><table><thead><tr><th>Section size (non-prose blocks)</th><th>Lead length</th></tr></thead><tbody><tr><td>≤ 5</td><td>1 paragraph</td></tr><tr><td>6 – 12</td><td>2 paragraphs</td></tr><tr><td>13 – 20</td><td>3 paragraphs</td></tr><tr><td>&gt; 20</td><td>4 paragraphs</td></tr></tbody></table></div><p>Each paragraph plays a distinct role; don’t pad with restated
+content. <strong>Lecturer-opening cadence</strong> (“The previous section gave us
+X. The question this section settles is Y. The first move is Z.”),
+not a list of block titles. When drafting leads at scale, rotate among
+many opener patterns (≥ 30 across ≥ 5 categories is the floor); drafts
+that all open the same way are a story violation.</p></li><li><p><strong>Each chapter has its own story.</strong> Its first section (or first prose
+block) frames what the chapter establishes, states its dependencies
+on earlier chapters (named, not just by <code class="language-plaintext highlighter-rouge">uses[]</code>), and outlines the
+sections in narrative order. The last section/block closes the loop.</p></li></ol><p><strong>Story-missing is a finding, not a <code class="language-plaintext highlighter-rouge">wontfix</code>.</strong> When dispatching a
+split, the watcher <strong>must</strong> produce a draft story for each new section
+(Slot F template); the author approves the story along with the split.
+Renaming a section is story-changing — record old → new name AND the new
+story summary in the reorganization map.</p><h2 id="slot-b--3-trigger-filter"><a href="#slot-b--3-trigger-filter" class="anchor-heading" aria-labelledby="slot-b--3-trigger-filter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot B — §3 trigger filter
+  
+  
+</h2><p>For a default-branch or PR commit event, mark it structural when the
+diff (with <code class="language-plaintext highlighter-rouge">git diff-tree -M</code> rename detection) touches: a paper or
+nested chapter manifest; a block manifest’s graph-topology fields
+(<code class="language-plaintext highlighter-rouge">uses</code> / <code class="language-plaintext highlighter-rouge">interprets</code> / <code class="language-plaintext highlighter-rouge">proofs</code> / <code class="language-plaintext highlighter-rouge">examples</code> / <code class="language-plaintext highlighter-rouge">kind</code> / <code class="language-plaintext highlighter-rouge">label</code> /
+<code class="language-plaintext highlighter-rouge">defines</code> / <code class="language-plaintext highlighter-rouge">tags</code>); a new <code class="language-plaintext highlighter-rouge">.ts</code> block (A-status); or a block rename
+(R-status). If a structural change lands without updating the
+reorganization map in the same commit, set <code class="language-plaintext highlighter-rouge">reorg_map_stale</code> (a finding,
+not a skip). For PR review-comment events, pass through if the comment
+mentions forward ref, section, reorder, split, merge, move, topic,
+dense, sparse, or cites a content-block label.</p><h2 id="slot-c--4b-dispatch-table"><a href="#slot-c--4b-dispatch-table" class="anchor-heading" aria-labelledby="slot-c--4b-dispatch-table"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot C — §4b dispatch table
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>Specialist</th><th>When to run</th><th>What it checks</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">content-graph</code> (analysis + proposals)</td><td><strong>always</strong></td><td>forward-ref / cross-chapter / sparse / dense / coupling / isolated heuristics; split/merge/move/reverse proposals</td></tr><tr><td><code class="language-plaintext highlighter-rouge">chapter-complexity-review</code></td><td>a chapter manifest changed, OR ≥ 1 block’s <code class="language-plaintext highlighter-rouge">uses[]</code> changed within a chapter</td><td>graph-energy delta + optimal section ordering</td></tr><tr><td><code class="language-plaintext highlighter-rouge">block-density</code></td><td>a block <code class="language-plaintext highlighter-rouge">.md</code> was edited/added/renamed</td><td>single-topic, length limit, embedded-table extraction</td></tr><tr><td><code class="language-plaintext highlighter-rouge">critical-path-analysis</code></td><td>a provable block’s <code class="language-plaintext highlighter-rouge">uses[]</code> changed</td><td>whether the change breaks a logical chain</td></tr><tr><td><code class="language-plaintext highlighter-rouge">content-validation</code></td><td>always</td><td>schema constraint rules</td></tr></tbody></table></div><p>Launch the parallel calls in a single response with multiple <code class="language-plaintext highlighter-rouge">Agent</code>
+tool uses. Cap each agent’s report at ~400 words. After dispatch,
+compute the delta against the cached baseline (counts derive from the
+analysis tool’s <code class="language-plaintext highlighter-rouge">findings[]</code> array — it does not export summary
+scalars). If the event is clean, promote the snapshot to baseline.</p><h2 id="slot-d--4c-finding-taxonomy"><a href="#slot-d--4c-finding-taxonomy" class="anchor-heading" aria-labelledby="slot-d--4c-finding-taxonomy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot D — §4c finding taxonomy
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>Finding</th><th>Severity</th><th>Description</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">uses-resolve-broken</code></td><td>critical</td><td><code class="language-plaintext highlighter-rouge">uses[]</code> cites a missing target</td></tr><tr><td><code class="language-plaintext highlighter-rouge">critical-path-break</code></td><td>critical</td><td>a move/removal broke a logical chain reaching a downstream provable</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cross-chapter-forward</code></td><td>critical</td><td>a new forward cross-chapter edge to a non-existent block</td></tr><tr><td><code class="language-plaintext highlighter-rouge">defterm-undeclared</code></td><td>critical</td><td>a new reference-directive with no matching <code class="language-plaintext highlighter-rouge">defines</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">forward-ref</code></td><td>major</td><td>a new <strong>logical</strong> forward reference (span &gt; 3 OR cross-section); only logical edges count (see severity gate)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">dense-section</code></td><td>major</td><td>section pushed over the upper block-count band</td></tr><tr><td><code class="language-plaintext highlighter-rouge">sparse-section</code></td><td>major</td><td>section dropped below the lower band (excludes intro/overview)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">topic-mixing</code></td><td>major</td><td>a block violates the single-topic rule</td></tr><tr><td><code class="language-plaintext highlighter-rouge">placement-violation</code></td><td>major</td><td>a block in the wrong chapter / with a forward dep / density overrun / cross-chapter forward</td></tr><tr><td><code class="language-plaintext highlighter-rouge">reorg-map-stale</code></td><td>major</td><td>structural change without updating the reorganization map</td></tr><tr><td><code class="language-plaintext highlighter-rouge">oversized-block</code></td><td>minor</td><td>a block exceeds the length limit without topic-mixing</td></tr><tr><td><code class="language-plaintext highlighter-rouge">embedded-table</code></td><td>minor</td><td>a block embeds a large table — extract to a <code class="language-plaintext highlighter-rouge">table</code> block</td></tr><tr><td><code class="language-plaintext highlighter-rouge">intra-chapter-energy</code></td><td>minor</td><td>graph energy rose without a new forward-ref finding (room to reorder)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">cross-section-coupling</code></td><td>minor</td><td>a new edge crossing many sections</td></tr><tr><td><code class="language-plaintext highlighter-rouge">isolated-block</code></td><td>minor</td><td>a block with no incoming or outgoing edges</td></tr><tr><td><code class="language-plaintext highlighter-rouge">missing-section-story</code></td><td>major</td><td>a section has no opening prose AND blocks aren’t narratively ordered — a <em>collection</em>, not a <em>story</em></td></tr><tr><td><code class="language-plaintext highlighter-rouge">section-lead-too-short</code></td><td>minor</td><td>a large section’s opening lead doesn’t scale to it</td></tr><tr><td><code class="language-plaintext highlighter-rouge">section-lead-block-title-list</code></td><td>minor</td><td>a lead lists block titles instead of motivating — a mechanical-generation tell</td></tr><tr><td><code class="language-plaintext highlighter-rouge">generic-section-name</code></td><td>major</td><td>a section label matches a generic pattern (<code class="language-plaintext highlighter-rouge">*-part-N</code>, <code class="language-plaintext highlighter-rouge">*-extras</code>, <code class="language-plaintext highlighter-rouge">misc-N</code>) — split without a story-naming step</td></tr><tr><td><code class="language-plaintext highlighter-rouge">missing-chapter-intro</code></td><td>major</td><td>a chapter has no opening narrative section/block</td></tr><tr><td><code class="language-plaintext highlighter-rouge">abrupt-chapter-ending</code></td><td>minor</td><td>a chapter’s last section ends without a closing prose block</td></tr><tr><td><code class="language-plaintext highlighter-rouge">section-narrative-drift</code></td><td>minor</td><td>block ordering within a section isn’t narrative-coherent</td></tr><tr><td><code class="language-plaintext highlighter-rouge">remark-ratio</code></td><td>info</td><td>the remark/example ratio drifted outside its band</td></tr><tr><td><code class="language-plaintext highlighter-rouge">preview-source-fwd-ref</code></td><td>info</td><td>a forward ref sourced from a preview chapter — info-only</td></tr></tbody></table></div><h3 id="excluded-forward-reference-patterns-strict"><a href="#excluded-forward-reference-patterns-strict" class="anchor-heading" aria-labelledby="excluded-forward-reference-patterns-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Excluded forward-reference patterns (STRICT)
+  
+  
+</h3><p>Three classes are <strong>never</strong> flagged as forward references even if the
+target is later in source order:</p><ol><li><strong>Statement → own proof.</strong> A <code class="language-plaintext highlighter-rouge">prf:foo</code> block belongs <em>after</em> its
+statement <code class="language-plaintext highlighter-rouge">prop:foo</code>/<code class="language-plaintext highlighter-rouge">lem:foo</code>/<code class="language-plaintext highlighter-rouge">thm:foo</code>/<code class="language-plaintext highlighter-rouge">cor:foo</code> (including
+qualified-variant proof names) — this is the correct reading order.</li><li><strong>Preview-chapter source</strong> — see the preview exclusion above
+(tagged <code class="language-plaintext highlighter-rouge">preview-source-fwd-ref</code> if surfaced, never escalated).</li><li><strong>Storytelling forward references.</strong> A forward reference is a <em>defect</em> <strong>only when the reader must RELY ON the target to follow the argument
+made here</strong> — i.e. a <strong>logical</strong> forward reference (both source and
+target carry logical content AND the source builds on the target).
+References where the source is a narrative block, or merely <em>cites</em> a
+later table/diagram, are <strong>storytelling</strong> and never flagged;
+references into an appendix or a framing chapter are <strong>structural</strong>
+and never flagged. Run the project’s forward-ref classifier on every
+<code class="language-plaintext highlighter-rouge">.ts</code> change; flag only NEW non-waived logical edges. The sanctioned
+logical forward references are the project’s explicit
+<code class="language-plaintext highlighter-rouge">FOUNDATIONAL_LATE</code> allowlist (used-early / developed-late objects,
+each justified inline). Disposition of a logical-forward-ref finding —
+exactly three fixes: <strong>promote</strong> the target earlier; <strong>demote to
+storytelling</strong> (express as an <code class="language-plaintext highlighter-rouge">interprets</code>/narrative pointer, or
+invert/drop the often-backwards edge); or <strong>add to
+<code class="language-plaintext highlighter-rouge">FOUNDATIONAL_LATE</code></strong> with justification.</li></ol><p>When adding a new exclusion class, document the pattern, the
+false-positive count it eliminates, and the filter location in the
+analysis script.</p><h2 id="slot-e--4d-discharge-bands"><a href="#slot-e--4d-discharge-bands" class="anchor-heading" aria-labelledby="slot-e--4d-discharge-bands"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot E — §4d discharge bands
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>Band</th><th>Examples</th></tr></thead><tbody><tr><td><strong>Auto-discharge</strong></td><td><code class="language-plaintext highlighter-rouge">embedded-table</code> extraction; <code class="language-plaintext highlighter-rouge">intra-chapter-energy</code> where the fix is an <strong>intra-section</strong> block swap that resolves a span-1 forward edge AND no single-topic hit on either block AND the validator passes post-swap</td></tr><tr><td><strong>Author-assist</strong></td><td>section split (always paired with per-new-section story drafts), section merge, cross-chapter move, new section, topic-mixing split, <code class="language-plaintext highlighter-rouge">critical-path-break</code>, <code class="language-plaintext highlighter-rouge">reorg-map-stale</code>, <code class="language-plaintext highlighter-rouge">missing-section-story</code> / <code class="language-plaintext highlighter-rouge">generic-section-name</code> / <code class="language-plaintext highlighter-rouge">missing-chapter-intro</code></td></tr><tr><td><strong>Defer</strong></td><td>architectural backward edge (<code class="language-plaintext highlighter-rouge">wontfix: architectural</code>); single-occurrence span-1 forward edge between adjacent sections; <code class="language-plaintext highlighter-rouge">isolated-block</code> flagged for a content pass; <code class="language-plaintext highlighter-rouge">remark-ratio</code> within ±20% of the band edge</td></tr></tbody></table></div><p><strong>Auto-discharge safety net (STRICT).</strong> Every auto-discharge MUST: run
+the validator post-edit and exit clean; re-snapshot the graph and verify
+the forward-ref count didn’t increase, no section left the band, and the
+cross-chapter count didn’t increase; <strong>revert</strong> and reclassify as
+<code class="language-plaintext highlighter-rouge">needs-author</code> if any check fails. <strong>Section merge is deliberately NOT
+auto-discharge</strong> — it renames labels and ripples through cross
+-references; always escalate.</p><h2 id="slot-f--4e-author-ask-templates"><a href="#slot-f--4e-author-ask-templates" class="anchor-heading" aria-labelledby="slot-f--4e-author-ask-templates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot F — §4e author-ask templates
+  
+  
+</h2><p>For <code class="language-plaintext highlighter-rouge">dense-section</code> — <strong>the ask MUST carry a per-new-section story
+draft</strong>; a split without stories is not actionable. Propose a K-way
+split (K chosen so each section lands in the band), each section with a
+drafted 1-sentence narrative arc and block count, and offer: accept
+as-drafted / approve splits but rewrite stories / re-split differently /
+defer (mark deliberately dense). Provide analogous templates for
+<code class="language-plaintext highlighter-rouge">missing-section-story</code> / <code class="language-plaintext highlighter-rouge">generic-section-name</code> (draft a 1-paragraph
+story; offer accept / rewrite / rename / merge), <code class="language-plaintext highlighter-rouge">missing-chapter-intro</code>
+(draft a 3-paragraph intro: framing, dependencies, outline; offer
+accept / rewrite / reference-chapter wontfix), <code class="language-plaintext highlighter-rouge">sparse-section</code> (offer
+merge-prev / merge-next / keep), <code class="language-plaintext highlighter-rouge">cross-chapter-forward</code> /
+<code class="language-plaintext highlighter-rouge">placement-violation</code> (offer move-source / move-dep / architectural
+wontfix), <code class="language-plaintext highlighter-rouge">critical-path-break</code> (offer bridge block / restore edge /
+intentional-break escalation), and <code class="language-plaintext highlighter-rouge">reorg-map-stale</code> (offer append entry
+now / defer to a larger PR / revert).</p><h2 id="slot-g--5a-backlog-discovery"><a href="#slot-g--5a-backlog-discovery" class="anchor-heading" aria-labelledby="slot-g--5a-backlog-discovery"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot G — §5a backlog discovery
+  
+  
+</h2><p>Run the full graph analysis with proposals and JSON; run the
+block-density audit across every paper; list recent block renames not
+yet reflected in the reorganization map. Convert each finding,
+proposal, and density hit into a queue item with <code class="language-plaintext highlighter-rouge">source: backlog</code>.</p><h2 id="slot-h--5b-prioritisation"><a href="#slot-h--5b-prioritisation" class="anchor-heading" aria-labelledby="slot-h--5b-prioritisation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot H — §5b prioritisation
+  
+  
+</h2><ol><li>Severity — critical → major → minor → info.</li><li>Forward-ref span — chapter-span first, then large section-span, then
+small section-span last.</li><li>Downstream impact — count blocks transitively depending on the
+affected block via <code class="language-plaintext highlighter-rouge">uses[]</code>.</li><li>Section-density distance — farthest outside the band first.</li><li>Last-audit recency — older first.</li><li>Alphabetical tie-breaker.</li></ol><h2 id="slot-i--6-invariants"><a href="#slot-i--6-invariants" class="anchor-heading" aria-labelledby="slot-i--6-invariants"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Slot I — §6 invariants
+  
+  
+</h2><p>Every check derives from the post-edit graph + density snapshots
+(<code class="language-plaintext highlighter-rouge">findings[]</code> array; no summary scalars):</p><div class="table-wrapper"><table><thead><tr><th>Invariant</th><th>Check</th></tr></thead><tbody><tr><td>Logical forward-ref count never increases on own-branch commits (excluding preview sources)</td><td>non-preview logical-edge count ≤ baseline</td></tr><tr><td>No section newly leaves the block-count band</td><td>if pre-edit in-band, post-edit in-band</td></tr><tr><td>Cross-chapter forward edges don’t grow (excluding preview sources)</td><td>non-preview count ≤ baseline</td></tr><tr><td>No new topic-mix</td><td>density audit exits clean and the topic-mix count does not increase</td></tr><tr><td>Reorganization map updated alongside every block move</td><td>the move commit includes both the manifest AND the map</td></tr><tr><td>Schema clean</td><td>the validator exits 0</td></tr><tr><td>No new <code class="language-plaintext highlighter-rouge">missing-section-story</code></td><td>every newly-created section’s first block is <code class="language-plaintext highlighter-rouge">prose</code></td></tr><tr><td>No new <code class="language-plaintext highlighter-rouge">generic-section-name</code></td><td>no new section label matches the generic pattern</td></tr><tr><td>No new <code class="language-plaintext highlighter-rouge">missing-chapter-intro</code></td><td>every touched chapter without a prior intro gains one (prose at index 0, a dedicated intro section, a moved intro block) or is tagged reference-only</td></tr><tr><td>No new <code class="language-plaintext highlighter-rouge">section-narrative-drift</code></td><td>within each touched section, ordering follows definitions → (proposition/lemma/theorem immediately followed by its proof)* → examples/remarks; each <code class="language-plaintext highlighter-rouge">interprets: X</code> block follows <code class="language-plaintext highlighter-rouge">X</code></td></tr><tr><td>Reorganization map records new-section stories</td><td>a new section’s map entry includes a 1-sentence story summary</td></tr></tbody></table></div><p>If any invariant fails on a proposed commit, <strong>block the commit</strong>, queue
+the violation as <code class="language-plaintext highlighter-rouge">critical</code>, revert the working tree, and ask the
+author (per parent §6).</p><h2 id="domain-specific-anti-patterns-extends-parent"><a href="#domain-specific-anti-patterns-extends-parent" class="anchor-heading" aria-labelledby="domain-specific-anti-patterns-extends-parent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Domain-specific anti-patterns (extends parent)
+  
+  
+</h2><ul><li>Auto-execute a section <strong>split</strong> or <strong>merge</strong> — both are judgement
+calls (new/removed labels, rippling cross-references); always escalate.</li><li>Forget the reorganization map — enforced as a hard invariant.</li><li>Discharge a finding downstream of a proof gap without consulting the
+proof watcher’s queue — a <code class="language-plaintext highlighter-rouge">critical-path-break</code> may be a proof issue.</li><li>Treat architectural backward edges as fixable — <code class="language-plaintext highlighter-rouge">wontfix:
+architectural</code> by design.</li><li>Split a dense section without writing a story for each new section —
+the split is <strong>not actionable</strong> without per-new-section stories, and a
+<code class="language-plaintext highlighter-rouge">&lt;source&gt;-part-1</code>/<code class="language-plaintext highlighter-rouge">-part-2</code> split is a <code class="language-plaintext highlighter-rouge">generic-section-name</code> finding.</li><li>Pretend a section/chapter without a story is fine — the edge metrics
+may pass while the narrative is incoherent; <em>detanglement is not edge
+counting</em>.</li><li>Auto-fix a <code class="language-plaintext highlighter-rouge">missing-chapter-intro</code> without surfacing the draft — the
+arc is editorial, not mechanical.</li></ul><h2 id="harness-skills-that-dispatch-here"><a href="#harness-skills-that-dispatch-here" class="anchor-heading" aria-labelledby="harness-skills-that-dispatch-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Harness skills that dispatch here
+  
+  
+</h2><p>This layer sits above cat-harness, so the link points down from here. The
+harness skills below describe this one generically and name no science skill
+(bean <code class="language-plaintext highlighter-rouge">syiq</code>).</p><ul><li><code class="language-plaintext highlighter-rouge">integration-watcher</code>: a child of this abstract parent.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

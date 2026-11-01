@@ -1,0 +1,18 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/role/requestor.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/role/requestor",
+      "@type": "bootstrap:Role",
+      "label": "Requestor",
+      "description": "Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any Harness built on it. Carries no skills deliberately: WHICH harness this repository should become is a judgement about intent, and no instruction body produces it. The Bootstrapping Agent may narrow the list from context; only the Requestor settles it.",
+      "source": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/scenarios/roles.json",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/directory/scenarios",
+      "flowNodeRef": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/process/Process_HumanAgentDiscussion/node/A_Answer"
+      ]
+    }
+  ]
+}

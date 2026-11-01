@@ -1,0 +1,420 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Remote-mount a harness | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Remote-mount a harness" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Remote-mount a harness" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-remote-mount",
+    "src": "../../assets/qa/reference-skill-instructions-remote-mount/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-remote-mount/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=2ed7923cda66"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=9ffac52f2026" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/remote-mount.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#mount-subscribe-or-associate-choose-first","label":"Mount, subscribe or associate: choose first"},{"href":"#the-two-halves-of-the-declaration","label":"The two halves of the declaration"},{"href":"#hydrated-the-index-files-are-published-per-pin-in-a-package","label":"Hydrated: the index files are published per pin, in a package"},{"href":"#tools-choose-by-id-mount-runnable","label":"Tools: choose by id, mount runnable"},{"href":"#why-the-default-path-is-the-home-path","label":"Why the default path is the home path"},{"href":"#the-closure","label":"The closure"},{"href":"#the-lock-and-the-three-states","label":"The lock, and the three states","children":[{"href":"#re-pinning-from-a-checkout-mounted-from-the-lock","label":"Re-pinning: from a checkout mounted from the lock","depth":1}],"fold":"1 sub-section"},{"href":"#a-changed-lock-re-renders-the-agent-surface","label":"A changed lock re-renders the agent surface"},{"href":"#trust-what-lets-a-mount-proceed-h8","label":"Trust: what lets a mount proceed (H8)","children":[{"href":"#standing-consent-a-site-keeps-itself-on-an-upstream-branch","label":"Standing consent: a site keeps itself on an upstream branch","depth":1}],"fold":"1 sub-section"},{"href":"#publishing-a-remote-mounted-downstream--provision-gh-pages-first","label":"Publishing a remote-mounted downstream — provision gh-pages first"},{"href":"#never","label":"Never"},{"href":"#not-yet","label":"Not yet"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Remote-mount a harness</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/remote-mount.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/kg/kg-core/remote-mount.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/remote-mount.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/kg/kg-core/remote-mount.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="remote-mount-a-harness"><a href="#remote-mount-a-harness" class="anchor-heading" aria-labelledby="remote-mount-a-harness"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Remote-mount a harness
+  
+  
+</h1><p>The owner, 2026-10-06, ruled on how a downstream folio gets the layers it is
+built on:</p><ul><li><strong>no git submodules, ever</strong>;</li><li><strong>no <code class="language-plaintext highlighter-rouge">.deps/</code></strong>, because a dot directory collides with GitHub’s conventions
+and with this repository’s own dot-prefix guard;</li><li>a remote mount is a <strong>declared directory with a remote source</strong>, pinned to
+a full 40-character SHA;</li><li>the <strong>defaults live in the harness’s own declaration</strong>, so a downstream
+never restates the paths;</li><li>a downstream <strong>may override</strong> them <strong>by id</strong>, never by path;</li><li>mounts are resolved <strong>transitively</strong> across the dependency closure;</li><li>code arrives through the mounted code directories.</li></ul><div class="table-wrapper"><table><thead><tr><th></th><th>where</th></tr></thead><tbody><tr><td>the process</td><td><a href="../../en/cat-harness/processes/mount-dependency.html"><code class="language-plaintext highlighter-rouge">mount-dependency.bpmn</code></a>; the per-subgraph view is the <code class="language-plaintext highlighter-rouge">remote</code> and <code class="language-plaintext highlighter-rouge">npm</code> flows of <a href="../../en/cat-harness/processes/mount-subgraph.html"><code class="language-plaintext highlighter-rouge">mount-subgraph.bpmn</code></a></td></tr><tr><td>the schema</td><td><code class="language-plaintext highlighter-rouge">cat-harness/schemas/kg/remote-mount.ts</code>, plus the <code class="language-plaintext highlighter-rouge">remote</code>, <code class="language-plaintext highlighter-rouge">npm</code> and <code class="language-plaintext highlighter-rouge">hydrated</code> members of <code class="language-plaintext highlighter-rouge">SubgraphSource</code> (<code class="language-plaintext highlighter-rouge">schemas/kg/subgraph-source.ts</code>); the per-pin index package is <code class="language-plaintext highlighter-rouge">subgraphIndexPackage</code> in <code class="language-plaintext highlighter-rouge">schemas/kg/subgraph-manifest.ts</code></td></tr><tr><td>the tool</td><td><code class="language-plaintext highlighter-rouge">bun run cat mount:remote</code> (<code class="language-plaintext highlighter-rouge">--plan</code> to resolve without writing), and <code class="language-plaintext highlighter-rouge">bun run cat mount:remote:check</code> (offline)</td></tr><tr><td>the entry point</td><td><code class="language-plaintext highlighter-rouge">bun run cat state:mount</code>, which the session-start hook already runs</td></tr></tbody></table></div><h2 id="mount-subscribe-or-associate-choose-first"><a href="#mount-subscribe-or-associate-choose-first" class="anchor-heading" aria-labelledby="mount-subscribe-or-associate-choose-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mount, subscribe or associate: choose first
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>you want</th><th>relation</th><th>what arrives</th></tr></thead><tbody><tr><td>to <strong>build on</strong> a harness: run its scripts, import its schemas, read its skills as your own</td><td><strong>remote mount</strong> (<code class="language-plaintext highlighter-rouge">source.remote</code> in <code class="language-plaintext highlighter-rouge">index.config.json</code>)</td><td>the harness’s declared directories and those of everything it needs, at one pin</td></tr><tr><td>to <strong>read</strong> another graph and hold chosen parts of it</td><td><strong>subscription</strong> (<code class="language-plaintext highlighter-rouge">subscriptions</code>): the <a href="../../reference/skill-instructions/kg-subscription.html"><code class="language-plaintext highlighter-rouge">kg-subscription</code></a> skill</td><td>a snapshot of its declaration, then parts you materialise one at a time through the five gates</td></tr><tr><td>to <strong>know of</strong> a harness and link to it</td><td><strong>association</strong> (<code class="language-plaintext highlighter-rouge">associatedHarnesses</code>): the <a href="../../reference/skill-instructions/associate-harness.html"><code class="language-plaintext highlighter-rouge">associate-harness</code></a> skill</td><td>nothing</td></tr><tr><td>to <strong>retrieve or distribute as a package</strong></td><td><strong>npm distribution</strong> (<code class="language-plaintext highlighter-rouge">kg-retrieve-npm</code>, <code class="language-plaintext highlighter-rouge">source.npm</code>): the <a href="../../reference/skill-instructions/npm-kg-distribution.html"><code class="language-plaintext highlighter-rouge">npm-kg-distribution</code></a> skill</td><td>an npm <code class="language-plaintext highlighter-rouge">.tgz</code> tarball (unhydrated source or hydrated view)</td></tr></tbody></table></div><p>The test is whether <strong>your code imports theirs</strong>. If it does, mount. If you
+only read their content, subscribe: a subscription gates every part through
+copyright and purpose, and a mount does not, because the code it brings is the
+platform you are built on.</p><h2 id="the-two-halves-of-the-declaration"><a href="#the-two-halves-of-the-declaration" class="anchor-heading" aria-labelledby="the-two-halves-of-the-declaration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two halves of the declaration
+  
+  
+</h2><p><strong>The harness side</strong> goes in the harness’s own <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> and is written
+once by the harness’s owner:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"mountDefaults"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cat-harness"</span><span class="p">,</span><span class="w"> </span><span class="nl">"directories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"schemas"</span><span class="p">,</span><span class="w"> </span><span class="s2">"scripts"</span><span class="p">,</span><span class="w"> </span><span class="s2">"skills"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p>What arrives is what the declaration NAMES: the declaration itself, the
+chosen directories, and the instance-scoped files in its <code class="language-plaintext highlighter-rouge">assets</code> (its
+README and AGENTS.md). A file the declaration does not name, such as a
+<code class="language-plaintext highlighter-rouge">platform.ts</code> beside it, never arrives. Code the mounted graphs import has to
+sit in a declared directory (owner, 2026-10-07: “Forks declare it”, bean
+<code class="language-plaintext highlighter-rouge">hupw</code>).</p><p>Both fields are optional, and each absence has a meaning:</p><ul><li><code class="language-plaintext highlighter-rouge">path</code> absent means the instance’s <strong>home path</strong> (<code class="language-plaintext highlighter-rouge">livesAt.path</code>, else its
+directory in its own repository).</li><li><code class="language-plaintext highlighter-rouge">directories</code> absent means <strong>every declared directory whose content is in the
+checkout</strong>. A <code class="language-plaintext highlighter-rouge">branch</code>, <code class="language-plaintext highlighter-rouge">family</code> or <code class="language-plaintext highlighter-rouge">remote</code> source is somebody’s state, not
+part of the harness.</li></ul><p><strong>The downstream side</strong> goes in the checkout’s root <code class="language-plaintext highlighter-rouge">index.config.json</code>, as the
+<code class="language-plaintext highlighter-rouge">source.remote</code> of the instance it brings in. Which instances a checkout
+instantiates, where each comes from, and the fallback for a folio with no index
+are <a href="../../reference/skill-instructions/index-config.html"><code class="language-plaintext highlighter-rouge">index-config</code></a>’s rule. This skill covers only what a
+<code class="language-plaintext highlighter-rouge">remote</code> source means once it is declared:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;harness&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"remote"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"repository"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;owner&gt;/&lt;repo&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;40-character sha&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"overrides"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"cat-harness"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"directories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"schemas"</span><span class="p">,</span><span class="w"> </span><span class="s2">"skills"</span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nl">"bootstrap"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"skip"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p>The fields are a <code class="language-plaintext highlighter-rouge">remoteMounts</code> entry without its <code class="language-plaintext highlighter-rouge">harness</code>, because the
+instance’s <code class="language-plaintext highlighter-rouge">name</code> is the harness (<code class="language-plaintext highlighter-rouge">RemoteSourceSchema</code> in
+<code class="language-plaintext highlighter-rouge">schemas/kg/index-config.ts</code>). A folio with no index still reads <code class="language-plaintext highlighter-rouge">remoteMounts</code> on
+its declaration. <strong>Declaring a mount in both places is an error</strong>:
+<code class="language-plaintext highlighter-rouge">readDeclaredMounts</code> throws and names both files. <code class="language-plaintext highlighter-rouge">bun run cat
+index-config:migrate --write</code> moves the entries across.</p><p><strong>Every tool that writes mounts writes through <code class="language-plaintext highlighter-rouge">writeDeclaredMounts</code></strong>, into
+<code class="language-plaintext highlighter-rouge">index.config.json</code>, and none writes <code class="language-plaintext highlighter-rouge">remoteMounts</code> any more.</p><p><code class="language-plaintext highlighter-rouge">overrides</code> is keyed by instance name, then by directory id:</p><ul><li><code class="language-plaintext highlighter-rouge">path</code> moves an instance.</li><li><code class="language-plaintext highlighter-rouge">directories</code> replaces its default list. An id may be one the instance
+declares in its <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> <strong>or from within</strong> one of those directories
+(a <code class="language-plaintext highlighter-rouge">"subgraph": true</code> entry of <code class="language-plaintext highlighter-rouge">skills/skills.json</code>, such as <code class="language-plaintext highlighter-rouge">voices</code>);
+both are resolved at the pin through <code class="language-plaintext highlighter-rouge">instanceDirectories</code>, the resolver
+every on-disk reader uses (bean <code class="language-plaintext highlighter-rouge">mo75</code> G3, after <code class="language-plaintext highlighter-rouge">2j2r</code>). A nested id mounts
+its own path alone. An id declared in neither place is refused, not dropped,
+and the refusal says where it looked. The same holds for the harness’s own
+<code class="language-plaintext highlighter-rouge">mountDefaults.directories</code>.
+An id may also be a <strong>concern name</strong>, a code from
+<code class="language-plaintext highlighter-rouge">code-lists/concern-group.json</code> such as <code class="language-plaintext highlighter-rouge">sdlc</code>. It expands to every
+kind-first member the instance declares, such as <code class="language-plaintext highlighter-rouge">processes/sdlc/</code> and
+<code class="language-plaintext highlighter-rouge">skills/sdlc/</code>, read from each grouping kind’s own declaration file at the
+pin. Each member is locked as <code class="language-plaintext highlighter-rouge">&lt;directory id&gt;/&lt;code&gt;</code>. A code that none of
+the instance’s kinds declares is refused like any other unknown id.</li><li>After a review of hydrated metadata, `mount:remote –choose<harness>[:<instance>] --directories a,b --tools x,y` writes the choice
+into `overrides.<instance>` (the choice, never the state), so a fresh clone
+replays it. It ends the review: that instance mounts as files, so its
+`hydrated` is dropped. The pin and consent do not move.
+</instance></instance></harness></li><li><code class="language-plaintext highlighter-rouge">skip</code> leaves it unmounted, and the lock records it as an answer.</li><li><code class="language-plaintext highlighter-rouge">tools</code> names Tools this instance declares, by id, and mounts each one
+<strong>runnable</strong>: its definition, its implementation and their import closure.
+The next section but one says what that brings.</li><li><code class="language-plaintext highlighter-rouge">hydrated: true</code> (here, or on the entry for its harness) mounts each chosen
+directory as one file: its published <code class="language-plaintext highlighter-rouge">index.hydrated.jsonld</code> at the pin, a
+<code class="language-plaintext highlighter-rouge">hydrated</code> source (bean <code class="language-plaintext highlighter-rouge">mo75</code>). Read what is there, then choose what to
+mount as files. No declaration is laid down, and <code class="language-plaintext highlighter-rouge">needs</code> is not followed.
+Where that file comes from is the next section. With no <code class="language-plaintext highlighter-rouge">directories</code>, a
+hydrated mount offers <strong>every</strong> top-level in-checkout subgraph and ignores
+<code class="language-plaintext highlighter-rouge">mountDefaults.directories</code> on purpose: that list chooses which FILES a
+downstream gets, and a hydrated mount is the step before choosing (“hydrated
+metadata first, then a chosen set”). Each top-level file already carries its
+nested subgraphs inline (<code class="language-plaintext highlighter-rouge">hasSubgraph</code>), so a nested one is named only when
+you want it on its own.</li></ul><h2 id="hydrated-the-index-files-are-published-per-pin-in-a-package"><a href="#hydrated-the-index-files-are-published-per-pin-in-a-package" class="anchor-heading" aria-labelledby="hydrated-the-index-files-are-published-per-pin-in-a-package"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Hydrated: the index files are published per pin, in a package
+  
+  
+</h2><p>Owner, 2026-10-24 (decision card, option A): <strong>a pin’s subgraph index files
+(<code class="language-plaintext highlighter-rouge">index.jsonld</code>, <code class="language-plaintext highlighter-rouge">index.hydrated.jsonld</code> under <code class="language-plaintext highlighter-rouge">&lt;docs&gt;/subgraph/&lt;HARNESS&gt;/</code>)
+are published per pin in a package</strong>, and a hydrated mount fetches them
+through the Tool its source names (the <code class="language-plaintext highlighter-rouge">hydrated</code> source’s <code class="language-plaintext highlighter-rouge">tool</code>, which is
+<code class="language-plaintext highlighter-rouge">remote-mount</code> unless it says otherwise; bean <code class="language-plaintext highlighter-rouge">j9cs</code>).</p><p>Why neither of the other two:</p><ul><li><strong>Not committed in each repository (B).</strong> The files are <code class="language-plaintext highlighter-rouge">builtAtPublish</code>:
+they are computed over the checkout’s other instances, so no commit can
+hold them current, and a committed copy turns every re-pin’s check red
+(owner, 2026-10-14, “B1”).</li><li><strong>Not generated at mount time (C).</strong> The downstream would need the whole
+index, kg-export and the framing toolchain to read one file of metadata,
+which is the cost a hydrated mount exists to avoid, and two downstreams
+could frame two different files for one pin.</li></ul><p>What that means in practice:</p><div class="table-wrapper"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>the package</td><td><code class="language-plaintext highlighter-rouge">&lt;harness&gt;-subgraph-index@0.0.0-pin.&lt;sha&gt;</code>: the index files at their published paths, and <code class="language-plaintext highlighter-rouge">subgraph-index.json</code> (<code class="language-plaintext highlighter-rouge">folio-subgraph-index/v1</code>) giving each file’s sha256 and the repository, pin and harness</td></tr><tr><td>where</td><td>assets of the GitHub release <code class="language-plaintext highlighter-rouge">subgraph-index-&lt;sha&gt;</code> in the instance’s repository, with the tarball’s <code class="language-plaintext highlighter-rouge">folio-binary-release/v1</code> record beside it. Every name is computed (<code class="language-plaintext highlighter-rouge">subgraphIndexPackage</code> in <code class="language-plaintext highlighter-rouge">schemas/kg/subgraph-manifest.ts</code>)</td></tr><tr><td>who publishes</td><td>the <code class="language-plaintext highlighter-rouge">subgraph-index-package</code> Tool, run on every push to <code class="language-plaintext highlighter-rouge">main</code> by the reusable workflow <code class="language-plaintext highlighter-rouge">layer-publish-subgraph-index.yml</code> (the tools layer); a harness opts in with one <code class="language-plaintext highlighter-rouge">uses:</code> line</td></tr><tr><td>what a mount checks</td><td>the pin’s git tree first (a commit that does carry the file still works); otherwise the package: the tarball against its record (size, sha256), the manifest against the repository, pin and harness asked for, each file against its sha256, then the same schema and subgraph-IRI check a tree file gets</td></tr><tr><td>the lock</td><td>a directory that came from the package records the tarball’s URL and sha256 and the file’s path in it (<code class="language-plaintext highlighter-rouge">package</code>), so <code class="language-plaintext highlighter-rouge">mount:lock</code> fetches the same bytes and refuses any others</td></tr></tbody></table></div><p>No release for the pin is <code class="language-plaintext highlighter-rouge">missing</code>, and the detail says the package was
+looked for. A package that fails a check is <code class="language-plaintext highlighter-rouge">missing</code>; one that could not be
+fetched is <code class="language-plaintext highlighter-rouge">could-not-determine</code>. Neither is ever an empty mount. The record
+travels with the tarball, so its digest proves the transfer, not the
+publisher: who may publish is the repository’s write access, the same trust
+the git tree at the pin already rests on.</p><h2 id="tools-choose-by-id-mount-runnable"><a href="#tools-choose-by-id-mount-runnable" class="anchor-heading" aria-labelledby="tools-choose-by-id-mount-runnable"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tools: choose by id, mount runnable
+  
+  
+</h2><p>The owner’s workflow (bean <code class="language-plaintext highlighter-rouge">mo75</code>): load the Tools’ metadata, review it,
+then materialise a chosen set. The first step is a hydrated mount of the
+declaring instance’s <code class="language-plaintext highlighter-rouge">tools</code> directory. Its <code class="language-plaintext highlighter-rouge">index.hydrated.jsonld</code> holds every
+Tool whole, and each Tool is its own <code class="language-plaintext highlighter-rouge">tools/&lt;id&gt;/</code> subgraph. The last step is
+<code class="language-plaintext highlighter-rouge">tools</code> on that instance’s override:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"overrides"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"cat-harness"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"tools"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"bean-query"</span><span class="p">,</span><span class="w"> </span><span class="s2">"bpmn-checklist"</span><span class="p">,</span><span class="w"> </span><span class="s2">"agent-memory"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p>Owner, 2026-10-24 (decision card on
+<a href="https://github.com/litlfred/cat-harness-tools/issues/744">cat-harness-tools#744</a>, all four as
+recommended). Three of the rulings govern this step:</p><ol><li><strong>A Tool brings both halves.</strong> Its <strong>definition</strong> is
+<code class="language-plaintext highlighter-rouge">&lt;tools dir&gt;/&lt;id&gt;/&lt;id&gt;.ts</code> in the instance that declares it, by the folder
+convention in <code class="language-plaintext highlighter-rouge">schemas/tools/tool-folders.ts</code>. Its <strong>implementation</strong> is what its
+<code class="language-plaintext highlighter-rouge">invoke</code> names:
+    <ul><li><code class="language-plaintext highlighter-rouge">inProcess.module</code>, found in the declarer or in an instance whose <code class="language-plaintext highlighter-rouge">needs</code>
+names it (<code class="language-plaintext highlighter-rouge">resolveImplementingPath</code>’s rule; two holders is refused);</li><li>the script a <code class="language-plaintext highlighter-rouge">bun run cat &lt;key&gt;</code> command resolves to through the
+instances’ <code class="language-plaintext highlighter-rouge">checkoutScripts</code>.</li></ul><p>A bare runtime command (<code class="language-plaintext highlighter-rouge">gh</code>, <code class="language-plaintext highlighter-rouge">beans</code>) or <code class="language-plaintext highlighter-rouge">manual</code> brings no code. Both
+halves arrive <strong>with their import closure</strong>. A definition without its code
+is not a Tool you can run, and code without the modules it imports does
+not load: either way the checkout is half-working.</p></li><li><strong>One closure walker.</strong> The closure is bootstrap-tools’ <code class="language-plaintext highlighter-rouge">importClosure</code>
+(<code class="language-plaintext highlighter-rouge">scripts/check-closure.ts</code>). <code class="language-plaintext highlighter-rouge">check:tools-closure</code> and the staging cone
+use the same walk. Do not write a second walker: two of them give two
+answers to “what does this code load”.</li><li><strong>Directory granularity.</strong> The mount brings every <strong>declared</strong> directory
+the closure touches, whole. It takes the most specific declared directory
+(a nested one such as <code class="language-plaintext highlighter-rouge">skills/voices</code> mounts alone) and never a single
+file, so the lock schema is unchanged. A closure file in no declared
+directory, and an import that resolves to nothing, are refused with the
+file named. Neither is ever dropped.</li></ol><p>With <code class="language-plaintext highlighter-rouge">tools</code> named anywhere in a mount entry, each instance of that entry
+mounts the directories the closure touches, plus any its override names in
+<code class="language-plaintext highlighter-rouge">directories</code>. It does <strong>not</strong> mount its default list. A <code class="language-plaintext highlighter-rouge">whole</code> instance
+stays whole. A Tool id the instance does not declare at the pin is refused at
+plan time. <code class="language-plaintext highlighter-rouge">tools</code> together with <code class="language-plaintext highlighter-rouge">hydrated</code> is refused, because metadata
+brings no code.</p><p><strong>What it costs, measured</strong> on cat-harness main (2026-10-24). A Tool folder is
+not a declared directory: <code class="language-plaintext highlighter-rouge">tools/</code> is, and most definitions import its
+<code class="language-plaintext highlighter-rouge">lib.ts</code>. So a definition arrives with the whole <code class="language-plaintext highlighter-rouge">tools</code> directory, which
+holds every Tool’s definition (about 170 folders, all of which load from
+<code class="language-plaintext highlighter-rouge">tools</code> + <code class="language-plaintext highlighter-rouge">schemas</code>). The cost that matters falls on the implementation side:</p><div class="table-wrapper"><table><thead><tr><th>Tools</th><th>cat-harness</th><th>the tools layer</th><th>bootstrap-tools</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">bean-query</code></td><td><code class="language-plaintext highlighter-rouge">schemas</code>, <code class="language-plaintext highlighter-rouge">tools</code></td><td><code class="language-plaintext highlighter-rouge">scripts</code>, <code class="language-plaintext highlighter-rouge">src</code></td><td>whole</td></tr><tr><td><code class="language-plaintext highlighter-rouge">agent-memory</code></td><td><code class="language-plaintext highlighter-rouge">schemas</code>, <code class="language-plaintext highlighter-rouge">tools</code></td><td><code class="language-plaintext highlighter-rouge">scripts</code></td><td>whole</td></tr></tbody></table></div><p>Without <code class="language-plaintext highlighter-rouge">tools</code>, the tools layer mounts every in-checkout directory it declares.
+The end-to-end check is the <code class="language-plaintext highlighter-rouge">remote-mount</code> test “load tools metadata, choose
+three Tools, materialise them” in the tools layer.</p><h2 id="why-the-default-path-is-the-home-path"><a href="#why-the-default-path-is-the-home-path" class="anchor-heading" aria-labelledby="why-the-default-path-is-the-home-path"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why the default path is the home path
+  
+  
+</h2><p>At its home path, a mounted instance keeps its position relative to its
+siblings. Two things then follow with no extra machinery:</p><ul><li><code class="language-plaintext highlighter-rouge">instanceRootsIn</code> scans one level deep, so it finds every mounted sibling and
+<code class="language-plaintext highlighter-rouge">needs</code> resolves exactly as it does in the monorepo.</li><li>A relative import such as <code class="language-plaintext highlighter-rouge">../../cat-harness/schemas/…</code> finds the file it
+names.</li></ul><p>Moving an instance by override is allowed, and the overlay still finds it
+through the lock (<code class="language-plaintext highlighter-rouge">mountedInstanceRoots</code>, <code class="language-plaintext highlighter-rouge">mountScopeFor</code>). The override is
+then responsible for any import that climbs out of the moved instance.</p><h2 id="the-closure"><a href="#the-closure" class="anchor-heading" aria-labelledby="the-closure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The closure
+  
+  
+</h2><ol><li>The harness’s declaration is read <strong>from the pinned tree</strong>, not from this
+checkout.</li><li>Each <code class="language-plaintext highlighter-rouge">needs</code> name is looked for in the same tree.</li><li>If it is not there, the planner looks for a <strong>gitlink</strong> at that tree’s root.
+A submodule entry is itself a pin, so a need on <code class="language-plaintext highlighter-rouge">bootstrap</code> resolves to
+<code class="language-plaintext highlighter-rouge">litlfred/bootstrap</code> at the gitlink’s SHA. The downstream gets the bytes and
+never a submodule.</li><li>A need the downstream already holds as a local instance is <code class="language-plaintext highlighter-rouge">local</code>: it is
+supplied by the checkout and never mounted over.</li><li>A need found nowhere is <code class="language-plaintext highlighter-rouge">missing</code>. It is never dropped.</li></ol><h2 id="the-lock-and-the-three-states"><a href="#the-lock-and-the-three-states" class="anchor-heading" aria-labelledby="the-lock-and-the-three-states"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The lock, and the three states
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">index.lock.json</code> sits beside the downstream’s <code class="language-plaintext highlighter-rouge">index.config.json</code> and is
+<strong>committed</strong>. It is generated by <code class="language-plaintext highlighter-rouge">mount:remote</code> and never hand-edited, which
+is why it is a separate file rather than part of the index. Until 2026-10-07 it
+was <code class="language-plaintext highlighter-rouge">&lt;name&gt;.mount-lock.json</code>. Readers still accept that legacy name during the
+transition, and both present is an error. It records:</p><ul><li>the pins it was written for;</li><li>for each instance: the repository, the SHA, how the pin was found
+(<code class="language-plaintext highlighter-rouge">declared</code> / <code class="language-plaintext highlighter-rouge">same-tree</code> / <code class="language-plaintext highlighter-rouge">gitlink</code>), the declaration’s digest, each
+directory’s tree digest, and declared instance assets (such as <code class="language-plaintext highlighter-rouge">package.json</code>);</li><li>what was <strong>not</strong> mounted, and why.</li></ul><p>The mounted bytes are <strong>not</strong> committed. With an index, each mount path is
+ignored by a <strong>generated block in the root <code class="language-plaintext highlighter-rouge">.gitignore</code></strong>, written from the
+index (<code class="language-plaintext highlighter-rouge">check:index-ignores</code> is the gate). A path that block does not cover is
+reported as missing, never patched locally, because a local exclude is
+invisible to every other clone. A folio with no index keeps the old behaviour:
+a path its rules do not ignore goes into the worktree’s <code class="language-plaintext highlighter-rouge">info/exclude</code>.</p><p><strong>Mount path and route collisions (bean folio-assistant-t4xb).</strong> A mount with no <code class="language-plaintext highlighter-rouge">path</code>
+override lands at <code class="language-plaintext highlighter-rouge">&lt;name&gt;/</code> in the downstream root, beside the downstream’s own
+directories, and its site routes sit beside the site-wide ones. To prevent collisions on disk
+and in route space:</p><ol><li><strong>Reserved names:</strong> <code class="language-plaintext highlighter-rouge">RESERVED_ROOT_AND_ROUTE_NAMES</code> in <code class="language-plaintext highlighter-rouge">schemas/kg/remote-mount.ts</code> declares
+the one authoritative list of reserved root directories and site route names:
+<code class="language-plaintext highlighter-rouge">["skills", "tools", "docs", "assets", "glossary", "api", "payload", "STAGING", "beans", "todos", "fsh-guts", "uploads", "test", "build", "_site", "_docs", "_kg"]</code>.</li><li><strong>Mount path check:</strong> <code class="language-plaintext highlighter-rouge">checkMountPathCollisions</code> (run during planning in <code class="language-plaintext highlighter-rouge">mount:remote</code>
+and by <code class="language-plaintext highlighter-rouge">bun run cat check:mount-collisions</code>) rejects any remote mount whose effective path
+(<code class="language-plaintext highlighter-rouge">path</code> or <code class="language-plaintext highlighter-rouge">&lt;name&gt;/</code>) collides with:
+    <ul><li>a directory the downstream declares in its own configuration;</li><li>a reserved root or site route name;</li><li>another mount’s path.
+When a collision occurs, the error clearly states how to fix it: “set <code class="language-plaintext highlighter-rouge">path</code>” (on the
+instance’s <code class="language-plaintext highlighter-rouge">overrides.&lt;name&gt;.path</code> in <code class="language-plaintext highlighter-rouge">index.config.json</code> or <code class="language-plaintext highlighter-rouge">source.remote.overrides</code>).</li></ul></li><li><strong>Route rules:</strong><ul><li><strong>Canonical:</strong> every visualiser is reachable at <code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;harness&gt;/&lt;visualizer&gt;/</code>.
+Every generated link uses that form unless an alias is declared.</li><li><strong>Alias:</strong> <code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;visualizer&gt;/</code> exists only when a declaration opts in via <code class="language-plaintext highlighter-rouge">alias: true</code>
+or <code class="language-plaintext highlighter-rouge">alias: "&lt;alias&gt;"</code> in its <code class="language-plaintext highlighter-rouge">Visualisation</code> declaration (<code class="language-plaintext highlighter-rouge">coverage.visualiser</code>). The site build
+refuses an alias that collides with another alias, a harness route, or a reserved site route,
+and names both claimants.</li><li>The route rule itself is in <a href="../../reference/skill-instructions/schema-management.html"><code class="language-plaintext highlighter-rouge">schema-management</code></a>
+§”Where a viewer publishes”.</li></ul></li></ol><p>Every instance ends in exactly one state:</p><div class="table-wrapper"><table><thead><tr><th>state</th><th>means</th><th>exit</th></tr></thead><tbody><tr><td>mounted</td><td>on disk, hashing to the lock</td><td>0</td></tr><tr><td>unverified-approver</td><td>mounted, on consent no <code class="language-plaintext highlighter-rouge">mountApprovers</code> list checked</td><td>0, reported apart</td></tr><tr><td>missing</td><td>not on disk, edited since mounting, not in the tree, refused, or the lock is for other pins</td><td>1</td></tr><tr><td>could-not-determine</td><td>the fetch failed, a declaration or lock is unreadable, or an instance is reached at two pins</td><td>2</td></tr></tbody></table></div><p>Could-not-determine outranks missing, and missing outranks mounted. <strong>A fetch
+that failed is never an empty layer.</strong></p><h3 id="re-pinning-from-a-checkout-mounted-from-the-lock"><a href="#re-pinning-from-a-checkout-mounted-from-the-lock" class="anchor-heading" aria-labelledby="re-pinning-from-a-checkout-mounted-from-the-lock"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Re-pinning: from a checkout mounted from the lock
+  
+  
+</h3><p>A re-pin is <code class="language-plaintext highlighter-rouge">mount:remote --seed &lt;name&gt;=&lt;owner/repo&gt;@&lt;sha&gt;</code> (it writes the
+pin and its consent into <code class="language-plaintext highlighter-rouge">index.config.json</code>), then <code class="language-plaintext highlighter-rouge">mount:remote</code> (it lays
+the bytes down and rewrites the lock). Do it in a checkout whose mounts match
+the lock: a fresh one, or one replayed by <code class="language-plaintext highlighter-rouge">.github/mount-from-lock.sh</code>. A
+mount with local edits is left untouched by the next mount, at its old
+commit, while the lock’s top-level pin moves; CI mounts from the instance
+entries, so it kept testing the old layer (folio-assistant#2682). <code class="language-plaintext highlighter-rouge">--seed</code>
+now refuses while a mount it moves has such edits, and <code class="language-plaintext highlighter-rouge">mount:check</code> reports
+an instance entry behind its pin as <code class="language-plaintext highlighter-rouge">missing</code>. After the re-pin, check that
+the moved instance’s <code class="language-plaintext highlighter-rouge">sha</code> in <code class="language-plaintext highlighter-rouge">index.lock.json</code> is the new pin.</p><h2 id="a-changed-lock-re-renders-the-agent-surface"><a href="#a-changed-lock-re-renders-the-agent-surface" class="anchor-heading" aria-labelledby="a-changed-lock-re-renders-the-agent-surface"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A changed lock re-renders the agent surface
+  
+  
+</h2><p><strong>A mount is not done when the bytes are on disk.</strong> A newly pinned layer can
+bring new skills, renamed skills and new agent-memory entries, but an agent
+does not read the layer: it reads what is <strong>generated</strong> from it.</p><div class="table-wrapper"><table><thead><tr><th>surface</th><th>generated by</th><th>from</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">.claude/commands/&lt;name&gt;.md</code></td><td><code class="language-plaintext highlighter-rouge">skill:commands</code></td><td>every <code class="language-plaintext highlighter-rouge">user_invocable</code> skill in the mounted <code class="language-plaintext highlighter-rouge">kg</code> graphs</td></tr><tr><td><code class="language-plaintext highlighter-rouge">.claude/agent-memory/&lt;agent&gt;/MEMORY.md</code>, <code class="language-plaintext highlighter-rouge">.agents/skills/</code>, <code class="language-plaintext highlighter-rouge">.agents/rules/</code></td><td><code class="language-plaintext highlighter-rouge">agent-memory</code></td><td>the <code class="language-plaintext highlighter-rouge">memory</code> directories the mounted instances declare</td></tr></tbody></table></div><p>So when a <code class="language-plaintext highlighter-rouge">mount:remote</code> run <strong>changes the lock</strong>, it runs both generators
+from the checkout root before it exits, and a generator that fails fails the
+run. A re-pin commit then carries the new layers <em>and</em> the surface rendered
+from them. <code class="language-plaintext highlighter-rouge">--no-agent-surface</code> opts out; <code class="language-plaintext highlighter-rouge">--check</code>, <code class="language-plaintext highlighter-rouge">--plan</code> and <code class="language-plaintext highlighter-rouge">--staging</code>
+never run it, since they change no lock a commit would carry.</p><p>The list lives in one place, <code class="language-plaintext highlighter-rouge">AGENT_SURFACE_GENERATORS</code> in
+<code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/remote-mount.ts</code>. A new generator of something an
+agent reads (a rule file, a settings hook) is added <strong>there</strong>, not to a
+checklist: a step a person has to remember is the step that gets skipped.
+That is what happened on folio-assistant#2526, whose re-pin shipped the new
+layers with the old memory and went red on three agent-memory tests. Owner,
+2026-10-10: <em>“that should be a part of process/skills/tools when a
+new/updated subgraph is mounted… it may have new agentic skills to
+re-render and add. same for memory.”</em></p><p>The process step is <code class="language-plaintext highlighter-rouge">Task_RenderAgentSurface</code> in
+<a href="../../en/cat-harness/processes/mount-dependency.html"><code class="language-plaintext highlighter-rouge">mount-dependency.bpmn</code></a>,
+between writing the lock and checking against it.</p><h2 id="trust-what-lets-a-mount-proceed-h8"><a href="#trust-what-lets-a-mount-proceed-h8" class="anchor-heading" aria-labelledby="trust-what-lets-a-mount-proceed-h8"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Trust: what lets a mount proceed (H8)
+  
+  
+</h2><p>A real mount needs a person’s consent for that pin (<code class="language-plaintext highlighter-rouge">trust.consent</code>); a
+<code class="language-plaintext highlighter-rouge">--staging</code> mount needs none. <code class="language-plaintext highlighter-rouge">schemas/kg/mount-trust.ts</code> has the rules. Four
+things to know (roast <code class="language-plaintext highlighter-rouge">1ygp</code> L4.2):</p><ul><li><strong>The lock records the basis</strong> for each instance: <code class="language-plaintext highlighter-rouge">staging</code>, or <code class="language-plaintext highlighter-rouge">consent</code>
+with who and when. <code class="language-plaintext highlighter-rouge">mount:remote:check</code> re-runs the trust check against the
+current declaration, so consent withdrawn later reads <code class="language-plaintext highlighter-rouge">refused</code>.</li><li><strong>A gitlink needs consent of its own.</strong> An instance reached through a
+gitlink is another repository at another commit. Give its consent on
+<code class="language-plaintext highlighter-rouge">overrides.&lt;name&gt;.trust</code>, for the gitlink’s SHA.</li><li><strong>Who may consent.</strong> Declare <code class="language-plaintext highlighter-rouge">mountApprovers</code> and a <code class="language-plaintext highlighter-rouge">consent.by</code> not on the
+list is refused. Without the list, mounts report <code class="language-plaintext highlighter-rouge">unverified-approver</code>: exit
+0, but never shown as clean. A checkout whose mounts <code class="language-plaintext highlighter-rouge">index.config.json</code>
+lists declares the list there, as its top-level <code class="language-plaintext highlighter-rouge">mountApprovers</code>; declaring
+it on the instance declaration as well is an error.</li><li><strong>A refused mount is not current.</strong> Its old bytes stay on disk (an agent
+does not delete them). The lock records them under <code class="language-plaintext highlighter-rouge">unmounted</code> as
+<code class="language-plaintext highlighter-rouge">leftOnDisk</code>, and the check reports them as not mounted.</li></ul><h3 id="standing-consent-a-site-keeps-itself-on-an-upstream-branch"><a href="#standing-consent-a-site-keeps-itself-on-an-upstream-branch" class="anchor-heading" aria-labelledby="standing-consent-a-site-keeps-itself-on-an-upstream-branch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Standing consent: a site keeps itself on an upstream branch
+  
+  
+</h3><p>Pins stay per site (owner, 2026-10-16). A site may
+declare, on one instance’s <code class="language-plaintext highlighter-rouge">trust.standing</code>, that a named person consents
+to following a branch — <code class="language-plaintext highlighter-rouge">{follows: "main", consentBy, consentAt, require?:
+"green"}</code>. The repin tool (<code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/repin-standing.ts</code>,
+run by its <code class="language-plaintext highlighter-rouge">standing-repin.yml</code> workflow) then moves that pin to the
+branch’s newest (green) commit and writes <code class="language-plaintext highlighter-rouge">trust.consent</code> for the new pin,
+<code class="language-plaintext highlighter-rouge">by</code> that person and marked <code class="language-plaintext highlighter-rouge">standing</code>. The mount accepts it only while the
+same rule is still declared: withdraw or edit it and those pins ask again.
+A pin moved by hand still asks again, rule or not.</p><h2 id="publishing-a-remote-mounted-downstream--provision-gh-pages-first"><a href="#publishing-a-remote-mounted-downstream--provision-gh-pages-first" class="anchor-heading" aria-labelledby="publishing-a-remote-mounted-downstream--provision-gh-pages-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Publishing a remote-mounted downstream — provision <code class="language-plaintext highlighter-rouge">gh-pages</code> first
+  
+  
+</h2><p>A mount brings layers into a checkout; it provisions <strong>nothing</strong> on the
+downstream’s remote. A downstream that publishes a site needs a <code class="language-plaintext highlighter-rouge">gh-pages</code>
+branch before GitHub Pages can be switched on, exactly as a new repository
+does. Owner, 2026-10-01: <em>“need to create gh-pages branch before can turn
+on”</em>; repeated 2026-10-07: <em>“need to create gh-pages before can deploy”</em>
+(issue #2417).</p><p>The step is <code class="language-plaintext highlighter-rouge">Task_ProvisionGhPages</code> (“Provision gh-pages”) in the
+getting-started process (<a href="../../reference/skill-instructions/getting-started.html"><code class="language-plaintext highlighter-rouge">getting-started</code></a>
+§5), with the semantics of <code class="language-plaintext highlighter-rouge">A_Provision</code> in bootstrap-tools’
+<a href="../../en/cat-harness/processes/render-kg-to-github-pages.html"><code class="language-plaintext highlighter-rouge">render-kg-to-github-pages.bpmn</code></a>.
+Run <code class="language-plaintext highlighter-rouge">bun run cat-harness-tools/scripts/pages-bootstrap.ts --provision</code> (idempotent,
+never forced; without the flag it only reports <code class="language-plaintext highlighter-rouge">unprovisioned</code> and the exact
+command), then set Pages to <strong>“Deploy from a branch: gh-pages, / (root)”</strong>.
+The worked example is litlfred/test — an overlay with remote mounts, its
+<code class="language-plaintext highlighter-rouge">gh-pages</code> provisioned as <code class="language-plaintext highlighter-rouge">860f9c2</code> in litlfred/test#5 — written up in
+<a href="../../reference/skill-instructions/repo-conversion.html"><code class="language-plaintext highlighter-rouge">repo-conversion</code></a> §5.</p><h2 id="never"><a href="#never" class="anchor-heading" aria-labelledby="never"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Never
+  
+  
+</h2><ul><li><strong>Never add a submodule</strong> to get a dependency, and never clone into <code class="language-plaintext highlighter-rouge">.deps/</code>.</li><li><strong>Never pin a branch or an abbreviated SHA.</strong> The schema refuses both.</li><li><strong>Never edit a mounted directory and expect a re-mount to keep the edit, or
+to throw it away.</strong> A re-mount leaves edited bytes untouched and reports them
+as missing. Move the edit upstream, or delete the directory and re-mount.</li><li><strong>Never mount over tracked files</strong>, or over a directory that no lock says
+this mount made. Both are refused.</li><li><strong>Never read <code class="language-plaintext highlighter-rouge">missing</code> or <code class="language-plaintext highlighter-rouge">could-not-determine</code> as “that layer has nothing
+in it”.</strong> A layer that is not mounted is absent from every overlay.</li></ul><h2 id="not-yet"><a href="#not-yet" class="anchor-heading" aria-labelledby="not-yet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Not yet
+  
+  
+</h2><p>These are tracked on bean <code class="language-plaintext highlighter-rouge">0mpw</code>:</p><ul><li>the pilot (smart-ra drops its submodule);</li><li>the first real consumer, the cutover tracked by bean <code class="language-plaintext highlighter-rouge">g8jp</code>.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/mount-dependency.html">Remote-mount a dependency</a></td><td>Declare the mount: harness, repository, pin; Resolve the closure at the pin; Mount each instance at its declared path; Write the lock; Re-render the agent surface; Check disk against lock against declaration</td></tr><tr><td><a href="../../en/cat-harness/processes/mount-subgraph.html">Mount a declared subgraph</a></td><td>Mount the remote tree at its pin</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

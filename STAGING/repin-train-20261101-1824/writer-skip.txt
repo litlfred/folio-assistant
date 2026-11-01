@@ -1,0 +1,71 @@
+  writer skip: ON (no records: every writer runs)
+  ran handler:index (reuse off) [2.7s]
+  ran ig-index:build (reuse off) [11.1s]
+  ran smart-base:document-kinds (reuse off) [0.5s]
+qa:refresh: kg:audit:all runs: no writer records from a full deploy
+qa:refresh: kg:detangle runs: no writer records from a full deploy
+qa:refresh: translation:block-qa runs: no writer records from a full deploy
+qa:refresh: qa-sweep:docs runs: no writer records from a full deploy
+  voice gate: 42 criterion(s) skipped — this folio activates agent-skill-authoring (voice-overlay-address-adjudicator, voice-overlay-address-administrator, voice-overlay-address-author, voice-overlay-address-authoring-agent, voice-overlay-address-business-analyst, voice-overlay-address-clinical-sme, voice-overlay-address-code-reviewer, voice-overlay-address-compute-authoring-agent, voice-overlay-address-deep-researcher, voice-overlay-address-docs-authoring-agent, voice-overlay-address-editor, voice-overlay-address-editorial-authoring-agent, voice-overlay-address-evidence-agent, voice-overlay-address-feedback-provider, voice-overlay-address-ingestion-agent, voice-overlay-address-integration-watcher, voice-overlay-address-lean-authoring-agent, voice-overlay-address-librarian, voice-overlay-address-narrative-reviewer, voice-overlay-address-onboarding-agent, voice-overlay-address-platform-authoring-agent, voice-overlay-address-programme-manager, voice-overlay-address-proof-review-agent, voice-overlay-address-publication-manager, voice-overlay-address-qc-reviewer, voice-overlay-address-review-coordinator, voice-overlay-address-reviewer, voice-overlay-address-session-coordinator, voice-overlay-address-sibling-session, voice-overlay-address-stakeholder, voice-overlay-address-terminologist, voice-overlay-address-translation-adjudicator, voice-overlay-address-translation-coordinator, voice-overlay-address-translator, voice-overlay-address-user, voice-overlay-milnor, voice-overlay-technical-writer, voice-overlay-who-digital-health, voice-overlay-who-digital-transformation-handbook, voice-overlay-who-editorial, voice-overlay-who-guideline-development, voice-overlay-who-publication-design)
+qa:refresh: check:l1-complete runs: no writer records from a full deploy
+qa:refresh: p2:refusals runs: no writer records from a full deploy
+qa:refresh: lsi:index:cat-harness:skills runs: no writer records from a full deploy
+qa:refresh: lsi:index:library runs: no writer records from a full deploy
+qa:refresh: lsi:audit runs: no writer records from a full deploy
+qa:refresh: docs:pages runs: no writer records from a full deploy
+qa:refresh: viewer:nav:audit runs: no writer records from a full deploy
+qa:refresh: eval:crdm-detect runs: no writer records from a full deploy
+qa:refresh: root-scan-census runs: no writer records from a full deploy
+qa:refresh: skill:register runs: no writer records from a full deploy
+qa:refresh: term:mapping runs: no writer records from a full deploy
+qa:refresh: check:harness-state runs: no writer records from a full deploy
+qa:refresh: check:wireframes runs: no writer records from a full deploy
+qa:refresh: check:source-licence runs: no writer records from a full deploy
+qa:refresh: check:layout-norms runs: no writer records from a full deploy
+qa:refresh: check:rendered-labels runs: no writer records from a full deploy
+qa:refresh: check:lane-documentation runs: no writer records from a full deploy
+qa:refresh: check:methodology-evidence runs: no writer records from a full deploy
+qa:refresh: check:avatar-coverage runs: no writer records from a full deploy
+qa:refresh: check:unlinked-beans runs: no writer records from a full deploy
+qa:refresh: kg:export runs: no writer records from a full deploy
+qa:refresh: check:reference-direction runs: no writer records from a full deploy
+qa:refresh: audit:coverage runs: no writer records from a full deploy
+qa:refresh: readme:subgraphs runs: no writer records from a full deploy
+  ran subgraph:jsonld (reuse off) [22.6s]
+  ran voices:viz (reuse off) [0.7s]
+  ran theme:viz (reuse off) [0.4s]
+  ran uploads:viz (reuse off) [1.8s]
+  ran document-kinds:viz (reuse off) [0.6s]
+  ran skills:docs (reuse off) [4.3s]
+  ran node-kinds (reuse off) [1.2s]
+  ran node-kind:pages (reuse off) [2.0s]
+  ran glossary:page (reuse off) [11.0s]
+  ran bibliography:page (reuse off) [0.5s]
+  ran smart:pages (reuse off) [0.7s]
+  ran jsonld:contexts (reuse off) [1.2s]
+  ran smart-trust-phw:pages (reuse off) [0.5s]
+  ran smart-trust:pages (reuse off) [0.8s]
+  ran smart-base:pages (reuse off) [0.8s]
+  ran smart-base:l1-extraction:pages (reuse off) [0.6s]
+  ran tools:viz (reuse off) [2.5s]
+  ran auto:docs (reuse off) [6.9s]
+  ran lsi:viz (reuse off) [2.3s]
+  ran translation:status (reuse off) [0.9s]
+  ran openapi:viz (reuse off) [0.2s]
+  ran schema:viz (reuse off) [2.5s]
+  ran methodologies:viz (reuse off) [1.6s]
+  ran external-schemas:viz (reuse off) [4.7s]
+  ran subscriptions:viz (reuse off) [0.2s]
+  ran docs:pages (reuse off) [1.6s]
+  ran docs:harness (reuse off) [3.4s]
+  ran navbar:include (reuse off) [0.1s]
+  ran kind:table (reuse off) [0.1s]
+  ran avatars:css (reuse off) [0.1s]
+  ran themes:css (reuse off) [0.4s]
+  ran folio:viz (reuse off) [0.6s]
+  ran kg:viewer (reuse off) [0.3s]
+  ran state:visualizer (reuse off) [5.8s]
+  ran site:viz (reuse off) [1.4s]
+  ran slice:sqlite (reuse off) [9.1s]
+  ran render:bpmn (reuse off) [4.3s]
+  ran processes:viz (reuse off) [6.4s]

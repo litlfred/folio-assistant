@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/role/compute-authoring-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/role/compute-authoring-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Compute authoring agent",
+      "title": "Compute authoring agent",
+      "notation": "compute-authoring-agent",
+      "description": "Writes and audits the computation scripts and simulators that produce witnessed values, and keeps the paper's numbers and its computations from drifting apart.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/skill/compute-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/skill/compute-author",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/skill/ffi-roundtrip-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/skill/lean-witness-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/skill/witnessed-values",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/skill/verify-local-substrate",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/skill/simulator",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/folio-assistant-sci/skill/simulator-math-audit"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/compute-authoring-agent"
+    }
+  ]
+}

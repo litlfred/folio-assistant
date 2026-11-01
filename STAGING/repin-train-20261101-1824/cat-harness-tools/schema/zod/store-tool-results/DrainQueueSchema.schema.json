@@ -1,0 +1,230 @@
+{
+  "$ref": "#/definitions/DrainQueue",
+  "definitions": {
+    "DrainQueue": {
+      "type": "object",
+      "properties": {
+        "refreshedAt": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "repo": {
+                "type": "string"
+              },
+              "ref": {
+                "type": "string"
+              },
+              "sha": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "repo",
+              "ref",
+              "sha"
+            ]
+          }
+        },
+        "byOwner": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "owner": {
+                "type": "string"
+              },
+              "beans": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "priority": {
+                      "type": "string"
+                    },
+                    "lastTouch": {
+                      "type": "object",
+                      "properties": {
+                        "author": {
+                          "type": "string"
+                        },
+                        "at": {
+                          "type": "string"
+                        },
+                        "agent": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "author",
+                        "at",
+                        "agent"
+                      ]
+                    },
+                    "skip": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "status",
+                    "type",
+                    "priority"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "owner",
+              "beans"
+            ]
+          }
+        },
+        "spare": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "string"
+              },
+              "lastTouch": {
+                "type": "object",
+                "properties": {
+                  "author": {
+                    "type": "string"
+                  },
+                  "at": {
+                    "type": "string"
+                  },
+                  "agent": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "author",
+                  "at",
+                  "agent"
+                ]
+              },
+              "skip": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "status",
+              "type",
+              "priority"
+            ]
+          }
+        },
+        "excluded": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string",
+                "enum": [
+                  "goal",
+                  "epic",
+                  "blocked",
+                  "completed",
+                  "scrapped",
+                  "draft",
+                  "owner-held"
+                ]
+              },
+              "detail": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "reason"
+            ]
+          }
+        },
+        "disagreements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "byCopy": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "used": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "byCopy",
+              "used"
+            ]
+          }
+        }
+      },
+      "required": [
+        "refreshedAt",
+        "sources",
+        "byOwner",
+        "spare",
+        "excluded",
+        "disagreements"
+      ],
+      "description": "The beans that can be drained, by owner, with what was excluded and why."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/store-tool-results/DrainQueueSchema.schema.json",
+  "title": "DrainQueueSchema",
+  "description": "Generated from `DrainQueueSchema` in schemas/tools/store-tool-results.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  }
+}

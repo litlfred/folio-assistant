@@ -1,0 +1,144 @@
+{
+  "$ref": "#/definitions/ArchimateConfig",
+  "definitions": {
+    "ArchimateConfig": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "cat-archimate-config/v1"
+        },
+        "directory": {
+          "type": "string",
+          "minLength": 1
+        },
+        "models": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9._-]+$"
+              },
+              "file": {
+                "type": "string",
+                "pattern": "\\.archimate$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "file"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "figures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "block": {
+                "type": "string",
+                "pattern": "\\.md$"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "model": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9._-]+$"
+              },
+              "view": {
+                "type": "string",
+                "minLength": 1
+              },
+              "basis": {
+                "type": "string",
+                "enum": [
+                  "same-elements",
+                  "by-eye"
+                ]
+              },
+              "svg": {
+                "type": "string",
+                "pattern": "\\.svg$"
+              }
+            },
+            "required": [
+              "block",
+              "label",
+              "model",
+              "view",
+              "basis"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "block": {
+                "type": "string",
+                "pattern": "\\.md$"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "relationship-types",
+                  "relationship-rules"
+                ]
+              },
+              "rules": {
+                "type": "string",
+                "pattern": "\\.json$"
+              },
+              "model": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9._-]+$"
+              }
+            },
+            "required": [
+              "block",
+              "label",
+              "kind",
+              "rules"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "directory",
+        "models"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateConfigSchema.schema.json",
+  "title": "ArchimateConfigSchema",
+  "description": "Generated from `ArchimateConfigSchema` in archimate/schemas/archimate.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  }
+}

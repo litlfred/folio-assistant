@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/who-iris/directory/who-iris-scripts.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/who-iris/directory/who-iris-scripts",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "who-iris-scripts",
+      "path": "scripts/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "The catalogue checker, the cover generator and `gen-iris-pages.ts` -- the instance-local generator `wjfu` cites as the precedent for every other one here (*\"instance-local generator, static HTML, committed, gated\"*). Cited as a model by another instance's bean while being undeclared itself, which is the sharpest form of the `ylj7` defect: a directory can be the corpus's own worked example and still be invisible to every consumer that walks declarations.",
+      "readmePath": "scripts/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/who-iris/directory/who-iris-scripts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-scripts"
+    }
+  ]
+}

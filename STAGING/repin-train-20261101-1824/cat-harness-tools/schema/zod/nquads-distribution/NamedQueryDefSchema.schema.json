@@ -1,0 +1,91 @@
+{
+  "$ref": "#/definitions/NamedQueryDef",
+  "definitions": {
+    "NamedQueryDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_-]+$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sparql": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredSubgraphs": {
+          "default": [],
+          "description": "List of subgraph partition IDs that must be resident in the store before execution",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "parameters": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9_]+$"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "string",
+                  "iri",
+                  "integer",
+                  "boolean"
+                ]
+              },
+              "required": {
+                "default": false,
+                "type": "boolean"
+              },
+              "defaultValue": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean"
+                ]
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ]
+          }
+        },
+        "outputVariables": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "sparql"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/nquads-distribution/NamedQueryDefSchema.schema.json",
+  "title": "NamedQueryDefSchema",
+  "description": "Generated from `NamedQueryDefSchema` in schemas/kg/nquads-distribution.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  }
+}

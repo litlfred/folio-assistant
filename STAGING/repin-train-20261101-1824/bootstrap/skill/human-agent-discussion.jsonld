@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/skill/human-agent-discussion.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/skill/human-agent-discussion",
+      "@type": "bootstrap:Skill",
+      "label": "human-agent-discussion",
+      "title": "Asking a person, in one reusable way",
+      "description": "Ask a person (or a sibling agent) for what no file holds. First determine where you are — the context, the Role you act as and theirs, the Process and task (or that you are idle) — and ask about whichever you cannot determine before anything else. Then context, the options, a recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it needs a person; it records the answer, an applied default, or what is still open, and never a guess.",
+      "source": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/skills/human-agent-discussion.md",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261101-1824/bootstrap/directory/skills"
+    }
+  ]
+}

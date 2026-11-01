@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bean drain | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Bean drain" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Bean drain" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-bean-drain",
+    "src": "../../assets/qa/reference-skill-instructions-bean-drain/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-bean-drain/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=2ed7923cda66"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=9ffac52f2026" defer></script><script src="../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/bean-drain.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#roles","label":"Roles"},{"href":"#spawning-drainers","label":"Spawning drainers"},{"href":"#1-build-the-queue--the-drain-queue-tool","label":"Build the queue — the drain-queue Tool","icon":"1"},{"href":"#2-before-each-bean-check-then-claim--the-bean-claim-check-tool","label":"Before each bean: check, then claim — the bean-claim-check Tool","icon":"2"},{"href":"#3-work-it","label":"Work it","icon":"3"},{"href":"#4-when-the-bean-waits-on-the-owner","label":"When the bean waits on the owner","icon":"4"},{"href":"#5-close-it-and-refill","label":"Close it, and refill","icon":"5"},{"href":"#the-measured-case-f1e1-2026-10-24","label":"The measured case: f1e1, 2026-10-24"},{"href":"#tools","label":"Tools"},{"href":"#as-a-process","label":"As a process"},{"href":"#input-and-output","label":"Input and output"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Bean drain</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/bean-drain.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core/bean-drain.md</code></a> — do not edit here. Typed contract: <a href="../skills/bean-drain.html">schema reference</a>.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/bean-drain.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/skills/sdlc/sdlc-core/bean-drain.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="bean-drain"><a href="#bean-drain" class="anchor-heading" aria-labelledby="bean-drain"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Bean drain
+  
+  
+</h1><p>Owner, 2026-10-24: <em>“update Skills so on draining beans/stories as part of SDLC
+and describe Tools for coordination on spawned bean drains”</em>. Bean <code class="language-plaintext highlighter-rouge">n7x7</code>.</p><p>A drain is the delivery loop run over a queue instead of over one item. Each
+bean in it still goes through the ordinary lifecycle
+(<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a>, <a href="../../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a>,
+<a href="../../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a>). What this skill adds is what goes
+wrong only when <strong>several agents drain the same store at once</strong>: two of them
+starting the same bean.</p><p>The drain is drawn as a process: <code class="language-plaintext highlighter-rouge">Process_BeanDrain</code>
+(<a href="../../en/cat-harness/processes/bean-drain.html"><code class="language-plaintext highlighter-rouge">processes/sdlc/bean-drain.bpmn</code></a>,
+bean <code class="language-plaintext highlighter-rouge">bssi</code>). It builds the queue (the <code class="language-plaintext highlighter-rouge">drain-queue</code> Tool), then for each bean
+calls OPEN (<code class="language-plaintext highlighter-rouge">Process_BeanOpen</code>, whose check is the <code class="language-plaintext highlighter-rouge">bean-claim-check</code> Tool),
+works it, calls CLOSE (<code class="language-plaintext highlighter-rouge">Process_BeanClose</code>), and refills. The steps below are
+the same loop in prose.</p><h2 id="roles"><a href="#roles" class="anchor-heading" aria-labelledby="roles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Roles
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>role</th><th>does</th><th>holds</th></tr></thead><tbody><tr><td><strong>queue keeper</strong></td><td>builds the queue, assigns beans to drainers, refills a drainer that runs dry</td><td>the queue file</td></tr><tr><td><strong>drainer</strong></td><td>takes the next bean from its own list, checks, claims, works, closes</td><td>the beans it claimed</td></tr></tbody></table></div><p>One agent can be both. Drainers are cloud threads and agents on the owner’s own
+machine, side by side. Each one is told apart by its <strong>commit author</strong> on the
+bean branch, never by its own say-so:</p><div class="table-wrapper"><table><thead><tr><th>agent</th><th>commit author on the bean branch</th></tr></thead><tbody><tr><td>cloud threads</td><td><code class="language-plaintext highlighter-rouge">Claude &lt;noreply@anthropic.com&gt;</code>, or <code class="language-plaintext highlighter-rouge">litlfred &lt;litlfred@users.noreply.github.com&gt;</code></td></tr><tr><td>agy, the owner’s local Antigravity agent</td><td><code class="language-plaintext highlighter-rouge">Carl Leitner &lt;litlfred@fenugreek.home&gt;</code></td></tr><tr><td>the state bot</td><td><code class="language-plaintext highlighter-rouge">folio-state-bot</code></td></tr></tbody></table></div><p>A new kind of agent joins this table when it starts committing. An author not
+in the table is treated as “another agent”.</p><h2 id="spawning-drainers"><a href="#spawning-drainers" class="anchor-heading" aria-labelledby="spawning-drainers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Spawning drainers
+  
+  
+</h2><p>A queue keeper that starts drain threads seeds each one as
+<a href="../../reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">coordinate</code></a> §”Since 2026-10: a spawned helper is reachable,
+and the owner’s authority is not relayed” says: the owner’s words verbatim, no
+relayed rulings (a merge window included), and a finishable list. Give each
+drainer this skill and its list, not a copy of the rules.</p><p>The first multi-lane drain was epic <code class="language-plaintext highlighter-rouge">ml9h</code> (2026-10-10, three lanes over three
+stores). Its rules hold here too: work leaves up (a parent closes when its
+last child does), one PR per bean or tight cluster, and scrap obsolete beans
+with reasons. Its lane B stalled on relayed authority, which is bean <code class="language-plaintext highlighter-rouge">yex5</code>
+and the <code class="language-plaintext highlighter-rouge">coordinate</code> section above.</p><h2 id="1-build-the-queue--the-drain-queue-tool"><a href="#1-build-the-queue--the-drain-queue-tool" class="anchor-heading" aria-labelledby="1-build-the-queue--the-drain-queue-tool"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Build the queue — the <code class="language-plaintext highlighter-rouge">drain-queue</code> Tool
+  
+  
+</h2><p>Read <strong>every</strong> bean store, not the one this checkout mounts. Since 2026-10-30
+each bean has one home (<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a>, “Each bean
+has one home”): the <code class="language-plaintext highlighter-rouge">cat/cat-harness/beans</code> branch on folio-assistant, plus the
+tools and core layers’ beans on their <code class="language-plaintext highlighter-rouge">main</code>. The cat-harness copy of that
+branch keeps no beans any more. If two stores ever hold the same id again,
+<code class="language-plaintext highlighter-rouge">bun run cat check:bean-one-home</code> names it; the newest <code class="language-plaintext highlighter-rouge">updated_at</code> wins here
+and the disagreement is listed, so somebody can fix it.</p><p>Leave out, each with its reason in the output so nothing vanishes silently:</p><ul><li><strong>goals and epics</strong> (<code class="language-plaintext highlighter-rouge">milestone</code>, <code class="language-plaintext highlighter-rouge">epic</code>): they close when their children do;</li><li><strong>blocked</strong>: a bean in <code class="language-plaintext highlighter-rouge">blocked_by</code> that is still open (<a href="../../reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking</code></a>);</li><li><strong>closed or not ready</strong>: <code class="language-plaintext highlighter-rouge">completed</code>, <code class="language-plaintext highlighter-rouge">scrapped</code>, <code class="language-plaintext highlighter-rouge">draft</code>;</li><li><strong>owner-held or parked</strong>: the last note says it waits on the owner, a date or a ruling;</li><li><strong>not drainable here</strong>: it needs something the drainers lack (a network host,
+a person’s account). Route it to an agent that has it instead, and say which.</li></ul><p>Group the rest <strong>by owner</strong> (the thread or agent that already holds work in the
+same area), in priority order, and write the result to one shared file. Mark the
+beans other agents hold as <strong>skip</strong>. Refill a drainer from the deepest queue when
+it finishes, and refresh the file each time.</p><p>The queue is advisory. It says who should take a bean; only a claim says who
+did. So a drainer still runs step 2 on every bean it takes from the queue.</p><h2 id="2-before-each-bean-check-then-claim--the-bean-claim-check-tool"><a href="#2-before-each-bean-check-then-claim--the-bean-claim-check-tool" class="anchor-heading" aria-labelledby="2-before-each-bean-check-then-claim--the-bean-claim-check-tool"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Before each bean: check, then claim — the <code class="language-plaintext highlighter-rouge">bean-claim-check</code> Tool
+  
+  
+</h2><p>Run this before <strong>any</strong> work on the bean, including reading code for it. The
+trigger is starting work, not claiming (<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a>
+§”The trigger is STARTING WORK”).</p><ol><li><strong>Fetch every copy</strong>, in its own command:
+<code class="language-plaintext highlighter-rouge">git fetch origin cat/cat-harness/beans</code>. A fetch in the same compound command
+as the read is not a barrier (bean <code class="language-plaintext highlighter-rouge">pomp</code>, case 2).</li><li><strong>Read the last commits on the bean’s file</strong>, per copy:
+<code class="language-plaintext highlighter-rouge">git log -3 --format='%an %cI %s' FETCH_HEAD -- 'beans/defs/*&lt;id&gt;--*'</code>.
+<strong>Skip</strong> the bean if another agent committed to it in the past 24 hours, or
+its last note says it is claimed.</li><li><strong>Look for open work naming the bean</strong>: an open PR whose title, body or
+branch names the id, in every repository the drain touches — the
+<code class="language-plaintext highlighter-rouge">open-work-lookup</code> Tool. <strong>Skip</strong> if one exists and is not yours. This is the
+step that catches the f1e1 case below.</li><li><strong>Claim</strong>: set <code class="language-plaintext highlighter-rouge">status: in-progress</code>, append a dated note naming you and your
+session, and make a <strong>plain commit on every copy</strong>. Push it before any other
+commit of yours.</li><li><strong>A rejected push</strong> means somebody wrote first: fetch, rebase, re-read the
+bean, and go back to step 2. <strong>Never force-push</strong> a bean branch.</li></ol><p><code class="language-plaintext highlighter-rouge">status: in-progress</code> alone is not a claim you can trust. It goes stale
+(§”A quiet claim” in <code class="language-plaintext highlighter-rouge">bean-coordination</code>), so steps 2 and 3 read activity, not
+status.</p><p><strong>Why plain commits, and why on every copy.</strong> <code class="language-plaintext highlighter-rouge">bun run cat state:push</code> and
+<code class="language-plaintext highlighter-rouge">bun run cat beans:claim</code> write the one copy the checkout points at. With more
+than one copy, the others go on saying <code class="language-plaintext highlighter-rouge">todo</code>, and that drift is what the
+2026-10-16 store reconciliation had to repair by hand. So while there is more
+than one copy, a drainer edits beans with plain git commits on each, and never
+with <code class="language-plaintext highlighter-rouge">state:push</code>. When the copies become one, <code class="language-plaintext highlighter-rouge">beans:claim</code> is the claim again
+and this paragraph goes.</p><h2 id="3-work-it"><a href="#3-work-it" class="anchor-heading" aria-labelledby="3-work-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Work it
+  
+  
+</h2><ul><li>Open the PR <strong>at the first commit</strong>, with <code class="language-plaintext highlighter-rouge">Closes-bean: &lt;id&gt;</code> in the body
+(<a href="../../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a>, <a href="../../reference/skill-instructions/pr-description.html"><code class="language-plaintext highlighter-rouge">pr-description</code></a>).
+An open PR is the claim every other agent can see without the bean branch.</li><li>Add the PR’s link to the bean with a dated note, on every copy.</li><li>Work only the bean you claimed. A cause you find inside it that is a separate
+piece of work becomes a new bean, and is checked and claimed in its own right.</li></ul><h2 id="4-when-the-bean-waits-on-the-owner"><a href="#4-when-the-bean-waits-on-the-owner" class="anchor-heading" aria-labelledby="4-when-the-bean-waits-on-the-owner"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. When the bean waits on the owner
+  
+  
+</h2><p>Ask through <a href="../../reference/skill-instructions/ask-the-person.html"><code class="language-plaintext highlighter-rouge">ask-the-person</code></a>:
+the full question and every option in the chat first, then the card. Record the
+question’s link in the bean. Keep the claim while the question is open, and take
+the next bean meanwhile. A bean that will wait long goes back to <code class="language-plaintext highlighter-rouge">todo</code> with the
+question recorded, so that it does not hold the queue.</p><p>When the question is about changed pages, it carries the staging preview: one
+deep link per changed page, with the same page on main, in the output
+contract’s <code class="language-plaintext highlighter-rouge">stagingLinks</code> field
+(<a href="../../reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a> §”The deep-link rule”).</p><h2 id="5-close-it-and-refill"><a href="#5-close-it-and-refill" class="anchor-heading" aria-labelledby="5-close-it-and-refill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Close it, and refill
+  
+  
+</h2><p>Close on evidence (<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”Closing a bean
+whose work has already landed”), on every copy. Then tell the queue keeper, or
+take the next bean on your list. A drainer whose list is empty asks for a refill
+instead of picking from another owner’s list.</p><h2 id="the-measured-case-f1e1-2026-10-24"><a href="#the-measured-case-f1e1-2026-10-24" class="anchor-heading" aria-labelledby="the-measured-case-f1e1-2026-10-24"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The measured case: f1e1, 2026-10-24
+  
+  
+</h2><p>Two agents started the same bean minutes apart, and both opened PRs in two
+repositories. Times from <code class="language-plaintext highlighter-rouge">gh api</code> on the four PRs and <code class="language-plaintext highlighter-rouge">git log</code> on both bean
+copies:</p><div class="table-wrapper"><table><thead><tr><th>UTC</th><th>what</th></tr></thead><tbody><tr><td>07:46:28</td><td>agy’s first commit for f1e1</td></tr><tr><td>07:47:35</td><td>agy opens <a href="https://github.com/litlfred/cat-harness-tools/pull/686">cat-harness-tools#686</a></td></tr><tr><td>07:49:20</td><td>agy opens cat-harness#502</td></tr><tr><td>07:50:08</td><td>a cloud thread’s first commit for f1e1</td></tr><tr><td>07:50:22</td><td>the cloud thread opens <a href="https://github.com/litlfred/cat-harness-tools/pull/688">cat-harness-tools#688</a>, merged 08:04</td></tr><tr><td>07:50:29</td><td>the cloud thread opens cat-harness#503</td></tr><tr><td>07:52:57</td><td>agy’s first commit to f1e1 on a bean branch</td></tr></tbody></table></div><p>Neither agent claimed before working. And step 2 alone would not have helped:
+both copies said <code class="language-plaintext highlighter-rouge">in-progress</code> since 2026-10-16 and showed no new commit until
+07:52:57. The duplicate existed only on an open PR’s head, two and a half
+minutes before the second start. Step 3 would have caught it. Step 4, done by
+the first agent, would have made step 2 catch it too.</p><h2 id="tools"><a href="#tools" class="anchor-heading" aria-labelledby="tools"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tools
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>Tool</th><th>answers</th><th>contract</th></tr></thead><tbody><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/drain-queue/drain-queue.json"><code class="language-plaintext highlighter-rouge">drain-queue</code></a></td><td>which open beans, grouped by owner, with what was left out and why</td><td><code class="language-plaintext highlighter-rouge">definitions.queue</code> in the output schema</td></tr><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/bean-claim-check/bean-claim-check.json"><code class="language-plaintext highlighter-rouge">bean-claim-check</code></a></td><td>may I take this bean; if so, claim it on every copy</td><td><code class="language-plaintext highlighter-rouge">definitions.claimCheck</code></td></tr><tr><td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/open-work-lookup/open-work-lookup.json"><code class="language-plaintext highlighter-rouge">open-work-lookup</code></a></td><td>does a path, a path prefix or a bean id appear on <code class="language-plaintext highlighter-rouge">main</code> or any open PR head, and where (bean <code class="language-plaintext highlighter-rouge">pomp</code>)</td><td><code class="language-plaintext highlighter-rouge">definitions.lookup</code></td></tr></tbody></table></div><p>Run from an index checkout, with one <code class="language-plaintext highlighter-rouge">--copy</code> per bean copy checkout:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>beans:drain-queue <span class="nt">--copy</span> folio-assistant <span class="nt">--copy</span> cat-harness <span class="nt">--holdings</span> holdings.json
+bun run <span class="nb">cat </span>beans:claim-check &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--copy</span> folio-assistant <span class="nt">--copy</span> cat-harness <span class="se">\</span>
+  <span class="nt">--repo</span> litlfred/cat-harness <span class="nt">--repo</span> &lt;tools-layer-repo&gt; <span class="nt">--session</span> &lt;your session <span class="nb">link</span><span class="o">&gt;</span>
+bun run <span class="nb">cat </span>lookup:open-work <span class="nt">--bean</span> &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--repo</span> litlfred/cat-harness   <span class="c"># or --path / --prefix</span>
+</code></pre></div></div><p>Pass one <code class="language-plaintext highlighter-rouge">--repo</code> per repository the bean’s work can land in: for f1e1, the
+harness and its tools layer.</p><p><code class="language-plaintext highlighter-rouge">--dry-run</code> on the claim check says what it would do and writes nothing.
+<code class="language-plaintext highlighter-rouge">--json</code> on any of them emits the contract below. The claim check exits 0
+when claimed, 1 on a skip and 2 when it could not tell; 2 is never “free”.</p><p>The Tools satisfy <code class="language-plaintext highlighter-rouge">bean-coordination</code> rather than this skill: this skill’s
+contract is the whole drain, and each Tool takes one step of it.</p><h2 id="as-a-process"><a href="#as-a-process" class="anchor-heading" aria-labelledby="as-a-process"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> As a process
+  
+  
+</h2><p>The drain will be drawn as a BPMN process that calls the shared bean OPEN and
+CLOSE subprocesses (owner choice A on bean <code class="language-plaintext highlighter-rouge">m8gz</code>, 2026-10-24): OPEN’s check is
+step 2, CLOSE is step 5. Bean <code class="language-plaintext highlighter-rouge">bssi</code> builds it once m8gz lands.</p><h2 id="input-and-output"><a href="#input-and-output" class="anchor-heading" aria-labelledby="input-and-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input and output
+  
+  
+</h2><p>The contract is <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/bean-drain/input.schema.json"><code class="language-plaintext highlighter-rouge">input.schema.json</code></a>
+and <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skills/bean-drain/output.schema.json"><code class="language-plaintext highlighter-rouge">output.schema.json</code></a>.</p><ul><li><strong>In:</strong> the bean <code class="language-plaintext highlighter-rouge">copies</code> to read, the <code class="language-plaintext highlighter-rouge">agents</code> and how each is recognised,
+the owners’ current <code class="language-plaintext highlighter-rouge">holdings</code>, the <code class="language-plaintext highlighter-rouge">windowHours</code> (24) and the <code class="language-plaintext highlighter-rouge">queueFile</code>.</li><li><strong>Out:</strong> the <code class="language-plaintext highlighter-rouge">queue</code> (by owner, excluded with reasons, copies that disagree),
+one <code class="language-plaintext highlighter-rouge">claimCheck</code> per bean taken, and what each drainer closed or asked.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><p>This skill has its own process: <strong><a href="../../en/cat-harness/processes/bean-drain.html">Drain the beans</a></strong>.</p><p><img src="../../assets/img/workflows/bean-drain.svg" alt="BPMN diagram: Drain the beans" style="max-width:100%" /></p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

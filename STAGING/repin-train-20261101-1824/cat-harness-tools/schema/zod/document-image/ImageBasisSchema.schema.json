@@ -1,0 +1,194 @@
+{
+  "$ref": "#/definitions/ImageBasis",
+  "definitions": {
+    "ImageBasis": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "const": "geometry"
+            },
+            "coverage": {
+              "type": "number",
+              "minimum": 0
+            },
+            "imagesOnPage": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "method",
+            "coverage",
+            "imagesOnPage",
+            "page"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "const": "inspection"
+            },
+            "by": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "script",
+                    "agent",
+                    "human"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "version": {
+                  "type": "string"
+                },
+                "model": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/@-]*$"
+                },
+                "session": {
+                  "type": "string"
+                },
+                "date": {
+                  "type": "string"
+                },
+                "skill": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?:[a-z][a-z0-9-]*\\/)?[a-z][a-z0-9-]*$",
+                  "description": "A skill reference, e.g. todo-manager or sdlc-core/todo-manager"
+                }
+              },
+              "required": [
+                "kind",
+                "id"
+              ]
+            },
+            "at": {
+              "type": "string",
+              "minLength": 1
+            },
+            "saw": {
+              "type": "string",
+              "minLength": 1
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "method",
+            "by",
+            "at",
+            "saw",
+            "page"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "const": "capture"
+            },
+            "producer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "creator": {
+              "type": "string",
+              "minLength": 1
+            },
+            "coverage": {
+              "type": "number",
+              "minimum": 0
+            },
+            "imagesOnPage": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "method",
+            "producer",
+            "creator",
+            "coverage",
+            "imagesOnPage",
+            "page"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "const": "threshold"
+            },
+            "value": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "suppliedBy": {
+              "type": "string",
+              "const": "caller"
+            },
+            "coverage": {
+              "type": "number",
+              "minimum": 0
+            },
+            "imagesOnPage": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "method",
+            "value",
+            "suppliedBy",
+            "coverage",
+            "imagesOnPage",
+            "page"
+          ]
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/document-image/ImageBasisSchema.schema.json",
+  "title": "ImageBasisSchema",
+  "description": "Generated from `ImageBasisSchema` in schemas/content/document-image.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261101-1824",
+    "sha": "d5031fe978ab7d48c4cec85d4797b4d06363b835",
+    "pr": "2890/merge",
+    "run": "41339307864"
+  }
+}
