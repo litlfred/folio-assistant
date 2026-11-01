@@ -33,10 +33,10 @@
     "undetermined": []
   },
   "qa": {
-    "status": "known",
-    "beforeCommit": "e6e0ac1b4e2da69c7a541997f0ea2640af6fbff2",
+    "status": "not-base",
+    "beforeCommit": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
     "baseCommit": "e6e0ac1b4e2da69c7a541997f0ea2640af6fbff2",
-    "measured": 25717,
+    "measured": 24339,
     "notInCone": [
       {
         "path": "ar/folio-assistant-core/glossary/index.html",
@@ -57,18 +57,6 @@
         "via": []
       },
       {
-        "path": "assets/beans/count.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/beans/index.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
         "path": "assets/css/just-the-docs-dark.css.map",
         "change": "changed",
         "role": "index",
@@ -84,12 +72,6 @@
         "path": "assets/css/just-the-docs-light.css.map",
         "change": "changed",
         "role": "index",
-        "via": []
-      },
-      {
-        "path": "assets/harness/tiles.json",
-        "change": "changed",
-        "role": "data",
         "via": []
       },
       {
@@ -201,15 +183,15 @@
         "via": []
       },
       {
-        "path": "assets/js/harness-data.js",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
         "path": "assets/js/search-data.json",
         "change": "changed",
         "role": "index",
+        "via": []
+      },
+      {
+        "path": "assets/js/search/_platform.json",
+        "change": "changed",
+        "role": "data",
         "via": []
       },
       {
@@ -225,6 +207,12 @@
         "via": []
       },
       {
+        "path": "assets/js/search/fhir-harness.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/js/search/folio-assistant-core.idx.json",
         "change": "changed",
         "role": "data",
@@ -232,36 +220,6 @@
       },
       {
         "path": "assets/js/search/folio-assistant-core.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/locale-ar.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/locale-es.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/locale-fr.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/locale-ru.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/locale-zh.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -298,30 +256,6 @@
       },
       {
         "path": "assets/js/search/smart-base.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/smart-immunizations.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/smart-trust-phw.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/smart-trust.idx.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/js/search/smart-trust.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -592,18 +526,6 @@
       },
       {
         "path": "assets/qa/index.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/slices/beans.db1bad2a9b3102f2e12e8a19eaf12fcd51825cc797e7ee0c20312955dc0b0cae.sqlite3",
-        "change": "added",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/slices/beans.sqlite3.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -56271,6 +56193,30 @@
         "via": []
       },
       {
+        "path": "smart-trust/artifact/Binary-TrustDomain-DDCC.change.history.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/Binary-TrustDomain-DDCC.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/Binary-TrustDomain-IPS-PILGRIMAGE.change.history.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/Binary-TrustDomain-IPS-PILGRIMAGE.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "smart-trust/artifact/CodeSystem-Actors-testing.html",
         "change": "changed",
         "role": "content",
@@ -56302,6 +56248,42 @@
       },
       {
         "path": "smart-trust/artifact/CodeSystem-ConnectionTypes.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/CodeSystem-DAKComponents-testing.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/CodeSystem-DAKComponents.change.history.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/CodeSystem-DAKComponents.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/CodeSystem-DDCCTermsOfUse-testing.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/CodeSystem-DDCCTermsOfUse.change.history.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/CodeSystem-DDCCTermsOfUse.json.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -64605,6 +64587,78 @@
         "via": []
       },
       {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomain-examples.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomain-mappings.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomain-testing.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomain.profile.history.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomain.profile.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomain.schema.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomainPolicy-examples.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomainPolicy-mappings.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomainPolicy-testing.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomainPolicy.profile.history.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomainPolicy.profile.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/StructureDefinition-TrustDomainPolicy.schema.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "smart-trust/artifact/ValueSet-Actors-testing.html",
         "change": "changed",
         "role": "content",
@@ -64660,6 +64714,66 @@
       },
       {
         "path": "smart-trust/artifact/ValueSet-ConnectionTypes.schema.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/ValueSet-DAKComponents-testing.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/ValueSet-DAKComponents.change.history.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/ValueSet-DAKComponents.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/ValueSet-DAKComponents.jsonld.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/ValueSet-DAKComponents.schema.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/ValueSet-DDCCTermsOfUse-testing.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/ValueSet-DDCCTermsOfUse.change.history.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/ValueSet-DDCCTermsOfUse.json.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/ValueSet-DDCCTermsOfUse.jsonld.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "smart-trust/artifact/ValueSet-DDCCTermsOfUse.schema.json.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -67589,32 +67703,6 @@
         ]
       },
       {
-        "dir": "payload",
-        "count": 2550,
-        "sample": [
-          "payload/sha256/00127e5d56cc3dbd276c1f9a3b82f6158d4aed3d60957874a6ba1de8335894bf",
-          "payload/sha256/00127e5d56cc3dbd276c1f9a3b82f6158d4aed3d60957874a6ba1de8335894bf.json",
-          "payload/sha256/004bfead058c17bf82c780d8ef66c9295fc2c9701babd22823c83f7ebe0368a5",
-          "payload/sha256/004bfead058c17bf82c780d8ef66c9295fc2c9701babd22823c83f7ebe0368a5.json",
-          "payload/sha256/00c1a7e7eac06c27ff9e881bc127d72a66c9066994e6f1722d63e71b3f6794fa",
-          "payload/sha256/00c1a7e7eac06c27ff9e881bc127d72a66c9066994e6f1722d63e71b3f6794fa.json",
-          "payload/sha256/00d59bfe14053ef1a6fb63e29dbb50489efb23530a58741128ae8c178d932a96",
-          "payload/sha256/00d59bfe14053ef1a6fb63e29dbb50489efb23530a58741128ae8c178d932a96.json",
-          "payload/sha256/00e2f0ada38ad1f24db3cab94e543e12294cd1cd4079d733ed168d5ac28c5b15",
-          "payload/sha256/00e2f0ada38ad1f24db3cab94e543e12294cd1cd4079d733ed168d5ac28c5b15.json",
-          "payload/sha256/0179c7eaf99c857bb94914e8dc7c206b1d77e99ceeabb5153b0177ac7f23858b",
-          "payload/sha256/0179c7eaf99c857bb94914e8dc7c206b1d77e99ceeabb5153b0177ac7f23858b.json",
-          "payload/sha256/01dc1968032dc9b254268dc4dd6093a0a6b321b66cea806e2632686f69f98ab4",
-          "payload/sha256/01dc1968032dc9b254268dc4dd6093a0a6b321b66cea806e2632686f69f98ab4.json",
-          "payload/sha256/021c1b010ba881fb4308cb32a5b0a89c780c62cb4f93cc5359a6ed5efef82c9c",
-          "payload/sha256/021c1b010ba881fb4308cb32a5b0a89c780c62cb4f93cc5359a6ed5efef82c9c.json",
-          "payload/sha256/022e5272725a9a67ae99a1b517d55ebac74949f9159ab4849b42025a09480cd8",
-          "payload/sha256/022e5272725a9a67ae99a1b517d55ebac74949f9159ab4849b42025a09480cd8.json",
-          "payload/sha256/02455903d07aa174cc59e5bf1b555b3d2baae679900cedba5d62404a43562fca",
-          "payload/sha256/02455903d07aa174cc59e5bf1b555b3d2baae679900cedba5d62404a43562fca.json"
-        ]
-      },
-      {
         "dir": "folio-assistant-core",
         "count": 1361,
         "sample": [
@@ -67638,6 +67726,32 @@
           "folio-assistant-core/concepts/ru/document-content-type.html",
           "folio-assistant-core/concepts/zh/content-lifecycle.html",
           "folio-assistant-core/concepts/zh/document-content-type.html"
+        ]
+      },
+      {
+        "dir": "payload",
+        "count": 1154,
+        "sample": [
+          "payload/sha256/004bfead058c17bf82c780d8ef66c9295fc2c9701babd22823c83f7ebe0368a5",
+          "payload/sha256/004bfead058c17bf82c780d8ef66c9295fc2c9701babd22823c83f7ebe0368a5.json",
+          "payload/sha256/00c1a7e7eac06c27ff9e881bc127d72a66c9066994e6f1722d63e71b3f6794fa",
+          "payload/sha256/00c1a7e7eac06c27ff9e881bc127d72a66c9066994e6f1722d63e71b3f6794fa.json",
+          "payload/sha256/00e2f0ada38ad1f24db3cab94e543e12294cd1cd4079d733ed168d5ac28c5b15",
+          "payload/sha256/00e2f0ada38ad1f24db3cab94e543e12294cd1cd4079d733ed168d5ac28c5b15.json",
+          "payload/sha256/01dc1968032dc9b254268dc4dd6093a0a6b321b66cea806e2632686f69f98ab4",
+          "payload/sha256/01dc1968032dc9b254268dc4dd6093a0a6b321b66cea806e2632686f69f98ab4.json",
+          "payload/sha256/022e5272725a9a67ae99a1b517d55ebac74949f9159ab4849b42025a09480cd8",
+          "payload/sha256/022e5272725a9a67ae99a1b517d55ebac74949f9159ab4849b42025a09480cd8.json",
+          "payload/sha256/025389873268affbe309d248e21ba616a7b7bf8157bf425d96dfe6405a25d59b",
+          "payload/sha256/025389873268affbe309d248e21ba616a7b7bf8157bf425d96dfe6405a25d59b.json",
+          "payload/sha256/03486f160d9ef2b5d82c3501494fe0c36421889951dce66955fdc6e8f7d822d5",
+          "payload/sha256/03486f160d9ef2b5d82c3501494fe0c36421889951dce66955fdc6e8f7d822d5.json",
+          "payload/sha256/0461e4044e3d917944a15d9b3f1f565fb0c5ae8e6a41a2bd1f939435f8165609",
+          "payload/sha256/0461e4044e3d917944a15d9b3f1f565fb0c5ae8e6a41a2bd1f939435f8165609.json",
+          "payload/sha256/050722ea3a98610ecac98d3e2f5f5391c934d410672be184ded9d033d1d28c16",
+          "payload/sha256/050722ea3a98610ecac98d3e2f5f5391c934d410672be184ded9d033d1d28c16.json",
+          "payload/sha256/052ca21d6fd0af5811204ad46523a595e8cc091cbe65d99ae97fff2375603a2a",
+          "payload/sha256/052ca21d6fd0af5811204ad46523a595e8cc091cbe65d99ae97fff2375603a2a.json"
         ]
       },
       {
@@ -67798,7 +67912,7 @@
       },
       {
         "dir": "assets",
-        "count": 264,
+        "count": 263,
         "sample": [
           "assets/beans/burndown.json",
           "assets/harnesses/bootstrap-tools.json",
