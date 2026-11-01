@@ -5,9 +5,9 @@
     "position": "complete",
     "next": null,
     "counts": {
-      "done": 9,
+      "done": 13,
       "not-done": 0,
-      "could-not-determine": 9,
+      "could-not-determine": 5,
       "stated": 0
     },
     "steps": [
@@ -65,33 +65,29 @@
         "id": "directory:library",
         "namedBy": "smart-trust",
         "what": "declared directory library/ exists",
-        "state": "could-not-determine",
-        "detail": "not mounted in this index checkout (index.lock.json brings part of this instance only)",
-        "action": "check it in the instance's own repository"
+        "state": "done",
+        "detail": "holds library"
       },
       {
         "id": "directory:smart-trust-catalogue",
         "namedBy": "smart-trust",
         "what": "declared directory catalogue/ exists",
-        "state": "could-not-determine",
-        "detail": "not mounted in this index checkout (index.lock.json brings part of this instance only)",
-        "action": "check it in the instance's own repository"
+        "state": "done",
+        "detail": "holds catalogue"
       },
       {
         "id": "directory:glossary",
         "namedBy": "smart-trust",
         "what": "declared directory glossary/ exists",
-        "state": "could-not-determine",
-        "detail": "not mounted in this index checkout (index.lock.json brings part of this instance only)",
-        "action": "check it in the instance's own repository"
+        "state": "done",
+        "detail": "holds glossary"
       },
       {
         "id": "directory:smart-trust-translations",
         "namedBy": "smart-trust",
         "what": "declared directory translations/ exists",
-        "state": "could-not-determine",
-        "detail": "not mounted in this index checkout (index.lock.json brings part of this instance only)",
-        "action": "check it in the instance's own repository"
+        "state": "done",
+        "detail": "holds translation-sources"
       },
       {
         "id": "asset:agent-instructions",
@@ -153,7 +149,7 @@
       {
         "id": "initialization",
         "state": "unknown",
-        "label": "9 setup step(s) could not be checked from here"
+        "label": "5 setup step(s) could not be checked from here"
       },
       {
         "id": "repository",
