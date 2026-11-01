@@ -382,8 +382,22 @@ jobs:
         # Each writer's skip-or-run line goes to a file the preview publishes
         # (STAGING/<slug>/writer-skip.txt): job logs cannot be read from
         # where the cone is measured (bean fwtz).
+        #
+        # A preview has no stamped QA working copy, so `uml:overview` builds one
+        # here (511 s of this step's 817 s on job 124708101507). Its
+        # `skill:register` step re-ran nine checks, 233 s of the same build on
+        # main's deploy (job 124653530529). The
+        # PR's own `Repository gates` run `skill:register:check`, which asks
+        # every one of them over the same tree, so the preview leaves them to it
+        # (CAT_SKILL_REGISTER_VERIFIED_BY_GATES, as layer-pr-checks does since
+        # 2026-10-23). The preview's skill-register record lists them as not
+        # run here, never as passed. The names come from skill-register's own
+        # CHECKS; if they cannot be read, every check runs, as before.
         run: |
           set -o pipefail
+          CAT_SKILL_REGISTER_VERIFIED_BY_GATES="$(bun -e 'import { CHECKS } from "./cat-harness-tools/scripts/skill-register.ts"; console.log(CHECKS.join(","))' 2>/dev/null || true)"
+          export CAT_SKILL_REGISTER_VERIFIED_BY_GATES
+          echo "skill:register checks left to the PR's gates: ${CAT_SKILL_REGISTER_VERIFIED_BY_GATES:-none}"
           bun run cat derive:publish 2>&1 | tee "$RUNNER_TEMP/derive.log"
 
       - name: Determine staging slug
