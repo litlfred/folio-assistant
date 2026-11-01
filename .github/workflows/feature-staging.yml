@@ -1822,13 +1822,17 @@ jobs:
         id: record
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           if [ ! -f cat-harness-tools/scripts/preview-record.ts ]; then
             echo "preview-record.ts is not in this tools pin yet: no build record"; exit 0
           fi
+          # `CAT_PREVIEW_BUILDER` is set only by the agent's replay of this
+          # job (`stage-workflow-local.ts`); on a runner it is always `ci`.
           bun run cat-harness-tools/scripts/preview-record.ts write --site ./_site --repo . \
-            --slug "$STAGING_SLUG" --builder ci --run "$RUN_URL" --out "$RUNNER_TEMP/ci-record.json"
+            --slug "$STAGING_SLUG" --builder "${CAT_PREVIEW_BUILDER:-ci}" --run "$RUN_URL" \
+            ${HEAD_SHA:+--head "$HEAD_SHA"} --out "$RUNNER_TEMP/ci-record.json"
           cp "$RUNNER_TEMP/ci-record.json" ./_site/_build-record.json
           echo "tree=$(jq -r .tree "$RUNNER_TEMP/ci-record.json")" >> "$GITHUB_OUTPUT"
 
