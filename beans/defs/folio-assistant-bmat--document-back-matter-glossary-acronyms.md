@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-02T19:05:00Z
+updated_at: 2026-11-02T19:00:00Z
 tags:
     - document-structure
     - glossary
@@ -49,3 +49,5 @@ _2026-11-02T18:30Z_ — Bean created. smart-ra#230 pushed (dd967cd reorder, b118
 _2026-11-02T18:50Z_ — dth-sc#24 and dth-phc#33 opened (draft, local checks green; dth-phc l1-coverage red on main too, 19 sign-offs pending). dth-sc#24 also fixes check-dth-blocks matching chapterRef "glossary". Next: dth-hrh acronyms subsection.
 
 _2026-11-02T19:05Z_ — core#622 opened. All 4 docs report ✓. Remaining: merge smart-ra#230 on green (approved); dth-sc#24, dth-phc#33, core#622 are drafts awaiting owner OK to mark ready + merge (card Q-BM-3).
+
+_2026-11-02T19:00Z_ — BLOCKER: smart-ra#230 full checks red on one new failure, check:corpus-gate (tbl:acronyms-lead-bf4749 moved = treated as edit). Fix: cat-harness-tools#1416 (issue #1415), gate skips R100 pure moves; verified locally on smart-ra/dth-sc/dth-phc branches. Card Q-BM-4 (cmsg_017WNUkNK8kdDziPK58Pv6G9RBRTJeLUvFeVCX3yVwGHTk): A split #230 (reorder only now; nesting after re-pin) / B record editor sign-off instances / C wait. dth-sc#24 and dth-phc#33 will hit the same gate until the re-pin.
