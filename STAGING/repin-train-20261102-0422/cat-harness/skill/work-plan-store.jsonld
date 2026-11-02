@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/work-plan-store.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/work-plan-store",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "work-plan-store",
+      "title": "The work plan's contract",
+      "description": "The contract the work plan (beans) keeps as a data store: give back a bean exactly as written, keep ids unique, keep links between beans pointing at beans that exist, keep status and type to their closed lists, lose nothing when two writers push at once, and keep the history of who changed what. A mechanical Actor plays this Role; this is what it must do.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/work-plan-store.md",
+      "instructionLines": 64,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store"
+    }
+  ]
+}

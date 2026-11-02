@@ -1,0 +1,393 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>dak-preprocessing | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="dak-preprocessing" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="dak-preprocessing" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-dak-preprocessing",
+    "src": "../../assets/qa/reference-skill-instructions-dak-preprocessing/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-dak-preprocessing/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=89ad1e0dbbb7"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=456c57efeed4"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=361359f99bf7" defer></script><script src="../../assets/js/edit-links.js?v=4f82faf45c35" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><style id="fa-page-ground" data-instance="cat-harness">
+  /* Grumpy cyborg agents, the theme of cat-harness. */
+  :root { --fa-page-scrim: rgba(39, 38, 43, 0.85); --fa-text-scrim: rgba(39, 38, 43, 0.96); }
+  :root[data-fa-scheme="light"] { --fa-page-scrim: rgba(255, 255, 255, 0.85); --fa-text-scrim: rgba(255, 255, 255, 0.96); }
+  /* The root carries the art, so it covers the whole viewport however short
+     the page; the body is made see-through so the art is not painted over. */
+  html:root body { background-color: transparent; }
+  html body .main-content { background-color: var(--fa-text-scrim); border-radius: 6px; }
+  html:root {
+    background-image:
+      linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+      url("../../assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  @media (max-width: 48rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-card.webp");
+    }
+  }
+  @media (max-width: 30rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-mobile.webp");
+    }
+  }
+  /* Print and forced colours get the plain page: art is decoration. */
+  @media print, (forced-colors: active) {
+    html:root { background-image: none; }
+  }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/dak-preprocessing.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-steps-and-what-each-one-accomplishes","label":"The steps, and what each one accomplishes"},{"href":"#what-get-it-into-the-ig-index-meant--step-2-precisely","label":"What “get it into the IG index” meant — step 2, precisely"},{"href":"#two-of-these-are-authoring-not-pre-processing","label":"Two of these are authoring, not pre-processing"},{"href":"#step-6-is-conditional-on-who-renders","label":"Step 6 is conditional on who renders"},{"href":"#steps-1-and-3--one-fact-computed-twice","label":"Steps 1 and 3 — one fact, computed twice"},{"href":"#what-a-qa-report-already-exists-for","label":"What a QA report already exists for"},{"href":"#in-the-ast-lifecycle-the-overlay-on-fhir-harnesss-refresh","label":"In the AST lifecycle: the overlay on fhir-harness’s refresh"},{"href":"#source-of-truth-versus-generated-artefacts-in-a-dak-repository","label":"Source of truth versus generated artefacts in a DAK repository"},{"href":"#version-numbering-dak-semver-and-how-an-igs-version-relates-to-its-daks","label":"Version numbering: DAK SEMVER and how an IG’s version relates to its DAK’s"},{"href":"#where-the-counterpart-is","label":"Where the counterpart is"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  var rv=el('span',{'data-fa-staging-review':''});d.appendChild(rv);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+  review(rv,r,rel);
+}
+// The preview's review page (owner, 2026-11-01, Q-REV-1): reviewers could not
+// find it from a staging page. A folio writes it at <root>/<locale>/review/,
+// an IG at <root>/review/. Asked with HEAD, which the staging worker passes
+// through, so a 404 here is not answered with the live site's page. No review
+// page, no link.
+function review(s,r,rel){
+  if(typeof fetch!=='function')return;
+  var c=[],m=rel.match(/^([a-z]{2,3}(?:-[A-Za-z0-9]+)?)\//);
+  if(m)c.push(r+m[1]+'/review/');
+  c.push(r+'review/');
+  (function next(i){
+    if(i>=c.length)return;
+    fetch(c[i]+'index.html',{method:'HEAD',cache:'no-store'}).then(function(x){
+      if(!x.ok)return next(i+1);
+      s.appendChild(sep());
+      s.appendChild(link(c[i],'\ud83d\udd0d Review changes','font-weight:bold'));
+      measure();
+    }).catch(function(){next(i+1);});
+  })(0);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>dak-preprocessing</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md"><code class="language-plaintext highlighter-rouge">smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md" class="fa-edit-source" data-fa-link="edit" data-src="smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><h1 id="dak-preprocessing"><a href="#dak-preprocessing" class="anchor-heading" aria-labelledby="dak-preprocessing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> dak-preprocessing
+  
+  
+</h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">dak-preprocessing</code> · Package: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> ·
+Layer: <strong><code class="language-plaintext highlighter-rouge">smart-base</code>, DAK kind</strong> (<a href="../../reference/skill-instructions/smart-stack-layering.html"><code class="language-plaintext highlighter-rouge">smart-stack-layering</code></a>; <code class="language-plaintext highlighter-rouge">smart-dak</code> until stage D, #1767),
+with two steps that are not pre-processing at all — see §”Two of these are
+authoring, not pre-processing”.</p></blockquote><p>The phase the WHO build calls <em>DAK Preprocessing</em>: everything that runs between
+checkout and <code class="language-plaintext highlighter-rouge">publisher.jar</code>, gated by the <code class="language-plaintext highlighter-rouge">do_dak</code> input and by a <code class="language-plaintext highlighter-rouge">dak</code>
+section under <code class="language-plaintext highlighter-rouge">contentTypes</code> in the root <code class="language-plaintext highlighter-rouge">index.config.json</code> (owner,
+2026-10-24, bean <code class="language-plaintext highlighter-rouge">cz17</code>: “WHO will adopt harness file”). Every script reads
+and writes it through <code class="language-plaintext highlighter-rouge">input/scripts/dak_index.py</code>. An IG that still carries
+the old <code class="language-plaintext highlighter-rouge">dak.json</code> keeps building: the workflow reads that file into the index
+for that build only, with a warning (<code class="language-plaintext highlighter-rouge">dak_index.py --adopt-legacy</code>), until the
+IG moves it. Nothing is committed back.</p><blockquote><p><strong>Sourcing.</strong> Read from <code class="language-plaintext highlighter-rouge">WorldHealthOrganization/smart-base</code> —
+<code class="language-plaintext highlighter-rouge">.github/workflows/ghbuild.yml</code> and the scripts under <code class="language-plaintext highlighter-rouge">input/scripts/</code> — on
+2026-09-22, at that repository’s <code class="language-plaintext highlighter-rouge">main</code>. Line numbers move; step names and
+script names are the stable handles. <strong>Re-read before relying on a detail</strong>:
+the scripts are fetched at build time from <code class="language-plaintext highlighter-rouge">SCRIPTS_BASE_URL</code> pinned to
+smart-base <code class="language-plaintext highlighter-rouge">main</code>, so a downstream IG’s build runs whatever smart-base’s main
+holds that day, not whatever its own checkout holds.</p></blockquote><h2 id="the-steps-and-what-each-one-accomplishes"><a href="#the-steps-and-what-each-one-accomplishes" class="anchor-heading" aria-labelledby="the-steps-and-what-each-one-accomplishes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The steps, and what each one accomplishes
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>#</th><th>script</th><th>what it actually does</th></tr></thead><tbody><tr><td>1</td><td><code class="language-plaintext highlighter-rouge">generate_dak_from_sushi.py</code></td><td>writes <code class="language-plaintext highlighter-rouge">contentTypes.dak</code> into <code class="language-plaintext highlighter-rouge">index.config.json</code> from <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> plus branch/repo context — only when <code class="language-plaintext highlighter-rouge">smart.who.int.base</code> is a dependency and the section is absent</td></tr><tr><td>2</td><td><code class="language-plaintext highlighter-rouge">update_sushi_config.py</code></td><td><strong>registers pages and menu entries in <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>, and writes placeholder markdown</strong> — see below, this is the one that matters</td></tr><tr><td>3</td><td><code class="language-plaintext highlighter-rouge">generate_dak_from_sushi.py</code>, again</td><td>re-runs step 1 with the resolved branch context, after the branch name has been sanitised</td></tr><tr><td>4</td><td><code class="language-plaintext highlighter-rouge">dmn_questionnaire_generator.py</code></td><td>emits FHIR <code class="language-plaintext highlighter-rouge">Questionnaire</code> resources from the DMN decision tables</td></tr><tr><td>5</td><td><code class="language-plaintext highlighter-rouge">transform_dmn.py</code> + <code class="language-plaintext highlighter-rouge">dmn2html.xslt</code> + <code class="language-plaintext highlighter-rouge">dmn.css</code></td><td>renders each DMN file to HTML for inclusion in a page</td></tr><tr><td>6</td><td><code class="language-plaintext highlighter-rouge">inject_translations.py</code></td><td>substitutes translated strings into the diagram sources before they are rendered</td></tr></tbody></table></div><p>Six script invocations across four named workflow steps: the first two share the
+step <em>“Prepare DAK environment”</em>, and step 3 is a deliberate second run.</p><h2 id="what-get-it-into-the-ig-index-meant--step-2-precisely"><a href="#what-get-it-into-the-ig-index-meant--step-2-precisely" class="anchor-heading" aria-labelledby="what-get-it-into-the-ig-index-meant--step-2-precisely"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What “get it into the IG index” meant — step 2, precisely
+  
+  
+</h2><p>This is the step the phase mostly exists for, and it is worth stating exactly,
+because the vague version (<em>“pre-processing gets things into the index so the
+pages render”</em>) is what keeps the phase alive after its reason has gone.</p><p><code class="language-plaintext highlighter-rouge">update_sushi_config.py</code> does four things:</p><ol><li><strong>Scans for resources</strong> — <code class="language-plaintext highlighter-rouge">fsh-generated/resources/</code> (SUSHI’s output) and
+<code class="language-plaintext highlighter-rouge">input/resources/</code> (static JSON), collecting every <code class="language-plaintext highlighter-rouge">ValueSet</code> and every
+logical-model <code class="language-plaintext highlighter-rouge">StructureDefinition</code>.</li><li><strong>Writes a placeholder markdown page per resource</strong> into
+<code class="language-plaintext highlighter-rouge">input/pagecontent/</code>, as <code class="language-plaintext highlighter-rouge">ValueSet-&lt;id&gt;.md</code> and the logical-model equivalent,
+each carrying a <code class="language-plaintext highlighter-rouge">&lt;!-- DAK_API_PLACEHOLDER: … --&gt;</code> marker. A file that already
+exists <strong>with real content</strong> is left alone; the marker is how the script
+tells its own placeholder from an author’s page.</li><li><strong>Registers <code class="language-plaintext highlighter-rouge">dak-api.md</code> in <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>’s <code class="language-plaintext highlighter-rouge">pages:</code> map</strong>, creating
+the <code class="language-plaintext highlighter-rouge">pages:</code> key if the IG has none.</li><li><strong>Registers <code class="language-plaintext highlighter-rouge">Indices → DAK API → dak-api.html</code> in the <code class="language-plaintext highlighter-rouge">menu:</code> map</strong>, creating
+<code class="language-plaintext highlighter-rouge">menu:</code> and the <code class="language-plaintext highlighter-rouge">Indices</code> subsection if absent.</li></ol><p>So the “index” is <strong><code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>’s <code class="language-plaintext highlighter-rouge">pages:</code> and <code class="language-plaintext highlighter-rouge">menu:</code> maps</strong>, and the
+“pages would not render” is literal: the IG Publisher’s Jekyll renders a page
+only if the file exists in <code class="language-plaintext highlighter-rouge">input/pagecontent/</code> <strong>and</strong> the config’s <code class="language-plaintext highlighter-rouge">pages:</code>
+names it. Both halves are what step 2 supplies.</p><p><strong>Which is why this step does not survive the transition.</strong> Under the
+just-the-docs pipeline the navigation is derived from <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>
+directly and the pages are folio pages — we own both maps, so writing them back
+into somebody else’s config to get them read again is a round trip through a
+tool we are removing. See <a href="../../reference/skill-instructions/ig-render-jekyll.html"><code class="language-plaintext highlighter-rouge">ig-render-jekyll</code></a>
+for what replaces it, and <code class="language-plaintext highlighter-rouge">kn0t</code> for the phasing.</p><h2 id="two-of-these-are-authoring-not-pre-processing"><a href="#two-of-these-are-authoring-not-pre-processing" class="anchor-heading" aria-labelledby="two-of-these-are-authoring-not-pre-processing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two of these are authoring, not pre-processing
+  
+  
+</h2><p>Steps 4 and 5 — <code class="language-plaintext highlighter-rouge">dmn_questionnaire_generator.py</code> and <code class="language-plaintext highlighter-rouge">transform_dmn.py</code> — are
+<strong>not</strong> hooks around a renderer. They mint artefacts:</p><ul><li>the questionnaire generator emits <strong>FHIR resources</strong>, which the Publisher then
+validates, indexes and publishes like any other resource. Delete the step and
+the IG is missing <code class="language-plaintext highlighter-rouge">Questionnaire</code>s, not missing a page.</li><li>the DMN transform produces the <strong>only</strong> human-readable rendering of a decision
+table the IG has.</li></ul><p>They run late because the pipeline had nowhere earlier to put them, not because
+they depend on anything the Publisher does. <strong>They are content generation and
+belong upstream of the Publisher, in the DAK document kind as authoring steps</strong> — which is
+how they survive the transition while step 2 does not.</p><p><code class="language-plaintext highlighter-rouge">transform_dmn.py</code> has a second property worth recording: its output is
+<strong>HTML</strong>, which the JSON-only render contract does not take. Either it gains a
+structured output, or its HTML is treated as an embedded asset rather than as a
+representation. That is an open question, not a settled one — bean <code class="language-plaintext highlighter-rouge">kn0t</code>.</p><h2 id="step-6-is-conditional-on-who-renders"><a href="#step-6-is-conditional-on-who-renders" class="anchor-heading" aria-labelledby="step-6-is-conditional-on-who-renders"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 6 is conditional on who renders
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">inject_translations.py</code> rewrites diagram sources <strong>before</strong> rendering because
+the Publisher offers no later hook. Once pages render through just-the-docs, the
+locale layer already in this platform does this, and the step is redundant <strong>for
+pages</strong>. It is not redundant for the diagram sources themselves, which are still
+rasterised outside Jekyll.</p><p>Do not remove it on the strength of the page argument alone.</p><h2 id="steps-1-and-3--one-fact-computed-twice"><a href="#steps-1-and-3--one-fact-computed-twice" class="anchor-heading" aria-labelledby="steps-1-and-3--one-fact-computed-twice"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps 1 and 3 — one fact, computed twice
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">generate_dak_from_sushi.py</code> runs twice, the second time <em>“with current branch
+context”</em>. That is a workaround for ordering: the branch name is sanitised by a
+later step than the one that first needs it.</p><p>The DAK section is <strong>ours</strong> (bean <code class="language-plaintext highlighter-rouge">cz17</code>), not a file we merely read, so this is a
+derivation we own and can compute once, in the right order. Do not reproduce the
+double run when lifting this step.</p><h2 id="what-a-qa-report-already-exists-for"><a href="#what-a-qa-report-already-exists-for" class="anchor-heading" aria-labelledby="what-a-qa-report-already-exists-for"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a QA report already exists for
+  
+  
+</h2><p>Every one of these scripts instantiates a <code class="language-plaintext highlighter-rouge">QAReporter</code> and writes a phase report
+— <code class="language-plaintext highlighter-rouge">successes</code>, <code class="language-plaintext highlighter-rouge">warnings</code>, <code class="language-plaintext highlighter-rouge">errors</code>, <code class="language-plaintext highlighter-rouge">files_processed</code>, <code class="language-plaintext highlighter-rouge">files_expected</code>,
+<code class="language-plaintext highlighter-rouge">files_missing</code>, plus a summary with counts and a completion timestamp. <strong>The
+data for the QA-report graph typology already exists and is thrown away</strong>, because
+nothing downstream read it.</p><p><strong>It has somewhere to go now.</strong> The owner ruled for the evidence-led option on
+2026-09-22 and <code class="language-plaintext highlighter-rouge">qa-report/v1</code> is registered — <code class="language-plaintext highlighter-rouge">schemas/qa-report.ts</code>, graph typology
+<code class="language-plaintext highlighter-rouge">qa-report</code>, <code class="language-plaintext highlighter-rouge">holds: "state"</code>. The shape is whatever these scripts already emit,
+down to upstream’s snake_case field names, because renaming them would insert a
+translation step between a producer we do not control and a consumer we do.</p><h2 id="in-the-ast-lifecycle-the-overlay-on-fhir-harnesss-refresh"><a href="#in-the-ast-lifecycle-the-overlay-on-fhir-harnesss-refresh" class="anchor-heading" aria-labelledby="in-the-ast-lifecycle-the-overlay-on-fhir-harnesss-refresh"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> In the AST lifecycle: the overlay on fhir-harness’s refresh
+  
+  
+</h2><p>Owner, 2026-10-14: <em>“that should be in fhir-harness then smart-</em> all use
+that”<em>, and *“i want AST to be used. it should be in cache branch”</em>. smart-base’s
+IG is published from the AST on its cache branch
+(<code class="language-plaintext highlighter-rouge">cat/fhir-harness/fhir-ast/&lt;package id&gt;</code>), like every smart-* IG. The one
+writer of that branch is fhir-harness’s reusable <code class="language-plaintext highlighter-rouge">ig-ast-refresh.yml</code>
+(skill <code class="language-plaintext highlighter-rouge">ig-build-pipeline</code>, §”The AST cache lifecycle”). The plain AST
+exporter does not run this phase, so smart-base supplies it as an
+<strong>overlay</strong>. fhir-harness never names it.</p><ul><li><strong>The command</strong> is <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/scripts/dak-pre-export.sh"><code class="language-plaintext highlighter-rouge">smart-base/scripts/dak-pre-export.sh</code></a>
+(<code class="language-plaintext highlighter-rouge">bun run cat smart-base:dak-pre-export</code>). It runs steps 1, 2, 4, 5 and 6
+of the table above, in that order. It uses this checkout’s own
+<code class="language-plaintext highlighter-rouge">input/scripts/</code>, never a download from another repository’s <code class="language-plaintext highlighter-rouge">main</code>. It
+does not repeat step 3, as §”Steps 1 and 3” says. Steps 4–6 run only when
+the IG declares <code class="language-plaintext highlighter-rouge">contentTypes.dak</code>, as in <code class="language-plaintext highlighter-rouge">ghbuild.yml</code>. Any failure fails the run.</li><li><strong>The caller</strong> is smart-base’s <code class="language-plaintext highlighter-rouge">.github/workflows/ig-ast-refresh.yml</code>:
+fhir-harness’s template plus <code class="language-plaintext highlighter-rouge">pre-export: bash smart-base/scripts/dak-pre-export.sh</code>.
+It runs by hand, and on every push to <code class="language-plaintext highlighter-rouge">main</code> that changes <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>,
+<code class="language-plaintext highlighter-rouge">ig.ini</code> or <code class="language-plaintext highlighter-rouge">input/**</code> (owner, 2026-10-14: refresh automatically when the IG
+source changes).</li><li><strong>What the cache records.</strong> This phase rewrites the IG’s inputs:
+<code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>’s <code class="language-plaintext highlighter-rouge">pages:</code>/<code class="language-plaintext highlighter-rouge">menu:</code> and placeholder pages under
+<code class="language-plaintext highlighter-rouge">input/pagecontent/</code>. fhir-harness takes the clean commit’s input digest
+before the command runs, puts the inputs back after the export, and records
+the AST against the clean commit. The prepared tree’s digest is kept under
+the manifest’s <code class="language-plaintext highlighter-rouge">preExport</code>. So the cache verifies on any clean checkout, and
+a merge that changes no input does not make it stale.</li><li><strong>The counterpart</strong> after the export is not the Publisher’s <code class="language-plaintext highlighter-rouge">output/</code> any
+more. It is fhir-harness’s <code class="language-plaintext highlighter-rouge">ig-api-gen.ts</code>, the generic port of the
+post-processing schema and vocabulary generators, run over the AST by
+<code class="language-plaintext highlighter-rouge">ig-site:sidecars</code> (<a href="../../reference/skill-instructions/dak-postprocessing.html"><code class="language-plaintext highlighter-rouge">dak-postprocessing</code></a>).</li></ul><p><code class="language-plaintext highlighter-rouge">ghbuild.yml</code> is WHO’s inherited build and keeps its own copy of these steps
+for downstream repositories. It is not how smart-base’s cache is written.</p><h2 id="source-of-truth-versus-generated-artefacts-in-a-dak-repository"><a href="#source-of-truth-versus-generated-artefacts-in-a-dak-repository" class="anchor-heading" aria-labelledby="source-of-truth-versus-generated-artefacts-in-a-dak-repository"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Source of truth versus generated artefacts in a DAK repository
+  
+  
+</h2><p>Owner, 2026-10-30 (<code class="language-plaintext highlighter-rouge">litlfred/folio-assistant#222</code>, bean <code class="language-plaintext highlighter-rouge">l1nl</code>): state which
+artefact is authoritative and which is compiled, cached or rendered output in a
+DAK repository, extending the base IG rule in
+<a href="../../reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a>
+§”Source of truth versus compiled, cached and rendered output”.</p><p>Two authority rules govern a DAK repository:</p><ol><li><strong>Across knowledge layers, authority flows <code class="language-plaintext highlighter-rouge">L1 → L2 → L3 → compiled AST /
+rendered site</code></strong> (<a href="../../reference/skill-instructions/smart-guideline-end-to-end.html"><code class="language-plaintext highlighter-rouge">smart-guideline-end-to-end</code></a>
+§”The order is a rule: L1, then L2, then L3”). L1 narrative guidelines and
+referenced tables (<code class="language-plaintext highlighter-rouge">library/&lt;bib&gt;/l1-extraction/</code>) ground L2 DAK components
+(business processes, decision-support logic, core data dictionary, L2 form
+wireframes, personas, scenarios, indicators, functional/non-functional
+requirements); L2 DAK components ground L3 FHIR artefacts (<code class="language-plaintext highlighter-rouge">input/fsh/</code>,
+<code class="language-plaintext highlighter-rouge">input/cql/</code>). Never patch an L3 artefact or a rendered page to contradict
+its L2 source, or an L2 table to contradict L1 without an L1 citation.</li><li><strong>Within the repository tree, hand-edit only the authored inputs — never the
+files written by DAK pre-processing, row generators, SUSHI, the AST refresh
+or DAK post-processing.</strong> Both the pre-export hook (<code class="language-plaintext highlighter-rouge">dak-pre-export.sh</code>) and
+the QA suite (<a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/pipeline/qa-checkers-dak.ts"><code class="language-plaintext highlighter-rouge">qa-checkers-dak.ts</code></a> <code class="language-plaintext highlighter-rouge">isGeneratedArtefact</code>) distinguish authored inputs from generated artefacts:</li></ol><div class="table-wrapper"><table><thead><tr><th>Authoritative source (edit here)</th><th>Generated, cached or rendered output (never hand-edit; overwritten on build)</th><th>Producer / basis</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> (<code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">canonical</code>, <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">title</code>, <code class="language-plaintext highlighter-rouge">description</code>, <code class="language-plaintext highlighter-rouge">version</code>, <code class="language-plaintext highlighter-rouge">status</code>, <code class="language-plaintext highlighter-rouge">license</code>, <code class="language-plaintext highlighter-rouge">effectivePeriod</code>, <code class="language-plaintext highlighter-rouge">publisher</code>, <code class="language-plaintext highlighter-rouge">contact</code>) and <code class="language-plaintext highlighter-rouge">index.config.json</code> <code class="language-plaintext highlighter-rouge">contentTypes.dak</code></td><td>Legacy <code class="language-plaintext highlighter-rouge">dak.json</code> (read-only fallback via <code class="language-plaintext highlighter-rouge">dak_index.py --adopt-legacy</code>; never committed back) and <code class="language-plaintext highlighter-rouge">fsh-generated/resources/ImplementationGuide-*.json</code></td><td><code class="language-plaintext highlighter-rouge">dak_index.py</code>, <code class="language-plaintext highlighter-rouge">generate_dak_from_sushi.py</code>, bean <code class="language-plaintext highlighter-rouge">cz17</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">input/fsh/**/*.fsh</code> (<code class="language-plaintext highlighter-rouge">ValueSet</code>, logical-model <code class="language-plaintext highlighter-rouge">StructureDefinition</code>, profiles, extensions, hand-authored instances) and authored <code class="language-plaintext highlighter-rouge">input/pagecontent/*.md</code></td><td>Placeholder pages <code class="language-plaintext highlighter-rouge">input/pagecontent/ValueSet-&lt;id&gt;.md</code> and <code class="language-plaintext highlighter-rouge">input/pagecontent/&lt;Model&gt;.md</code> carrying <code class="language-plaintext highlighter-rouge">&lt;!-- DAK_API_PLACEHOLDER: … --&gt;</code>, plus <code class="language-plaintext highlighter-rouge">dak-api.md</code> in <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> <code class="language-plaintext highlighter-rouge">pages:</code> and <code class="language-plaintext highlighter-rouge">Indices → DAK API</code> in <code class="language-plaintext highlighter-rouge">menu:</code> (reverted after <code class="language-plaintext highlighter-rouge">AstExportCli</code> in <code class="language-plaintext highlighter-rouge">ig-ast-refresh.yml</code>)</td><td><code class="language-plaintext highlighter-rouge">update_sushi_config.py</code>, <code class="language-plaintext highlighter-rouge">dak-pre-export.sh</code></td></tr><tr><td>Authored L2 decision-support tables (<code class="language-plaintext highlighter-rouge">input/decision-support/**</code>), data dictionary / requirements workbooks and L2 form wireframes</td><td>Generated <code class="language-plaintext highlighter-rouge">Questionnaire</code> JSON/FSH resources, rendered DMN HTML tables, and row-generated <code class="language-plaintext highlighter-rouge">.fsh</code> instances carrying <code class="language-plaintext highlighter-rouge">generated from row N</code>, <code class="language-plaintext highlighter-rouge">Automatically generated from DAK artifacts</code> or <code class="language-plaintext highlighter-rouge">Autogenerated from DAK artifacts</code></td><td><code class="language-plaintext highlighter-rouge">dmn_questionnaire_generator.py</code>, <code class="language-plaintext highlighter-rouge">transform_dmn.py</code>, <code class="language-plaintext highlighter-rouge">qa-checkers-dak.ts</code> (<code class="language-plaintext highlighter-rouge">isGeneratedArtefact</code>)</td></tr><tr><td>Authored BPMN / diagram sources (<code class="language-plaintext highlighter-rouge">input/business-processes/**</code>, <code class="language-plaintext highlighter-rouge">input/images-source/**</code>) and gettext <code class="language-plaintext highlighter-rouge">.po</code> catalogues (<code class="language-plaintext highlighter-rouge">input/translations/**</code>)</td><td>Translated diagram copies and rewritten <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code> references in <code class="language-plaintext highlighter-rouge">output/</code></td><td><code class="language-plaintext highlighter-rouge">inject_translations.py</code>, <code class="language-plaintext highlighter-rouge">update_translated_image_refs.py</code></td></tr><tr><td>Cached AST (<code class="language-plaintext highlighter-rouge">cat/fhir-harness/fhir-ast/&lt;package id&gt;</code>) and <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code></td><td>DAK API sidecars (<code class="language-plaintext highlighter-rouge">$SITE_WORK/ig-api/sidecars/*.schema.json</code>, <code class="language-plaintext highlighter-rouge">*.displays.json</code>, <code class="language-plaintext highlighter-rouge">*.openapi.json</code>, <code class="language-plaintext highlighter-rouge">.jsonld</code> vocabularies), <code class="language-plaintext highlighter-rouge">dak-api.html</code>, <code class="language-plaintext highlighter-rouge">openapi/index.html</code>, stripped <code class="language-plaintext highlighter-rouge">Library</code> JSON (<code class="language-plaintext highlighter-rouge">strip_library_binaries.py</code>, <code class="language-plaintext highlighter-rouge">strip_library_content.py</code>), and <code class="language-plaintext highlighter-rouge">input/pagecontent/smart.liquid.md</code> / <code class="language-plaintext highlighter-rouge">output/smart.liquid.html</code> (<code class="language-plaintext highlighter-rouge">generate_smart_liquid.py</code>)</td><td><a href="../../reference/skill-instructions/dak-postprocessing.html"><code class="language-plaintext highlighter-rouge">dak-postprocessing</code></a>, <code class="language-plaintext highlighter-rouge">ig-site-sidecars.ts</code></td></tr></tbody></table></div><h2 id="version-numbering-dak-semver-and-how-an-igs-version-relates-to-its-daks"><a href="#version-numbering-dak-semver-and-how-an-igs-version-relates-to-its-daks" class="anchor-heading" aria-labelledby="version-numbering-dak-semver-and-how-an-igs-version-relates-to-its-daks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Version numbering: DAK SEMVER and how an IG’s version relates to its DAK’s
+  
+  
+</h2><p>Owner, 2026-10-30 (<code class="language-plaintext highlighter-rouge">litlfred/folio-assistant#222</code>, bean <code class="language-plaintext highlighter-rouge">l1nl</code>): define the
+SEMVER rule for DAK and IG versions — what bumps <code class="language-plaintext highlighter-rouge">major</code>, <code class="language-plaintext highlighter-rouge">minor</code> and <code class="language-plaintext highlighter-rouge">patch</code>,
+and how an IG’s version relates to its DAK’s.</p><p>Both <code class="language-plaintext highlighter-rouge">index.config.json</code> <code class="language-plaintext highlighter-rouge">contentTypes.dak.version</code> (<a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/dak.ts"><code class="language-plaintext highlighter-rouge">schemas/dak.ts</code></a> <code class="language-plaintext highlighter-rouge">DakDeclarationSchema</code>, mirroring <code class="language-plaintext highlighter-rouge">input/fsh/models/DAK.fsh</code>)
+and <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> <code class="language-plaintext highlighter-rouge">version</code> use exact <code class="language-plaintext highlighter-rouge">MAJOR.MINOR.PATCH</code> semantic
+versioning:</p><div class="table-wrapper"><table><thead><tr><th>Increment</th><th>What triggers the bump on a DAK (<code class="language-plaintext highlighter-rouge">contentTypes.dak.version</code>)</th><th>What triggers the bump on the L3 IG (<code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> <code class="language-plaintext highlighter-rouge">version</code>)</th></tr></thead><tbody><tr><td><strong><code class="language-plaintext highlighter-rouge">major</code></strong> (<code class="language-plaintext highlighter-rouge">X+1.0.0</code>)</td><td>Breaking L2 change across the nine DAK component types (<code class="language-plaintext highlighter-rouge">DAK.fsh</code>): removing or incompatibly redefining a core data element (<code class="language-plaintext highlighter-rouge">dataElement</code>), business process (<code class="language-plaintext highlighter-rouge">businessProcess</code>), decision-support table (<code class="language-plaintext highlighter-rouge">decisionSupportLogic</code>) or clinical rule, indicator (<code class="language-plaintext highlighter-rouge">indicator</code>) numerator/denominator definition, persona (<code class="language-plaintext highlighter-rouge">healthInterventions</code>), scenario (<code class="language-plaintext highlighter-rouge">userScenario</code>), L2 form wireframe (<code class="language-plaintext highlighter-rouge">form</code>), or functional/non-functional requirement (<code class="language-plaintext highlighter-rouge">requirement</code>); or rebasing onto a new L1 WHO guideline edition that invalidates prior L2 logic or data elements</td><td>Breaking L3 conformance change per <a href="../../reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a> §”Version numbering: SEMVER for a FHIR IG” (removing/renaming a canonical resource, tightening cardinality or bindings, incompatible CQL/operation signature change, <code class="language-plaintext highlighter-rouge">fhirVersion</code> change, or breaking dependency major bump), <strong>or</strong> any <code class="language-plaintext highlighter-rouge">major</code> bump in the DAK it encodes</td></tr><tr><td><strong><code class="language-plaintext highlighter-rouge">minor</code></strong> (<code class="language-plaintext highlighter-rouge">X.Y+1.0</code>)</td><td>Backward-compatible L2 addition: adding a new persona, scenario, BPMN workflow, DMN decision table or rule row, optional data dictionary element, L2 form wireframe, indicator or requirement; or extending an L2 value set without invalidating existing rows</td><td>Backward-compatible L3 addition (new profile, logical model, extension, <code class="language-plaintext highlighter-rouge">ValueSet</code>, <code class="language-plaintext highlighter-rouge">CodeSystem</code>, <code class="language-plaintext highlighter-rouge">Library</code>, <code class="language-plaintext highlighter-rouge">PlanDefinition</code>, <code class="language-plaintext highlighter-rouge">Measure</code>, <code class="language-plaintext highlighter-rouge">Questionnaire</code>, optional element/slice, or new narrative page), <strong>or</strong> any <code class="language-plaintext highlighter-rouge">minor</code> bump in the DAK it encodes</td></tr><tr><td><strong><code class="language-plaintext highlighter-rouge">patch</code></strong> (<code class="language-plaintext highlighter-rouge">X.Y.Z+1</code>)</td><td>Backward-compatible L2 editorial or bug fix: fixing typos, descriptions, labels, translations or diagram layout; correcting a DMN cell or data dictionary description to match the existing L1 source without changing data-element semantics or workflow structure</td><td>Backward-compatible L3 fix (narrative prose in <code class="language-plaintext highlighter-rouge">input/pagecontent/**</code>, translations, example fixes, CQL/FML bug fixes preserving declared inputs/outputs and clinical intent, or rendering fixes), <strong>or</strong> any <code class="language-plaintext highlighter-rouge">patch</code> bump in the DAK it encodes</td></tr></tbody></table></div><p><strong>How an IG’s version relates to its DAK’s:</strong></p><ol><li><strong>Co-hosted DAK and L3 IG in one repository (<code class="language-plaintext highlighter-rouge">contentTypes.dak</code> +
+<code class="language-plaintext highlighter-rouge">contentTypes.ig</code>) — lockstep <code class="language-plaintext highlighter-rouge">MAJOR.MINOR.PATCH</code>.</strong> When a repository
+publishes a DAK and its L3 FHIR IG together (the standard WHO SMART
+Guideline repository shape), <code class="language-plaintext highlighter-rouge">index.config.json</code> <code class="language-plaintext highlighter-rouge">contentTypes.dak.version</code>
+and <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> <code class="language-plaintext highlighter-rouge">version</code> (plus <code class="language-plaintext highlighter-rouge">publication-request.json</code> <code class="language-plaintext highlighter-rouge">version</code>
+on a release) carry the <strong>same</strong> <code class="language-plaintext highlighter-rouge">MAJOR.MINOR.PATCH</code> version and matching
+<code class="language-plaintext highlighter-rouge">status</code> (<code class="language-plaintext highlighter-rouge">draft</code> | <code class="language-plaintext highlighter-rouge">active</code> | <code class="language-plaintext highlighter-rouge">retired</code>). If L2 changes by <code class="language-plaintext highlighter-rouge">minor</code> and L3
+changes by <code class="language-plaintext highlighter-rouge">patch</code>, both move to the higher increment (<code class="language-plaintext highlighter-rouge">minor</code>); if L3 makes
+a breaking conformance change (<code class="language-plaintext highlighter-rouge">major</code>) while L2 is unchanged, both move to
+<code class="language-plaintext highlighter-rouge">major</code> so the published DAK package and its FHIR IG artifact never diverge.
+    <ul><li><strong>Why both files must be updated together when bumping:</strong> step 1
+(<code class="language-plaintext highlighter-rouge">generate_dak_from_sushi.py</code>) seeds <code class="language-plaintext highlighter-rouge">contentTypes.dak</code> from
+<code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> <strong>only when <code class="language-plaintext highlighter-rouge">contentTypes.dak</code> is absent</strong>
+(<code class="language-plaintext highlighter-rouge">if read_dak_section(repo_root) is not None: return</code>). Once
+<code class="language-plaintext highlighter-rouge">contentTypes.dak</code> exists in <code class="language-plaintext highlighter-rouge">index.config.json</code>, editing <code class="language-plaintext highlighter-rouge">version</code> or
+<code class="language-plaintext highlighter-rouge">status</code> in <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> alone leaves <code class="language-plaintext highlighter-rouge">contentTypes.dak.version</code>
+stale. Always update <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> <code class="language-plaintext highlighter-rouge">version</code>/<code class="language-plaintext highlighter-rouge">status</code> and
+<code class="language-plaintext highlighter-rouge">index.config.json</code> <code class="language-plaintext highlighter-rouge">contentTypes.dak.version</code>/<code class="language-plaintext highlighter-rouge">status</code> in the same
+commit.</li></ul></li><li><strong>Standalone L2 DAK vs downstream L3 IG (<code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code>).</strong> When an L2
+DAK (<code class="language-plaintext highlighter-rouge">contentTypes: { dak }</code> only) and an L3 IG (<code class="language-plaintext highlighter-rouge">contentTypes: { ig }</code>)
+live in separate repositories, each tracks its own <code class="language-plaintext highlighter-rouge">MAJOR.MINOR.PATCH</code>
+lifecycle, and a <code class="language-plaintext highlighter-rouge">major</code> or <code class="language-plaintext highlighter-rouge">minor</code> bump in the upstream L2 DAK requires at
+least a matching <code class="language-plaintext highlighter-rouge">major</code> or <code class="language-plaintext highlighter-rouge">minor</code> bump in the L3 IG release that adopts
+it.</li><li><strong>Adapted / country DAKs and IGs (<code class="language-plaintext highlighter-rouge">l2-dependency-choice</code>,
+<code class="language-plaintext highlighter-rouge">l3-dependency-choice</code>).</strong> A downstream or country adaptation pins the
+upstream WHO DAK and IG in <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> <code class="language-plaintext highlighter-rouge">dependencies:</code> (and
+<code class="language-plaintext highlighter-rouge">index.config.json</code> <code class="language-plaintext highlighter-rouge">dependencies</code>) at an exact released <code class="language-plaintext highlighter-rouge">MAJOR.MINOR.PATCH</code>
+version (<code class="language-plaintext highlighter-rouge">bun run cat check:published-refs</code>), while the adaptation’s own
+<code class="language-plaintext highlighter-rouge">contentTypes.dak.version</code> and <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> <code class="language-plaintext highlighter-rouge">version</code> track the
+adaptation’s own <code class="language-plaintext highlighter-rouge">MAJOR.MINOR.PATCH</code> release series.</li></ol><h2 id="where-the-counterpart-is"><a href="#where-the-counterpart-is" class="anchor-heading" aria-labelledby="where-the-counterpart-is"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the counterpart is
+  
+  
+</h2><p><a href="../../reference/skill-instructions/dak-postprocessing.html"><code class="language-plaintext highlighter-rouge">dak-postprocessing</code></a> — the eight steps after the
+Publisher run. <a href="../../reference/skill-instructions/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a> — the Publisher run itself
+and the authority to release. <a href="../../reference/skill-instructions/smart-stack-layering.html"><code class="language-plaintext highlighter-rouge">smart-stack-layering</code></a>
+— which layer each of these belongs to, and the falsification test that placing
+them is what checks the stack.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/smart-guideline-end-to-end.html">SMART Guideline end to end</a></td><td>4 · Create / adapt L2 DAK assets</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

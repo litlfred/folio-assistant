@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/skill/formal-accuracy.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/skill/formal-accuracy",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "formal-accuracy",
+      "title": "Formal accuracy",
+      "description": "The accuracy checks a content type with a formal-proof layer adds to the harness's scientific-accuracy review: the consequence-versus-axiom audit, formal cross-references, and validation across the .ts / .md / formal triple.",
+      "instructionsPath": "skills/content/authoring-math/formal-accuracy.md",
+      "instructionLines": 64,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/formal-accuracy"
+    }
+  ]
+}

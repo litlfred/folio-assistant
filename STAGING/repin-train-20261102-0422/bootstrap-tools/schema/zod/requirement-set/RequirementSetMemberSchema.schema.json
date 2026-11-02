@@ -1,0 +1,35 @@
+{
+  "$ref": "#/definitions/RequirementSetMember",
+  "definitions": {
+    "RequirementSetMember": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^req:[a-z0-9][a-z0-9-]*(#[A-Za-z0-9][A-Za-z0-9_.-]*(\\/[A-Za-z0-9][A-Za-z0-9_.-]*)?)?$"
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "approved",
+            "amended",
+            "rejected",
+            "deferred"
+          ]
+        }
+      },
+      "required": [
+        "ref"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap-tools/schema/zod/requirement-set/RequirementSetMemberSchema.schema.json",
+  "title": "RequirementSetMemberSchema",
+  "description": "Generated from `RequirementSetMemberSchema` in schemas/requirement-set.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  }
+}

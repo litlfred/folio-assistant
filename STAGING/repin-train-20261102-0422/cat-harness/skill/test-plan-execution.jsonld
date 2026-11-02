@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/test-plan-execution.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/test-plan-execution",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "test-plan-execution",
+      "title": "Running a test plan — from a request to a signed certification",
+      "description": "Run a `test-plan/v1` against a system under test and take it to a certification decision — the five lanes of `test-plan-execution.bpmn` (requester, tester, untainted checker, certifier, attestation service), how the test data is bound, what the run and the report must record, the facts the certification table reads, and the four kg-audit criteria that judge a run afterwards. Read before executing a plan, re-executing a sample, or certifying a result.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/test-plan-execution.md",
+      "instructionLines": 156,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-plan-execution"
+    }
+  ]
+}

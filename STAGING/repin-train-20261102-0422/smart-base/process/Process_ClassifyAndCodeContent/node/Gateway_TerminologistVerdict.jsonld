@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Gateway_TerminologistVerdict",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Coding verdict?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/terminologist",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C11"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C12",
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C13"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

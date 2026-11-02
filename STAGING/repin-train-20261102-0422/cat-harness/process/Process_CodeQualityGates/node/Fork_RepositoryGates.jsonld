@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/process/Process_CodeQualityGates/node/Fork_RepositoryGates.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/process/Process_CodeQualityGates/node/Fork_RepositoryGates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Fork_RepositoryGates",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/process/Process_CodeQualityGates#flow/Flow_Fork_RepositoryGates"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/process/Process_CodeQualityGates#flow/Flow_17",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/process/Process_CodeQualityGates#flow/Flow_22"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Fork_RepositoryGates"
+    }
+  ]
+}

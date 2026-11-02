@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/fhir-harness/skill/ig-site-links.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-site-links.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-site-links",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "ig-site-links",
+      "title": "ig-site-links",
+      "description": "What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages, files of the IG's repository, the OpenAPI index), which are reported as the IG's own dead links, and the two gates that keep a generator from linking a page it does not write. Read before changing build-ig-site's relinking, gen-ig-pages' links, or before concluding an IG page's broken link is ours.",
+      "instructionsPath": "skills/fhir-ig-base/ig-site-links.md",
+      "instructionLines": 96,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

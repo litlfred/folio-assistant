@@ -1,0 +1,20 @@
+{
+  "$ref": "#/definitions/DocId",
+  "definitions": {
+    "DocId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "description": "A library document id, e.g. WPR-RDO-2020-003-eng"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/DocIdSchema.schema.json",
+  "title": "DocIdSchema",
+  "description": "Generated from `DocIdSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  }
+}

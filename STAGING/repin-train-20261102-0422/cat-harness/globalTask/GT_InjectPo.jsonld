@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/globalTask/GT_InjectPo.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/globalTask/GT_InjectPo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "name": "Inject the PO into translated Markdown",
+      "summary": "Read the .po file and the source .md, substitute msgstr for msgid, unshield the placeholders, and write the translated .md to translations/<locale>/.",
+      "description": "Read the .po file and the source .md, substitute msgstr for msgid, unshield the placeholders, and write the translated .md to translations/<locale>/. Check structure (paragraph count, heading levels) and completeness (no empty msgstr), and lint (doubled punctuation, orphaned placeholders). Tool: the translation_inject MCP tool, or bun run content/pipeline/po-inject.ts.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/translation-manager"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_InjectPo"
+    }
+  ]
+}

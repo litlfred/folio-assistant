@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Scheduled log sweep",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/process/Process_PrChecksPresent",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci"
+    }
+  ]
+}

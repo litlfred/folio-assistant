@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/integration-watcher.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/integration-watcher",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "integration-watcher",
+      "title": "integration-watcher (abstract parent)",
+      "description": "Abstract parent skill for domain-specific **integration watchers**. Encodes the shared mechanics — Monitor on `origin/main`, PR subscriptions, per-event QA dispatch, queue + ledger, idle backlog sweep, idle author-ask dispatcher, watch-PRs-you-prepare protocol, voice-pass on PR diff, witness-drift CI recovery, billing-quick-fail flake handling — that every concrete watcher inherits. Children fill nine domain-specific slots; everything else is shared here.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/integration-watcher.md",
+      "instructionLines": 239,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-watcher"
+    }
+  ]
+}

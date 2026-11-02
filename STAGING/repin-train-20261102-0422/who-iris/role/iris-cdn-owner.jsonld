@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/who-iris/role/iris-cdn-owner.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/who-iris/role/iris-cdn-owner",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "IRIS CDN owner",
+      "title": "IRIS CDN owner",
+      "notation": "iris-cdn-owner",
+      "description": "A person: decides the export's scope, budget and storage target. Nothing downstream widens what the owner approved.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/who-iris/skill/iris-cdn-exporter"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner"
+    }
+  ]
+}

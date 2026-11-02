@@ -1,0 +1,67 @@
+{
+  "$ref": "#/definitions/ModelConfig",
+  "definitions": {
+    "ModelConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capabilities": {
+          "type": "object",
+          "properties": {
+            "reasoning_tier": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "expert"
+              ]
+            },
+            "tool_use": {
+              "type": "boolean"
+            },
+            "context_window": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "multimodal": {
+              "type": "boolean"
+            },
+            "capabilities": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "name": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "capabilities"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/model-capabilities/ModelConfigSchema.schema.json",
+  "title": "ModelConfigSchema",
+  "description": "Generated from `ModelConfigSchema` in schemas/conduct/model-capabilities.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_DeepDocumentResearch/node/GW_Held.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_DeepDocumentResearch/node/GW_Held",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Is the corpus there to search?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/role/deep-researcher",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_DeepDocumentResearch#flow/F_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_DeepDocumentResearch#flow/F_Held",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_DeepDocumentResearch#flow/F_NotHeld"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/node/GW_Held"
+    }
+  ]
+}

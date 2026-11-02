@@ -1,0 +1,39 @@
+{
+  "$ref": "#/definitions/SystemUnderTestFacet",
+  "definitions": {
+    "SystemUnderTestFacet": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "skill",
+            "agent",
+            "tool",
+            "machine",
+            "ig",
+            "process"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "version"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SystemUnderTestFacetSchema.schema.json",
+  "title": "SystemUnderTestFacetSchema",
+  "description": "Generated from `SystemUnderTestFacetSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/skill/smart-stack-layering.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/smart-stack-layering.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/smart-stack-layering",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "smart-stack-layering",
+      "title": "smart-stack-layering",
+      "description": "Which layer a WHO SMART asset, rule, script or page belongs to — fhir-harness, smart-base (with its L1 and DAK document kinds) or smart-ig — and the one question that settles it. Read before adding anything to fhir-harness, smart-base or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
+      "instructionLines": 184,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

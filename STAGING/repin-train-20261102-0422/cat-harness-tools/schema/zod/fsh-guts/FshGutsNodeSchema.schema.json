@@ -1,0 +1,60 @@
+{
+  "$ref": "#/definitions/FshGutsNode",
+  "definitions": {
+    "FshGutsNode": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-fsh-guts/v1"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "movedOn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "movedFrom": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issue": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "bean": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "description": "A bean identifier, e.g. folio-assistant-1dfh"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "$schema",
+        "title",
+        "kind"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/fsh-guts/FshGutsNodeSchema.schema.json",
+  "title": "FshGutsNodeSchema",
+  "description": "Generated from `FshGutsNodeSchema` in schemas/kg/fsh-guts.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  }
+}

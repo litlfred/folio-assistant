@@ -1,0 +1,114 @@
+  writer skip: ON (records of eec485fbf65a, 35 writer(s))
+  handler:index runs: . changed (+92 more: _kg, bootstrap-tools/scripts, build, build/qa-refresh.json, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, and 85 others) [decided in 0.1s]
+  ig-index:build runs: not recorded: git ls-remote is not a read-only command the cone replays [decided in 0.0s]
+  ran handler:index (reuse off) [4.1s]
+  uml:overview runs: . changed (+3229 more: bootstrap-tools/scripts, cat-harness-tools/archimate/schemas/metamodel.ts, cat-harness-tools/libraries/yaml.library.json, cat-harness-tools/libraries/zod.library.json, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, and 3222 others) [decided in 0.3s]
+  ran ig-index:build (reuse off) [10.5s]
+  smart-base:document-kinds runs: . changed (+25 more: bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/known-skills.ts, and 18 others) [decided in 0.0s]
+  ran smart-base:document-kinds (reuse off) [0.6s]
+qa:refresh: kg:audit:all runs: no writer records from a full deploy
+qa:refresh: kg:detangle runs: no writer records from a full deploy
+qa:refresh: translation:block-qa runs: no writer records from a full deploy
+qa:refresh: qa-sweep:docs runs: no writer records from a full deploy
+  voice gate: 42 criterion(s) skipped — this folio activates agent-skill-authoring (voice-overlay-address-adjudicator, voice-overlay-address-administrator, voice-overlay-address-author, voice-overlay-address-authoring-agent, voice-overlay-address-business-analyst, voice-overlay-address-clinical-sme, voice-overlay-address-code-reviewer, voice-overlay-address-compute-authoring-agent, voice-overlay-address-deep-researcher, voice-overlay-address-docs-authoring-agent, voice-overlay-address-editor, voice-overlay-address-editorial-authoring-agent, voice-overlay-address-evidence-agent, voice-overlay-address-feedback-provider, voice-overlay-address-ingestion-agent, voice-overlay-address-integration-watcher, voice-overlay-address-lean-authoring-agent, voice-overlay-address-librarian, voice-overlay-address-narrative-reviewer, voice-overlay-address-onboarding-agent, voice-overlay-address-platform-authoring-agent, voice-overlay-address-programme-manager, voice-overlay-address-proof-review-agent, voice-overlay-address-publication-manager, voice-overlay-address-qc-reviewer, voice-overlay-address-review-coordinator, voice-overlay-address-reviewer, voice-overlay-address-session-coordinator, voice-overlay-address-sibling-session, voice-overlay-address-stakeholder, voice-overlay-address-terminologist, voice-overlay-address-translation-adjudicator, voice-overlay-address-translation-coordinator, voice-overlay-address-translator, voice-overlay-address-user, voice-overlay-milnor, voice-overlay-technical-writer, voice-overlay-who-digital-health, voice-overlay-who-digital-transformation-handbook, voice-overlay-who-editorial, voice-overlay-who-guideline-development, voice-overlay-who-publication-design)
+  subgraph:jsonld runs: not recorded: the trace is 492194660 bytes, more than 268435456 [decided in 0.0s]
+qa:refresh: check:l1-complete runs: no writer records from a full deploy
+qa:refresh: p2:refusals runs: no writer records from a full deploy
+qa:refresh: lsi:index:cat-harness:skills runs: no writer records from a full deploy
+qa:refresh: lsi:index:library runs: no writer records from a full deploy
+qa:refresh: lsi:audit runs: no writer records from a full deploy
+qa:refresh: docs:pages runs: no writer records from a full deploy
+qa:refresh: viewer:nav:audit runs: no writer records from a full deploy
+qa:refresh: eval:crdm-detect runs: no writer records from a full deploy
+qa:refresh: root-scan-census runs: no writer records from a full deploy
+qa:refresh: skill:register runs: no writer records from a full deploy
+qa:refresh: term:mapping runs: no writer records from a full deploy
+qa:refresh: check:harness-state runs: no writer records from a full deploy
+qa:refresh: check:wireframes runs: no writer records from a full deploy
+qa:refresh: check:source-licence runs: no writer records from a full deploy
+qa:refresh: check:layout-norms runs: no writer records from a full deploy
+qa:refresh: check:rendered-labels runs: no writer records from a full deploy
+qa:refresh: check:lane-documentation runs: no writer records from a full deploy
+qa:refresh: check:methodology-evidence runs: no writer records from a full deploy
+qa:refresh: check:avatar-coverage runs: no writer records from a full deploy
+qa:refresh: check:unlinked-beans runs: no writer records from a full deploy
+qa:refresh: kg:export runs: no writer records from a full deploy
+qa:refresh: check:reference-direction runs: no writer records from a full deploy
+qa:refresh: audit:coverage runs: no writer records from a full deploy
+qa:refresh: readme:subgraphs runs: no writer records from a full deploy
+  ran subgraph:jsonld (reuse off) [31.0s]
+  library:viz runs: bootstrap-tools/processes/render-kg-to-github-pages.svg changed (+2044 more: bootstrap-tools/scripts, bootstrap-tools/scripts/README.md, bootstrap-tools/scripts/render-bpmn.ts, bootstrap/processes/complete-initialization.bpmn, bootstrap/processes/complete-initialization.svg, bootstrap/processes/discussion.bpmn, bootstrap/processes/discussion.svg, and 2037 others) [decided in 0.9s]
+  voices:viz runs: bootstrap-tools/scripts changed (+24 more: cat-harness-tools/package.json, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/known-skills.ts, and 17 others) [decided in 0.0s]
+  ran voices:viz (reuse off) [1.0s]
+  theme:viz runs: bootstrap-tools/scripts changed (+27 more: cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, and 20 others) [decided in 0.0s]
+  ran theme:viz (reuse off) [0.7s]
+  uploads:viz runs: bootstrap-tools/scripts changed (+894 more: cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, and 887 others) [decided in 0.3s]
+  ran uploads:viz (reuse off) [3.1s]
+  document-kinds:viz runs: bootstrap-tools/scripts changed (+24 more: cat-harness-tools/package.json, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/known-skills.ts, and 17 others) [decided in 0.0s]
+  ran document-kinds:viz (reuse off) [1.0s]
+  skills:docs runs: bootstrap-tools/scripts changed (+258 more: bootstrap/processes/complete-initialization.bpmn, bootstrap/processes/discussion.bpmn, bootstrap/processes/initialize-harness.bpmn, bootstrap/processes/log-message.bpmn, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, and 251 others) [decided in 0.0s]
+  ran skills:docs (reuse off) [6.4s]
+  node-kinds runs: bootstrap-tools/scripts changed (+29 more: cat-harness-tools/archimate/schemas/metamodel.ts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, and 22 others) [decided in 0.0s]
+  ran node-kinds (reuse off) [1.6s]
+  node-kind:pages runs: bootstrap-tools/scripts changed (+587 more: cat-harness-tools/archimate/schemas/metamodel.ts, cat-harness-tools/beans/defs/cat-tools-sr31--security-review-2026-10-31-every-harnessed-layer.md, cat-harness-tools/beans/defs/folio-assistant-5a3l--deployment-topologies-and-operating-modes-are-two.md, cat-harness-tools/beans/defs/folio-assistant-fs43--arc-state-graphs-on-a-declared-state-branch-beans.md, cat-harness-tools/libraries/yaml.library.json, cat-harness-tools/libraries/zod.library.json, cat-harness-tools/package.json, and 580 others) [decided in 0.3s]
+  ran node-kind:pages (reuse off) [3.2s]
+  glossary:page runs: bootstrap-tools/scripts changed (+207 more: bootstrap/processes/complete-initialization.bpmn, bootstrap/processes/discussion.bpmn, bootstrap/processes/initialize-harness.bpmn, bootstrap/processes/log-message.bpmn, cat-harness-tools/archimate/schemas/metamodel.ts, cat-harness-tools/package.json, cat-harness-tools/pipeline, and 200 others) [decided in 0.1s]
+  ran glossary:page (reuse off) [16.5s]
+  bibliography:page runs: cat-harness-tools/package.json changed (+35 more: cat-harness-tools/pipeline, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness/archimate/graph.json, cat-harness/archimate/typologies/archimate.json, cat-harness/archimate/validators, and 28 others) [decided in 0.0s]
+  ran bibliography:page (reuse off) [0.7s]
+  smart:pages runs: not recorded: the writer reads smart-base/docs/artifact and then rewrites it [decided in 0.0s]
+  ran smart:pages (reuse off) [0.8s]
+  jsonld:contexts runs: bootstrap changed (+1010 more: bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/tests, cat-harness-tools/scripts/tests/process, and 1003 others) [decided in 0.3s]
+  ran jsonld:contexts (reuse off) [2.0s]
+  tools:viz runs: bootstrap-tools/scripts changed (+66 more: cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/gen-processes-viz.ts, and 59 others) [decided in 0.0s]
+  smart-base:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output [decided in 0.0s]
+  smart-trust:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output [decided in 0.0s]
+  smart-trust-phw:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output [decided in 0.0s]
+  ran smart-trust-phw:pages (reuse off) [0.7s]
+  ran smart-trust:pages (reuse off) [1.2s]
+  ran smart-base:pages (reuse off) [1.2s]
+  smart-base:l1-extraction:pages runs: bootstrap-tools/scripts changed (+20 more: cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/known-skills.ts, cat-harness-tools/test, and 13 others) [decided in 0.0s]
+  ran smart-base:l1-extraction:pages (reuse off) [0.9s]
+  ran tools:viz (reuse off) [3.5s]
+  auto:docs runs: bootstrap-tools/scripts changed (+645 more: cat-harness-tools/archimate/schemas/metamodel.ts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, and 638 others) [decided in 0.2s]
+  ran auto:docs (reuse off) [10.5s]
+  lsi:viz runs: cat-harness-tools/beans/defs/cat-tools-sr31--security-review-2026-10-31-every-harnessed-layer.md changed (+670 more: cat-harness-tools/beans/defs/folio-assistant-5a3l--deployment-topologies-and-operating-modes-are-two.md, cat-harness-tools/beans/defs/folio-assistant-fs43--arc-state-graphs-on-a-declared-state-branch-beans.md, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, and 663 others) [decided in 0.2s]
+  ran lsi:viz (reuse off) [3.8s]
+  translation:status runs: bootstrap-tools/scripts changed (+283 more: cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/gen-processes-viz.ts, and 276 others) [decided in 0.0s]
+  ran translation:status (reuse off) [1.5s]
+  openapi:viz runs: cat-harness-tools/package.json changed (+11 more: cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness/archimate/graph.json, cat-harness/archimate/typologies/archimate.json, cat-harness/archimate/validators, cat-harness/cat-harness.json, and 4 others) [decided in 0.0s]
+  ran openapi:viz (reuse off) [0.2s]
+  schema:viz runs: bootstrap-tools/scripts changed (+43 more: cat-harness-tools/archimate/schemas/metamodel.ts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/block-kind-nodes.test.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, and 36 others) [decided in 0.0s]
+  ran schema:viz (reuse off) [3.6s]
+  methodologies:viz runs: bootstrap-tools/scripts changed (+85 more: cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, and 78 others) [decided in 0.0s]
+  ran methodologies:viz (reuse off) [2.3s]
+  external-schemas:viz runs: bootstrap-tools/processes/render-kg-to-github-pages.svg changed (+3485 more: bootstrap-tools/scripts, bootstrap-tools/scripts/README.md, bootstrap-tools/scripts/render-bpmn.ts, bootstrap/processes/complete-initialization.bpmn, bootstrap/processes/complete-initialization.svg, bootstrap/processes/discussion.bpmn, bootstrap/processes/discussion.svg, and 3478 others) [decided in 0.6s]
+  ran external-schemas:viz (reuse off) [6.9s]
+  subscriptions:viz runs: cat-harness-tools/package.json changed (+11 more: cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/known-skills.ts, cat-harness/archimate/graph.json, cat-harness/archimate/typologies/archimate.json, cat-harness/archimate/validators, cat-harness/cat-harness.json, and 4 others) [decided in 0.0s]
+  ran subscriptions:viz (reuse off) [0.3s]
+  docs:pages runs: bootstrap-tools/scripts changed (+904 more: cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, and 897 others) [decided in 0.1s]
+  ran docs:pages (reuse off) [2.4s]
+  docs:harness runs: bootstrap-tools/scripts changed (+341 more: cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/gen-processes-viz.ts, and 334 others) [decided in 0.1s]
+  ran docs:harness (reuse off) [5.0s]
+  navbar:include runs: its script, imports, audited environment or tools changed [decided in 0.0s]
+  ran navbar:include (reuse off) [0.2s]
+  kind:table runs: its script, imports, audited environment or tools changed [decided in 0.0s]
+  ran kind:table (reuse off) [0.1s]
+  avatars:css runs: its script, imports, audited environment or tools changed [decided in 0.0s]
+  ran avatars:css (reuse off) [0.2s]
+  themes:css runs: bootstrap-tools/scripts changed (+23 more: cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, and 16 others) [decided in 0.0s]
+  ran themes:css (reuse off) [0.7s]
+  folio:viz runs: bootstrap-tools/scripts changed (+22 more: cat-harness-tools/package.json, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, cat-harness-tools/scripts/known-skills.ts, and 15 others) [decided in 0.0s]
+  ran folio:viz (reuse off) [0.8s]
+  kg:viewer runs: bootstrap-tools/scripts changed (+21 more: cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/translation.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/scripts, cat-harness-tools/scripts/harness-tiles.ts, and 14 others) [decided in 0.0s]
+  ran kg:viewer (reuse off) [0.5s]
+  state:visualizer runs: bootstrap-tools/scripts changed (+707 more: bootstrap/processes/complete-initialization.bpmn, bootstrap/processes/discussion.bpmn, bootstrap/processes/initialize-harness.bpmn, bootstrap/processes/log-message.bpmn, cat-harness-tools/beans/defs/cat-tools-sr31--security-review-2026-10-31-every-harnessed-layer.md, cat-harness-tools/beans/defs/folio-assistant-5a3l--deployment-topologies-and-operating-modes-are-two.md, cat-harness-tools/beans/defs/folio-assistant-fs43--arc-state-graphs-on-a-declared-state-branch-beans.md, and 700 others) [decided in 0.1s]
+  ran state:visualizer (reuse off) [9.1s]
+  site:viz runs: not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git) [decided in 0.0s]
+  ran site:viz (reuse off) [1.2s]
+  slice:sqlite runs: not recorded: the trace is 283858655 bytes, more than 268435456 [decided in 0.0s]
+  ran slice:sqlite (reuse off) [12.5s]
+  render:bpmn runs: bootstrap-tools/scripts changed (+201 more: bootstrap-tools/scripts/render-bpmn.ts, bootstrap/processes/complete-initialization.bpmn, bootstrap/processes/complete-initialization.svg, bootstrap/processes/discussion.bpmn, bootstrap/processes/discussion.svg, bootstrap/processes/human-agent-discussion.svg, bootstrap/processes/initialize-harness.bpmn, and 194 others) [decided in 0.0s]
+  ran render:bpmn (reuse off) [6.5s]
+  processes:viz runs: bootstrap-tools/scripts changed (+332 more: bootstrap/processes/complete-initialization.bpmn, bootstrap/processes/discussion.bpmn, bootstrap/processes/initialize-harness.bpmn, bootstrap/processes/log-message.bpmn, cat-harness-tools/beans/defs/cat-tools-sr31--security-review-2026-10-31-every-harnessed-layer.md, cat-harness-tools/beans/defs/folio-assistant-5a3l--deployment-topologies-and-operating-modes-are-two.md, cat-harness-tools/beans/defs/folio-assistant-fs43--arc-state-graphs-on-a-declared-state-branch-beans.md, and 325 others) [decided in 0.1s]
+  ran processes:viz (reuse off) [9.5s]

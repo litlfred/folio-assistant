@@ -1,0 +1,76 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills",
+      "@type": "bootstrap:Subgraph",
+      "name": "who-iris-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
+      "@type": "bootstrap:Skill",
+      "name": "iris-cdn-exporter",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7162da646ea82784d178dc924d7c039771c2350405635638880938b01b29d980",
+        "bytes": 4759,
+        "sha256": "7162da646ea82784d178dc924d7c039771c2350405635638880938b01b29d980"
+      },
+      "title": "The IRIS CDN Exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
+      "@type": "bootstrap:Skill",
+      "name": "iris-cdn-signing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d0f1df56875252961a0769bd80bf4402bea1e480569b205e917cf431dd87195a",
+        "bytes": 6002,
+        "sha256": "d0f1df56875252961a0769bd80bf4402bea1e480569b205e917cf431dd87195a"
+      },
+      "title": "Signing and verifying an IRIS CDN release"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
+      "@type": "bootstrap:Skill",
+      "name": "iris-dspace",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0de69fac8e6f7a33938a512c15f682ea9a4a35f20b769761754248137d168c4b",
+        "bytes": 15306,
+        "sha256": "0de69fac8e6f7a33938a512c15f682ea9a4a35f20b769761754248137d168c4b"
+      },
+      "title": "IRIS, DSpace and Dublin Core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
+      "@type": "bootstrap:Skill",
+      "name": "iris-oxigraph",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4dc93fe0b0efce3aaa6d56006342a52f93939e96d8be13b75d85f92724e0ab4f",
+        "bytes": 8512,
+        "sha256": "4dc93fe0b0efce3aaa6d56006342a52f93939e96d8be13b75d85f92724e0ab4f"
+      },
+      "title": "Oxigraph Multi-Graph Search & Discovery for WHO IRIS"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
+      "@type": "bootstrap:Skill",
+      "name": "iris-rest-feed",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a3ff7df5064b9c17ee8b1da8b5b2988e9bf409d1ad61b5c44aaef211f7178766",
+        "bytes": 4564,
+        "sha256": "a3ff7df5064b9c17ee8b1da8b5b2988e9bf409d1ad61b5c44aaef211f7178766"
+      },
+      "title": "Reading IRIS changes over DSpace REST"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/who-iris/skills/voices/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills",
+  "path": "skills/"
+}

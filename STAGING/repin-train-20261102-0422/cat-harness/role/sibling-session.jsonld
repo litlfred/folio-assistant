@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/role/sibling-session.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/role/sibling-session",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Sibling session",
+      "title": "Sibling session",
+      "notation": "sibling-session",
+      "description": "Another agent or human working the same store. Present in bean-open (Process_BeanOpen) precisely to mark what is NOT yours to close.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/bean-coordination"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session"
+    }
+  ]
+}

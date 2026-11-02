@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/theme-artefacts.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/theme-artefacts",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "theme-artefacts",
+      "title": "Per-artefact specialisation",
+      "description": "The per-surface SPECIALISATION layer — sticky, landing board, docs background, navbar avatar. Only what DIFFERS lives here; the general rule lives in its stage. Read this last, after the stage that owns your question.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/package/theming"
+      ],
+      "instructionsPath": "skills/ui/theming/theme-artefacts.md",
+      "instructionLines": 228,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-artefacts"
+    }
+  ]
+}

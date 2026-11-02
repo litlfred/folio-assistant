@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/graph-rendering.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/graph-rendering",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "graph-rendering",
+      "title": "Graph rendering: one set of rules for every drawn graph",
+      "description": "Draw any graph in a harness (schemas, processes, a folio's block graph and any formal relation its content type adds, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph typology here applies them.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/package/graph-management"
+      ],
+      "instructionsPath": "skills/kg/graph-management/graph-rendering.md",
+      "instructionLines": 179,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering"
+    }
+  ]
+}

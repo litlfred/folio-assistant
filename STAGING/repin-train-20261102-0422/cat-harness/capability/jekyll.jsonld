@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/capability/jekyll.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/capability/jekyll",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "jekyll",
+      "name": "Jekyll",
+      "description": "Jekyll static site generator for IG publication.",
+      "detection": {
+        "method": "command",
+        "command": "jekyll --version"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/jekyll"
+    }
+  ]
+}

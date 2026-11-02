@@ -1,0 +1,49 @@
+{
+  "$ref": "#/definitions/LogExecution",
+  "definitions": {
+    "LogExecution": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "argv": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exitCode": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "durationMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "cwd": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outputRef": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "command"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/log-entry/LogExecutionSchema.schema.json",
+  "title": "LogExecutionSchema",
+  "description": "Generated from `LogExecutionSchema` in schemas/sdlc/log-entry.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/RemoteSyncStrategy",
+  "definitions": {
+    "RemoteSyncStrategy": {
+      "type": "string",
+      "enum": [
+        "shallow-clone",
+        "sparse-checkout",
+        "subtree"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/RemoteSyncStrategySchema.schema.json",
+  "title": "RemoteSyncStrategySchema",
+  "description": "Generated from `RemoteSyncStrategySchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  }
+}

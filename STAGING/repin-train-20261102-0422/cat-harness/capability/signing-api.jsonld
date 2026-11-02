@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/capability/signing-api.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/capability/signing-api",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "signing-api",
+      "name": "Signing API",
+      "description": "An attestation endpoint that will sign a QA report's run hashes. Probed by configuration, not by calling it: a probe that made a live request would be indistinguishable from an outage on the one machine this matters for, and would call an external service just to answer a question about setup.",
+      "detection": {
+        "method": "env-var",
+        "variable": "FOLIO_SIGNING_ENDPOINT"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/signing-api"
+    }
+  ]
+}

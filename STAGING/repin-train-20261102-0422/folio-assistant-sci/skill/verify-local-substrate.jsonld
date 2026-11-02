@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/skill/verify-local-substrate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/skill/verify-local-substrate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "verify-local-substrate",
+      "title": "Verify Anchor Connectivity",
+      "description": "Verify that every result block of a designated class traces back to a designated anchor definition through the uses[] dependency graph. Identifies gaps where claims lack a formal connection to the anchor, and suggests fixes.",
+      "instructionsPath": "skills/content/folio-paper-adapter/verify-local-substrate.md",
+      "instructionLines": 107,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/verify-local-substrate"
+    }
+  ]
+}

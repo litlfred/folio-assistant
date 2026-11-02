@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/process/Process_SgEndToEnd/lane/Lane_Agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Authoring agent",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "bindsRole": "http://smart.who.int/base/role/authoring-agent",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Redirecting…</title><script>location.replace("../../../../en/folio-assistant-core/bibliography/cat-harness-library/arxiv-2505.06046v4/" + location.search + location.hash);</script><meta http-equiv="refresh" content="0; url=../../../../en/folio-assistant-core/bibliography/cat-harness-library/arxiv-2505.06046v4/"><meta name="robots" content="noindex"></head><body><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  var rv=el('span',{'data-fa-staging-review':''});d.appendChild(rv);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+  review(rv,r,rel);
+}
+// The preview's review page (owner, 2026-11-01, Q-REV-1): reviewers could not
+// find it from a staging page. A folio writes it at <root>/<locale>/review/,
+// an IG at <root>/review/. Asked with HEAD, which the staging worker passes
+// through, so a 404 here is not answered with the live site's page. No review
+// page, no link.
+function review(s,r,rel){
+  if(typeof fetch!=='function')return;
+  var c=[],m=rel.match(/^([a-z]{2,3}(?:-[A-Za-z0-9]+)?)\//);
+  if(m)c.push(r+m[1]+'/review/');
+  c.push(r+'review/');
+  (function next(i){
+    if(i>=c.length)return;
+    fetch(c[i]+'index.html',{method:'HEAD',cache:'no-store'}).then(function(x){
+      if(!x.ok)return next(i+1);
+      s.appendChild(sep());
+      s.appendChild(link(c[i],'\ud83d\udd0d Review changes','font-weight:bold'));
+      measure();
+    }).catch(function(){next(i+1);});
+  })(0);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><p>This page is at <a href="../../../../en/folio-assistant-core/bibliography/cat-harness-library/arxiv-2505.06046v4/">../../../../en/folio-assistant-core/bibliography/cat-harness-library/arxiv-2505.06046v4/</a>.</p></body></html>

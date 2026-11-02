@@ -1,0 +1,155 @@
+{
+  "$ref": "#/definitions/NoteTags",
+  "definitions": {
+    "NoteTags": {
+      "type": "object",
+      "properties": {
+        "roles": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "processes": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tasks": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "process": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+                "description": "A BPMN process element id, e.g. Process_CRDM"
+              },
+              "task": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "process",
+              "task"
+            ]
+          }
+        },
+        "identities": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "displayName": {
+                "type": "string"
+              },
+              "actor": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "provider",
+              "id"
+            ]
+          }
+        },
+        "references": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "agent",
+                  "asset",
+                  "bean",
+                  "block",
+                  "capability",
+                  "decision",
+                  "directory",
+                  "package",
+                  "process",
+                  "requirement",
+                  "role",
+                  "schema",
+                  "skill",
+                  "todo",
+                  "tool",
+                  "user-story",
+                  "voice"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "id"
+            ]
+          }
+        },
+        "artefacts": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "provider": {
+                "type": "string"
+              },
+              "repo": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "id"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/carried-note/NoteTagsSchema.schema.json",
+  "title": "NoteTagsSchema",
+  "description": "Generated from `NoteTagsSchema` in schemas/kg/carried-note.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  }
+}

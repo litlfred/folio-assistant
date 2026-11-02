@@ -1,0 +1,170 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "DVC - Vaccines Schema API",
+    "description": "JSON Schema for DVC - Vaccines ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/ValueSet-DVCVaccines.schema.json": {
+      "get": {
+        "summary": "JSON Schema definition for the enumeration ValueSet-DVCVaccines",
+        "description": "This endpoint serves the JSON Schema definition for the enumeration ValueSet-DVCVaccines.",
+        "responses": {
+          "200": {
+            "description": "The JSON Schema for ValueSet-DVCVaccines",
+            "content": {
+              "application/schema+json": {
+                "schema": {
+                  "$ref": "./ValueSet-DVCVaccines.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ValueSet-DVCVaccines": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "http://smart.who.int/trust-phw/ValueSet-DVCVaccines.schema.json",
+        "title": "DVC - Vaccines Schema",
+        "description": "JSON Schema for DVC - Vaccines ValueSet codes. Values are represented as Coding objects with 'system' and 'code' properties.",
+        "type": "object",
+        "required": [
+          "system",
+          "code"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "system": {
+            "type": "string",
+            "const": "http://id.who.int/icd/release/11/mms"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "1749191919",
+              "1773165662",
+              "1471383174",
+              "1859125126",
+              "1147064900",
+              "1322480936",
+              "111418983",
+              "1770751664",
+              "1436712068",
+              "149798181",
+              "206580507",
+              "933979203",
+              "675122679",
+              "581970587",
+              "1699211479",
+              "1267641273",
+              "10241378",
+              "1734710686",
+              "793282805",
+              "342781498",
+              "1675645605",
+              "1234470901",
+              "213276798",
+              "228589771",
+              "1678327079",
+              "425304593",
+              "1025950511",
+              "386948767",
+              "396699965",
+              "732930532",
+              "828661706",
+              "1890639347",
+              "1843933938",
+              "1143858830",
+              "1014173101",
+              "1457361654",
+              "959195229",
+              "2115949315",
+              "548455280",
+              "1165620955",
+              "959348095",
+              "87842213",
+              "14126832",
+              "173681028",
+              "2050849439",
+              "1716231214",
+              "1519204432",
+              "1203345122",
+              "1625813008",
+              "1397512280",
+              "1654923661",
+              "2009034581",
+              "1109334865",
+              "210635131",
+              "426819379",
+              "373657629",
+              "1326557479",
+              "138999348",
+              "1740197021",
+              "492026092",
+              "1229683522",
+              "201368617",
+              "172584777",
+              "540916249",
+              "747689717",
+              "674054347",
+              "1991958378",
+              "1943937130",
+              "1538819279",
+              "1851996153",
+              "184392178",
+              "1084912791",
+              "647091749",
+              "344572808",
+              "1132895780",
+              "16698370",
+              "1696948661",
+              "164703371",
+              "382285729",
+              "751881015",
+              "1901715257",
+              "344093324",
+              "1000964652",
+              "824452416",
+              "774324818",
+              "1063237844",
+              "918468355",
+              "325290432",
+              "1037171821",
+              "1955820655",
+              "715198108",
+              "511681494",
+              "1687508903",
+              "1046686076",
+              "701343271",
+              "643642263",
+              "2041850548",
+              "187973104",
+              "1504223258",
+              "1589421967",
+              "894585096",
+              "873941688",
+              "1104808441",
+              "729916172",
+              "264142908",
+              "1316179031",
+              "1368305645",
+              "1959459034",
+              "877986394",
+              "993066376"
+            ]
+          }
+        },
+        "narrative": "This schema validates Coding-shaped objects for the DVC - Vaccines ValueSet. Each value must be an object with 'system' (CodeSystem URI) and 'code' (fragment after '#') properties. Display values are available at http://smart.who.int/trust-phw/ValueSet-DVCVaccines.displays.json. The canonical IRI for a code can be reconstructed as system + '#' + code. For a complete listing of all ValueSets, see artifacts.html#terminology-value-sets.",
+        "fhir:displays": "http://smart.who.int/trust-phw/ValueSet-DVCVaccines.displays.json",
+        "fhir:valueSet": "http://smart.who.int/trust-phw/ValueSet/DVCVaccines",
+        "fhir:version": "0.1.0",
+        "fhir:expansionTimestamp": "2026-11-02T00:45:24+00:00"
+      }
+    }
+  }
+}

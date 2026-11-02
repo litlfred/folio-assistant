@@ -1,0 +1,1345 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_DsaDocumentLifecycle",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+ "tasks": {
+  "Call_BeanOpen": {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpen",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "bean-coordination",
+     "href": "../../../reference/skill-instructions/bean-coordination.html"
+    }
+   ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "work-plan-store",
+      "href": "../../../reference/skill-instructions/work-plan-store.html"
+     }
+    ]
+   }
+  },
+  "Task_AgreeTerms": {
+   "id": "Task_AgreeTerms",
+   "name": "P1.1 · Agree purpose, datasets, period, duties and trust anchors",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AgreeTerms",
+   "lane": "Parties and signatories (provider, recipient)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+   "skills": [],
+   "role": {
+    "name": "stakeholder",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+    "title": "Stakeholder",
+    "skills": []
+   }
+  },
+  "Task_WriteText": {
+   "id": "Task_WriteText",
+   "name": "P1.2 · Write the legal text",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_WriteText",
+   "lane": "Author and policy author",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "document-authoring",
+     "href": "../../../reference/skill-instructions/document-authoring.html"
+    },
+    {
+     "name": "normative-statements",
+     "href": "../../../reference/skill-instructions/normative-statements.html"
+    },
+    {
+     "name": "document-structure",
+     "href": "../../../reference/skill-instructions/document-structure.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_RecordLegalBasis": {
+   "id": "Task_RecordLegalBasis",
+   "name": "P1.2a · Record the legal basis",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_RecordLegalBasis",
+   "lane": "Author and policy author",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "normative-statements",
+     "href": "../../../reference/skill-instructions/normative-statements.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_PlainSummary": {
+   "id": "Task_PlainSummary",
+   "name": "P1.2b · Draft the plain-language summary",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_PlainSummary",
+   "lane": "Author and policy author",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "document-authoring",
+     "href": "../../../reference/skill-instructions/document-authoring.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_DeriveOdrl": {
+   "id": "Task_DeriveOdrl",
+   "name": "P1.3 · Derive the ODRL 2.2 Agreement",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DeriveOdrl",
+   "lane": "Author and policy author",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+   "skills": [],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_CheckOdrl": {
+   "id": "Task_CheckOdrl",
+   "name": "P1.4 · Check the ODRL against the text",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_CheckOdrl",
+   "lane": "Reviewer (legal, policy)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_SplitAnnexes": {
+   "id": "Task_SplitAnnexes",
+   "name": "P1.5 · Split public terms from private annexes",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SplitAnnexes",
+   "lane": "Author and policy author",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+   "skills": [],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_Review": {
+   "id": "Task_Review",
+   "name": "Review the draft agreement",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Review",
+   "lane": "Reviewer (legal, policy)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    },
+    {
+     "name": "review-comments",
+     "href": "../../../reference/skill-instructions/review-comments.html"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Call_PublicComment": {
+   "id": "Call_PublicComment",
+   "name": "Public comment on the template",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_PublicComment",
+   "lane": "Public review (commenters, review committee, editor)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_PublicReview",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../reference/skill-instructions/public-comment.html"
+    }
+   ],
+   "calls": {
+    "name": "Public comment on a review draft",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
+    "diagram": "public-comment.html"
+   },
+   "role": {
+    "name": "review-coordinator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
+    "title": "Review coordinator",
+    "skills": [
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html"
+     },
+     {
+      "name": "review-heatmap",
+      "href": "../../../reference/skill-instructions/review-heatmap.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html"
+     }
+    ]
+   }
+  },
+  "Task_Render": {
+   "id": "Task_Render",
+   "name": "Render the text to HTML / PDF",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Render",
+   "lane": "Build pipeline (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "document-publishing",
+     "href": "../../../reference/skill-instructions/document-publishing.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Sign": {
+   "id": "Task_Sign",
+   "name": "P1.6 · Sign",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Sign",
+   "lane": "Parties and signatories (provider, recipient)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+   "skills": [],
+   "role": {
+    "name": "stakeholder",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+    "title": "Stakeholder",
+    "skills": []
+   }
+  },
+  "Task_AssignVersion": {
+   "id": "Task_AssignVersion",
+   "name": "P2.1 · Assign the version and its immutable URL",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AssignVersion",
+   "lane": "Publisher (data provider's publication manager)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    },
+    {
+     "name": "package-release",
+     "href": "../../../reference/skill-instructions/package-release.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Task_Hash": {
+   "id": "Task_Hash",
+   "name": "P2.2 · Record the SHA-256 of each file",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Hash",
+   "lane": "Publisher (data provider's publication manager)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+   "skills": [
+    {
+     "name": "dsa-checksum",
+     "href": "../../../reference/skill-instructions/dsa-checksum.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Task_HashSummary": {
+   "id": "Task_HashSummary",
+   "name": "P2.2a · Hash the plain-language summary with the agreement",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_HashSummary",
+   "lane": "Publisher (data provider's publication manager)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+   "skills": [
+    {
+     "name": "dsa-checksum",
+     "href": "../../../reference/skill-instructions/dsa-checksum.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Task_ConsentCitation": {
+   "id": "Task_ConsentCitation",
+   "name": "P2.2b · State the fixed-version URL and hash a Consent cites",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation",
+   "lane": "Publisher (data provider's publication manager)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Task_OdrlCitesText": {
+   "id": "Task_OdrlCitesText",
+   "name": "P2.3 · Make the ODRL cite the text by URL and hash",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_OdrlCitesText",
+   "lane": "Author and policy author",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "dsa-odrl-source",
+     "href": "../../../reference/skill-instructions/dsa-odrl-source.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_Publish": {
+   "id": "Task_Publish",
+   "name": "Publish the version at its URL",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Publish",
+   "lane": "Build pipeline (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Catalogue": {
+   "id": "Task_Catalogue",
+   "name": "P2.4–5 · Write the DCAT 3 record and link versions",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Catalogue",
+   "lane": "Publisher (data provider's publication manager)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+   "skills": [
+    {
+     "name": "dsa-dcat-record",
+     "href": "../../../reference/skill-instructions/dsa-dcat-record.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanClosePublished": {
+   "id": "Call_BeanClosePublished",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanClosePublished",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "work-plan-store",
+      "href": "../../../reference/skill-instructions/work-plan-store.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanOpenChange": {
+   "id": "Call_BeanOpenChange",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpenChange",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "bean-coordination",
+     "href": "../../../reference/skill-instructions/bean-coordination.html"
+    }
+   ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "work-plan-store",
+      "href": "../../../reference/skill-instructions/work-plan-store.html"
+     }
+    ]
+   }
+  },
+  "Task_DecideChange": {
+   "id": "Task_DecideChange",
+   "name": "Decide: amend, renew or end",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideChange",
+   "lane": "Parties and signatories (provider, recipient)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+   "skills": [],
+   "role": {
+    "name": "stakeholder",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+    "title": "Stakeholder",
+    "skills": []
+   }
+  },
+  "Task_DecideGrants": {
+   "id": "Task_DecideGrants",
+   "name": "P14.2 · Decide what happens to existing grants",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideGrants",
+   "lane": "Parties and signatories (provider, recipient)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+   "skills": [],
+   "role": {
+    "name": "stakeholder",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+    "title": "Stakeholder",
+    "skills": []
+   }
+  },
+  "Task_NewConsentNeeded": {
+   "id": "Task_NewConsentNeeded",
+   "name": "P14.3 · Record that new consent is needed",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_NewConsentNeeded",
+   "lane": "Parties and signatories (provider, recipient)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+   "skills": [],
+   "role": {
+    "name": "stakeholder",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+    "title": "Stakeholder",
+    "skills": []
+   }
+  },
+  "Task_SetStatus": {
+   "id": "Task_SetStatus",
+   "name": "P14.5 · Set the catalogue status to ended",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SetStatus",
+   "lane": "Publisher (data provider's publication manager)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
+   "skills": [
+    {
+     "name": "dsa-catalogue-status",
+     "href": "../../../reference/skill-instructions/dsa-catalogue-status.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Task_EndDuties": {
+   "id": "Task_EndDuties",
+   "name": "Revoke grants and start end-of-agreement duties",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_EndDuties",
+   "lane": "Parties and signatories (provider, recipient)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
+   "skills": [],
+   "role": {
+    "name": "stakeholder",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+    "title": "Stakeholder",
+    "skills": []
+   }
+  },
+  "Call_BeanCloseEnded": {
+   "id": "Call_BeanCloseEnded",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded",
+   "lane": "Work plan — beans (shared by humans and agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../reference/skill-instructions/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "work-plan-store",
+      "href": "../../../reference/skill-instructions/work-plan-store.html"
+     }
+    ]
+   }
+  }
+ }
+}

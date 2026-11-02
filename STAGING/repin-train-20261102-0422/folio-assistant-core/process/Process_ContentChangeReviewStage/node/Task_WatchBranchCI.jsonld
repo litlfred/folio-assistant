@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_WatchBranchCI.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_WatchBranchCI",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Open the branch-watch bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_ContentChangeReviewStage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_ContentChangeReviewStage/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/skill/watch",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/process/Process_ContentChangeReviewStage#flow/p4b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_WatchBranchCI"
+    }
+  ]
+}

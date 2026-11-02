@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap/process/Process_Discussion/node/A_AskRequestor.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap/process/Process_Discussion/node/A_AskRequestor",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Ask which harness, and where",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap/process/Process_Discussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap/skill/confirm-harness",
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap/process/Process_HumanAgentDiscussion"
+    }
+  ]
+}

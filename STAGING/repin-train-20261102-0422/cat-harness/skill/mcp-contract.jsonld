@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/mcp-contract.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/mcp-contract",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "mcp-contract",
+      "title": "MCP contract — the projected service must match what it was projected from",
+      "description": "Verify an MCP service's tools against the Tool nodes and skill declarations they came from — I/O equivalence in both directions. Read before shipping a projected server, and when a tool call fails with an argument the schema said was fine.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/package/folio-core"
+      ],
+      "instructionsPath": "skills/tools/folio-core/mcp-contract.md",
+      "instructionLines": 88,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/mcp-contract"
+    }
+  ]
+}

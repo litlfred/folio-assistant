@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/skill/tabular-metadata.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/skill/tabular-metadata",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "tabular-metadata",
+      "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read",
+      "description": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph.",
+      "instructionsPath": "skills/library/ingestion/tabular-metadata.md",
+      "instructionLines": 221,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/tabular-metadata"
+    }
+  ]
+}

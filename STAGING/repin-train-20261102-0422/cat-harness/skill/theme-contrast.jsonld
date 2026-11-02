@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/theme-contrast.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/skill/theme-contrast",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "theme-contrast",
+      "title": "Contrast: measured over the darkest thing that could be there",
+      "description": "Why every scrim is measured over PURE BLACK rather than over the art actually in use, what the AAA floor is, and why the high-contrast pair declares no backdrop at all. The CONSUMER stage that says what the ink must survive.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/package/theming"
+      ],
+      "instructionsPath": "skills/ui/theming/theme-contrast.md",
+      "instructionLines": 75,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-contrast"
+    }
+  ]
+}

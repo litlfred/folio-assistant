@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/nist-sp-800-207",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Zero Trust Architecture",
+      "dcterms:creator": [
+        "Architecture, Zero Trust"
+      ],
+      "dcterms:issued": "D:20200810",
+      "bibo:doi": "10.6028/NIST.SP.800-207",
+      "dcterms:identifier": "https://doi.org/10.6028/NIST.SP.800-207",
+      "dcterms:source": "cat-harness/library/nist-sp-800-207/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/nist-sp-800-207"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap-tools/role/github-pages.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap-tools/role/github-pages",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "GitHub Pages",
+      "title": "GitHub Pages",
+      "notation": "github-pages",
+      "description": "The host that serves what the Site Publisher deployed, at the publication root URL. It receives a deployment — a commit on the `gh-pages` branch — and serves it, deciding nothing. Its skill is its contract, `github-pages`, which `pages-status` tests (owner, 2026-10-16).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/bootstrap-tools/skill/github-pages"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/role/github-pages"
+    }
+  ]
+}

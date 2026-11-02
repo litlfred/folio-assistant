@@ -1,0 +1,21 @@
+{
+  "$ref": "#/definitions/FhirR5PermissionRuleType",
+  "definitions": {
+    "FhirR5PermissionRuleType": {
+      "type": "string",
+      "enum": [
+        "deny",
+        "permit"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/odrl-to-fhir-r5-permission/FhirR5PermissionRuleTypeSchema.schema.json",
+  "title": "FhirR5PermissionRuleTypeSchema",
+  "description": "Generated from `FhirR5PermissionRuleTypeSchema` in schemas/odrl-to-fhir-r5-permission.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  }
+}

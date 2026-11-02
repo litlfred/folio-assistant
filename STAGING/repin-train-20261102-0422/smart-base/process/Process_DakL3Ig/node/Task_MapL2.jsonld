@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/process/Process_DakL3Ig/node/Task_MapL2.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Map L2 → L3",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "performedBy": "http://smart.who.int/base/role/fhir-modeller",
+      "inLane": "http://smart.who.int/base/process/Process_DakL3Ig/lane/Lane_Modeller",
+      "requires": [
+        "http://smart.who.int/base/skill/l3-fhir-authoring",
+        "http://smart.who.int/base/skill/l2-dak-authoring"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

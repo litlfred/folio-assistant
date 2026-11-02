@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/skill/lean-content-test.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/skill/lean-content-test",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "lean-content-test",
+      "title": "Lean content test",
+      "description": "The paper-folio half of the harness's content-test: run Lean proof verification and LaTeX compilation, dispatch the repo's Lean CI, and check how much of the corpus a Lake build reaches before reading its numbers.",
+      "instructionsPath": "skills/content/folio-paper-adapter/lean-content-test.md",
+      "instructionLines": 54,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-content-test"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/skill/critical-path-analysis.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/skill/critical-path-analysis",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "critical-path-analysis",
+      "title": "Critical Path Analysis & Context Review",
+      "description": "Analyse the critical path of the paper's argument chain, audit statement and proof contexts (e.g. general vs specialised assumptions), identify blocks that need rewriting, and propose cleanups.  Also covers \"statement and proof context review\" — classifying each result by whether its statement, proof, or both require specialisation assumptions.",
+      "instructionsPath": "skills/content/folio-paper-adapter/critical-path-analysis.md",
+      "instructionLines": 166,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/critical-path-analysis"
+    }
+  ]
+}

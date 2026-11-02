@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/skill/lean-environment-setup.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0422",
+    "sha": "6935700569b5fb27253bbf59836dc768205c3ceb",
+    "pr": "2905/merge",
+    "run": "41388516236"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/skill/lean-environment-setup",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "lean-environment-setup",
+      "title": "Lean Environment Setup",
+      "description": "Sets up and troubleshoots the Lean 4 environment for Claude Code sessions. Ensures elan, lake, lean are installed so the paper-assistant MCP's Lean tools are operational. Handles sandboxed/cloud environments where downloads may be restricted.",
+      "instructionsPath": "skills/content/folio-paper-adapter/lean-environment-setup.md",
+      "instructionLines": 181,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0422/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-environment-setup"
+    }
+  ]
+}
