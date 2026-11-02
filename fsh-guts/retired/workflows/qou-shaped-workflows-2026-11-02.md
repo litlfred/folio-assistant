@@ -1,19 +1,21 @@
 ---
 $schema: folio-fsh-guts/v1
-title: "Four qou-shaped workflows, retired from folio-assistant: they build material only qou holds"
+title: "Three qou-shaped workflows, retired from folio-assistant: they build material only qou holds"
 kind: retired-workflow
 movedOn: 2026-11-02
-movedFrom: ".github/workflows/{snappea_wasm,hecke-engine-wasm,witness-refresh,publish}.yml in litlfred/folio-assistant"
+movedFrom: ".github/workflows/{snappea_wasm,hecke-engine-wasm,witness-refresh}.yml in litlfred/folio-assistant"
 issue: 2909
 summary: >-
-  snappea_wasm, hecke-engine-wasm, witness-refresh and publish.yml named
+  snappea_wasm, hecke-engine-wasm and witness-refresh named
   folio-assistant/computations and folio-assistant/snappea-wasm, paths of the
-  old monorepo checkout that separation:cutover:check flags. All four ran only
+  old monorepo checkout that separation:cutover:check flags. All three ran only
   by hand. Retired on the owner's choice Q-SEP-5 A (2026-11-02 10:05Z); kept
-  verbatim beside this note.
+  verbatim beside this note. publish.yml was archived too at first, then kept
+  in fa: cat-harness-tools tests treat it as the platform's reusable folio
+  pipeline.
 ---
 
-# Four qou-shaped workflows retired from folio-assistant (2026-11-02)
+# Three qou-shaped workflows retired from folio-assistant (2026-11-02)
 
 Copied verbatim from folio-assistant main at `41bbb14ed0` and removed from
 `.github/workflows/` there, so `separation:cutover:check` (monorepo-paths)
@@ -24,9 +26,8 @@ passes. Part of fa#2894 Phase 2c (GOAL 1 separation), PR fa#2909.
 | `snappea_wasm.yml` | builds `folio-assistant/snappea-wasm`, absent since the split |
 | `hecke-engine-wasm.yml` | builds in `folio-assistant/computations`; that code lives in litlfred/qou |
 | `witness-refresh.yml` | regenerates witnesses in `folio-assistant/computations` (qou) |
-| `publish.yml` | the folio PDF/HTML pipeline; its witness steps and mount fallback name the old submodule layout |
 
-All four were `workflow_dispatch` only (publish.yml also `workflow_call`).
-qou's `build.yml` calls `publish.yml` at a pinned sha, which still resolves
-after this removal; a future qou build belongs in qou (bean qou-pwp9).
+All three were `workflow_dispatch` only. `publish.yml` stays in
+folio-assistant: qou's `build.yml` calls it at a pinned sha, and
+cat-harness-tools tests treat it as the platform's reusable folio pipeline.
 Same treatment as `witness-pipeline.yml` (bean 52dz: dead workflows go here, never `rm`).
