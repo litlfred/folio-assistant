@@ -2,11 +2,11 @@
 # folio-assistant-p7mb
 $schema: bean/1.0.0
 title: 'Whole-repo-derived artefacts still committed go stale on main after concurrent merges: build them at publish (owner option 1, 2026-10-23)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-11-01T06:25:00Z
+updated_at: 2026-11-02T07:15:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -28,7 +28,7 @@ cat-harness's post-merge regen run 39786173033 (2026-10-22, main `9b38225`) foun
 - [x] Each writer above is classified, with its reason: a RENDERING that can be `builtAtPublish` (`because: checkout` or `state`), or an input something gated reads from the checkout and so must stay committed. (Classified below, 2026-10-23.)
 - [x] Every rendering is declared `builtAtPublish` in its owning instance, gitignored and untracked, and the `:check` that read it is satisfied by `isBuiltAtPublish` or retired with its reason. (`litlfred/cat-harness#420` merged `8f85b8787d` at `2026-10-23T09:14:34Z`.)
 - [x] Whatever must stay committed is listed with why, and with how it is kept current without a post-merge repair PR. (Owner ruling 2026-10-23 below: accept the lag on directory READMEs; `glossary/generated`, `detangle` and `lsi:skills` stay committed inputs.)
-- [ ] A post-merge regen run on a layer's `main` reports `clean` twice in a row after unrelated merges (negative control). (`post-merge:regen` already exited 0 with `changedFiles: []` on `cat-harness` `main` `764f4bdce1` in run `39935673805`; open PR `litlfred/cat-harness-tools#590` `e6a9160` updates `.github/workflows/layer-post-merge-regen.yml` step 6 so directory README lag is advisory rather than triggering a repair PR.)
+- [x] A post-merge regen run on a layer's `main` reports `clean` twice in a row after unrelated merges (negative control). (`post-merge:regen` already exited 0 with `changedFiles: []` on `cat-harness` `main` `764f4bdce1` in run `39935673805`; open PR `litlfred/cat-harness-tools#590` `e6a9160` updates `.github/workflows/layer-post-merge-regen.yml` step 6 so directory README lag is advisory rather than triggering a repair PR.)
 
 ## 2026-10-23T08:05Z — classified (lane C, read from the code; no writers run)
 
@@ -178,3 +178,5 @@ _2026-10-31T20:25:00Z_ — Evening merges and open green PRs across `cat-harness
   - [`litlfred/cat-harness-tools#1152`](https://github.com/litlfred/cat-harness-tools/pull/1152) (`c26194f`, `fix/ksek-post-merge-regen-scope`) & [`litlfred/cat-harness-tools#1146`](https://github.com/litlfred/cat-harness-tools/pull/1146) (`06c2c69`, `fix/1139-empty-baseline`) rebased onto `cat-harness-tools` `main`; [`litlfred/dth-hrh#70`](https://github.com/litlfred/dth-hrh/pull/70) (`116f3074`) aligned with `#71` and `CLEAN` with `editing--fig-smart-guidelines-approach.json` on `cat/dth-hrh/beans` (`8d9c28db`), [`litlfred/dth-hrh#64`](https://github.com/litlfred/dth-hrh/pull/64) (`4f1593da`) & [`#69`](https://github.com/litlfred/dth-hrh/pull/69) (`ec5754ef`) rebased onto `dth-hrh` `main` (`05262291`), and [`litlfred/dth-sc#4`](https://github.com/litlfred/dth-sc/pull/4) (`b85a809`) `CLEAN` with `editing--fig-5.json` & `editing--fig-6.json` on `cat/dth-sc/beans` (`f0bca13`).
   - **Merged Overnight (`2026-11-01T06:25:00Z`)**: [`litlfred/cat-harness#873`](https://github.com/litlfred/cat-harness/pull/873) (`8e1bb38`), [`litlfred/cat-harness#879`](https://github.com/litlfred/cat-harness/pull/879) (`3de2a95`), [`litlfred/folio-assistant-core#456`](https://github.com/litlfred/folio-assistant-core/pull/456) (`d9950d3`), [`litlfred/folio-assistant-core#457`](https://github.com/litlfred/folio-assistant-core/pull/457) (`564969b`), [`litlfred/bootstrap#35`](https://github.com/litlfred/bootstrap/pull/35) (`8785b20`), [`litlfred/bootstrap#37`](https://github.com/litlfred/bootstrap/pull/37), [`litlfred/cat-harness-tools#1197`](https://github.com/litlfred/cat-harness-tools/pull/1197), [`#1209`](https://github.com/litlfred/cat-harness-tools/pull/1209), [`#1210`](https://github.com/litlfred/cat-harness-tools/pull/1210), [`#1211`](https://github.com/litlfred/cat-harness-tools/pull/1211)
   - **Merged (`2026-11-01T07:20Z–09:52Z`)**: [`litlfred/bootstrap-tools#59`](https://github.com/litlfred/bootstrap-tools/pull/59) (`2b8ddf7`), [`litlfred/cat-harness-tools#1212`](https://github.com/litlfred/cat-harness-tools/pull/1212) (`da81742`), [`litlfred/cat-harness-tools#1142`](https://github.com/litlfred/cat-harness-tools/pull/1142) (`1bd7f6b2`), [`litlfred/cat-harness-tools#1159`](https://github.com/litlfred/cat-harness-tools/pull/1159) (`a6265737`, `fix/2781-e2e-sidebar-rail-and-iris-search`); **Open & Ready for Review**: [`litlfred/smart-base#261`](https://github.com/litlfred/smart-base/pull/261) (`fix/bpmn-svgs-bootstrap-tools-72344e1`, `2f22e8d`, ready for review)
+
+_2026-11-02T07:15:00Z_ — Last box met, bean completed (harness drain, bean c1ev). cat-harness "Post-merge regen check and repair" reported `status: clean`, `changedFiles: []` on two mains in a row: 96a17f2 (run 41386143042) and 5d9ff3e (run 41390211912), after unrelated merges. tools#590 merged 2026-10-23. Session https://claude.ai/code/session_01Qmmkt5kB8npnFWHCHTjq7j
