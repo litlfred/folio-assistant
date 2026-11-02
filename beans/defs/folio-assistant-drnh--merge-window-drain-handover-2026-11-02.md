@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T20:13:54Z
+updated_at: 2026-11-02T20:14:09Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -94,3 +94,5 @@ _2026-11-02T19:58:55Z_ — Harness drain (https://claude.ai/code/session_01EucfR
 _2026-11-02T20:05:03Z_ — Train check: repin-train/20261102-1625 is still the newest (head de098fc, Q-SLASH-8 applied). Still 16 reds, the same as before; QA working copy fails on skill:register, check:lane-documentation and methodology-evidence (cat-harness c7cfab5). No re-pin yet: the fix is cat-harness#999 (sibling session_01EucfRo4LGSMzJn5kq6PucY, CI check 20:05Z, then merge and re-pin). Not merged. who-iris#165 waits. Next check after the re-pin lands.
 
 _2026-11-02T20:13:54Z_ — cat-harness#999 merged at 42bc930 with all checks green (it also lands #996, c7cfab5). Re-pinned on repin-train/20261102-1625 as 9675208: index.lock.json harness ref, instance sha, trust ref and treeDigest (5d14177c…, 12002 files, declaration unchanged), and index.config.json ref plus consent ref, following 68df55f. Coordinator messaged.
+
+_2026-11-02T20:14:09Z_ — Correction to the previous entry: the coordinator was NOT messaged. session_01EucfRmNiFYxXqLAgwhF71Q has been archived since about 20:09Z, so send_message was refused. Whoever owns the train merge next: fa#2921 is at 9675208 (cat-harness 42bc930) and needs its CI watched and merged by 2026-11-03 00:40Z.
