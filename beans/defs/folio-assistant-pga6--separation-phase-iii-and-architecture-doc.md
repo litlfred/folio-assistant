@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: low
 created_at: 2026-11-01T15:47:00Z
-updated_at: 2026-11-02T07:10:00Z
+updated_at: 2026-11-02T19:53:09Z
 parent: folio-assistant-vuip
 ---
 
@@ -19,3 +19,5 @@ Phases I and II of #223 are done: epic 7x5n (separation arc) is completed, and e
 - [ ] A write-up of the current and future software architecture: repo roles (Content, Tool, Test, Consumer app, per #223), the dependency direction between them, and the migration path. Integrated with the existing docs, not a separate island.
 
 _2026-11-02T07:10:00Z_ — Re-parented from `iirv` to `vuip`. `iirv` (the cat-harness / cat-harness-tools split) closed when its last split task, `6fez`, landed. Phase III is new repositories, not part of that split, so it sits under the GOAL 1 umbrella. Owner card Q-SEP-1 A (2026-11-01 20:54Z): this waits until after the MVP freeze. Session https://claude.ai/code/session_01Qmmkt7RHts2i4tKUhAsKBF (thread "Separate the repos for MVP").
+
+_2026-11-02T19:53:09Z_ — Close-out check (harness drain 4j43): NOT closable in this window. Both boxes need new work (a Phase III proposal and an architecture write-up), and owner card Q-SEP-1 A defers it until after the MVP freeze. It stays `todo` and leaves the drain's open list as owner-deferred. Session https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5

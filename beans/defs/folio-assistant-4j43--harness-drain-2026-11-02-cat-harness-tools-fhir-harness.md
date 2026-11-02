@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T19:47:01Z
+updated_at: 2026-11-02T19:53:09Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -51,3 +51,5 @@ _2026-11-02T18:32:00Z_ — Plan and state written here as the drain's durable me
 _2026-11-02T18:43:00Z_ — cat-harness-tools#1399 merged (fe808ba) after the test-order fix went green. Its paired issue fhir-harness#269 was already closed.
 
 _2026-11-02T19:47:01Z_ — Previous owner threads stalled (owner 19:46Z). The drain was taken over by sibling https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5. The cat-harness train blocker went to https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY. The coordinator is https://claude.ai/code/session_01EucfRmNiFYxXqLAgwhF71Q.
+
+_2026-11-02T19:53:09Z_ — Takeover blocked: this session can reach only litlfred/folio-assistant. Attaching cat-harness and cat-harness-tools (add_repo) was refused by the session's permission check, so cat-harness#980, #959, #981, #972 and cat-harness-tools#1411, #1378, #1379, #1356, #1299 are not re-checked or touched, and no PR comment was posted. Needs: the owner allows add_repo for this session, or another session with those repos takes them. fwtz and pga6 checked (notes on each): neither can be completed now. fwtz: none of its 3 boxes is met on main, and its open PRs folio-assistant#2875 and #2904 both edit .github/workflows (owner-only). pga6: the owner deferred it until after the MVP freeze (card Q-SEP-1 A). Session https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5

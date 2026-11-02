@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T19:47:01Z
+updated_at: 2026-11-02T19:53:09Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -84,3 +84,5 @@ _2026-11-02T19:42:55Z_ — Train fa#2921 (repin-train/20261102-1625 @ 68df55f, s
 _2026-11-02T19:45:48Z_ — The owner ran Q-SLASH-8. The train is now at de098fc (588844b "drop .json copy step", then de098fc tombstone-comment cleanup). The root `${STUB}.json` copy lines are gone from both workflows. CI restarted. The cat-harness saturation-meta-merge reds (previous comment) are expected to remain until a cat-harness fix is re-pinned.
 
 _2026-11-02T19:47:01Z_ — The owner reported only two other agents active (19:46Z) and every thread idle over 15 minutes as stalled, so I started siblings. cat-harness saturation-meta-merge fix and re-pin: https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY. Harness drain (4j43): https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5. Review-log watcher (lgwt): https://claude.ai/code/session_01EucfRmAyZLEuxMG8wkPi5r. This coordinator (https://claude.ai/code/session_01EucfRmNiFYxXqLAgwhF71Q) keeps the train fa#2921 and its follow-on merges (who-iris#165, then tools#1299 recount).
+
+_2026-11-02T19:53:09Z_ — Harness drain sibling (https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5): no merges. This session cannot reach cat-harness or cat-harness-tools (add_repo refused), so the harness PR merges in 4j43 are blocked until access is granted or another session takes them.
