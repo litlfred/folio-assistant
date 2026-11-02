@@ -40,3 +40,7 @@ Resume: generator scripts per diagram in /mnt/project-files/bpmn-layout-2026-11-
 
 _2026-11-02T19:55:00Z_ — Pushed to #990 (head 79ceba7): review-task, upstream-pin-watch, publish-verification, options-analysis (task renamed "Record the chosen option AND the rejected ones", .pot updated), secure-agent-permissions (1920->1400), crdm-signoff (1810->1350). 20 redrawn, 25 left (list below).
 NEXT: translation-workflow, copy-into-folio, then subscribe-kg, human-translation-workflow, kg-separation, test-data-curation, merge-train, crdm-deliver, sub-kg-lifecycle, named-query-execution, mount-subgraph, kg-to-portal, requirements-filing, narrative-code-review, merge-refusal, bean-close, document-ingestion, mount-dependency, graph-detanglement, staging-render-log, qa-publish, bean-drain, crdm-requirements-definition, crdm-issue-linking, voice-review.
+
+_2026-11-02T20:30:00Z_ — Pushed to #990: translation-workflow (2 rows, names shortened to fit, .pot updated), copy-into-folio, qa-publish, bean-drain, voice-review, crdm-issue-linking, staging-render-log, crdm-requirements-definition. 28 redrawn, 17 left.
+NEXT: subscribe-kg, human-translation-workflow, kg-separation, test-data-curation, merge-train, crdm-deliver, sub-kg-lifecycle, named-query-execution, mount-subgraph, kg-to-portal, requirements-filing, narrative-code-review, merge-refusal, bean-close, document-ingestion, mount-dependency, graph-detanglement.
+Note: translation-workflow has a laneSet but no pool/lanes drawn (left as-is; follow-up).
