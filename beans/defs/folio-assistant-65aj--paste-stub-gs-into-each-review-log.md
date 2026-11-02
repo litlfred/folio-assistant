@@ -5,8 +5,9 @@ title: Paste Stub.gs into each review log
 status: todo
 type: task
 priority: normal
+parent: folio-assistant-dthl
 created_at: 2026-11-02T14:40:00Z
-updated_at: 2026-11-02T14:40:00Z
+updated_at: 2026-11-02T15:23:00Z
 tags:
     - review-sheet
     - person-step
