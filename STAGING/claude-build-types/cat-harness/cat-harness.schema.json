@@ -957,6 +957,13 @@
                   "minLength": 1
                 }
               },
+              "awaitingCitation": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
               "visualisedAs": {
                 "type": "string",
                 "enum": [
@@ -1187,6 +1194,10 @@
               "reason": {
                 "type": "string",
                 "minLength": 1
+              },
+              "index": {
+                "type": "boolean",
+                "const": true
               }
             },
             "required": [
@@ -2241,8 +2252,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/build-types",
-    "sha": "52104a46669cffa0eb1301979898fc364c93dbb7",
+    "sha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
     "pr": "2871/merge",
-    "run": "41348246692"
+    "run": "41383236235"
   }
 }

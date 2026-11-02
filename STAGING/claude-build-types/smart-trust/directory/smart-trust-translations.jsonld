@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/smart-trust.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-translations.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/smart-trust.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
+    "pr": "2871/merge",
+    "run": "41383236235"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-translations",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-trust-translations",
+      "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/translation-sources"
+      ],
+      "description": "The gettext side of smart-trust's own strings, one directory per target locale: today the `glossary/` templates of the GDHCN glossary (`glossary/gdhcn.glossary.json`). A scheme's translations sit with the instance whose terms they translate (owner, 2026-10-04, bean riit). Written by `bun run cat glossary:pot`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-translations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-translations"
+    }
+  ]
+}

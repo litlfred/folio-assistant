@@ -1,0 +1,33 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2005.09998v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Tackling the DMN Challenges with cDMN: A Tight Integration of DMN and Constraint Reasoning",
+      "dcterms:creator": [
+        "DMN, A Tight Integration of",
+        "Constraint"
+      ],
+      "dcterms:issued": "D:20200521",
+      "dcterms:identifier": "https://arxiv.org/abs/2005.09998",
+      "dcterms:abstract": "This paper describes an extension to the DMN standard, called cDMN. It aims to enlarge the expressivity of DMN in order to solve more complex problems, while retaining DMN’s goal of being readable by domain experts. We test cDMN by solving the most complex challenges posted on the DM Community website. We compare our own cDMN solutions to the solutions that have been submitted to the website and ﬁnd that our approach is competitive, both in readability and compactness. Moreover, cDMN is able to solve more challenges than any other approach.",
+      "dcterms:source": "cat-harness/library/arxiv-2005.09998v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2005.09998v1"
+    }
+  ]
+}

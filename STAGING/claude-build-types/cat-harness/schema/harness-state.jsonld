@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/schema/harness-state.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
+    "pr": "2871/merge",
+    "run": "41383236235"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/schema/harness-state",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "harness-state",
+      "title": "harness-state",
+      "summary": "One harness's state as `harness:state` publishes it (`folio-harness-state/v1`).",
+      "module": "schemas/sdlc/harness-state.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/harness-state"
+    }
+  ]
+}

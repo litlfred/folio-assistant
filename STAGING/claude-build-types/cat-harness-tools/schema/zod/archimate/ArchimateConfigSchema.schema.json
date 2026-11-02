@@ -69,6 +69,10 @@
                   "same-elements",
                   "by-eye"
                 ]
+              },
+              "svg": {
+                "type": "string",
+                "pattern": "\\.svg$"
               }
             },
             "required": [
@@ -80,6 +84,62 @@
             ],
             "additionalProperties": false
           }
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "block": {
+                "type": "string",
+                "pattern": "\\.md$"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "relationship-types",
+                  "relationship-rules"
+                ]
+              },
+              "rules": {
+                "type": "string",
+                "pattern": "\\.json$"
+              },
+              "model": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9._-]+$"
+              }
+            },
+            "required": [
+              "block",
+              "label",
+              "kind",
+              "rules"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "poster": {
+          "type": "object",
+          "properties": {
+            "noteProperty": {
+              "type": "string",
+              "minLength": 1
+            },
+            "starProperty": {
+              "type": "string",
+              "minLength": 1
+            },
+            "starLabel": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
@@ -95,8 +155,8 @@
   "description": "Generated from `ArchimateConfigSchema` in archimate/schemas/archimate.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "claude/build-types",
-    "sha": "52104a46669cffa0eb1301979898fc364c93dbb7",
+    "sha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
     "pr": "2871/merge",
-    "run": "41348246692"
+    "run": "41383236235"
   }
 }

@@ -374,15 +374,15 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-01T21:23:13.135Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/52104a46669cffa0eb1301979898fc364c93dbb7",
-  "sourceCommitSha": "52104a46669cffa0eb1301979898fc364c93dbb7",
-  "sourceCommitAt": "2026-11-01T20:42:27Z",
+  "generatedAt": "2026-11-02T03:49:17.238Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
+  "sourceCommitSha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
+  "sourceCommitAt": "2026-11-02T03:27:45Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 6,
-    "Subgraph": 5,
+    "GraphTypology": 10,
+    "Subgraph": 9,
     "Asset": 2
   },
   "@graph": [
@@ -394,11 +394,25 @@
       "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. An L1 library's catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/library",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "library",
+      "renderable": false,
+      "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/document-kinds",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
       "name": "document-kinds",
       "renderable": false,
       "summary": "Document kinds — named structures of sections (fixed or semi-fixed) that a document authored with a harness follows, one `document-kind/1.0.0` JSON each, plus computed `document-kind-coverage/1.0.0` reports of how a subject realises one. Every kind and section names its sources; `computedFrom` names the declared graphs a section derives from."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/translation-sources",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "translation-sources",
+      "renderable": false,
+      "summary": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/openapi",
@@ -427,6 +441,20 @@
       "name": "ig-pages",
       "renderable": false,
       "summary": "The pages of a FHIR Implementation Guide mirror, generated from its artefact index and the chrome of its template chain. Carried beside `docs` on the same directory: `docs` is how the site mounts them, and this kind is what says they are derived."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/catalogue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "catalogue",
+      "renderable": false,
+      "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#graphTypology/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#GraphTypology",
+      "name": "glossary",
+      "renderable": false,
+      "summary": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-ast",
@@ -520,6 +548,74 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-docs"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/library",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "library",
+      "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/library"
+      ],
+      "description": "L1 source documents materialized for smart-trust: the GDHCN Administrative and Operational Framework 1.2 (9 October 2026), the legal source document for GDHCN definitions and Trust Domains (owner, 2026-11-01: \"admin framework is the legal source document for GDHCN\"). Every knowledge-graph reference to the Framework resolves through here, and `check:materialized-fixity` verifies its SHA-256 digest against `catalogue/`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/library",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-catalogue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-trust-catalogue",
+      "path": "catalogue/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/catalogue"
+      ],
+      "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and materialization fixity (`folio-catalogue-node/v1`) records for the documents materialized in `library/`: the GDHCN Administrative and Operational Framework 1.2. `bun run cat check:catalogue` and `bun run cat check:materialized-fixity` verify every node, metadataRef, libraryId, localPath and SHA-256 digest.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-catalogue",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-catalogue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "glossary",
+      "path": "glossary/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/v0/ns#graphTypology/glossary"
+      ],
+      "description": "The primary GDHCN glossary (`gdhcn.glossary.json`, folio-glossary/v1): the 21 definitions in Section II of the GDHCN Administrative and Operational Framework 1.2, quoted from the L1 copy in `library/`. The Framework is the legal source (owner, 2026-11-01); IG-only terms may be added in a separate scheme and never override it. Rendered and checked by check:glossary.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-translations",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-trust-translations",
+      "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/translation-sources"
+      ],
+      "description": "The gettext side of smart-trust's own strings, one directory per target locale: today the `glossary/` templates of the GDHCN glossary (`glossary/gdhcn.glossary.json`). A scheme's translations sit with the instance whose terms they translate (owner, 2026-10-04, bean riit). Written by `bun run cat glossary:pot`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-translations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-translations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/asset/agent-instructions",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
       "name": "agent-instructions",
@@ -570,6 +666,30 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-docs"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/smart-trust.jsonld#directory/library",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/library",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/library"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/smart-trust.jsonld#directory/smart-trust-catalogue",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-catalogue",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-catalogue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/smart-trust.jsonld#directory/glossary",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/glossary",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/smart-trust.jsonld#directory/smart-trust-translations",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-translations",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/directory/smart-trust-translations"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/smart-trust.jsonld#asset/agent-instructions",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/smart-trust/asset/agent-instructions",
@@ -584,8 +704,8 @@
   ],
   "staging": {
     "branch": "claude/build-types",
-    "sha": "52104a46669cffa0eb1301979898fc364c93dbb7",
+    "sha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
     "pr": "2871/merge",
-    "run": "41348246692"
+    "run": "41383236235"
   }
 }

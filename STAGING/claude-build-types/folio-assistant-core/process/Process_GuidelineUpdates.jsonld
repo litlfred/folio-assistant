@@ -1,0 +1,182 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
+    "pr": "2871/merge",
+    "run": "41383236235"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Guideline Updates",
+      "summary": "Taking up a new version of a guideline, or a changed lower layer, is a re-pin and a review at once.",
+      "description": "Taking up a new version of a guideline, or a changed lower layer, is a\nre-pin and a review at once. The steward maps the affected layers and\nre-pins them in dependency order. For each re-pin, the adaptation team\ncompares the old version, the new version and its own adaptations. A\nchange that touches no adaptation or policy merges on the technical\npath. One that does goes to the adaptation committee, which decides for\neach adaptation whether to keep, revise or retire it. Revisions are\nordinary content changes (Process_ContentChangeReview), and the re-pin\nmerges with them. The loop runs until every layer is current.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/guideline-updates.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/guideline-updates.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/assets/img/workflows/guideline-updates.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged"
+      ],
+      "nodeCount": 14,
+      "flowCount": 16,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/process/Process_GuidelineUpdates/node/End_Current",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17"
+    }
+  ]
+}

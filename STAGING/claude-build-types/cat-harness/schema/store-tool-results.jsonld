@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/schema/store-tool-results.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
+    "pr": "2871/merge",
+    "run": "41383236235"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/schema/store-tool-results",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "store-tool-results",
+      "title": "store-tool-results",
+      "summary": "Typed results of the tools that read and write the harness's data stores —",
+      "module": "schemas/tools/store-tool-results.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/store-tool-results"
+    }
+  ]
+}

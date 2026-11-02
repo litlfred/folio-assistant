@@ -1,0 +1,224 @@
+{
+  "$ref": "#/definitions/MergedGatesReport",
+  "definitions": {
+    "MergedGatesReport": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-merged-gates-report/v1"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "conflict",
+            "fail",
+            "not-clean",
+            "undetermined"
+          ]
+        },
+        "exitCode": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 0
+            },
+            {
+              "type": "number",
+              "const": 1
+            },
+            {
+              "type": "number",
+              "const": 2
+            }
+          ]
+        },
+        "head": {
+          "type": "string"
+        },
+        "base": {
+          "type": "string"
+        },
+        "behind": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "gates": {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "folio-gates-report/v1"
+            },
+            "outcome": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "not-clean",
+                "undetermined"
+              ]
+            },
+            "exitCode": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "const": 0
+                },
+                {
+                  "type": "number",
+                  "const": 1
+                },
+                {
+                  "type": "number",
+                  "const": 2
+                }
+              ]
+            },
+            "set": {
+              "type": "string",
+              "enum": [
+                "fast",
+                "whole"
+              ]
+            },
+            "gates": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "writers": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "failed": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "command": {
+                    "type": "string"
+                  },
+                  "job": {
+                    "type": "string"
+                  },
+                  "step": {
+                    "type": "string"
+                  },
+                  "why": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "command",
+                  "job",
+                  "step",
+                  "why"
+                ]
+              }
+            },
+            "skipped": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "command": {
+                    "type": "string"
+                  },
+                  "why": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "command",
+                  "why"
+                ]
+              }
+            },
+            "mutatedBy": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "undetermined": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "unclassified": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string"
+                  },
+                  "command": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file",
+                  "command"
+                ]
+              }
+            },
+            "unrun": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "outcome",
+            "exitCode",
+            "set",
+            "gates",
+            "writers",
+            "failed",
+            "skipped",
+            "mutatedBy",
+            "undetermined",
+            "unclassified",
+            "unrun"
+          ],
+          "additionalProperties": false
+        },
+        "why": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "$schema",
+        "outcome",
+        "exitCode"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/gates-report/MergedGatesReportSchema.schema.json",
+  "title": "MergedGatesReportSchema",
+  "description": "Generated from `MergedGatesReportSchema` in schemas/sdlc/gates-report.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
+    "pr": "2871/merge",
+    "run": "41383236235"
+  }
+}

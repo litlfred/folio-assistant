@@ -1,0 +1,69 @@
+{
+  "$ref": "#/definitions/ArchimateViewNode",
+  "definitions": {
+    "ArchimateViewNode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "element",
+            "group",
+            "note",
+            "view-ref"
+          ]
+        },
+        "ref": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "w": {
+          "type": "number"
+        },
+        "h": {
+          "type": "number"
+        },
+        "parent": {
+          "type": "string"
+        },
+        "fill": {
+          "type": "string"
+        },
+        "alternate": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "x",
+        "y",
+        "w",
+        "h"
+      ],
+      "additionalProperties": false,
+      "description": "ViewNode"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/archimate/ArchimateViewNodeSchema.schema.json",
+  "title": "ArchimateViewNodeSchema",
+  "description": "Generated from `ArchimateViewNodeSchema` in archimate/schemas/archimate.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
+    "pr": "2871/merge",
+    "run": "41383236235"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-build-types/cat-harness/tool-types/BeanQueryRows.schema.json",
+  "title": "BeanQueryRows",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "propertyNames": {
+      "type": "string"
+    },
+    "additionalProperties": {
+      "type": "string"
+    }
+  },
+  "description": "The rows a bean SPARQL query returned, each variable to its value; bean IRIs are shortened to bean ids.",
+  "staging": {
+    "branch": "claude/build-types",
+    "sha": "30b41811a9dafd27f9e86e0a8f5c1acf85ccb290",
+    "pr": "2871/merge",
+    "run": "41383236235"
+  }
+}
