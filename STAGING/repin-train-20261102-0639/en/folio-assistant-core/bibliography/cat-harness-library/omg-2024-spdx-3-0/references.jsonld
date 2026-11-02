@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/omg-2024-spdx-3-0",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "System Package Data Exchange (SPDX)",
+      "dcterms:creator": [
+        "(SPDX), System Package Data Exchange"
+      ],
+      "dcterms:issued": "D:20241216",
+      "dcterms:source": "cat-harness/library/omg-2024-spdx-3-0/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/omg-2024-spdx-3-0"
+    }
+  ]
+}

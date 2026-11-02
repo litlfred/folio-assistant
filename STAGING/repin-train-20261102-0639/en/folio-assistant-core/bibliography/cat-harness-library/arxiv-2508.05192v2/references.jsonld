@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2508.05192v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "AI-assisted JSON Schema Creation and Mapping",
+      "dcterms:creator": [
+        "Institute for Parallel",
+        "Systems, Distributed"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2508.05192",
+      "dcterms:abstract": "Model-Driven Engineering (MDE) places models at the core of system and data engineering processes. In the context of research data, these models are typically expressed as schemas that define the structure and semantics of datasets. However, many domains still lack standardized models, and creating them remains a significant barrier, especially for non- experts. We present a hybrid approach that combines large language models (LLMs) with deterministic techniques to enable JSON Schema creation, modification, and schema mapping based on natural language inputs by the user. These capabilities are integrated into the open-source tool MetaConfigurator, which already provides visual model editing, validation, code gener- ation, and form generation from models. For data integration, we generate schema mappings from heterogeneous JSON, CSV, XML, and YAML data using LLMs, while ensuring scalability and reliability through deterministic execution of generated mapping rules. The applicability of our work is demonstrated in an application example in the field of chemistry. By combining natural language interaction with deterministic safeguards, this work significantly lowers the barrier to structured data modeling and data integration for non-experts. Index Terms—rdm, research data management, mde, model driven engineering, json, yaml, configuration, schema, data, model, editor, gui, tool, ai, llm, mapping, matching I. INTRODUCTION Model-Driven Engineering (MDE) emphasizes the central role of models in the design, development, and operation of systems [1]. In the context of research data management [2]– [4], models are typically expressed as schemas, which define the structure and semantics of datasets. These models enable key functionalities such as instance validation, transformation, code generation, and visualization, and are essential for ensur- ing data quality, interoperability, and reusability. Despite their importance, many scientific domains still lack standardized da",
+      "dcterms:source": "cat-harness/library/arxiv-2508.05192v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2508.05192v2"
+    }
+  ]
+}

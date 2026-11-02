@@ -1,0 +1,31 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2312.07755v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Designing with Language: Wireframing UI Design Intent with Generative Large Language Models",
+      "dcterms:creator": [
+        "Models, Language"
+      ],
+      "dcterms:issued": "D:20231214",
+      "dcterms:identifier": "https://arxiv.org/abs/2312.07755",
+      "dcterms:source": "cat-harness/library/arxiv-2312.07755v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2312.07755v1"
+    }
+  ]
+}

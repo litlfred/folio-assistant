@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/hasic-2018-5pdm-decision-intelligence",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Augmenting processes with decision intelligence: Principles for integrated modelling",
+      "dcterms:issued": "2018",
+      "dcterms:source": "cat-harness/library/hasic-2018-5pdm-decision-intelligence/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/hasic-2018-5pdm-decision-intelligence"
+    }
+  ]
+}

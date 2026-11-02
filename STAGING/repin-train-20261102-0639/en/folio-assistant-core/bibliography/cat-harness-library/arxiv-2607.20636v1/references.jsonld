@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2607.20636v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Algorithmic Approaches to Sequential Decision-Making and Social Epistemology",
+      "dcterms:creator": [
+        "and, Sequential Decision-Making"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2607.20636",
+      "dcterms:source": "cat-harness/library/arxiv-2607.20636v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2607.20636v1"
+    }
+  ]
+}

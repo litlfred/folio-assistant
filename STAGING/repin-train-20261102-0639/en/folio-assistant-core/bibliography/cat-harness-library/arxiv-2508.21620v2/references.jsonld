@@ -1,0 +1,31 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2508.21620v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Introduction to the Analysis of Probabilistic Decision-Making Algorithms",
+      "dcterms:creator": [
+        "Algorithms, Decision-Making"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2508.21620",
+      "dcterms:abstract": "Decision theories offer principled methods for making choices under various types of uncertainty. Algorithms that implement these theories have been success- fully applied to a wide range of real-world problems, including materials and drug discovery. Indeed, they are desirable since they can adaptively gather information to make better decisions in the future, resulting in data-efficient workflows. In scien- tific discovery, where experiments are costly, these algorithms can thus significantly reduce the cost of experimentation. Theoretical analyses of these algorithms are cru- cial for understanding their behavior and providing valuable insights for developing next-generation algorithms. However, theoretical analyses in the literature are often inaccessible to non-experts. This monograph aims to provide an accessible, self- contained introduction to the theoretical analysis of commonly used probabilistic decision-making algorithms, including bandit algorithms, Bayesian optimization, and tree search algorithms. Only basic knowledge of probability theory and statis- tics, along with some elementary knowledge about Gaussian processes, is assumed. arXiv:2508.21620v2 [cs.LG] 23 May 2026",
+      "dcterms:source": "cat-harness/library/arxiv-2508.21620v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2508.21620v2"
+    }
+  ]
+}

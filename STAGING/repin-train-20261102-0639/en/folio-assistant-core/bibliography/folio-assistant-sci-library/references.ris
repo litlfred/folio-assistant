@@ -1,0 +1,70 @@
+TY  - GEN
+ID  - codata-2022
+TI  - CODATA 2022 Recommended Values of the Fundamental Physical Constants
+PY  - 2022
+DA  - 2022
+ER  - 
+
+TY  - JOUR
+ID  - arxiv-2512.09874v3
+AU  - Horn1[0009−0004−1911−1138], Pius
+AU  - Janis Keuper1, 2[0000−0002−1327−1243]
+TI  - Benchmarking Document Parsers on Mathematical Formula Extraction from PDFs
+DA  - D:20260825
+UR  - https://arxiv.org/abs/2512.09874
+AB  - Correctly parsing mathematical formulas from PDFs is crit- ical for training large language models and building scientiﬁc knowledge bases from academic literature, yet existing benchmarks either exclude formulas entirely or lack semantically-aware evaluation metrics. We in- troduce a benchmarking framework centered on synthetically generated PDFs with precise LaTeX ground truth, enabling systematic control over layout, formulas, and content characteristics. For evaluation, we apply LLM-as-a-judge to assess semantic equivalence of parsed formulas, cap- turing mathematical meaning beyond surface-level notation diﬀerences. We validate this approach through a human study (250 formula pairs, 750 ratings from 30 evaluators), showing a Pearson correlation of r=0.78 with human judgment, compared to r=0.34 for character-level match- ing (CDM) and r≈0 for text similarity. Our robust two-stage matching pipeline combining LLM-based extraction with fuzzy validation reliably aligns parsed formulas with ground truth despite format inconsisten- cies across parsers. Evaluating 20+ contemporary PDF parsers across 100 synthetic documents with 2,000+ formulas reveals signiﬁcant per- formance disparities, providing actionable guidance for practitioners se- lecting parsers for downstream applications.
+ER  - 
+
+TY  - JOUR
+ID  - arxiv-2601.22554v1
+AU  - Humans, Automating Blueprint Generation for
+AU  - AI
+TI  - LeanArchitect: Automating Blueprint Generation for Humans and AI
+UR  - https://arxiv.org/abs/2601.22554
+AB  - Large-scale formalization projects in Lean rely on blueprints: structured dependency graphs linking informal mathematical exposition to formal declarations. While blueprints are central to human collaboration, existing tooling treats the informal (LATEX) and formal (Lean) components as largely decoupled artifacts, leading to maintenance overhead and limiting integration with AI automation. We present LeanArchitect, a Lean package for extracting, managing, and exporting blueprint data directly from Lean code. LeanArchitect introduces a declarative annotation mechanism that associates formal declarations with blueprint metadata, automatically infers dependency information, and generates LATEX blueprint content synchronized with the Lean development. This design eliminates duplication between formal and informal representations and eases fine-grained progress tracking for both human contributors and AI-based theorem provers. We demonstrate the practicality of LeanArchitect through the automated conversion of several large existing blueprint-driven projects, and through a human–AI collaboration case study formalizing a multivariate Taylor theorem. Our results show that LeanArchitect improves maintainability, exposes latent inconsistencies in existing blueprints, and provides an effective interface for integrating AI tools into real-world formalization workflows. arXiv:2601.22554v1 [cs.LO] 30 Jan 2026
+ER  - 
+
+TY  - GEN
+ID  - milnorlink
+TI  - Link Groups
+DA  - D:20100521
+ER  - 
+
+TY  - JOUR
+ID  - arxiv-2406.01940v2
+AU  - Lu1∗, Jianqiao
+AU  - Wan2∗, Yingjia
+AU  - Liu3, Zhengying
+AU  - Huang4, Yinya
+AU  - Xiong1, Jing
+TI  - Process-Driven Autoformalization in Lean 4
+DA  - D:20241015
+UR  - https://arxiv.org/abs/2406.01940
+AB  - Autoformalization, the conversion of natural language mathematics into formal languages, offers significant potential for advancing mathematical reasoning. How- ever, existing efforts are limited to formal languages with substantial online corpora and struggle to keep pace with rapidly evolving languages like Lean 4. To bridge this gap, we propose a large-scale dataset Formalization for Lean 4 (FORML4) de- signed to comprehensively evaluate the autoformalization capabilities of large lan- guage models (LLMs), encompassing both statements and proofs in natural and for- mal languages. Additionally, we introduce the Process-Driven Autoformalization (PDA) framework that leverages the precise feedback from Lean 4 compilers to enhance autoformalization. Extensive experiments demonstrate that PDA improves autoformalization, enabling higher compiler accuracy and human-evaluation scores using less filtered training data. Moreover, when fine-tuned with data containing detailed process information, PDA exhibits enhanced data utilization, resulting in more substantial improvements in autoformalization for Lean 4.
+ER  - 
+
+TY  - JOUR
+ID  - arxiv-2003.08005v1
+AU  - Parag Mali, Puneeth Kukkadapu, Mahshad Mahdavi, and, Richard Zanibbi
+TI  - ScanSSD: Scanning Single Shot Detector for Mathematical Formulas in PDF Document Images
+DA  - D:20200319
+UR  - https://arxiv.org/abs/2003.08005
+AB  - We introduce the Scanning Single Shot Detector (ScanSSD) for locating math formulas offset from text and embedded in textlines. ScanSSD uses only visual features for detection: no formatting or typesetting information such as layout, font, or character labels are employed. Given a 600 dpi document page image, a Single Shot Detector (SSD) locates formulas at multiple scales using sliding windows, after which candidate detections are pooled to obtain page-level results. For our experiments we use the TFD-ICDAR2019v2 dataset, a modiﬁcation of the GTDB scanned math article collection. ScanSSD detects characters in formulas with high accuracy, obtaining a 0.926 f-score, and detects formulas with high recall overall. Detection errors are largely minor, such as splitting formulas at large whitespace gaps (e.g., for variable constraints) and merging formulas on adjacent textlines. Formula detection f-scores of 0.796 (IOU ≥0.5) and 0.733 (IOU ≥0.75) are obtained. Our data, evaluation tools, and code are publicly available. I. INTRODUCTION The PDF format is used ubiquitously for sharing and printing documents. Unfortunately, while the latest PDF speciﬁcation supports embedding structural information for graphical elements (e.g., ﬁgures, tables, and footnotes1), most born-digital PDF documents contain only rendering-level information such as characters, lines, and images. These low-level objects can be recovered by parsing the document [1], but graphic regions must be located using detection algorithms. For example, PDFFigures [2] extracts ﬁgures and tables from born-digital Computer Science research papers for Semantic Scholar.2 Unfortunately, older PDF documents may contain only scanned images of document pages, providing no information about characters or other graphical objects in the page images. We present a new image-based detector for mathematical formulas in in both born-digital and scanned PDF documents. Math expressions may be displayed and offset from the main text
+ER  - 
+
+TY  - JOUR
+ID  - arxiv-2604.00554v1
+AU  - Pluzhnikov, Ivan
+TI  - LLM-supported document separation for printed reviews from zbMATH Open
+DA  - D:20260402
+UR  - https://arxiv.org/abs/2604.00554
+AB  - This paper presents a specialized methodology for digitizing and segmenting mathematical documents from zbMATH Open, a com- prehensive database of mathematical literature, to enhance ma- chine processing capabilities. Currently, approximately 831,000 documents exist only in scanned volumes, which makes them not machine-processable. Furthermore, these scans often span multi- ple pages or share pages with other documents and incorporate diverse typesetting techniques, posing challenges for automated processing. To address these issues, we evaluate various Optical Charac- ter Recognition (OCR) tools and document separation techniques, proposing an optimized pipeline that outperforms existing ap- proaches. Our study identifies Mathpix as the most effective OCR tool for LaTeX conversion, demonstrating superior performance based on BLEU and Edit Distance metrics. For document sepa- ration, we fine-tune generative Large Language Models (LLMs) and integrate them into a Majority Voting framework, achieving 97.5% accuracy when providing the text of the document. Addi- tionally, our method identifies the start and end indexes for 90.6% of the test dataset, with an accuracy of 98.4% on applicable cases, resulting in an overall accuracy of 89.1% on the entire dataset. This approach surpasses traditional baselines, including regular expres- sions, ChatGPT-4o, and computer vision-based techniques. As a practical outcome, we process 810,977 mathematical documents into machine-readable text and extract precise document bound- aries for 721,288 documents in LaTeX format. These contributions significantly improve accessibility for mathematical information re- trieval systems, machine learning models, and related applications.
+ER  - 
+
+TY  - JOUR
+ID  - arxiv-2602.16554v1
+AU  - Ren∗, Yuanjie
+TI  - MerLean: An Agentic Framework for Autoformalization in Quantum Computation
+UR  - https://arxiv.org/abs/2602.16554
+AB  - We introduce MerLean, a fully automated agentic framework for autoformalization in quantum computation. MerLean extracts mathematical statements from LATEX source files, formalizes them into verified Lean 4 code built on Mathlib, and trans- lates the result back into human-readable LATEX for semantic review. We evaluate MerLean on three theoretical quantum computing papers producing 2,050 Lean dec- larations from 114 statements in total. MerLean achieves end-to-end formalization on all three papers, reducing the verification burden to only the newly introduced definitions and axioms. Our results demonstrate that agentic autoformalization can scale to frontier research, offering both a practical tool for machine-verified peer review and a scalable engine for mining high-quality synthetic data to train future reasoning models. Our approach can also be generalized to any other rigorous research in mathematics and theoretical physics.
+ER  - 

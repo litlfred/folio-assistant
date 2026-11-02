@@ -1,0 +1,33 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2504.19675v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs",
+      "dcterms:creator": [
+        "Suominen, Osma",
+        "Inkinen, Juho",
+        "Lehtinen, Mona"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2504.19675",
+      "dcterms:abstract": "This paper presents the Annif system in SemEval-2025 Task 5 (LLMs4Subjects), which focussed on subject indexing using large lan- guage models (LLMs). The task required creating subject predictions for bibliographic records from the bilingual TIBKAT database using the GND subject vocabulary. Our ap- proach combines traditional natural language processing and machine learning techniques im- plemented in the Annif toolkit with innovative LLM-based methods for translation and syn- thetic data generation, and merging predictions from monolingual models. The system ranked first in the all-subjects category and second in the tib-core-subjects category in the quantita- tive evaluation, and fourth in qualitative evalu- ations. These findings demonstrate the poten- tial of combining traditional XMTC algorithms with modern LLM techniques to improve the accuracy and efficiency of subject indexing in multilingual contexts.",
+      "dcterms:source": "cat-harness/library/arxiv-2504.19675v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2504.19675v2"
+    }
+  ]
+}

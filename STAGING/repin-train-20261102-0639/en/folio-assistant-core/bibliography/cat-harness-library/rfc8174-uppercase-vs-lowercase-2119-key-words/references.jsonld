@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/rfc8174-uppercase-vs-lowercase-2119-key-words",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words",
+      "dcterms:issued": "D:20260921",
+      "dcterms:source": "cat-harness/library/rfc8174-uppercase-vs-lowercase-2119-key-words/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/rfc8174-uppercase-vs-lowercase-2119-key-words"
+    }
+  ]
+}

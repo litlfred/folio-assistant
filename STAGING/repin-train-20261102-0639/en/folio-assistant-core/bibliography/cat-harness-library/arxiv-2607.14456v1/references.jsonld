@@ -1,0 +1,35 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2607.14456v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution",
+      "dcterms:creator": [
+        "Borman, Harris",
+        "Wandabwa, Herman",
+        "Yu, Fusun",
+        "Kannangara, Sandeepa",
+        "Liu, Justin",
+        "Leontjeva, Anna",
+        "Ng, Ritchie"
+      ],
+      "dcterms:source": "cat-harness/library/arxiv-2607.14456v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2607.14456v1"
+    }
+  ]
+}

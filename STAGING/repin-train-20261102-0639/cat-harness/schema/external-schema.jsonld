@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/schema/external-schema.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0639",
+    "sha": "0071885095359aa80ce483f4045661ad79e22656",
+    "pr": "repin-train/20261102-0639",
+    "run": "41401374238"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/schema/external-schema",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "external-schema",
+      "title": "external-schema",
+      "summary": "A specification this repository DEPENDS ON and does not hold.",
+      "module": "schemas/kg/external-schema.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/external-schema"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/glossary-from-source/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-from-source.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Read a source's glossary and abbreviations sections (an L1 entry's sections/, or a folio block) into `candidate` terms of a folio-glossary/v1 scheme, verbatim, each with `source: <file>#L<line>`. Acronyms fold into the term they expand as `notation`. The scheme is merged: terms a person owns are never changed. `--check` writes nothing and fails when the scheme would change.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat glossary:from-source"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--out"
+            },
+            "description": "The scheme file to write or merge into: `glossary/<scheme>.glossary.json`.",
+            "name": "out",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--id"
+            },
+            "description": "The scheme id, for a new file.",
+            "name": "id",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "stdin": true
+            },
+            "description": "The scheme title, for a new file: free text, so it goes on stdin.",
+            "name": "title",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "arg": {
+              "flag": "--from"
+            },
+            "description": "A directory whose glossary and abbreviations sections are read: an L1 entry's `sections/`.",
+            "name": "from",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--terms"
+            },
+            "description": "A Markdown file read as term and definition rows.",
+            "name": "terms",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--abbreviations"
+            },
+            "description": "A Markdown file read as acronym and expansion rows.",
+            "name": "abbreviations",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--check"
+            },
+            "description": "Fail if the scheme is stale, instead of writing.",
+            "name": "check",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The merged folio-glossary/v1 scheme.",
+            "name": "scheme",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "glossary-from-source",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/glossary-terms",
+      "title": "Glossary candidates from a source"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/glossary-from-source",
+  "path": "tools/glossary-from-source/"
+}

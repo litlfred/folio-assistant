@@ -1,0 +1,34 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2403.16873v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "How accurately can quantitative imaging methods be ranked without ground truth: An upper bound on no-gold-standard evaluation",
+      "dcterms:creator": [
+        "Yan Liua, b",
+        "Jhaa, Abhinav K.",
+        "b"
+      ],
+      "dcterms:issued": "D:20240326",
+      "dcterms:identifier": "https://arxiv.org/abs/2403.16873",
+      "dcterms:abstract": "Objective evaluation of quantitative imaging (QI) methods with patient data, while important, is typically hindered by the lack of gold standards. To address this challenge, no-gold-standard evaluation (NGSE) techniques have been proposed. These techniques have demonstrated efficacy in accurately ranking QI methods without access to gold standards. The development of NGSE methods has raised an important question: how accurately can QI methods be ranked without ground truth. To answer this question, we propose a Cram´er–Rao bound (CRB)-based framework that quantifies the upper bound in ranking QI methods without any ground truth. We present the application of this framework in guiding the use of a well-known NGSE technique, namely the regression-without-truth (RWT) technique. Our results show the utility of this framework in quantifying the performance of this NGSE technique for different patient numbers. These results provide motivation towards studying other applications of this upper bound.",
+      "dcterms:source": "cat-harness/library/arxiv-2403.16873v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2403.16873v1"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/qi-hessen-vanderheijden-2023-ca-vs-lsa",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Improving information retrieval through correspondence analysis instead of latent semantic analysis",
+      "dcterms:issued": "D:20230909",
+      "bibo:doi": "10.1007/s10844-023-00815-y",
+      "dcterms:identifier": "https://doi.org/10.1007/s10844-023-00815-y",
+      "dcterms:abstract": "The initial dimensions extracted by latent semantic analysis (LSA) of a document-term matrix have been shown to mainly display marginal effects, which are irrelevant for information retrieval. To improve the performance of LSA, usually the elements of the raw document- term matrix are weighted and the weighting exponent of singular values can be adjusted. An alternative information retrieval technique that ignores the marginal effects is correspon- dence analysis (CA). In this paper, the information retrieval performance of LSA and CA is empirically compared. Moreover, it is explored whether the two weightings also improve the performance of CA. The results for four empirical datasets show that CA always performs better than LSA. Weighting the elements of the raw data matrix can improve CA; however, it is data dependent and the improvement is small. Adjusting the singular value weighting exponent often improves the performance of CA; however, the extent of the improvement depends on the dataset and the number of dimensions.",
+      "dcterms:source": "cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa"
+    }
+  ]
+}

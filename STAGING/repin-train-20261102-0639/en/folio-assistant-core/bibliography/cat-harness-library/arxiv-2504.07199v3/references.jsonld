@@ -1,0 +1,33 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2504.07199v3",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "SemEval-2025 Task 5: LLMs4Subjects - LLM-based Automated Subject Tagging for a National Technical Library’s Open-Access Catalog",
+      "dcterms:creator": [
+        "Jennifer D’Souza, Sameer Sadruddin, Holger Israel, Mathias Begoin",
+        "Slawig, Diana"
+      ],
+      "dcterms:issued": "D:20250526",
+      "dcterms:identifier": "https://arxiv.org/abs/2504.07199",
+      "dcterms:abstract": "We present SemEval-2025 Task 5: LLMs4Subjects, a shared task on auto- mated subject tagging for scientific and technical records in English and German using the GND taxonomy. Participants developed LLM-based systems to recommend top-k subjects, evaluated through quantitative metrics (precision, recall, F1-score) and qualitative assessments by subject specialists. Results highlight the effectiveness of LLM ensembles, synthetic data generation, and multilingual processing, offering insights into applying LLMs for digital library classification.",
+      "dcterms:source": "cat-harness/library/arxiv-2504.07199v3/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2504.07199v3"
+    }
+  ]
+}

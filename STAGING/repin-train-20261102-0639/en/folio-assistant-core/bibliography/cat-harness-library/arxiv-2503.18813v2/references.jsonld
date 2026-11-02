@@ -1,0 +1,35 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2503.18813v2",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Defeating Prompt Injections by Design",
+      "dcterms:creator": [
+        "Debenedetti1, Edoardo",
+        "3*",
+        "Shumailov2, Ilia",
+        "Fan1, Tianqi",
+        "Hayes2, Jamie",
+        "Carlini2, Nicholas"
+      ],
+      "dcterms:identifier": "https://arxiv.org/abs/2503.18813",
+      "dcterms:source": "cat-harness/library/arxiv-2503.18813v2/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2503.18813v2"
+    }
+  ]
+}
