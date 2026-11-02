@@ -1,0 +1,312 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_FeatureStaging",
+    "path": "processes/sdlc/feature-staging.bpmn"
+  },
+  "source_hash": "sha256:ceb09ec65989d7720b9c3f63f4b7da925f8a8d7b5a3b2f69d062d20fa5d0db43",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Remove",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Preflight",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RemoveDisp",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "H_Confirm",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_LogRendered",
+          "detail": "needs skill \"render-logging\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Comment",
+          "detail": "needs skill \"staging-review\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Remove",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_LogRetained",
+          "detail": "needs skill \"render-logging\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Notice",
+          "detail": "needs skill \"staging-review\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Preflight",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_RemoveDisp",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "H_Confirm",
+          "detail": "needs skill \"deletion-requires-confirmation\", but its lane's role \"user\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_LogRendered",
+          "detail": "task \"Append `rendered` to the render log\" requires skill \"render-logging\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_Comment",
+          "detail": "task \"Comment the preview URL on the PR\" requires skill \"staging-review\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_Remove",
+          "detail": "task \"Remove the preview AND append `removed` — one commit\" requires skill \"deletion-requires-confirmation\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_LogRetained",
+          "detail": "task \"Append `retained`, with why it stays\" requires skill \"render-logging\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_Notice",
+          "detail": "task \"Post the retention notice on the PR\" requires skill \"staging-review\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_Validate",
+          "detail": "task \"Check the slug's SHAPE and that the confirmation repeats it\" requires skill \"deletion-requires-confirmation\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_Preflight",
+          "detail": "task \"Re-evaluate liveness AT REMOVAL TIME\" requires skill \"deletion-requires-confirmation\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_RemoveDisp",
+          "detail": "task \"Remove it AND append `removed` — one commit\" requires skill \"deletion-requires-confirmation\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "H_Confirm",
+          "detail": "task \"Repeat the slug, exactly, to confirm\" requires skill \"deletion-requires-confirmation\", which role \"user\" (named by lane \"Human actor\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "H_Confirm",
+          "detail": "\"Repeat the slug, exactly, to confirm\" — a ServiceTask is performed by agent or system, but its lane's role \"user\" admits only person. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
+        }
+      ]
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_FeatureStaging",
+          "detail": "22 flow nodes, past the 20 at which bpmn-authoring asks for a split by phase into call activities."
+        }
+      ]
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_FeatureStaging",
+          "detail": "3 start events (Start_PR, Start_Closed, Start_Dispatch). One entry point per process level, or a call activity per entry."
+        }
+      ]
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-through-node": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-wide": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-tall": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-edge": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-shape": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-lane-line": {
+      "result": "pass",
+      "findings": []
+    },
+    "shape-overlap": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Notice+Task_RemoveDisp",
+          "detail": "\"Post the retention&#10;notice on the PR\" and \"Remove it AND append&#10;`removed` — one commit\" are drawn on top of each other. Move one."
+        }
+      ]
+    },
+    "lane-order": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 32,
+    "fail": 7,
+    "n/a": 6,
+    "unknown": 0
+  }
+}
