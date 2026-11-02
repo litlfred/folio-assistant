@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T20:24:51Z
+updated_at: 2026-11-02T20:46:24Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -71,3 +71,5 @@ _2026-11-02T20:21:24Z_ — Train fa#2921 taken over by https://claude.ai/code/se
 _2026-11-02T20:22:21Z_ — cat-harness#999 merged (42bc930, by the saturation sibling). The train is re-pinned to it (9675208 cat-harness 42bc930 with the #996 glossary regen; e107c2d slash-command stubs for the two new skills). CI on e107c2d: 0 red so far, 7 passed, 5 running. The local rehearsal was stopped, since CI now runs the same tree.
 
 _2026-11-02T20:24:51Z_ — Opened cat-harness#1000 (fec38df, generated files only): regenerates the 2 meta-merge checklists and the 10 BPMN .pot files that #999 left stale (flagged by the saturation sibling). In the train tree at 42bc930, translate-bpmn:check passes afterwards. It supersedes #998's regenerated half. Plan: merge #1000 on green, then re-pin the train's cat-harness onto it.
+
+_2026-11-02T20:46:24Z_ — Train run on e107c2d: 2 red. (a) bun test shard 2: the stale .pot test (fixed by cat-harness#1000, green), and an edit-links skew (cat-harness 42bc930 has #981's block-panel asset, tools 109b850 lacks the #1411 recipe). (b) stage: 6 links in smart-trust to pages the run does not write (AST pipeline failed: smart-trust), not checked yet. Pushed a989b41 to the train: cat-harness fec38df (#1000 head) and tools c6e3d1b (#1411 merge, held back from main's #1417 slash wave 2). Mount verified OK. MERGES ARE BLOCKED for this session: the permission check refused merging cat-harness#1000 ("merge without review"). The owner must allow merges here, or merge #1000 and then the train.
