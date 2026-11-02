@@ -57,7 +57,11 @@ on:
       - 'cat-harness-tools/scripts/gen-jsonld-context.ts'
       - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
+  # MAIN ONLY (owner, 2026-11-01, card Q-PIPE-1 A). A push to a PR branch is
+  # already judged by the `pull_request` run above; running on the branch push
+  # too judged every PR commit twice and took a second runner slot each time.
   push:
+    branches: [main]
     paths:
       - '.github/mount-from-lock.sh'  # replays the remote-mount lock (bean nn8e)
       - 'index.lock.json'
