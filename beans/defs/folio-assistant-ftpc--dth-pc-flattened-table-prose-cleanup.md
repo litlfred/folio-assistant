@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T19:30:00Z
-updated_at: 2026-11-02T19:35:00Z
+updated_at: 2026-11-02T20:05:00Z
 parent: folio-assistant-dthl
 tags:
     - dth-pc
@@ -24,8 +24,8 @@ Same owner message also asked: more padding between content and the "grill" (sid
 
 1. [x] Fix p-ch02-page-033, p-ch03-page-037, p-ch04-page-041, p-ch05-page-044: keep only "End of chapter checkpoint" as a heading + list. Branch claude/dth-pc-flattened-tables, draft PR litlfred/dth-pc#16 (base claude/dth-pc-scaffold), issue litlfred/dth-pc#15.
 2. [x] Before/after images, card to owner (content change: never merge without OK; editing gate may need editor sign-off).
-3. [ ] If owner says so: same cleanup on 12 more pages (ch01 021/022/023, ch02 025/027/031/032, ch03 035/036, ch04 039/040, ch05 043). These mix real prose with table text, so cut per page against the table blocks.
-4. [ ] Process fix: seed_from_l1.py should not emit table text into prose when a table block covers it (gate idea: check for "INPUTS STEPS RESOURCES" / "POTENTIAL RISKS MITIGATION" in prose).
+3. [x] (owner Q-FT-1 A, 19:19Z) If owner says so: same cleanup on 12 more pages (ch01 021/022/023, ch02 025/027/031/032, ch03 035/036, ch04 039/040, ch05 043). These mix real prose with table text, so cut per page against the table blocks.
+4. [ ] Process fix (NOT in dth-pc: AGENTS.md says validators live in the platform, and seed_from_l1.py is a one-shot seeder): a folio-assistant-core gate that fails when a prose block repeats a table block of its section (markers "INPUTS STEPS RESOURCES" / "POTENTIAL RISKS MITIGATION"). Old idea: seed_from_l1.py should not emit table text into prose when a table block covers it (gate idea: check for "INPUTS STEPS RESOURCES" / "POTENTIAL RISKS MITIGATION" in prose).
 5. [x] Padding / right grill: already done by smart-ra panel thread in cat-harness#994 (merged 19:18Z) + #981. dth-pc needs a cat-harness re-pin to show it; asked that thread who re-pins.
 
 Thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G94BkArgbUhEUSTweR879Ve4
@@ -35,3 +35,5 @@ Thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg
 _2026-11-02T19:30Z_ — Step 1 pushed (dth-pc 7-line diff per page), PR #16 draft, issue #15. Staging site litlfred.github.io is blocked from the sandbox, so before/after is rendered locally.
 
 _2026-11-02T19:35Z_ — Before/after PNGs in /mnt/project-files/dth-pc-flattened-tables-2026-11-02/. Card Q-FT-1 posted (A: OK + clean other 12 pages + seeder fix; B: these 4 only; C: hold).
+
+_2026-11-02T20:05Z_ — #16 merged a3330c9 (owner A). 12 pages: draft dth-pc#17 (3e97f27), fragment check script in scratch (every removed run found in the section's table blocks). Re-pin cat-harness 356ca7a + core 3c13890: dth-pc#18 (mechanical, merge on green), stage-local of that branch running. Empty pages 022/027/032/036 keep their blocks (tags, BPMN uses).
