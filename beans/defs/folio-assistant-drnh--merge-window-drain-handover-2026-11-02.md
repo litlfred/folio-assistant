@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T20:24:51Z
+updated_at: 2026-11-02T20:25:10Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -104,3 +104,5 @@ _2026-11-02T20:21:43Z_ — Harness drain session https://claude.ai/code/session_
 _2026-11-02T20:22:21Z_ — cat-harness#999 merged (42bc930, by the saturation sibling). The train is re-pinned to it (9675208 cat-harness 42bc930 with the #996 glossary regen; e107c2d slash-command stubs for the two new skills). CI on e107c2d: 0 red so far, 7 passed, 5 running. The local rehearsal was stopped, since CI now runs the same tree.
 
 _2026-11-02T20:24:51Z_ — Opened cat-harness#1000 (fec38df, generated files only): regenerates the 2 meta-merge checklists and the 10 BPMN .pot files that #999 left stale (flagged by the saturation sibling). In the train tree at 42bc930, translate-bpmn:check passes afterwards. It supersedes #998's regenerated half. Plan: merge #1000 on green, then re-pin the train's cat-harness onto it.
+
+_2026-11-02T20:25:10Z_ — Confirmed: translate-bpmn:check was red at 42bc930 on the 10 stale .pot files. The train owner (…RqHz) opened cat-harness#1000 (fec38df) with the regenerated checklists and .pot files, to merge on green and re-pin. cat-harness#998 is now fully superseded (BPMN/skill edits by #999, regen by #1000). It belongs to session_01Qmmkt8V2Q2C2M3WxErzGN7 and is left for its owner or litlfred to close.
