@@ -116,7 +116,8 @@ permissions:
 # on (#2233). So a PR's runs share one group and the newer cancels the
 # older.
 #
-# A newer push to MAIN now supersedes the older main run the same way — bean
+# A newer push to MAIN supersedes an older main run that is still WAITING (not
+# one that has started, since 2026-11-01, card Q-CIS-1 A; see below) — bean
 # `qbco`, issue #2456. This comment said until 2026-10-07 that main's runs
 # were grouped by sha and never cancelled, so that "main's history of
 # verdicts is not thinned". The owner has ruled that it may be thinned
@@ -133,7 +134,12 @@ permissions:
 # `merge_group` stays per sha.
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || (github.event_name == 'push' && github.ref) || github.sha }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+  # A started main run is never cancelled (owner, 2026-11-01, card Q-CIS-1 A):
+  # with merges landing faster than one run, cancelling on push left main with
+  # no finished run all day (0 green of 10 pushes from 10:00Z). A newer push
+  # still waits in the group, and a newer one replaces it there, so the newest
+  # main is the next judged; only the commits in between get no verdict.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   hygiene:

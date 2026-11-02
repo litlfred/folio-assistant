@@ -42,7 +42,10 @@ concurrency:
 jobs:
   verdict:
     name: No new failures compared with fa main
-    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.event.workflow_run.head_branch, 'repin-train/') }}
+    # Only this repository's own re-pin branches: a fork can name a branch
+    # `repin-train/…` too, and this job holds statuses and pull-requests write
+    # (security audit V2, 2026-11-01).
+    if: ${{ github.event_name == 'workflow_dispatch' || (startsWith(github.event.workflow_run.head_branch, 'repin-train/') && github.event.workflow_run.head_repository.full_name == github.repository) }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
