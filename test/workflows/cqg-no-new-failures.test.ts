@@ -32,7 +32,7 @@ const wf = parse(readFileSync(WORKFLOW, "utf8")) as { jobs: Record<string, Job> 
 const JUDGED = ["typescript-test", "gates-kg", "gates-docs", "gates-standalone", "gates-unrun", "e2e-shard"];
 
 /** A sandbox: a state dir, a stand-in gate-shell that runs the step with `bash -e`, and a `gh` serving `mainLog`. */
-function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string; ghFails?: boolean } = {}) {
+function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string; ghFails?: boolean; refusesEscapes?: boolean } = {}) {
   const dir = mkdtempSync(join(tmpdir(), "cqg-"));
   const state = join(dir, "state");
   const bin = join(dir, "bin");
@@ -47,7 +47,10 @@ function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string
     join(bin, "gh"),
     opts.ghFails
       ? "#!/bin/sh\necho denied >&2\nexit 1\n"
-      : `#!/bin/sh\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`,
+      : opts.refusesEscapes
+        ? // Newer gh refuses a body with terminal escapes unless it is passed --allow-escape-sequences.
+          `#!/bin/sh\nif [ "$2" = --allow-escape-sequences ]; then shift; elif case "$2" in *"/logs") true ;; *) false ;; esac; then echo "the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway" >&2; exit 1; fi\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`
+        : `#!/bin/sh\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`,
   );
   chmodSync(join(bin, "gh"), 0o755);
   const summary = join(dir, "summary.md");
@@ -148,6 +151,16 @@ describe("pull_request: only a failure main does not have fails", () => {
     expect(r.status).toBe(0);
     expect(sb.summary()).toContain("failing on main too");
     expect(sb.summary()).toContain("check:red-on-main");
+  });
+
+  test("main's log is read even when gh refuses its colour codes without --allow-escape-sequences", () => {
+    const sb = sandbox(mainLog, { refusesEscapes: true });
+    sb.begin();
+    sb.step(red);
+    sb.step(green);
+    const r = sb.verdict("pull_request");
+    expect(r.status).toBe(0);
+    expect(sb.summary()).toContain("failing on main too");
   });
 
   test("a failure main passes is NEW and fails", () => {

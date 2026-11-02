@@ -253,6 +253,9 @@ def compare(head, main):
 
 def gh(path, raw=False):
     r = subprocess.run(["gh", "api", path], capture_output=True, text=True)
+    if r.returncode != 0 and "--allow-escape-sequences" in r.stderr:
+        # Job logs carry colour codes; newer gh refuses them unless asked.
+        r = subprocess.run(["gh", "api", "--allow-escape-sequences", path], capture_output=True, text=True)
     if r.returncode != 0:
         raise RuntimeError(f"gh api {path}: {r.stderr.strip()[:300]}")
     return r.stdout if raw else json.loads(r.stdout)
