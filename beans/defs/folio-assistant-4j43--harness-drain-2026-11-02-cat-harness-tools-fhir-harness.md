@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T21:26:53Z
+updated_at: 2026-11-02T21:39:38Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -86,3 +86,5 @@ _2026-11-02T21:23:49Z_ — Train re-pinned at 95da342, from the reds on e107c2d 
 Order: the train merges, then #1001 and #1422 re-run against the new main pins and merge.
 
 _2026-11-02T21:26:53Z_ — Train at aa3ac81: cat-harness 4bf7090 (#1001, now also rewriting saturation-meta-merge's process summary, whose first sentence "Owner, 2026-11-02 06:57Z…" failed process-index's no-chatter rule). Not fixed and not the train's: check:bean-parents fails on the shared work plan, because open beans bmat and rpc6 have no `parent`. It's red on main too, since the state branch is shared. Their threads should give each an epic parent; this drain did not guess one.
+
+_2026-11-02T21:39:38Z_ — Train at 9032f1c: cat-harness-tools 4824597 (#1422), which drops the unused readRoleGraph import that failed lint on aa3ac81 (reported by sibling https://claude.ai/code/session_01EucfRp9ycxtZrrBKaipNy5). ESLint is clean on every file #1422 touches.
