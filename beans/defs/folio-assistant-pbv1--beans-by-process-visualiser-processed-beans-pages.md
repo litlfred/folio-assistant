@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-11-02T18:45:00Z
-updated_at: 2026-11-02T18:45:00Z
+updated_at: 2026-11-02T19:10:00Z
 parent: folio-assistant-yj32
 tags:
     - visualiser
@@ -21,7 +21,7 @@ Owner ask 2026-11-02 18:35Z (thread cmsg_017WNUkNK8kdDziPK58Pv6G9PqHijxfA1UbP1sL
 
 - Issue: litlfred/cat-harness-tools#1413
 - Mockup (real data): https://claude.ai/artifact/BhKAqXAqj7Ay49YPeKrcEr
-- Code branch: cat-harness-tools `claude/processed-beans` (draft PR to follow)
+- Code: cat-harness-tools draft PR #1414 (branch `claude/processed-beans`, fae97eb). Follow-up: cat-harness#988 (agents record instances again).
 
 ## What exists
 
@@ -34,8 +34,13 @@ Owner ask 2026-11-02 18:35Z (thread cmsg_017WNUkNK8kdDziPK58Pv6G9PqHijxfA1UbP1sL
 
 ## Plan / checklist
 
-- [ ] `scripts/processed-beans.ts`: pure join -> `processed-beans.json` (reuse workflow-view stuck kinds; add `node-missing`, `bean-missing`)
-- [ ] tests for the join
-- [ ] page `processed-beans/` (all processes) and `processed-bean/?bean=` (one bean), lazy-loaded diagrams, client filters in the URL
-- [ ] wire into state-visualizer publish; declare visualisers in cat-harness `cat-harness.json`
-- [ ] open questions carded to owner: route (literal /beans/en/... vs harness route rule) and what to do about unrecorded instances
+- [x] `scripts/processed-beans.ts`: pure join (stuckStatesOf kinds + `node-missing`, `bean-missing`), page bodies, client script
+- [x] 8 tests (scripts/tests/processed-beans.test.ts)
+- [x] PATH IRIs ONLY (owner 18:42Z "no ?... want IRIs, make sure urls handle subgraphs"): `<base>/<harness>/beans/<store>/processed-beans/`, `.../processed-beans/<processId>/`, `.../processed-bean/<beanId>/`; filters stay in page state
+- [x] wired into state-visualizer `drawWorkflows`; orphans pruned with the store's others
+- [x] smoke test with real data: badges, filters, lazy diagrams OK
+- [x] Q-PBV-1 = A (build + follow-up cat-harness#988); Q-PBV-2 = A (harness route; owner wants IRIs)
+- [ ] CI green on #1414, then owner review
+- [ ] optional short alias `/beans/processed-beans/`
+
+_2026-11-02T19:10Z_ — PR #1414 up, follow-up cat-harness#988 filed.
