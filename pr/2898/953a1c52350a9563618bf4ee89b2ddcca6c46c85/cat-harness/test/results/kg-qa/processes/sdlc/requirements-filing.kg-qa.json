@@ -1,0 +1,282 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_RequirementsFiling",
+    "path": "processes/sdlc/requirements-filing.bpmn"
+  },
+  "source_hash": "sha256:27c6ff8339ea628adae5309fa226de21dee55dbfa2e073db7e63385525f82d75",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_ClassifyFiling",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_PromoteOrUpdate",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_BindFrontMatter",
+          "detail": "names skill \"specification-management\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_UpdateLifecycle",
+          "detail": "names skill \"specification-management\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_UpdateIndex",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_RunCheck",
+          "detail": "names skill \"specification-management\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "BA_ReviewFiling",
+          "detail": "names skill \"adjudication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_RecordFilingSignoff",
+          "detail": "names skill \"adjudication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_BindFrontMatter",
+          "detail": "needs skill \"specification-management\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_UpdateLifecycle",
+          "detail": "needs skill \"specification-management\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "A_RunCheck",
+          "detail": "needs skill \"specification-management\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "BA_ReviewFiling",
+          "detail": "needs skill \"adjudication\", but its lane's role \"business-analyst\" does not carry it."
+        },
+        {
+          "where": "A_RecordFilingSignoff",
+          "detail": "needs skill \"adjudication\", but its lane's role \"authoring-agent\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_BindFrontMatter",
+          "detail": "task \"Bind Requirement front matter, statements, and 3-axis lineage\" requires skill \"specification-management\", which role \"authoring-agent\" (named by lane \"Authoring Agent\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_UpdateLifecycle",
+          "detail": "task \"Mark superseded or retired record in place and update RequirementSet\" requires skill \"specification-management\", which role \"authoring-agent\" (named by lane \"Authoring Agent\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_RunCheck",
+          "detail": "task \"Run check:requirements schema, collision, and lineage gate\" requires skill \"specification-management\", which role \"authoring-agent\" (named by lane \"Authoring Agent\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "BA_ReviewFiling",
+          "detail": "task \"Review filed requirement, organisation, and sign off\" requires skill \"adjudication\", which role \"business-analyst\" (named by lane \"BA / Feature Requestor\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_RecordFilingSignoff",
+          "detail": "task \"Record requirement-signoff attestation and set stage\" requires skill \"adjudication\", which role \"authoring-agent\" (named by lane \"Authoring Agent\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "SF_RF_Retire×SF_RF_CheckFail",
+          "detail": "flows SF_RF_Retire and SF_RF_CheckFail cross."
+        }
+      ]
+    },
+    "edge-through-node": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-wide": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "diagram",
+          "detail": "2146 wide, budget 1400: text shows at 8.9px in a 1200px band. Close the gaps between columns, stack steps of different lanes in one column, or split by phase."
+        }
+      ]
+    },
+    "diagram-too-tall": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-edge": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-shape": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-lane-line": {
+      "result": "pass",
+      "findings": []
+    },
+    "shape-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-order": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 32,
+    "fail": 5,
+    "n/a": 8,
+    "unknown": 0
+  }
+}
