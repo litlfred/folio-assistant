@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Prose and the code it describes",
       "summary": "Judging whether the prose side of a declared prose/code pair still says what the code does, once the machine has done what it can.",
       "description": "Judging whether the prose side of a declared prose/code pair still says what the code does, once the machine has done what it can. You are in this process when a change touches both sides of a declared pair — a diagram and the workflow it implements, a skill and the code beside it — and review-task has sent it here.\n\nThe mechanical half is already on the subject's kg-qa sidecar: prose-reviewed-since-code-changed says whether the code moved while the prose stood still, and prose-claims-resolve says which claims the prose makes about the code hold, are false, or could not be determined. This process judges only what is left — the stale pairs, the false claims and the undetermined ones — and never re-derives what the checks already settled.\n\nThree outcomes, each leaving a record: the prose holds (attested, with a reason), the two really disagree (a finding against the side that is wrong), or the reviewer disagrees with a checker's verdict (adjudication, which keeps the checker's entry beneath the judgement). A proof and its Lean are the one pair kind a proof assistant can settle; that specialisation is proof-narrative-lean-equivalence, not this diagram.",
@@ -33,7 +33,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/Start_PairChanged",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/A_ReadPairFindings",
@@ -42,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/A_ReadPairFindings",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/GW_Open",
@@ -51,7 +51,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_Open",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/GW_Open",
@@ -61,7 +61,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_None",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/GW_Open",
@@ -71,7 +71,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/A_ReRead",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/GW_Verdict",
@@ -80,7 +80,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_Holds",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "the prose holds",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/GW_Verdict",
@@ -90,7 +90,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_Mismatch",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "they disagree",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/GW_Verdict",
@@ -100,7 +100,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_Disagree",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "I disagree with the checker",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/GW_Verdict",
@@ -110,7 +110,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/A_Attest",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/End_Settled",
@@ -119,7 +119,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/A_RaiseFinding",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/End_Settled",
@@ -128,7 +128,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview#flow/F_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/Call_Adjudication",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview/node/End_Settled",

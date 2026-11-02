@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Adopting an upstream version bump",
       "summary": "A REUSABLE SUBPROCESS, entered once per pinned upstream dependency that has fallen behind a release.",
       "description": "A REUSABLE SUBPROCESS, entered once per pinned upstream dependency that has fallen behind a release. Callers invoke it with `calledElement=\"Process_UpstreamAdoption\"`; `upstream-pin-watch.bpmn` is the first, and a person may enter it directly with `workflow_start` when they want to try a version the watcher has not raised.\n\nReusable means the tenant-specific part is DATA. `upstream-pins.json` carries, per row, what of ours binds to the dependency and what its MVP runs; this diagram carries the order those are done in, which is the same for every tenant. A second tenant is a registry row, not a second diagram.\n\nShaped after `crdm-requirements.bpmn` because the question is the same one: something outside the repository wants to change what we ship, and the answer has to be a judgement somebody made on evidence rather than a merge that happened. The loop back into impact analysis is the MVP loop — findings the agent can fix are fixed on the same branch and re-evidenced, and only what remains reaches the decider.",
@@ -33,7 +33,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Start_Adopt",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Call_BeanOpen",
@@ -42,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/A_Scope",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/A_Impact",
@@ -51,7 +51,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/A_Impact",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Task_Mvp",
@@ -60,7 +60,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Task_Mvp",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Task_Gates",
@@ -69,7 +69,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Task_Gates",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/A_Evidence",
@@ -78,7 +78,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/A_Evidence",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/R_Review",
@@ -87,7 +87,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/R_Review",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/GW_Findings",
@@ -96,7 +96,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/GW_Findings",
@@ -106,7 +106,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/GW_Findings",
@@ -116,7 +116,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_15",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Call_OptionsAnalysis",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/PM_Decide",
@@ -125,7 +125,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/PM_Decide",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/GW_Adopt",
@@ -134,7 +134,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/GW_Adopt",
@@ -144,7 +144,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/GW_Adopt",
@@ -154,7 +154,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/A_ApplyPin",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Call_BeanClose",
@@ -163,7 +163,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_UA_14",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/A_RecordOutcome",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Call_BeanClose",
@@ -172,7 +172,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_Bean_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "claimed",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/GW_BeanYours",
@@ -182,7 +182,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_Bean_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Call_BeanOpen",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/GW_BeanYours",
@@ -191,7 +191,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_Bean_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "not yours",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/GW_BeanYours",
@@ -201,7 +201,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption#flow/SF_Bean_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/Call_BeanClose",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption/node/End_Adopt",

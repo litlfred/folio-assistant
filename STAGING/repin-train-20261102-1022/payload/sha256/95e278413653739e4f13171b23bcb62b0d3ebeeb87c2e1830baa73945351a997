@@ -82,7 +82,7 @@ is not enabled**. That has consequences for how you author:
   is the deprecated form (owner, 2026-10-16). A diagram using any
   `bootstrap.processes:` element declares the namespace as the first child of
   `<bpmn:definitions>`: `<bpmn:import
-  namespace="https://litlfred.github.io/bootstrap/v0/processes/ns#"
+  namespace="https://litlfred.github.io/bootstrap/v0/processes/ns/"
   location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld"
   importType="http://www.w3.org/ns/json-ld"/>`.
 - **A store is not a lane.** Lanes are for people and agents, the roles that

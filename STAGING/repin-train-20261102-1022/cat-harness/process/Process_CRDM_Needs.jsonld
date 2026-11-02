@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "CRDM Phase 1 — needs",
       "summary": "Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it.",
       "description": "Identify the stakeholders, synthesise a needs statement from the sources, and loop until the BA and the stakeholders both recognise it. The loop is the phase: a needs statement nobody confirmed is an agent's summary, not a requirement.",
@@ -33,7 +33,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs#flow/SF_Process_CRDM_Needs_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/Start_Process_CRDM_Needs",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/A_Stakeholders",
@@ -42,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs#flow/SF_Process_CRDM_Needs_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/A_Stakeholders",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/A_Synthesise",
@@ -51,7 +51,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs#flow/SF_Process_CRDM_Needs_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/A_Synthesise",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/BA_ReviewNeeds",
@@ -60,7 +60,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs#flow/SF_Process_CRDM_Needs_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/BA_ReviewNeeds",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/S_ConfirmNeeds",
@@ -69,7 +69,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs#flow/SF_Process_CRDM_Needs_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/S_ConfirmNeeds",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/GW_Needs",
@@ -78,7 +78,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs#flow/SF_Process_CRDM_Needs_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "revise",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/GW_Needs",
@@ -88,7 +88,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs#flow/SF_Process_CRDM_Needs_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs/node/GW_Needs",

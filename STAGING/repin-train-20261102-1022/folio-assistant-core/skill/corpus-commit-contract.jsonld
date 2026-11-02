@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/skill/corpus-commit-contract",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "corpus-commit-contract",
       "title": "Corpus — committing an accepted edit",
       "description": "The contract the `corpus` role is held to when an accepted edit is committed into it: take the write only on the editor's acceptance, as one change with its QA sidecars, under the commit-hygiene requirement and with no relaxing of that policy. The narrowest contract the editing diagram requires. A mechanical role's skill is a contract to test against, not instructions to read.",

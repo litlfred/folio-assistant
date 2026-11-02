@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-sci/directory/sci-lean",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "sci-lean",
       "path": "lean/",
       "contentSource": {
@@ -19,7 +19,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/lean"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/lean"
       ],
       "description": "The Lean templates this harness's tooling fills: today `formal-edges.lean.tmpl`, which pipeline/formal-edges.ts writes into a folio's own `.lake/` and elaborates there. Declared with graph typology `lean`, the kind this instance owns for Lean sources (typologies/lean.json), on the owner's ruling of 2026-10-10: \"lean/ is a declared directory in folio-asst-sci (it should be) and lean Processes and Tools are around that.\" The Tools (`lean-html-docs`, `lean-render-publish`), the process (`lean-docs-publish`) and the skill (`lean-html-docs`) are what a FOLIO's `lean` directory gets: its doc-gen4 render, published under the folio's site in the harness rail. `.tmpl`, never `.lean`: the platform tracks no Lean content, and lean-decl-starts-are-shared.test.ts holds it to that. Declared WITH its files, per bean dh4f.",
       "readmePath": "lean/README.md",

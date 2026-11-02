@@ -4,8 +4,8 @@
     "dcterms": "http://purl.org/dc/terms/",
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns#",
-    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns#",
+    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/",
     "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns#",
     "label": "rdfs:label",
     "prefLabel": "skos:prefLabel",
@@ -31,18 +31,18 @@
       "@type": "@id"
     },
     "usage": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#hasLaneUsage",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/hasLaneUsage",
       "@type": "@id"
     },
     "ofConcept": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#ofConcept",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/ofConcept",
       "@type": "@id"
     },
     "inProcess": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#inProcess",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/inProcess",
       "@type": "@id"
     },
-    "performerVaries": "https://litlfred.github.io/cat-harness/v0/ns#performerVaries"
+    "performerVaries": "https://litlfred.github.io/cat-harness/v0/ns/performerVaries"
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld",
   "@type": "skos:ConceptScheme",
@@ -69,7 +69,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_CompleteInitialization/Lane_BootstrappingAgent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/role/bootstrapping-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_CompleteInitialization",
       "label": "Bootstrapping Agent",
@@ -78,7 +78,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_Discussion/Lane_BootstrappingAgent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/role/bootstrapping-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_Discussion",
       "label": "Bootstrapping Agent",
@@ -87,7 +87,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_InitializeHarness/Lane_BootstrappingAgent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/role/bootstrapping-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_InitializeHarness",
       "label": "Bootstrapping Agent",
@@ -117,7 +117,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_HumanAgentDiscussion/Lane_Requestor",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/role/requestor",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_HumanAgentDiscussion",
       "label": "Requestor",
@@ -138,7 +138,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_LogMessage/Lane_Logger",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/role/logger",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_LogMessage",
       "label": "Logger",
@@ -149,41 +149,19 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_HumanAgentDiscussion/lane/Lane_Agent",
       "@type": "skos:Concept",
       "prefLabel": "Agent",
-      "performerVaries": true,
-      "notation": "Agent",
+      "notation": "Process_HumanAgentDiscussion/lane/Lane_Agent",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld",
-      "usage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_HumanAgentDiscussion/Lane_Agent"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_HumanAgentDiscussion/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_HumanAgentDiscussion/lane/Lane_Agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_HumanAgentDiscussion",
-      "label": "Agent",
-      "scopeNote": "Whichever agent called this sub-process. It determines where it is, prepares the question, rules on whether an answer settles it, and records the outcome in the form its caller asked for. It never supplies the answer itself.",
-      "source": "bootstrap/processes/human-agent-discussion.bpmn"
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-02: no swimlane in this instance derives this term."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_LogMessage/lane/Lane_Actor",
       "@type": "skos:Concept",
       "prefLabel": "Actor",
-      "performerVaries": true,
-      "notation": "Actor",
+      "notation": "Process_LogMessage/lane/Lane_Actor",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld",
-      "usage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_LogMessage/Lane_Actor"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_LogMessage/Lane_Actor",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_LogMessage/lane/Lane_Actor",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/process/Process_LogMessage",
-      "label": "Actor",
-      "scopeNote": "Whichever process called this sub-process, composing the five required fields and nothing more. GW_Complete then refuses an incomplete message rather than logging it anyway, because a partial entry that reads as a whole one is worse than no entry at all.",
-      "source": "bootstrap/processes/log-message.bpmn"
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-02: no swimlane in this instance derives this term."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap/role/initiator",

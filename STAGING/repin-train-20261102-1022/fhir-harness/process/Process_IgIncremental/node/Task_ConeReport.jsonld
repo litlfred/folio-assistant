@@ -5,25 +5,20 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ConeReport.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ConeReport",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Post the cone report on the PR",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/qc-reviewer",
       "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Review",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/quality-control",
-        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/quality-control",
-        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/quality-control"
-      ],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [

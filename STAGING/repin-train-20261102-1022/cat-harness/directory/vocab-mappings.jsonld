@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/directory/vocab-mappings",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "vocab-mappings",
       "path": "vocab-mappings/",
       "contentSource": {
@@ -19,7 +19,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/vocab-mapping"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/vocab-mapping"
       ],
       "description": "Vocabulary mappings: one `\"$schema\": \"folio-vocab-mapping/v1\"` table per source content type and target node, saying which source field becomes which target predicate and with what relationship. A table is shaped like a FHIR ConceptMap, so an existing ConceptMap is representable here and a table can be produced as one, with the loss reported (`schemas/vocab-mapping-fhir.ts`). Owner, 2026-09-23 (bean sl9u): \"need Tools for this type of ETL procedure depending on source / target content type and other metadata\". Ruled 2026-10-02 (bean k74z): option 1, tables as KG data applied by the in-process `vocab-map` Tool. First consumer: `scripts/glossary-export.ts`. `dependents: skip`: a table belongs to the Tool that applies it, which lives here.",
       "readmePath": "vocab-mappings/README.md",

@@ -4,8 +4,8 @@
     "dcterms": "http://purl.org/dc/terms/",
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns#",
-    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns#",
+    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/",
     "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns#",
     "label": "rdfs:label",
     "prefLabel": "skos:prefLabel",
@@ -31,18 +31,18 @@
       "@type": "@id"
     },
     "usage": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#hasLaneUsage",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/hasLaneUsage",
       "@type": "@id"
     },
     "ofConcept": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#ofConcept",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/ofConcept",
       "@type": "@id"
     },
     "inProcess": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#inProcess",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/inProcess",
       "@type": "@id"
     },
-    "performerVaries": "https://litlfred.github.io/cat-harness/v0/ns#performerVaries"
+    "performerVaries": "https://litlfred.github.io/cat-harness/v0/ns/performerVaries"
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld",
   "@type": "skos:ConceptScheme",
@@ -89,7 +89,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Person",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_ContentAcquisition",
       "label": "Contributor",
@@ -98,7 +98,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Reader",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Reader (any actor)",
@@ -107,7 +107,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Ingestion/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_Ingestion",
       "label": "Contributor (human or agent)",
@@ -116,7 +116,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MaterializeRemote",
       "label": "Contributor (human or agent)",
@@ -125,7 +125,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MethodologyFromSource",
       "label": "Owner",
@@ -134,7 +134,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_RefreshMaterialized",
       "label": "Contributor (human or agent)",
@@ -143,7 +143,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SampleImport",
       "label": "Contributor (human or agent)",
@@ -152,7 +152,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SubscribeKg",
       "label": "Subscriber (the folio's owner)",
@@ -161,7 +161,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SecureAgentPermissions",
       "label": "Owner",
@@ -170,7 +170,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SessionStateMachine",
       "label": "Human actor",
@@ -179,7 +179,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_ActivityLog",
       "label": "Log operator (human)",
@@ -188,7 +188,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_FeatureStaging",
       "label": "Human actor",
@@ -197,7 +197,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeToMain",
       "label": "Owner",
@@ -206,7 +206,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeTrain",
       "label": "Owner",
@@ -215,7 +215,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_RelatedWork",
       "label": "User",
@@ -224,7 +224,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_StalledAgentTriage",
       "label": "User",
@@ -254,7 +254,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/author",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CopyIntoFolio",
       "label": "Folio author",
@@ -263,7 +263,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountDependency/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/author",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MountDependency",
       "label": "Downstream author",
@@ -272,7 +272,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/author",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Copier's own folio/",
@@ -281,7 +281,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/author",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_ArchimatePublish",
       "label": "Model author",
@@ -307,7 +307,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Review/Lane_EditorDecides",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/editor",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_Review",
       "label": "Editors + authoring agents",
@@ -316,7 +316,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Editorial",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/editor",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgToPortal",
       "label": "Editorial",
@@ -346,7 +346,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_Review",
       "label": "Reviewer / SME",
@@ -355,7 +355,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_HumanTranslation",
       "label": "Subject-Matter Expert / Reviewer",
@@ -364,7 +364,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeCodeReview",
       "label": "Reviewer",
@@ -373,7 +373,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "label": "Reviewer / SME",
@@ -382,7 +382,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_HarnessRendering",
       "label": "Reviewer",
@@ -391,7 +391,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_ThemeUIReview",
       "label": "Reviewer",
@@ -422,7 +422,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeReview/Lane_NarrativeReviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/narrative-reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NarrativeReview",
       "label": "Narrative reviewer",
@@ -431,7 +431,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_VoiceReview/Lane_NarrativeReviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/narrative-reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_VoiceReview",
       "label": "Narrative reviewer",
@@ -453,7 +453,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeReview/Lane_CodeReviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/code-reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CodeReview",
       "label": "Code reviewer",
@@ -462,7 +462,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/code-reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CodeChangeReview",
       "label": "Code reviewer",
@@ -492,7 +492,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_SME",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/clinical-sme",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SmeTestDataReview",
       "label": "Clinical / scientific SME",
@@ -519,7 +519,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Admin",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/administrator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_GraphDetanglement",
       "label": "Administrator",
@@ -528,7 +528,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Admin",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/administrator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgSeparation",
       "label": "Administrator",
@@ -537,7 +537,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Admin",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/administrator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SubKgLifecycle",
       "label": "Administrator (owner)",
@@ -546,7 +546,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Administrator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/administrator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_ActorRoleAdministration",
       "label": "Administrator",
@@ -584,7 +584,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Publication",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/publication-manager",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgSeparation",
       "label": "Publication manager",
@@ -593,7 +593,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Deployment",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/publication-manager",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgToPortal",
       "label": "Deployment owner",
@@ -602,7 +602,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/publication-manager",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_PublishAlert",
       "label": "Publication manager",
@@ -611,7 +611,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/publication-manager",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_QaReportSigning",
       "label": "Human signer",
@@ -620,7 +620,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Publication",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/publication-manager",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "label": "Publication manager",
@@ -653,7 +653,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Close",
       "label": "BA / Feature Requestor",
@@ -662,7 +662,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_DataModel",
       "label": "BA / Feature Requestor",
@@ -671,7 +671,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Deliver",
       "label": "BA / Feature Requestor",
@@ -680,7 +680,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
       "label": "BA / Feature Requestor",
@@ -689,7 +689,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Requirements",
       "label": "BA / Feature Requestor",
@@ -698,7 +698,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM",
       "label": "BA / Feature Requestor",
@@ -707,7 +707,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Signoff",
       "label": "BA / Feature Requestor",
@@ -716,7 +716,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SwotAnalysis",
       "label": "Business analyst",
@@ -725,7 +725,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_OptionsAnalysis",
       "label": "Business analyst",
@@ -734,7 +734,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_RequirementsFiling",
       "label": "BA / Feature Requestor",
@@ -767,7 +767,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Coordinator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/translation-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_HumanTranslation",
       "label": "Translation Coordinator",
@@ -791,7 +791,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Translator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/translator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_HumanTranslation",
       "label": "Human Translator",
@@ -815,7 +815,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Translation/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/translation-adjudicator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_Translation",
       "label": "Human reviewer / adjudicator",
@@ -838,7 +838,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/adjudicator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_Adjudication",
       "label": "Adjudicator",
@@ -847,7 +847,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/adjudicator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CriterionAdjudication",
       "label": "Adjudicator",
@@ -856,7 +856,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/adjudicator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_WireframeDesignReview",
       "label": "Adjudicator",
@@ -881,7 +881,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/feedback-provider",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_Adjudication",
       "label": "Feedback provider",
@@ -890,7 +890,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Reviewers",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/feedback-provider",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_WireframeDesignReview",
       "label": "Feedback providers",
@@ -919,7 +919,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_Stakeholders",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Close",
       "label": "Stakeholders",
@@ -928,7 +928,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Stakeholders",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_DataModel",
       "label": "Stakeholders",
@@ -937,7 +937,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Stakeholders",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Deliver",
       "label": "Stakeholders",
@@ -946,7 +946,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Stakeholders",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
       "label": "Stakeholders",
@@ -955,7 +955,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Stakeholders",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Requirements",
       "label": "Stakeholders",
@@ -964,7 +964,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwotAnalysis/Lane_Stakeholder",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SwotAnalysis",
       "label": "Stakeholder",
@@ -1030,7 +1030,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CopyIntoFolio",
       "label": "Authoring agent",
@@ -1039,7 +1039,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_GraphDetanglement",
       "label": "Authoring agent",
@@ -1048,7 +1048,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgSeparation",
       "label": "Authoring agent",
@@ -1057,7 +1057,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Caller",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NamedQueryExecution",
       "label": "Query Caller (CLI / MCP / Web)",
@@ -1066,7 +1066,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SubKgLifecycle",
       "label": "Authoring agent",
@@ -1075,7 +1075,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MethodologyFromSource",
       "label": "Agent",
@@ -1084,7 +1084,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Translation/Lane_Platform",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_Translation",
       "label": "Agent / platform (automated)",
@@ -1093,7 +1093,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_AskThePerson/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_AskThePerson",
       "label": "Agent",
@@ -1102,7 +1102,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Close",
       "label": "Agent",
@@ -1111,7 +1111,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_DataModel",
       "label": "Agent",
@@ -1120,7 +1120,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Deliver",
       "label": "Agent",
@@ -1129,7 +1129,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Issue/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Issue",
       "label": "Agent",
@@ -1138,7 +1138,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Needs",
       "label": "Agent",
@@ -1147,7 +1147,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Requirements",
       "label": "Agent",
@@ -1156,7 +1156,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM",
       "label": "Agent",
@@ -1165,7 +1165,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CRDM_Signoff",
       "label": "Agent",
@@ -1174,7 +1174,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SecureAgentPermissions",
       "label": "Agent",
@@ -1183,7 +1183,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SessionStateMachine",
       "label": "Agent (playing the machine)",
@@ -1192,7 +1192,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_ActivityLog",
       "label": "Agent (this session)",
@@ -1201,7 +1201,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanClose/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_BeanClose",
       "label": "Agent (this session)",
@@ -1210,7 +1210,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_Drainer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_BeanDrain",
       "label": "Drainer",
@@ -1219,7 +1219,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_BeanLifecycle",
       "label": "Agent (this session)",
@@ -1228,7 +1228,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_BeanOpen",
       "label": "Agent (this session)",
@@ -1237,7 +1237,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CodeChangeReview",
       "label": "Authoring agent",
@@ -1246,7 +1246,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeBase",
       "label": "Authoring agent",
@@ -1255,7 +1255,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeRefusal",
       "label": "Dispatched agent",
@@ -1264,7 +1264,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_RelatedWork",
       "label": "Agent",
@@ -1273,7 +1273,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_RequirementsFiling",
       "label": "Authoring Agent",
@@ -1282,7 +1282,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SmeTestDataReview",
       "label": "Authoring agent",
@@ -1291,7 +1291,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_StalledAgentTriage",
       "label": "Triage agent",
@@ -1300,7 +1300,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_TestDataCuration",
       "label": "Authoring agent",
@@ -1309,7 +1309,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamPinWatch",
       "label": "Agent",
@@ -1318,7 +1318,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "label": "Agent",
@@ -1327,7 +1327,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_WireframeDesignReview",
       "label": "Designer",
@@ -1360,7 +1360,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_ContentAcquisition",
       "label": "Agent",
@@ -1369,7 +1369,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Ingestion/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_Ingestion",
       "label": "Ingestion Engine (agent, runs unattended)",
@@ -1378,7 +1378,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MaterializeRemote",
       "label": "Ingestion engine (agent, runs unattended)",
@@ -1387,7 +1387,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_RefreshMaterialized",
       "label": "Ingestion Engine (agent, runs unattended)",
@@ -1396,7 +1396,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SampleImport",
       "label": "Ingestion Engine (agent, runs unattended)",
@@ -1405,7 +1405,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SubscribeKg",
       "label": "Ingestion Engine (agent, runs unattended)",
@@ -1414,7 +1414,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_IngestTheme/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_IngestTheme",
       "label": "Ingestion Engine (agent, runs unattended)",
@@ -1423,7 +1423,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_ThemeUIReview",
       "label": "Agent",
@@ -1461,7 +1461,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Sibling",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_HandBackToDiscussion",
       "label": "Sibling",
@@ -1470,7 +1470,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_BeanOpen",
       "label": "Sibling session or human (not yours to close)",
@@ -1479,7 +1479,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeRefusal",
       "label": "Owning session",
@@ -1488,7 +1488,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeTrain",
       "label": "Sibling session",
@@ -1513,7 +1513,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Merger",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/merge-steward",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeToMain",
       "label": "Merging session",
@@ -1522,7 +1522,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/merge-steward",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeTrain",
       "label": "Merge steward",
@@ -1583,7 +1583,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgSeparation",
       "label": "Build pipeline",
@@ -1592,7 +1592,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgToPortal",
       "label": "Build pipeline",
@@ -1601,7 +1601,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountDependency/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MountDependency",
       "label": "Build pipeline",
@@ -1610,7 +1610,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MountSubgraph",
       "label": "Build pipeline",
@@ -1619,7 +1619,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Engine",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NamedQueryExecution",
       "label": "Universal Query Engine Runtime",
@@ -1628,7 +1628,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NQuadsDistribution/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NQuadsDistribution",
       "label": "CI/CD Pipeline",
@@ -1637,7 +1637,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SliceSqlitePublish",
       "label": "CI/CD Pipeline",
@@ -1646,7 +1646,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SubKgLifecycle",
       "label": "Build pipeline",
@@ -1655,7 +1655,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_HumanTranslation",
       "label": "Automated Pipeline",
@@ -1664,7 +1664,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Audit",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_ActorRoleAdministration",
       "label": "Graph audit (system)",
@@ -1673,7 +1673,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_RenderKgToCdn",
       "label": "Build pipeline",
@@ -1682,7 +1682,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CiHealth/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CiHealth",
       "label": "Scheduled log sweep",
@@ -1691,7 +1691,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CodeChangeReview",
       "label": "CI/CD pipeline",
@@ -1700,7 +1700,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeQualityGates/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CodeQualityGates",
       "label": "CI/CD Pipeline",
@@ -1709,7 +1709,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_DocsSite/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_DocsSite",
       "label": "CI/CD Pipeline",
@@ -1718,7 +1718,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_FeatureStaging",
       "label": "CI/CD Pipeline",
@@ -1727,7 +1727,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GeneratedFileDrift/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_GeneratedFileDrift",
       "label": "Build pipeline",
@@ -1736,7 +1736,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_JsonLdDrift",
       "label": "Build pipeline",
@@ -1745,7 +1745,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Command",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeBase",
       "label": "merge:main command",
@@ -1754,7 +1754,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeToMain",
       "label": "Build pipeline",
@@ -1763,7 +1763,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeTrain",
       "label": "Build pipeline",
@@ -1772,7 +1772,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_PrChecksPresent",
       "label": "Scheduled log sweep",
@@ -1781,7 +1781,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_PublishAlert",
       "label": "CI/CD Pipeline",
@@ -1790,7 +1790,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_PublishVerification",
       "label": "CI/CD Pipeline",
@@ -1799,7 +1799,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_QaPublish",
       "label": "CI/CD Pipeline",
@@ -1808,7 +1808,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_RepoHealth",
       "label": "Scheduled log sweep",
@@ -1817,7 +1817,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TrackedWatch/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_TrackedWatch",
       "label": "Scheduled log sweep",
@@ -1826,7 +1826,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamPinWatch",
       "label": "CI/CD Pipeline",
@@ -1835,7 +1835,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_UpstreamAdoption",
       "label": "CI/CD Pipeline",
@@ -1844,7 +1844,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_ArchimatePublish",
       "label": "CI/CD Pipeline",
@@ -1853,7 +1853,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_HarnessRendering",
       "label": "Build pipeline",
@@ -1862,7 +1862,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_RenderLog",
       "label": "CI/CD Pipeline",
@@ -1883,7 +1883,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Board",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/board-renderer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_HarnessRendering",
       "label": "Board renderer",
@@ -1910,7 +1910,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Validate",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/validation-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CopyIntoFolio",
       "label": "Validation pipeline",
@@ -1919,7 +1919,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Verify",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/validation-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Verification",
@@ -1928,7 +1928,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Qa",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/validation-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_QaReportSigning",
       "label": "Validation and QA (mechanical + agents)",
@@ -1949,7 +1949,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Target",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/publish-target",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgToPortal",
       "label": "Publish target",
@@ -1976,7 +1976,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Attestation",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/attestation-service",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgToPortal",
       "label": "Attestation (GDHCN / WHO SMART Trust)",
@@ -1985,7 +1985,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Api",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/attestation-service",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_QaReportSigning",
       "label": "Attestation service (API)",
@@ -1994,7 +1994,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Attestation",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/attestation-service",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_TestPlanExecution",
       "label": "Attestation service",
@@ -2029,7 +2029,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Source",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/corpus",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CopyIntoFolio",
       "label": "Source knowledge graph — read-only",
@@ -2038,7 +2038,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/corpus",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Source graph — read-only",
@@ -2062,7 +2062,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Portal",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/external-registry",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgToPortal",
       "label": "Portal (external consumer)",
@@ -2125,7 +2125,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/platform-authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_KgSeparation",
       "label": "Platform authoring agent",
@@ -2134,7 +2134,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NQuadsDistribution/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/platform-authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_NQuadsDistribution",
       "label": "Knowledge Graph Engineer",
@@ -2143,7 +2143,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/platform-authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SliceSqlitePublish",
       "label": "Platform authoring agent",
@@ -2152,7 +2152,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Platform",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/platform-authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SubKgLifecycle",
       "label": "Platform authoring agent",
@@ -2181,7 +2181,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Discussion",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/session-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_HandBackToDiscussion",
       "label": "Discussion agent",
@@ -2190,7 +2190,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_QueueKeeper",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/session-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_BeanDrain",
       "label": "Queue keeper",
@@ -2199,7 +2199,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/session-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_MergeRefusal",
       "label": "Merge steward",
@@ -2208,7 +2208,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/session-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_StalledAgentTriage",
       "label": "Merge steward",
@@ -2241,7 +2241,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Requester",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/test-requester",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_TestPlanExecution",
       "label": "Requester / system under test",
@@ -2264,7 +2264,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Record",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/tester",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_SmeTestDataReview",
       "label": "Tester",
@@ -2273,7 +2273,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Tester",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/tester",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_TestDataCuration",
       "label": "Tester",
@@ -2282,7 +2282,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Tester",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/tester",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_TestPlanExecution",
       "label": "Tester",
@@ -2303,7 +2303,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Checker",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/untainted-checker",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_TestPlanExecution",
       "label": "Untainted checker",
@@ -2324,7 +2324,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Certifier",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/certifier",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_TestPlanExecution",
       "label": "Certifier",

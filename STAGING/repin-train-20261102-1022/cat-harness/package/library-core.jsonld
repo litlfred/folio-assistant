@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/package/library-core",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/SkillPackage",
       "name": "library-core",
       "version": "0.1.0",
       "description": "Library and information management in the harness: the basic ingestion flow (accept an upload, extract its metadata into the KG, place the asset in library/ if materialized), content acquisition, upload routes and naming, asset extraction, literature search, methodology adoption, code lists, glossary terms, term disagreement and translation. Moved out of folio-core into the library topic (bean 9umr, owner ruling 2026-09-30); the cataloguing methods and the detailed document-ingestion method moved up a layer in placement PR6 (bean apcg).",

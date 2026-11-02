@@ -5,17 +5,16 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Author.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
       "name": "FHIR modeller / PR author (person + authoring agent)",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
     }
   ]

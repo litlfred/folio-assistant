@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/capability/pymupdf",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
       "localId": "pymupdf",
       "name": "PyMuPDF (preferred PDF reader backend for pdf-structure.py)",
       "description": "Optional PDF reader backend for scripts/pdf-structure.py, preferred over pypdf when present. Its text layer is cleaner on math PDFs (fewer split words, correct accents, correct CJK where pypdf yields mojibake), and it reads the embedded outline directly via get_toc() rather than walking pypdf's outline object. pdf-structure.py auto-detects it and falls back to pypdf when absent, so it is never required. LICENCE: PyMuPDF is AGPL-3.0 (or commercial); the shipped Docker image installs pypdf (BSD-3-Clause), not PyMuPDF, so this stays an opt-in accelerator. Install: pip install pymupdf.",

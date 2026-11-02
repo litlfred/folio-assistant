@@ -1,0 +1,127 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_DIIG",
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG",
+ "tasks": {
+  "A_FormTeam": {
+   "id": "A_FormTeam",
+   "name": "Form the team and establish goals",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_FormTeam",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "A_MapCurrentState": {
+   "id": "A_MapCurrentState",
+   "name": "Map the current state and confirm bottlenecks",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_MapCurrentState",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "A_PrioritizeBottlenecks": {
+   "id": "A_PrioritizeBottlenecks",
+   "name": "Prioritize, and map to health system challenges",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_PrioritizeBottlenecks",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "A_DetermineInterventions": {
+   "id": "A_DetermineInterventions",
+   "name": "Determine appropriate digital health interventions",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_DetermineInterventions",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "A_PlanImplementation": {
+   "id": "A_PlanImplementation",
+   "name": "Plan the implementation",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_PlanImplementation",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "A_LinkEnterpriseArchitecture": {
+   "id": "A_LinkEnterpriseArchitecture",
+   "name": "Link to the enterprise architecture",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "A_DevelopBudget": {
+   "id": "A_DevelopBudget",
+   "name": "Develop a budget",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_DevelopBudget",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "A_MonitorAndUseData": {
+   "id": "A_MonitorAndUseData",
+   "name": "Monitor, and use data effectively",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_MonitorAndUseData",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "A_ValueProposition": {
+   "id": "A_ValueProposition",
+   "name": "Make the value proposition and set next steps",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_ValueProposition",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Call_BeanOpen": {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/Call_BeanOpen",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "binding": "unbound"
+  },
+  "Call_BeanClose": {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/Call_BeanClose",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "binding": "unbound"
+  }
+ }
+}

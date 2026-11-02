@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Release a draft for public comment",
       "summary": "The whole public comment cycle around the comments themselves.",
       "description": "The whole public comment cycle around the comments themselves. The\ncommittee and editor agree a release date; the draft is frozen as a\npublic comment release with fixed line numbers (a PDF and a permanent\nPC/<version> site); the editor sets up every channel against that\nrelease, with instructions and links, and writes the announcement; the\npublic is told; comments come back and are handled one by one in\nProcess_PublicComment; and the release is archived with the review.\nCalled from Process_Publication. Skills: public-comment, document-publishing.",
@@ -29,7 +29,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease#flow/Flow_DraftReady_To_AgreeReleaseDate",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/StartEvent_DraftReady",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_AgreeReleaseDate",
@@ -38,7 +38,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease#flow/Flow_AgreeReleaseDate_To_BuildPcRelease",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_AgreeReleaseDate",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_BuildPcRelease",
@@ -47,7 +47,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease#flow/Flow_BuildPcRelease_To_SetUpChannels",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_BuildPcRelease",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_SetUpChannels",
@@ -56,7 +56,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease#flow/Flow_SetUpChannels_To_WriteAnnouncement",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_SetUpChannels",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_WriteAnnouncement",
@@ -65,7 +65,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease#flow/Flow_WriteAnnouncement_To_Distribute",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_WriteAnnouncement",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_Distribute",
@@ -74,7 +74,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease#flow/Flow_Distribute_To_PublicComment",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_Distribute",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/CallActivity_PublicComment",
@@ -83,7 +83,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease#flow/Flow_PublicComment_To_ArchiveRelease",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/CallActivity_PublicComment",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_ArchiveRelease",
@@ -92,7 +92,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease#flow/Flow_ArchiveRelease_To_Closed",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_ArchiveRelease",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/folio-assistant-core/process/Process_PublicCommentRelease/node/EndEvent_Closed",

@@ -838,9 +838,9 @@
   };
   const copyLink = (b) => {
     const url = location.href.replace(/#.*$/, "") + "#" + encodeURIComponent(b.dataset.anchor).replace(/%3A/g, ":").replace(/%2F/g, "/");
-    try { history.replaceState(null, "", url); } catch (x) { /* the copy still works */ }
+    try { history.replaceState(null, "", url); } catch { /* the copy still works */ }
     const done = (t) => { b.title = t; b.classList.add("ba-copied"); setTimeout(() => { b.classList.remove("ba-copied"); b.title = "Copy link"; }, 2000); };
-    try { navigator.clipboard.writeText(url).then(() => done("Link copied"), () => done(url)); } catch (x) { done(url); }
+    try { navigator.clipboard.writeText(url).then(() => done("Link copied"), () => done(url)); } catch { done(url); }
   };
   const HEADINGS = ".main-content h2[id], .main-content h3[id], .main-content h4[id], main h2[id], main h3[id], main h4[id]";
   const icons = (root) => {

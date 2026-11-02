@@ -5,25 +5,21 @@
   "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SeedBeans.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SeedBeans",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Seed the work plan",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
-      "performedBy": "http://smart.who.int/base/role/work-plan",
       "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_WorkPlan",
-      "requires": [
-        "http://smart.who.int/base/skill/todo-manager"
-      ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "note",
+      "requires": [],
+      "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
         "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_1"

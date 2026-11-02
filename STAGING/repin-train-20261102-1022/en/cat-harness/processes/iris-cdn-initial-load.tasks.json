@@ -10,12 +10,7 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
    "lane": "Owner",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
-   "skills": [
-    {
-     "name": "iris-cdn-exporter",
-     "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "iris-cdn-owner",
     "href": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner",
@@ -75,16 +70,7 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
    "lane": "IRIS CDN Exporter (agent)",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
-   "skills": [
-    {
-     "name": "iris-cdn-exporter",
-     "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
-    },
-    {
-     "name": "iris-dspace",
-     "href": "../../../reference/skill-instructions/iris-dspace.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "iris-cdn-exporter",
     "href": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
@@ -112,16 +98,7 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-   "skills": [
-    {
-     "name": "iris-rest-feed",
-     "href": "../../../reference/skill-instructions/iris-rest-feed.html"
-    },
-    {
-     "name": "iris-dspace",
-     "href": "../../../reference/skill-instructions/iris-dspace.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -213,12 +190,7 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-   "skills": [
-    {
-     "name": "iris-cdn-exporter",
-     "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -310,12 +282,7 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-   "skills": [
-    {
-     "name": "iris-cdn-exporter",
-     "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -407,12 +374,7 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-   "skills": [
-    {
-     "name": "iris-cdn-exporter",
-     "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -504,12 +466,7 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-   "skills": [
-    {
-     "name": "iris-cdn-exporter",
-     "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -601,16 +558,7 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-   "skills": [
-    {
-     "name": "iris-oxigraph",
-     "href": "../../../reference/skill-instructions/iris-oxigraph.html"
-    },
-    {
-     "name": "nquads-distribution",
-     "href": "../../../reference/skill-instructions/nquads-distribution.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Package and distribute partitioned W3C N-Quads and named queries",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
@@ -707,12 +655,7 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
-   "skills": [
-    {
-     "name": "iris-cdn-signing",
-     "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Sign and publish an IRIS CDN release",
     "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
@@ -809,12 +752,7 @@
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
    "lane": "IRIS CDN Exporter (agent)",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
-   "skills": [
-    {
-     "name": "iris-cdn-exporter",
-     "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "iris-cdn-exporter",
     "href": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",

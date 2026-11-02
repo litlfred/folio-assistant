@@ -204,10 +204,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/nquads-distribution"
-      ],
       "touchesWorkPlan": false
     },
     {
@@ -224,7 +220,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     },
     {
@@ -322,7 +317,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -338,7 +332,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -357,10 +350,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace"
-      ],
       "touchesWorkPlan": false
     },
     {
@@ -376,10 +365,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace"
-      ],
       "touchesWorkPlan": false
     },
     {
@@ -395,7 +380,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -411,7 +395,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -427,7 +410,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -443,7 +425,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -587,10 +568,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/nquads-distribution"
-      ],
       "touchesWorkPlan": false
     },
     {
@@ -607,7 +584,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     },
     {
@@ -683,7 +659,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
     },
     {
@@ -699,10 +674,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace"
-      ],
       "touchesWorkPlan": false
     },
     {
@@ -718,7 +689,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -734,7 +704,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
     },
     {
@@ -750,7 +719,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
     },
     {
@@ -766,7 +734,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -782,7 +749,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -910,10 +876,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
-        "https://litlfred.github.io/folio-assistant/who-iris/skill/nquads-distribution"
-      ],
       "touchesWorkPlan": false
     },
     {
@@ -930,7 +892,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     },
     {
@@ -1006,7 +967,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
     },
     {
@@ -1022,7 +982,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -1038,7 +997,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
     },
     {
@@ -1054,7 +1012,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
     },
     {
@@ -1070,7 +1027,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
     },
     {
@@ -1324,7 +1280,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     },
     {
@@ -1340,7 +1295,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     },
     {
@@ -1356,7 +1310,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     },
     {
@@ -1372,7 +1325,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     },
     {
@@ -1388,7 +1340,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     },
     {
@@ -1404,7 +1355,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     },
     {
@@ -1420,7 +1370,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
     },
     {
@@ -1436,7 +1385,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
     }
   ],

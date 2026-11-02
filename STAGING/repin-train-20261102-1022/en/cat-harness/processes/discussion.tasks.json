@@ -7,14 +7,7 @@
    "name": "Determine where you are: process, roles, context",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "discussion"
-    },
-    {
-     "name": "human-agent-discussion"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -55,11 +48,7 @@
    "name": "List the harnesses this could be",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "confirm-harness"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -100,11 +89,7 @@
    "name": "List the locations this could install to",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "confirm-harness"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -145,14 +130,7 @@
    "name": "Ask which harness, and where",
    "type": "bpmn:CallActivity",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "confirm-harness"
-    },
-    {
-     "name": "human-agent-discussion"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Human–agent discussion",
     "href": "human-agent-discussion.html",
@@ -198,11 +176,7 @@
    "name": "Record the determination",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "discussion"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -243,11 +217,7 @@
    "name": "Record what is still open",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "discussion"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",

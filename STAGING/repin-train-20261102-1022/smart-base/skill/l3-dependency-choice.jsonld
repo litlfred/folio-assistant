@@ -5,14 +5,14 @@
   "sameAs": "http://smart.who.int/base/skill/l3-dependency-choice.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/skill/l3-dependency-choice",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "l3-dependency-choice",
       "title": "l3-dependency-choice",
       "description": "Stage 5 of smart-guideline-end-to-end: choose which existing FHIR IGs (WHO's, or a jurisdiction's) the guideline's L3 builds on. Indexes each candidate IG with ig-artifact-ingestion, matches the L1 knowledge graph and the stage-4 L2 assets against the index, and returns one decision row per IG naming the profiles, value sets and libraries reused, derived from or not used. Read before choosing, or recording, an IG dependency.",

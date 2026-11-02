@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/skill/hand-back-to-discussion",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "hand-back-to-discussion",
       "title": "Hand back to the discussion",
       "description": "A sibling agent, spawned during or working beside a live agent-human discussion, hands every card, question, decision, result, blocker or piece of context back to the discussion agent that is talking with the person, and never leaves it only in its own thread. The discussion agent asks the person (ask-the-person), marks every copy answered, and routes the answer back. A review sheet or issue in play is an extra channel. Use whenever an agent that is not the one talking with the person has something the person must see.",

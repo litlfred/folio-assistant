@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/capability/docling",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
       "localId": "docling",
       "name": "Docling (layout-aware PDF parsing)",
       "description": "IBM's MIT-licensed document parser: layout analysis, TableFormer table structure, formula enrichment. Stage 3 of docs/proposals/rag-document-ingestion.md §10 — the ~20 documents pypdf cannot serve (7 no-TOC, 17 unsectioned, 7 likely-scanned) plus the WHO L1 guidelines, where boxed recommendations and GRADE tables are layout facts. IMPORTANT: `pip install docling` succeeds but a first parse fetches weights from huggingface.co, which returns `CONNECT tunnel failed, response 403` under organisation policy (re-measured 2026-08-26). So the import is NOT the capability, and this probe does not stop there: it passes when the weights are already cached locally, and otherwise falls back to a 5-second reachability check. A sandboxed session therefore reports ABSENT and a workstation with models downloaded passes offline and instantly. Run it where egress allows and commit the artefacts.",

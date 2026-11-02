@@ -5,25 +5,21 @@
   "sameAs": "http://smart.who.int/base/process/Process_DIIG/node/A_PlanImplementation.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/process/Process_DIIG/node/A_PlanImplementation",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Plan the implementation",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_DIIG",
-      "performedBy": "http://smart.who.int/base/role/programme-manager",
       "inLane": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
-      "requires": [
-        "http://smart.who.int/base/skill/methodology-adoption"
-      ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "note",
+      "requires": [],
+      "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
         "http://smart.who.int/base/process/Process_DIIG#flow/SF_DIIG_07"

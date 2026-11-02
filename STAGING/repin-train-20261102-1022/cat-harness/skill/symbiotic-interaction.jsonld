@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/skill/symbiotic-interaction",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "symbiotic-interaction",
       "title": "symbiotic-interaction — the three registers of author input",
       "description": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic folio-assistant platform skill.",

@@ -7,11 +7,7 @@
    "name": "Read the declaration, and each one it needs",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "bootstrap-kg-navigation"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -52,14 +48,7 @@
    "name": "Check the JSON Schemas and JSON-LD are at their IRIs",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "publish-documents"
-    },
-    {
-     "name": "initialization-steps"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -100,11 +89,7 @@
    "name": "List the steps the declarations name",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "initialization-steps"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -145,11 +130,7 @@
    "name": "Check it",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "initialization-steps"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -190,14 +171,7 @@
    "name": "Do it, then check again",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "initialization-steps"
-    },
-    {
-     "name": "publish-site"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -238,11 +212,7 @@
    "name": "Follow it, and say that you did",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "initialization-steps"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -283,14 +253,7 @@
    "name": "Ask the person",
    "type": "bpmn:CallActivity",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "human-agent-discussion"
-    },
-    {
-     "name": "publish-site"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Human–agent discussion",
     "href": "human-agent-discussion.html",
@@ -336,11 +299,7 @@
    "name": "Record the step in its state",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "initialization-steps"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -381,11 +340,7 @@
    "name": "Report every step",
    "type": "bpmn:CallActivity",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "log-message"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Log a message",
     "href": "log-message.html",

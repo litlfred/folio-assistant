@@ -5,14 +5,14 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/health.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/health",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "health",
       "path": "health/",
       "contentSource": {
@@ -23,7 +23,7 @@
         "declaredIn": "declaration"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/health"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/health"
       ],
       "description": "Repository health reports for THIS repository: the one `health-report/v1` document `bun run cat-harness-tools/test/health/run.ts --instance <this instance>` writes. Each repository the separation made is its own clone, with its own size, publish branch, branches and stores, so each carries its own report (owner, 2026-10-10: \"All repos need health check\"). The graph typology is cat-harness's; its `health` entry says what separates a health report (about the repository) from a `qa` verdict (about an artefact). It sits at the root, not under `test/health/results/` as in cat-harness, because this instance declares `test/` as code and a declared directory nested inside another is the layout-norms defect (owner, 2026-10-10: option A, move it out of `test/`); at the root a state graph's path equals its id, as `beans/` does.",
       "fileCount": 0,

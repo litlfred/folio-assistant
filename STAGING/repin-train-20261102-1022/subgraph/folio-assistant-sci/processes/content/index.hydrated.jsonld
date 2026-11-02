@@ -162,7 +162,6 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/build-pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes",
       "name": "CI/CD Pipeline",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish"
@@ -170,7 +169,6 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
       "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes",
       "name": "Lean toolchain",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish"
@@ -185,7 +183,6 @@
       "name": "No render — refused or failed; nothing published",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -199,7 +196,6 @@
       "name": "Lean pages ready for the chrome check and deploy",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -213,7 +209,6 @@
       "name": "Pages without chrome — not published",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -231,7 +226,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_3"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -249,7 +243,6 @@
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_6"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/build-pipeline",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -263,7 +256,6 @@
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_0",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
       "relaxable": true,
       "touchesWorkPlan": false
     },
@@ -278,9 +270,7 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_1",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs",
       "touchesWorkPlan": false
     },
     {
@@ -294,16 +284,14 @@
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish#flow/Flow_4",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs",
       "touchesWorkPlan": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "@type": "bootstrap:Process",
       "description": "How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting. folio-assistant — authoring a scientific paper end to end (Lean + LaTeX).\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\n\nReview, publish and committee feedback are core's shared Process_FolioReviewPublish, called after rendering (shared block G6 of the BPMN guidance review, owner Q-BR-7 A, 2026-11-01). Its `no` answer, changes asked, comes back to Task_AuthorBlocks.",
-      "enforcement": "advisory",
+      "enforcement": "strict",
       "flowCount": 17,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes",
       "name": "Authoring a paper",
@@ -508,7 +496,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/todo-manager",
       "touchesWorkPlan": false
     },
     {
@@ -524,7 +511,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/work-plan",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/bean-coordination",
       "touchesWorkPlan": false
     },
     {
@@ -540,7 +526,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/content-review",
       "touchesWorkPlan": false
     },
     {
@@ -611,8 +596,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Gateway_LeanGreen",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
-      "decidedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/decision/lean-build-gate/Decision_LeanBuildGate",
-      "decisionRef": "decisions/lean-build-gate.dmn#Decision_LeanBuildGate",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Lean",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A09",
@@ -657,7 +640,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/authoring-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/content-author",
       "touchesWorkPlan": false
     },
     {
@@ -676,10 +658,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/lean-toolchain",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-formalization",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-verification"
-      ],
       "touchesWorkPlan": false
     },
     {
@@ -695,7 +673,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/author",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/content-plan",
       "touchesWorkPlan": false
     },
     {
@@ -711,7 +688,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-authoring",
       "touchesWorkPlan": false
     },
     {
@@ -727,7 +703,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/authoring-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/content-plan",
       "touchesWorkPlan": false
     },
     {
@@ -743,9 +718,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/work-plan",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/todo-manager",
-      "touchesWorkPlan": true,
-      "workPlanOp": "note"
+      "touchesWorkPlan": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Validate",
@@ -760,7 +733,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/build-pipeline",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/content-validate",
       "touchesWorkPlan": false
     }
   ],

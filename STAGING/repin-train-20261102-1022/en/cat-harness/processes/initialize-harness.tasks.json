@@ -7,11 +7,7 @@
    "name": "Determine which harness, and where",
    "type": "bpmn:CallActivity",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "confirm-harness"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Determine the harness and repositories",
     "href": "discussion.html",
@@ -57,11 +53,7 @@
    "name": "Read what each location already is",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "bootstrap-kg-navigation"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -102,11 +94,7 @@
    "name": "Read the harness's declaration and instructions",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "bootstrap-kg-navigation"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -147,11 +135,7 @@
    "name": "Log the start of the install",
    "type": "bpmn:CallActivity",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "log-message"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Log a message",
     "href": "log-message.html",
@@ -197,11 +181,7 @@
    "name": "Follow them, at each location",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "bootstrap-kg-navigation"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -242,11 +222,7 @@
    "name": "Write the root README, if it is not there",
    "type": "bpmn:Task",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "root-readme"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "bootstrapping-agent",
     "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
@@ -287,11 +263,7 @@
    "name": "Make sure every step is done",
    "type": "bpmn:CallActivity",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "initialization-steps"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Complete initialization",
     "href": "complete-initialization.html",
@@ -337,11 +309,7 @@
    "name": "Log the failure",
    "type": "bpmn:CallActivity",
    "lane": "Bootstrapping Agent",
-   "skills": [
-    {
-     "name": "log-message"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Log a message",
     "href": "log-message.html",

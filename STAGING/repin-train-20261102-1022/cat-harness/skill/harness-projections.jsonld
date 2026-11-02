@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/skill/harness-projections",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "harness-projections",
       "title": "Harness projections: CI writes them, the owner consents to every hand edit",
       "description": "Who may write under `.claude/`, and when. The generated projections of the knowledge graph (`.claude/commands/*.md` from `skill:commands`, the assembled agent memory under `.claude/agents/` and `.claude/agent-memory/`) are written by CI, which commits them to the PR branch, and never by an agent. A hand-edited `.claude/` file (`settings.json`, its hooks, a hand-written command or agent definition) changes only with the owner's explicit consent to that change: the agent shows the exact diff and the reason, asks first, and records the consent. Read before staging any path under `.claude/`.",

@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/who-iris.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/directory/who-iris-skills",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "who-iris-skills",
       "path": "skills/",
       "contentSource": {
@@ -19,7 +19,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/skills"
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/skills"
       ],
       "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill package: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool. Since 2026-10-01 it also holds the WHO STYLE GUIDE's three house voices under `voices/`, declared from within by `skills.json` (bean `cmsl`) -- they were the separate staged instance `who-style-guide` until the owner's 2026-09-30 ruling, 'who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.' (bean `qsx4`).",
       "readmePath": "skills/README.md",

@@ -10,12 +10,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_Basic",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "library-ingestion",
-     "href": "../../../reference/skill-instructions/library-ingestion.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Basic ingestion — an upload to an asset catalogued in library/",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion",
@@ -68,12 +63,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Detect",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "document-intake",
-     "href": "../../../reference/skill-instructions/document-intake.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -121,12 +111,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Licence",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "document-intake",
-     "href": "../../../reference/skill-instructions/document-intake.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -174,12 +159,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_Extract",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "document-intake",
-     "href": "../../../reference/skill-instructions/document-intake.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Ingestion subprocess — extract structure",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
@@ -232,12 +212,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_Derive",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "document-intake",
-     "href": "../../../reference/skill-instructions/document-intake.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Ingestion subprocess — derive content from the assets",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
@@ -290,12 +265,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_IngestTheme",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "theme-art-intake",
-     "href": "../../../reference/skill-instructions/theme-art-intake.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Ingestion subprocess — ingest a theme",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_IngestTheme",
@@ -348,12 +318,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Call_BeanOpen",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "bean-coordination",
-     "href": "../../../reference/skill-instructions/bean-coordination.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Open the bean",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
@@ -406,12 +371,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Call_BeanClose",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "todo-manager",
-     "href": "../../../reference/skill-instructions/todo-manager.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Close the bean",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
@@ -464,12 +424,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_BuildKg",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "document-intake",
-     "href": "../../../reference/skill-instructions/document-intake.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Ingestion subprocess — build the L1 knowledge graph",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
@@ -522,12 +477,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_Gate",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "l1-document-ingestion",
-     "href": "../../../reference/skill-instructions/l1-document-ingestion.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Ingestion subprocess — the L1 completeness gate",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
@@ -580,12 +530,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_OpenBean",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "todo-manager",
-     "href": "../../../reference/skill-instructions/todo-manager.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -633,12 +578,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Promote",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "document-intake",
-     "href": "../../../reference/skill-instructions/document-intake.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -686,12 +626,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "l1-document-ingestion",
-     "href": "../../../reference/skill-instructions/l1-document-ingestion.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -739,12 +674,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Citeable",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
-   "skills": [
-    {
-     "name": "document-intake",
-     "href": "../../../reference/skill-instructions/document-intake.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",

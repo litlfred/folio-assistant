@@ -5,23 +5,20 @@
   "sameAs": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IdentifyL1.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_IdentifyL1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "1 · Identify L1 guidelines and recommendations",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
-      "performedBy": "http://smart.who.int/base/role/authoring-agent",
       "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
-      "requires": [
-        "http://smart.who.int/base/skill/dak-l1-library"
-      ],
+      "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [

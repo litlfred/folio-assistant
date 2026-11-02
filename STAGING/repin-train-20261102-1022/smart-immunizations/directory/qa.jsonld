@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/smart-immunizations/smart-immunizations.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/smart-immunizations/directory/qa",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "qa",
       "path": "test/results/",
       "contentSource": {
@@ -22,7 +22,7 @@
         "declaredIn": "storage"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/qa"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/qa"
       ],
       "description": "What auditing THIS instance produced: one QA verdict sidecar per audited subject, among them the check:l1-complete verdict of each library/ entry. Stored on the cat/cat-harness/qa-reports branch keyed by commit, as who-iris, smart-base and folio-assistant-sci declare theirs, so the working copy is not a record and a consumer reads every verdict as unknown until it names the commit it is about, never as current. `qa` is a perInstance graph typology: these verdicts are about this instance's nodes.",
       "fileCount": 0,

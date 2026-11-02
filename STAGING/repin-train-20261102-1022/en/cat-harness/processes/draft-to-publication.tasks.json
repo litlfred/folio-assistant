@@ -10,12 +10,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_OpenReleaseBean",
    "lane": "Build pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
-   "skills": [
-    {
-     "name": "bean-coordination",
-     "href": "../../../reference/skill-instructions/bean-coordination.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Open the bean",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
@@ -112,12 +107,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_BuildDraft",
    "lane": "Build pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
-   "skills": [
-    {
-     "name": "content-publish",
-     "href": "../../../reference/skill-instructions/content-publish.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -209,16 +199,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_PublicationQa",
    "lane": "Build pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
-   "skills": [
-    {
-     "name": "content-test",
-     "href": "../../../reference/skill-instructions/content-test.html"
-    },
-    {
-     "name": "quality-control",
-     "href": "../../../reference/skill-instructions/quality-control.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -310,16 +291,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/CallActivity_Editing",
    "lane": "Editors + authoring agents",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Editors",
-   "skills": [
-    {
-     "name": "content-author",
-     "href": "../../../reference/skill-instructions/content-author.html"
-    },
-    {
-     "name": "content-validate",
-     "href": "../../../reference/skill-instructions/content-validate.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Editing and HCI validation",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
@@ -398,16 +370,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_CirculateDraft",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
-   "skills": [
-    {
-     "name": "content-review",
-     "href": "../../../reference/skill-instructions/content-review.html"
-    },
-    {
-     "name": "staging-review",
-     "href": "../../../reference/skill-instructions/staging-review.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "publication-manager",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
@@ -459,12 +422,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/CallActivity_PublicComment",
    "lane": "Public review (commenters, review committee, editor)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PublicReview",
-   "skills": [
-    {
-     "name": "public-comment",
-     "href": "../../../reference/skill-instructions/public-comment.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Release a draft for public comment",
     "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease",
@@ -501,16 +459,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_ReviewDraft",
    "lane": "Review team (content · QC · technical officer)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_ReviewTeam",
-   "skills": [
-    {
-     "name": "content-review",
-     "href": "../../../reference/skill-instructions/content-review.html"
-    },
-    {
-     "name": "staging-review",
-     "href": "../../../reference/skill-instructions/staging-review.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "reviewer",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -566,16 +515,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_SmeSignoff",
    "lane": "Clinical / scientific SMEs",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Sme",
-   "skills": [
-    {
-     "name": "content-review",
-     "href": "../../../reference/skill-instructions/content-review.html"
-    },
-    {
-     "name": "staging-review",
-     "href": "../../../reference/skill-instructions/staging-review.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "clinical-sme",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
@@ -641,16 +581,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_OpenChangeBeans",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
-   "skills": [
-    {
-     "name": "todo-manager",
-     "href": "../../../reference/skill-instructions/todo-manager.html"
-    },
-    {
-     "name": "content-feedback",
-     "href": "../../../reference/skill-instructions/content-feedback.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "publication-manager",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
@@ -702,12 +633,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_AuthorizeRelease",
    "lane": "Programme manager (release authority)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_ProgMgr",
-   "skills": [
-    {
-     "name": "content-publish",
-     "href": "../../../reference/skill-instructions/content-publish.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "programme-manager",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
@@ -755,16 +681,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_PublishRelease",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
-   "skills": [
-    {
-     "name": "content-publish",
-     "href": "../../../reference/skill-instructions/content-publish.html"
-    },
-    {
-     "name": "render-kg-to-cdn",
-     "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "publication-manager",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
@@ -816,12 +733,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_CloseReleaseBeans",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
-   "skills": [
-    {
-     "name": "todo-manager",
-     "href": "../../../reference/skill-instructions/todo-manager.html"
-    }
-   ],
+   "skills": [],
    "role": {
     "name": "publication-manager",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
@@ -873,12 +785,7 @@
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_ArchiveReleaseBean",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
-   "skills": [
-    {
-     "name": "todo-manager",
-     "href": "../../../reference/skill-instructions/todo-manager.html"
-    }
-   ],
+   "skills": [],
    "calls": {
     "name": "Close the bean",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",

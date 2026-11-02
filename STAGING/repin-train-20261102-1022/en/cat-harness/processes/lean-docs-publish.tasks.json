@@ -1,0 +1,27 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_LeanDocsPublish",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
+ "tasks": {
+  "Task_Build": {
+   "id": "Task_Build",
+   "name": "Build the doc-gen4 render over the warm cache",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Build",
+   "lane": "Lean toolchain",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "Task_Publish": {
+   "id": "Task_Publish",
+   "name": "Stage the render under the site and rail every page",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Publish",
+   "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/bootstrap-tools.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Render a Knowledge Graph to GitHub Pages",
       "summary": "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — to GitHub Pages at a publication root URL, and report the push: a STATUS (pushed, not pushed, could not determine) and one MESSAGE carrying the deployed commit and the QA result.",
       "description": "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — to GitHub Pages at a publication root URL, and report the push: a STATUS (pushed, not pushed, could not determine) and one MESSAGE carrying the deployed commit and the QA result. Owner, 2026-09-30: \"render content of a KG (or list of subgraphs within) for publication to a CDN at a given publication root URL … independent of staging vs publication … just rendering … output is status of push to CDN + message\", and \"the rendering bpmn is ok in bootstrap-tools … so 'render KG to githubpages' works and self described\".\n\nSTAGING AND RELEASE ARE THE SAME PROCESS. A preview is this with a root under the release root; a release is this with the release root. What differs between them — who may start it, what must be reviewed first, what else lives on the same host — belongs to whatever calls this, never in here.\n\nEVERY STEP IS ONE OF THESE TOOLS: site.ts stages, site.ts --check and readme-book.ts --check check the staging, the instance's Pages workflow deploys, pages-status.ts checks what is served and writes the message. The skill render-kg-to-github-pages has each command.\n\nTHREE STATES, NOT TWO. A check that could not look (a 403 from a proxy, no network) is could-not-determine, and never reported as pushed.\n\nNO work-plan element on any activity, and isExecutable is false: this is bootstrap-tools' own diagram, in bootstrap's diagram vocabulary, and bootstrap's diagrams carry no work plan.",
@@ -29,7 +29,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/Start_Render",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_ResolveInputs",
@@ -38,7 +38,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_ResolveInputs",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Provision",
@@ -47,7 +47,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_2b",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Provision",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Stage",
@@ -56,7 +56,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Stage",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_CheckStaged",
@@ -65,7 +65,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_CheckStaged",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/GW_Staged",
@@ -74,7 +74,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/GW_Staged",
@@ -84,7 +84,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/GW_Staged",
@@ -94,7 +94,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Deploy",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_CheckServed",
@@ -103,7 +103,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_CheckServed",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Report",
@@ -112,7 +112,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Report",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/GW_Pushed",
@@ -121,7 +121,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/GW_Pushed",
@@ -131,7 +131,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/GW_Pushed",

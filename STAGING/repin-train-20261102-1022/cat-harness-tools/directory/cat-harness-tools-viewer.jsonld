@@ -5,14 +5,14 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-viewer.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-viewer",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "cat-harness-tools-viewer",
       "path": "viewer/",
       "contentSource": {
@@ -20,7 +20,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
       "description": "The content viewer the MCP server serves at `/viewer/` (`adapters/mcp-server/server.ts`, `VIEWER_DIR`): one HTML page carrying the whole single-page app, which reads `/api/folio` and opens the first paper the folio lists. A platform viewer, not folio content: it names no folio, and `test/test-server.e2e.ts` and `scripts/tests/ui/viewer-script.test.ts` assert it. Declared 2026-10-24 under bean `0uu2` (owner, card \"A. Declare and keep\"), when its last hardcoded folio name (`quantum-observable-universe`, the `qou-viewer` package name, now `folio-content-viewer`, because `folio-viewer` is already the folio graph's registered viewer Tool) was removed.",
       "readmePath": "viewer/README.md",

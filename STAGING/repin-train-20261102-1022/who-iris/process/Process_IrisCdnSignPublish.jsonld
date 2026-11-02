@@ -4,14 +4,14 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/who-iris.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Sign and publish an IRIS CDN release",
       "summary": "Turn a candidate payload into a signed release on Cloudflare: each changed library item gets a detached JWS over its own manifest, and the BagIt bag (RFC 8493) whose tagmanifest pins every item manifest and signature is signed once with a detached JWS (RFC 75…",
       "description": "Turn a candidate payload into a signed release on Cloudflare: each changed library item gets a detached JWS over its own manifest, and the BagIt bag (RFC 8493) whose tagmanifest pins every item manifest and signature is signed once with a detached JWS (RFC 7515 Appendix F, ES256 per RFC 7518), the key published as a verificationMethod of a did:web DID document whose publicKeyJwk carries an x5c chain to the WHO signing key. Nothing unchanged is re-uploaded or re-signed; an empty diff ends the process with no commit.",
@@ -29,7 +29,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Start_Candidate",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
@@ -38,7 +38,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
@@ -47,7 +47,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
@@ -56,7 +56,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
@@ -66,7 +66,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/GW_Empty",
@@ -76,7 +76,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
@@ -85,7 +85,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P6b",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
@@ -94,7 +94,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
@@ -103,7 +103,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
@@ -112,7 +112,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
@@ -121,7 +121,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
@@ -131,7 +131,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no / unknown",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified",
@@ -141,7 +141,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish#flow/P12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed",

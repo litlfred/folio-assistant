@@ -294,7 +294,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
       "touchesWorkPlan": false
     },
     {
@@ -310,7 +309,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bean-coordination",
       "touchesWorkPlan": false
     },
     {
@@ -377,8 +375,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Gateway_Intent",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
-      "decidedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/decision/folio-intent/Decision_FolioIntent",
-      "decisionRef": "decisions/folio-intent.dmn#Decision_FolioIntent",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_3",
@@ -393,15 +389,13 @@
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
-      "relaxable": false,
+      "relaxable": true,
       "touchesWorkPlan": false
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Gateway_Live",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
-      "decidedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/decision/pages-live-gate/Decision_PagesLive",
-      "decisionRef": "decisions/pages-live-gate.dmn#Decision_PagesLive",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_probe",
@@ -445,10 +439,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/interaction-modality",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started"
-      ],
       "touchesWorkPlan": false
     },
     {
@@ -463,11 +453,7 @@
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_chosen",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
-      "relaxable": false,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/repo-conversion",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/interaction-modality"
-      ],
+      "relaxable": true,
       "touchesWorkPlan": false
     },
     {
@@ -482,11 +468,7 @@
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_confirm",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/user",
-      "relaxable": false,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/repo-conversion",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dispatch-agent"
-      ],
+      "relaxable": true,
       "touchesWorkPlan": false
     },
     {
@@ -502,7 +484,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/repo-conversion",
       "touchesWorkPlan": false
     },
     {
@@ -518,7 +499,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/interaction-modality",
       "touchesWorkPlan": false
     },
     {
@@ -534,7 +514,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
       "touchesWorkPlan": false
     },
     {
@@ -553,7 +532,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
       "touchesWorkPlan": false
     },
     {
@@ -571,8 +549,7 @@
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_3",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
-      "relaxable": false,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
+      "relaxable": true,
       "touchesWorkPlan": false
     },
     {
@@ -588,7 +565,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
       "touchesWorkPlan": false
     },
     {
@@ -604,7 +580,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
       "touchesWorkPlan": false
     },
     {
@@ -620,7 +595,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/publish-target",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
       "touchesWorkPlan": false
     },
     {
@@ -640,7 +614,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/getting-started",
       "touchesWorkPlan": false
     },
     {
@@ -656,10 +629,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
       "relaxable": true,
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/repo-conversion",
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake"
-      ],
       "touchesWorkPlan": false
     },
     {
@@ -675,7 +644,6 @@
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/onboarding-agent",
       "relaxable": true,
-      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
       "touchesWorkPlan": true,
       "workPlanOp": "note"
     }

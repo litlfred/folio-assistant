@@ -5,14 +5,14 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-plugin-slots.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1022",
-    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "sha": "090e26156d3b7be87828834827b62791e36843b2",
     "pr": "2911/merge",
-    "run": "41428808694"
+    "run": "41432078283"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-plugin-slots",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "fhir-harness-plugin-slots",
       "path": "pipeline/",
       "contentSource": {
@@ -20,7 +20,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
       "description": "The one typed table of this instance's pipeline-slot implementations (`plugin-slots.ts`), which the nodes in pipeline-plugins/ name and the loader requires. It lies under harness-config's declared `*/pipeline/plugin-slots.ts` import glob, as folio-assistant-sci's table does.",
       "fileCount": 0,
