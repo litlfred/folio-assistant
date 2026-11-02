@@ -1,0 +1,54 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "role",
+    "id": "build-pipeline",
+    "path": "scenarios/roles.json"
+  },
+  "source_hash": "sha256:a2736f500ac293c66cab28c822681001ba3f5e6ffab96e7ba3d2a66d8007191b",
+  "criteria": {
+    "role-skills-resolve": {
+      "result": "pass",
+      "findings": []
+    },
+    "role-inherits-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-binds-a-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "mechanical-role-untested": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "build-pipeline",
+          "detail": "role \"build-pipeline\" is played only by system actors, and none of its 33 skill(s) (build-docs, build-pdf, ci-health, compiled-artefact-cache, content-publish, content-test, content-validate, document-publishing, feature-staging, fhir-validation, harness-projections, ig-ast-delta, ig-publication, kg-separation, l3-fhir-authoring, latex-authoring, latex-build-cache, latex-compilation, latex-validation, lean-content-test, platform-gates, prepare-merge, publish-verification, qa-reports, quality-control, remote-mount, render-kg-to-cdn, smart-base-tools, sub-kg-lifecycle, todo-manager, translation-manager, upstream-version-adoption, watch) names a test in `tested-by:`."
+        }
+      ]
+    },
+    "role-has-persona": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-has-story": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-has-actor": {
+      "result": "pass",
+      "findings": []
+    },
+    "actor-kind-fits-role": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 1,
+    "n/a": 3,
+    "unknown": 0
+  }
+}
