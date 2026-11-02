@@ -371,6 +371,17 @@ describe("the workflow wires it as designed", () => {
     expect(readFileSync(STEP, "utf8")).not.toMatch(/\|\|\s*true/);
   });
 
+  // GitHub rejects the whole file when a STEP's `shell:` holds an expression
+  // (only `defaults.run.shell` may), and then no job runs at all: fa#2902's
+  // first push. So a step names its shell script by a relative path.
+  test("no step-level `shell:` holds an expression", () => {
+    for (const job of Object.values(wf.jobs)) {
+      for (const s of job.steps ?? []) {
+        expect(String(s.shell ?? "")).not.toContain("${{");
+      }
+    }
+  });
+
   test("verdict reuse is `true` only when the inheritance check says so", () => {
     expect(wf.jobs["verdict-reuse"]!.outputs!.reuse).toBe(
       "${{ steps.decide.outputs.reuse == 'true' && steps.inherited.outputs.reuse == 'true' && 'true' || 'false' }}",
