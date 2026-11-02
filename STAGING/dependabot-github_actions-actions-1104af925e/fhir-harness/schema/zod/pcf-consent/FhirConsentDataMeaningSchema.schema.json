@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/FhirConsentDataMeaning",
+  "definitions": {
+    "FhirConsentDataMeaning": {
+      "type": "string",
+      "enum": [
+        "instance",
+        "related",
+        "dependents",
+        "authoredby"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/pcf-consent/FhirConsentDataMeaningSchema.schema.json",
+  "title": "FhirConsentDataMeaningSchema",
+  "description": "Generated from `FhirConsentDataMeaningSchema` in schemas/pcf-consent.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-1104af925e",
+    "sha": "fd0c19554d80387dbc057c4c1d95d31f78e981c6",
+    "pr": "2919/merge",
+    "run": "41455694320"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-1104af925e",
+    "sha": "fd0c19554d80387dbc057c4c1d95d31f78e981c6",
+    "pr": "2919/merge",
+    "run": "41455694320"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Judge domain correctness of worked case or indicator cohort",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_SmeTestDataReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/role/clinical-sme",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_SmeTestDataReview/lane/Lane_SME",
+      "requires": [],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_SmeTestDataReview#flow/Flow_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_SmeTestDataReview#flow/Flow_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge"
+    }
+  ]
+}

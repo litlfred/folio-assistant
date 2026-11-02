@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-1104af925e",
+    "sha": "fd0c19554d80387dbc057c4c1d95d31f78e981c6",
+    "pr": "2919/merge",
+    "run": "41455694320"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Edited where it lives — no copy needed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Reader",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_CopyOutMaterialized#flow/Flow_NotFrozen"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen"
+    }
+  ]
+}

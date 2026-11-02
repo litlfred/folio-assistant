@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/djurica-2024-decision-model-comprehension-emisa",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Investigating the impact of representation features on decision model comprehension (Extended Abstract)",
+      "dcterms:issued": "D:20240502",
+      "bibo:doi": "10.18420/EMISA2024_05",
+      "dcterms:identifier": "https://doi.org/10.18420/EMISA2024_05",
+      "dcterms:abstract": ")5 Djordje Djurica 1, Tyge F. Kummer 2, Jan Mendling 1,3, and Kathrin Figl 4 Abstract: Decision models play a crucial role in the development of information systems for tasks such as system analysis and design, as well as compliance management. The effective presentation of these models is essential to ensure their accuracy and completeness. Existing research on their cognitive effectiveness remains inconclusive. Our study advances understanding by examining the detailed representation features of decision models, including type (tree versus table), structure (expanded versus frugal), and design (monochromatic versus colored). We demonstrate that the use of color can improve model-task fit, and that structural features can enhance comprehension. Utilizing eye-tracking, we analyzed the underlying mechanisms of these effects. Our findings provide valuable insights for cognitive information systems research and practical applications, offering guidance for both users and developers of decision models.",
+      "dcterms:source": "cat-harness/library/djurica-2024-decision-model-comprehension-emisa/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/djurica-2024-decision-model-comprehension-emisa"
+    }
+  ]
+}

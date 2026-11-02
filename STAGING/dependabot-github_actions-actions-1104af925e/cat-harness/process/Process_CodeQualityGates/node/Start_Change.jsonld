@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_CodeQualityGates/node/Start_Change.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-1104af925e",
+    "sha": "fd0c19554d80387dbc057c4c1d95d31f78e981c6",
+    "pr": "2919/merge",
+    "run": "41455694320"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_CodeQualityGates/node/Start_Change",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Pull request, push to main, or dispatch",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_CodeQualityGates#flow/Flow_0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Start_Change"
+    }
+  ]
+}

@@ -1,0 +1,532 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_MergeToMain",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
+ "tasks": {
+  "Task_RegenProjections": {
+   "id": "Task_RegenProjections",
+   "name": "Regenerate harness projections (CI)",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_RegenProjections",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "harness-projections"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_ReadEvidence": {
+   "id": "Task_ReadEvidence",
+   "name": "Read the head's evidence, live",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_ReadEvidence",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  },
+  "Task_LocalGates": {
+   "id": "Task_LocalGates",
+   "name": "No CI: run the repo's own gates locally",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_LocalGates",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  },
+  "Call_HandBack": {
+   "id": "Call_HandBack",
+   "name": "Hand it back",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Call_HandBack",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "calls": {
+    "name": "A refused merge-train member",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
+    "diagram": "merge-refusal.html"
+   },
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  },
+  "Task_ReadAuthorisation": {
+   "id": "Task_ReadAuthorisation",
+   "name": "Find the owner's authorisation for THIS merge",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_ReadAuthorisation",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  },
+  "Task_Ask": {
+   "id": "Task_Ask",
+   "name": "Put the merge to the owner, evidence first",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Ask",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "calls": {
+    "name": "Ask the person",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson",
+    "diagram": "ask-the-person.html"
+   },
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  },
+  "Task_OwnerDecides": {
+   "id": "Task_OwnerDecides",
+   "name": "Merge, hold or refuse",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_OwnerDecides",
+   "lane": "Owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Owner",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "role": {
+    "name": "user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "dispatch-agent"
+     },
+     {
+      "name": "folio-init"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "kg-affordances"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "repo-conversion"
+     }
+    ]
+   }
+  },
+  "Task_RecordAuthorisation": {
+   "id": "Task_RecordAuthorisation",
+   "name": "Record who authorised, when, and the quote",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_RecordAuthorisation",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  },
+  "Task_Merge": {
+   "id": "Task_Merge",
+   "name": "Merge, pinned to the evaluated head",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Merge",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  },
+  "Task_ConfirmBase": {
+   "id": "Task_ConfirmBase",
+   "name": "Confirm main's CI on the merge commit",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_ConfirmBase",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  },
+  "Task_Republish": {
+   "id": "Task_Republish",
+   "name": "Rebuild and republish the repository's site",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Republish",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  },
+  "Task_Repin": {
+   "id": "Task_Repin",
+   "name": "Re-pin downstream mounts, as PRs",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Repin",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  },
+  "Task_Report": {
+   "id": "Task_Report",
+   "name": "Note the bean, summarise on the issue",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Report",
+   "lane": "Merging session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+   "skills": [
+    {
+     "name": "merge-to-main"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     }
+    ]
+   }
+  }
+ }
+}

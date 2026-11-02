@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/actor/clinical-sme.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-1104af925e",
+    "sha": "fd0c19554d80387dbc057c4c1d95d31f78e981c6",
+    "pr": "2919/merge",
+    "run": "41455694320"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/actor/clinical-sme",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "clinical-sme",
+      "actorKind": "person",
+      "title": "Clinical Subject Matter Expert",
+      "description": "Clinical validator and ground-truth provider who ensures clinical accuracy and completeness of authored content.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.ClinicalSME",
+        "lifecycle": [
+          "validate",
+          "review",
+          "feedback"
+        ]
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/role/clinical-sme"
+      ],
+      "permissionName": [
+        "clinical-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/clinical-sme"
+    }
+  ]
+}

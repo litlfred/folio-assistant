@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_DocsSite/node/Call_Verify.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-1104af925e",
+    "sha": "fd0c19554d80387dbc057c4c1d95d31f78e981c6",
+    "pr": "2919/merge",
+    "run": "41455694320"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_DocsSite/node/Call_Verify",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Verify the export",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_DocsSite",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/skill/publish-verification"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_PublishVerification",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_DocsSite#flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/process/Process_DocsSite#flow/Flow_V1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Verify"
+    }
+  ]
+}

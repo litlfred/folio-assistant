@@ -1,0 +1,31 @@
+{
+  "$ref": "#/definitions/NavbarIcons",
+  "definitions": {
+    "NavbarIcons": {
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "close",
+          "todos",
+          "beans",
+          "processes",
+          "kg",
+          "fsh-guts",
+          "launcher",
+          "qr"
+        ]
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/NavbarIconsSchema.schema.json",
+  "title": "NavbarIconsSchema",
+  "description": "Generated from `NavbarIconsSchema` in schemas/kg/cat-harness.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-1104af925e",
+    "sha": "fd0c19554d80387dbc057c4c1d95d31f78e981c6",
+    "pr": "2919/merge",
+    "run": "41455694320"
+  }
+}

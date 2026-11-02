@@ -1,0 +1,384 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "arxiv-2505.11701v2",
+  "title": "DMN-Guided Prompting: A Framework for Controlling LLM Behavior",
+  "variant": "pdf",
+  "pages": 15,
+  "tocSource": "outline",
+  "tocMethod": null,
+  "toc": [
+    {
+      "level": 1,
+      "title": "DMN-Guided Prompting: A Framework for Controlling LLM Behavior",
+      "number": null,
+      "page": 1,
+      "pageLabel": null,
+      "confidence": null,
+      "evidence": null,
+      "source": "outline",
+      "section": "sec-000-dmn-guided-prompting-a-framework-for-controlling"
+    }
+  ],
+  "sections": [
+    {
+      "id": "sec-000-dmn-guided-prompting-a-framework-for-controlling",
+      "number": null,
+      "title": "DMN-Guided Prompting: A Framework for Controlling LLM Behavior",
+      "level": 1,
+      "pageStart": 1,
+      "pageEnd": 15,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 6044,
+      "summary": null,
+      "keywords": [
+        {
+          "term": "prompting framework",
+          "heading": true
+        },
+        {
+          "term": "dmn logic",
+          "heading": false
+        },
+        {
+          "term": "false true",
+          "heading": false
+        },
+        {
+          "term": "dmn rules",
+          "heading": false
+        },
+        {
+          "term": "dmn triples",
+          "heading": false
+        },
+        {
+          "term": "dmn models",
+          "heading": false
+        },
+        {
+          "term": "decision logic",
+          "heading": false
+        },
+        {
+          "term": "loan approval",
+          "heading": false
+        }
+      ],
+      "extract": "LLM Behavior Shaghayegh Abedi1 and Amin Jalali2 1 Politecnico di Torino, Turin, Italy, s309894@studenti.polito.it 2 Stockholm University, Stockholm, Sweden, aj@dsv.su.se Abstract. Large Language Models (LLMs) have shown considerable potential in automating decision logic within knowledge-intensive processes. However, their effectiveness largely depends on the strategy and quality of prompting. Since decision logic",
+      "extractCut": true
+    }
+  ],
+  "checks": {
+    "figureSequenceGaps": [],
+    "pageLabelConflicts": {
+      "count": 0,
+      "items": []
+    }
+  },
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "dmn logic",
+      "heading": false
+    },
+    {
+      "term": "false true",
+      "heading": false
+    },
+    {
+      "term": "dmn rules",
+      "heading": false
+    },
+    {
+      "term": "dmn triples",
+      "heading": true
+    },
+    {
+      "term": "dmn models",
+      "heading": false
+    },
+    {
+      "term": "decision logic",
+      "heading": false
+    },
+    {
+      "term": "loan approval",
+      "heading": false
+    },
+    {
+      "term": "parsed dmn",
+      "heading": true
+    },
+    {
+      "term": "dmn file",
+      "heading": false
+    },
+    {
+      "term": "dmn supports",
+      "heading": false
+    },
+    {
+      "term": "bpr rules",
+      "heading": true
+    },
+    {
+      "term": "perceived usefulness",
+      "heading": true
+    }
+  ],
+  "pageLabels": [
+    {
+      "physical": 1,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 2,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 3,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 4,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 5,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 6,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 7,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 8,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 9,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 10,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 11,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 12,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 13,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 14,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    },
+    {
+      "physical": 15,
+      "label": null,
+      "source": null,
+      "confidence": 0
+    }
+  ],
+  "figures": [
+    {
+      "kind": "figure",
+      "number": "1",
+      "title": "A decision requirements diagram example",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "2",
+      "title": "A decision table example",
+      "page": 3,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "3",
+      "title": "A literal expression example",
+      "page": 4,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "4",
+      "title": "The overall prompt structure used for DMN-guided evaluation",
+      "page": 5,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "5",
+      "title": "Instructions in Part B: parsing DMN into structured triples",
+      "page": 6,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "6",
+      "title": "Instructions in Part C: evaluating input text using parsed DMN",
+      "page": 7,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "7",
+      "title": "Application of the DMN-Guided Prompting Framework in our case study",
+      "page": 8,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "8",
+      "title": "Overview of instructor-labeled evaluations of GPT-4o–generated feedback, presented across student groups and nine BPR rules. Each rule is assessed along two dimensions: whether the student correctly applied the principle (Rule column) and the GPT-4o feedback (Feedback column)",
+      "page": 9,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "9",
+      "title": "Example of a merged task with ambiguous labeling, leading to DMN-Guided framework using GPT-4o feedback misclassification for Rule 2 (task composition)",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "table",
+      "number": "1",
+      "title": "Performance comparison of different prompting approaches",
+      "page": 10,
+      "pageLabel": null,
+      "confidence": 0.8,
+      "evidence": [
+        "referenced",
+        "in-sequence"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "10",
+      "title": "Example of an incorrectly modeled deferred choice, where an unnecessary ‘Wait for Result’ task was added despite the presence of an automated reminder mechanism",
+      "page": 11,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    },
+    {
+      "kind": "figure",
+      "number": "11",
+      "title": "Boxplots showing the distribution of Perceived Usefulness (PU) in aggregated and detailed level",
+      "page": 12,
+      "pageLabel": null,
+      "confidence": 0.9,
+      "evidence": [
+        "referenced",
+        "in-sequence",
+        "graphic"
+      ]
+    }
+  ],
+  "links": {
+    "repo": "litlfred/cat-harness",
+    "branch": "main",
+    "dir": "library/arxiv-2505.11701v2"
+  }
+}

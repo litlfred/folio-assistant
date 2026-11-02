@@ -1,0 +1,34 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/figl-2018-what-we-know-dmn-emisa",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "What we know and what we do not know about DMN (Extended Abstract)",
+      "dcterms:creator": [
+        "Figl2, Kathrin",
+        "Mendling3, Jan",
+        "Tokdemir4, Gul",
+        "Vanthienen5, Jan"
+      ],
+      "dcterms:issued": "D:20210719",
+      "dcterms:abstract": ")1 Kathrin Figl2, Jan Mendling3, Gul Tokdemir4, Jan Vanthienen5 Abstract: The recent Decision Model and Notation (DMN) establishes business decisions as first- class citizens of executable business processes. This research note has two objectives: first, to describe DMN’s technical and theoretical foundations; second, to identify research directions for investigating DMN’s potential benefits on a technological, individual and organizational level. To this end, we integrate perspectives from management science, cognitive theory and information systems research.",
+      "dcterms:source": "cat-harness/library/figl-2018-what-we-know-dmn-emisa/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/figl-2018-what-we-know-dmn-emisa"
+    }
+  ]
+}

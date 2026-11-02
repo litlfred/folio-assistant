@@ -1,0 +1,39 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-OperationsTeam.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/OperationsTeam",
+  "schema:name": "OperationsTeam",
+  "dcterms:title": "Operations Team",
+  "dcterms:description": "The operations team of the Trust Network Gateway's service provider, which registers a Participant's key material and verifies its pull requests (onboarding steps [30]-[50]).",
+  "schema:version": "1.7.5",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/trust/ActorDefinition/OperationsTeam"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://litlfred.github.io/smart-trust/ActorDefinition-OperationsTeam.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.trust",
+    "schema:version": "1.7.5",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/trust"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2505.11701v2/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/arxiv-2505.11701v2/manifest.jsonld",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/arxiv-2505.11701v2/manifest.jsonld",
+      "title": "DMN-Guided Prompting: A Framework for Controlling LLM Behavior"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2505.11701v2/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2505.11701v2/blocks/figure-img-p010-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2505.11701v2/blocks/figure-img-p010-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2505.11701v2/blocks/figure-img-p011-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Figure",
+          "path": "library/arxiv-2505.11701v2/blocks/figure-img-p011-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2505.11701v2/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns#Prose",
+          "path": "library/arxiv-2505.11701v2/blocks/prose-sec-000.jsonld",
+          "title": "DMN-Guided Prompting: A Framework for Controlling LLM Behavior"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2505.11701v2/blocks",
+      "path": "library/arxiv-2505.11701v2/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2505.11701v2/figures/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2505.11701v2/figures",
+      "path": "library/arxiv-2505.11701v2/figures/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2505.11701v2/images/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2505.11701v2/images",
+      "path": "library/arxiv-2505.11701v2/images/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/arxiv-2505.11701v2/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/arxiv-2505.11701v2/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/arxiv-2505.11701v2/sections/sec-000.jsonld",
+          "title": "DMN-Guided Prompting: A Framework for Controlling LLM Behavior"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/arxiv-2505.11701v2/sections",
+      "path": "library/arxiv-2505.11701v2/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/arxiv-2505.11701v2",
+  "path": "library/arxiv-2505.11701v2/"
+}

@@ -1,0 +1,340 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_RefreshMaterialized",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized",
+ "tasks": {
+  "Task_Fixity": {
+   "id": "Task_Fixity",
+   "name": "ARCHIVAL verify fixity — never re-fetch",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_Fixity",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/lane/Lane_1",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "materialize-on-demand"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "theme-art-intake"
+     },
+     {
+      "name": "theme-ui-review"
+     },
+     {
+      "name": "upload-naming"
+     }
+    ]
+   }
+  },
+  "Task_Upstream": {
+   "id": "Task_Upstream",
+   "name": "WORKING what changed upstream",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_Upstream",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/lane/Lane_1",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "materialize-on-demand"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "theme-art-intake"
+     },
+     {
+      "name": "theme-ui-review"
+     },
+     {
+      "name": "upload-naming"
+     }
+    ]
+   }
+  },
+  "Task_Local": {
+   "id": "Task_Local",
+   "name": "What changed LOCALLY since",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_Local",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/lane/Lane_1",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "library-ingestion"
+     },
+     {
+      "name": "materialize-on-demand"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "theme-art-intake"
+     },
+     {
+      "name": "theme-ui-review"
+     },
+     {
+      "name": "upload-naming"
+     }
+    ]
+   }
+  },
+  "Task_Adjudicate": {
+   "id": "Task_Adjudicate",
+   "name": "Adjudicate the conflict",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_Adjudicate",
+   "lane": "Contributor (human or agent)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/lane/Lane_0",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    },
+    {
+     "name": "adjudication"
+    }
+   ],
+   "calls": {
+    "name": "Adjudication",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+    "diagram": "adjudication.html"
+   },
+   "role": {
+    "name": "user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "dispatch-agent"
+     },
+     {
+      "name": "folio-init"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "kg-affordances"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "repo-conversion"
+     }
+    ]
+   }
+  },
+  "Task_Reconcile": {
+   "id": "Task_Reconcile",
+   "name": "Reconcile the two by hand",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_Reconcile",
+   "lane": "Contributor (human or agent)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/lane/Lane_0",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "agent-permissions"
+     },
+     {
+      "name": "dispatch-agent"
+     },
+     {
+      "name": "folio-init"
+     },
+     {
+      "name": "getting-started"
+     },
+     {
+      "name": "interaction-modality"
+     },
+     {
+      "name": "kg-affordances"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "repo-conversion"
+     }
+    ]
+   }
+  },
+  "Task_Apply": {
+   "id": "Task_Apply",
+   "name": "Re-materialize, re-asking the five gates — and record the new fixity",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_Apply",
+   "lane": "Corpus — L1 source knowledge graph",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/lane/Lane_2",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-affordances"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     }
+    ]
+   }
+  },
+  "Task_KeepLocal": {
+   "id": "Task_KeepLocal",
+   "name": "Keep the local edit, and re-pin so it stops being asked",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_KeepLocal",
+   "lane": "Corpus — L1 source knowledge graph",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/lane/Lane_2",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-affordances"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     }
+    ]
+   }
+  },
+  "Task_RecordConflict": {
+   "id": "Task_RecordConflict",
+   "name": "Record the conflict, decide nothing, and do NOT re-pin",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_RecordConflict",
+   "lane": "Corpus — L1 source knowledge graph",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/lane/Lane_2",
+   "skills": [
+    {
+     "name": "materialize-remote"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-affordances"
+     },
+     {
+      "name": "kg-subscription"
+     },
+     {
+      "name": "materialize-remote"
+     }
+    ]
+   }
+  }
+ }
+}

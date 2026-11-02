@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/capability/java-runtime.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "dependabot/github_actions/actions-1104af925e",
+    "sha": "fd0c19554d80387dbc057c4c1d95d31f78e981c6",
+    "pr": "2919/merge",
+    "run": "41455694320"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/dependabot-github_actions-actions-1104af925e/cat-harness/capability/java-runtime",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "java-runtime",
+      "name": "Java Runtime",
+      "description": "Java Runtime Environment for running Java-based tools (IG Publisher, validators).",
+      "detection": {
+        "method": "command",
+        "command": "java -version"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/java-runtime"
+    }
+  ]
+}
