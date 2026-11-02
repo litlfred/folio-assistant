@@ -152,11 +152,24 @@ on:
         required: false
         default: ''
         type: string
+      # ── Verify an agent-built preview (folio-assistant#2881) ──
+      # The PR number whose agent-built preview this run checks. Set by
+      # `preview-verify-sweep.yml`, with `branch` set to the PR's head branch.
+      # The run builds the PR's merge ref in full, compares every file with the
+      # agent's build record, and replaces the preview only when they differ.
+      verify_pr:
+        description: 'VERIFY: the PR whose agent-built preview to rebuild and check. Leave blank otherwise.'
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: write
   pull-requests: write
   actions: write
+  # `preview/agent-build`, the verify status of an agent-built preview
+  # (folio-assistant#2881).
+  statuses: write
 
 concurrency:
   # `cleanup_slug` sits in the middle so two dispatched cleanups of
@@ -166,7 +179,11 @@ concurrency:
   # A `push` run has a group of its OWN. It usually decides to do nothing
   # (the PR is clean), and in the shared group its arrival would cancel the
   # `pull_request` run building the same commit, losing the preview.
-  group: staging-${{ github.event_name == 'push' && 'push-' || '' }}${{ github.event.pull_request.head.ref || inputs.cleanup_slug || github.ref_name }}
+  #
+  # A VERIFY run (`verify_pr`) has a group of its own too: a newer push to the
+  # branch must not be cancelled by a check of an older agent build, nor the
+  # check by it. The deploy re-reads the record before replacing anything.
+  group: staging-${{ github.event_name == 'push' && 'push-' || '' }}${{ inputs.verify_pr != '' && 'verify-' || '' }}${{ github.event.pull_request.head.ref || inputs.cleanup_slug || inputs.branch || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -182,9 +199,12 @@ jobs:
     # The start event's guard: a push stands in for the pull_request event GitHub withholds while the PR conflicts.
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: read
+      pull-requests: write
+      contents: read
+      statuses: write
     outputs:
       go: ${{ steps.decide.outputs.go }}
+      deferred: ${{ steps.defer.outputs.deferred }}
     steps:
       - id: decide
         env:
@@ -213,6 +233,52 @@ jobs:
             echo "PR #$pr is not conflicted: its pull_request run stages it"; echo "go=false" >> "$GITHUB_OUTPUT"
           fi
 
+      # ── An agent already built this exact tree (folio-assistant#2881) ──
+      # Owner, 2026-11-01, Q-SPD-9 B and Q-SPD-9b A: a preview may go live from
+      # the agent's own build, and CI then rebuilds the same tree IN FULL, off
+      # the critical path, replacing the preview if anything differs. Previews
+      # only: main and release builds never read an agent record.
+      #
+      # "The same tree" is exact: the record's `tree` is `HEAD^{tree}` of what
+      # the agent built, and this run's tree is the PR's test merge commit's
+      # (`github.sha`). A clean merge of the same head and base gives the same
+      # tree; anything else (main moved, a new push) does not match, and this
+      # run builds as it always has.
+      #
+      # On a match the build is DEFERRED, not skipped: a pending
+      # `preview/agent-build` status goes on the head commit, and
+      # `preview-verify-sweep.yml` picks it up, one verify at a time.
+      - id: defer
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          MERGE_SHA: ${{ github.sha }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -u
+          # The slug, by the rule of `Determine staging slug` in `stage`.
+          SLUG=$(echo "$HEAD_REF" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
+          case "$SLUG" in ""|.|..|_retired) echo "deferred=false" >> "$GITHUB_OUTPUT"; exit 0 ;; esac
+          rec=$(gh api "repos/$REPO/contents/STAGING/$SLUG/_build-record.json?ref=gh-pages" -H 'Accept: application/vnd.github.raw' 2>/dev/null || true)
+          builder=$(printf '%s' "$rec" | jq -r '.builder // empty' 2>/dev/null || true)
+          rtree=$(printf '%s' "$rec" | jq -r '.tree // empty' 2>/dev/null || true)
+          tree=$(gh api "repos/$REPO/git/commits/$MERGE_SHA" --jq .tree.sha)
+          if [ "$builder" != "agent" ] || [ -z "$rtree" ] || [ "$rtree" != "$tree" ]; then
+            echo "no agent build of tree ${tree:0:12} at STAGING/$SLUG (record: ${builder:-none} ${rtree:0:12}): CI builds the preview"
+            echo "deferred=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          echo "an agent build of tree ${tree:0:12} is live at STAGING/$SLUG: deferring the CI build to the verify sweep"
+          gh api "repos/$REPO/statuses/$HEAD_SHA" -f state=pending -f context=preview/agent-build \
+            -f description="Agent-built preview is live; CI full rebuild queued (low priority)" \
+            -f target_url="https://github.com/$REPO/actions/workflows/preview-verify-sweep.yml" >/dev/null
+          owner="${REPO%%/*}"; name="${REPO#*/}"
+          body=$(printf '<!-- preview-build-verify -->\n**Preview built by an agent:** https://%s.github.io/%s/STAGING/%s/ (tree `%s`).\n\nCI will rebuild the same tree in full, off the critical path, and replace the preview if any file differs. The `preview/agent-build` status on this commit says when that is done.\n' "$owner" "$name" "$SLUG" "${tree:0:12}")
+          gh api "repos/$REPO/issues/$PR/comments" -f body="$body" >/dev/null || true
+          echo "deferred=true" >> "$GITHUB_OUTPUT"
+
   # ── Deploy feature branch to STAGING/ ─────────────────────────
   stage:
     needs: conflict-gate
@@ -239,6 +305,7 @@ jobs:
     # A DRAFT PR IS a staging request (owner, 2026-10-31; see `on:`).
     if: >-
       needs.conflict-gate.outputs.go == 'true'
+      && needs.conflict-gate.outputs.deferred != 'true'
       && github.event.action != 'closed'
       && (github.event_name != 'workflow_dispatch' || inputs.cleanup_slug == '')
       && github.event_name != 'merge_group'
@@ -291,9 +358,12 @@ jobs:
       # A `push` (a conflicted PR, which has no merge commit) takes its steps
       # from the pushed commit itself, so it checks that out, as does a
       # `workflow_dispatch` of a named branch.
+      #
+      # A VERIFY run (`verify_pr`, folio-assistant#2881) checks out the PR's
+      # test merge ref, the same tree the agent was asked to build.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          ref: ${{ github.event_name == 'pull_request' && github.sha || inputs.branch || github.ref }}
+          ref: ${{ github.event_name == 'pull_request' && github.sha || (inputs.verify_pr != '' && format('refs/pull/{0}/merge', inputs.verify_pr)) || inputs.branch || github.ref }}
       # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
       # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
@@ -1742,6 +1812,30 @@ jobs:
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll
 
+      # ── This build's record (folio-assistant#2881) ──────────────
+      # Every CI preview carries one, written after the last step that changes
+      # `_site`: the tree it was built from and a hash of every file. A record
+      # with `builder: ci` never defers a later run; it is what a verify run
+      # compares an agent's record against. Guarded on the tool existing, so
+      # this file can land before the cat-harness-tools re-pin that brings it.
+      - name: Record what this build produced
+        id: record
+        env:
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ ! -f cat-harness-tools/scripts/preview-record.ts ]; then
+            echo "preview-record.ts is not in this tools pin yet: no build record"; exit 0
+          fi
+          # `CAT_PREVIEW_BUILDER` is set only by the agent's replay of this
+          # job (`stage-workflow-local.ts`); on a runner it is always `ci`.
+          bun run cat-harness-tools/scripts/preview-record.ts write --site ./_site --repo . \
+            --slug "$STAGING_SLUG" --builder "${CAT_PREVIEW_BUILDER:-ci}" --run "$RUN_URL" \
+            ${HEAD_SHA:+--head "$HEAD_SHA"} --out "$RUNNER_TEMP/ci-record.json"
+          cp "$RUNNER_TEMP/ci-record.json" ./_site/_build-record.json
+          echo "tree=$(jq -r .tree "$RUNNER_TEMP/ci-record.json")" >> "$GITHUB_OUTPUT"
+
       # Contention with the OTHER workflows that push to `gh-pages` —
       # docs-site, discoverability-docs, publish, and a folio's blueprint and
       # lean_ci — is handled by the deploy step's own loop, not by a
@@ -1781,6 +1875,51 @@ jobs:
       # Halving this workflow's writes attacks that cause rather than
       # absorbing it. The three-attempt rebase loop is kept regardless: the
       # contention BETWEEN sessions is untouched, and is `yzsj`'s ground.
+      # ── A VERIFY run: the agent's build against this one ────────
+      # Owner, 2026-11-01, Q-SPD-9b A: a FULL rebuild, compared file by file,
+      # not a sample. Same files: nothing is pushed, the agent's preview stays,
+      # and `preview/agent-build` goes green. Any difference, or a record that
+      # cannot be read: the deploy below replaces the preview with this build,
+      # and the status goes red with the paths that differed on the PR.
+      - name: Compare the agent-built preview with this rebuild
+        id: verify_agent
+        if: inputs.verify_pr != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -u
+          # Read off gh-pages through the API: with the batched publisher this
+          # job has no gh-pages checkout. Read just before the hand-off, so a
+          # newer preview that landed while this run built is seen and kept.
+          AGENT="$RUNNER_TEMP/agent-record.json"
+          gh api "repos/$REPO/contents/STAGING/$STAGING_SLUG/_build-record.json?ref=gh-pages" \
+            -H 'Accept: application/vnd.github.raw' > "$AGENT" 2>/dev/null || rm -f "$AGENT"
+          OUT="$RUNNER_TEMP/verify-comment.md"
+          if [ ! -f "$RUNNER_TEMP/ci-record.json" ]; then
+            echo "::error::this tools pin cannot write a build record, so it cannot verify one"
+            echo "same=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if [ ! -f "$AGENT" ] || [ "$(jq -r '.builder // empty' "$AGENT")" != "agent" ]; then
+            echo "no agent record at STAGING/$STAGING_SLUG any more: nothing to verify, nothing replaced"
+            echo "same=gone" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          echo "agent_tree=$(jq -r .tree "$AGENT")" >> "$GITHUB_OUTPUT"
+          echo "agent_head=$(jq -r '.head // empty' "$AGENT")" >> "$GITHUB_OUTPUT"
+          bun run cat-harness-tools/scripts/preview-record.ts compare --claimed "$AGENT" \
+            --rebuilt "$RUNNER_TEMP/ci-record.json" --slug "$STAGING_SLUG" --run "$RUN_URL" --out "$OUT" && rc=0 || rc=$?
+          # 0 same files; 3 built from another tree (the base moved or a newer
+          # push): stale, replaced, not judged; anything else: differed.
+          case "$rc" in
+            0) echo "same=true" >> "$GITHUB_OUTPUT" ;;
+            3) echo "same=stale" >> "$GITHUB_OUTPUT" ;;
+            *) echo "same=false" >> "$GITHUB_OUTPUT" ;;
+          esac
+          # Kept for the PR comment whatever the answer.
+          [ -f "$OUT" ] || printf '<!-- preview-build-verify -->\n**Agent-built preview could not be compared** (its record was refused). CI replaced it.\n\nCI run: %s\n' "$RUN_URL" > "$OUT"
+
       # Q-SPD-5c (owner card 2026-11-01 16:24Z, option A): hand the built site
       # to the batched publisher (`staging-publish.yml`) instead of waiting at
       # the gh-pages push gate on this runner. The publisher pushes every
@@ -1820,7 +1959,9 @@ jobs:
 
       - name: Pack the preview for the batched publisher (Q-SPD-5c)
         id: handoff
-        if: steps.fastpath.outputs.direct != 'true'
+        # A verify run hands off only a build that replaces the agent's; the
+        # fast path (#2891) pushes from this job instead when nothing waits.
+        if: steps.fastpath.outputs.direct != 'true' && (inputs.verify_pr == '' || steps.verify_agent.outputs.same == 'false' || steps.verify_agent.outputs.same == 'stale')
         continue-on-error: true
         env:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
@@ -1940,9 +2081,14 @@ jobs:
 
       - name: Deploy the preview and log the render, in one commit
         id: deploy
-        # Only when the hand-off to the batched publisher did not happen.
-        if: steps.handoff_dispatch.outcome != 'success'
+        # In-job deploy only when the hand-off to the batched publisher did not
+        # happen, and, in a verify run, only when the agent's build differed or
+        # was of an older tree (folio-assistant#2881).
+        if: >-
+          steps.handoff_dispatch.outcome != 'success'
+          && (inputs.verify_pr == '' || steps.verify_agent.outputs.same == 'false' || steps.verify_agent.outputs.same == 'stale')
         env:
+          VERIFY_TREE: ${{ steps.verify_agent.outputs.agent_tree }}
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -2078,6 +2224,16 @@ jobs:
             bun run cat-harness-tools/scripts/staging-push-gate.ts gate --dir pages --queued-at "$QUEUED_AT" && gate=0 || gate=$?
             if [ "$gate" = 75 ]; then continue; fi
             if [ "$gate" != 0 ]; then exit 1; fi
+            # A verify run replaces ONLY the agent build it checked. A newer
+            # push may have put a newer preview there while this run built;
+            # that one is not this run's to replace (folio-assistant#2881).
+            if [ -n "${VERIFY_TREE:-}" ]; then
+              now=$(jq -r '.tree // empty' "pages/STAGING/$STAGING_SLUG/_build-record.json" 2>/dev/null || true)
+              if [ "$now" != "$VERIFY_TREE" ]; then
+                echo "STAGING/$STAGING_SLUG now holds tree ${now:-none}, not the checked ${VERIFY_TREE}: a newer preview, left alone"
+                exit 0
+              fi
+            fi
             BASE=$(git -C pages rev-parse HEAD)
             rm -rf "pages/STAGING/$STAGING_SLUG"
             mkdir -p "pages/STAGING/$STAGING_SLUG"
@@ -2219,6 +2375,7 @@ jobs:
       # (owner, 2026-10-23: "gh-pages should render wether all CI succeeeds or
       # not"). Here a finding fails this PR's check, so it still shows red.
       - name: Judge the built-site checks
+        id: judge
         if: ${{ !cancelled() }}
         env:
           SEARCH_INDEX: ${{ steps.search_index.outcome }}
@@ -2239,6 +2396,49 @@ jobs:
             fi
           done
           exit "$failed"
+
+      # ── The verify run's answer, on the PR's head commit ─────────
+      # `preview/agent-build` was set pending when the PR's own run deferred.
+      # Green only when the files matched AND the built-site checks passed: a
+      # deferred PR's own Feature Staging run judged nothing, so this status is
+      # where those checks reach the PR.
+      - name: Report the verify on the PR
+        if: ${{ !cancelled() && inputs.verify_pr != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ inputs.verify_pr }}
+          SAME: ${{ steps.verify_agent.outputs.same }}
+          AGENT_HEAD: ${{ steps.verify_agent.outputs.agent_head }}
+          DEPLOY: ${{ steps.handoff_dispatch.outcome == 'success' && 'handed to the batched publisher' || steps.deploy.outcome }}
+          JUDGE: ${{ steps.judge.outcome }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -u
+          # On the commit the agent built, where the PR's run set it pending;
+          # not on a newer head, which has its own status (or none).
+          head="${AGENT_HEAD:-}"
+          case "$head" in *[!0-9a-f]*|"") head=$(gh api "repos/$REPO/pulls/$PR" --jq .head.sha) ;; esac
+          if [ "$SAME" = "gone" ]; then
+            state=success; desc="No agent build left to check (a newer preview replaced it)"
+          elif [ "$SAME" = "true" ] && [ "$JUDGE" = "success" ]; then
+            state=success; desc="Full CI rebuild matched the agent build"
+          elif [ "$SAME" = "true" ]; then
+            state=failure; desc="Files matched, but the built-site checks failed"
+          elif [ "$SAME" = "stale" ] && [ "$JUDGE" = "success" ]; then
+            state=success; desc="Base moved since the agent build; CI rebuilt and replaced it"
+          elif [ "$SAME" = "stale" ]; then
+            state=failure; desc="Base moved; CI rebuilt and replaced it, and the built-site checks failed"
+          else
+            state=failure; desc="Agent build differed; CI build replaced it (deploy: ${DEPLOY:-not reached})"
+          fi
+          gh api "repos/$REPO/statuses/$head" -f state="$state" -f context=preview/agent-build \
+            -f description="$desc" -f target_url="$RUN_URL" >/dev/null
+          f="$RUNNER_TEMP/verify-comment.md"
+          if [ "$SAME" != "gone" ] && [ -f "$f" ]; then
+            gh api "repos/$REPO/issues/$PR/comments" -F body=@"$f" >/dev/null || true
+          fi
+          echo "preview/agent-build: $state ($desc)"
 
   # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────
   # MERGED closes the question; CLOSED-UNMERGED does not.
