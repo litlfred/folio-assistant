@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T22:51:08Z
+updated_at: 2026-11-02T23:29:34Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -95,3 +95,7 @@ _2026-11-02T22:22:21Z_ — CI on 9032f1c: 25 passed, 2 red (bun test shards 2 an
 Shard 2's remaining red is bean-parents (bmat and rpc6 have no parent), which is the shared work plan's and red on main too. The train is at 3b74fbd.
 
 _2026-11-02T22:51:08Z_ — CI on 3b74fbd: shard 4 green (the deck and nested-instances fixes worked); 20 passed. New red: jsonld-gen-check, because the deck's 22 generated figure blocks carried the old image paths. They are regenerated (gen-library-jsonld) in cat-harness#1001 (d696b2f), and all 4 JSON-LD checks pass in a tree at the train's lock. The train is at e9fc31d. Shard 2's remaining red is bean-parents (shared work plan, main's too).
+
+_2026-11-02T23:29:34Z_ — MERGED the re-pin train folio-assistant#2921 as 2e10fd3, at e9fc31d. Its verdict status read "no new failures vs main 7e745b9 (1 known)". 26 checks passed; the 1 red is bun test shard 2, red on main too (bean-parents on the shared work plan). It touched 7 files and nothing under subscriptions/. folio-assistant main now pins cat-harness d696b2f, cat-harness-tools f96dfff, core 6f04061 and who-iris 40d52ba.
+- MERGED cat-harness#1001 as f3e6197 (green, clean).
+- Re-running against the new main pins: who-iris#165, core#624, cat-harness-tools#1422 (their only reds were the comparison against the old pins).
