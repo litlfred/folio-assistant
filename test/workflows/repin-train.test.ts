@@ -132,6 +132,13 @@ describe("the workflows", () => {
     expect(restore).toBeLessThan(train.indexOf("git add -u"));
   });
 
+  test("the train judges open trains itself, since token-started CI triggers no workflow_run", () => {
+    const judge = train.indexOf("repin-train.ts verdict --sha");
+    expect(judge).toBeGreaterThan(-1);
+    expect(judge).toBeLessThan(train.lastIndexOf("repin-train.ts decide --tree"));
+    expect(train).toContain("statuses: write");
+  });
+
   test("without a bot token, the train starts both workflows the verdict reads", () => {
     expect(train).toContain("gh workflow run code-quality-gates.yml");
     expect(train).toContain("gh workflow run feature-staging.yml");

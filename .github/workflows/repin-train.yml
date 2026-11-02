@@ -51,7 +51,7 @@ jobs:
       pull-requests: write
       issues: write
       actions: write
-      statuses: read
+      statuses: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -108,6 +108,21 @@ jobs:
           echo "branch=repin-train/$stamp" >> "$GITHUB_OUTPUT"
           echo "stamp=$stamp" >> "$GITHUB_OUTPUT"
           echo "tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_OUTPUT"
+
+      # The verdict workflow starts on workflow_run, but the train's CI is
+      # dispatched with GITHUB_TOKEN when no bot token is set, and a run
+      # started by that token triggers no workflow_run. So each open train
+      # is judged here too, before the decision reads its verdict (#2896
+      # stayed "still being checked" for hours after its checks finished).
+      - name: Judge the open trains
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for sha in $(gh api "repos/$GITHUB_REPOSITORY/pulls?state=open&per_page=100" \
+              --jq '.[] | select(any(.labels[]; .name == "repin-train")) | .head.sha'); do
+            bun .github/scripts/repin-train.ts verdict --sha "$sha"
+          done
 
       - name: Skip a tree already tested, or a train still running
         id: decide
