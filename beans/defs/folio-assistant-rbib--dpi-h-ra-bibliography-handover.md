@@ -2,11 +2,11 @@
 # folio-assistant-rbib
 $schema: bean/1.0.0
 title: 'dpi-h-ra: footnote citations to KG bibliography (smart-ra#232, handover bean)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-02T18:58:00Z
+updated_at: 2026-11-02T19:03:00Z
 parent: folio-assistant-4j43
 tags:
     - smart-ra
@@ -36,3 +36,4 @@ Resume prompt: "read bean folio-assistant-rbib on branch cat/cat-harness/beans o
 _2026-11-02T18:30Z_ — PR #232 opened draft at 5ac8299; CI running; card posted to owner.
 _2026-11-02T18:29Z_ — Owner tapped A (merge as is) at 18:28:18Z. PR marked ready for full CI; merge on green.
 _2026-11-02T18:58Z_ — Full CI red only on cat-harness-tools:check:corpus-gate (54 edited blocks lack editing-hci-validation instances; store = smart-ra branch cat/dpi-h-ra/beans, beans/workflows/, mount with `bun run cat state:mount`, CI mounts it too). PR comment posted. Card 'How should I get past the corpus gate' (A record approval per block via `bun run cat workflow:start/complete` (rec), B merge red, C platform relax citation-only edits, D hold).
+_2026-11-02T19:03Z_ — Owner tapped B (merge with corpus gate red) 19:01Z. Merged smart-ra#232 as 140ddd1. Done. Follow-up: smart-ra site publish (workflow_dispatch/agent) to show it live; re-pin #228 brings core references:render.
