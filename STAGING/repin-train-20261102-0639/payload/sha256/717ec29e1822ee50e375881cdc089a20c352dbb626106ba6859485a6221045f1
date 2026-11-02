@@ -267,6 +267,58 @@ term, verbatim, with `source: <file>#L<line>`; an acronym becomes the
 adopted or edited is never changed. Only a person moves a term to `authored`
 (`glossary-terms`). `--check` keeps the candidates in step with the L1 entry.
 
+## Requirements and normative statements — every DAK and DTH source
+
+Owner, 2026-11-01: requirement extraction "should be a general part of L1
+ingestion for DAK and DTH". It is a Stage B **aspect** (cat-harness-tools#1357):
+`cat ingest` runs `extract-candidates.py --aspects-only` on every staged
+entry, and each requirement the source states becomes a typed node in the
+entry's graph, `derivedFrom` its L1 section. A folio's requirement block then
+CITES that node. It does not restate it with an id of its own.
+
+**The mount is the gate.** The `requirements` aspect lives in the DAK layer
+(its `scripts/extractors/dak-requirements.py`), so it runs in DAK and
+DTH repositories and nowhere else. With no aspect mounted the arm writes
+nothing.
+
+**No new schema: the existing kind that fits the source.** Requirement schemas
+come in more than one style (owner, 2026-11-01), some core and some
+the DAK layer's:
+
+| the source prints | kind | layer |
+|---|---|---|
+| a DAK requirement row, `<CODE>.FXREQ.<n>` / `.NFXREQ.<n>` | `functional-requirement` / `non-functional-requirement` | DAK layer |
+| a system's `shall`/`must`/`should` in prose ("The registry shall …") | `functional-requirement`, no id | DAK layer |
+| a row of a table of system functions | `functional-requirement`, `source_kind: function-table-row` (by hand today) | DAK layer |
+| a row of a table of information needs, an item of a list of reports or functions, a figure caption naming a function | `functional-requirement`, `source_kind`: `information-need-table-row`, `function-list-item`, `figure-caption` (by hand today) | DAK layer |
+| an indicator | `indicator` | DAK layer |
+| any other normative sentence | [`recommendation`](../../content/folio-document-adapter/normative-statements.md), strength in `rfc2119-requirement-level` or `grade-recommendation-strength` | core |
+
+**Ids come from the source or there are none.** `number` is the id exactly as
+printed, and it lands in the node's `meta.source_number`. A requirement that
+prints no id has none. The node's `@id` is derived from the section and the
+order the items appear in (`<kind>-<section>-NN`), never from a made-up label.
+A DTH folio's `FR-xx` ids, which an agent assigned and no source shows, are
+the failure this prevents.
+
+**A requirement from a source is a reference, not a definition.** Owner,
+2026-11-01, on the WHO 2015 HRHIS guide: its system requirements are "not
+definitional but contribute to a definition". The nodes carry
+`provenance: ingested` and `route_to: l2-dak-authoring`. The folio that cites
+one decides what it means for its own system, and a person promotes it.
+
+**Then account for everything.** Run [`l1-coverage`](l1-coverage.md) with the
+entry's requirement candidates as `--captured`. Every normative sentence the
+aspect did not propose is either a missing capture or an exclusion a person
+signs off.
+
+A requirement written by hand, from a table no extractor reads yet, uses the
+same `candidates.json` shape: `kind`, `source_kind`, `number` (or null),
+`name`, `statement` verbatim, `section_file`, `section_title`, `pages`,
+`formalization_candidate: false`, `route_to`. Leave out `document_class`,
+`validated` and `disposition`. Those describe the WHOLE document, and the
+manifest reads them as such. Then run `gen-library-jsonld --entry`.
+
 ## An inferred chapter tree is refused, not guessed
 
 This is the rule most worth understanding, because the failure it prevents is
