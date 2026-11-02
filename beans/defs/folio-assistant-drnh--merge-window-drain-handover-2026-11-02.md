@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T18:20:00Z
+updated_at: 2026-11-02T18:32:00Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -76,3 +76,5 @@ Report artifact: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr
 Long-lived review-log watching lives in bean folio-assistant-lgwt.
 
 _2026-11-02T18:20:00Z_ — Filed from the coordinator handover of 18:07Z (owner asked 18:08Z for a short-term drain bean used as memory and handover for stalled agents). Thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9CGT3dPmJTAXBao9ddv9dw4
+
+_2026-11-02T18:32:00Z_ — Harness drain (thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G993tgDz3qufiWhn4SHZH4bHs): still 26 of 35, no PR red. tools#1399's new red was test order, fixed in 8c020c4, merge on green. cat-harness#959 is green (meta-merge thread's to merge). Full harness plan and state: bean folio-assistant-4j43.

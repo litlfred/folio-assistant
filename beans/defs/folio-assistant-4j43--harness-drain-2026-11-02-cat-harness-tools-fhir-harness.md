@@ -2,11 +2,11 @@
 # folio-assistant-4j43
 $schema: bean/1.0.0
 title: 'Harness drain 2026-11-02: cat-harness, cat-harness-tools, fhir-harness'
-status: todo
+status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T06:50:00Z
+updated_at: 2026-11-02T18:32:00Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -16,8 +16,34 @@ Drain of the open issues, PRs and beans in the three harness repos, plan A (owne
 
 Counted 06:45Z: 15 issues, 13 PRs, 20 open beans; 35 in scope after leaving out paused and committee/DTH items (cat-harness#686; beans amom, oz9e, 17iw, 9hxd, fvec, r29x, nvhg, dthl, cysv, ls3t, max2, llxa).
 
-Rules: merge window to 2026-11-03 02:40Z; non-content PRs merge on green (or with only main's reds); only issues opened by litlfred; never merge PRs touching subscriptions/*/; owner threads keep their items, take over after 2 h idle.
+Rules: merge window to 2026-11-03 00:40Z; non-content PRs merge on green (or with only main's reds); only issues opened by litlfred; never merge PRs touching subscriptions/*/; owner threads keep their items, take over after 2 h idle.
 
 Children are the five phases.
 
 _2026-11-02T06:50:00Z_ — Filed by the harness drain thread (owner card Q-HDR-1 A, 2026-11-02 06:44Z), session https://claude.ai/code/session_01Qmmkt5upL17RB2jgQPi8Mx
+
+## How to resume (read this first)
+
+Resume prompt: "read bean folio-assistant-4j43 on branch cat/cat-harness/beans of litlfred/folio-assistant and continue the harness drain".
+
+1. Read this bean, newest note last. Re-check each item live on GitHub before acting.
+2. Work the open list below. Take over any item whose owner thread is idle more than 2 hours; comment on the PR that you did (Claude Code footer on every comment).
+3. Every 10 minutes, send the coordinator a report for the project chat: theme bar chart, open-PR chart by state, 2-3 sentence narrative, link to https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr (Live status section). Keep a one-shot send_later chain (queue the next one FIRST); an hourly backstop re-arms it.
+4. After each state change, append `_<UTC>_ — <change>` here and bump updated_at. Short-term merge handover across all repos is bean folio-assistant-drnh.
+5. When the window closes (2026-11-03 00:40Z) or all items are done: final report, disable the backstop, complete this bean.
+
+## Open items (18:32Z: 26 of 35 done)
+
+- [ ] cat-harness-tools#1399 (PR, check-workflow-script-paths `./` fix; taken over by the drain thread). New red was test order: docs/todos.jsonld was built only by an earlier test in the shard (#411 pattern). Fixed in 8c020c4 (ensureDocsPages in subgraph-node-checkout and todo-graph-repo-root). Merge on green.
+- [ ] cat-harness-tools#1299 — 13 of 16 reds wait on the fa re-pin train (fa#2921, which needs owner command Q-SLASH-8). Recount after the train merges. Owner thread: Finish idle harness issues (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9E2MM936aKdTfuSSRD7GVeN).
+- [ ] cat-harness-tools#1378, #1379 — slash IRIs; owner thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G95HvJ9m7xBV6qWhqn6M2rVj.
+- [ ] cat-harness-tools#1356 — L1 ingestion; owner thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9MzQpc26tsYwzKvRWEvTqXn.
+- [ ] beans fwtz (docs site rebuild on bean-branch move), pga6 (separation) — close-outs thread.
+- [ ] bean nbp9 — owner's own to-do (security).
+- [ ] umbrella beans rwmf, yj32 — complete when their children are done.
+
+Other open harness PRs (not drain items): cat-harness#972 (draft, content, card Q-B1-2), #959 (meta-merge skill, meta-merge thread), #980, #981, cat-harness-tools#1411.
+
+Done since 06:50Z: fhir-harness#269, #271, #275, #280; cat-harness#978; cat-harness-tools#1354, #1259 (via #1406, cat-harness#975), #400 (via fa#2915); bean 8bm7; plus the merged/closed rows in the report table.
+
+_2026-11-02T18:32:00Z_ — Plan and state written here as the drain's durable memory (owner asked 18:26Z: "make sure workplan beaned up may stall"). Session https://claude.ai/code/session_01Qmmkt5upL17RB2jgQPi8Mx
