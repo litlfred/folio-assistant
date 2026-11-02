@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T19:47:01Z
+updated_at: 2026-11-02T19:52:34Z
 parent: folio-assistant-dthl
 tags:
     - review-log-watch
@@ -64,3 +64,5 @@ Resume prompt: "read bean folio-assistant-lgwt on branch cat/cat-harness/beans o
 _2026-11-02T18:20:00Z_ — Filed from the coordinator handover (owner asked 18:08Z for a semi-permanent log-watcher bean used as memory and handover for stalled agents). Thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9CGT3dPmJTAXBao9ddv9dw4
 
 _2026-11-02T19:47:01Z_ — The watcher thread is stalled (owner 19:46Z). Taken over by sibling https://claude.ai/code/session_01EucfRmAyZLEuxMG8wkPi5r. Note: from the coordinator session the Google Drive connector fails ("does not support dynamic client registration"), so the sheets may be unreadable until the connector is reconnected.
+
+_2026-11-02T19:52:34Z_ — Taken over again by https://claude.ai/code/session_01EucfRmAyZLEuxMG8wkPi5r (restarted after unarchive). Sheets NOT readable from this session: the google-drive MCP server failed to connect (CONNECTION_CLOSED), and the environment network policy blocks docs.google.com (proxy 403), so even a public CSV export cannot be fetched. No polls were run and no wakes armed. Watch is paused until the owner reconnects the Google Drive connector (claude.ai Settings → Connectors); then resume with the prompt above.
