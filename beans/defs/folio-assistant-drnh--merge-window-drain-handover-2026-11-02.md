@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T19:42:55Z
+updated_at: 2026-11-02T19:45:48Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -54,7 +54,7 @@ Report artifact: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr
 
 ## Open cards waiting on the owner
 
-- [ ] Q-SLASH-8 — run the command above
+- [x] Q-SLASH-8 — run the command above (owner, 588844b)
 - [ ] Q-REFKG-5 — references (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9RMY4ByX7D89zNFwW323CSk)
 - [ ] TOC — smart-trust#138 (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9T2NwvJrwiuyNa9WdtSZ8Ag)
 - [ ] Q-B1-2 — cat-harness#972
@@ -80,3 +80,5 @@ _2026-11-02T18:20:00Z_ — Filed from the coordinator handover of 18:07Z (owner 
 _2026-11-02T18:32:00Z_ — Harness drain (thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G993tgDz3qufiWhn4SHZH4bHs): still 26 of 35, no PR red. tools#1399's new red was test order, fixed in 8c020c4, merge on green. cat-harness#959 is green (meta-merge thread's to merge). Full harness plan and state: bean folio-assistant-4j43.
 
 _2026-11-02T19:42:55Z_ — Train fa#2921 (repin-train/20261102-1625 @ 68df55f, still the newest train) is red on 16 checks; main 7e745b9 has only 4 (post-merge QA, bun test shards 2 and 3, registered gates), so it can't merge on main's reds. Q-SLASH-8 is NOT applied yet: the `.json` copy lines are still in both workflow files. The owner's local `git switch` failed on an uncommitted edit to bean u9lb (stash it first). Q-SLASH-8 alone won't turn the train green. The root red is in the pinned cat-harness (c7cfab5): `qa:refresh` fails on (1) `skill:register` with 2 undeclared skills (add them to package-manifest.json `skills`); (2) `check:lane-documentation` with 5 undocumented lanes in processes/sdlc/saturation-meta-merge.bpmn (Steward, Sibling, Owner, Pipeline) and merge-manager-watch.bpmn (Steward); (3) `check:methodology-evidence`: skills/sdlc/sdlc-core/saturation-meta-merge.md names 2 instances above it and is not in PENDING. With no QA working copy, `uml:overview` exits 2 in stage, and the e2e, bun test and gate shards all report UNKNOWN. The fix needs a cat-harness PR (saturation-meta-merge, from the #959 meta-merge skill) and then a re-pin; this session can't reach cat-harness. who-iris#165 and tools#1299 still wait on the train.
+
+_2026-11-02T19:45:48Z_ — The owner ran Q-SLASH-8. The train is now at de098fc (588844b "drop .json copy step", then de098fc tombstone-comment cleanup). The root `${STUB}.json` copy lines are gone from both workflows. CI restarted. The cat-harness saturation-meta-merge reds (previous comment) are expected to remain until a cat-harness fix is re-pinned.
