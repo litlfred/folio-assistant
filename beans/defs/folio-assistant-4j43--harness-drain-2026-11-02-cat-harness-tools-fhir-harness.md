@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T20:48:45Z
+updated_at: 2026-11-02T21:23:49Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -77,3 +77,10 @@ _2026-11-02T20:46:24Z_ — Train run on e107c2d: 2 red. (a) bun test shard 2: th
 _2026-11-02T20:47:21Z_ — The owner allowed merges for this session (card: option 1). Merged cat-harness#1000 as d7ebe6e (green, generated files only). The train's pin fec38df is #1000's head, now on main with the same tree as d7ebe6e, so the pin stays and CI on a989b41 keeps running.
 
 _2026-11-02T20:48:45Z_ — The train's stage red was `cp: cannot stat ./_site/cat-harness-glossary.jsonld`. tools eab1407 ("Remove the one-release IRI tombstones") stopped writing the root glossary tombstone, but feature-staging.yml:1606 and docs-site.yml:823 still copied it. This is Q-SLASH-8's twin for the glossary. Pushed a9a2c6c to the train, deleting both lines. This session's push to .github/workflows WAS accepted, so no owner card is needed. CI restarted on a9a2c6c.
+
+_2026-11-02T21:23:49Z_ — Train re-pinned at 95da342, from the reds on e107c2d and a9a2c6c, each reproduced in a tree mounted from the train's lock and compared with main's:
+- cat-harness#1001 (cc571bb): the meta-merge diagrams still used the processes `ns#` namespace, so their skill refs were invisible (activity-skill-coverage, 9 activities). Fixed the namespace, gave the 3 really skill-less tasks a skill or a no-skill reason, regenerated the checklists and .pot files, and archimate-models.md no longer names folio-assistant-core (reference-direction, the 1 new finding).
+- cat-harness-tools#1422 (30a0ec3, branch from c6e3d1b, so slash wave 2 #1417 is not in): tests follow the lower layers. That covers tools pairs (core glossary-table), kg-export (log is a data store, Q-BR-3 A), 502c (new GW_BeanClosedHow), stakeholder-map (dependents' roles), viewer-tools (business-processes), the deck path, block-summaries (library/conduct filing, .jsonld blocks), and check-instance-render reading the slash GraphTypology type.
+- index.config.json: check:ig-citations is declared no-folio (it reads an IG's own checkout; at the index it reads 0 pages).
+- Also red on main in a clean tree, so main's: kg:validate nested instances (676g), process-index subgraph JSON-LD ×4, block-summaries viewer projection, the deck's slide 4 and generated assets.
+Order: the train merges, then #1001 and #1422 re-run against the new main pins and merge.
