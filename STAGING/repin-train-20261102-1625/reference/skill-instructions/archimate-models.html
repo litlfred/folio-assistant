@@ -375,8 +375,8 @@ not something to settle by renaming in Archi.</li></ul><h2 id="the-model-is-neve
 was ingested)”</em>.</p><p><strong>An authored model depicts concepts; it never defines them.</strong> Meaning lives
 in the SKOS glossary, read from the source documents. So:</p><ul><li>Never write a term, label, definition, <code class="language-plaintext highlighter-rouge">focus</code> or relationship into a
 glossary from a model someone authored in Archi. An element with no term
-is a term to add from the source’s own words, not from the box.</li><li>The glossary may drive the model (<code class="language-plaintext highlighter-rouge">archimate-from-glossary</code>, in
-folio-assistant-core): names, documentation and relationships flow from
+is a term to add from the source’s own words, not from the box.</li><li>The glossary may drive the model (<code class="language-plaintext highlighter-rouge">archimate-from-glossary</code>, a content
+layer’s Tool): names, documentation and relationships flow from
 the terms into the model, and Archi keeps the layout.</li><li>The term pages’ “depicted by” links read <code class="language-plaintext highlighter-rouge">skosConcept</code> on each build and
 write nothing into the glossary, so they are allowed.</li><li>The one exception is an <strong>ingested</strong> model, received from elsewhere and
 held as a source under the instance’s <code class="language-plaintext highlighter-rouge">library/</code>. It may seed the glossary

@@ -4,17 +4,17 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-1625",
-    "sha": "de897bd715c560ce657b9fba972b4a72ae86027a",
+    "sha": "54cd3a0f87bd27d8d38fb33827ce68143dd9f51a",
     "pr": "2921/merge",
-    "run": "41522563112"
+    "run": "41530330888"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/process/Process_MergeManagerWatch",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Merge manager watch: wake, read the queue live, route",
-      "summary": "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher).",
-      "description": "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher). Owner, 2026-11-02: formalise the merge manager agent's role, skills and process, and coordinate with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK.",
+      "summary": "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands.",
+      "description": "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK.",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/merge-manager-watch.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/merge-manager-watch.bpmn",

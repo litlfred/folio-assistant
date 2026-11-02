@@ -4755,7 +4755,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/merge-manager-watch.svg",
-      "description": "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher). Owner, 2026-11-02: formalise the merge manager agent's role, skills and process, and coordinate with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK.",
+      "description": "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK.",
       "enforcement": "strict",
       "flowCount": 9,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
@@ -4764,7 +4764,7 @@
       "sourcePath": "processes/sdlc/merge-manager-watch.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/merge-manager-watch.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Start_Wake",
-      "summary": "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher)."
+      "summary": "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_1",
@@ -4977,6 +4977,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-manager-watcher",
       "touchesWorkPlan": false
     },
     {
@@ -9620,7 +9621,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/saturation-meta-merge.svg",
-      "description": "Owner, 2026-11-02 06:57Z, with the runners full: cancel everything queued, pause new work, consolidate all ready PRs on one meta-merge branch, skip CI and rendering, and merge it. Then: coordinate with the swarm siblings when this happens, and make it repeatable across repositories. First run 2026-11-02 07:03Z: cat-harness#956 (7 PRs), and two layers that build on this one (4 PRs and 1 PR). Skill saturation-meta-merge holds the steps and the safety rules. This process bypasses merge:guard on purpose, so the owner's card, the PR body and a comment on each member PR are the record.",
+      "description": "Landing a batch while the runners are full: cancel everything queued, pause new work, consolidate all ready PRs on one meta-merge branch, skip CI and rendering, and merge it, holding the swarm siblings until it is done. It repeats across repositories. Skill saturation-meta-merge holds the steps, the safety rules and the record of its first run. This process bypasses merge:guard on purpose, so the owner's card, the PR body and a comment on each member PR are the record.",
       "enforcement": "strict",
       "flowCount": 13,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
@@ -9629,7 +9630,7 @@
       "sourcePath": "processes/sdlc/saturation-meta-merge.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/saturation-meta-merge.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Start_Saturated",
-      "summary": "Owner, 2026-11-02 06:57Z, with the runners full: cancel everything queued, pause new work, consolidate all ready PRs on one meta-merge branch, skip CI and rendering, and merge it."
+      "summary": "Landing a batch while the runners are full: cancel everything queued, pause new work, consolidate all ready PRs on one meta-merge branch, skip CI and rendering, and merge it, holding the swarm siblings until it is done."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge#flow/Flow_1",
@@ -9862,6 +9863,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ask-the-person",
       "touchesWorkPlan": false
     },
     {
@@ -9880,6 +9882,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-manager-watcher",
       "touchesWorkPlan": false
     },
     {
@@ -9895,6 +9898,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-manager-watcher",
       "touchesWorkPlan": false
     },
     {
@@ -9910,6 +9914,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/saturation-meta-merge",
       "touchesWorkPlan": false
     },
     {
@@ -9955,6 +9960,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-to-main",
       "touchesWorkPlan": false
     },
     {
@@ -9970,6 +9976,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
       "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/saturation-meta-merge",
       "touchesWorkPlan": false
     },
     {
