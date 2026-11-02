@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-02T18:36:00Z
+updated_at: 2026-11-02T18:55:00Z
 parent: folio-assistant-4j43
 tags:
     - folio-glass
@@ -41,8 +41,8 @@ Resume prompt: "read bean folio-assistant-fbmk on branch cat/cat-harness/beans o
 
 - [x] Mockups (bookmark in gutter; bookmark card on glass; pinned block card for glossary / BPMN / FHIR) and card Q-BMK-1 for the owner.
 - [x] GitHub issue: litlfred/cat-harness#982.
-- [ ] Core infra: one generic opt-in, e.g. `data-fa-pin="<iri>"` + title/href/avatar/kind on any rendered block of any graph kind, so docs-ui.js gives it a pin control and calls `displayInFolio`. Store key = the node IRI.
-- [ ] Bookmark = kind `bookmark`, href = document URL + block anchor, avatar = the document's cover + bookmark badge.
+- [x] Core infra (cat-harness#984, branch claude/folio-pin-any-block; specs cat-harness-tools#1412): one generic opt-in, e.g. `data-fa-pin="<iri>"` + title/href/avatar/kind on any rendered block of any graph kind, so docs-ui.js gives it a pin control and calls `displayInFolio`. Store key = the node IRI.
+- [x] Bookmark = kind `bookmark`, href = document URL + block anchor, avatar = the document's cover + bookmark badge.
 - [ ] Tests (docs-ui specs, block-actions tests), PRs, watch.
 
 ## Log
@@ -50,3 +50,6 @@ Resume prompt: "read bean folio-assistant-fbmk on branch cat/cat-harness/beans o
 _2026-11-02T18:30Z_ — bean created; code located; mockups next.
 
 _2026-11-02T18:36Z_ — mockup + card Q-BMK-1 posted (A link card / B live window / C A now B next, recommended C). Issue cat-harness#982. Waiting on card and on gutter rework PRs.
+
+_2026-11-02T18:30Z_ — owner chose Q-BMK-1 = C. Owner 18:29Z: lazy-load all visualizers (many item types).
+_2026-11-02T18:55Z_ — draft PRs cat-harness#984 (docs-ui.js: data-fa-pin* contract, window.faFolio.pin, link cards with 🔖/📌 badge, glass filter kinds) and cat-harness-tools#1412 (spec test/content/folio-block-pins.e2e.ts, 5 pass locally). Follow-up issue cat-harness#985 (lazy live windows per kind). NEXT: when tools#1411 + harness#981 merge, add 🔖 to the block panel/gutter in cat-harness-tools src/core/edit-links.ts (emit data-fa-pin attrs on .block-actions box, kind bookmark, avatar = document cover) and regenerate cat-harness site-chrome/assets/js/edit-links.js. Then emit data-fa-pin on graph-node subject pages (cat-harness-tools scripts/kg-export.ts subjectPage) so every graph kind is pinnable. Local e2e: CAT_HARNESS_ROOT=../cat-harness PLAYWRIGHT_CHROMIUM_PATH=/opt/pw-browsers/chromium with a minimal config without globalSetup.
