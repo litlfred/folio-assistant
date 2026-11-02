@@ -50,7 +50,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "c6e3d1b9b1c2175122134cff9a340af22e9e15c6",
+          "ref": "8d678452dbd89e14ec5fad804974e418ddf9d249",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -61,7 +61,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-02",
-              "ref": "c6e3d1b9b1c2175122134cff9a340af22e9e15c6",
+              "ref": "8d678452dbd89e14ec5fad804974e418ddf9d249",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -494,6 +494,13 @@
         "match": "bun .github/scripts/repin-train.ts verdict",
         "kind": "ci-only",
         "reason": "repin-train-verdict.yml's no-new-failures status (issue #2873, owner card Q-SPD-3 B): it compares the check runs GitHub reported on a train head with those on main and WRITES a commit status and PR comment, so its inputs exist only after those runs finish. A write about other checks' results, never a verdict on the tree; its logic is pinned by test/workflows/repin-train.test.ts in `bun test`."
+      }
+    ],
+    "scripts": [
+      {
+        "script": "check:ig-citations",
+        "kind": "no-folio",
+        "reason": "smart-base's gate (owner, 2026-11-02: IG references \"KG managed\", with a QA check for citations not in the harnessed bibliography) reads an IG's OWN checkout: `input/pagecontent/*.md` and the bibliography its root `<name>.json` declares. This index has neither, so run here it reports 0 pages and judges nothing. Its input is an IG's tree, not this one."
       }
     ]
   }
