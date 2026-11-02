@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:55:00Z
-updated_at: 2026-11-02T18:55:00Z
+updated_at: 2026-11-02T19:20:00Z
 parent: folio-assistant-rwmf
 tags:
     - bpmn-layout
@@ -31,3 +31,5 @@ Layout redraws are CONTENT under the merge-window rules: show before/after image
 Local setup: clone cat-harness, cat-harness-tools, bootstrap-tools side by side; in tools drop the two @litlfred deps, `bun install`, restore package.json, symlink node_modules/@litlfred/{bootstrap-tools,cat-harness}; then `CAT_HARNESS_ROOT=... CHROMIUM_PATH=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell bun scripts/bpmn-detangle.ts <dir>`.
 
 _2026-11-02T18:55:00Z_ — Filed by the BPMN layout thread, session https://claude.ai/code/session_01Qmmkt7JGxreHWSJr571Mwq
+
+_2026-11-02T19:20:00Z_ — Issue cat-harness#989, draft PR cat-harness#990 (branch claude/bpmn-layout-overlaps): code-change-review (2050->1390) and crdm-requirements (3146->1142) redrawn by hand, both clean. Generator: /mnt/project-files/bpmn-layout-2026-11-02/gen/{di.py,ccr.py,crdm.py} (rewrites the BPMNPlane from a coordinate spec, keeps DI ids). `--write` on the rest fixed little (62 still flagged), reverted. 43 diagrams have overlap findings, 20 only width. Card Q-LAYOUT-1 (A all 43 rec / B all 63 / C merge two now / D stop). Working on A meanwhile, worst first: activity-log, feature-staging, session-state-machine, refresh-materialized, slice-sqlite-publish, test-plan-execution, merge-base, nquads-distribution...
