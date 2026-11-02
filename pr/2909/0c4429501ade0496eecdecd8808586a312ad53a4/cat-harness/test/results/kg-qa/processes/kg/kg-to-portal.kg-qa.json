@@ -1,0 +1,305 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_KgToPortal",
+    "path": "processes/kg/kg-to-portal.bpmn"
+  },
+  "source_hash": "sha256:176881ab8578c286d84c0bfb8381fc455fac76585105b5654b90563fa5c24c84",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "D_Constraints",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "E_Scope",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Select",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Package",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "S_Sign",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Distribute",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "P_Verify",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "D_Constraints",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"publication-manager\" does not carry it."
+        },
+        {
+          "where": "E_Scope",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"editor\" does not carry it."
+        },
+        {
+          "where": "A_Select",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_Serialize",
+          "detail": "needs skill \"kg-export\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_Package",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "S_Sign",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"attestation-service\" does not carry it."
+        },
+        {
+          "where": "E_HumanEyes",
+          "detail": "needs skill \"continual-progress\", but its lane's role \"editor\" does not carry it."
+        },
+        {
+          "where": "A_Distribute",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"publish-target\" does not carry it."
+        },
+        {
+          "where": "P_Verify",
+          "detail": "needs skill \"kg-to-portal\", but its lane's role \"external-registry\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "D_Constraints",
+          "detail": "task \"State the constraints, with denominators\" requires skill \"kg-to-portal\", which role \"publication-manager\" (named by lane \"Deployment owner\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "E_Scope",
+          "detail": "task \"Decide what may leave the repository\" requires skill \"kg-to-portal\", which role \"editor\" (named by lane \"Editorial\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Select",
+          "detail": "task \"Cut the subgraph that leaves\" requires skill \"kg-to-portal\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Serialize",
+          "detail": "task \"Serialize to JSON-LD\" requires skill \"kg-export\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Package",
+          "detail": "task \"Package: files plus a manifest of digests\" requires skill \"kg-to-portal\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "S_Sign",
+          "detail": "task \"Sign the package and/or each asset\" requires skill \"kg-to-portal\", which role \"attestation-service\" (named by lane \"Attestation (GDHCN / WHO SMART Trust)\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "E_HumanEyes",
+          "detail": "task \"Human eyes on the rendered artefact\" requires skill \"continual-progress\", which role \"editor\" (named by lane \"Editorial\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Distribute",
+          "detail": "task \"Publish to the origin (a cache may front it)\" requires skill \"kg-to-portal\", which role \"publish-target\" (named by lane \"Publish target\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "P_Verify",
+          "detail": "task \"Verify what arrived against what was signed\" requires skill \"kg-to-portal\", which role \"external-registry\" (named by lane \"Portal (external consumer)\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-through-node": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-wide": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "diagram",
+          "detail": "1720 wide, budget 1400: text shows at 11.2px in a 1200px band. Close the gaps between columns, stack steps of different lanes in one column, or split by phase."
+        }
+      ]
+    },
+    "diagram-too-tall": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-edge": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-shape": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-lane-line": {
+      "result": "pass",
+      "findings": []
+    },
+    "shape-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-order": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 32,
+    "fail": 4,
+    "n/a": 9,
+    "unknown": 0
+  }
+}
