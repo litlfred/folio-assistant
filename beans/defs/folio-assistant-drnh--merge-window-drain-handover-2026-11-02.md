@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T19:45:48Z
+updated_at: 2026-11-02T19:47:01Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -82,3 +82,5 @@ _2026-11-02T18:32:00Z_ — Harness drain (thread https://claude.ai/code/project/
 _2026-11-02T19:42:55Z_ — Train fa#2921 (repin-train/20261102-1625 @ 68df55f, still the newest train) is red on 16 checks; main 7e745b9 has only 4 (post-merge QA, bun test shards 2 and 3, registered gates), so it can't merge on main's reds. Q-SLASH-8 is NOT applied yet: the `.json` copy lines are still in both workflow files. The owner's local `git switch` failed on an uncommitted edit to bean u9lb (stash it first). Q-SLASH-8 alone won't turn the train green. The root red is in the pinned cat-harness (c7cfab5): `qa:refresh` fails on (1) `skill:register` with 2 undeclared skills (add them to package-manifest.json `skills`); (2) `check:lane-documentation` with 5 undocumented lanes in processes/sdlc/saturation-meta-merge.bpmn (Steward, Sibling, Owner, Pipeline) and merge-manager-watch.bpmn (Steward); (3) `check:methodology-evidence`: skills/sdlc/sdlc-core/saturation-meta-merge.md names 2 instances above it and is not in PENDING. With no QA working copy, `uml:overview` exits 2 in stage, and the e2e, bun test and gate shards all report UNKNOWN. The fix needs a cat-harness PR (saturation-meta-merge, from the #959 meta-merge skill) and then a re-pin; this session can't reach cat-harness. who-iris#165 and tools#1299 still wait on the train.
 
 _2026-11-02T19:45:48Z_ — The owner ran Q-SLASH-8. The train is now at de098fc (588844b "drop .json copy step", then de098fc tombstone-comment cleanup). The root `${STUB}.json` copy lines are gone from both workflows. CI restarted. The cat-harness saturation-meta-merge reds (previous comment) are expected to remain until a cat-harness fix is re-pinned.
+
+_2026-11-02T19:47:01Z_ — The owner reported only two other agents active (19:46Z) and every thread idle over 15 minutes as stalled, so I started siblings. cat-harness saturation-meta-merge fix and re-pin: https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY. Harness drain (4j43): https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5. Review-log watcher (lgwt): https://claude.ai/code/session_01EucfRmAyZLEuxMG8wkPi5r. This coordinator (https://claude.ai/code/session_01EucfRmNiFYxXqLAgwhF71Q) keeps the train fa#2921 and its follow-on merges (who-iris#165, then tools#1299 recount).

@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T18:20:00Z
+updated_at: 2026-11-02T19:47:01Z
 parent: folio-assistant-dthl
 tags:
     - review-log-watch
@@ -62,3 +62,5 @@ Resume prompt: "read bean folio-assistant-lgwt on branch cat/cat-harness/beans o
 - Short-term merge drain: bean folio-assistant-drnh.
 
 _2026-11-02T18:20:00Z_ — Filed from the coordinator handover (owner asked 18:08Z for a semi-permanent log-watcher bean used as memory and handover for stalled agents). Thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9CGT3dPmJTAXBao9ddv9dw4
+
+_2026-11-02T19:47:01Z_ — The watcher thread is stalled (owner 19:46Z). Taken over by sibling https://claude.ai/code/session_01EucfRmAyZLEuxMG8wkPi5r. Note: from the coordinator session the Google Drive connector fails ("does not support dynamic client registration"), so the sheets may be unreadable until the connector is reconnected.

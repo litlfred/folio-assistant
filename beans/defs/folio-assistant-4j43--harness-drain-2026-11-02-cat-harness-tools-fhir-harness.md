@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T18:43:00Z
+updated_at: 2026-11-02T19:47:01Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -49,3 +49,5 @@ Done since 06:50Z: fhir-harness#269, #271, #275, #280; cat-harness#978; cat-harn
 _2026-11-02T18:32:00Z_ — Plan and state written here as the drain's durable memory (owner asked 18:26Z: "make sure workplan beaned up may stall"). Session https://claude.ai/code/session_01Qmmkt5upL17RB2jgQPi8Mx
 
 _2026-11-02T18:43:00Z_ — cat-harness-tools#1399 merged (fe808ba) after the test-order fix went green. Its paired issue fhir-harness#269 was already closed.
+
+_2026-11-02T19:47:01Z_ — Previous owner threads stalled (owner 19:46Z). The drain was taken over by sibling https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5. The cat-harness train blocker went to https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY. The coordinator is https://claude.ai/code/session_01EucfRmNiFYxXqLAgwhF71Q.
