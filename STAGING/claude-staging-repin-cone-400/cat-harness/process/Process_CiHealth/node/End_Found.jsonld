@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CiHealth/node/End_Found.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-repin-cone-400",
+    "sha": "a409af9d35b7509f1348778e69d10dcb8661521e",
+    "pr": "2915/merge",
+    "run": "41441481770"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CiHealth/node/End_Found",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Recorded — job stays GREEN",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CiHealth",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CiHealth#flow/Flow_8"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/End_Found"
+    }
+  ]
+}

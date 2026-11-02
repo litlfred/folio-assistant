@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/schema/block-qa.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-repin-cone-400",
+    "sha": "a409af9d35b7509f1348778e69d10dcb8661521e",
+    "pr": "2915/merge",
+    "run": "41441481770"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/schema/block-qa",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "block-qa",
+      "title": "block-qa",
+      "summary": "Per-content-block QA report schema.",
+      "module": "schemas/sdlc/block-qa.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-qa"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CodeChangeReview/node/Task_Review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-repin-cone-400",
+    "sha": "a409af9d35b7509f1348778e69d10dcb8661521e",
+    "pr": "2915/merge",
+    "run": "41441481770"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CodeChangeReview/node/Task_Review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Review the change",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CodeChangeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/role/code-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CodeChangeReview/lane/Lane_Reviewer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/skill/code-node-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/skill/adversarial-code-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/skill/staging-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CodeChangeReview#flow/f8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_CodeChangeReview#flow/f12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Review"
+    }
+  ]
+}

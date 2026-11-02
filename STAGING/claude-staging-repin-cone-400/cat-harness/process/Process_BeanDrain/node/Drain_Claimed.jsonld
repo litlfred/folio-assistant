@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_BeanDrain/node/Drain_Claimed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-repin-cone-400",
+    "sha": "a409af9d35b7509f1348778e69d10dcb8661521e",
+    "pr": "2915/merge",
+    "run": "41441481770"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_BeanDrain/node/Drain_Claimed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Bean claimed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_BeanDrain",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_BeanDrain/lane/Lane_Drainer",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_BeanDrain#flow/BD_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_BeanDrain#flow/BD_6",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/process/Process_BeanDrain#flow/BD_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Claimed"
+    }
+  ]
+}

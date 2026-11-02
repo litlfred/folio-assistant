@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/schema/tool-types.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-repin-cone-400",
+    "sha": "a409af9d35b7509f1348778e69d10dcb8661521e",
+    "pr": "2915/merge",
+    "run": "41441481770"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/schema/tool-types",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "tool-types",
+      "title": "tool-types",
+      "summary": "The shared I/O type vocabulary Tool ports reference.",
+      "module": "schemas/tools/tool-types.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/tools/tool-types-schema.jsonld"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-repin-cone-400/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-types"
+    }
+  ]
+}

@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../../assets/js/vendor/lunr.min.js"></script><script src="../../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Editing and HCI validation | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Editing and HCI validation" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Editing and HCI validation" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "en-cat-harness-processes-editing-hci-validation",
+    "src": "../../../assets/qa/en-cat-harness-processes-editing-hci-validation/page.translation.json",
+    "index": "../../../assets/qa/en-cat-harness-processes-editing-hci-validation/qa-index.json",
+    "list": "../../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../../folio-assistant-core/","jsonld":"../../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../../assets/harness/site.json"><meta name="fa-todo-src" content="../../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../../todos.jsonld"><meta name="fa-zoom-src" content="../../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../../assets/beans/index.json"><meta name="fa-processes-src" content="../../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../../build.json"><meta name="fa-fsh-guts-src" content="../../../fsh-guts.json"><link rel="stylesheet" href="../../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../../assets/css/docs-ui.css?v=2ed7923cda66"><link rel="stylesheet" href="../../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../../assets/css/avatars.css?v=366f939559cc"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../../assets/js/harness-data.js" defer></script><script src="../../../assets/js/vendor/qrcode.js" defer></script><script src="../../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../../assets/js/kg-render.js" defer></script><script src="../../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../../assets/js/docs-ui.js?v=52e4c68c64c7" defer></script><script src="../../../assets/js/edit-links.js?v=81bb303b6bc2" defer></script><script src="../../../assets/js/work-plan.js" defer></script><script src="../../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><link rel="stylesheet" href="../../../assets/css/navbar.css"><script src="../../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../../assets/page-layout.css" data-fa-page-layout><script src="../../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../../.." data-fa-to-root="../../..">{"data":"rail-giobbw31pa","here":"/en/cat-harness/processes/editing-hci-validation.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#how-it-connects","label":"How it connects"},{"href":"#lanes--who-acts","label":"Lanes — who acts"},{"href":"#steps","label":"Steps"},{"href":"#decisions","label":"Decisions"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <code class="language-plaintext highlighter-rouge">folio-assistant-core/processes/content/editing-hci-validation.bpmn</code> by <code class="language-plaintext highlighter-rouge">gen-processes-viz.ts</code> — do not edit here. <a href="index.html">All processes</a> · <a href="folio-assistant-core/">folio-assistant-core processes</a></p></blockquote><h1 id="editing-and-hci-validation"><a href="#editing-and-hci-validation" class="anchor-heading" aria-labelledby="editing-and-hci-validation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Editing and HCI validation
+  
+  
+</h1><p><code class="language-plaintext highlighter-rouge">Process_Editing</code> · strict · 18 step(s)</p><p>What happens to one proposed change to one content block: drafted, validated mechanically and by review, shown to the editor, and committed to the corpus only if accepted. folio-assistant — editing a content block and its HCI validation gate.
+Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
+BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
+by <code class="language-plaintext highlighter-rouge">bun run cat render:bpmn</code> — never hand-edit the SVG.
+The &lt;bootstrap.processes:skill&gt; extension on an activity names the folio-assistant skill
+that implements it; &lt;cat-harness.processes:bean&gt; marks a step that reads or writes the shared
+work plan in beans/.</p><style>.pt-diagram{position:relative;width:100%}.pt-diagram>img{display:block;width:100%;height:auto}.pt-mark{position:absolute;transform:translate(-50%,-50%);width:1.35em;height:1.35em;padding:0;border-radius:50%;border:1px solid #1f6feb;background:#fff;color:#1f6feb;font:bold 0.8em/1 sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.25)}.pt-layer{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:2}.pt-layer>*{pointer-events:auto}.pt-go{position:absolute;display:block;border-radius:8px;cursor:pointer}.pt-go:hover,.pt-go:focus-visible{outline:2px solid #1f6feb;outline-offset:1px;background:rgba(31,111,235,.07)}.pt-mark{z-index:1}.pt-mark:hover,.pt-mark[aria-expanded=true]{background:#1f6feb;color:#fff}.pt-mark:focus-visible{outline:2px solid #1f6feb;outline-offset:2px}.pt-panel{position:absolute;z-index:5;margin:0.9em 0 0 -0.6em;max-width:min(26em,90vw);min-width:14em;padding:0.6em 0.7em;background:#fff;color:#1b1f24;border:1px solid #8c959f;border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-size:0.85em;line-height:1.35}.pt-close{position:absolute;top:0.2em;right:0.35em;border:0;background:none;font-size:1.2em;cursor:pointer;color:inherit}.pt-obj{border:1px solid #57606a;border-radius:3px;margin:0.15em 0}.pt-head{border-bottom:1px solid #57606a;padding:0.15em 0.45em;background:#f6f8fa;text-decoration:underline}.pt-head .pt-st{text-decoration:none;display:inline-block;margin-right:0.35em}.pt-attr{padding:0.1em 0.45em}.pt-st,.pt-via{color:#57606a;font-size:0.9em}.pt-edge{color:#57606a;font-size:0.85em;padding-left:1em}.pt-role .pt-head{background:#fff8c5}.pt-skill .pt-head{background:#ddf4ff}.pt-task .pt-head{background:#f6f8fa}.pt-none{color:#57606a;font-style:italic;margin-top:0.3em}</style><div class="pt-diagram" data-panel="editing-hci-validation.tasks.json"><img src="../../../assets/img/workflows/editing-hci-validation.svg" alt="BPMN diagram: Editing and HCI validation" /><div class="pt-layer"><button type="button" class="pt-mark" data-task="Task_DescribeChange" style="left:10.87%;top:2.44%" aria-expanded="false" aria-label="About step: Describe the intended change" title="About: Describe the intended change">i</button> <a class="pt-go" href="bean-open.html" style="left:11.75%;top:12.92%;width:3.82%;height:6.28%" aria-label="Open subprocess: Open the bean" title="Open subprocess: Open the bean"></a> <button type="button" class="pt-mark" data-task="Task_ClaimBean" style="left:15.57%;top:12.92%" aria-expanded="false" aria-label="About step: Open the bean" title="About: Open the bean">i</button> <a class="pt-go" href="evidence-retrieval.html" style="left:11.75%;top:2.34%;width:5.29%;height:6.49%" aria-label="Open subprocess: Gather and verify the evidence" title="Open subprocess: Gather and verify the evidence"></a> <button type="button" class="pt-mark" data-task="CallActivity_Evidence" style="left:17.04%;top:2.34%" aria-expanded="false" aria-label="About step: Gather and verify the evidence" title="About: Gather and verify the evidence">i</button> <button type="button" class="pt-mark" data-task="Task_DraftEdit" style="left:22.92%;top:31.08%" aria-expanded="false" aria-label="About step: Draft the block edit" title="About: Draft the block edit">i</button> <button type="button" class="pt-mark" data-task="Task_SchemaValidate" style="left:41.73%;top:50.77%" aria-expanded="false" aria-label="About step: Schema and constraint checks" title="About: Schema and constraint checks">i</button> <button type="button" class="pt-mark" data-task="Task_SyntaxSpell" style="left:41.73%;top:57.93%" aria-expanded="false" aria-label="About step: Syntax, spelling and links" title="About: Syntax, spelling and links">i</button> <button type="button" class="pt-mark" data-task="Task_BuildGates" style="left:41.73%;top:65.99%" aria-expanded="false" aria-label="About step: Build and QA gates" title="About: Build and QA gates">i</button> <button type="button" class="pt-mark" data-task="Task_AgentReview" style="left:41.73%;top:73.95%" aria-expanded="false" aria-label="About step: Agent review of the change" title="About: Agent review of the change">i</button> <button type="button" class="pt-mark" data-task="Task_SmeReview" style="left:41.73%;top:81.49%" aria-expanded="false" aria-label="About step: Human / SME review" title="About: Human / SME review">i</button> <button type="button" class="pt-mark" data-task="Task_CollateFindings" style="left:55.25%;top:41.55%" aria-expanded="false" aria-label="About step: Collate findings into a report" title="About: Collate findings into a report">i</button> <button type="button" class="pt-mark" data-task="Task_LogFindings" style="left:61.12%;top:12.53%" aria-expanded="false" aria-label="About step: Log findings on the bean" title="About: Log findings on the bean">i</button> <button type="button" class="pt-mark" data-task="Task_ReviewFindings" style="left:65.82%;top:2.44%" aria-expanded="false" aria-label="About step: Review the findings" title="About: Review the findings">i</button> <a class="pt-go" href="options-analysis.html" style="left:62%;top:31.01%;width:5%;height:6.42%" aria-label="Open subprocess: Options analysis accept · revise · discard" title="Open subprocess: Options analysis accept · revise · discard"></a> <button type="button" class="pt-mark" data-task="Call_OptionsAnalysis" style="left:67%;top:31.01%" aria-expanded="false" aria-label="About step: Options analysis accept · revise · discard" title="About: Options analysis accept · revise · discard">i</button> <button type="button" class="pt-mark" data-task="Task_RecordDecision" style="left:73.02%;top:2.06%" aria-expanded="false" aria-label="About step: Record the decision and its audit note" title="About: Record the decision and its audit note">i</button> <button type="button" class="pt-mark" data-task="Task_ReviseEdit" style="left:79.34%;top:30.69%" aria-expanded="false" aria-label="About step: Revise the proposed change" title="About: Revise the proposed change">i</button> <button type="button" class="pt-mark" data-task="Task_Commit" style="left:88.25%;top:91.27%" aria-expanded="false" aria-label="About step: Commit into the corpus" title="About: Commit into the corpus">i</button> <a class="pt-go" href="bean-close.html" style="left:89.71%;top:12.92%;width:3.82%;height:6.28%" aria-label="Open subprocess: Close the bean" title="Open subprocess: Close the bean"></a> <button type="button" class="pt-mark" data-task="Task_ResolveBean" style="left:93.54%;top:12.92%" aria-expanded="false" aria-label="About step: Close the bean" title="About: Close the bean">i</button> <a class="pt-go" href="bean-close.html" style="left:80.52%;top:2.79%;width:4.7%;height:5.59%" aria-label="Open subprocess: Close the bean" title="Open subprocess: Close the bean"></a> <button type="button" class="pt-mark" data-task="Call_BeanClose" style="left:85.22%;top:2.79%" aria-expanded="false" aria-label="About step: Close the bean" title="About: Close the bean">i</button></div><div class="pt-panel" role="dialog" aria-label="Task details" hidden=""></div></div><script>(function () {
+  Array.prototype.forEach.call(document.querySelectorAll(".pt-diagram:not([data-pt-ready])"), init);
+  function init(root) {
+  root.setAttribute("data-pt-ready", "");
+  var panel = root.querySelector(".pt-panel"), data = null, pending = null, open = null;
+  function load() {
+    if (data) return Promise.resolve(data);
+    if (!pending) pending = fetch(root.getAttribute("data-panel")).then(function (r) {
+      if (!r.ok) throw new Error(r.status + " " + r.statusText);
+      return r.json();
+    }).then(function (j) { data = j; return j; });
+    return pending;
+  }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function link(l, cls) {
+    var e = el(l.href ? "a" : "code", cls, l.name);
+    if (l.href) e.href = l.href; else e.title = "no page for this one";
+    return e;
+  }
+  function obj(stereo, name, kind) {
+    var box = el("div", "pt-obj pt-" + kind), head = el("div", "pt-head");
+    head.appendChild(el("span", "pt-st", "\u00ab" + stereo + "\u00bb"));
+    head.appendChild(typeof name === "string" ? el("b", null, name) : name);
+    box.appendChild(head);
+    return box;
+  }
+  function edge(label) { return el("div", "pt-edge", "\u2502 " + label + " \u25bc"); }
+  function render(t) {
+    panel.textContent = "";
+    var close = el("button", "pt-close", "\u00d7"); close.type = "button"; close.setAttribute("aria-label", "Close");
+    close.onclick = function () { hide(); }; panel.appendChild(close);
+    var task = obj(t.type.replace(/^bpmn:/, ""), link({ name: t.name, href: t.href }), "task");
+    task.appendChild(el("div", "pt-attr", "id = " + t.id));
+    if (t.lane) {
+      var ln = el("div", "pt-attr", "lane = "); ln.appendChild(link({ name: t.lane, href: t.laneHref }));
+      // The lane is a partition; the Role it names is who acts (owner,
+      // 2026-10-31: "i thought there was a Role/person or actor that should be
+      // linked"). Shown here too, not only in the Role box further down.
+      if (t.role) { ln.appendChild(el("span", "pt-st", " → role ")); ln.appendChild(link(t.role)); }
+      task.appendChild(ln);
+    }
+    if (data && data.processHref) { var pr = el("div", "pt-attr", "process = "); pr.appendChild(link({ name: data.process, href: data.processHref })); task.appendChild(pr); }
+    panel.appendChild(task);
+    if (t.calls) {
+      panel.appendChild(edge("calls"));
+      var cp = obj("Process", link(t.calls), "proc");
+      if (t.calls.diagram && t.calls.diagram !== t.calls.href) { var dg = el("div", "pt-attr"); dg.appendChild(link({ name: "diagram", href: t.calls.diagram })); cp.appendChild(dg); }
+      panel.appendChild(cp);
+    }
+    if (t.shared) {
+      panel.appendChild(edge("calls"));
+      var gt = obj(t.shared.type.replace(/^bpmn:/, ""), t.shared.id, "proc");
+      Object.keys(t.shared.inputs || {}).forEach(function (k) { gt.appendChild(el("div", "pt-attr", k + " = " + t.shared.inputs[k])); });
+      panel.appendChild(gt);
+    }
+    t.skills.forEach(function (s) {
+      panel.appendChild(edge("requires"));
+      var sk = obj("Skill", link(s), "skill");
+      (s.methodologies || []).forEach(function (m) {
+        var row = el("div", "pt-attr"); row.appendChild(el("span", "pt-st", "uses-methodology \u2192 "));
+        row.appendChild(link(m)); sk.appendChild(row);
+      });
+      panel.appendChild(sk);
+    });
+    if (!t.skills.length && !t.calls) panel.appendChild(el("div", "pt-none", "This task names no skill."));
+    if (t.role) {
+      panel.appendChild(edge("lane names"));
+      var role = obj("Role", link(t.role), "role");
+      if (t.role.title) role.appendChild(el("div", "pt-attr", "title = " + t.role.title));
+      var list = el("div", "pt-attr"); list.appendChild(el("span", "pt-st", "hasSkill: "));
+      if (!t.role.skills.length) list.appendChild(el("i", null, "none listed"));
+      t.role.skills.forEach(function (s, i) {
+        if (i) list.appendChild(document.createTextNode(", "));
+        list.appendChild(link(s));
+        if (s.via) list.appendChild(el("span", "pt-via", " (via " + s.via + ")"));
+      });
+      role.appendChild(list); panel.appendChild(role);
+    } else if (t.binding) {
+      panel.appendChild(el("div", "pt-none", "Lane role: " + t.binding + "."));
+    }
+  }
+  // THE MARKERS FOLLOW THE DRAWING, not the box around it. The site's figure
+  // viewer (docs-ui.js) swaps the <img> for an inlined <svg>, puts a toolbar
+  // above it, and zooms and pans it inside a scroll box. Positioned against
+  // this block, every marker and link drifted off its shape (owner,
+  // 2026-10-31: "misaligned"). So the layer is laid over wherever the drawing
+  // is actually drawn, and re-laid whenever that can change.
+  var layer = root.querySelector(".pt-layer"), queued = false;
+  function art() {
+    var c = root.querySelectorAll("img, svg");
+    for (var i = 0; i < c.length; i++) {
+      var e = c[i];
+      if (e.closest(".pt-layer, .pt-panel, .fa-figure-tools")) continue;
+      if (e.parentElement && e.parentElement.closest("svg")) continue;
+      return e;
+    }
+    return null;
+  }
+  function place() {
+    queued = false;
+    var a = art();
+    if (!layer || !a) return;
+    var r = root.getBoundingClientRect(), b = a.getBoundingClientRect();
+    var x = b.left - r.left, y = b.top - r.top, w = b.width, h = b.height, vw = 0, vh = 0;
+    if (a.tagName.toLowerCase() === "img") { vw = a.naturalWidth; vh = a.naturalHeight; }
+    else { var vb = (a.getAttribute("viewBox") || "").trim().split(/[s,]+/).map(Number); vw = vb[2]; vh = vb[3]; }
+    // An SVG keeps its aspect inside a box of another shape (xMidYMid meet).
+    if (vw > 0 && vh > 0 && w > 0 && h > 0) {
+      var k = vw / vh;
+      if (w / h > k) { var nw = h * k; x += (w - nw) / 2; w = nw; } else { var nh = w / k; y += (h - nh) / 2; h = nh; }
+    }
+    layer.style.left = x + "px"; layer.style.top = y + "px"; layer.style.width = w + "px"; layer.style.height = h + "px";
+    // Zoomed in, the drawing scrolls inside its box: markers past the edge are hidden with it.
+    var sc = a.parentElement;
+    while (sc && sc !== root && !(sc.scrollWidth > sc.clientWidth + 1 || sc.scrollHeight > sc.clientHeight + 1)) sc = sc.parentElement;
+    if (sc && sc !== root) {
+      var s = sc.getBoundingClientRect(), L = r.left + x, T = r.top + y;
+      layer.style.clipPath = "inset(" + Math.max(0, s.top - T) + "px " + Math.max(0, L + w - s.right) + "px " +
+        Math.max(0, T + h - s.bottom) + "px " + Math.max(0, s.left - L) + "px)";
+    } else layer.style.clipPath = "";
+    if (open) at(open);
+  }
+  function schedule() { if (!queued) { queued = true; requestAnimationFrame(place); } }
+  if (window.ResizeObserver) new ResizeObserver(schedule).observe(root);
+  if (window.MutationObserver) new MutationObserver(function (ms) {
+    for (var i = 0; i < ms.length; i++) if (!layer || !layer.contains(ms[i].target)) { schedule(); return; }
+  }).observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ["style", "class", "viewBox"] });
+  root.addEventListener("scroll", schedule, true);
+  root.addEventListener("load", schedule, true);
+  window.addEventListener("resize", schedule);
+  schedule();
+  function at(b) {
+    var r = root.getBoundingClientRect(), m = b.getBoundingClientRect();
+    panel.style.left = (m.left + m.width / 2 - r.left) + "px"; panel.style.top = (m.top + m.height / 2 - r.top) + "px";
+  }
+  function hide() { panel.hidden = true; if (open) open.setAttribute("aria-expanded", "false"); open = null; }
+  root.addEventListener("click", function (ev) {
+    var b = ev.target.closest && ev.target.closest(".pt-mark");
+    if (!b) return;
+    if (open === b) { hide(); return; }
+    if (open) open.setAttribute("aria-expanded", "false");
+    open = b; b.setAttribute("aria-expanded", "true");
+    at(b);
+    panel.hidden = false; panel.textContent = "Loading\u2026";
+    load().then(function (j) {
+      var t = j.tasks[b.getAttribute("data-task")];
+      if (open === b) { if (t) render(t); else panel.textContent = "No details for this task."; }
+    }).catch(function (e) { if (open === b) panel.textContent = "Could not load task details: " + e.message; });
+  });
+  document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && open) hide(); });
+  }
+})();</script><h2 id="how-it-connects"><a href="#how-it-connects" class="anchor-heading" aria-labelledby="how-it-connects"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it connects
+  
+  
+</h2><ul><li><strong>Called by:</strong> <a href="content-lifecycle.html">Content lifecycle</a>, <a href="draft-to-publication.html">Draft, review and publish</a></li><li><strong>Calls:</strong> <a href="bean-close.html">Close the bean</a>, <a href="bean-open.html">Open the bean</a>, <a href="evidence-retrieval.html">Evidence for a recommendation</a>, <a href="options-analysis.html">Options analysis</a></li><li><strong>Presented on:</strong> <a href="https://github.com/litlfred/folio-assistant-core/blob/HEAD/docs/process/publication-workflow.md#editing-and-the-hci-validation-gate" data-fa-pin="folio-assistant-core">Publication workflow — Editing and the HCI validation gate</a></li><li><strong>Running instances:</strong> none recorded</li></ul><h2 id="lanes--who-acts"><a href="#lanes--who-acts" class="anchor-heading" aria-labelledby="lanes--who-acts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lanes — who acts
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>lane</th><th>role</th><th>what it does here</th></tr></thead><tbody><tr><td>Editor / author (person)</td><td><code class="language-plaintext highlighter-rouge">author</code></td><td>Every act the requesting party performs personally rather than through the agent lands here: stating the change, retrieving its evidence, and — once every validation path has reported — ruling on it. The gate sits at Task_ReviewFindings rather than earlier because a decision taken before the findings exist would not be a decision about the change that was actually built.</td></tr><tr><td>Work plan — beans (shared by humans and agents)</td><td><code class="language-plaintext highlighter-rouge">work-plan</code></td><td>Claims the edit as a bean before drafting starts, so a re-entry cannot silently duplicate the same request, carries the findings onto it before the editor ever sees them, and closes or reopens it against whether the change actually landed. That record is independent of the audit note Task_RecordDecision writes for the decision itself — one tracks the edit’s course, the other its outcome.</td></tr><tr><td>Authoring agent (system)</td><td><code class="language-plaintext highlighter-rouge">authoring-agent</code></td><td>Produces the proposed change and, once findings exist, weighs the options for it — accept, revise, discard — but stops short of choosing: Call_OptionsAnalysis records that the options were weighed, Task_RecordDecision in the editor’s lane records what was chosen, and collapsing the two would let the same party both analyse and decide.</td></tr><tr><td>HCI validation pipeline (system)</td><td><code class="language-plaintext highlighter-rouge">validation-pipeline</code></td><td>Forks validation into its four parallel paths and, once every one reports, collates mechanical results and review findings into a single report. It is the aggregation point rather than a checker itself — its only job is making sure none of the four is missing before the editor sees anything.</td></tr><tr><td>Mechanical validation (system)</td><td><code class="language-plaintext highlighter-rouge">validation-pipeline</code></td><td>Runs the three checks that need no judgement call — schema and constraints, syntax and link resolution, build and QA gates — in parallel with the non-mechanical review rather than gating on it, so a spelling error is never held up behind a pending SME review, or the reverse.</td></tr><tr><td>Non-mechanical validation (review agent or SME)</td><td><code class="language-plaintext highlighter-rouge">reviewer</code></td><td>Supplies the half of validation no checker can perform: whether the change says what the editor meant. Gateway_ReviewerKind escalates from agent review to a human SME specifically when the judgement needed turns clinical or scientific rather than editorial.</td></tr><tr><td>Corpus (versioned store)</td><td><code class="language-plaintext highlighter-rouge">corpus</code></td><td>Receives the write only after Gateway_EditorDecision resolves to accept. The one activity here is irreversible in a way nothing upstream is, which is why it is subject to the commit-hygiene requirement and reachable from no path except acceptance.</td></tr></tbody></table></div><h2 id="steps"><a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
+  
+  
+</h2><p>Every one of the 18 step(s) is documented.</p><div class="table-wrapper"><table><thead><tr><th>step</th><th>lane</th><th>skill / sub-process</th><th>what it does</th></tr></thead><tbody><tr><td><strong>Describe the intended change</strong><br /><code class="language-plaintext highlighter-rouge">Task_DescribeChange</code></td><td>Editor / author (person)</td><td>—</td><td>The editor states the change in natural language; no content has moved yet.</td></tr><tr><td><strong>Open the bean</strong><br /><code class="language-plaintext highlighter-rouge">Task_ClaimBean</code></td><td>Work plan — beans (shared by humans and agents)</td><td>calls <a href="bean-open.html">Open the bean</a><br /><code class="language-plaintext highlighter-rouge">bean-coordination</code></td><td><a href="bean-open.html">Process_BeanOpen</a>: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else’s. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached.</td></tr><tr><td><strong>Gather and verify the evidence</strong><br /><code class="language-plaintext highlighter-rouge">CallActivity_Evidence</code></td><td>Editor / author (person)</td><td>calls <a href="evidence-retrieval.html">Evidence for a recommendation</a></td><td>Before anything is drafted: the author reads the guidance ALREADY in this content, frames the question as PICO, retrieves candidates across the three evidence classes, and has each candidate’s authority resolved against its publisher’s own API. A recommendation reaches the drafting step with its evidence attached, or with the gap recorded.<br />This step has nothing to do for content that carries no recommendations – a mathematics folio has none – and is skipped there rather than satisfied vacuously.</td></tr><tr><td><strong>Draft the block edit</strong><br /><code class="language-plaintext highlighter-rouge">Task_DraftEdit</code></td><td>Authoring agent (system)</td><td><code class="language-plaintext highlighter-rouge">content-author</code><br /><code class="language-plaintext highlighter-rouge">before-after-preview</code></td><td>The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet. For a rendered change it also produces the before/after preview (skill before-after-preview) here, before Gateway_ValidationFork, so the preview exists when the parallel review starts.</td></tr><tr><td><strong>Schema and constraint checks</strong><br /><code class="language-plaintext highlighter-rouge">Task_SchemaValidate</code></td><td>Mechanical validation (system)</td><td><code class="language-plaintext highlighter-rouge">content-validate</code></td><td>Block schema, label prefixes, required fields, constraint rules.</td></tr><tr><td><strong>Syntax, spelling and links</strong><br /><code class="language-plaintext highlighter-rouge">Task_SyntaxSpell</code></td><td>Mechanical validation (system)</td><td><code class="language-plaintext highlighter-rouge">content-validate</code></td><td>Syntax, spelling, cross-references, citation and link resolution.</td></tr><tr><td><strong>Build and QA gates</strong><br /><code class="language-plaintext highlighter-rouge">Task_BuildGates</code></td><td>Mechanical validation (system)</td><td><code class="language-plaintext highlighter-rouge">content-test</code></td><td>Lean build and proof status, LaTeX compile, FHIR/SUSHI validation, QA axes.</td></tr><tr><td><strong>Agent review of the change</strong><br /><code class="language-plaintext highlighter-rouge">Task_AgentReview</code></td><td>Non-mechanical validation (review agent or SME)</td><td><code class="language-plaintext highlighter-rouge">content-review</code></td><td>A review agent judges what no checker can: accuracy, voice, exposition, whether the change says what the editor meant.</td></tr><tr><td><strong>Human / SME review</strong><br /><code class="language-plaintext highlighter-rouge">Task_SmeReview</code></td><td>Non-mechanical validation (review agent or SME)</td><td><code class="language-plaintext highlighter-rouge">content-review</code></td><td>Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement. A rendered change reaches the reviewer with its before/after preview (skill before-after-preview).</td></tr><tr><td><strong>Collate findings into a report</strong><br /><code class="language-plaintext highlighter-rouge">Task_CollateFindings</code></td><td>HCI validation pipeline (system)</td><td><code class="language-plaintext highlighter-rouge">content-validate</code><br /><code class="language-plaintext highlighter-rouge">content-validate</code><br /><code class="language-plaintext highlighter-rouge">content-validate</code></td><td>Mechanical results and review findings are merged into one report against the proposed change.</td></tr><tr><td><strong>Log findings on the bean</strong><br /><code class="language-plaintext highlighter-rouge">Task_LogFindings</code></td><td>Work plan — beans (shared by humans and agents)</td><td><code class="language-plaintext highlighter-rouge">todo-manager</code></td><td>Findings are appended to the bean, so the next agent or human sees what is outstanding.</td></tr><tr><td><strong>Review the findings</strong><br /><code class="language-plaintext highlighter-rouge">Task_ReviewFindings</code></td><td>Editor / author (person)</td><td><code class="language-plaintext highlighter-rouge">decision-audit</code><br /><code class="language-plaintext highlighter-rouge">decision-audit</code><br /><code class="language-plaintext highlighter-rouge">decision-audit</code></td><td>THE GATE: the editor sees every finding BEFORE anything reaches the corpus.</td></tr><tr><td><strong>Options analysis accept · revise · discard</strong><br /><code class="language-plaintext highlighter-rouge">Call_OptionsAnalysis</code></td><td>Authoring agent (system)</td><td>calls <a href="options-analysis.html">Options analysis</a></td><td>On the edge out of <code class="language-plaintext highlighter-rouge">Task_ReviewFindings</code> and before <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code>: the findings are the evidence, so the options can only be weighed once they exist, and after <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code> the decision is already written down.<br />NOT between <code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code> and <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code>, which is the pair the work-plan named — in this diagram those run the OTHER WAY ROUND. <code class="language-plaintext highlighter-rouge">Flow_21b</code> goes <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code> -&gt; <code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code>, so the gateway reads a decision that has already been recorded, and interposing there would analyse options after the choice was made.<br />In the Agent lane, and this diagram makes the reason sharp. <code class="language-plaintext highlighter-rouge">Task_RecordDecision</code> is a <code class="language-plaintext highlighter-rouge">userTask</code> in <code class="language-plaintext highlighter-rouge">Lane_Editor</code> that already names <code class="language-plaintext highlighter-rouge">decision-audit</code>, and <a href="options-analysis.html"><code class="language-plaintext highlighter-rouge">Process_OptionsAnalysis</code></a> ends with its own <code class="language-plaintext highlighter-rouge">decision-audit</code> note. Those are two different acts — the subprocess records that the options were WEIGHED, the editor records WHAT WAS CHOSEN — and putting the analysis in the editor’s lane would collapse them, making the same party both analyse and decide. The subprocess’s own documentation refuses that: it produces options and a recommendation, and the authorisation belongs to the calling step.<br /><code class="language-plaintext highlighter-rouge">CallActivity_Evidence</code> sits in <code class="language-plaintext highlighter-rouge">Lane_Editor</code> instead, and that is not an inconsistency: the author performs the evidence retrieval, whereas here the point is that the analyst is not the decider.<br />On the trigger: <code class="language-plaintext highlighter-rouge">A_Frame</code> opens the subprocess on <code class="language-plaintext highlighter-rouge">opening-brief</code>’s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached <code class="language-plaintext highlighter-rouge">Task_ReviewFindings</code> with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not.</td></tr><tr><td><strong>Record the decision and its audit note</strong><br /><code class="language-plaintext highlighter-rouge">Task_RecordDecision</code></td><td>Editor / author (person)</td><td><code class="language-plaintext highlighter-rouge">decision-audit</code></td><td>A decision is an act ABOUT the findings, not a finding. Record the outcome, every finding it weighed, every finding it overrules — and an audit note saying why it was made, or why a finding in it was left. Each note cites corpus evidence: a witness, another finding, a QA report, a block, a file range. An overruled mechanical finding stays on the record; a gate whose findings vanish when somebody disagrees with them cannot be audited. An agent may assemble the citations and is recorded as <code class="language-plaintext highlighter-rouge">proposed_by</code>; the author is whoever decided.</td></tr><tr><td><strong>Revise the proposed change</strong><br /><code class="language-plaintext highlighter-rouge">Task_ReviseEdit</code></td><td>Authoring agent (system)</td><td><code class="language-plaintext highlighter-rouge">content-author</code><br /><code class="language-plaintext highlighter-rouge">before-after-preview</code></td><td>The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal. The before/after preview is refreshed with it (skill before-after-preview).</td></tr><tr><td><strong>Commit into the corpus</strong><br /><code class="language-plaintext highlighter-rouge">Task_Commit</code></td><td>Corpus (versioned store)</td><td><code class="language-plaintext highlighter-rouge">corpus-commit-contract</code></td><td>Only now does the change become corpus content, together with its QA sidecars. Subject to the commit-hygiene requirement.</td></tr><tr><td><strong>Close the bean</strong><br /><code class="language-plaintext highlighter-rouge">Task_ResolveBean</code></td><td>Work plan — beans (shared by humans and agents)</td><td>calls <a href="bean-close.html">Close the bean</a><br /><code class="language-plaintext highlighter-rouge">todo-manager</code></td><td><a href="bean-close.html">Process_BeanClose</a>: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine’s resolve sees nothing left but the archive step.</td></tr><tr><td><strong>Close the bean</strong><br /><code class="language-plaintext highlighter-rouge">Call_BeanClose</code></td><td>Editor / author (person)</td><td>calls <a href="bean-close.html">Close the bean</a><br /><code class="language-plaintext highlighter-rouge">todo-manager</code></td><td><a href="bean-close.html">Process_BeanClose</a>: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine’s resolve sees nothing left but the archive step.</td></tr></tbody></table></div><h2 id="decisions"><a href="#decisions" class="anchor-heading" aria-labelledby="decisions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Decisions
+  
+  
+</h2><p>Every one of the 3 decision(s) is documented.</p><div class="table-wrapper"><table><thead><tr><th>decision</th><th>what decides it</th><th>branches</th></tr></thead><tbody><tr><td><strong>Judgement call?</strong><br /><code class="language-plaintext highlighter-rouge">Gateway_ReviewerKind</code></td><td>Does this change need a judgement call? <code class="language-plaintext highlighter-rouge">no</code> goes to agent review; <code class="language-plaintext highlighter-rouge">yes</code> goes to a human or SME. The question is about the change, not about who is available.</td><td><strong>no</strong> → Agent review of the change<br /><strong>yes</strong> → Human / SME review</td></tr><tr><td><strong>Accept, revise or discard?</strong><br /><code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code></td><td>The editor’s recorded decision, with its audit note. <code class="language-plaintext highlighter-rouge">revise</code> reworks the proposed change; <code class="language-plaintext highlighter-rouge">discard</code> ends with the change dropped; <code class="language-plaintext highlighter-rouge">accept</code> commits it into the corpus.</td><td><strong>revise</strong> → Revise the proposed change<br /><strong>discard</strong> → Close the bean<br /><strong>accept</strong> → Commit into the corpus</td></tr><tr><td><strong>Bean claimed?</strong><br /><code class="language-plaintext highlighter-rouge">GW_BeanYours</code></td><td>Reads which end <a href="bean-open.html">Process_BeanOpen</a> reached. <code class="language-plaintext highlighter-rouge">claimed</code>: the bean is in progress and this process works it. <code class="language-plaintext highlighter-rouge">not yours</code>: a sibling session or a human holds it, nothing was written to it, and this process stops here rather than work a bean it does not own (bean-coordination).</td><td><strong>claimed</strong> → Gather and verify the evidence<br /><strong>not yours</strong> → Not yours — left alone</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script src="../../../assets/js/fa-pin-links.js" data-fa-pins="../../../pins.json" defer></script></body></html>

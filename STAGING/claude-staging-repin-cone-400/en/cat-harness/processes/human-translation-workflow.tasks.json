@@ -1,0 +1,798 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_HumanTranslation",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
+ "tasks": {
+  "Task_IdentifyContent": {
+   "id": "Task_IdentifyContent",
+   "name": "Identify content and target locale",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_IdentifyContent",
+   "lane": "Translation Coordinator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Coordinator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translation-coordinator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-coordinator",
+    "title": "Translation coordinator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_AssignTranslator": {
+   "id": "Task_AssignTranslator",
+   "name": "Assign to qualified human translator",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_AssignTranslator",
+   "lane": "Translation Coordinator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Coordinator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translation-coordinator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-coordinator",
+    "title": "Translation coordinator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_CheckCompleteness": {
+   "id": "Task_CheckCompleteness",
+   "name": "Check translation completeness",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_CheckCompleteness",
+   "lane": "Translation Coordinator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Coordinator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translation-coordinator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-coordinator",
+    "title": "Translation coordinator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_RequestMoreWork": {
+   "id": "Task_RequestMoreWork",
+   "name": "Request completion of remaining strings",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_RequestMoreWork",
+   "lane": "Translation Coordinator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Coordinator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translation-coordinator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-coordinator",
+    "title": "Translation coordinator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_ReceiveAssignment": {
+   "id": "Task_ReceiveAssignment",
+   "name": "Receive assignment and materials",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ReceiveAssignment",
+   "lane": "Human Translator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Translator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translator",
+    "title": "Human translator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_TranslateInTool": {
+   "id": "Task_TranslateInTool",
+   "name": "Translate strings in preferred tool",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_TranslateInTool",
+   "lane": "Human Translator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Translator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translator",
+    "title": "Human translator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_SubmitPO": {
+   "id": "Task_SubmitPO",
+   "name": "Submit completed .po file",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_SubmitPO",
+   "lane": "Human Translator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Translator",
+   "skills": [
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translator",
+    "title": "Human translator",
+    "skills": [
+     {
+      "name": "translation-manager"
+     }
+    ]
+   }
+  },
+  "Task_SMEReview": {
+   "id": "Task_SMEReview",
+   "name": "Review translation for accuracy",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_SMEReview",
+   "lane": "Subject-Matter Expert / Reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Reviewer",
+   "skills": [
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    },
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_ReturnForCorrection": {
+   "id": "Task_ReturnForCorrection",
+   "name": "Return for correction with annotations",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ReturnForCorrection",
+   "lane": "Subject-Matter Expert / Reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Reviewer",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_Signoff": {
+   "id": "Task_Signoff",
+   "name": "Sign off translation as official",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_Signoff",
+   "lane": "Subject-Matter Expert / Reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Reviewer",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_ExtractPOT": {
+   "id": "Task_ExtractPOT",
+   "name": "Extract POT (translatable strings)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ExtractPOT",
+   "lane": "Automated Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_PrepareGlossary": {
+   "id": "Task_PrepareGlossary",
+   "name": "Prepare domain glossary",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_PrepareGlossary",
+   "lane": "Automated Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_InjectPO": {
+   "id": "Task_InjectPO",
+   "name": "Inject PO → translated Markdown",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_InjectPO",
+   "lane": "Automated Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_RoundTripQA": {
+   "id": "Task_RoundTripQA",
+   "name": "Round-trip translation QA",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_RoundTripQA",
+   "lane": "Automated Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_AppendDisclaimer": {
+   "id": "Task_AppendDisclaimer",
+   "name": "Append WHO disclaimer (if DAK)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_AppendDisclaimer",
+   "lane": "Automated Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_WriteStatus": {
+   "id": "Task_WriteStatus",
+   "name": "Write status.json (official)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_WriteStatus",
+   "lane": "Automated Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  }
+ }
+}
