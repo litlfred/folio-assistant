@@ -545,6 +545,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           ref=yes; api=yes; why="no pull request — carrying everything"
           if [ -n "$PR" ]; then
@@ -593,6 +594,35 @@ jobs:
               # with the stub below.
               if printf '%s\n' "$files" | grep -qxE 'index\.(lock|config)\.json'; then
                 ref=yes; api=yes; why="the branch re-pins a mounted instance, whose skills and schemas the file list cannot show"
+              fi
+              # THE SAME RE-PIN, EXPANDED for the cone (cat-harness-tools#400,
+              # box 4). Left as the one line `index.lock.json`, a lock-only
+              # branch reaches no instance root, so the composed instances and
+              # the IG sites below it are cut to stubs. Each mount whose pin
+              # moved is diffed in its own repository between the two pins
+              # (`staging-changes.ts expand`, the changes page's own step), and
+              # its changed files, at their mount paths, join the list: only
+              # the layers whose pins moved are rebuilt. ANY DOUBT CARRIES: a
+              # pin that cannot be diffed, a new or dropped mount, a lock edit
+              # that moves no pin (a mounted directory added, say), or a failed
+              # step removes the list, and every instance is carried. Measured
+              # on a re-pin of 8 mounts: 1,336 mounted files, about 6 s.
+              if printf '%s\n' "$files" | grep -qxF 'index.lock.json'; then
+                X="$RUNNER_TEMP/repin-cone"; mkdir -p "$X"
+                if [ -n "$BASE_SHA" ] \
+                   && git fetch -q --depth=1 origin "$BASE_SHA" \
+                   && git show "$BASE_SHA:index.lock.json" > "$X/base.lock.json" \
+                   && bun run cat-harness-tools/scripts/staging-changes.ts expand \
+                        --changed-files "$RUNNER_TEMP/pr-files.txt" \
+                        --base-lock "$X/base.lock.json" --head-lock index.lock.json \
+                        --repo "$GITHUB_REPOSITORY" --out-list "$X/list.txt" --out-json "$X/sources.json" \
+                   && bun -e 'const s = JSON.parse(await Bun.file(process.argv[1]).text()); const d = s.repins.filter((r) => r.files === null); for (const r of d) console.log(`  · ${r.instance}: ${r.doubt}`); if (!s.repins.length) console.log("  · the lock changed but no pin moved (a mounted directory or a declaration changed)"); process.exit(d.length || !s.repins.length ? 1 : 0)' "$X/sources.json"; then
+                  cat "$X/list.txt" >> "$RUNNER_TEMP/pr-files.txt"
+                  echo "re-pin expanded: $(grep -c . "$X/list.txt" || true) mounted file(s) added to the cone's file list"
+                else
+                  rm -f "$RUNNER_TEMP/pr-files.txt"
+                  why="$why; a re-pinned mount could not be expanded — carrying every instance"
+                fi
               fi
             else
               why="could not read all of the pull request's files (read ${got:-0} of ${total:-?}) — carrying everything"
