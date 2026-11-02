@@ -739,9 +739,7 @@ jobs:
           cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
           # The host's document sits under its own directory, like every layer's
           # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
-          # root `<stub>.jsonld` is the one-release tombstone the export writes there,
-          # and its `.json` alias forwards with it.
-          cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
+          # root `<stub>.jsonld` is the one-release tombstone the export writes there.
 
           # bootstrap's OWN graph, as its own document.
           #
@@ -822,7 +820,6 @@ jobs:
 
           bun run cat-harness-tools/scripts/glossary-export.ts --out "./_site/${STUB}/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}/${STUB}-glossary.jsonld" "./_site/${STUB}/${STUB}-glossary.json"
-          cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
           fi
