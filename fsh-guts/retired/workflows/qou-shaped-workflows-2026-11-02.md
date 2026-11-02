@@ -1,3 +1,18 @@
+---
+$schema: folio-fsh-guts/v1
+title: "Four qou-shaped workflows, retired from folio-assistant: they build material only qou holds"
+kind: retired-workflow
+movedOn: 2026-11-02
+movedFrom: ".github/workflows/{snappea_wasm,hecke-engine-wasm,witness-refresh,publish}.yml in litlfred/folio-assistant"
+issue: 2909
+summary: >-
+  snappea_wasm, hecke-engine-wasm, witness-refresh and publish.yml named
+  folio-assistant/computations and folio-assistant/snappea-wasm, paths of the
+  old monorepo checkout that separation:cutover:check flags. All four ran only
+  by hand. Retired on the owner's choice Q-SEP-5 A (2026-11-02 10:05Z); kept
+  verbatim beside this note.
+---
+
 # Four qou-shaped workflows retired from folio-assistant (2026-11-02)
 
 Copied verbatim from folio-assistant main at `41bbb14ed0` and removed from
