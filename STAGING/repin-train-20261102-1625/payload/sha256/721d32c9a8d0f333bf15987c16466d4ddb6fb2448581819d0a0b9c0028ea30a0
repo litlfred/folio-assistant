@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T22:22:21Z
+updated_at: 2026-11-02T22:51:08Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -130,3 +130,5 @@ _2026-11-02T22:22:21Z_ — CI on 9032f1c: 25 passed, 2 red (bun test shards 2 an
 - the living deck's image paths: a real cat-harness defect. Bean 6fez filed kg-folio-asst-2026-09-30 one level down, but its images.json kept ../../docs/ paths (28 of them broken). Fixed in cat-harness#1001 (9d9d7e2).
 - kg:validate nested instances (676g): fixed by sibling tools#1419, whose diff is carried on #1422 (f96dfff).
 Shard 2's remaining red is bean-parents (bmat and rpc6 have no parent), which is the shared work plan's and red on main too. The train is at 3b74fbd.
+
+_2026-11-02T22:51:08Z_ — CI on 3b74fbd: shard 4 green (the deck and nested-instances fixes worked); 20 passed. New red: jsonld-gen-check, because the deck's 22 generated figure blocks carried the old image paths. They are regenerated (gen-library-jsonld) in cat-harness#1001 (d696b2f), and all 4 JSON-LD checks pass in a tree at the train's lock. The train is at e9fc31d. Shard 2's remaining red is bean-parents (shared work plan, main's too).
