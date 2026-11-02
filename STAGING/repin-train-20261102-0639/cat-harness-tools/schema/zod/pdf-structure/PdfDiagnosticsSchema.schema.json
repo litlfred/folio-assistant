@@ -208,6 +208,15 @@
           "type": "integer",
           "minimum": 0,
           "maximum": 9007199254740991
+        },
+        "furniture_lines_stripped": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "outline_reordered": {
+          "type": "boolean",
+          "const": true
         }
       },
       "required": [
@@ -225,8 +234,8 @@
   "description": "Generated from `PdfDiagnosticsSchema` in schemas/ui/pdf-structure.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "repin-train/20261102-0639",
-    "sha": "0071885095359aa80ce483f4045661ad79e22656",
-    "pr": "repin-train/20261102-0639",
-    "run": "41401374238"
+    "sha": "ef551559636c9e007fd41a816bb3b0cfdba7e59b",
+    "pr": "2907/merge",
+    "run": "41405658162"
   }
 }

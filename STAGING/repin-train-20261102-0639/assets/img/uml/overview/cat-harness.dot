@@ -294,6 +294,8 @@ digraph "cat_harness" {
   }
   subgraph "cluster_pkg_cat_harness_library" {
     label=<<b>cat-harness/library</b><br/><i>«library»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "cat_harness_library_concern_groups_v1_Directory" [fillcolor="#f4f4f1", class="fa_uml_kind_library", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Directory</b></td></tr><tr><td><i>«json: ConcernGroupsSchema»</i></td></tr><tr><td align="left">id [1] : string</td></tr><tr><td align="left">path [1] : string</td></tr><tr><td align="left">subgraph [1] : true</td></tr><tr><td align="left">graphTypologies [1..*] : string[]</td></tr></table>>];
+    "cat_harness_library_concern_groups_v1_concern_groups_v1" [fillcolor="#f4f4f1", class="fa_uml_kind_library", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>concern-groups/v1</b></td></tr><tr><td><i>«json: ConcernGroupsSchema»</i></td></tr><tr><td align="left">$schema [1] : &quot;concern-groups/v1&quot;</td></tr><tr><td align="left">_comment [0..1] : string</td></tr><tr><td align="left">groups [0..*] : string[]</td></tr><tr><td align="left">directories [0..*] : Directory[]</td></tr></table>>];
     "cat_harness_library_folio_document_images_v1_folio_document_images_v1" [fillcolor="#f4f4f1", class="fa_uml_kind_library", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>folio-document-images/v1</b></td></tr><tr><td><i>«json: ImagesSidecarSchema»</i></td></tr><tr><td align="left">$schema [1] : &quot;folio-document-images/v1&quot;</td></tr><tr><td align="left">doc_id [1] : string</td></tr><tr><td align="left">images [1] : object[] | null</td></tr><tr><td align="left">undetermined_reason [0..1] : string</td></tr></table>>];
     "cat_harness_library_folio_image_verdicts_v1" [fillcolor="#f4f4f1", class="fa_uml_kind_library", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>folio-image-verdicts/v1</b></td></tr><tr><td><i>«ts: VerdictFile»</i></td></tr><tr><td align="left">inspected_by [1] : unknown</td></tr><tr><td align="left">inspected_at [1] : string</td></tr><tr><td align="left">attribution [0..1] : Record&lt;string, { inspected_by: unknown; inspected_at: string }&gt;</td></tr><tr><td align="left">verdicts [1] : Record&lt;string, Record&lt;string, Verdict&gt;&gt;</td></tr></table>>];
     "cat_harness_library_folio_vector_labels_v1_folio_vector_labels_v1" [fillcolor="#f4f4f1", class="fa_uml_kind_library", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>folio-vector-labels/v1</b></td></tr><tr><td><i>«json: VectorLabelsSidecarSchema»</i></td></tr><tr><td align="left">$schema [1] : &quot;folio-vector-labels/v1&quot;</td></tr><tr><td align="left">doc_id [1] : string</td></tr><tr><td align="left">pages [1] : object[] | null</td></tr><tr><td align="left">undetermined_reason [0..1] : string</td></tr></table>>];
@@ -786,6 +788,7 @@ digraph "cat_harness" {
   "cat_harness_health_Check" -> "cat_harness_health_Measurement" [dir=both, arrowtail=diamond, arrowhead=none, label="measurements", headlabel="0..*", class="fa_uml_composition"];
   "cat_harness_health_Check" -> "cat_harness_health_Finding" [dir=both, arrowtail=diamond, arrowhead=none, label="findings", headlabel="0..*", class="fa_uml_composition"];
   "cat_harness_health_HealthReport" -> "cat_harness_health_Check" [dir=both, arrowtail=diamond, arrowhead=none, label="checks", headlabel="1..*", class="fa_uml_composition"];
+  "cat_harness_library_concern_groups_v1_concern_groups_v1" -> "cat_harness_library_concern_groups_v1_Directory" [dir=both, arrowtail=diamond, arrowhead=none, label="directories", headlabel="0..*", class="fa_uml_composition"];
   "cat_harness_library_folio_block_summaries_v1_Summary" -> "cat_harness_library_folio_block_summaries_v1_Superseded" [dir=both, arrowtail=diamond, arrowhead=none, label="superseded", headlabel="0..*", class="fa_uml_composition"];
   "cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1" -> "cat_harness_library_folio_block_summaries_v1_Summary" [dir=both, arrowtail=diamond, arrowhead=none, label="summaries", headlabel="0..*", class="fa_uml_composition"];
   "cat_harness_library_folio_keywords_v1_folio_keywords_v1" -> "cat_harness_library_folio_keywords_v1_Document" [dir=both, arrowtail=diamond, arrowhead=none, label="document", headlabel="0..*", class="fa_uml_composition"];
@@ -1053,6 +1056,8 @@ digraph "cat_harness" {
   "cat_harness_health_HealthReport" -> "grid_pkg_cat_harness_health_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_uploads_top" -> "n_cat_harness_uploads_uploads" [style=invis, class="kg-graph-anchor"];
   "n_cat_harness_uploads_uploads" -> "grid_pkg_cat_harness_uploads_bottom" [style=invis, class="kg-graph-anchor"];
+  "cat_harness_library_concern_groups_v1_Directory" -> "cat_harness_library_folio_vector_labels_v1_folio_vector_labels_v1" [style=invis, class="kg-graph-anchor"];
+  "cat_harness_library_concern_groups_v1_concern_groups_v1" -> "cat_harness_library_folio_vector_figures_v1_folio_vector_figures_v1" [style=invis, class="kg-graph-anchor"];
   "cat_harness_library_folio_document_images_v1_folio_document_images_v1" -> "cat_harness_library_folio_figure_descriptions_v1_folio_figure_descriptions_v1" [style=invis, class="kg-graph-anchor"];
   "cat_harness_library_folio_image_verdicts_v1" -> "cat_harness_library_folio_block_summaries_v1_Superseded" [style=invis, class="kg-graph-anchor"];
   "cat_harness_library_folio_vector_labels_v1_folio_vector_labels_v1" -> "cat_harness_library_folio_block_summaries_v1_Summary" [style=invis, class="kg-graph-anchor"];
@@ -1062,10 +1067,10 @@ digraph "cat_harness" {
   "cat_harness_library_folio_block_summaries_v1_Summary" -> "cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1" [style=invis, class="kg-graph-anchor"];
   "cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1" -> "cat_harness_library_folio_referenced_source_v1_Outline" [style=invis, class="kg-graph-anchor"];
   "cat_harness_library_folio_keywords_v1_Document" -> "cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_library_top" -> "cat_harness_library_concern_groups_v1_Directory" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_library_top" -> "cat_harness_library_concern_groups_v1_concern_groups_v1" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_library_top" -> "cat_harness_library_folio_document_images_v1_folio_document_images_v1" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_library_top" -> "cat_harness_library_folio_image_verdicts_v1" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_library_top" -> "cat_harness_library_folio_vector_labels_v1_folio_vector_labels_v1" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_library_top" -> "cat_harness_library_folio_vector_figures_v1_folio_vector_figures_v1" [style=invis, class="kg-graph-anchor"];
   "cat_harness_library_folio_keywords_v1_folio_keywords_v1" -> "grid_pkg_cat_harness_library_bottom" [style=invis, class="kg-graph-anchor"];
   "cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1" -> "grid_pkg_cat_harness_library_bottom" [style=invis, class="kg-graph-anchor"];
   "cat_harness_library_folio_referenced_source_v1_Outline" -> "grid_pkg_cat_harness_library_bottom" [style=invis, class="kg-graph-anchor"];

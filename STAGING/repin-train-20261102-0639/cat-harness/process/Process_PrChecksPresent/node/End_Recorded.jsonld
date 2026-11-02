@@ -4,15 +4,15 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "repin-train/20261102-0639",
-    "sha": "0071885095359aa80ce483f4045661ad79e22656",
-    "pr": "repin-train/20261102-0639",
-    "run": "41401374238"
+    "sha": "ef551559636c9e007fd41a816bb3b0cfdba7e59b",
+    "pr": "2907/merge",
+    "run": "41405658162"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Recorded",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Recorded — job stays GREEN",
+      "name": "Recorded: job stays green",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
@@ -22,7 +22,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_9"
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_5"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",

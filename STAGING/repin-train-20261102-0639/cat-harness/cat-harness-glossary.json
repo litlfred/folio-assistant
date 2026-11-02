@@ -1573,6 +1573,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TrackedWatch/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline",
@@ -1813,6 +1814,15 @@
       "label": "Scheduled log sweep",
       "scopeNote": "The only lane in this diagram, and everything it does is either checking or recording — never removing, which is deletion-requires-confirmation applied to the shape most tempted to break it. It is also where the inversion lives: a real finding leaves the job GREEN and speaks through one tracking issue edited in place, while \"could not tell\" is the only outcome that turns the job RED and leaves that issue deliberately untouched.",
       "source": "cat-harness/processes/sdlc/repository-health-watch.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TrackedWatch/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "label": "Scheduled log sweep",
+      "scopeNote": "Every path through it writes something: the tracking label, and the issue itself (opened, edited or closed). Keeping all of it in one lane is what makes 'one tracking issue, edited in place' enforceable.",
+      "source": "cat-harness/processes/sdlc/tracked-watch.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",

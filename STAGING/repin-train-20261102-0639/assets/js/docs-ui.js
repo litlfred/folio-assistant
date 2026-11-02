@@ -12902,6 +12902,17 @@
         applyNavPref(null);
         label();
       });
+      /* A PIN LIFTS WHEN THE MOUSE LEAVES -- owner, 2026-11-02 (Q-FMR-11 A).
+       * Since an open bar's avatar goes home, nothing on the bar closes a
+       * pin, so a bar pinned open stayed open until the reader left the page.
+       * Now the mouse leaving the bar unpins it, and the bar goes back to the
+       * hover peek. Only a MOUSE: a finger's pointerleave fires as it lifts,
+       * which would undo the tap that pinned the bar. Nothing is stored. */
+      bar.addEventListener("pointerleave", function (e) {
+        if (e.pointerType !== "mouse" || !box.checked) return;
+        box.checked = false;
+        label();
+      });
     }
   }
 

@@ -370,10 +370,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-11-02T07:02:17.780Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0071885095359aa80ce483f4045661ad79e22656",
-  "sourceCommitSha": "0071885095359aa80ce483f4045661ad79e22656",
-  "sourceCommitAt": "2026-11-02T06:39:47Z",
+  "generatedAt": "2026-11-02T07:48:23.912Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ef551559636c9e007fd41a816bb3b0cfdba7e59b",
+  "sourceCommitSha": "ef551559636c9e007fd41a816bb3b0cfdba7e59b",
+  "sourceCommitAt": "2026-11-02T07:20:20Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -383,12 +383,12 @@
     "SkillPackage": 18,
     "Decision": 11,
     "Task": 12,
-    "Process": 79,
-    "SequenceFlow": 1079,
-    "Lane": 172,
-    "ProcessNode": 1040,
+    "Process": 80,
+    "SequenceFlow": 1071,
+    "Lane": 173,
+    "ProcessNode": 1033,
     "Tool": 169,
-    "Schema": 183,
+    "Schema": 184,
     "ExternalSchema": 28,
     "GraphTypology": 53,
     "Role": 44,
@@ -16445,6 +16445,306 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/End_Recorded"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Report a verdict on one tracking issue",
+      "summary": "Report a check's verdict on one tracking issue: close the issue when the check found nothing, open or edit it when the check found something, and leave it untouched when the check could not tell.",
+      "description": "Report a check's verdict on one tracking issue: close the issue when the check found nothing, open or edit it when the check found something, and leave it untouched when the check could not tell. Every watch that keeps one tracking issue runs this, with its own label: ci-health-watch (`ci-health`), repository-health-watch (`repo-health`) and pr-checks-present (`pr-no-checks`). Before 2026-11-01 each of them drew these seven steps itself (shared block G2 of the BPMN guidance review, owner Q-BR-2 C).\n\nTHE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. `unknown` runs `exit 1`; a finding does NOT. A repository in trouble leaves the watch GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.\n\nONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue: a feed nobody reads is the failure mode a watchdog invites. On `unknown` the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.\n\n`Ensure the tracking label exists` sits AFTER `Could we tell?` and before the split, because both issue paths need the label: the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on `unknown`, where neither path runs and a label hiccup must not be what fails the job.\n\nThe verdict is the calling watch's: its check writes a report file before any exit path, exit 0 is clean, 1 is a finding, 2 is could-not-check, and an exit 1 with no report file is a crash, read as could-not-check. Each watch's own gateway documentation in its workflow says which step writes it.",
+      "enforcement": "strict",
+      "sourcePath": "processes/sdlc/tracked-watch.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/tracked-watch.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/assets/img/workflows/tracked-watch.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Start_Verdict"
+      ],
+      "nodeCount": 9,
+      "flowCount": 8,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/externalSchema/w3c-xsd11-structures"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Start_Verdict",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Determined",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Determined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Unknown",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Determined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Label",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Label",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Finding",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Finding",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Close",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Close",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Clean",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Finding",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Track",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Track",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Found",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "Scheduled log sweep",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Start_Verdict",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Check run, verdict written",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/Start_Verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Determined",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Could we tell?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_2",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/GW_Determined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Unknown",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Unknown: job red, issue untouched",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_2"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/End_Unknown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Label",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Ensure the tracking label exists",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_EnsureTrackingLabel",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/Task_Label"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Finding",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Anything found?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_5",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/GW_Finding"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Close",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Close the tracking issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_CloseTrackingIssue",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/Task_Close"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Clean",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Clean: issue closed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/End_Clean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Track",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Open or edit the one tracking issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_TrackIssue",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/Task_Track"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Found",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Found: recorded, job stays green",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_8"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/End_Found"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RequirementsFiling",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Requirements filing: promote, organise, trace, supersede, or retire",
@@ -18204,7 +18504,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Is CI actually working on the default branch?",
       "summary": "Is CI actually working on the default branch: record each workflow's state on one tracking issue, and fail the job only when the state could not be determined.",
-      "description": "Is CI actually working on the default branch: record each workflow's state on one tracking issue, and fail the job only when the state could not be determined. A WORKFLOW'S OUTCOME IS INVISIBLE FROM A CHECKOUT. Bean `xom7`: one workflow here fired on every push to `main` and FAILED ALL 30 TIMES OVER TWO MONTHS with nothing in the repository saying so. This is the backstop.\n\nWEEKLY, NOT DAILY, and the cadence is an argument rather than a default: the defect is \"nobody noticed for two months\", not \"nobody noticed for a day\", and the session-start sweep already covers every day somebody is working. A weekly run bounds the blind spot to seven days without turning the tracking issue into a feed.\n\n`Could we tell?` IS NOT SIMPLY THE EXIT CODE, and that is the subtlety worth drawing. `bun` exits 1 on an uncaught exception as well as on a live failure, so exit 1 alone does not separate \"found something red\" from \"crashed\". The REPORT FILE separates them: `--out` writes it before any exit path, so a genuine red always has one and a crash before that point does not. Exit 1 with no report is reclassified as `unknown`. Without that, a crash would open a tracking issue quoting a stale file.\n\nTHE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the `if:` guards: `unknown` runs `exit 1`; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.\n\nONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue — a feed nobody reads is the failure mode a watchdog invites. On `unknown` the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.\n\n`Ensure the tracking label exists` sits AFTER `Could we tell?` and before the split, because both issue paths need the label — the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on `unknown`, where neither path runs and a label hiccup must not be what fails the job.",
+      "description": "Is CI actually working on the default branch: record each workflow's state on one tracking issue, and fail the job only when the state could not be determined. A WORKFLOW'S OUTCOME IS INVISIBLE FROM A CHECKOUT. Bean `xom7`: one workflow here fired on every push to `main` and FAILED ALL 30 TIMES OVER TWO MONTHS with nothing in the repository saying so. This is the backstop.\n\nWEEKLY, NOT DAILY, and the cadence is an argument rather than a default: the defect is \"nobody noticed for two months\", not \"nobody noticed for a day\", and the session-start sweep already covers every day somebody is working. A weekly run bounds the blind spot to seven days without turning the tracking issue into a feed.\n\n`Could we tell?` IS NOT SIMPLY THE EXIT CODE, and that is the subtlety worth drawing. `bun` exits 1 on an uncaught exception as well as on a live failure, so exit 1 alone does not separate \"found something red\" from \"crashed\". The REPORT FILE separates them: `--out` writes it before any exit path, so a genuine red always has one and a crash before that point does not. Exit 1 with no report is reclassified as `unknown`. Without that, a crash would open a tracking issue quoting a stale file.\n\nTHE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the `if:` guards: `unknown` runs `exit 1`; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.\n\nONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue — a feed nobody reads is the failure mode a watchdog invites. On `unknown` the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.\n\n`Ensure the tracking label exists` sits AFTER `Could we tell?` and before the split, because both issue paths need the label — the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on `unknown`, where neither path runs and a label hiccup must not be what fails the job.\n\nThe verdict is reported through the shared `tracked-watch` process (Process_TrackedWatch), with the label `ci-health`. Its three ends say what happened: unknown (job red, issue untouched), clean (issue closed), or found (issue opened or edited, job green).",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/ci-health-watch.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/ci-health-watch.bpmn",
@@ -18212,8 +18512,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Start_Sweep"
       ],
-      "nodeCount": 10,
-      "flowCount": 9,
+      "nodeCount": 4,
+      "flowCount": 3,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/externalSchema/omg-dd-1.0",
@@ -18236,76 +18536,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Check",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Determined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Call_Watch",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_1"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_2",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Determined",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Unknown",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Call_Watch",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Reported",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_2"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Determined",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Label",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_3"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Label",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Finding",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "clean",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Finding",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Close",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Close",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Clean",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "not clean",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Finding",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Track",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Track",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Found",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_8"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
@@ -18359,31 +18601,31 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Check"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Determined",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Call_Watch",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Could we tell?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
+      "name": "Report the verdict on the tracking issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_1"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_2",
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_3"
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_2"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/GW_Determined"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Call_Watch"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Unknown",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Reported",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Unknown — job RED, issue UNTOUCHED",
+      "name": "Verdict reported",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
@@ -18397,139 +18639,7 @@
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/End_Unknown"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Label",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Ensure the tracking label exists",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_EnsureTrackingLabel",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_3"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_4"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Label"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Finding",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Anything red on main?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_4"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_5",
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_7"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/GW_Finding"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Close",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Close the tracking issue",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_CloseTrackingIssue",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_5"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_6"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Close"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Clean",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "main is green",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_6"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/End_Clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Track",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Open or EDIT the one tracking issue",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_TrackIssue",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_7"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_8"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Track"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Found",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Recorded — job stays GREEN",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_8"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/End_Found"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/End_Reported"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_SmeTestDataReview",
@@ -19528,7 +19638,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Is the repository itself healthy?",
       "summary": "Is the repository itself healthy — what the review previews cost the publish branch, what a clone costs, whether the work plan holds duplicates or unhonoured claims — reported in one tracking issue and never acted on.",
-      "description": "Is the repository itself healthy — what the review previews cost the publish branch, what a clone costs, whether the work plan holds duplicates or unhonoured claims — reported in one tracking issue and never acted on. THE SAME SHAPE AS `ci-health`, ONE LEVEL OUT. That one asks whether the WORKFLOWS pass; this asks about the REPOSITORY — how much of `gh-pages` the review previews occupy, how big a clone costs, whether the work plan has duplicates or unhonoured claims.\n\nIT REPORTS AND NEVER ACTS. Four of the five checks are about artefacts accumulating, and every finding's action names something a PERSON does. That is `deletion-requires-confirmation` applied to the tool that most wants to break it: the skill's own worked example is bean `plj1`, a workflow whose shape deleted every open PR's preview without anybody deciding it. There is no removal task on this diagram, and its absence is the rule being followed rather than an omission.\n\nTHE REPORT IS KEPT WHETHER OR NOT THE CHECKS SUCCEED (`if: always()`), which is why `Run the health checks` says \"keeping the report either way\". A sweep whose output survives only on success cannot be used to investigate the run that failed.\n\nThe daily cron is at 06:41, OFF THE HOUR deliberately: GitHub's scheduler queues heavily at :00, and a delayed run is a run whose report is stamped later than the state it describes.\n\nTHE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the `if:` guards: `unknown` runs `exit 1`; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.\n\nONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue — a feed nobody reads is the failure mode a watchdog invites. On `unknown` the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.\n\n`Ensure the tracking label exists` sits AFTER `Could we tell?` and before the split, because both issue paths need the label — the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on `unknown`, where neither path runs and a label hiccup must not be what fails the job.",
+      "description": "Is the repository itself healthy — what the review previews cost the publish branch, what a clone costs, whether the work plan holds duplicates or unhonoured claims — reported in one tracking issue and never acted on. THE SAME SHAPE AS `ci-health`, ONE LEVEL OUT. That one asks whether the WORKFLOWS pass; this asks about the REPOSITORY — how much of `gh-pages` the review previews occupy, how big a clone costs, whether the work plan has duplicates or unhonoured claims.\n\nIT REPORTS AND NEVER ACTS. Four of the five checks are about artefacts accumulating, and every finding's action names something a PERSON does. That is `deletion-requires-confirmation` applied to the tool that most wants to break it: the skill's own worked example is bean `plj1`, a workflow whose shape deleted every open PR's preview without anybody deciding it. There is no removal task on this diagram, and its absence is the rule being followed rather than an omission.\n\nTHE REPORT IS KEPT WHETHER OR NOT THE CHECKS SUCCEED (`if: always()`), which is why `Run the health checks` says \"keeping the report either way\". A sweep whose output survives only on success cannot be used to investigate the run that failed.\n\nThe daily cron is at 06:41, OFF THE HOUR deliberately: GitHub's scheduler queues heavily at :00, and a delayed run is a run whose report is stamped later than the state it describes.\n\nTHE THIRD STATE IS THE WHOLE POINT, AND IT IS THE ONLY ONE THAT FAILS THE JOB. Verified 2026-09-20 by reading the `if:` guards: `unknown` runs `exit 1`; a finding does NOT. A repository in trouble leaves this workflow GREEN and speaks through the tracking issue, while a sweep that could not look turns the job red. That inversion is deliberate and is invisible from the run list, which is the argument for drawing it.\n\nONE TRACKING ISSUE, EDITED IN PLACE, never a comment and never a second issue — a feed nobody reads is the failure mode a watchdog invites. On `unknown` the issue is left UNTOUCHED: not closed, not opened, not edited. Closing it would assert the thing the sweep just failed to establish.\n\n`Ensure the tracking label exists` sits AFTER `Could we tell?` and before the split, because both issue paths need the label — the clean path filters on it too, and on a repository where nothing has ever gone wrong it would not otherwise exist. It is skipped on `unknown`, where neither path runs and a label hiccup must not be what fails the job.\n\nThe verdict is reported through the shared `tracked-watch` process (Process_TrackedWatch), with the label `repo-health`. Its three ends say what happened: unknown (job red, issue untouched), clean (issue closed), or found (issue opened or edited, job green).",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/repository-health-watch.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/repository-health-watch.bpmn",
@@ -19536,8 +19646,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Start_Sweep"
       ],
-      "nodeCount": 10,
-      "flowCount": 9,
+      "nodeCount": 4,
+      "flowCount": 3,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/externalSchema/omg-dd-1.0",
@@ -19560,76 +19670,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Check",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Determined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Call_Watch",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_1"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_2",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Determined",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Unknown",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Call_Watch",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Reported",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_2"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Determined",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Label",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_3"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Label",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Finding",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "clean",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Finding",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Close",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Close",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Clean",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "not clean",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Finding",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Track",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Track",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Found",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_8"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
@@ -19683,31 +19735,31 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Check"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Determined",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Call_Watch",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Could we tell?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
+      "name": "Report the verdict on the tracking issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_1"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_2",
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_3"
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_2"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/GW_Determined"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Call_Watch"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Unknown",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Reported",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Unknown — job RED, issue UNTOUCHED",
+      "name": "Verdict reported",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
@@ -19721,139 +19773,7 @@
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/End_Unknown"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Label",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Ensure the tracking label exists",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_EnsureTrackingLabel",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_3"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_4"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Label"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Finding",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Any findings?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_4"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_5",
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_7"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/GW_Finding"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Close",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Close the tracking issue",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_CloseTrackingIssue",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_5"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_6"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Close"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Clean",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Repository clean",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_6"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/End_Clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Track",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Open or EDIT the one tracking issue",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_TrackIssue",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_7"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_8"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Track"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Found",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Recorded — job stays GREEN",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_8"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/End_Found"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/End_Reported"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PublishVerification",
@@ -21036,7 +20956,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
       "name": "Which open pull requests have no CI run on their head?",
       "summary": "Find the open pull requests whose head has no CI run, past an age gate, and say so on one tracking issue and once per head on the pull request.",
-      "description": "Find the open pull requests whose head has no CI run, past an age gate, and say so on one tracking issue and once per head on the pull request. A PULL REQUEST WITH ZERO CHECKS IS INVISIBLE PRECISELY BECAUSE NOBODY IS LOOKING. Bean `3pqn`. `check:head-has-run` answers this for one commit when somebody remembers to ask; this is the half that asks when nobody does, which is the only placement that addresses the defect rather than the symptom.\n\nMEASURED 2026-09-20 over the six open pull requests here: TWO had no run of any kind on their head, both updated minutes earlier. A third of the open set, with nothing to merge on.\n\nTHE 15-MINUTE AGE GATE IS THE DIFFERENCE BETWEEN USEFUL AND IGNORED. A head pushed thirty seconds ago legitimately has no run yet, and a sweep that reports those is one nobody reads — this bean's own failure, reproduced by its fix. A younger head is NOT JUDGED rather than called clean, which is the third state again.\n\nONLY `unknown` FAILS THE JOB. A finding records itself and the workflow stays GREEN, the same inversion as `ci-health`: the repository speaks through the tracking issue, while a sweep that could not look turns red. And a sweep blind on one pull request has not cleared the others, so ONE unreadable answer makes the whole run unknown — never a partial clean.\n\nTWO CHANNELS, ON THE OWNER'S INSTRUCTION, AND THEY BEHAVE DIFFERENTLY. The tracking issue is EDITED IN PLACE, never appended to. The per-PR comment is posted ONCE PER (PULL REQUEST, HEAD SHA), keyed by a marker in the body: hourly comments without that key would put twenty-four notifications a day on one unchanged pull request, which is how a warning gets muted.",
+      "description": "Find the open pull requests whose head has no CI run, past an age gate, and say so on one tracking issue and once per head on the pull request. A PULL REQUEST WITH ZERO CHECKS IS INVISIBLE PRECISELY BECAUSE NOBODY IS LOOKING. Bean `3pqn`. `check:head-has-run` answers this for one commit when somebody remembers to ask; this is the half that asks when nobody does, which is the only placement that addresses the defect rather than the symptom.\n\nMEASURED 2026-09-20 over the six open pull requests here: TWO had no run of any kind on their head, both updated minutes earlier. A third of the open set, with nothing to merge on.\n\nTHE 15-MINUTE AGE GATE IS THE DIFFERENCE BETWEEN USEFUL AND IGNORED. A head pushed thirty seconds ago legitimately has no run yet, and a sweep that reports those is one nobody reads — this bean's own failure, reproduced by its fix. A younger head is NOT JUDGED rather than called clean, which is the third state again.\n\nONLY `unknown` FAILS THE JOB. A finding records itself and the workflow stays GREEN, the same inversion as `ci-health`: the repository speaks through the tracking issue, while a sweep that could not look turns red. And a sweep blind on one pull request has not cleared the others, so ONE unreadable answer makes the whole run unknown — never a partial clean.\n\nTWO CHANNELS, ON THE OWNER'S INSTRUCTION, AND THEY BEHAVE DIFFERENTLY. The tracking issue is EDITED IN PLACE, never appended to. The per-PR comment is posted ONCE PER (PULL REQUEST, HEAD SHA), keyed by a marker in the body: hourly comments without that key would put twenty-four notifications a day on one unchanged pull request, which is how a warning gets muted.\n\nThe verdict is reported through the shared `tracked-watch` process (Process_TrackedWatch), with the label `pr-no-checks`. Its three ends say what happened: unknown (job red, issue untouched), clean (issue closed), or found (issue opened or edited, job green).",
       "enforcement": "strict",
       "sourcePath": "processes/sdlc/pr-checks-present.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/pr-checks-present.bpmn",
@@ -21044,8 +20964,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Start_Sweep"
       ],
-      "nodeCount": 11,
-      "flowCount": 10,
+      "nodeCount": 7,
+      "flowCount": 6,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/externalSchema/omg-dd-1.0",
@@ -21068,17 +20988,16 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Sweep",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Determined",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Call_Watch",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_1"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_2",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Determined",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Unknown",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Call_Watch",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Found",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_2"
     },
@@ -21087,66 +21006,29 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Determined",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Label",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Found",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Comment",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_3"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_4",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Label",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Finding",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Found",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Done",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_4"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_5",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "none",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Finding",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Close",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Close",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Clean",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "one or more",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Finding",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Track",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Track",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Comment",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_8"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Comment",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Recorded",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_9"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_5"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
@@ -21179,7 +21061,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Sweep",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Ask, per open PR, whether its HEAD has a run — skipping heads younger than 15 min",
+      "name": "Ask whether each open PR head has a run",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
@@ -21200,72 +21082,29 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Sweep"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Determined",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Call_Watch",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Could we tell?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
+      "name": "Report the verdict on the tracking issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_1"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_2",
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_3"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/GW_Determined"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Unknown",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Unknown — job RED, issue UNTOUCHED",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_2"
       ],
-      "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/End_Unknown"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Call_Watch"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Label",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Ensure the tracking label exists",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_EnsureTrackingLabel",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_3"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_4"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Label"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Finding",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Found",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
       "name": "Any head with no run?",
       "nodeKind": "exclusive",
@@ -21277,43 +21116,19 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_3",
         "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_4"
       ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_5",
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_7"
-      ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/GW_Finding"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/GW_Found"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Close",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Done",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Close the tracking issue",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_CloseTrackingIssue",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_5"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_6"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Close"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Clean",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Every head has a run",
+      "name": "Every head has a run, or could not tell",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
@@ -21323,16 +21138,16 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_6"
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_4"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/End_Clean"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/End_Done"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Track",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Comment",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Open or EDIT the one tracking issue",
+      "name": "Comment once per PR and head",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
@@ -21343,35 +21158,11 @@
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_TrackIssue",
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_7"
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_3"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_8"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Track"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Comment",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Comment ONCE per (PR, head sha)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/issue-working"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_8"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_9"
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_5"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Comment"
@@ -21379,7 +21170,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Recorded",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Recorded — job stays GREEN",
+      "name": "Recorded: job stays green",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent",
@@ -21389,7 +21180,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_9"
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_5"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
@@ -53588,6 +53379,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/glossary-ledger"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/schema/ingest-candidates",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "ingest-candidates",
+      "title": "ingest-candidates",
+      "summary": "`library/<slug>/candidates.json` — Stage B's proposals for an entry,",
+      "module": "schemas/library/ingest-candidates.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ingest-candidates"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/schema/intake",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
       "name": "intake",
@@ -56705,7 +56506,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/library"
       ],
-      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to the IRIS replica, milnorlink to the science layer) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to the content core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good. THE AGENT-SKILL CORPUS JOINED IT on 2026-10-01 (owner ruling: agent-skills dissolves into cat-harness's concern groups; bean `j7ql`): the 14 documents listed in `heldEntries` — vendor skill documentation (ASSERTION: a publisher describing its own product) and three arXiv papers (EVIDENCE: a measurement somebody else can repeat); each entry's `structure.json` carries its publisher, which is how a reader tells the two kinds apart. They sit flat here until placement PR8 (bean `f8wp`) regroups `library/` into `library/<group>/<slug>/`; the audit (#1778) assigns them conduct (10), sdlc (`hmans-2026-beans-readme`), tools (`mcp-2026-specification-2026-07-28`) and content (the two RFCs). Their summaries stay HELD, per entry, on the owner's 2026-09-24 ruling (bean `x80s`: 'Library summaries for agent-skills entries — No, keep held back'), which was stated about these documents and not about this directory.",
+      "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to the IRIS replica, milnorlink to the science layer) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to the content core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good. THE AGENT-SKILL CORPUS JOINED IT on 2026-10-01 (owner ruling: agent-skills dissolves into cat-harness's concern groups; bean `j7ql`): the 14 documents listed in `heldEntries` — vendor skill documentation (ASSERTION: a publisher describing its own product) and three arXiv papers (EVIDENCE: a measurement somebody else can repeat); each entry's `structure.json` carries its publisher, which is how a reader tells the two kinds apart. Since bean `6fez` (2026-11-01) every entry is filed by concern group at `library/<group>/<slug>/`, the groups named in `library/library.json`; the audit (#1778) put them in conduct (10), sdlc (`hmans-2026-beans-readme`), tools (`mcp-2026-specification-2026-07-28`) and content (the two RFCs). A new upload still lands unfiled at `library/<slug>/`, and ids are minted from the slug, so filing an entry changes none of them. Their summaries stay HELD, per entry, on the owner's 2026-09-24 ruling (bean `x80s`: 'Library summaries for agent-skills entries — No, keep held back'), which was stated about these documents and not about this directory.",
       "readmePath": "library/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/library",
@@ -73815,6 +73616,120 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_MergeBase/node/End_Recorded"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/flow/Flow_TW_1",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_1",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/flow/Flow_TW_2",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_2",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/flow/Flow_TW_3",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_3",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/flow/Flow_TW_4",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_4",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/flow/Flow_TW_5",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_5",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/flow/Flow_TW_6",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_6",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/flow/Flow_TW_7",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_7",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/flow/Flow_TW_8",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_8",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/lane/Lane_Ci",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/node/Start_Verdict",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Start_Verdict",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Start_Verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/node/GW_Determined",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Determined",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Determined"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/node/End_Unknown",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Unknown",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Unknown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/node/Task_Label",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Label",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Label"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/node/GW_Finding",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Finding",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/GW_Finding"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/node/Task_Close",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Close",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Close"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/node/End_Clean",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Clean",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Clean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/node/Task_Track",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Track",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Track"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_TrackedWatch/node/End_Found",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Found",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/End_Found"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RequirementsFiling",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RequirementsFiling",
@@ -74523,42 +74438,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_2"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/flow/Flow_3",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_3",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_3"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/flow/Flow_4",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_4",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/flow/Flow_5",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_5",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/flow/Flow_6",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_6",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/flow/Flow_7",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_7",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/flow/Flow_8",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_8",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth#flow/Flow_8"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/lane/Lane_Ci",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
@@ -74577,52 +74456,16 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Check"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/node/GW_Determined",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/node/Call_Watch",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Determined",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Determined"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Call_Watch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Call_Watch"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/node/End_Unknown",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/node/End_Reported",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Unknown",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Unknown"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/node/Task_Label",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Label",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Label"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/node/GW_Finding",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Finding",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/GW_Finding"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/node/Task_Close",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Close",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Close"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/node/End_Clean",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Clean",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/node/Task_Track",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Track",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/Task_Track"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_CiHealth/node/End_Found",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Found",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Found"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Reported",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_CiHealth/node/End_Reported"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_SmeTestDataReview",
@@ -75039,42 +74882,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_2"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/flow/Flow_3",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_3",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_3"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/flow/Flow_4",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_4",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/flow/Flow_5",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_5",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/flow/Flow_6",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_6",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/flow/Flow_7",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_7",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/flow/Flow_8",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_8",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth#flow/Flow_8"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/lane/Lane_Ci",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
@@ -75093,52 +74900,16 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Check"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/node/GW_Determined",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/node/Call_Watch",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Determined",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Determined"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Call_Watch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Call_Watch"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/node/End_Unknown",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/node/End_Reported",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Unknown",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Unknown"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/node/Task_Label",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Label",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Label"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/node/GW_Finding",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Finding",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/GW_Finding"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/node/Task_Close",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Close",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Close"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/node/End_Clean",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Clean",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/node/Task_Track",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Track",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/Task_Track"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_RepoHealth/node/End_Found",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Found",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Found"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Reported",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_RepoHealth/node/End_Reported"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PublishVerification",
@@ -75639,30 +75410,6 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_5"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/flow/Flow_6",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_6",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/flow/Flow_7",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_7",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/flow/Flow_8",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_8",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_8"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/flow/Flow_9",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_9",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent#flow/Flow_9"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/lane/Lane_Ci",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
@@ -75681,46 +75428,22 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Sweep"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/GW_Determined",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/Call_Watch",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Determined",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Determined"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Call_Watch",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Call_Watch"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/End_Unknown",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/GW_Found",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Unknown",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Unknown"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Found",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Found"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/Task_Label",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/End_Done",
       "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Label",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Label"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/GW_Finding",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Finding",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/GW_Finding"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/Task_Close",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Close",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Close"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/End_Clean",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Clean",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/Task_Track",
-      "deprecated": true,
-      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Track",
-      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/Task_Track"
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Done",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_PrChecksPresent/node/End_Done"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#process/Process_PrChecksPresent/node/Task_Comment",
@@ -85659,6 +85382,12 @@
       "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/schema/glossary-ledger"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#schema/ingest-candidates",
+      "deprecated": true,
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/schema/ingest-candidates",
+      "sameAs": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/schema/ingest-candidates"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness.jsonld#schema/intake",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/schema/intake",
@@ -86915,8 +86644,8 @@
   ],
   "staging": {
     "branch": "repin-train/20261102-0639",
-    "sha": "0071885095359aa80ce483f4045661ad79e22656",
-    "pr": "repin-train/20261102-0639",
-    "run": "41401374238"
+    "sha": "ef551559636c9e007fd41a816bb3b0cfdba7e59b",
+    "pr": "2907/merge",
+    "run": "41405658162"
   }
 }

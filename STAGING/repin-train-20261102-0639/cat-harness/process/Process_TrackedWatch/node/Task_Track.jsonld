@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Track.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0639",
+    "sha": "ef551559636c9e007fd41a816bb3b0cfdba7e59b",
+    "pr": "2907/merge",
+    "run": "41405658162"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/node/Task_Track",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Open or edit the one tracking issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/skill/ci-health"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/globalTask/GT_TrackIssue",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/Task_Track"
+    }
+  ]
+}

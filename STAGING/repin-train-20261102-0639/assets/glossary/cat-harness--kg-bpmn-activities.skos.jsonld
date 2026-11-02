@@ -1094,6 +1094,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_cihealth.call_watch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report the verdict on the tracking issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Runs the shared tracking watch with the label `ci-health`. Asked of the same `verdict`, once it is known. `clean` is verdict == 'clean' (exit 0): the open `ci-health` issue, if there is one, is closed saying main is clean. `not clean` is verdict == 'red' (exit 1 with a report): the one open issue labelled `ci-health` is edited in place with the report as its body, or created if there is none. Neither branch fails the job — a red main speaks through the issue, not through this workflow's status. Clean here means main is clean."
+        }
+      ],
+      "skos:notation": "Call_Watch",
+      "dcterms:source": "cat-harness/processes/sdlc/ci-health-watch.bpmn#Call_Watch",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_cihealth.task_check",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1106,71 +1126,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check."
+          "@value": "Run check:ci-health --out, writing the report file before any exit path. Exit 0 clean, 1 live failures, 2 could not check. bun also exits 1 on an uncaught exception, so an exit 1 with no report file is a crash and is treated as could-not-check. Where its verdict comes from: Asked of the `verdict` output that the `check` step of .github/workflows/ci-health.yml writes, not of the raw exit code. `check:ci-health` exits 0 clean, 1 live failure(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': the last step runs `exit 1` and no issue step runs, so the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on the label step and so on both issue paths."
         }
       ],
       "skos:notation": "Task_Check",
       "dcterms:source": "cat-harness/processes/sdlc/ci-health-watch.bpmn#Task_Check",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_cihealth.task_close",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Close the tracking issue"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Clean: close the open issue carrying the tracking label (the `label` input), if any, saying why the verdict is clean. Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. Clean here means main is clean."
-        }
-      ],
-      "skos:notation": "Task_Close",
-      "dcterms:source": "cat-harness/processes/sdlc/ci-health-watch.bpmn#Task_Close",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_cihealth.task_label",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Ensure the tracking label exists"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Create the tracking label (the `label` input) with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
-        }
-      ],
-      "skos:notation": "Task_Label",
-      "dcterms:source": "cat-harness/processes/sdlc/ci-health-watch.bpmn#Task_Label",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_cihealth.task_track",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Open or EDIT the one tracking issue"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed."
-        }
-      ],
-      "skos:notation": "Task_Track",
-      "dcterms:source": "cat-harness/processes/sdlc/ci-health-watch.bpmn#Task_Track",
       "skos:note": "candidate"
     },
     {
@@ -7429,23 +7389,23 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_prcheckspresent.task_close",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_prcheckspresent.call_watch",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
       },
       "skos:prefLabel": [
         {
-          "@value": "Close the tracking issue"
+          "@value": "Report the verdict on the tracking issue"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Clean: close the open issue carrying the tracking label (the `label` input), if any, saying why the verdict is clean. Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. Clean here means every open pull request's head now has a CI run."
+          "@value": "Runs the shared tracking watch with the label `pr-no-checks`. Asked of the same `verdict`. `none` is verdict == 'clean': every open PR's head older than 15 minutes has a run, and the tracking issue is closed. `one or more` is verdict == 'findings': the one tracking issue is opened or edited in place, and the workflow also comments once on each affected pull request. Clean here means every open pull request's head now has a CI run. The body is the sweep's report."
         }
       ],
-      "skos:notation": "Task_Close",
-      "dcterms:source": "cat-harness/processes/sdlc/pr-checks-present.bpmn#Task_Close",
+      "skos:notation": "Call_Watch",
+      "dcterms:source": "cat-harness/processes/sdlc/pr-checks-present.bpmn#Call_Watch",
       "skos:note": "candidate"
     },
     {
@@ -7456,7 +7416,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Comment ONCE per (PR, head sha)"
+          "@value": "Comment once per PR and head"
         }
       ],
       "skos:definition": [
@@ -7469,26 +7429,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_prcheckspresent.task_label",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Ensure the tracking label exists"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Create the tracking label (the `label` input) with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
-        }
-      ],
-      "skos:notation": "Task_Label",
-      "dcterms:source": "cat-harness/processes/sdlc/pr-checks-present.bpmn#Task_Label",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_prcheckspresent.task_sweep",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -7496,36 +7436,16 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Ask, per open PR, whether its HEAD has a run — skipping heads younger than 15 min"
+          "@value": "Ask whether each open PR head has a run"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Run check:prs-have-runs --min-age-minutes 15, writing the report file first. A head younger than 15 minutes legitimately has no run yet and is skipped. Exit 0 clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is treated as could-not-determine."
+          "@value": "Run check:prs-have-runs --min-age-minutes 15, writing the report file first. A head younger than 15 minutes legitimately has no run yet and is skipped. Exit 0 clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is treated as could-not-determine. Where its verdict comes from: Asked of the `verdict` output of the `Sweep` step in .github/workflows/pr-checks-present.yml, which runs `check:prs-have-runs --min-age-minutes 15`. Exit 0 is clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is reclassified as could-not-determine, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `pr-no-checks` label."
         }
       ],
       "skos:notation": "Task_Sweep",
       "dcterms:source": "cat-harness/processes/sdlc/pr-checks-present.bpmn#Task_Sweep",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_prcheckspresent.task_track",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Open or EDIT the one tracking issue"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body is the sweep's report."
-        }
-      ],
-      "skos:notation": "Task_Track",
-      "dcterms:source": "cat-harness/processes/sdlc/pr-checks-present.bpmn#Task_Track",
       "skos:note": "candidate"
     },
     {
@@ -8344,6 +8264,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_repohealth.call_watch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report the verdict on the tracking issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Runs the shared tracking watch with the label `repo-health`. Asked of the same `verdict`. `clean` is verdict == 'clean': the `repo-health` tracking issue is closed. `not clean` is verdict == 'findings': the one tracking issue is opened or edited in place with the report. A finding does not fail the job; only `unknown` does. Clean here means every check ran and none had anything to report. The body states that nothing in it has been acted on."
+        }
+      ],
+      "skos:notation": "Call_Watch",
+      "dcterms:source": "cat-harness/processes/sdlc/repository-health-watch.bpmn#Call_Watch",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_repohealth.task_check",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -8356,71 +8296,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "Run bun run cat health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does."
+          "@value": "Run bun run cat health --out and upload the JSON report whatever the verdict — on unknown it is the only evidence of why the sweep went blind. Exit 0 clean, 1 gating findings, 2 could not check; exit 1 with no report is a crash. The checks report and never act: every finding names something a person does. Where its verdict comes from: Asked of the `verdict` output of 'Run the health checks' in .github/workflows/health-check.yml, which runs `bun run cat health --out`. Exit 0 is clean, 1 gating finding(s), 2 could not check; an exit 1 with no report file is a crash and is reclassified as could-not-check, as is any other code. `no` is verdict == 'unknown': 'Refuse to report success on an unchecked repository' runs `exit 1` and the tracking issue is left untouched. `yes` is verdict != 'unknown', the guard on ensuring the `repo-health` label. The report is uploaded as an artifact on every verdict (`if: always()`), including this one."
         }
       ],
       "skos:notation": "Task_Check",
       "dcterms:source": "cat-harness/processes/sdlc/repository-health-watch.bpmn#Task_Check",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_repohealth.task_close",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Close the tracking issue"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Clean: close the open issue carrying the tracking label (the `label` input), if any, saying why the verdict is clean. Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean. Clean here means every check ran and none had anything to report."
-        }
-      ],
-      "skos:notation": "Task_Close",
-      "dcterms:source": "cat-harness/processes/sdlc/repository-health-watch.bpmn#Task_Close",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_repohealth.task_label",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Ensure the tracking label exists"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Create the tracking label (the `label` input) with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
-        }
-      ],
-      "skos:notation": "Task_Label",
-      "dcterms:source": "cat-harness/processes/sdlc/repository-health-watch.bpmn#Task_Label",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_repohealth.task_track",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Open or EDIT the one tracking issue"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed. The body states that nothing in it has been acted on."
-        }
-      ],
-      "skos:notation": "Task_Track",
-      "dcterms:source": "cat-harness/processes/sdlc/repository-health-watch.bpmn#Task_Track",
       "skos:note": "candidate"
     },
     {
@@ -10936,6 +10816,66 @@
       ],
       "skos:notation": "R_Judge",
       "dcterms:source": "cat-harness/processes/ui/theme-ui-review.bpmn#R_Judge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_trackedwatch.task_close",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the tracking issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Clean: close the open issue carrying the tracking label (the `label` input), if any, saying why the verdict is clean. Runs only on a clean verdict — on unknown the issue is left untouched and the job fails instead, because could-not-check is never rendered as clean."
+        }
+      ],
+      "skos:notation": "Task_Close",
+      "dcterms:source": "cat-harness/processes/sdlc/tracked-watch.bpmn#Task_Close",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_trackedwatch.task_label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Ensure the tracking label exists"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Create the tracking label (the `label` input) with --force so it exists before either issue path runs — the close path filters on it too, and on a repository that has never had a finding it would not exist yet. Skipped on an unknown verdict."
+        }
+      ],
+      "skos:notation": "Task_Label",
+      "dcterms:source": "cat-harness/processes/sdlc/tracked-watch.bpmn#Task_Label",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities/process_trackedwatch.task_track",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open or edit the one tracking issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Findings: EDIT the one open issue carrying the tracking label (the `label` input) if there is one, otherwise create it, with the report as the body. One issue edited in place, never a new issue or a comment per run, so the tracking issue never becomes a feed."
+        }
+      ],
+      "skos:notation": "Task_Track",
+      "dcterms:source": "cat-harness/processes/sdlc/tracked-watch.bpmn#Task_Track",
       "skos:note": "candidate"
     },
     {

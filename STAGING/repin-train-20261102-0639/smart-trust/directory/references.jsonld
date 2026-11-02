@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/smart-trust/smart-trust.jsonld",
   "staging": {
     "branch": "repin-train/20261102-0639",
-    "sha": "0071885095359aa80ce483f4045661ad79e22656",
-    "pr": "repin-train/20261102-0639",
-    "run": "41401374238"
+    "sha": "ef551559636c9e007fd41a816bb3b0cfdba7e59b",
+    "pr": "2907/merge",
+    "run": "41405658162"
   },
   "@graph": [
     {
@@ -22,6 +22,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/references"
       ],
       "description": "smart-trust's bibliography: one folio-reference/v1 CSL-JSON entry per cited work, `<key>.json`, taken from the hand-written reference lists of the IG pages (certificate governance, references, ethical principles, decision support, TNG architecture). The pages' lists are written from these entries by `input/scripts/references.ts` between `references:begin`/`references:end` markers, and each in-text citation links to its entry's `#ref-<key>` anchor; `--check` fails on a stale list, a missing entry or a dangling citation.",
+      "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0639/smart-trust/directory/references",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/references"
     }

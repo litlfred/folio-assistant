@@ -1633,6 +1633,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/library/ingest-candidates.ts",
+      "instance": "cat-harness-tools",
+      "name": "ingest-candidates",
+      "graphNode": "schema",
+      "summary": "`library/<slug>/candidates.json` — Stage B's proposals for an entry,",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/library/intake.ts",
       "instance": "cat-harness-tools",
       "name": "intake",
@@ -41236,6 +41244,188 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/library/ingest-candidates.ts#IngestCandidates",
+      "name": "IngestCandidates",
+      "module": "cat-harness-tools/schemas/library/ingest-candidates.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/library/ingest-candidates.ts#IngestCandidateSchema",
+      "name": "IngestCandidateSchema",
+      "module": "cat-harness-tools/schemas/library/ingest-candidates.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "kind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "statement",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "number",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The source's OWN number for the item, or null. Never one an agent made up."
+        },
+        {
+          "name": "source_kind",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "aspect",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The aspect that proposed it; absent for a class extractor's or a hand-written candidate."
+        },
+        {
+          "name": "section_file",
+          "type": "z.string().regex(/^sections\\/.+\\.md$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "section_title",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "pages",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "strength",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "formalization_candidate",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "route_to",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/library/ingest-candidates.ts#IngestCandidatesSchema",
+      "name": "IngestCandidatesSchema",
+      "module": "cat-harness-tools/schemas/library/ingest-candidates.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "_schema",
+          "type": "z.literal(INGEST_CANDIDATES_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doc_id",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "document_class",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "validated",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "aspects",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "source",
+          "type": "z.object({ structure_sha256: z.string().nullable().optional(), file: z.string().nullable().optional() }).passthrough().…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "provenance",
+          "type": "z.record(z.string(), z.unknown()).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "disposition",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "z .object({ candidates: z.number().int().min(0), by_kind: z.record(z.string(), z.number().int().min(0)), formalization_…",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "candidates",
+          "type": "z.array(IngestCandidateSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/library/ingest-candidates.ts#IngestCandidateSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "INGEST_CANDIDATES_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/library/intake.ts#DateTime",
       "name": "DateTime",
       "module": "cat-harness-tools/schemas/library/intake.ts",
@@ -41669,7 +41859,7 @@
       "fields": [
         {
           "name": "@type",
-          "type": "z.tuple([z.string().regex(/^[\\w.-]+:\\w+$/), z.string().regex(/^doco:\\w+$/)])",
+          "type": "z.union([ z.tuple([z.string().regex(/^[\\w.-]+:\\w+$/), z.string().regex(/^doco:\\w+$/)]), z.tuple([z.string().regex(/^[\\w…",
           "optional": false,
           "array": false
         },
@@ -41726,6 +41916,12 @@
           "type": "z.array(z.string()).optional()",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "meta",
+          "type": "z.record(z.string(), z.string()).optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -66580,6 +66776,20 @@
           "type": "z.number().int().min(0)",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "furniture_lines_stripped",
+          "type": "z.number().int().min(0).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Running heads, footers, folios and side tabs `strip_furniture` took out before the split."
+        },
+        {
+          "name": "outline_reordered",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The flat outline ran against its own pages and `repair_outline` put it in page order. Absent when not."
         }
       ],
       "extendsNames": [],
@@ -91226,6 +91436,14 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/library/ingest-candidates.ts#IngestCandidatesSchema",
+      "to": "cat-harness-tools/schemas/library/ingest-candidates.ts#IngestCandidateSchema",
+      "via": "candidates",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness-tools/schemas/library/intake.ts#IntakeFileSchema",
       "to": "cat-harness-tools/schemas/library/archive-contents.ts#ArchiveEntrySchema",
       "via": "",
@@ -98978,6 +99196,15 @@
       "instance": "fhir-harness",
       "typologies": [
         "fhir-artifact-index"
+      ]
+    },
+    {
+      "id": "ingest-candidates/v1",
+      "source": "family",
+      "decl": "cat-harness-tools/schemas/library/ingest-candidates.ts#IngestCandidatesSchema",
+      "instance": "cat-harness-tools",
+      "typologies": [
+        "library"
       ]
     },
     {

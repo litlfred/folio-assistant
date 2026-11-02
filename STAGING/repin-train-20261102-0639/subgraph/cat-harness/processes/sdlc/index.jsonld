@@ -672,34 +672,6 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_2",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "no"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_3",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "yes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_4",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_5",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_6",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_7",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "not clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth#flow/Flow_8",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -708,29 +680,14 @@
       "name": "Scheduled log sweep"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/End_Clean",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Call_Watch",
       "@type": "bootstrap:ProcessNode",
-      "name": "main is green"
+      "name": "Report the verdict on the tracking issue"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/End_Found",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/End_Reported",
       "@type": "bootstrap:ProcessNode",
-      "name": "Recorded — job stays GREEN"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/End_Unknown",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Unknown — job RED, issue UNTOUCHED"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/GW_Determined",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Could we tell?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/GW_Finding",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Anything red on main?"
+      "name": "Verdict reported"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Start_Sweep",
@@ -741,21 +698,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Check",
       "@type": "bootstrap:ProcessNode",
       "name": "Run check:ci-health, WRITING the report file"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Close",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the tracking issue"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Label",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Ensure the tracking label exists"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Track",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Open or EDIT the one tracking issue"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
@@ -2897,8 +2839,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_2",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "no"
+      "@type": "bootstrap:SequenceFlow"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_3",
@@ -2907,28 +2848,11 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_4",
-      "@type": "bootstrap:SequenceFlow"
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_5",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "none"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_6",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_7",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "one or more"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_8",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent#flow/Flow_9",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -2937,27 +2861,22 @@
       "name": "Scheduled log sweep"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/End_Clean",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Call_Watch",
       "@type": "bootstrap:ProcessNode",
-      "name": "Every head has a run"
+      "name": "Report the verdict on the tracking issue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/End_Done",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Every head has a run, or could not tell"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/End_Recorded",
       "@type": "bootstrap:ProcessNode",
-      "name": "Recorded — job stays GREEN"
+      "name": "Recorded: job stays green"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/End_Unknown",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Unknown — job RED, issue UNTOUCHED"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/GW_Determined",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Could we tell?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/GW_Finding",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/GW_Found",
       "@type": "bootstrap:ProcessNode",
       "name": "Any head with no run?"
     },
@@ -2967,29 +2886,14 @@
       "name": "Hourly (:37), or on dispatch"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Close",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the tracking issue"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Comment",
       "@type": "bootstrap:ProcessNode",
-      "name": "Comment ONCE per (PR, head sha)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Label",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Ensure the tracking label exists"
+      "name": "Comment once per PR and head"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Sweep",
       "@type": "bootstrap:ProcessNode",
-      "name": "Ask, per open PR, whether its HEAD has a run — skipping heads younger than 15 min"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Track",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Open or EDIT the one tracking issue"
+      "name": "Ask whether each open PR head has a run"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
@@ -3511,34 +3415,6 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_2",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "no"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_3",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "yes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_4",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_5",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_6",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_7",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "not clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth#flow/Flow_8",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -3547,29 +3423,14 @@
       "name": "Scheduled log sweep"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/End_Clean",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Call_Watch",
       "@type": "bootstrap:ProcessNode",
-      "name": "Repository clean"
+      "name": "Report the verdict on the tracking issue"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/End_Found",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/End_Reported",
       "@type": "bootstrap:ProcessNode",
-      "name": "Recorded — job stays GREEN"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/End_Unknown",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Unknown — job RED, issue UNTOUCHED"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/GW_Determined",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Could we tell?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/GW_Finding",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Any findings?"
+      "name": "Verdict reported"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Start_Sweep",
@@ -3580,21 +3441,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Check",
       "@type": "bootstrap:ProcessNode",
       "name": "Run the health checks, keeping the report either way"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Close",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the tracking issue"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Label",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Ensure the tracking label exists"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Track",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Open or EDIT the one tracking issue"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling",
@@ -4362,6 +4208,97 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Start_Request",
       "@type": "bootstrap:ProcessNode",
       "name": "Certification wanted against plan P"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch",
+      "@type": "bootstrap:Process",
+      "name": "Report a verdict on one tracking issue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_2",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_5",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_7",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_8",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "@type": "cat-harness:Lane",
+      "name": "Scheduled log sweep"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/End_Clean",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Clean: issue closed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/End_Found",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Found: recorded, job stays green"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/End_Unknown",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Unknown: job red, issue untouched"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/GW_Determined",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Could we tell?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/GW_Finding",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Anything found?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/Start_Verdict",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check run, verdict written"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/Task_Close",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the tracking issue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/Task_Label",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Ensure the tracking label exists"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/Task_Track",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open or edit the one tracking issue"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
