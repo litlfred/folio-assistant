@@ -50,7 +50,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "753e3744e1c92120b0a0e13b806377f8d7c41d9d",
+          "ref": "f92092eb95e01386b834c659eae8082ce1bb9431",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -61,8 +61,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-01",
-              "ref": "753e3744e1c92120b0a0e13b806377f8d7c41d9d",
-              "evidence": "Owner litlfred tapped card Q-S8-3 'A. Yes, re-pin now' on 2026-11-01 at 22:55:36Z in the project thread 'Drain S8' (cmsg_017WNUkNK8kdDziPK58Pv6G92Ks2zmXKa7h2gejXkCWjqg), answering 'Re-pin fa#2885 to cat-harness-tools main 753e374?'. Re-pinned on folio-assistant#2885 to cat-harness-tools main 753e374 (has tools#1331 and #1333).",
+              "ref": "f92092eb95e01386b834c659eae8082ce1bb9431",
+              "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
                 "consentAt": "2026-11-01"
@@ -452,6 +452,16 @@
   ],
   "gateExemptions": {
     "steps": [
+      {
+        "match": "bun run cat-harness-tools/scripts/preview-record.ts write --site ./_site",
+        "kind": "ci-only",
+        "reason": "feature-staging.yml hashes the preview it just built into its build record (folio-assistant#2881; owner Q-SPD-9 B, Q-SPD-9b A, 2026-11-01). Its input is the built ./_site, which exists only in the staging job: a WRITE of a record, not a check of the tree. Its logic is pinned by preview-record.test.ts in `bun test`."
+      },
+      {
+        "match": "bun run cat-harness-tools/scripts/preview-record.ts compare --claimed",
+        "kind": "ci-only",
+        "reason": "feature-staging.yml's verify mode compares an agent-built preview's record (read from gh-pages) with the full CI rebuild of the same tree (folio-assistant#2881). Both records exist only in that job. Its logic is pinned by preview-record.test.ts in `bun test`."
+      },
       {
         "match": "bun run cat state:push -- --id cat-harness.health",
         "kind": "ci-only",
