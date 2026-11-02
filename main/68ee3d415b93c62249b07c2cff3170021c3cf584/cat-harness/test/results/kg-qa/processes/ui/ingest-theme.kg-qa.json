@@ -1,0 +1,223 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_IngestTheme",
+    "path": "processes/ui/ingest-theme.bpmn"
+  },
+  "source_hash": "sha256:ec5240ca81172493c97259bd0ec0686484ea9c8f40ee6ffd662fbf2769fb267c",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_ReadStylesheet",
+          "detail": "names skill \"theme-art-intake\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ReadGuide",
+          "detail": "names skill \"theme-art-intake\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_MapRoles",
+          "detail": "names skill \"theme-art-intake\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Contradictions",
+          "detail": "names skill \"theme-art-intake\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Review",
+          "detail": "names skill \"theme-ui-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_IngestTheme",
+          "detail": "ingest-theme.svg is rendered but no docs page shows it — run `bun run cat processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-through-node": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-wide": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-tall": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-edge": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-shape": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-lane-line": {
+      "result": "pass",
+      "findings": []
+    },
+    "shape-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-order": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 35,
+    "fail": 2,
+    "n/a": 8,
+    "unknown": 0
+  }
+}
