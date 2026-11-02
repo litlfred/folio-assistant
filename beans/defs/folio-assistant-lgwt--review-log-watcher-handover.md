@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T19:56:44Z
+updated_at: 2026-11-02T19:58:01Z
 parent: folio-assistant-dthl
 tags:
     - review-log-watch
@@ -68,3 +68,5 @@ _2026-11-02T19:47:01Z_ — The watcher thread is stalled (owner 19:46Z). Taken o
 _2026-11-02T19:52:34Z_ — Taken over again by https://claude.ai/code/session_01EucfRmAyZLEuxMG8wkPi5r (restarted after unarchive). Sheets NOT readable from this session: the google-drive MCP server failed to connect (CONNECTION_CLOSED), and the environment network policy blocks docs.google.com (proxy 403), so even a public CSV export cannot be fetched. No polls were run and no wakes armed. Watch is paused until the owner reconnects the Google Drive connector (claude.ai Settings → Connectors); then resume with the prompt above.
 
 _2026-11-02T19:56:44Z_ — The owner reconnected Google Drive. From the coordinator session, Google_Drive download_file_content (exportMimeType text/csv) now returns the full Contributor Feedback tab of the DTH-HRH log; read_file_content returns only header samples. Watch tab: cells hash z5fwp9, checked 19:55Z. DTH-HRH state: new row CS-022 (central/federated/distributed registry, physical vs conceptual; section 1.3) has no issue and no agent proposal, and needs step 2, a proposal (committee content). CS-002 and CS-003 Needs you. CS-001 stale proposal awaits the owner (draft dth-hrh#94). CS-007, 014, 015, 016, 017, 018 and 021 in committee review. The owner's answer at 19:56Z ("yes, merge #980 #959 #981 on green") was relayed to session_01EucfRo4LGSMzJn5kq6PucY. Watcher sibling session_01EucfRmAyZLEuxMG8wkPi5r was asked to retry.
+
+_2026-11-02T19:58:01Z_ — Google Drive connector now connected in https://claude.ai/code/session_01EucfRmAyZLEuxMG8wkPi5r: the logs are READABLE (DTH-HRH Contributor Feedback read via CSV export; Watch!G1 hash z5fwp9, checked 2026-11-02 19:55Z). But the Drive connector cannot WRITE cells, so the Agent step, new issue rows and hiding closed rows (skill review-log-watch steps 3–5) cannot be done. Owner chose (card, 2026-11-02T19:58:01Z): stop until a Google Sheets connector with cell-write access is connected and a new session is started. No polls armed.
