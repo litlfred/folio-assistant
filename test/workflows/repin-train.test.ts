@@ -126,6 +126,19 @@ describe("the workflows", () => {
     expect(install).toBeLessThan(train.indexOf("git add -u"));
   });
 
+  test("the train never commits workflow files, which its token may not push", () => {
+    const restore = train.indexOf("git checkout -- .github/workflows");
+    expect(restore).toBeGreaterThan(train.indexOf("mount:repin:standing --summary-file"));
+    expect(restore).toBeLessThan(train.indexOf("git add -u"));
+  });
+
+  test("the train judges open trains itself, since token-started CI triggers no workflow_run", () => {
+    const judge = train.indexOf("repin-train.ts verdict --sha");
+    expect(judge).toBeGreaterThan(-1);
+    expect(judge).toBeLessThan(train.lastIndexOf("repin-train.ts decide --tree"));
+    expect(train).toContain("statuses: write");
+  });
+
   test("without a bot token, the train starts both workflows the verdict reads", () => {
     expect(train).toContain("gh workflow run code-quality-gates.yml");
     expect(train).toContain("gh workflow run feature-staging.yml");
