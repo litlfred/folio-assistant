@@ -56,8 +56,14 @@ jobs:
       # platform, the genericity failure AGENTS.md is largely a list of.
       - name: Install elan and Lean toolchain
         run: |
-          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
-            | sh -s -- -y --default-toolchain none
+          # The installer is fetched at a fixed commit (elan v4.2.4) and checked
+          # against its SHA-256 before it runs, never piped from a moving
+          # branch into sh (KG security audit 2026-11-01, finding S4).
+          ELAN_INIT_URL="https://raw.githubusercontent.com/leanprover/elan/227caca133724d5516bee25c2aeb3e609478f2d8/elan-init.sh"
+          ELAN_INIT_SHA256="a620ff1641616222c8d37c54845492004bb84d6877cdbc944dd65c1aa685bf53"
+          curl -sSfL "$ELAN_INIT_URL" -o "$RUNNER_TEMP/elan-init.sh"
+          echo "$ELAN_INIT_SHA256  $RUNNER_TEMP/elan-init.sh" | sha256sum -c -
+          sh "$RUNNER_TEMP/elan-init.sh" -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
           if [ -f lean-toolchain ]; then
             "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
