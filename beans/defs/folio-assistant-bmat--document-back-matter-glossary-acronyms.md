@@ -59,3 +59,5 @@ _2026-11-02T19:13Z_ — STALL CHECKPOINT. All work pushed. Open: smart-ra#230 (r
 _2026-11-02T19:15Z_ — smart-ra#230 MERGED (8257473): dpi-h-ra opens on Executive summary; Glossary, Acronyms after Appendix. Site publish is agent-run (stage-local.ts), not done yet.
 
 _2026-11-02T19:26Z_ — cat-harness-tools#1416 MERGED (8560fbe). Asked Re-pin train thread (cmsg_017WNUkNK8kdDziPK58Pv6G9MmDK4fGPz89Zs2mtVYEY36) to pin cat-harness-tools >= 8560fbe in smart-ra, dth-sc, dth-phc. After pins land: open PR from smart-ra claude/glossary-acronyms-nest (rebase on main first); merge dth-sc#24, dth-phc#33, core#622 per card Q-BM-3.
+
+_2026-11-02T19:25Z_ — Re-pin train thread confirmed: will pin cat-harness-tools >= 8560fbe in smart-ra, dth-sc, dth-phc after fa#2921 lands (~within the hour) and will report each pin.
