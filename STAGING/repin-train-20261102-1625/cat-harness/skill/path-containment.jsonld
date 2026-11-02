@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/skill/path-containment.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1625",
+    "sha": "de897bd715c560ce657b9fba972b4a72ae86027a",
+    "pr": "2921/merge",
+    "run": "41522563112"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/skill/path-containment",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "path-containment",
+      "title": "Path containment — two questions that look like one",
+      "description": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/package/security"
+      ],
+      "instructionsPath": "skills/conduct/security/path-containment.md",
+      "instructionLines": 102,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/path-containment"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/globalTask/GT_RoundTripQa.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1625",
+    "sha": "de897bd715c560ce657b9fba972b4a72ae86027a",
+    "pr": "2921/merge",
+    "run": "41522563112"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/globalTask/GT_RoundTripQa",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Task",
+      "name": "Round-trip translation QA",
+      "summary": "Back-translate the target-language .md into the source language and compare the meaning with the original (bean folio-assistant-ktt2).",
+      "description": "Back-translate the target-language .md into the source language and compare the meaning with the original (bean folio-assistant-ktt2). It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/skill/translation-manager"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_RoundTripQa"
+    }
+  ]
+}

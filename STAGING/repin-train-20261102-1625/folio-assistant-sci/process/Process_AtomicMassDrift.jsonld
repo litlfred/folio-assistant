@@ -1,0 +1,49 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1625",
+    "sha": "de897bd715c560ce657b9fba972b4a72ae86027a",
+    "pr": "2921/merge",
+    "run": "41522563112"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Is AtomicMass.lean still in sync with its data table?",
+      "summary": "Check that `AtomicMass.lean` is still in sync with the data table it is generated from.",
+      "description": "Check that `AtomicMass.lean` is still in sync with the data table it is generated from. THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red.\n\nThe check itself is the shared `generated-file-drift` process (Process_GeneratedFileDrift), drawn once for every drift check. This diagram stays because its workflow's job names Start_Change (`# bpmn-node:`), which is what lets check:workflow-coverage see the job.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/atomic-mass-drift-check.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/atomic-mass-drift-check.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/assets/img/workflows/atomic-mass-drift-check.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift/node/Start_Change"
+      ],
+      "nodeCount": 3,
+      "flowCount": 2,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_AtomicMassDrift"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift#flow/Flow_0",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift/node/Start_Change",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift/node/Call_Drift",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_AtomicMassDrift#flow/Flow_0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift#flow/Flow_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift/node/Call_Drift",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/process/Process_AtomicMassDrift/node/End_Checked",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_AtomicMassDrift#flow/Flow_1"
+    }
+  ]
+}

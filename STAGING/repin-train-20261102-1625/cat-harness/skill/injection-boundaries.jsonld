@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/skill/injection-boundaries.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1625",
+    "sha": "de897bd715c560ce657b9fba972b4a72ae86027a",
+    "pr": "2921/merge",
+    "run": "41522563112"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/skill/injection-boundaries",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "injection-boundaries",
+      "title": "Injection — the value became program",
+      "description": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/package/security"
+      ],
+      "instructionsPath": "skills/conduct/security/injection-boundaries.md",
+      "instructionLines": 188,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/injection-boundaries"
+    }
+  ]
+}

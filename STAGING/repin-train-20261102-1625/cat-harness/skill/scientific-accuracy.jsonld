@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/skill/scientific-accuracy.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1625",
+    "sha": "de897bd715c560ce657b9fba972b4a72ae86027a",
+    "pr": "2921/merge",
+    "run": "41522563112"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/skill/scientific-accuracy",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "scientific-accuracy",
+      "title": "Scientific Accuracy Skill",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/package/authoring-core"
+      ],
+      "instructionsPath": "skills/authoring/authoring-core/scientific-accuracy.md",
+      "instructionLines": 145,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1625/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/scientific-accuracy"
+    }
+  ]
+}
