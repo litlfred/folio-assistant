@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T19:53:58Z
+updated_at: 2026-11-02T19:56:52Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -55,3 +55,5 @@ _2026-11-02T19:47:01Z_ — Previous owner threads stalled (owner 19:46Z). The dr
 _2026-11-02T19:53:09Z_ — Takeover blocked: this session can reach only litlfred/folio-assistant. Attaching cat-harness and cat-harness-tools (add_repo) was refused by the session's permission check, so cat-harness#980, #959, #981, #972 and cat-harness-tools#1411, #1378, #1379, #1356, #1299 are not re-checked or touched, and no PR comment was posted. Needs: the owner allows add_repo for this session, or another session with those repos takes them. fwtz and pga6 checked (notes on each): neither can be completed now. fwtz: none of its 3 boxes is met on main, and its open PRs folio-assistant#2875 and #2904 both edit .github/workflows (owner-only). pga6: the owner deferred it until after the MVP freeze (card Q-SEP-1 A). Session https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5
 
 _2026-11-02T19:53:58Z_ — Drain sibling session_01EucfRqHzqzMjJkqcnKNkY5 could reach only folio-assistant, so it holds just fwtz and pga6 (neither can close: fwtz 0 of 3 boxes met, its PRs fa#2875 and #2904 edit workflows and are owner-only; pga6 deferred to after the MVP freeze). New holders: cat-harness-tools PRs (#1411, #1378, #1379, #1356, #1299) → https://claude.ai/code/session_01EucfRmD6JzE3AYLeUkX1KU. cat-harness PRs (#980, #959, #981; #972 waits on card Q-B1-2) → https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY, after its saturation-meta-merge train fix. Review-log watcher (lgwt) is blocked: no Google Drive/Sheets access (connector failed, docs.google.com blocked by network policy).
+
+_2026-11-02T19:56:52Z_ — The owner approved merging cat-harness #980, #959 and #981 on green (asked first-hand in session https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY). Nothing to do: all three were already merged, #980 at 18:43:58Z (625fac59), #959 at 18:44:11Z (8d41aa15) and #981 at 18:50:37Z (615da974), and all are on cat-harness main. #972 was not touched (content, card Q-B1-2).
