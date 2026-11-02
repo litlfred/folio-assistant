@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-sci/skill/devils-advocate-paper.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-sci/skill/devils-advocate-paper",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "devils-advocate-paper",
+      "title": "Devil's advocate on a paper folio",
+      "description": "What the harness's devils-advocate-watcher means for a paper folio: its claim-bearing kinds and formal tree, the Lean vacuity shapes the Formalist lens looks for, and the paper watchers the adversary sits beside.",
+      "instructionsPath": "skills/content/folio-paper-adapter/devils-advocate-paper.md",
+      "instructionLines": 60,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/devils-advocate-paper"
+    }
+  ]
+}

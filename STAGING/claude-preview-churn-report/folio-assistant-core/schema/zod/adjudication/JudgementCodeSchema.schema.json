@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/JudgementCode",
+  "definitions": {
+    "JudgementCode": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "means": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "code",
+        "means"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/schema/zod/adjudication/JudgementCodeSchema.schema.json",
+  "title": "JudgementCodeSchema",
+  "description": "Generated from `JudgementCodeSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

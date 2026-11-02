@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/skill/schema-management.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/skill/schema-management",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "schema-management",
+      "title": "Managing a schema — the graph, the viewer, and the three answers that are not \"fine\"",
+      "description": "Manage a schema over its life — add one, change one, read the schema graph and its viewer, and act on what the reader could not determine. The layout rule lives in `directory-conventions`; the entity question lives in `data-modelling`; this is the work in between.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/schema-management.md",
+      "instructionLines": 471,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/schema-management"
+    }
+  ]
+}

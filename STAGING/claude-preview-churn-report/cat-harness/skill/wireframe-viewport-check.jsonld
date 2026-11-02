@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/skill/wireframe-viewport-check.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/skill/wireframe-viewport-check",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "wireframe-viewport-check",
+      "title": "Wireframe viewport check",
+      "description": "Render wireframe candidates at a web viewport (1280x800) and a mobile viewport (390x844), and record, per candidate and viewport, a pass or fail entry with a note for each mechanical criterion: renders, no-overflow, no-placeholder. Writes a screenshot per viewport beside the report. The mechanical step (step 3) of wireframe-design-review; a fail sends the candidate back to that skill's step 2.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/wireframe-viewport-check.md",
+      "instructionLines": 42,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/skills/wireframe-viewport-check/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/skills/wireframe-viewport-check/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-viewport-check"
+    }
+  ]
+}

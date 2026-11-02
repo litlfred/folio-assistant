@@ -1,0 +1,123 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "IRIS CDN weekly reconciliation",
+      "summary": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds.",
+      "description": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds. An item no longer listed is re-checked by id; only one IRIS confirms withdrawn is marked so.",
+      "enforcement": "strict",
+      "sourcePath": "processes/iris-cdn-reconcile.bpmn",
+      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-reconcile.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/assets/img/workflows/iris-cdn-reconcile.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly"
+      ],
+      "nodeCount": 11,
+      "flowCount": 10,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile#flow/R1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Start_Weekly",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile#flow/R2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile#flow/R3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile#flow/R4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile#flow/R5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/End_Refused",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile#flow/R6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/GW_Plausible",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile#flow/R7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile#flow/R8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile#flow/R9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile#flow/R10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/process/Process_IrisCdnReconcile/node/End_Reconciled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile#flow/R10"
+    }
+  ]
+}

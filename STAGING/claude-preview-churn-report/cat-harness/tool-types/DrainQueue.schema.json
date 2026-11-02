@@ -1,0 +1,225 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/tool-types/DrainQueue.schema.json",
+  "title": "DrainQueue",
+  "type": "object",
+  "properties": {
+    "refreshedAt": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "repo": {
+            "type": "string"
+          },
+          "ref": {
+            "type": "string"
+          },
+          "sha": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "repo",
+          "ref",
+          "sha"
+        ]
+      }
+    },
+    "byOwner": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "owner": {
+            "type": "string"
+          },
+          "beans": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "priority": {
+                  "type": "string"
+                },
+                "lastTouch": {
+                  "type": "object",
+                  "properties": {
+                    "author": {
+                      "type": "string"
+                    },
+                    "at": {
+                      "type": "string"
+                    },
+                    "agent": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "author",
+                    "at",
+                    "agent"
+                  ]
+                },
+                "skip": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "status",
+                "type",
+                "priority"
+              ]
+            }
+          }
+        },
+        "required": [
+          "owner",
+          "beans"
+        ]
+      }
+    },
+    "spare": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "lastTouch": {
+            "type": "object",
+            "properties": {
+              "author": {
+                "type": "string"
+              },
+              "at": {
+                "type": "string"
+              },
+              "agent": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "author",
+              "at",
+              "agent"
+            ]
+          },
+          "skip": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "type",
+          "priority"
+        ]
+      }
+    },
+    "excluded": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "goal",
+              "epic",
+              "blocked",
+              "completed",
+              "scrapped",
+              "draft",
+              "owner-held"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "reason"
+        ]
+      }
+    },
+    "disagreements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "byCopy": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "used": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "byCopy",
+          "used"
+        ]
+      }
+    }
+  },
+  "required": [
+    "refreshedAt",
+    "sources",
+    "byOwner",
+    "spare",
+    "excluded",
+    "disagreements"
+  ],
+  "description": "The beans that can be drained, by owner, with what was excluded and why.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

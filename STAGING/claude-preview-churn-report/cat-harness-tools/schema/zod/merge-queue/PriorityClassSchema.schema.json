@@ -1,0 +1,26 @@
+{
+  "$ref": "#/definitions/PriorityClass",
+  "definitions": {
+    "PriorityClass": {
+      "type": "string",
+      "enum": [
+        "override",
+        "harness-seed",
+        "unblocker",
+        "mvp",
+        "standard",
+        "hand-back",
+        "ci-not-green"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/PriorityClassSchema.schema.json",
+  "title": "PriorityClassSchema",
+  "description": "Generated from `PriorityClassSchema` in schemas/sdlc/merge-queue.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

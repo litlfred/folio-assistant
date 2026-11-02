@@ -1,0 +1,492 @@
+{
+  "against": "eec485fbf65af99423f2cd15e61c5dc8e546e6ac",
+  "skipped": 17,
+  "ran": 26,
+  "reused": 0,
+  "groups": [
+    {
+      "cause": ".",
+      "writtenBy": "the commit",
+      "reran": [
+        "handler:index",
+        "smart-base:document-kinds",
+        "uml:overview"
+      ],
+      "seconds": 205.43726390400002
+    },
+    {
+      "cause": "not recorded: the trace is 492194660 bytes, more than 268435456",
+      "writtenBy": "-",
+      "reran": [
+        "subgraph:jsonld"
+      ],
+      "seconds": 22.45583236100001
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 13.736909433000008
+    },
+    {
+      "cause": "cat-harness/docs/cat-harness/published-graphs.md",
+      "writtenBy": "handler:index",
+      "reran": [
+        "auto:docs",
+        "lsi:viz",
+        "docs:pages"
+      ],
+      "seconds": 12.408931035999965
+    },
+    {
+      "cause": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html",
+      "writtenBy": "state:visualizer",
+      "reran": [
+        "library:viz",
+        "tools:viz",
+        "translation:status",
+        "schema:viz"
+      ],
+      "seconds": 11.567811025999951
+    },
+    {
+      "cause": "not recorded: the trace is 283858655 bytes, more than 268435456",
+      "writtenBy": "-",
+      "reran": [
+        "slice:sqlite"
+      ],
+      "seconds": 9.542971334000002
+    },
+    {
+      "cause": ".github/workflows/feature-staging.yml",
+      "writtenBy": "the commit",
+      "reran": [
+        "external-schemas:viz",
+        "docs:harness"
+      ],
+      "seconds": 8.764149562000005
+    },
+    {
+      "cause": "cat-harness/docs/assets/qa/index.json",
+      "writtenBy": "docs:pages",
+      "reran": [
+        "state:visualizer"
+      ],
+      "seconds": 5.794277017999964
+    },
+    {
+      "cause": "bootstrap/processes/complete-initialization.svg",
+      "writtenBy": "the commit",
+      "reran": [
+        "render:bpmn"
+      ],
+      "seconds": 4.428164504999994
+    },
+    {
+      "cause": "cat-harness/docs/assets/auto-docs/index.json",
+      "writtenBy": "auto:docs",
+      "reran": [
+        "node-kind:pages"
+      ],
+      "seconds": 2.434740197999985
+    },
+    {
+      "cause": "bootstrap",
+      "writtenBy": "the commit",
+      "reran": [
+        "jsonld:contexts"
+      ],
+      "seconds": 1.4154087690000305
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "writtenBy": "-",
+      "reran": [
+        "site:viz"
+      ],
+      "seconds": 1.3628113340000272
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-base:pages"
+      ],
+      "seconds": 0.8143294170000008
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust:pages"
+      ],
+      "seconds": 0.7174014709999901
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.6427867119999718
+    },
+    {
+      "cause": "cat-harness/docs/en/cat-harness/folio",
+      "writtenBy": "the commit",
+      "reran": [
+        "folio:viz"
+      ],
+      "seconds": 0.53327076699998
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust-phw:pages"
+      ],
+      "seconds": 0.4852194759999984
+    },
+    {
+      "cause": "cat-harness/docs/_data/harness.json",
+      "writtenBy": "docs:harness",
+      "reran": [
+        "navbar:include"
+      ],
+      "seconds": 0.12010784599999898
+    }
+  ],
+  "writers": [
+    {
+      "writer": "auto:docs",
+      "did": "ran",
+      "why": "cat-harness/docs/cat-harness/published-graphs.md changed (+26 more: cat-harness/docs/en/cat-harness/attestations/index.html, cat-harness/docs/en/cat-harness/beans/index.html, cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/bootstrap-tools/index.html, cat-harness/docs/en/cat-harness/code/cat-harness-tools/index.html, cat-harness/docs/en/cat-harness/code/cat-harness/index.html, cat-harness/docs/en/cat-harness/code/fhir-harness/index.html, and 19 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/cat-harness/published-graphs.md"
+      },
+      "seconds": 7.975812762999966
+    },
+    {
+      "writer": "avatars:css",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (303 paths, 1 outputs)",
+      "seconds": 0.00487786700000288
+    },
+    {
+      "writer": "bibliography:page",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (1601 paths, 819 outputs); evidence only, the audit did not clear it: unannotated input site at folio-assistant-core/schemas/materialization.ts:469 (clock)",
+      "seconds": 0.054950858999975025
+    },
+    {
+      "writer": "docs:harness",
+      "did": "ran",
+      "why": ".github/workflows/feature-staging.yml changed (+24 more: cat-harness/docs/_data, cat-harness/docs/assets/qa/index.json, cat-harness/docs/en/cat-harness/beans/index.html, cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/bootstrap-tools/index.html, cat-harness/docs/en/cat-harness/code/cat-harness-tools/index.html, cat-harness/docs/en/cat-harness/code/cat-harness/index.html, and 17 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github/workflows/feature-staging.yml"
+      },
+      "seconds": 3.6713465790000046
+    },
+    {
+      "writer": "docs:pages",
+      "did": "ran",
+      "why": "cat-harness/docs/cat-harness/published-graphs.md changed (+122 more: cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/smart-immunizations, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/bpmn-execution.qa.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/consolidated-skill-references.qa.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/content-workflows.qa.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/deterministic-and-agentic.qa.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/feature-request-workflow.qa.json, and 115 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/cat-harness/published-graphs.md"
+      },
+      "seconds": 1.9061725529999822
+    },
+    {
+      "writer": "document-kinds:viz",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (858 paths, 10 outputs); evidence only, the audit did not clear it: unannotated non-literal dynamic import or computed load at cat-harness-tools/pipeline/json-manifest.ts:129 (computed)",
+      "seconds": 0.012036219000001437
+    },
+    {
+      "writer": "external-schemas:viz",
+      "did": "ran",
+      "why": ".github/workflows/feature-staging.yml changed (+334 more: build/asset/agent-instructions.jsonld, build/asset/readme.jsonld, build/asset/vocabulary.jsonld, build/bootstrap-kg-export.jsonld, build/directory/models.jsonld, build/directory/processes.jsonld, build/directory/scenarios.jsonld, and 327 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github/workflows/feature-staging.yml"
+      },
+      "seconds": 5.092802983000001
+    },
+    {
+      "writer": "folio:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/folio changed",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/folio"
+      },
+      "seconds": 0.53327076699998
+    },
+    {
+      "writer": "glossary:page",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (5273 paths, 203 outputs); evidence only, the audit did not clear it: unannotated input site at folio-assistant-core/scripts/glossary-page.ts:214 (env)",
+      "seconds": 0.09541874400002416
+    },
+    {
+      "writer": "handler:index",
+      "did": "ran",
+      "why": ". changed (+60 more: _kg, build, build/qa-refresh.json, cat-harness/docs, cat-harness/docs/cat-harness/auto-docs/auto-docs.json, cat-harness/docs/cat-harness/auto-docs/glossary/swimlane-glossary/index.html, cat-harness/docs/cat-harness/auto-docs/index.html, and 53 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 2.2635823300000046
+    },
+    {
+      "writer": "ig-index:build",
+      "did": "ran",
+      "why": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "seconds": 13.736909433000008
+    },
+    {
+      "writer": "jsonld:contexts",
+      "did": "ran",
+      "why": "bootstrap changed (+11 more: cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/smart-immunizations, cat-harness/ns, fhir-harness, folio-assistant-core, folio-assistant-sci, smart-base, and 4 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap"
+      },
+      "seconds": 1.4154087690000305
+    },
+    {
+      "writer": "kg:viewer",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (634 paths, 3 outputs); evidence only, the audit did not clear it: unannotated input site at cat-harness-tools/scripts/kg-viewer.ts:1269 (env)",
+      "seconds": 0.010904515000001993
+    },
+    {
+      "writer": "kind:table",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (300 paths, 1 outputs)",
+      "seconds": 0.005438871999969706
+    },
+    {
+      "writer": "library:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html changed (+200 more: cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html, cat-harness/test/attestations/kg-qa/processes/sdlc/feature-staging.attestations.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/bpmn-execution.qa.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/consolidated-skill-references.qa.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/content-workflows.qa.json, and 193 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html"
+      },
+      "seconds": 5.016625331000017
+    },
+    {
+      "writer": "lsi:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/cat-harness/published-graphs.md changed (+2 more: cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/smart-immunizations)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/cat-harness/published-graphs.md"
+      },
+      "seconds": 2.526945720000018
+    },
+    {
+      "writer": "methodologies:viz",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (3885 paths, 72 outputs); evidence only, the audit did not clear it: unannotated non-literal dynamic import or computed load at cat-harness-tools/pipeline/json-manifest.ts:129 (computed)",
+      "seconds": 0.04481121499999426
+    },
+    {
+      "writer": "navbar:include",
+      "did": "ran",
+      "why": "cat-harness/docs/_data/harness.json changed",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/_data/harness.json"
+      },
+      "seconds": 0.12010784599999898
+    },
+    {
+      "writer": "node-kind:pages",
+      "did": "ran",
+      "why": "cat-harness/docs/assets/auto-docs/index.json changed (+31 more: cat-harness/docs/cat-harness/auto-docs/index/docs/docs/index.html, cat-harness/docs/cat-harness/auto-docs/index/docs/index.html, cat-harness/docs/cat-harness/published-graphs.md, cat-harness/docs/en/cat-harness, cat-harness/docs/en/cat-harness/attestations/index.html, cat-harness/docs/en/cat-harness/beans/index.html, cat-harness/docs/en/cat-harness/code, and 24 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/assets/auto-docs/index.json"
+      },
+      "seconds": 2.434740197999985
+    },
+    {
+      "writer": "node-kinds",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (998 paths, 1 outputs); evidence only, the audit did not clear it: unannotated non-literal dynamic import or computed load at cat-harness-tools/pipeline/json-manifest.ts:129 (computed)",
+      "seconds": 0.022619870999944395
+    },
+    {
+      "writer": "openapi:viz",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (378 paths, 100 outputs); evidence only, the audit did not clear it: unannotated input site at cat-harness-tools/openapi/scripts/ingest-openapi.ts:207 (spawn)",
+      "seconds": 0.010152391000010539
+    },
+    {
+      "writer": "processes:viz",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (4913 paths, 278 outputs); evidence only, the audit did not clear it: unannotated non-literal dynamic import or computed load at cat-harness-tools/pipeline/json-manifest.ts:129 (computed)",
+      "seconds": 0.07300308599998243
+    },
+    {
+      "writer": "render:bpmn",
+      "did": "ran",
+      "why": "bootstrap/processes/complete-initialization.svg changed (+81 more: bootstrap/processes/discussion.svg, bootstrap/processes/human-agent-discussion.svg, bootstrap/processes/initialize-harness.svg, bootstrap/processes/log-message.svg, cat-harness/docs/assets/img/workflows/activity-log.svg, cat-harness/docs/assets/img/workflows/actor-role-administration.svg, cat-harness/docs/assets/img/workflows/adjudication.svg, and 74 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap/processes/complete-initialization.svg"
+      },
+      "seconds": 4.428164504999994
+    },
+    {
+      "writer": "schema:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html changed (+3 more: cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html"
+      },
+      "seconds": 2.755665358999977
+    },
+    {
+      "writer": "site:viz",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 1.3628113340000272
+    },
+    {
+      "writer": "skills:docs",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (4344 paths, 419 outputs); evidence only, the audit did not clear it: unannotated non-literal dynamic import or computed load at cat-harness-tools/pipeline/json-manifest.ts:129 (computed)",
+      "seconds": 0.11430481999996119
+    },
+    {
+      "writer": "slice:sqlite",
+      "did": "ran",
+      "why": "not recorded: the trace is 283858655 bytes, more than 268435456",
+      "seconds": 9.542971334000002
+    },
+    {
+      "writer": "smart-base:document-kinds",
+      "did": "ran",
+      "why": ". changed (+4 more: cat-harness/docs, cat-harness/docs/cat-harness/auto-docs/auto-docs.json, cat-harness/docs/todos.json, smart-base/document-kinds)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 0.38283086699999697
+    },
+    {
+      "writer": "smart-base:l1-extraction:pages",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (2083 paths, 7 outputs); evidence only, the audit did not clear it: unannotated input site at smart-base/scripts/gen-l1-extraction-pages.ts:360 (spawn)",
+      "seconds": 0.09651908800000092
+    },
+    {
+      "writer": "smart-base:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "seconds": 0.8143294170000008
+    },
+    {
+      "writer": "smart-trust-phw:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "seconds": 0.4852194759999984
+    },
+    {
+      "writer": "smart-trust:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "seconds": 0.7174014709999901
+    },
+    {
+      "writer": "smart:pages",
+      "did": "ran",
+      "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "seconds": 0.6427867119999718
+    },
+    {
+      "writer": "state:visualizer",
+      "did": "ran",
+      "why": "cat-harness/docs/assets/qa/index.json changed (+199 more: cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/site/index.html, cat-harness/test/attestations/kg-qa/processes/sdlc/feature-staging.attestations.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/bpmn-execution.qa.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/consolidated-skill-references.qa.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/content-workflows.qa.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/deterministic-and-agentic.qa.json, and 192 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/assets/qa/index.json"
+      },
+      "seconds": 5.794277017999964
+    },
+    {
+      "writer": "subgraph:jsonld",
+      "did": "ran",
+      "why": "not recorded: the trace is 492194660 bytes, more than 268435456",
+      "seconds": 22.45583236100001
+    },
+    {
+      "writer": "subscriptions:viz",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (358 paths, 2 outputs); evidence only, the audit did not clear it: unannotated input site at cat-harness-tools/scripts/kg-subscribe.ts:428 (network)",
+      "seconds": 0.007957716999982949
+    },
+    {
+      "writer": "theme:viz",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (990 paths, 2 outputs); evidence only, the audit did not clear it: unannotated non-literal dynamic import or computed load at cat-harness-tools/pipeline/json-manifest.ts:129 (computed)",
+      "seconds": 0.024962017999961974
+    },
+    {
+      "writer": "themes:css",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (760 paths, 2 outputs); evidence only, the audit did not clear it: unannotated non-literal dynamic import or computed load at cat-harness-tools/pipeline/json-manifest.ts:129 (computed)",
+      "seconds": 0.011331658000010066
+    },
+    {
+      "writer": "tools:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html changed (+5 more: cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html, smart-trust, smart-trust-phw)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html"
+      },
+      "seconds": 2.614969981000002
+    },
+    {
+      "writer": "translation:status",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html changed (+3 more: cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html"
+      },
+      "seconds": 1.1805503549999556
+    },
+    {
+      "writer": "uml:overview",
+      "did": "ran",
+      "why": ". changed (+3016 more: .github/workflows/feature-staging.yml, cat-harness/docs, cat-harness/docs/_data, cat-harness/docs/_data/todo_listing.json, cat-harness/docs/_includes, cat-harness/docs/_includes/generated, cat-harness/docs/_includes/generated/todo-listing, and 3009 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 202.790850707
+    },
+    {
+      "writer": "uploads:viz",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (26364 paths, 8 outputs); evidence only, the audit did not clear it: unannotated non-literal dynamic import or computed load at cat-harness-tools/pipeline/json-manifest.ts:129 (computed)",
+      "seconds": 0.25283794400002807
+    },
+    {
+      "writer": "voices:viz",
+      "did": "skipped",
+      "why": "reads unchanged since eec485fbf65a (2258 paths, 14 outputs); evidence only, the audit did not clear it: unannotated non-literal dynamic import or computed load at cat-harness-tools/pipeline/json-manifest.ts:129 (computed)",
+      "seconds": 0.02681190999998944
+    }
+  ]
+}

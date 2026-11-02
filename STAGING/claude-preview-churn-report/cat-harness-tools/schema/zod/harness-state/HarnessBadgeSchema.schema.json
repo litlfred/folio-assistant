@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/HarnessBadge",
+  "definitions": {
+    "HarnessBadge": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "initialization",
+            "repository"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "finding",
+            "unknown"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "state",
+        "label"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessBadgeSchema.schema.json",
+  "title": "HarnessBadgeSchema",
+  "description": "Generated from `HarnessBadgeSchema` in schemas/sdlc/harness-state.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

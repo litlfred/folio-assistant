@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/skills/wireframe-viewport-check/input.schema.json",
+  "title": "Wireframe Viewport Check Input",
+  "description": "The wireframe candidates to render, and where the screenshots and report go. Called from wireframe-design-review step 3, once per round of candidates.",
+  "type": "object",
+  "required": [
+    "candidates"
+  ],
+  "properties": {
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Wireframe HTML files. Each must carry both a web and a mobile layout (responsive CSS or two layouts)."
+    },
+    "out": {
+      "type": "string",
+      "description": "Where the screenshots and report.json go: the asset directory's checks/ (wireframe-design-review, 'Where wireframes live'). Absent: .build/wireframes."
+    }
+  },
+  "additionalProperties": false,
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

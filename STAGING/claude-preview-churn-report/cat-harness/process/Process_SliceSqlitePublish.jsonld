@@ -1,0 +1,203 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Build and publish a per-slice SQLite file",
+      "summary": "Build one named slice of a knowledge graph as a SQLite file a browser mounts without parsing, and publish it beside its manifest and its payloads.",
+      "description": "Build one named slice of a knowledge graph as a SQLite file a browser mounts without parsing, and publish it beside its manifest and its payloads. The contract is `kg-export` §\"Per-slice SQLite\"; the builder is the `slice-sqlite` Tool (`cat-harness-tools/scripts/gen-slice-sqlite.ts`), one table-driven builder with one definition per slice; the search is one page, `slices/search.html?slice=<name>`. Bean `q8ar`.\n\nTHE SIZE IS MEASURED BEFORE THE SLICE IS WIRED, AND THAT IS WHY THIS IS A DIAGRAM. A slice that is wired first and measured afterwards ships whatever it weighs, because by then a manifest, a gate, two deploy steps and a page depend on it. The budget gateway sits between measuring and wiring so that an oversized slice stops with its measurement reported, rather than arriving on a reader's connection.\n\nNO BINARY IS COMMITTED. The file is built at deploy from the tree being published, so the gate cannot compare against a committed copy; it proves determinism (two builds, one sha256) and a row-content digest read back from the file against one computed from the source.",
+      "enforcement": "strict",
+      "sourcePath": "processes/kg/slice-sqlite-publish.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/kg/slice-sqlite-publish.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/assets/img/workflows/slice-sqlite-publish.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/Start_Need"
+      ],
+      "nodeCount": 19,
+      "flowCount": 18,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_0",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/Start_Need",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/Call_BeanOpen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Define",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Measure",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Measure",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/GW_Budget",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes — under",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/GW_Budget",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Wire",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no — over",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/GW_Budget",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Report",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Report",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/Call_BeanClose_3",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Wire",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Check",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Check",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/GW_Green",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes — green",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/GW_Green",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Deploy",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no — red",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/GW_Green",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/Call_BeanClose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Deploy",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Verify",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Verify",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/Call_BeanClose_2",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "claimed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/A_Define",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/Call_BeanOpen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/GW_BeanYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "not yours",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/GW_BeanYours",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/End_BeanNotYours",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/Call_BeanClose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/End_Red",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/Call_BeanClose_2",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/End_Shipped",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/Call_BeanClose_3",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/process/Process_SliceSqlitePublish/node/End_Stopped",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_6"
+    }
+  ]
+}

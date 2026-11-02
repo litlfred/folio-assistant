@@ -1,0 +1,20 @@
+{
+  "$ref": "#/definitions/ProcessElementId",
+  "definitions": {
+    "ProcessElementId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+      "description": "A BPMN process element id, e.g. Process_CRDM"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/process-element-id/ProcessElementIdSchema.schema.json",
+  "title": "ProcessElementIdSchema",
+  "description": "Generated from `ProcessElementIdSchema` in schemas/process/process-element-id.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

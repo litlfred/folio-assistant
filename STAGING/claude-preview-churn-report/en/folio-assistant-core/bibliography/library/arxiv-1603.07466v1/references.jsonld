@@ -1,0 +1,34 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-1603.07466v1",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Semantics and Analysis of DMN Decision Tables",
+      "dcterms:creator": [
+        "Calvanese1, Diego",
+        "Dumas2, Marlon",
+        "Laurson2, Ülari"
+      ],
+      "dcterms:issued": "D:20160325",
+      "dcterms:identifier": "https://arxiv.org/abs/1603.07466",
+      "dcterms:abstract": "The Decision Model and Notation (DMN) is a standard no- tation to capture decision logic in business applications in general and business processes in particular. A central construct in DMN is that of a decision table. The increasing use of DMN decision tables to capture critical business knowledge raises the need to support analysis tasks on these tables such as correctness and completeness checking. This paper provides a formal semantics for DMN tables, a formal deﬁnition of key analysis tasks and scalable algorithms to tackle two such tasks, i.e., de- tection of overlapping rules and of missing rules. The algorithms are based on a geometric interpretation of decision tables that can be used to support other analysis tasks by tapping into geometric algorithms. The algorithms have been implemented in an open-source DMN editor and tested on large decision tables derived from a credit lending dataset.",
+      "dcterms:source": "cat-harness/library/arxiv-1603.07466v1/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-1603.07466v1"
+    }
+  ]
+}

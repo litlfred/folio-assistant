@@ -1,0 +1,139 @@
+{
+  "$ref": "#/definitions/SkillPackageManifest",
+  "definitions": {
+    "SkillPackageManifest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "A skill name, e.g. todo-manager"
+          }
+        },
+        "docker": {
+          "type": "object",
+          "properties": {
+            "baseImage": {
+              "default": "ubuntu:24.04",
+              "type": "string"
+            },
+            "aptPackages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "pipPackages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "npmPackages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "setupCommands": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "exposePorts": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "env": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "labels": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "aptPackages"
+          ]
+        },
+        "providesCapabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiresCapabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lifecycleStages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "plan",
+              "author",
+              "validate",
+              "review",
+              "test",
+              "publish",
+              "feedback",
+              "retire"
+            ]
+          }
+        },
+        "schemas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "description",
+        "skills",
+        "docker"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/SkillPackageManifestSchema.schema.json",
+  "title": "SkillPackageManifestSchema",
+  "description": "Generated from `SkillPackageManifestSchema` in schemas/kg/skill-package.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

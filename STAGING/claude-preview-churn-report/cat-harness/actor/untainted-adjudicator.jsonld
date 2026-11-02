@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/actor/untainted-adjudicator.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/actor/untainted-adjudicator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "untainted-adjudicator",
+      "actorKind": "agent",
+      "title": "Untainted adjudicator",
+      "description": "The dispatched party that rules — given the original intent and the checker's output, and never the artefact itself. It names each drift against the criterion's declared `drift` statement and returns pass / warn / fail. It holds `qa-reporting` and its witness leads the criterion, because the first entry per criterion is the operative one. It does NOT hold `content-authoring`: the party that produced the artefact does not write the verdict on it, which is the whole discipline in one line.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/role/qc-reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/role/adjudicator"
+      ],
+      "permissionName": [
+        "qa-reporting",
+        "adjudication"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/untainted-adjudicator"
+    }
+  ]
+}

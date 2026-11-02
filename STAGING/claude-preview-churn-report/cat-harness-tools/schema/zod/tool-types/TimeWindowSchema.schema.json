@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/TimeWindow",
+  "definitions": {
+    "TimeWindow": {
+      "type": "string",
+      "pattern": "^(\\d{1,4}[hdw]|\\d{4}-\\d{2}-\\d{2})$",
+      "description": "A history window: a count with a unit (4h, 2d, 1w) or an ISO date."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/TimeWindowSchema.schema.json",
+  "title": "TimeWindowSchema",
+  "description": "Generated from `TimeWindowSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

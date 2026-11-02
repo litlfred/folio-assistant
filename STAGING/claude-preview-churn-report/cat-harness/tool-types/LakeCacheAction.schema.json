@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/tool-types/LakeCacheAction.schema.json",
+  "title": "LakeCacheAction",
+  "type": "string",
+  "enum": [
+    "status",
+    "restore",
+    "restore-toolchain",
+    "install-toolchain",
+    "verify",
+    "seed",
+    "contribute",
+    "list",
+    "doctor"
+  ],
+  "description": "A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

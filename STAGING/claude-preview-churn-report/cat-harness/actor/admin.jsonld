@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/actor/admin.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/actor/admin",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "admin",
+      "actorKind": "person",
+      "title": "Administrator",
+      "description": "Full administrative access. `roles` is what it may act AS and `capabilities` what its machine has. What it may DO is no longer written here: it is an ODRL rule in cat-harness/policies/folio-defaults.jsonld (issue #1180).",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/role/administrator",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/role/programme-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/role/publication-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/role/editor",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/role/author",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/role/code-reviewer"
+      ],
+      "permissionName": [
+        "admin-settings",
+        "role-management",
+        "release-authorization"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/admin"
+    }
+  ]
+}

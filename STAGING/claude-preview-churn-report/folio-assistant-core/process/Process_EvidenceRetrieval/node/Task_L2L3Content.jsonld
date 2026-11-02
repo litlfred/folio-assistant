@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L2L3Content.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L2L3Content",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Search trusted CONTENT — L2 DAKs, L3 IGs",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/process/Process_EvidenceRetrieval",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/role/evidence-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/skill/document-intake",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/skill/document-intake"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_08"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L2L3Content"
+    }
+  ]
+}

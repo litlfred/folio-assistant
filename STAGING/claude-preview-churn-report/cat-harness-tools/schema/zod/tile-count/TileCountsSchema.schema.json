@@ -1,0 +1,38 @@
+{
+  "$ref": "#/definitions/TileCounts",
+  "definitions": {
+    "TileCounts": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "count",
+          "unit"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tile-count/TileCountsSchema.schema.json",
+  "title": "TileCountsSchema",
+  "description": "Generated from `TileCountsSchema` in schemas/ui/tile-count.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-sci/directory/folio-templates.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-sci/directory/folio-templates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "folio-templates",
+      "path": "templates/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+      ],
+      "description": "The PAPER profile of the files `folio_init` writes into a new folio: `paper/` holds the Lean build, lake-cache restore and blueprint workflows and the `.github/scripts` they call, written into a paper folio after the `document/` profile the tools layer keeps. Moved here from cat-harness-tools `templates/paper/` (move M11, folio-assistant#2598; owner 2026-10-23): only a paper folio is given them, and the paper profile is this layer's. The id is the tools layer's `folio-templates`, so this directory is a member of that subgraph and `init-folio` finds it by id across the checkout, never by a path naming this layer. `{{assistant}}`, `{{folio}}`, `{{platform_git}}` and `{{platform_repo}}` are substituted at write time. Declared `code`: executable sources whose target is another repository. `dependents: skip` -- a folio inherits them through `folio_init`, not by owning a copy. Declared WITH its files, per bean dh4f.",
+      "readmePath": "templates/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/folio-assistant-sci/directory/folio-templates",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/folio-templates"
+    }
+  ]
+}

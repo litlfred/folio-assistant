@@ -1,0 +1,42 @@
+{
+  "$ref": "#/definitions/SkillSchemaRef",
+  "definitions": {
+    "SkillSchemaRef": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "read",
+            "write",
+            "read-write"
+          ]
+        }
+      },
+      "required": [
+        "module",
+        "types",
+        "access"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/constraints/SkillSchemaRefSchema.schema.json",
+  "title": "SkillSchemaRefSchema",
+  "description": "Generated from `SkillSchemaRefSchema` in schemas/constraints.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

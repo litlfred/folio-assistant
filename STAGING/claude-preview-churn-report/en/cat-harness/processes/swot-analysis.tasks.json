@@ -1,0 +1,452 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_SwotAnalysis",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis",
+ "tasks": {
+  "A_FrameSubject": {
+   "id": "A_FrameSubject",
+   "name": "Name the subject and the level",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/node/A_FrameSubject",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/lane/Lane_BusinessAnalyst",
+   "skills": [
+    {
+     "name": "swot-analysis",
+     "methodologies": [
+      {
+       "name": "swot",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/swot/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "A_ScanExternal": {
+   "id": "A_ScanExternal",
+   "name": "Scan the environment opportunities and threats",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/node/A_ScanExternal",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/lane/Lane_BusinessAnalyst",
+   "skills": [
+    {
+     "name": "swot-analysis",
+     "methodologies": [
+      {
+       "name": "swot",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/swot/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "A_ScanInternal": {
+   "id": "A_ScanInternal",
+   "name": "Scan the subject strengths and weaknesses",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/node/A_ScanInternal",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/lane/Lane_BusinessAnalyst",
+   "skills": [
+    {
+     "name": "swot-analysis",
+     "methodologies": [
+      {
+       "name": "swot",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/swot/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "A_GroupReview": {
+   "id": "A_GroupReview",
+   "name": "Pool knowledge across participants",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/node/A_GroupReview",
+   "lane": "Stakeholder",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/lane/Lane_Stakeholder",
+   "skills": [
+    {
+     "name": "swot-analysis",
+     "methodologies": [
+      {
+       "name": "swot",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/swot/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "stakeholder",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
+    "title": "Stakeholder",
+    "skills": []
+   }
+  },
+  "A_RecordAmbiguous": {
+   "id": "A_RecordAmbiguous",
+   "name": "Record what did not classify cleanly",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/node/A_RecordAmbiguous",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/lane/Lane_BusinessAnalyst",
+   "skills": [
+    {
+     "name": "swot-analysis",
+     "methodologies": [
+      {
+       "name": "swot",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/swot/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "A_Cross": {
+   "id": "A_Cross",
+   "name": "Cross the axes into SO, WO, ST, WT",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/node/A_Cross",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/lane/Lane_BusinessAnalyst",
+   "skills": [
+    {
+     "name": "swot-analysis",
+     "methodologies": [
+      {
+       "name": "swot",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/swot/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  },
+  "A_HandOff": {
+   "id": "A_HandOff",
+   "name": "Hand the candidates to a decision methodology",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/node/A_HandOff",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/lane/Lane_BusinessAnalyst",
+   "skills": [
+    {
+     "name": "methodology-adoption"
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "crdm-impact-analysis"
+     },
+     {
+      "name": "crdm-needs-assessment"
+     },
+     {
+      "name": "crdm-recorded-walkthrough"
+     },
+     {
+      "name": "crdm-requirements-template"
+     },
+     {
+      "name": "crdm-requirements-workflow"
+     },
+     {
+      "name": "data-modelling"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "decision-methodology-selector"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "methodology-adoption"
+     },
+     {
+      "name": "opening-brief"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "wireframe-design-review"
+     }
+    ]
+   }
+  }
+ }
+}

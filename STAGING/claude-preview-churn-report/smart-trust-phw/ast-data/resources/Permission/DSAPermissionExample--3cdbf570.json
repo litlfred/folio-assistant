@@ -1,0 +1,94 @@
+{
+  "resourceType" : "Permission",
+  "id" : "DSAPermissionExample",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: Permission DSAPermissionExample</b></p><a name=\"DSAPermissionExample\"> </a><a name=\"hcDSAPermissionExample\"> </a><p><b>status</b>: Active</p><p><b>asserter</b>: <a href=\"Organization-MinistryM.html\">Ministry M (urn:ietf:rfc:3986#Uniform Resource Identifier (URI)#https://ministry-m.example.org/)</a></p><p><b>validity</b>: 2026-01-01 00:00:00+0000 --&gt; 2027-12-31 23:59:59+0000</p><h3>Justifications</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Evidence</b></td></tr><tr><td style=\"display: none\">*</td><td>Data sharing agreement 42, version 3 (fixed-version URL = ODRL uid) (Identifier: <a href=\"http://terminology.hl7.org/5.3.0/NamingSystem-uri.html\" title=\"As defined by RFC 3986 (http://www.ietf.org/rfc/rfc3986.txt)(with many schemes defined in many RFCs). For OIDs and UUIDs, use the URN form (urn:oid:(note: lowercase) and urn:uuid:). See http://www.ietf.org/rfc/rfc3001.txt and http://www.ietf.org/rfc/rfc4122.txt \r\n\r\nThis oid is used as an identifier II.root to indicate the the extension is an absolute URI (technically, an IRI). Typically, this is used for OIDs and GUIDs. Note that when this OID is used with OIDs and GUIDs, the II.extension should start with urn:oid or urn:uuid: \r\n\r\nNote that this OID is created to aid with interconversion between CDA and FHIR - FHIR uses urn:ietf:rfc:3986 as equivalent to this OID. URIs as identifiers appear more commonly in FHIR.\r\n\r\nThis OID may also be used in CD.codeSystem.\">Uniform Resource Identifier (URI)</a>/https://ministry-m.example.org/dsa/42/v3)</td></tr></table><p><b>combining</b>: Deny-overrides</p><blockquote><p><b>rule</b></p><p><b>type</b>: Permit</p><blockquote><p><b>data</b></p><h3>Resources</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Meaning</b></td><td><b>Reference</b></td></tr><tr><td style=\"display: none\">*</td><td>Instance</td><td>Ministry M immunization coverage dataset (Identifier: <a href=\"http://terminology.hl7.org/5.3.0/NamingSystem-uri.html\" title=\"As defined by RFC 3986 (http://www.ietf.org/rfc/rfc3986.txt)(with many schemes defined in many RFCs). For OIDs and UUIDs, use the URN form (urn:oid:(note: lowercase) and urn:uuid:). See http://www.ietf.org/rfc/rfc3001.txt and http://www.ietf.org/rfc/rfc4122.txt \r\n\r\nThis oid is used as an identifier II.root to indicate the the extension is an absolute URI (technically, an IRI). Typically, this is used for OIDs and GUIDs. Note that when this OID is used with OIDs and GUIDs, the II.extension should start with urn:oid or urn:uuid: \r\n\r\nNote that this OID is created to aid with interconversion between CDA and FHIR - FHIR uses urn:ietf:rfc:3986 as equivalent to this OID. URIs as identifiers appear more commonly in FHIR.\r\n\r\nThis OID may also be used in CD.codeSystem.\">Uniform Resource Identifier (URI)</a>/https://ministry-m.example.org/dataset/immunization-coverage)</td></tr></table></blockquote><h3>Activities</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Actor</b></td><td><b>Action</b></td><td><b>Purpose</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"Organization-InstituteI.html\">Institute I (urn:ietf:rfc:3986#Uniform Resource Identifier (URI)#https://institute-i.example.org/)</a></td><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/consentaction use}\">use</span></td><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/v3-ActReason PUBHLTH}\">public health</span></td></tr></table><p><b>limit</b>: <span title=\"Codes:{http://terminology.hl7.org/CodeSystem/v3-ActCode DELAU}\">delete after use</span></p></blockquote><blockquote><p><b>rule</b></p><p><b>type</b>: Deny</p><blockquote><p><b>data</b></p><h3>Resources</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Meaning</b></td><td><b>Reference</b></td></tr><tr><td style=\"display: none\">*</td><td>Instance</td><td>Ministry M immunization coverage dataset (Identifier: <a href=\"http://terminology.hl7.org/5.3.0/NamingSystem-uri.html\" title=\"As defined by RFC 3986 (http://www.ietf.org/rfc/rfc3986.txt)(with many schemes defined in many RFCs). For OIDs and UUIDs, use the URN form (urn:oid:(note: lowercase) and urn:uuid:). See http://www.ietf.org/rfc/rfc3001.txt and http://www.ietf.org/rfc/rfc4122.txt \r\n\r\nThis oid is used as an identifier II.root to indicate the the extension is an absolute URI (technically, an IRI). Typically, this is used for OIDs and GUIDs. Note that when this OID is used with OIDs and GUIDs, the II.extension should start with urn:oid or urn:uuid: \r\n\r\nNote that this OID is created to aid with interconversion between CDA and FHIR - FHIR uses urn:ietf:rfc:3986 as equivalent to this OID. URIs as identifiers appear more commonly in FHIR.\r\n\r\nThis OID may also be used in CD.codeSystem.\">Uniform Resource Identifier (URI)</a>/https://ministry-m.example.org/dataset/immunization-coverage)</td></tr></table></blockquote><h3>Activities</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Actor</b></td><td><b>Action</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"Organization-InstituteI.html\">Institute I (urn:ietf:rfc:3986#Uniform Resource Identifier (URI)#https://institute-i.example.org/)</a></td><td><span title=\"Codes:{http://terminology.hl7.org/CodeSystem/consentaction disclose}\">disclose</span></td></tr></table></blockquote></div>"
+  },
+  "status" : "active",
+  "asserter" : {
+    "reference" : "Organization/MinistryM"
+  },
+  "validity" : {
+    "start" : "2026-01-01T00:00:00Z",
+    "end" : "2027-12-31T23:59:59Z"
+  },
+  "justification" : {
+    "evidence" : [{
+      "identifier" : {
+        "system" : "urn:ietf:rfc:3986",
+        "value" : "https://ministry-m.example.org/dsa/42/v3"
+      },
+      "display" : "Data sharing agreement 42, version 3 (fixed-version URL = ODRL uid)"
+    }]
+  },
+  "combining" : "deny-overrides",
+  "rule" : [{
+    "type" : "permit",
+    "data" : [{
+      "resource" : [{
+        "meaning" : "instance",
+        "reference" : {
+          "identifier" : {
+            "system" : "urn:ietf:rfc:3986",
+            "value" : "https://ministry-m.example.org/dataset/immunization-coverage"
+          },
+          "display" : "Ministry M immunization coverage dataset"
+        }
+      }]
+    }],
+    "activity" : [{
+      "actor" : [{
+        "reference" : "Organization/InstituteI"
+      }],
+      "action" : [{
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/consentaction",
+          "code" : "use",
+          "display" : "use"
+        }]
+      }],
+      "purpose" : [{
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+          "code" : "PUBHLTH",
+          "display" : "public health"
+        }]
+      }]
+    }],
+    "limit" : [{
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+        "code" : "DELAU",
+        "display" : "delete after use"
+      }]
+    }]
+  },
+  {
+    "type" : "deny",
+    "data" : [{
+      "resource" : [{
+        "meaning" : "instance",
+        "reference" : {
+          "identifier" : {
+            "system" : "urn:ietf:rfc:3986",
+            "value" : "https://ministry-m.example.org/dataset/immunization-coverage"
+          },
+          "display" : "Ministry M immunization coverage dataset"
+        }
+      }]
+    }],
+    "activity" : [{
+      "actor" : [{
+        "reference" : "Organization/InstituteI"
+      }],
+      "action" : [{
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/consentaction",
+          "code" : "disclose",
+          "display" : "disclose"
+        }]
+      }]
+    }]
+  }]
+}

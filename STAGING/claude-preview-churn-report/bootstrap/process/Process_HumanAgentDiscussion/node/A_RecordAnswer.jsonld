@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/process/Process_HumanAgentDiscussion/node/A_RecordAnswer.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/process/Process_HumanAgentDiscussion/node/A_RecordAnswer",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Record the answer, and who gave it",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/process/Process_HumanAgentDiscussion",
+      "requires": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/skill/human-agent-discussion"
+    }
+  ]
+}

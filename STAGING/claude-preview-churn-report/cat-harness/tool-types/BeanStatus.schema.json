@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/tool-types/BeanStatus.schema.json",
+  "title": "BeanStatus",
+  "type": "string",
+  "enum": [
+    "draft",
+    "todo",
+    "in-progress",
+    "completed",
+    "scrapped"
+  ],
+  "description": "A bean status. Exactly what `beans update --status` accepts.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

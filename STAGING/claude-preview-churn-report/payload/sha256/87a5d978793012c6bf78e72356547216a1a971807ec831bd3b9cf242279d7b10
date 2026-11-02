@@ -1,0 +1,37 @@
+---
+# folio-assistant-vbhb
+$schema: bean/1.0.0
+title: 'sci and folio-assistant pin tools and workflows to moving refs'
+status: completed
+type: bug
+priority: normal
+tags:
+    - security
+    - security-review-2026-10-31
+    - red-flag-security
+created_at: 2026-10-31T04:01:56Z
+updated_at: 2026-11-01T22:10:00Z
+parent: folio-assistant-sb31
+---
+
+Found by the 2026-10-31 security and QA review of the folio-assistant layers (SOP: cat-harness `skills/conduct/security/`, the 16 rules of `skills/voices/secure-code-authoring/voice.json`, RED FLAG categories of cat-harness-tools `schemas/sdlc/red-flag.ts`). No fix PR yet: fixes wait for the owner's go-ahead.
+
+**Category:** security · **Severity:** minor
+
+Rule `scz-pin-third-party-by-full-sha`.
+
+- folio-assistant-sci `.github/workflows/cancel-on-close.yml:16`, `harness-pr-checks.yml:20,38`, `publish-context.yml:18` call `litlfred/cat-harness-tools/.github/workflows/layer-*.yml@main`. These run with sci's tokens (`issues: write`, `contents: write`, `actions: write`). folio-assistant pins the same kind of call by SHA (`main-qa.yml:35`).
+- folio-assistant `.mcp.json`: the `sage` server runs `sagemath/sagemath:latest`, a moving Docker tag, on every session that enables it. Pin by `@sha256:` digest.
+
+Third-party actions in both repos are all SHA-pinned (cat-harness-tools `pin-actions.ts`: 0 to pin in folio-assistant; grep in sci).
+
+## Done when
+
+- [x] sci's reusable workflow calls are SHA-pinned
+- [x] The sage image is pinned by digest
+
+_2026-10-31T04:15:00Z_ — Claimed by agy (`44190586-6f7e-4f91-bace-14f09541fa6a`).
+
+_2026-10-31T08:24:00Z_ — PRs open: https://github.com/litlfred/folio-assistant-sci/pull/158 (SHA-pins `litlfred/cat-harness-tools/.github/workflows/layer-*.yml` in `sci`) and https://github.com/litlfred/folio-assistant/pull/2829 (pins `sagemath/sagemath@sha256:310dfe23fc786f3a5a06a7b0387c60201ec79b32c0db941b7624505ee5edb565` in `.mcp.json` and `.github/workflows/wrapper-tests.yml`).
+
+_2026-11-01T22:10:00Z_ — Completed: folio-assistant part merged in litlfred/folio-assistant#2829 (merge `cbd4361`): `.mcp.json` and `wrapper-tests.yml` pin `sagemath/sagemath` by `@sha256:` digest. sci part merged earlier in folio-assistant-sci#158. MVP security review, session https://claude.ai/code/session_01Qmmkt7zjJDpkdmxtXvQWTS

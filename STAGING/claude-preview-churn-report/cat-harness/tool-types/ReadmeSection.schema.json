@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/cat-harness/tool-types/ReadmeSection.schema.json",
+  "title": "ReadmeSection",
+  "type": "string",
+  "enum": [
+    "folio:toc",
+    "folio:lean-coverage",
+    "folio:lean-modules",
+    "folio:simulators",
+    "folio:workflows",
+    "skills:index"
+  ],
+  "description": "A generated README section, named by its marker.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}

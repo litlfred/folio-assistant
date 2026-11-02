@@ -1,0 +1,18 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/directory/schemas.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/directory/schemas",
+      "@type": "bootstrap:Subgraph",
+      "label": "schemas",
+      "description": "The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion Process. Their published `$id`s do not change when a file moves.",
+      "type": [
+        "bootstrap:graphTypology/schemas"
+      ],
+      "source": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/schemas/",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-churn-report/bootstrap/bootstrap.jsonld"
+    }
+  ]
+}

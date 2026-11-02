@@ -1,0 +1,122 @@
+{
+  "$ref": "#/definitions/ToolInvocation",
+  "definitions": {
+    "ToolInvocation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tool": {
+          "type": "string",
+          "minLength": 1
+        },
+        "skill": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "A skill name, e.g. todo-manager"
+        },
+        "by": {
+          "type": "object",
+          "properties": {
+            "actor": {
+              "type": "string",
+              "minLength": 1
+            },
+            "role": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "actor",
+            "role"
+          ]
+        },
+        "context": {
+          "type": "object",
+          "properties": {
+            "process": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+              "description": "A BPMN process element id, e.g. Process_CRDM"
+            },
+            "task": {
+              "type": "string",
+              "minLength": 1
+            },
+            "instance": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "process",
+            "task"
+          ]
+        },
+        "inputs": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "argv": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "ran",
+            "refused-permission",
+            "refused-input",
+            "unavailable",
+            "failed"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "exitCode": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "started_at": {
+          "type": "string"
+        },
+        "finished_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "tool",
+        "skill",
+        "by",
+        "inputs",
+        "argv",
+        "outcome",
+        "started_at"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-invocation/ToolInvocationSchema.schema.json",
+  "title": "ToolInvocationSchema",
+  "description": "Generated from `ToolInvocationSchema` in schemas/tools/tool-invocation.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-churn-report",
+    "sha": "c12535d0f29bf2c464c88f9908fe27639e326b23",
+    "pr": "2904/merge",
+    "run": "41386946655"
+  }
+}
