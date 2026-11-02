@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T23:29:34Z
+updated_at: 2026-11-02T23:52:30Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -136,3 +136,5 @@ _2026-11-02T22:51:08Z_ — CI on 3b74fbd: shard 4 green (the deck and nested-ins
 _2026-11-02T23:29:34Z_ — MERGED the re-pin train folio-assistant#2921 as 2e10fd3, at e9fc31d. Its verdict status read "no new failures vs main 7e745b9 (1 known)". 26 checks passed; the 1 red is bun test shard 2, red on main too (bean-parents on the shared work plan). It touched 7 files and nothing under subscriptions/. folio-assistant main now pins cat-harness d696b2f, cat-harness-tools f96dfff, core 6f04061 and who-iris 40d52ba.
 - MERGED cat-harness#1001 as f3e6197 (green, clean).
 - Re-running against the new main pins: who-iris#165, core#624, cat-harness-tools#1422 (their only reds were the comparison against the old pins).
+
+_2026-11-02T23:52:30Z_ — MERGED who-iris#165 (83c2e00) and folio-assistant-core#624 (e987b89), both green and clean after re-running against folio-assistant main's new pins. drnh's plan was to merge #165 after the train; main already pinned its head. cat-harness-tools#1422: its Standalone check found 1 new failure (the core table-Tool pair, absent when core is not mounted). The expectation is now conditional on core's Tools being loaded; pushed, CI running.
