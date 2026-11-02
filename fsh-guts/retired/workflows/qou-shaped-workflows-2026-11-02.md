@@ -1,3 +1,15 @@
+---
+$schema: folio-fsh-guts/v1
+title: "Four qou-shaped workflows retired from folio-assistant"
+kind: retired-workflow
+movedOn: 2026-11-02
+movedFrom: "folio-assistant/.github/workflows/{snappea_wasm,hecke-engine-wasm,witness-refresh,publish}.yml"
+issue: 2909
+summary: >-
+  Copied verbatim from folio-assistant main at 41bbb14ed0 and removed there so
+  separation:cutover:check passes (fa#2894 Phase 2c, GOAL 1 separation).
+---
+
 # Four qou-shaped workflows retired from folio-assistant (2026-11-02)
 
 Copied verbatim from folio-assistant main at `41bbb14ed0` and removed from
