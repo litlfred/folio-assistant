@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-02T18:30:00Z
+updated_at: 2026-11-02T18:36:00Z
 parent: folio-assistant-4j43
 tags:
     - folio-glass
@@ -35,12 +35,12 @@ Resume prompt: "read bean folio-assistant-fbmk on branch cat/cat-harness/beans o
 - Avatars: `avatarOf` in `cat-harness-tools/scripts/library-graph.ts`; covers via `library-covers.ts`; avatar kinds in `avatars.css` (from `gen-avatars-css.ts`).
 - Block gutter icons (✎ edit, 📣 feedback, 🔗): `folio-assistant-core/scripts/block-actions.ts`, drawn by `build-document-site.ts`. Skill `folio-assistant-core/skills/content/folio-document-adapter/block-actions.md`.
 - Glass rules: skill `cat-harness/skills/ui/ui-core/board-windows.md` and `folio-assistant-core/.../folio-board-windows.md` (three states library / folio / glass; put-back happens from the source, not from the glass).
-- Copilot instructions: none in folio-assistant-core, cat-harness-tools (checked 18:28Z). cat-harness: to check.
+- Copilot instructions: none in folio-assistant-core, cat-harness-tools (checked 18:28Z). cat-harness: none.
 
 ## Plan
 
-- [ ] Mockups (bookmark in gutter; bookmark card on glass; pinned block card for glossary / BPMN / FHIR) and card Q-BMK-1 for the owner.
-- [ ] GitHub issue (cat-harness, the glass owner).
+- [x] Mockups (bookmark in gutter; bookmark card on glass; pinned block card for glossary / BPMN / FHIR) and card Q-BMK-1 for the owner.
+- [x] GitHub issue: litlfred/cat-harness#982.
 - [ ] Core infra: one generic opt-in, e.g. `data-fa-pin="<iri>"` + title/href/avatar/kind on any rendered block of any graph kind, so docs-ui.js gives it a pin control and calls `displayInFolio`. Store key = the node IRI.
 - [ ] Bookmark = kind `bookmark`, href = document URL + block anchor, avatar = the document's cover + bookmark badge.
 - [ ] Tests (docs-ui specs, block-actions tests), PRs, watch.
@@ -48,3 +48,5 @@ Resume prompt: "read bean folio-assistant-fbmk on branch cat/cat-harness/beans o
 ## Log
 
 _2026-11-02T18:30Z_ — bean created; code located; mockups next.
+
+_2026-11-02T18:36Z_ — mockup + card Q-BMK-1 posted (A link card / B live window / C A now B next, recommended C). Issue cat-harness#982. Waiting on card and on gutter rework PRs.
