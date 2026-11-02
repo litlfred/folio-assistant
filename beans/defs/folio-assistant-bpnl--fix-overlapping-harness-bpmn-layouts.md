@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:55:00Z
-updated_at: 2026-11-02T19:20:00Z
+updated_at: 2026-11-02T19:13:00Z
 parent: folio-assistant-rwmf
 tags:
     - bpmn-layout
@@ -33,3 +33,7 @@ Local setup: clone cat-harness, cat-harness-tools, bootstrap-tools side by side;
 _2026-11-02T18:55:00Z_ — Filed by the BPMN layout thread, session https://claude.ai/code/session_01Qmmkt7JGxreHWSJr571Mwq
 
 _2026-11-02T19:20:00Z_ — Issue cat-harness#989, draft PR cat-harness#990 (branch claude/bpmn-layout-overlaps): code-change-review (2050->1390) and crdm-requirements (3146->1142) redrawn by hand, both clean. Generator: /mnt/project-files/bpmn-layout-2026-11-02/gen/{di.py,ccr.py,crdm.py} (rewrites the BPMNPlane from a coordinate spec, keeps DI ids). `--write` on the rest fixed little (62 still flagged), reverted. 43 diagrams have overlap findings, 20 only width. Card Q-LAYOUT-1 (A all 43 rec / B all 63 / C merge two now / D stop). Working on A meanwhile, worst first: activity-log, feature-staging, session-state-machine, refresh-materialized, slice-sqlite-publish, test-plan-execution, merge-base, nquads-distribution...
+
+_2026-11-02T19:13:00Z_ — Owner chose A (redraw all 43 with overlaps), and asked to improve authoring skills (done in 9dd97fc: bpmn-authoring requires zero `--check` findings; bpmn-detangle "Laying it out by hand" patterns). PR #990 pushed. DONE (clean or width-only): code-change-review, crdm-requirements, activity-log, feature-staging, session-state-machine, refresh-materialized, slice-sqlite-publish, test-plan-execution (too-wide 1760), merge-base, nquads-distribution, sme-test-data-review, code-quality-gates (too-wide 1540), adjudication, crdm-close. Names shortened (with .pot msgids): refresh-materialized Task_RecordConflict; sme-test-data-review 3 tasks.
+NEXT (worst first): review-task (no pool: rewrite() needs a pool, use lanes only), subscribe-kg (4186 wide, 32 nodes, wrap rows), kg-separation, test-data-curation, merge-train, crdm-deliver, human-translation-workflow, sub-kg-lifecycle, named-query-execution, mount-subgraph, kg-to-portal, requirements-filing, narrative-code-review, merge-refusal, bean-close, document-ingestion, mount-dependency, graph-detanglement, staging-render-log, qa-publish, bean-drain, crdm-requirements-definition, crdm-issue-linking, voice-review, upstream-pin-watch, publish-verification, options-analysis, secure-agent-permissions, crdm-signoff, translation-workflow, copy-into-folio.
+Resume: generator scripts per diagram in /mnt/project-files/bpmn-layout-2026-11-02/gen/ (di.py rewrite/patch, dump.py); /home/claude/work/chk.sh = detangle + before/after PNG (recreate: see How to resume above). Then before/after PNGs for all, merge card.
