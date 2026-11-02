@@ -1,0 +1,284 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_RefreshMaterialized",
+    "path": "processes/library/refresh-materialized.bpmn"
+  },
+  "source_hash": "sha256:1fed198b0d9d31a5af55ccb6f834a6893b8718833955f0e8540d5ccf823ebb1d",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Fixity",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Upstream",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Local",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Adjudicate",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Adjudicate",
+          "detail": "names skill \"adjudication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Reconcile",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Apply",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_KeepLocal",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RecordConflict",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_RefreshMaterialized",
+          "detail": "refresh-materialized.svg is rendered but no docs page shows it — run `bun run cat processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Upstream",
+          "detail": "\"WORKING what changed upstream\" starts with \"working\", which reads as a noun or gerund. Start with an imperative verb, then its object (verb-object)."
+        }
+      ]
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Flow_Merge×Flow_Reconciled",
+          "detail": "flows Flow_Merge and Flow_Reconciled cross."
+        },
+        {
+          "where": "Flow_Defer×Flow_Kept",
+          "detail": "flows Flow_Defer and Flow_Kept cross."
+        },
+        {
+          "where": "Flow_Defer×Flow_Deferred",
+          "detail": "flows Flow_Defer and Flow_Deferred cross."
+        }
+      ]
+    },
+    "edge-through-node": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Flow_8",
+          "detail": "flow Task_Adjudicate → GW_Outcome runs over \"Re-materialize, re-asking the five gates — and record the new fixity\", which it does not connect."
+        },
+        {
+          "where": "Flow_Remote",
+          "detail": "flow GW_Outcome → Task_Apply runs over \"Fresh, and the graph records against what\", which it does not connect."
+        },
+        {
+          "where": "Flow_Reconciled",
+          "detail": "flow Task_Reconcile → Task_Apply runs over \"Adjudicate the conflict\", which it does not connect."
+        },
+        {
+          "where": "Flow_9",
+          "detail": "flow Task_Fixity → EndEvent_Fresh runs over \"Re-materialize, re-asking the five gates — and record the new fixity\", which it does not connect."
+        }
+      ]
+    },
+    "diagram-too-wide": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "diagram",
+          "detail": "2130 wide, budget 1400: text shows at 9.0px in a 1200px band. Close the gaps between columns, stack steps of different lanes in one column, or split by phase."
+        }
+      ]
+    },
+    "diagram-too-tall": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-edge": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-shape": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Flow_6/Gateway_Both",
+          "detail": "label \"yes\" covers \"Both changed?\"."
+        }
+      ]
+    },
+    "label-on-lane-line": {
+      "result": "pass",
+      "findings": []
+    },
+    "shape-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-order": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 30,
+    "fail": 7,
+    "n/a": 8,
+    "unknown": 0
+  }
+}
