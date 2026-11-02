@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/editor.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1022",
+    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "pr": "2911/merge",
+    "run": "41428808694"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/editor",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Role",
+      "prefLabel": "Editor",
+      "title": "Editor",
+      "notation": "editor",
+      "description": "Author plus the authority to accept a change into the corpus. The lane that sees QA findings and decides.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/skill/voice-authoring-guidance"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1022",
+    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "pr": "2911/merge",
+    "run": "41428808694"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Another active voice?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/narrative-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_VoiceReview/lane/Lane_NarrativeReviewer",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_VoiceReview#flow/Flow_GW_MoreVoices_Join"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_VoiceReview#flow/F_V11",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_VoiceReview#flow/F_V12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices"
+    }
+  ]
+}

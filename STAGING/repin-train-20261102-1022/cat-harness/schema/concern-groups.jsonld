@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/schema/concern-groups.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1022",
+    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "pr": "2911/merge",
+    "run": "41428808694"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/schema/concern-groups",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "name": "concern-groups",
+      "title": "concern-groups",
+      "summary": "The shape of a kind's FROM-WITHIN declaration file when it names concern",
+      "module": "schemas/kg/concern-groups.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/concern-groups"
+    }
+  ]
+}

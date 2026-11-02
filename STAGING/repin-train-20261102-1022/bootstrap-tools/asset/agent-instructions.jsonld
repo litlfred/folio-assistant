@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/asset/agent-instructions.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1022",
+    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "pr": "2911/merge",
+    "run": "41428808694"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/bootstrap-tools/asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — bootstrap-tools",
+      "description": "The one-way boundary: this reads and writes bootstrap, bootstrap never imports from here, and nothing here imports above bootstrap. How an agent runs each tool, and what a Zod change does to a published contract.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/asset/agent-instructions"
+    }
+  ]
+}

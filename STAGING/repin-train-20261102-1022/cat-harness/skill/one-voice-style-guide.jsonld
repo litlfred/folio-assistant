@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/skill/one-voice-style-guide.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1022",
+    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "pr": "2911/merge",
+    "run": "41428808694"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/skill/one-voice-style-guide",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "one-voice-style-guide",
+      "title": "One-Voice Style Guide — Author Voice Profile",
+      "description": "Author voice profile and narrative style guide. Reference when authoring or editing prose. Pairs with `one-voice-audit` (mechanical sweep for status leaks, emoji, and Unicode crashes).",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/package/authoring-core"
+      ],
+      "instructionsPath": "skills/authoring/authoring-core/one-voice-style-guide.md",
+      "instructionLines": 228,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-style-guide"
+    }
+  ]
+}

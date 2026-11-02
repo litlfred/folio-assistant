@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CriterionAdjudication/node/A_ScopeCriterion.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-1022",
+    "sha": "f0452588d2b5dc368ac4a9547c9d649d232c1296",
+    "pr": "2911/merge",
+    "run": "41428808694"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CriterionAdjudication/node/A_ScopeCriterion",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Scope the criterion so it stops applying here",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/role/adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CriterionAdjudication#flow/F_Scope"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/process/Process_CriterionAdjudication#flow/F_C5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-1022/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/A_ScopeCriterion"
+    }
+  ]
+}
