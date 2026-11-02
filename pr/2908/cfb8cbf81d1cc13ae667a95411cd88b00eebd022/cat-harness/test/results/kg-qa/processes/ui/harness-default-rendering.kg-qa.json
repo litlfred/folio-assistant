@@ -1,0 +1,262 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_HarnessRendering",
+    "path": "processes/ui/harness-default-rendering.bpmn"
+  },
+  "source_hash": "sha256:a166216e04ff5af5c9046491fe80f8b2ee4f94c6d4976c631214a1eab6274247",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Publish",
+          "detail": "names skill \"liquid-templates\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Read",
+          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Todo",
+          "detail": "names skill \"content-feedback\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Tiles",
+          "detail": "needs skill \"harness-tiles\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_Ground",
+          "detail": "needs skill \"harness-tiles\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_Publish",
+          "detail": "needs skill \"liquid-templates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_Board",
+          "detail": "needs skill \"todo-manager\", but its lane's role \"board-renderer\" does not carry it."
+        },
+        {
+          "where": "A_Propose",
+          "detail": "needs skill \"kg-affordances\", but its lane's role \"reviewer\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Tiles",
+          "detail": "task \"Compose each harness's nav and tile\" requires skill \"harness-tiles\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Ground",
+          "detail": "task \"Resolve each harness's page ground\" requires skill \"harness-tiles\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Publish",
+          "detail": "task \"Publish docs on their theme's art\" requires skill \"liquid-templates\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Board",
+          "detail": "task \"Draw the board of todos and beans\" requires skill \"todo-manager\", which role \"board-renderer\" (named by lane \"Board renderer\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Propose",
+          "detail": "task \"Propose the change\" requires skill \"kg-affordances\", which role \"reviewer\" (named by lane \"Reviewer\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "pass",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_HarnessRendering",
+          "detail": "harness-default-rendering.svg is rendered but no docs page shows it — run `bun run cat processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-through-node": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-wide": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-tall": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-edge": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-shape": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Start_Process_HarnessRendering/Lane_Pipeline",
+          "detail": "label \"Site build starts\" runs into the name of \"Build pipeline\"."
+        }
+      ]
+    },
+    "label-on-lane-line": {
+      "result": "pass",
+      "findings": []
+    },
+    "shape-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-order": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 31,
+    "fail": 5,
+    "n/a": 9,
+    "unknown": 0
+  }
+}
