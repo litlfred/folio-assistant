@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-02T18:53:00Z
+updated_at: 2026-11-02T19:04:00Z
 parent: folio-assistant-4j43
 tags:
     - folio-glass
@@ -54,3 +54,4 @@ _2026-11-02T18:36Z_ — mockup + card Q-BMK-1 posted (A link card / B live windo
 _2026-11-02T18:30Z_ — owner chose Q-BMK-1 = C. Owner 18:29Z: lazy-load all visualizers (many item types).
 _2026-11-02T18:55Z_ — draft PRs cat-harness#984 (docs-ui.js: data-fa-pin* contract, window.faFolio.pin, link cards with 🔖/📌 badge, glass filter kinds) and cat-harness-tools#1412 (spec test/content/folio-block-pins.e2e.ts, 5 pass locally). Follow-up issue cat-harness#985 (lazy live windows per kind). NEXT: when tools#1411 + harness#981 merge, add 🔖 to the block panel/gutter in cat-harness-tools src/core/edit-links.ts (emit data-fa-pin attrs on .block-actions box, kind bookmark, avatar = document cover) and regenerate cat-harness site-chrome/assets/js/edit-links.js. Then emit data-fa-pin on graph-node subject pages (cat-harness-tools scripts/kg-export.ts subjectPage) so every graph kind is pinnable. Local e2e: CAT_HARNESS_ROOT=../cat-harness PLAYWRIGHT_CHROMIUM_PATH=/opt/pw-browsers/chromium with a minimal config without globalSetup.
 _2026-11-02T18:53Z_ — badge/avatar fixes pushed (#984 head 364ddb5). Both PRs green + clean. Live preview https://claude.ai/artifact/J4dgvHxEMG8PQr6wYaJXoj; screenshots /mnt/project-files/folio-bookmarks-2026-11-02/. Merge was denied without owner OK: card Q-BMK-2 (A merge both, #984 first; B wait for gutter; C owner merges). Reminder set 19:36Z to check tools#1411/harness#981.
+_2026-11-02T19:04Z_ — owner tapped Q-BMK-2 A. MERGED cat-harness#984 (ea6ace8) and tools#1412 (109b850). Remaining: gutter 🔖 after tools#1411/harness#981; data-fa-pin on kg subject pages; #985 live windows. Re-pin train needs cat-harness >= ea6ace8 for sites to show it.
