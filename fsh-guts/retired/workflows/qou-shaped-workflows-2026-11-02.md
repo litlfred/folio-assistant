@@ -10,16 +10,20 @@ summary: >-
   folio-assistant/computations and folio-assistant/snappea-wasm, paths of the
   old monorepo checkout that separation:cutover:check flags. All three ran only
   by hand. Retired on the owner's choice Q-SEP-5 A (2026-11-02 10:05Z); kept
-  verbatim beside this note. publish.yml was archived too at first, then kept
-  in fa: cat-harness-tools tests treat it as the platform's reusable folio
-  pipeline.
+  verbatim beside this note. PENDING: the originals are still in fa. Removing
+  them leaves stale exemptions in cat-harness-tools check-workflow-paths, so
+  the removal waits for one post-MVP change with the tools list and fa's pin
+  together (fa#2909 was narrowed to the lake-cache fix). publish.yml was
+  archived too at first, then kept: cat-harness-tools tests treat it as the
+  platform's reusable folio pipeline.
 ---
 
 # Three qou-shaped workflows retired from folio-assistant (2026-11-02)
 
-Copied verbatim from folio-assistant main at `41bbb14ed0` and removed from
-`.github/workflows/` there, so `separation:cutover:check` (monorepo-paths)
-passes. Part of fa#2894 Phase 2c (GOAL 1 separation), PR fa#2909.
+Copied verbatim from folio-assistant main at `41bbb14ed0`. **Pending:** the
+originals are still in fa's `.github/workflows/`; their removal waits for a
+post-MVP change that also drops their exemptions from cat-harness-tools
+`check-workflow-paths` (FOLIO_PATHS, FOLIO_WORKDIRS). Part of fa#2894 Phase 2c.
 
 | file | why it cannot run in folio-assistant |
 |---|---|
