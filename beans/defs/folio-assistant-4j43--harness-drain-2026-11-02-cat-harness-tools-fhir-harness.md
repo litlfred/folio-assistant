@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T19:58:55Z
+updated_at: 2026-11-02T20:21:24Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -65,3 +65,5 @@ _2026-11-02T19:58:55Z_ — The owner allowed add_repo. Attached: cat-harness, ca
 - Train fa#2921 is still open (de098fc). The tools#1299 recount waits on it.
 - Not drain items, and left alone: cat-harness#996 and core#624 (glossary regen for the train, which the coordinator owns), cat-harness#998 and #999 (saturation sibling), cat-harness#992 and #993 (owner proposal bsd1, owner questions open).
 Session https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5
+
+_2026-11-02T20:21:24Z_ — Train fa#2921 taken over by https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5, on the owner's choice (card: coordinator https://claude.ai/code/session_01EucfRmNiFYxXqLAgwhF71Q was archived at about 20:09Z). All 16 reds on de098fc come from the single cat-harness c7cfab5 qa:working-copy root, fixed by cat-harness#999 (36b9f0f, all checks green, owned by the saturation sibling). The train pins who-iris at 40d52ba (= #165 head) and core at 6f04061 (= core#624 head), so those merge with it. Rehearsing the train locally with cat-harness at 36b9f0f to find any hidden reds before the re-pin.

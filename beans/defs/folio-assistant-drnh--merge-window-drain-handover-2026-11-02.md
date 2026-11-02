@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T20:14:09Z
+updated_at: 2026-11-02T20:21:24Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -96,3 +96,5 @@ _2026-11-02T20:05:03Z_ — Train check: repin-train/20261102-1625 is still the n
 _2026-11-02T20:13:54Z_ — cat-harness#999 merged at 42bc930 with all checks green (it also lands #996, c7cfab5). Re-pinned on repin-train/20261102-1625 as 9675208: index.lock.json harness ref, instance sha, trust ref and treeDigest (5d14177c…, 12002 files, declaration unchanged), and index.config.json ref plus consent ref, following 68df55f. Coordinator messaged.
 
 _2026-11-02T20:14:09Z_ — Correction to the previous entry: the coordinator was NOT messaged. session_01EucfRmNiFYxXqLAgwhF71Q has been archived since about 20:09Z, so send_message was refused. Whoever owns the train merge next: fa#2921 is at 9675208 (cat-harness 42bc930) and needs its CI watched and merged by 2026-11-03 00:40Z.
+
+_2026-11-02T20:21:24Z_ — Train fa#2921 taken over by https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5, on the owner's choice (card: coordinator https://claude.ai/code/session_01EucfRmNiFYxXqLAgwhF71Q was archived at about 20:09Z). All 16 reds on de098fc come from the single cat-harness c7cfab5 qa:working-copy root, fixed by cat-harness#999 (36b9f0f, all checks green, owned by the saturation sibling). The train pins who-iris at 40d52ba (= #165 head) and core at 6f04061 (= core#624 head), so those merge with it. Rehearsing the train locally with cat-harness at 36b9f0f to find any hidden reds before the re-pin.
