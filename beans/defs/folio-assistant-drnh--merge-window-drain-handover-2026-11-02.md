@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T21:39:38Z
+updated_at: 2026-11-02T22:22:21Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -125,3 +125,8 @@ Order: the train merges, then #1001 and #1422 re-run against the new main pins a
 _2026-11-02T21:26:53Z_ — Train at aa3ac81: cat-harness 4bf7090 (#1001, now also rewriting saturation-meta-merge's process summary, whose first sentence "Owner, 2026-11-02 06:57Z…" failed process-index's no-chatter rule). Not fixed and not the train's: check:bean-parents fails on the shared work plan, because open beans bmat and rpc6 have no `parent`. It's red on main too, since the state branch is shared. Their threads should give each an epic parent; this drain did not guess one.
 
 _2026-11-02T21:39:38Z_ — Train at 9032f1c: cat-harness-tools 4824597 (#1422), which drops the unused readRoleGraph import that failed lint on aa3ac81 (reported by sibling https://claude.ai/code/session_01EucfRp9ycxtZrrBKaipNy5). ESLint is clean on every file #1422 touches.
+
+_2026-11-02T22:22:21Z_ — CI on 9032f1c: 25 passed, 2 red (bun test shards 2 and 4). The repin-train verdict was "1 new failure vs main 7e745b9", which is shard 4: main's red shards are 2 and 3. Shard 4's tests:
+- the living deck's image paths: a real cat-harness defect. Bean 6fez filed kg-folio-asst-2026-09-30 one level down, but its images.json kept ../../docs/ paths (28 of them broken). Fixed in cat-harness#1001 (9d9d7e2).
+- kg:validate nested instances (676g): fixed by sibling tools#1419, whose diff is carried on #1422 (f96dfff).
+Shard 2's remaining red is bean-parents (bmat and rpc6 have no parent), which is the shared work plan's and red on main too. The train is at 3b74fbd.
