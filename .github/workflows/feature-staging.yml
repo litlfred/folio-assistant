@@ -1356,6 +1356,8 @@ jobs:
           # not a blocked preview.
           # Which derive:publish writers this preview skipped, and why the rest ran (bean fwtz).
           { grep -E 'writer skip|skipped |[^ ]+ runs: |^  ran ' "$RUNNER_TEMP/derive.log" || true; } > ./_site/writer-skip.txt 2>/dev/null || true
+          # What changed, which writer wrote it, and what ran again because of it (tools#1217).
+          cp build/writer-cone/churn.json ./_site/writer-churn.json 2>/dev/null || true
           RECORD=./_site/staging-preview.json
           git show "FETCH_HEAD:STAGING/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
             || rm -f "$RECORD"
