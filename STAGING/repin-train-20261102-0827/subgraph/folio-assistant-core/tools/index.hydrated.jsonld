@@ -1,0 +1,1969 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-tools",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "The content layer's Tool nodes. Declared 2026-09-22 with the first one, `folio-changeset` (bean jwox, epic q4jm), which exposes `schemas/changeset.ts`. Reached by the harness through tool auto-discovery (bean p0za, owner ruling 2026-09-22), never by an import: the harness may not import core, and a Tool node is a declaration loaded by path.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-tools",
+      "name": "core-tools",
+      "path": "tools/",
+      "readmePath": "tools/README.md"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/archimate-from-glossary/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/archimate-from-glossary.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Make an ArchiMate model agree with the instance's folio-glossary/v1 terms whose `focus` is an ArchiMate element: elements matched by their `skosConcept` property (never by name) take the term's prefLabel and definition, a term with no element gets one on no view, and the relationships the terms list are added. A type that disagrees is reported, never changed. A relationship between two linked elements that no term lists is reported, and removed with `--prune` along with the lines that draw it. No box or line is moved. Without `--write` it only reports; `--check` fails when anything would change.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat archimate:from-glossary"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--instance"
+                },
+                "description": "The instance root holding `glossary/*.glossary.json` and `archimate/cat-archimate.config.json`.",
+                "name": "instance",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--model"
+                },
+                "description": "The model's id in the ArchiMate config.",
+                "name": "model",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ArchimateModelId"
+              },
+              {
+                "arg": {
+                  "flag": "--write"
+                },
+                "description": "Write the changes into the model file.",
+                "name": "write",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--prune"
+                },
+                "description": "Also remove relationships between linked elements that no term lists.",
+                "name": "prune",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Fail if the model and the graph disagree.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The model file, rewritten in place with `--write`.",
+                "name": "model",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "archimate-from-glossary",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+          "title": "ArchiMate model from the glossary"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/archimate-from-glossary",
+      "path": "tools/archimate-from-glossary/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/bibliography-page/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/bibliography-page.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Render every reference in the checkout (each declared `references` directory's folio-reference/v1 nodes and each `catalogue` directory's Dublin Core records) as the bibliography page and one page per sub-graph, each with its BibTeX, CSL-JSON, RIS and Dublin Core JSON-LD exports and a per-reference export, at the route of the visualiser core declares for it.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat bibliography:page"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Fail if a page or export is stale, instead of writing.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--site"
+                },
+                "description": "A site being built: write the pages at their declared route under it instead of under cat-harness's docs, as a repository's own site build does (`visualiser-writers.ts`).",
+                "name": "site",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The bibliography pages and their exports, under the published site directory.",
+                "name": "pages",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "bibliography-page",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+          "title": "Bibliography page"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/bibliography-page",
+      "path": "tools/bibliography-page/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/block-actions/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/block-actions.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on `main`, and [feedback] opens a new GitHub issue about the block, from the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the `block-actions` skill (bean `uphx`, REQ-17).",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/block-actions.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The folio's repository root. Default: the working directory.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--block"
+                },
+                "description": "One block's label. Absent: every block of every document. A label no block has exits 1.",
+                "name": "block",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+              },
+              {
+                "arg": {
+                  "flag": "--github"
+                },
+                "description": "`owner/name` on GitHub. Default `GITHUB_REPOSITORY`, else the checkout's `origin`. None at all exits 2: no links rather than broken ones.",
+                "name": "github",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--edit-branch"
+                },
+                "description": "The branch [edit] opens. Default `main`.",
+                "name": "edit-branch",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              },
+              {
+                "arg": {
+                  "flag": "--issue-template"
+                },
+                "description": "The issue form's file name under `.github/ISSUE_TEMPLATE/`. Default `block-feedback.yml`, used only if the folio has it.",
+                "name": "issue-template",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "JSON on stdout: one `{ label, source, section, edit, feedback }` per block. A one-line summary goes to stderr.",
+                "name": "links",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "block-actions",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/block-actions",
+          "title": "Block edit and feedback links"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/block-actions",
+      "path": "tools/block-actions/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/catalogue-from-references/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/catalogue-from-references.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Write one `folio-dublin-core/v1` record and one `folio-catalogue-node/v1` item per library entry that the source ledger joins to a CSL-JSON reference, into the folio's declared `catalogue` directory, so `gen-library-jsonld` reads the title from the catalogue's `dc.title` instead of falling to the PDF or the slug. The join is exact: a ledger row naming the entry's `structure.json` source file, one reference id, and the same sha256 where both record one. Unjoined entries are reported and left alone. Never touches a node it did not write (folio-assistant-core#72).",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/catalogue-from-references.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The folio instance's root. It must declare a `catalogue` and a `library` directory.",
+                "name": "instance",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--apply"
+                },
+                "description": "Write the records and nodes, and remove this tool's stale ones. Without it the run is a dry run.",
+                "name": "apply",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Write nothing. Exit 1 if any record or node on disk differs from what the bibliography gives.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--json"
+                },
+                "description": "Print the plan as JSON.",
+                "name": "json",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`<catalogue>/records/<slug>.dc.json` and `<catalogue>/nodes/item-<slug>.json` per joined entry; `catalogue.json` when absent and `--base-url` is given. A summary of joined and left-alone entries goes to stdout.",
+                "name": "catalogue",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "catalogue-from-references",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/filing-dublin-core",
+          "title": "Catalogue a library from its bibliography"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/catalogue-from-references",
+      "path": "tools/catalogue-from-references/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/check-dsa-hash/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/check-dsa-hash.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Verify a Data Sharing Agreement (DSA) directory or single version: checks that every JSON-LD term in `agreement.jsonld` and `dcat.jsonld` is defined in the SHA-256-pinned official W3C ODRL 2.2, W3C DCAT 3 (with SPDX 2.2.2 and ADMS), or DCMI Metadata Terms contexts; checks that the ODRL 2.2 Agreement's `uid` is the version's fixed-version URL and its `dcterms:source` cites the DCAT 3 `dcat:Distribution` whose `spdx:checksum` is checked; verifies that the SHA-256 digest of `agreement.md` matches `spdx:checksumValue`; and checks `dcat:previousVersion` and hash distinctness across versions.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/check-dsa-hash.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "Path to a versioned DSA directory (holding `v1/`, `v2/`, ...) or a single version directory holding `agreement.md`, `dcat.jsonld`, and `agreement.jsonld`. Defaults to `folio-assistant-core/scripts/test-fixtures/dsa`.",
+                "name": "dir",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Per-version verification line (`dcat:version`, `dcat:downloadURL`, `sha256`) on stdout when valid; diagnostic findings on stderr with exit code 1 when any check fails.",
+                "name": "verdict",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "check-dsa-hash",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-checksum",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-dcat-record",
+            "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-catalogue-status"
+          ],
+          "title": "Verify Data Sharing Agreement hash, citation, and vocabulary terms"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/check-dsa-hash",
+      "path": "tools/check-dsa-hash/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/diig-phases-svg/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/diig-phases-svg.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Draw a DIIG \"phases, steps and resources\" chart as SVG from `diig-phases-figure/v1` data on a who-iris library entry (DIIG Fig. 1.1.1, or a handbook's republished version such as the product catalogue handbook's Fig. 4), or from a folio's `diig-phases-adaptation/v1` file that adds its own tiles and marks itself \"(this document)\". Every label comes from the data; tiles link to their library entry or glossary concept.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/diig-phases-svg.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "A diig-phases-figure/v1 file, or a diig-phases-adaptation/v1 file whose `adapts` is a repository-root path to one.",
+                "name": "figure-or-adaptation",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write the SVG; stdout when absent.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The chart, with text as SVG text, one `<g id=\"tile-<resource>\">` per tile.",
+                "name": "svg",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "diig-phases-svg",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
+          "title": "DIIG phases, steps and resources chart"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/diig-phases-svg",
+      "path": "tools/diig-phases-svg/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/dublin-core-render/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/dublin-core-render.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Render every `folio-dublin-core/v1` record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (`<instanceRoot>/dublin-core/<stem>.dc.xml` and `.dc.jsonld`), so the site mount publishes them beside the item pages. Deterministic. `--check` fails on a missing, stale or orphaned rendering. Governed by the `dublin-core-renderings` skill (bean `7eak`).",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/dc-render.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The catalogue instance's root, e.g. an IRIS mirror's directory. It must hold `catalogue/catalogue.json` and declare a directory with `instanceRoot: true`.",
+                "name": "instance",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Write nothing. Exit 1 if any rendering is missing, stale or orphaned.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`<published root>/dublin-core/`: one `.dc.xml` and one `.dc.jsonld` per record. A one-line summary goes to stdout.",
+                "name": "renderings",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "dublin-core-render",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dublin-core-renderings",
+          "title": "Dublin Core renderings"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/dublin-core-render",
+      "path": "tools/dublin-core-render/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/figure-coverage/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/figure-coverage.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "For every figure a source publication declares, report whether the folio built from it has a block and how computable it is: missing, excluded (signed off), picture (a PNG crop), linked (a picture linked to a model view), computable (a diagram, a table or a figure rebuilt by ArchiMate, BPMN, DMN, Mermaid, a class diagram or a generator), or cited (a picture kept on purpose, signed off). Exits non-zero when any declared figure is missing; `--require-computable` also fails on pictures.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/figure-coverage.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--entry"
+                },
+                "description": "The L1 library entry directory; its `sections/*.md` give the declared figures, read with cat-harness-tools `declaredFigureCaptions`.",
+                "name": "entry",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--folio"
+                },
+                "description": "The folio's document directory; every figure, diagram and table block naming a figure is read.",
+                "name": "folio",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--exclusions"
+                },
+                "description": "JSON `[{figure, scope: block|rebuild, reason, signedOffBy?, signedOffAt?}]`. Without `signedOffBy` an exclusion is a proposal and does not count.",
+                "name": "exclusions",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write the report; stdout when absent.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "A `figure-coverage-report/v1` JSON report: declared count, counts per state, one row per figure with its blocks, blocks naming undeclared figures, and problems. A per-figure table goes to stderr.",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "figure-coverage",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
+          "title": "Figure coverage and computability"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/figure-coverage",
+      "path": "tools/figure-coverage/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-block-qa-summary/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-block-qa-summary.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Summarise a folio's committed per-block QA verdicts into one `block-qa.json` a staging preview publishes: each block is failing (a FRESH verdict failed, with the worst severity), stale (a verdict predates the block's current files), passing, or unaudited. Freshness is the QA sweep's own rule, including the uses-graph hash for graph-scoped criteria. Runs no checker and writes no verdict.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat block-qa:publish"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--folio"
+                },
+                "description": "The folio's `folio` graph directory.",
+                "name": "folio",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write `block-qa.json`.",
+                "name": "out",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The folio's instance root, where verdicts are anchored. Default: found from `folio` exactly as the QA sweep finds it.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "A `folio-block-qa-summary/v1` file keyed by block label. Its counts go to stderr.",
+                "name": "block-qa",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "folio-block-qa-summary",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/review-heatmap",
+          "title": "Folio block QA summary"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/folio-block-qa-summary",
+      "path": "tools/folio-block-qa-summary/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-block-screenshots/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-block-screenshots.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Adds no dependency: Playwright is already the platform's browser driver.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat block:screenshots"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--changeset"
+                },
+                "description": "The preview's `changeset.json`: which blocks changed, and their kind on each side.",
+                "name": "changeset",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--base"
+                },
+                "description": "The published main site, as a directory (the publish branch's root).",
+                "name": "base",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--head"
+                },
+                "description": "The staging build's site directory.",
+                "name": "head",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write `visual-diff.json` and `visual/`: the site root, so the review page finds them.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--count"
+                },
+                "description": "Print how many changed blocks would be pictured, and stop, so a caller installs a browser only when there is work.",
+                "name": "count",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`<out>/visual-diff.json` and `<out>/visual/*.png`. A per-block summary goes to stderr.",
+                "name": "visual-diff",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "folio-block-screenshots",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun",
+              "chromium"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
+          "title": "Folio block screenshots"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/folio-block-screenshots",
+      "path": "tools/folio-block-screenshots/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-changeset/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-changeset.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "What changed in a folio between two git refs, block by block: each block added, removed, or changed — and for a changed block, every aspect that applies (renamed, prose, manifest, moved). Keyed on the block label, which the `id-unique` / `id-stable` QA criteria guard, not on file paths.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/schemas/changeset.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--folio"
+                },
+                "description": "The folio's `folio` graph directory, relative to the repository — what `<slug>.json` declares for it, usually `folio/`.",
+                "name": "folio",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--base"
+                },
+                "description": "The ref compared against. Default `origin/main`. An unresolvable base is an ERROR, never an empty ChangeSet.",
+                "name": "base",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              },
+              {
+                "arg": {
+                  "flag": "--head"
+                },
+                "description": "The ref under review, or `worktree` (the default) for the files on disk, uncommitted edits included.",
+                "name": "head",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write the JSON. Absent: stdout.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--text-out"
+                },
+                "description": "Also write `changeset-text.json`: the prose, source and rendered, of every block the ChangeSet lists, on each side that has it. The review page's diff renderers read it (bean `d903`).",
+                "name": "text-out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "A `folio-changeset/v1` document. Its one-line summary goes to stderr.",
+                "name": "changeset",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "folio-changeset",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun",
+              "git",
+              "tar"
+            ]
+          },
+          "satisfies": [
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/diff",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review"
+          ],
+          "title": "Folio ChangeSet"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/folio-changeset",
+      "path": "tools/folio-changeset/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-review-comment-move/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-review-comment-move.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "A review-process task moves one `review-comment/1.0.0` todo's status (address, send back, resolve, adjudicate, withdraw) through `transition()`, which refuses any move the named BPMN task may not make. The comment is written to the folio's todos graph (its declared `todo-feedback` directory) and, with `--commit`, committed to the edit-set's FEATURE branch. Refused on the base branch and on a detached HEAD.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/review-comment-move.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--id"
+                },
+                "description": "The review comment's id, `review-pr<N>-c<commentId>`.",
+                "name": "id",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+              },
+              {
+                "arg": {
+                  "flag": "--to"
+                },
+                "description": "The status to move it to: open, addressed, resolved, adjudicated or withdrawn. Checked against the closed list by the script; the list is core vocabulary, so it is not a harness Tool type.",
+                "name": "to",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+              },
+              {
+                "arg": {
+                  "flag": "--process"
+                },
+                "description": "The BPMN process whose task is making the move.",
+                "name": "process",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ProcessId"
+              },
+              {
+                "arg": {
+                  "flag": "--task"
+                },
+                "description": "The task, in that process, making the move.",
+                "name": "task",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+              },
+              {
+                "arg": {
+                  "flag": "--decision"
+                },
+                "description": "The Decision that closes it. Required to resolve or adjudicate.",
+                "name": "decision",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/NodeId"
+              },
+              {
+                "arg": {
+                  "flag": "--todos"
+                },
+                "description": "The folio's todos graph root. Default `todos`.",
+                "name": "todos",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--published"
+                },
+                "description": "The published `review-comments.json`, for a comment not committed yet.",
+                "name": "published",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--commit"
+                },
+                "description": "Commit the file to the current feature branch.",
+                "name": "commit",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--base"
+                },
+                "description": "The base branch a status may NOT be committed to. Default `main`.",
+                "name": "base",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`<todo-feedback dir>/<id>.json`, the moved node.",
+                "name": "comment",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "folio-review-comment-move",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun",
+              "git"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments",
+          "title": "Move a review comment's status"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/folio-review-comment-move",
+      "path": "tools/folio-review-comment-move/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-review-comments/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-review-comments.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Ingest a pull request's tagged conversation comments (`block: <label>` on the first line) into `review-comment/1.0.0` todos, and write them as `review-comments.json`. Idempotent over its previous output, whose statuses it keeps. Re-anchors every comment against the head's blocks, following `renamedFrom`, and orphans a comment whose block is gone rather than dropping it.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/review-comments.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "`owner/name` of the repository the pull request is in.",
+                "name": "repo",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+              },
+              {
+                "arg": {
+                  "flag": "--pr"
+                },
+                "description": "The edit-set's pull request.",
+                "name": "pr",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ChangeProposalNumber"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write `review-comments.json`.",
+                "name": "out",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--folio"
+                },
+                "description": "Read the head's blocks from the folio's manifests (as text; nothing is executed). Give this OR `blocks`.",
+                "name": "folio",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--blocks-out"
+                },
+                "description": "With `folio`: also write `blocks.json`, so a later run can anchor without checking the folio out.",
+                "name": "blocks-out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--blocks"
+                },
+                "description": "A published `blocks.json`. The comment-triggered refresh uses this, so it never checks out the pull request's code.",
+                "name": "blocks",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--existing"
+                },
+                "description": "The previous `review-comments.json`. Every comment in it is kept, with its status.",
+                "name": "existing",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--commit"
+                },
+                "description": "The head commit. Default `GITHUB_SHA`, else `git rev-parse HEAD`.",
+                "name": "commit",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/CommitSha"
+              },
+              {
+                "arg": {
+                  "flag": "--todos"
+                },
+                "description": "The folio's todos graph root. Review comments committed under its `todo-feedback` directory, on the feature branch, win over the previously published copy.",
+                "name": "todos",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--comments"
+                },
+                "description": "Read comments from this JSON file instead of GitHub: offline runs and tests.",
+                "name": "comments",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "A `folio-review-comments/v1` file whose `comments` are `review-comment/1.0.0` todos. Its one-line summary goes to stderr.",
+                "name": "review-comments",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "folio-review-comments",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments",
+          "title": "Folio review comments"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/folio-review-comments",
+      "path": "tools/folio-review-comments/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/folio-review-coverage/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/folio-review-coverage.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Compute the two facts `content-change-review.bpmn`'s coverage gate (`GW_Covered`) reads: `uncoveredBlocks`, the changed blocks with no reviewer verdict on their CURRENT hash, and `openDefects`. Reads a preview's `changeset.json`, `blocks.json` and `review-comments.json`. With `--commit`, writes the ingested `folio-review-verdict/v1` verdicts into the todos graph's declared `review-verdicts` directory and commits them to the edit-set's FEATURE branch; refused on the base branch and a detached HEAD. Prints the facts as JSON on stdout.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/review-coverage.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--changeset"
+                },
+                "description": "The preview's `changeset.json`: which blocks changed.",
+                "name": "changeset",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--blocks"
+                },
+                "description": "The preview's `blocks.json`: each head block's current hash.",
+                "name": "blocks",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--comments"
+                },
+                "description": "The preview's `review-comments.json`: open defects, and the ingested verdicts.",
+                "name": "comments",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Also write the full `folio-review-coverage/v1` report, with the uncovered labels and the stale verdicts.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--todos"
+                },
+                "description": "The folio's todos graph root. Verdicts committed under its `review-verdicts` directory win over the published copy.",
+                "name": "todos",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--commit"
+                },
+                "description": "Write the published verdicts into the declared directory and commit them to the current feature branch. Needs `todos`.",
+                "name": "commit",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--base"
+                },
+                "description": "The base branch verdicts may NOT be committed to. Default `main`.",
+                "name": "base",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The `folio-review-coverage/v1` report at `out`. Its `facts` field, `{\"uncoveredBlocks\": n, \"openDefects\": n}`, is also printed alone on stdout: what `workflow_complete` takes for `GW_Covered`. The summary goes to stderr.",
+                "name": "coverage",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "folio-review-coverage",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun",
+              "git"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-comments",
+          "title": "Folio review coverage"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/folio-review-coverage",
+      "path": "tools/folio-review-coverage/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/glossary-build/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-build.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/build-glossary.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The paper directory, which must hold a `<paper>.ts` manifest. Absent, the command exits 2 with its usage — could-not-determine, not an empty glossary.",
+                "name": "targetPath",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Report drift and write nothing.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`glossary.json` beside the paper, and `chapters/glossary.tex` at the repo root.",
+                "name": "glossary",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "glossary-build",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+          "title": "Glossary build"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/glossary-build",
+      "path": "tools/glossary-build/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/glossary-from-source/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-from-source.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Read a source's glossary and abbreviations sections (an L1 entry's sections/, or a folio block) into `candidate` terms of a folio-glossary/v1 scheme, verbatim, each with `source: <file>#L<line>`. Acronyms fold into the term they expand as `notation`. The scheme is merged: terms a person owns are never changed. `--check` writes nothing and fails when the scheme would change.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat glossary:from-source"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "The scheme file to write or merge into: `glossary/<scheme>.glossary.json`.",
+                "name": "out",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--id"
+                },
+                "description": "The scheme id, for a new file.",
+                "name": "id",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+              },
+              {
+                "arg": {
+                  "stdin": true
+                },
+                "description": "The scheme title, for a new file: free text, so it goes on stdin.",
+                "name": "title",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              },
+              {
+                "arg": {
+                  "flag": "--from"
+                },
+                "description": "A directory whose glossary and abbreviations sections are read: an L1 entry's `sections/`.",
+                "name": "from",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--terms"
+                },
+                "description": "A Markdown file read as term and definition rows.",
+                "name": "terms",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--abbreviations"
+                },
+                "description": "A Markdown file read as acronym and expansion rows.",
+                "name": "abbreviations",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Fail if the scheme is stale, instead of writing.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The merged folio-glossary/v1 scheme.",
+                "name": "scheme",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "glossary-from-source",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/glossary-terms",
+          "title": "Glossary candidates from a source"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/glossary-from-source",
+      "path": "tools/glossary-from-source/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/glossary-page/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-page.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Render every declared glossary — authored SKOS schemes, the swimlane ledger and the terms extracted from knowledge-graph assets — as the glossary page and one page per asset type, at the route of the visualiser core declares for it.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat glossary:page"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Fail if a page is stale, instead of writing.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--site"
+                },
+                "description": "A site being built: write the pages at their declared route under it instead of under cat-harness's docs, as a repository's own site build does (`visualiser-writers.ts`).",
+                "name": "site",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The glossary pages, under the published site directory.",
+                "name": "pages",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "glossary-page",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+          "title": "Glossary page"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/glossary-page",
+      "path": "tools/glossary-page/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/glossary-table/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/glossary-table.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Rewrite the glossary and acronyms tables of a document from its folio-glossary/v1 schemes, as `glossary/glossary-tables.json` (folio-glossary-tables/v1) lists them: terms with their altLabels, definitions and editorial notes, or acronyms (notation and prefLabel). The block's caption and footnotes are left alone. `--check` writes nothing and fails when a table is stale.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat glossary:table"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--instance"
+                },
+                "description": "The instance root holding `glossary/glossary-tables.json`.",
+                "name": "instance",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Fail if a table is stale, instead of writing.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The rewritten table blocks, at the paths the config names.",
+                "name": "blocks",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "glossary-table",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+          "title": "Glossary and acronyms tables"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/glossary-table",
+      "path": "tools/glossary-table/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/l1-coverage/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/l1-coverage.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for. Issue #2405 FR-009.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/l1-coverage.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--text"
+                },
+                "description": "The publication's body text, page-tagged: `{\"pages\":[{\"page\":n,\"text\":\"…\"}]}` JSON, or plain text with a form feed between pages (what `pdftotext` writes). Headers, references and tables of contents are stripped by the caller.",
+                "name": "text",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--captured"
+                },
+                "description": "JSON `[{\"id\",\"text\"}]`: every statement the extraction captured, verbatim.",
+                "name": "captured",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--exclusions"
+                },
+                "description": "JSON `[{location|text, reason, signedOffBy?, signedOffAt?}]`. An exclusion without `signedOffBy` is a proposal and leaves its sentence unaccounted.",
+                "name": "exclusions",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write the report; stdout when absent.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "An `l1-coverage-report/v1` JSON report: definitionVersion, matchMethod, source and graph sha256, totals, pages[] and sentences[]. A per-page table goes to stderr.",
+                "name": "report",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "l1-coverage",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-coverage",
+          "title": "L1 extraction coverage"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/l1-coverage",
+      "path": "tools/l1-coverage/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/review-log-watch/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/review-log-watch.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "The mechanical check a review-log watcher runs on every poll (owner, 2026-11-01; Q-WATCH1 B). Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened left out) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0, and the watcher does nothing more. Changed: it lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Q-WATCH2 B; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through (owner, 10:18Z): Title is the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL. It exits 10. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state, so the next poll compares against it.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/tools/review-log-watch/watch.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The folio repository, `owner/name`, whose open issues are read with `gh api`.",
+                "name": "repo",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--sheet"
+                },
+                "description": "The Contributor Feedback tab's values as JSON: the Sheets API `values` array (or the whole `get_values` answer), from row 1, so the header row (first cell `Change-set`) is found.",
+                "name": "sheet",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--state"
+                },
+                "description": "The last check's state file. Missing on the first check, which reports every open issue as opened.",
+                "name": "state",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--issues"
+                },
+                "description": "Issues as JSON (the issues API's shape), instead of reading them with `gh api`. For tests and offline runs.",
+                "name": "issues",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--author"
+                },
+                "description": "Only issues this GitHub login opened. Default every author.",
+                "name": "author",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--sheet-hash"
+                },
+                "description": "The sheet script's hash of the person-set cells, Watch!G1 (Q-WATCH4 A). Given, it stands for the cells, so `--sheet` needs only the header row and the Issue column.",
+                "name": "sheetHash",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--skip-label"
+                },
+                "description": "The label that keeps an issue off the sheet. Default `no-sheet`.",
+                "name": "skipLabel",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "JSON on standard output: `status` (`unchanged` or `changed`), `digest`, and when changed `changes`, `append` (rows aligned to the header, each with `closed`), `closedRows` and `state`. Exit 0 unchanged, 10 changed, 2 usage.",
+                "name": "result",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "review-log-watch",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-log-watch",
+          "title": "Check a review log and its repository's issues for changes"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/review-log-watch",
+      "path": "tools/review-log-watch/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/review-sheet-sync/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/review-sheet-sync.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Builds `Code.gs` (one generic script for every document, `--script`) and one document's Config tab rows (`--config`): the Google Apps Script that keeps a public-comment review sheet's links and joins current: each comment No. links to its comment page, Sections, Page and Line no(s) link to the page of the frozen review draft, Review Change Sets joins its comments, suggested revisions, feedback and dispositions with each `No. n` linking to its row, and on both tabs Agentic status lists each pull request of the change-set, linked, with its status and what it changed, from the Agent tab. The script is the same for every review (`review-sheet.gs`); this Tool fills in one folio's data from its `review/public-comment/sheet-sync.json`, its review anchors and the draft's `pdf-line-map.json`. The script reads the document's URLs, tab and column names and data from the sheet's Config tab (visible, locked to the owner), which the agent writes from these rows. A person pastes the script (one file) into the sheet once (Extensions > Apps Script) and runs `installTriggers`; from then on the sheet rebuilds itself within five minutes of an edit, with no agent. With `\"mode\": \"drafting\"` in the config it builds the simpler drafting sheet instead: one Contributor Feedback tab where each row is a change set (ids assigned by the script), Sections picked from the document's table of contents and linked to it, and Issue and Agentic status from the Agent tab.",
+          "install": {
+            "service": "Google Apps Script bound to the review sheet: copy the template, have the agent write its Config tab, add editors to the \"Ready columns: editors\" lock, paste Code.gs, run installTriggers (skill review-sheet-script, \"Setting up a sheet for a new document\")"
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/tools/review-sheet-sync/build-review-sheet-script.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--script"
+                },
+                "description": "Where to write the generic Code.gs. The same for every document.",
+                "name": "script",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--repo"
+                },
+                "description": "The folio repository. Default the current directory.",
+                "name": "repo",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--config"
+                },
+                "description": "The folio's sheet settings, e.g. `review/public-comment/sheet-sync.json`: anchors, lineMap, draftUrl, commentUrl, and optional namedSections, aliases, tabs and columns. A drafting sheet's config (`review/drafting/sheet-sync.json`) has mode `drafting`, anchors and sectionUrl.",
+                "name": "config",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write the Config tab's rows (JSON). Default standard output.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Code.gs, ready to paste into any review sheet's Apps Script editor. Never committed: it is rebuilt from the template.",
+                "name": "script",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "description": "The Config tab's rows for one document, which the agent writes into the sheet. Never committed: rebuilt from the config.",
+                "name": "configRows",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "review-sheet-sync",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script",
+          "title": "Build the review sheet's Apps Script and a document's Config tab"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/review-sheet-sync/dist/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "cat-harness:graphTypology/tools"
+          ],
+          "name": "tools/review-sheet-sync/dist",
+          "path": "tools/review-sheet-sync/dist/"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/review-sheet-sync",
+      "path": "tools/review-sheet-sync/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/smart-approach-svg/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/smart-approach-svg.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Draw the WHO SMART Guidelines approach chart (knowledge layers L1–L5 with their products, and their country adaptations, between the research, localisation and impact bands) as SVG from `smart-guidelines-approach-figure/v1` data on a who-iris library entry, such as the product catalogue handbook's Fig. 5. Every label comes from the data.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/smart-approach-svg.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "A smart-guidelines-approach-figure/v1 file.",
+                "name": "figure",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write the SVG; stdout when absent.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The chart, with text as SVG text, one `<g id=\"cell-l<n>-<name>\">` per layer cell.",
+                "name": "svg",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "smart-approach-svg",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
+          "title": "WHO SMART Guidelines approach chart"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/smart-approach-svg",
+      "path": "tools/smart-approach-svg/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/tabular-csv/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/tabular-csv.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Read a delimited text file into a `folio-tabular-csvw/v1` record: one table, its columns and their CSVW datatypes, each measured or explicitly undetermined. Routing is by content, never by extension: the first rows must agree on one field count of two or more, under exactly one of `,` `;` TAB `|`. A CSV's `fac:anchor` sheet and cell are a determined null. Governed by the `tabular-metadata` skill (bean `eief`).",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/tabular-csv.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "Path to the delimited text file.",
+                "name": "file",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DelimitedTextPath"
+              },
+              {
+                "arg": {
+                  "flag": "--doc-id"
+                },
+                "description": "The record's `doc_id`. Default: the file name without its extension.",
+                "name": "doc-id",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write `tabular.csvw.json`. Default: stdout.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "A `folio-tabular-csvw/v1` document. Exit 2 when the file is not shown to be a table.",
+                "name": "record",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "tabular-csv",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/tabular-metadata",
+          "title": "CSV tabular metadata"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/tabular-csv",
+      "path": "tools/tabular-csv/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/tabular-xlsx/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/tabular-xlsx.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Read a workbook into a `folio-tabular-csvw/v1` record, one CSVW table per rectangular block of cells. Blocks are split on empty rows, then on empty columns, so several tables on one sheet are found, each anchored at its real top-left cell (`fac:anchor`: sheet, A1 cell, row, column). Dates are read through the number formats in `styles.xml`, not misread as integer serials. A malformed part is refused rather than half-read. No new dependency: ZIP via `node:zlib`, SpreadsheetML via `fast-xml-parser`. Governed by the `tabular-metadata` skill (bean `eief`).",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/tabular-xlsx.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "Path to the `.xlsx` workbook.",
+                "name": "file",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/WorkbookPath"
+              },
+              {
+                "arg": {
+                  "flag": "--doc-id"
+                },
+                "description": "The record's `doc_id`. Default: the file name without its extension.",
+                "name": "doc-id",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where to write `tabular.csvw.json`. Default: stdout.",
+                "name": "out",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "A `folio-tabular-csvw/v1` document, one table per block. Exit 2 when the file is not a SpreadsheetML workbook.",
+                "name": "record",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "tabular-xlsx",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/tabular-metadata",
+          "title": "Spreadsheet tabular metadata"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/tabular-xlsx",
+      "path": "tools/tabular-xlsx/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools",
+  "path": "tools/"
+}

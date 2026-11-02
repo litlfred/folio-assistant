@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_VoiceReview/node/End_VoiceReviewed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0827",
+    "sha": "c13bc5fdae3a834936ed19d6d63ae266115d26c1",
+    "pr": "2908/merge",
+    "run": "41413639130"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_VoiceReview/node/End_VoiceReviewed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Voices adjudicated",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_VoiceReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/role/narrative-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_VoiceReview/lane/Lane_NarrativeReviewer",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_VoiceReview#flow/F_V13"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/End_VoiceReviewed"
+    }
+  ]
+}

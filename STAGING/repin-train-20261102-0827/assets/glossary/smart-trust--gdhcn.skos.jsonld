@@ -1,0 +1,401 @@
+{
+  "@context": {
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn",
+      "@type": "skos:ConceptScheme",
+      "skos:prefLabel": "GDHCN terms",
+      "skos:definition": "The primary GDHCN glossary: the 21 definitions in Section II of the GDHCN Administrative and Operational Framework (version 1.2, 9 October 2026), quoted word for word. The Framework is the legal source document for GDHCN (owner, 2026-11-01), and it says the definitions 'apply herein'. Terms this IG adds go in a separate scheme and never override a definition here.",
+      "dcterms:hasVersion": "1.2",
+      "dcterms:modified": "2026-11-01",
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-001-ii-definitions.md",
+      "dcterms:license": "CC-BY-SA-3.0-IGO"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/business-owner-representative",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Business Owner Representative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The individual identified by a GDHCN Participant as having the primary business and programmatic responsibility for the GDHCN Participant for the implementation of the use cases covered by a Trust Domain."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-001-ii-definitions.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/certificate-authority",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Certificate Authority"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An entity that stores, signs, and issues cryptographic certificates and certifies the ownership of a public key by the named subject of the certificate. This allows GDHCN Trust Network Gateway participants to rely on signatures or assertions made in relation to the private key corresponding to the certified public key. Certificate Authorities may be operated by different types of entities, including, but not limited to, a private-sector Certificate Authority, a ministry or agency responsible for ICT/eGovernment services, a Ministry of Health, or another competent authority within the jurisdiction. It is the responsibility of each GDHCN Participant to determine the appropriate arrangement for its Certificate Authority, in accordance with applicable laws and policies within its jurisdiction, to guarantee security and proper data management. Each GDHCN Participant must identify, establish, or liaise with the relevant Certificate Authority, as applicable and impose on the latter all requirements of this document."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-001-ii-definitions.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/encryption-key-certificate-governance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Encryption Key Certificate Governance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The process and technical specifications regarding the management and use of encryption keys for Verifiable Digital Health Certificates, Public Key Infrastructure, and for securing connections with Trusted Services and the Trust Network Gateway."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-001-ii-definitions.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/eligible-gdhcn-participant",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Eligible GDHCN Participant"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An Eligible GDHCN Participant is one of the following: • a WHO Member State or Associate Member, or sub-national unit thereof; • a State Party to the International Health Regulations (2005), or sub-national unit thereof; • the United Nations (UN) and other intergovernmental organizations in effective relations with WHO; • a fund, programme, specialized agency, or related organization within the UN system; or • an organization officially delegated by one of the organizations mentioned above that can abide by the GDHCN Terms of Participation and fulfils one or more of the following health service functions: • Public Health Agency; • Health Professions Education Accreditation Agency; • Health Services Licensing Agency; or • Public Health Security Agency. and, once accepted to the GDHCN, after the successful conclusion of the Onboarding Process, will be referred to as GDHCN Participant throughout this document. An Eligible GDHCN Participant that has initiated the Onboarding Process will be referred to as an Eligible GDHCN Applicant throughout this document."
+        }
+      ],
+      "skos:scopeNote": "Quoted from Section II of the Framework. The L1 text splits this definition across sections (its list items were read as headings), and a page footnote interrupts it, so the text here follows the Framework's own wording rather than the section file line by line.",
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-001-ii-definitions.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/gdhcn-secretariat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GDHCN Secretariat"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The WHO Secretariat serves as the operational and management leadership of the GDHCN, and in this role, is referred to as the GDHCN Secretariat."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/gdhcn-trust-network",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GDHCN Trust Network"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The GDHCN Trust Network is a Trust Network comprised of the GDHCN Secretariat and GDHCN Participants. The GDHCN Trust Network operationalizes Trust Domains through a Trust Network Gateway by enabling bilateral verification and utilization of Verifiable Digital Health Certificates and the utilization of Trusted Services by GDHCN Participants."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/health-professions-education-accreditation-agency",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Health Professions Education Accreditation Agency"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An organization or organizational unit that is responsible for establishing and/or implementing procedures for accreditation of health professions education institutions."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/health-services-licensing-agency",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Health Services Licensing Agency"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An organization or organizational unit that is responsible for establishing and/or implementing procedures for licensure, and the licensing of organizations or individuals to provide clinical, health system or public health services within their jurisdiction. Licensing comprises processes through which duly authorized governmental authorities, such as recognized professional organizations, grant permission to an individual or healthcare organization to operate or engage in a medical occupation or profession."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/key-master-representative",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Key Master Representative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The individual identified by a GDHCN Participant as having the primary responsibility for the management of the Public Key Infrastructure, including the generation of any needed public-private key pairs, and the configuration and management of the connections between the GDHCN Participant’s Public Key Infrastructure and the GDHCN Trust Network Gateway."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/legal-representative",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Legal Representative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The individual designated by a GDHCN Participant as having the primary responsibility for reviewing the requirements related to a Trust Domain on behalf of this GDHCN Participant. This person should be someone that the GDHCN Secretariat can consult in relation to any legal or policy issues that may arise, such as changes to this document or changes to one of its Annexes that defines a Trust Domain."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/letter-of-application",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Letter of Application"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A formal application sent via a verifiable and secure channel from an Eligible GDHCN Participant to the GDHCN Secretariat to join the GDHCN Trust Network and participate in a particular Trust Domain."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/onboarding-process",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Onboarding Process"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The processes required for an Eligible GDHCN Participant to join the GDHCN Trust Network. At the successful conclusion of the Onboarding Process, the Eligible GDHCN Participant shall be considered a GDHCN Participant. Sometimes simply referred to as “Onboarding”."
+        }
+      ],
+      "skos:scopeNote": "Quoted from Section II of the Framework. The L1 text splits this definition across sections (its list items were read as headings), and a page footnote interrupts it, so the text here follows the Framework's own wording rather than the section file line by line.",
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/public-health-agency",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Public Health Agency"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An organization, or organizational unit, that is responsible for establishing procedures for and/or implementation of activities related to the protection, promotion, and improvement of public health within a specific jurisdiction or domain. May also be referred to as a Ministry of Health, Department of Health, or Public Health Authority."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/public-health-security-agency",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Public Health Security Agency"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An organization, or organizational unit, that is responsible for establishing procedures for and/or implementing required activities, both proactive and reactive, for minimizing the danger and impact of acute public health events that endanger people’s health across geographical regions and international boundaries."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/public-key-infrastructure",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Public Key Infrastructure"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A system of hardware, software, policies, procedures, and roles that support the management of public keys and supports authentication, encryption, integrity, or non-repudiation services via a database of digital public keys."
+        }
+      ],
+      "skos:notation": "PKI",
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/technical-representative",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Technical Representative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The individual designated by a GDHCN Participant as having the primary overall responsibility for the security, technical matters and systems infrastructure of this GDHCN Participant for the applicable Trust Domain, including ensuring compliance with technical specifications."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/trust-domain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Trust Domain"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Consists of: • Defined use cases and business processes related to the utilization of Verifiable Digital Health Certificates; • the open, interoperable technical specifications that identify or define the applicable Trusted Services and Verifiable Digital Health Certificates; and • a set of policy and regulatory standards describing expected behavior of GDHCN Participants in relation to operation of the Trusted Services and utilization of Verifiable Digital Health Certificates (e.g. data minimization, privacy, scope of use)."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/trust-network",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Trust Network"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A Trust Network is a means to authenticate the encryption public keys used by participants within a network to perform encryption services, verify digital signatures, establish secure connections between systems, and otherwise make use of encryption public keys."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/trust-network-gateway",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Trust Network Gateway"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The open-source software and its IT operational infrastructure, utilizing open standards, for a Public Key Infrastructure and metadata management services which is used to operationalize one or more Trust Domains."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/trusted-service",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Trusted Service"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A service (digital or otherwise) related to the issuance, management, verification, exchange, or other relevant processes, of Verifiable Digital Health Certificates which is defined using open, interoperable digital health standards."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn/verifiable-digital-health-certificate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-trust/v0/ns#glossary/gdhcn"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Verifiable Digital Health Certificate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A digital representation of a data set comprising a certificate or document, designed for a set of specific clinical or public health use cases which is defined using open, interoperable digital health standards; that contains within, or is associated to, a digital signature which can be verified by the public key of a public-private encryption key pair, and which is issued by a GDHCN Participant."
+        }
+      ],
+      "dcterms:source": "library/gdhcn-administrative-and-operational-framework/sections/sec-005-o-public-health-security-agency.md"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_NarrativeReview/node/Call_VoiceOverlay.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0827",
+    "sha": "c13bc5fdae3a834936ed19d6d63ae266115d26c1",
+    "pr": "2908/merge",
+    "run": "41413639130"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_NarrativeReview/node/Call_VoiceOverlay",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Voice overlay review",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_NarrativeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/role/narrative-reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_NarrativeReview/lane/Lane_NarrativeReviewer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/skill/voice-overlay-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_VoiceReview",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_NarrativeReview#flow/F_N3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/process/Process_NarrativeReview#flow/F_N3b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0827/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/node/Call_VoiceOverlay"
+    }
+  ]
+}

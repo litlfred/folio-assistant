@@ -1,0 +1,649 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_KgToPortal",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
+ "tasks": {
+  "D_Constraints": {
+   "id": "D_Constraints",
+   "name": "State the constraints, with denominators",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/D_Constraints",
+   "lane": "Deployment owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Deployment",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../reference/skill-instructions/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "E_Scope": {
+   "id": "E_Scope",
+   "name": "Decide what may leave the repository",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/E_Scope",
+   "lane": "Editorial",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Editorial",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../reference/skill-instructions/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+    "title": "Editor",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html",
+      "via": "author"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "author"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html",
+      "via": "author"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "author"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "author"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "A_Select": {
+   "id": "A_Select",
+   "name": "Cut the subgraph that leaves",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Select",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../reference/skill-instructions/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "A_Serialize": {
+   "id": "A_Serialize",
+   "name": "Serialize to JSON-LD",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Serialize",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "kg-export",
+     "href": "../../../reference/skill-instructions/kg-export.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "A_Package": {
+   "id": "A_Package",
+   "name": "Package with digests",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Package",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../reference/skill-instructions/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "S_Sign": {
+   "id": "S_Sign",
+   "name": "Sign the package and/or each asset",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/S_Sign",
+   "lane": "Attestation (GDHCN / WHO SMART Trust)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Attestation",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../reference/skill-instructions/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "attestation-service",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/attestation-service",
+    "title": "Attestation service",
+    "skills": [
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "test-plan-execution",
+      "href": "../../../reference/skill-instructions/test-plan-execution.html"
+     }
+    ]
+   }
+  },
+  "E_HumanEyes": {
+   "id": "E_HumanEyes",
+   "name": "Human eyes on the rendered artefact",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/E_HumanEyes",
+   "lane": "Editorial",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Editorial",
+   "skills": [
+    {
+     "name": "continual-progress",
+     "href": "../../../reference/skill-instructions/continual-progress.html"
+    }
+   ],
+   "role": {
+    "name": "editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+    "title": "Editor",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html",
+      "via": "author"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "author"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html",
+      "via": "author"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "author"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "author"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "D_Undetermined": {
+   "id": "D_Undetermined",
+   "name": "Record the decision as still open",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/D_Undetermined",
+   "lane": "Deployment owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Deployment",
+   "skills": [
+    {
+     "name": "decision-audit",
+     "href": "../../../reference/skill-instructions/decision-audit.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../reference/skill-instructions/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../reference/skill-instructions/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     }
+    ]
+   }
+  },
+  "A_Distribute": {
+   "id": "A_Distribute",
+   "name": "Publish to the origin (a cache may front it)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Distribute",
+   "lane": "Publish target",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Target",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../reference/skill-instructions/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "publish-target",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
+    "title": "Publish target",
+    "skills": [
+     {
+      "name": "getting-started",
+      "href": "../../../reference/skill-instructions/getting-started.html"
+     }
+    ]
+   }
+  },
+  "P_Verify": {
+   "id": "P_Verify",
+   "name": "Verify what arrived against what was signed",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/P_Verify",
+   "lane": "Portal (external consumer)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Portal",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../reference/skill-instructions/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "external-registry",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry",
+    "title": "External registry",
+    "skills": [
+     {
+      "name": "external-registry-contract",
+      "href": "../../../reference/skill-instructions/external-registry-contract.html"
+     }
+    ]
+   }
+  }
+ }
+}
