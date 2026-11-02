@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T20:46:24Z
+updated_at: 2026-11-02T20:47:21Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -110,3 +110,5 @@ _2026-11-02T20:25:10Z_ — Confirmed: translate-bpmn:check was red at 42bc930 on
 _2026-11-02T20:25:53Z_ — cat-harness#998 closed at the owner's request, with a comment pointing to #999 (merged) and #1000 (regen).
 
 _2026-11-02T20:46:24Z_ — Train run on e107c2d: 2 red. (a) bun test shard 2: the stale .pot test (fixed by cat-harness#1000, green), and an edit-links skew (cat-harness 42bc930 has #981's block-panel asset, tools 109b850 lacks the #1411 recipe). (b) stage: 6 links in smart-trust to pages the run does not write (AST pipeline failed: smart-trust), not checked yet. Pushed a989b41 to the train: cat-harness fec38df (#1000 head) and tools c6e3d1b (#1411 merge, held back from main's #1417 slash wave 2). Mount verified OK. MERGES ARE BLOCKED for this session: the permission check refused merging cat-harness#1000 ("merge without review"). The owner must allow merges here, or merge #1000 and then the train.
+
+_2026-11-02T20:47:21Z_ — The owner allowed merges for this session (card: option 1). Merged cat-harness#1000 as d7ebe6e (green, generated files only). The train's pin fec38df is #1000's head, now on main with the same tree as d7ebe6e, so the pin stays and CI on a989b41 keeps running.
