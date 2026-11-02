@@ -2,11 +2,11 @@
 # folio-assistant-ls3t
 $schema: bean/1.0.0
 title: 'dth-l1-to-l2-ingest skill: add the lessons from dth-sc, dth-pc and dth-phc as rules'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-31T20:35:18Z
-updated_at: 2026-10-31T20:54:04Z
+updated_at: 2026-11-02T08:00:00Z
 parent: folio-assistant-dthl
 ---
 
@@ -27,3 +27,5 @@ Add to the `dth-l1-to-l2-ingest` skill (smart-base `skills/`), as rules:
 Needs the owner's OK before any PR. Source: litlfred/dth-phc#1 section 8 (L1-L12) and section 9 item 1.
 
 Owner OK 2026-10-31 20:48Z (option A). Added to smart-base#249 at 2153414; completes when #249 merges.
+
+_2026-11-02T08:00:00Z_ — Completed. Owner merged litlfred/smart-base#249 (`e4e4ee1`) on 2026-11-02 07:54Z after Q-ING-1 A; its base litlfred/smart-base#244 landed as `60250de`. #249 also added three rules from the PHC Fig. 13 work: a flattened PDF table goes back into a table in the L1 (litlfred/who-iris#157), coverage is regenerated with every L1 repin (litlfred/dth-phc#5), and texts cite by title or number, never by raw id. The gate fix it needed is litlfred/cat-harness-tools#1362 (`61400ac`).
