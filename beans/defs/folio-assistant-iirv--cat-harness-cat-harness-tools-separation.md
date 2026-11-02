@@ -2,11 +2,11 @@
 # folio-assistant-iirv
 $schema: bean/1.0.0
 title: cat-harness / cat-harness-tools separation
-status: in-progress
+status: completed
 type: epic
 priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-31T17:05:00Z
+updated_at: 2026-11-02T07:10:00Z
 parent: folio-assistant-vuip
 ---
 
@@ -75,3 +75,5 @@ _2026-10-30T20:37:00Z_ — Placement PR2–PR9 (`pzwb`, `63wl`, `4fv8`, `tlat`, 
 _2026-10-31T08:35:00Z_ — `folio-assistant-8lcl` (stage 1b) and `folio-assistant-txue` (S5) are now `completed` (`cat-harness#794` and `cat-harness-tools#995` merged on `main`; `check:content-code-free` at 0 code files; `kind:json-schemas:check` and `check:node-iris` green). Remaining open children under `iirv`: `w1gy` and `ygge`.
 
 _2026-10-31T15:35:00Z_ — `folio-assistant-ygge` (F17) and `folio-assistant-w1gy` (stage 5 fresh-clone QA, plus `mgxw`) are now both `completed` (`cat-harness#853` `02c4725`, `bootstrap-tools#55` `541195a`, `cat-harness-tools#1121` `0bf6efb`, `bootstrap-tools#58` `72344e1`, and `cat-harness-tools#1131` `9da064c` merged on `main`, with 0 tsc errors and 0 test failures outside the baseline in a fresh sibling clone). Reference-direction follow-ups: [`litlfred/cat-harness#864`](https://github.com/litlfred/cat-harness/pull/864) (`001f764`, naming higher layers by URL or role in `repo-conversion` and `hand-back-to-discussion`) merged on `main`; merged on `cat-harness-tools` `main`: [`litlfred/cat-harness-tools#1160`](https://github.com/litlfred/cat-harness-tools/pull/1160) (`53dd38d8`, dropping two `who-iris` mentions and marking `state.jsonld` as generator output), [`litlfred/cat-harness-tools#1151`](https://github.com/litlfred/cat-harness-tools/pull/1151) (`83340d4a`, removing two upward layer mentions in `graph-typology-registry.ts` comments), and [`litlfred/cat-harness-tools#1142`](https://github.com/litlfred/cat-harness-tools/pull/1142) (`1bd7f6b2`, merged `2026-11-01T09:12:53Z`, repairing `cat-tools-g7ls` `status: done` → `completed` and skipping generated `README.md` in bean readers). 29 of 30 children under `iirv` are now `completed`; the sole remaining open child is `folio-assistant-6fez` (`Library sources regroup: cat-harness/library/ into library/<group>/<slug>/`, split from `f8wp`).
+
+_2026-11-02T07:10:00Z_ — Completed. The last open split child, `6fez` (library regroup), landed with `litlfred/cat-harness#934` on 2026-11-02. `pga6` (Phase III: new L4/L5 repositories and the architecture write-up) is not part of this split, so it moved under `vuip` and waits until after the MVP freeze (owner card Q-SEP-1 A, 2026-11-01 20:54Z). The cut itself was done by remote mount on 2026-10-08. Fresh-clone QA `w1gy` passed on 2026-10-31. Both direction gates report 0 wrong-direction, and `check:content-code-free` reports 0 code files (2026-10-31 notes above). Session https://claude.ai/code/session_01Qmmkt7RHts2i4tKUhAsKBF (thread "Separate the repos for MVP").
