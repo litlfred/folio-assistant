@@ -1,0 +1,249 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_CodeQualityGates",
+    "path": "processes/sdlc/code-quality-gates.bpmn"
+  },
+  "source_hash": "sha256:756c561f531c3a4422ca6224a7807fe7a9ca7edab4437ed11e8887c998cf7e4c",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_QaWorkingCopy",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_QaPublish",
+          "detail": "names skill \"qa-reports\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_CodeQualityGates",
+          "detail": "code-quality-gates.svg is rendered but no docs page shows it — run `bun run cat processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_SkillChain",
+          "detail": "\"Skill-registration chain (UNMASKED)\" starts with \"skill-registration\", which reads as a noun or gerund. Start with an imperative verb, then its object (verb-object)."
+        }
+      ]
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Flow_19×Flow_22",
+          "detail": "flows Flow_19 and Flow_22 cross."
+        },
+        {
+          "where": "Flow_21×Flow_22",
+          "detail": "flows Flow_21 and Flow_22 cross."
+        }
+      ]
+    },
+    "edge-through-node": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-wide": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "diagram",
+          "detail": "1930 wide, budget 1400: text shows at 9.9px in a 1200px band. Close the gaps between columns, stack steps of different lanes in one column, or split by phase."
+        }
+      ]
+    },
+    "diagram-too-tall": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "diagram",
+          "detail": "950 tall, budget 900: a reader scrolls to see it whole. Shrink lanes to their content, or split by phase."
+        }
+      ]
+    },
+    "label-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-edge": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_Readers/Flow_3",
+          "detail": "label \"Every reader of&#10;the QA tree\" sits on flow Flow_3. Move the label off the line (`bpmn:detangle --write` does it)."
+        },
+        {
+          "where": "GW_Readers/Flow_16",
+          "detail": "label \"Every reader of&#10;the QA tree\" sits on flow Flow_16. Move the label off the line (`bpmn:detangle --write` does it)."
+        }
+      ]
+    },
+    "label-on-shape": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "GW_Readers/Task_RepositoryGates",
+          "detail": "label \"Every reader of&#10;the QA tree\" covers \"Repository gates&#10;(HARD)\"."
+        }
+      ]
+    },
+    "label-on-lane-line": {
+      "result": "pass",
+      "findings": []
+    },
+    "shape-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-order": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "pass",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 30,
+    "fail": 8,
+    "n/a": 7,
+    "unknown": 0
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_ArchimatePublish",
+    "path": "processes/ui/archimate-publish.bpmn"
+  },
+  "source_hash": "sha256:0ae6c4bed2843c0f726554f5d9fdeb6989d6da39898a5c8fe4a90a4a89a81c36",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Check",
+          "detail": "needs skill \"archimate-models\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_Metamodel",
+          "detail": "needs skill \"archimate-models\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "A_FixModel",
+          "detail": "needs skill \"archimate-models\", but its lane's role \"author\" does not carry it."
+        },
+        {
+          "where": "A_Pages",
+          "detail": "needs skill \"archimate-models\", but its lane's role \"build-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Check",
+          "detail": "task \"Check the model parses and resolves\" requires skill \"archimate-models\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Metamodel",
+          "detail": "task \"Derive the metamodel in use\" requires skill \"archimate-models\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_FixModel",
+          "detail": "task \"Fix the relationship in Archi\" requires skill \"archimate-models\", which role \"author\" (named by lane \"Model author\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "A_Pages",
+          "detail": "task \"Write pages, drawings and the metamodel page\" requires skill \"archimate-models\", which role \"build-pipeline\" (named by lane \"CI/CD Pipeline\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_ArchimatePublish",
+          "detail": "archimate-publish.svg is rendered but no docs page shows it — run `bun run cat processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-through-node": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-wide": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-tall": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-edge": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-shape": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-lane-line": {
+      "result": "pass",
+      "findings": []
+    },
+    "shape-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-order": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 32,
+    "fail": 3,
+    "n/a": 10,
+    "unknown": 0
+  }
+}
