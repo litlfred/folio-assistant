@@ -151,7 +151,7 @@ jobs:
           # lake-cache/qou-v4-24-0 (7268 oleans, all dependencies). That
           # guard is the point of routing through the script.
           SVC=""
-          for c in scripts/lake-cache.sh folio-assistant/scripts/lake-cache.sh; do
+          for c in scripts/lake-cache.sh folio-assistant-sci/scripts/lake-cache.sh; do
             [ -f "$c" ] && { SVC="$c"; break; }
           done
           [ -z "$SVC" ] && { echo "::error::lake-cache.sh not found"; exit 1; }
