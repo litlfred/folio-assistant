@@ -115,6 +115,16 @@ describe("after `--begin`, a failing step is recorded and the next one still run
   });
 });
 
+describe("a step marked CQG_UNJUDGED passes its exit status through, even after `--begin`", () => {
+  test("its failure fails the step and is not recorded", () => {
+    const sb = sandbox();
+    sb.begin();
+    expect(sb.step("exit 4", { CQG_UNJUDGED: "true" }).status).toBe(4);
+    expect(sb.step("true", { CQG_UNJUDGED: "true" }).status).toBe(0);
+    expect(existsSync(join(sb.state, "steps.jsonl"))).toBe(false);
+  });
+});
+
 describe("push, merge_group and workflow_dispatch: any failure fails, so main stays red", () => {
   for (const event of ["push", "merge_group", "workflow_dispatch"]) {
     test(event, () => {
@@ -365,7 +375,8 @@ describe("the workflow wires it as designed", () => {
       expect(own || last.env?.CQG_VERDICT === "true").toBe(true);
       if (own) {
         expect(last.if).toBe("${{ !cancelled() }}");
-        expect(last.shell).toContain("gate-shell.sh");
+        expect(last.shell).toBeUndefined();
+        expect(last.env?.CQG_UNJUDGED).toBe("true");
       }
     }
   });
@@ -386,7 +397,9 @@ describe("the workflow wires it as designed", () => {
 
   // GitHub rejects the whole file when a STEP's `shell:` holds an expression
   // (only `defaults.run.shell` may), and then no job runs at all: fa#2902's
-  // first push. So a step names its shell script by a relative path.
+  // first push. A relative path is no answer either (gate-shell-workflow.test.ts
+  // wants every custom shell absolute), so a judged job's setup and verdict
+  // steps keep the job's shell and say `CQG_UNJUDGED: "true"` instead.
   test("no step-level `shell:` holds an expression", () => {
     for (const job of Object.values(wf.jobs)) {
       for (const s of job.steps ?? []) {

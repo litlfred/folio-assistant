@@ -2004,8 +2004,8 @@ jobs:
       # main's too (see `.github/scripts/cqg_judge.py`).
       - name: No new failures compared with main (Q-PIPE-1)
         if: ${{ !cancelled() }}
-        shell: bash ./cat-harness-tools/scripts/gate-shell.sh {0}
         env:
+          CQG_UNJUDGED: "true"  # its own exit status, never recorded
           GH_TOKEN: ${{ github.token }}
           CQG_JOB_STATUS: ${{ job.status }}
         run: python3 .github/scripts/cqg_judge.py verdict
@@ -3189,8 +3189,8 @@ jobs:
       # main's too (see `.github/scripts/cqg_judge.py`).
       - name: No new failures compared with main (Q-PIPE-1)
         if: ${{ !cancelled() }}
-        shell: bash ./cat-harness-tools/scripts/gate-shell.sh {0}
         env:
+          CQG_UNJUDGED: "true"  # its own exit status, never recorded
           GH_TOKEN: ${{ github.token }}
           CQG_JOB_STATUS: ${{ job.status }}
         run: python3 .github/scripts/cqg_judge.py verdict
@@ -4257,8 +4257,8 @@ jobs:
       # main's too (see `.github/scripts/cqg_judge.py`).
       - name: No new failures compared with main (Q-PIPE-1)
         if: ${{ !cancelled() }}
-        shell: bash ./cat-harness-tools/scripts/gate-shell.sh {0}
         env:
+          CQG_UNJUDGED: "true"  # its own exit status, never recorded
           GH_TOKEN: ${{ github.token }}
           CQG_JOB_STATUS: ${{ job.status }}
         run: python3 .github/scripts/cqg_judge.py verdict
@@ -4626,8 +4626,8 @@ jobs:
       # failed producer reaches these steps and stops the shard red, saying
       # why, rather than testing pages nobody built.
       - name: The QA working copy and the publish-time pages were built for this run
-        shell: bash ./cat-harness-tools/scripts/gate-shell.sh {0}  # setup, not judged
         env:
+          CQG_UNJUDGED: "true"  # its own exit status, never recorded
           QA: ${{ needs.qa-working-copy.result }}
           PAGES: ${{ needs.publish-pages.result }}
         run: |
@@ -4643,8 +4643,8 @@ jobs:
           path: ${{ runner.temp }}/qa-working-copy
 
       - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
-        shell: bash ./cat-harness-tools/scripts/gate-shell.sh {0}  # setup, not judged
         env:
+          CQG_UNJUDGED: "true"  # its own exit status, never recorded
           EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
@@ -4655,8 +4655,8 @@ jobs:
           path: ${{ runner.temp }}/publish-pages
 
       - name: Restore the publish-time pages, byte-identical to the producer's (B1)
-        shell: bash ./cat-harness-tools/scripts/gate-shell.sh {0}  # setup, not judged
         env:
+          CQG_UNJUDGED: "true"  # its own exit status, never recorded
           EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
@@ -4718,8 +4718,8 @@ jobs:
       # main's too (see `.github/scripts/cqg_judge.py`).
       - name: No new failures compared with main (Q-PIPE-1)
         if: ${{ !cancelled() }}
-        shell: bash ./cat-harness-tools/scripts/gate-shell.sh {0}
         env:
+          CQG_UNJUDGED: "true"  # its own exit status, never recorded
           GH_TOKEN: ${{ github.token }}
           CQG_JOB_STATUS: ${{ job.status }}
         run: python3 .github/scripts/cqg_judge.py verdict

@@ -8,7 +8,8 @@
 # still writes its summary and its annotation.
 #
 # Until the job's `--begin` step has run, a step's exit status is passed
-# through as it is: setup fails the job exactly as before. After it, each
+# through as it is: setup fails the job exactly as before. So does a step
+# with `CQG_UNJUDGED=true`, at any point. After it, each
 # step's exit status is RECORDED (`cqg_judge.py record`) and the step exits 0,
 # so the next gate still runs. The job's verdict is the last step's:
 # `cqg_judge.py verdict` fails on any failure on push, merge_group and
@@ -40,7 +41,9 @@ gate_shell="${CQG_GATE_SHELL:-$here/../../cat-harness-tools/scripts/gate-shell.s
 # The verdict's token, kept out of the step's own environment.
 token="${CQG_TOKEN:-}"
 
-if [ ! -f "$dir/phase" ]; then
+# Before `--begin`, or on a step marked `CQG_UNJUDGED=true` (setup and the
+# verdict itself), the exit status passes through unrecorded.
+if [ ! -f "$dir/phase" ] || [ "${CQG_UNJUDGED:-}" = "true" ]; then
   env -u CQG_TOKEN bash "$gate_shell" "$script"
   exit $?
 fi
