@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-11-02T19:10:00Z
-updated_at: 2026-11-02T19:10:00Z
+updated_at: 2026-11-02T19:13:00Z
 parent: folio-assistant-yj32
 tags:
     - work-plan-store
@@ -26,6 +26,11 @@ Owner ask 2026-11-02 18:56Z (thread cmsg_017WNUkNK8kdDziPK58Pv6G9PqHijxfA1UbP1sL
 
 ## Next
 
-- [ ] owner answers Q1-Q5 (card)
-- [ ] step 1: rewrite work-plan-store.md as operations + Tool pages
-- [ ] steps 2-10 per proposal §5
+- [x] owner answered Q-BSD-1 B (position only in instances), 2 A (deployment picks Tool), 3 A (beans-serve first launcher), 4 A (git log + instances), 5 A (run-scoped store), 6 A (ITB drives test runs). Proposal PR #992 head a4fbbe4, §4.8 = ITB test harness (owner 19:07Z).
+- [x] step 1: draft PR cat-harness#993 (branch claude/work-plan-store-ops, 698e841; draft fast tier green): work-plan-store as operations, new skill work-plan-store-git-branch, todo-manager updated
+- [ ] mark #992/#993 ready + merge when green (non-content docs)
+- [ ] step 6: remove git commands from bean-coordination, idle-backlog, bean-drain, continual-progress, workflow-state, process-state
+- [ ] steps 2-5, 7-12 per proposal §5
+- Also in this thread: tools#1414 (processed-beans pages, ready; owner said merge to main 18:50Z; repo has no auto-merge, merge by hand when base-exact checks finish)
+
+_2026-11-02T19:13Z_ — handover: all work pushed; see checklist above.
