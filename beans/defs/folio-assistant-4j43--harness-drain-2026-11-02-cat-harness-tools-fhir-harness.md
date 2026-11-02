@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T19:56:52Z
+updated_at: 2026-11-02T19:58:55Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -57,3 +57,11 @@ _2026-11-02T19:53:09Z_ — Takeover blocked: this session can reach only litlfre
 _2026-11-02T19:53:58Z_ — Drain sibling session_01EucfRqHzqzMjJkqcnKNkY5 could reach only folio-assistant, so it holds just fwtz and pga6 (neither can close: fwtz 0 of 3 boxes met, its PRs fa#2875 and #2904 edit workflows and are owner-only; pga6 deferred to after the MVP freeze). New holders: cat-harness-tools PRs (#1411, #1378, #1379, #1356, #1299) → https://claude.ai/code/session_01EucfRmD6JzE3AYLeUkX1KU. cat-harness PRs (#980, #959, #981; #972 waits on card Q-B1-2) → https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY, after its saturation-meta-merge train fix. Review-log watcher (lgwt) is blocked: no Google Drive/Sheets access (connector failed, docs.google.com blocked by network policy).
 
 _2026-11-02T19:56:52Z_ — The owner approved merging cat-harness #980, #959 and #981 on green (asked first-hand in session https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY). Nothing to do: all three were already merged, #980 at 18:43:58Z (625fac59), #959 at 18:44:11Z (8d41aa15) and #981 at 18:50:37Z (615da974), and all are on cat-harness main. #972 was not touched (content, card Q-B1-2).
+
+_2026-11-02T19:58:55Z_ — The owner allowed add_repo. Attached: cat-harness, cat-harness-tools, fhir-harness, folio-assistant-core, smart-base, who-iris. Re-checked live:
+- Already merged by earlier threads: cat-harness#980 (625fac5, 18:43Z), #959 (8d41aa1, 18:44Z), #981 (615da97, 18:50Z), cat-harness-tools#1411 (c6e3d1b, 19:31Z).
+- cat-harness-tools #1378, #1379, #1356 and #1299 are ISSUES, not PRs, and tools has no open PR. Sibling https://claude.ai/code/session_01EucfRmD6JzE3AYLeUkX1KU (running) took #1378, #1379 and #1356 over at 19:55Z. #1378 and #1356 have nothing left in tools; #1379 wave 2 waits on the train. I left them to that sibling.
+- cat-harness#972 is held (content, card Q-B1-2).
+- Train fa#2921 is still open (de098fc). The tools#1299 recount waits on it.
+- Not drain items, and left alone: cat-harness#996 and core#624 (glossary regen for the train, which the coordinator owns), cat-harness#998 and #999 (saturation sibling), cat-harness#992 and #993 (owner proposal bsd1, owner questions open).
+Session https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5
