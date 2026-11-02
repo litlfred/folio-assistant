@@ -152,7 +152,7 @@ read before any harness resolves. `scope: "repository"` means exactly these four
 A section that cannot read its source returns `skip` and the region is left
 exactly as it was. Not decoration:
 
-- qou configured its simulators under the platform submodule's `simulators/`, which
+- qou configured its simulators under `folio-assistant/simulators`, which
   existed only once the platform submodule was checked out. The first version
   rendered "directory absent" as "this folio has no simulators" — replacing a
   correct nine-row table with a sentence. qou owns them outright since
@@ -216,7 +216,7 @@ Each shipped once:
    pastes into an `import`.
 2. **Workflow descriptions from a hardcoded map of twelve `qou` filenames**,
    consulted *before* the workflow's own `name:`. Now always the `name:`.
-3. **The simulator directory as a literal path inside the platform submodule.**
+3. **The simulator directory as the literal `folio-assistant/simulators`.**
    Now `<name>.config.json`, and the fallback is the folio-root `simulators`
    — the platform has no such directory since 2026-09-19.
 '''
