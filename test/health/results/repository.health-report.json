@@ -2,14 +2,14 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "4c5c53c99d94"
+    "script_hash": "adf09dbb7100"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-11-01T06:45:47.891Z",
-  "verdict": "findings",
+  "updated_at": "2026-11-02T06:54:45.348Z",
+  "verdict": "unknown",
   "checks": [
     {
       "id": "staging-preview-size",
@@ -27,13 +27,13 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 774911150,
+          "value": 2684973395,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 5,
+          "value": 7,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
@@ -84,27 +84,27 @@
       "measurements": [
         {
           "metric": "special-branch-bytes:qa-reports",
-          "value": 8569254012,
+          "value": 1103304074,
           "unit": "bytes",
-          "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch"
+          "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
         {
           "metric": "special-branch-bytes:beans",
-          "value": 8759577,
+          "value": 8793136,
           "unit": "bytes",
-          "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch"
+          "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
         {
           "metric": "special-branch-bytes:todos",
-          "value": 24025,
+          "value": 24145,
           "unit": "bytes",
-          "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch"
+          "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
         {
           "metric": "special-branches-measured",
           "value": 3,
           "unit": "count",
-          "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch"
+          "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
         {
           "metric": "special-branches-unbudgeted",
@@ -121,7 +121,7 @@
       ],
       "findings": [
         {
-          "summary": "`cat/cat-harness/qa-reports` is 7.98 GB, over the 500.0 MB budget (500 MB) for `qa-reports`.",
+          "summary": "`cat/cat-harness/qa-reports` is 1.03 GB, over the 500.0 MB budget (500 MB) for `qa-reports`.",
           "metric": "special-branch-bytes:qa-reports",
           "severity": "major",
           "action": "Report it to the owner with what the branch holds and its largest paths, and ask what to prune or whether the budget should change. Nothing here removes anything; the budget is the owner's."
@@ -130,7 +130,7 @@
     },
     {
       "id": "pages-publish-health",
-      "state": "ok",
+      "state": "unknown",
       "summary": "What the published site served, as the CI pages-serving observation recorded it — read offline from `qa-reports`, so the sweep never reaches the network itself.",
       "thresholds": [
         {
@@ -155,33 +155,9 @@
           "severity": "major"
         }
       ],
-      "measurements": [
-        {
-          "metric": "pages-serving-instruments",
-          "value": 1,
-          "unit": "count",
-          "command": "qa:fetch main/77afed971db953c4565f1dde8634b6fc70b0b63d health/pages-serving.json"
-        },
-        {
-          "metric": "pages-serving-observation-age-days",
-          "value": 0,
-          "unit": "days",
-          "command": "qa:fetch main/77afed971db953c4565f1dde8634b6fc70b0b63d health/pages-serving.json"
-        },
-        {
-          "metric": "pages-serving-urls",
-          "value": 41,
-          "unit": "count",
-          "command": "qa:fetch main/77afed971db953c4565f1dde8634b6fc70b0b63d health/pages-serving.json"
-        },
-        {
-          "metric": "pages-serving-failing",
-          "value": 0,
-          "unit": "count",
-          "command": "qa:fetch main/77afed971db953c4565f1dde8634b6fc70b0b63d health/pages-serving.json"
-        }
-      ],
-      "findings": []
+      "measurements": [],
+      "findings": [],
+      "reason": "no pages-serving observation could be read: qa-reports:main/41bbb14ed0b0603762aa27f81194c2fc9602fac0 — miss: main/41873450c66b7a824e2740eee057311f16b2234a has nothing under health"
     },
     {
       "id": "remote-mounts",
@@ -228,28 +204,38 @@
       "measurements": [
         {
           "metric": "staging-orphan-count",
-          "value": 1,
+          "value": 3,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 326709,
+          "value": 1364568143,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-live-count",
-          "value": 4,
+          "value": 3,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
       ],
       "findings": [
         {
-          "summary": "`STAGING/_retired` (319.1 kB, 367 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "summary": "`STAGING/repin-train-20261101-2248` (497.0 MB, 25718 files) — no open pull request; and no branch on the remote slugifies to it.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `_retired` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: _retired` and `cleanup_confirm: _retired`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `repin-train-20261101-2248` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261101-2248` and `cleanup_confirm: repin-train-20261101-2248`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+        },
+        {
+          "summary": "`STAGING/repin-train-20261102-0422` (401.5 MB, 19743 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `repin-train-20261102-0422` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261102-0422` and `cleanup_confirm: repin-train-20261102-0422`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+        },
+        {
+          "summary": "`STAGING/repin-train-20261102-0523` (402.9 MB, 19759 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `repin-train-20261102-0523` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261102-0523` and `cleanup_confirm: repin-train-20261102-0523`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         }
       ]
     },
@@ -303,13 +289,13 @@
       ],
       "findings": [
         {
-          "summary": "Declared needs: could not determine for litlfred/folio-assistant, litlfred/bootstrap, litlfred/folio-assistant-core, litlfred/bootstrap-tools, litlfred/who-iris, litlfred/folio-assistant-sci, litlfred/cat-harness, litlfred/fhir-harness, litlfred/cat-harness-tools — no credentials/needs.json, so used-vs-declared is not judged.",
+          "summary": "Declared needs: could not determine for litlfred/folio-assistant, litlfred/bootstrap, litlfred/fhir-harness, litlfred/cat-harness, litlfred/folio-assistant-core, litlfred/cat-harness-tools, litlfred/who-iris, litlfred/bootstrap-tools, litlfred/folio-assistant-sci — no credentials/needs.json, so used-vs-declared is not judged.",
           "metric": "secret-needs-undetermined",
           "severity": "major",
           "action": "Author `credentials/needs.json` per the credentials proposal §2.3 (bean 9hxd); until then this is not clean."
         },
         {
-          "summary": "Expiry: no credentials/registry.json records dates for litlfred/folio-assistant, litlfred/folio-assistant-core, litlfred/who-iris, litlfred/cat-harness, litlfred/cat-harness-tools, so no expiry can be warned of.",
+          "summary": "Expiry: no credentials/registry.json records dates for litlfred/folio-assistant, litlfred/cat-harness, litlfred/folio-assistant-core, litlfred/cat-harness-tools, litlfred/who-iris, so no expiry can be warned of.",
           "metric": "secret-expiry-days",
           "severity": "minor",
           "action": "Record issue and expiry dates as credentials are added or rotated (credentials proposal §2.3, registry.json)."
@@ -353,19 +339,19 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 98686986,
+          "value": 98826804,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 1106036931,
+          "value": 1142207293,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 814151680,
+          "value": 853736448,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
@@ -377,14 +363,14 @@
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 11.21,
+          "value": 11.56,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 1.03 GB against 94.1 MB of tracked content — 11.2x, in 3 pack(s).",
+          "summary": "`.git` is 1.06 GB against 94.2 MB of tracked content — 11.6x, in 3 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -393,7 +379,7 @@
     },
     {
       "id": "bean-store",
-      "state": "finding",
+      "state": "ok",
       "summary": "The work-plan store itself: duplicates, claims nobody is honouring, resolved items still inline, the size of the open backlog, decision records that list fewer than two real options, and session logs typed as roadmap roots.",
       "thresholds": [
         {
@@ -456,19 +442,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 728,
+          "value": 45,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 33,
+          "value": 24,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 695,
+          "value": 21,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -486,7 +472,7 @@
         },
         {
           "metric": "bean-stale-in-progress",
-          "value": 1,
+          "value": 0,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -498,7 +484,7 @@
         },
         {
           "metric": "bean-claimed",
-          "value": 21,
+          "value": 9,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -510,19 +496,19 @@
         },
         {
           "metric": "bean-quiet-claims-parenting-live-work",
-          "value": 1,
+          "value": 0,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-decision-records",
-          "value": 10,
+          "value": 0,
           "unit": "count",
           "command": "beans/defs/*.md — list items under the first `## Options` / `## Considered options` heading"
         },
         {
           "metric": "bean-rendered-decision-records",
-          "value": 1,
+          "value": 0,
           "unit": "count",
           "command": "beans/defs/*.md — the five-row table `renderDecision` emits"
         },
@@ -534,13 +520,13 @@
         },
         {
           "metric": "bean-claimed-with-criteria",
-          "value": 21,
+          "value": 9,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
         {
           "metric": "bean-claimed-criteria-absent",
-          "value": 8,
+          "value": 4,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
@@ -558,31 +544,18 @@
         },
         {
           "metric": "bean-self-declared-done-mid-flight",
-          "value": 6,
+          "value": 0,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading, touched within 72 h"
         },
         {
           "metric": "bean-self-declared-done-open-children",
-          "value": 1,
+          "value": 2,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading, with an open child"
         }
       ],
-      "findings": [
-        {
-          "summary": "`folio-assistant-vke6` has been `in-progress` for 41 days (\"SPLIT (#223): cut this repo into layers that can depend on each other\").",
-          "metric": "bean-stale-in-progress",
-          "severity": "minor",
-          "action": "Ask whoever claimed it whether it is still live. If nobody answers, move it back to `todo` with a note saying the claim expired — never CLOSE a sibling's bean on staleness (closing is governed by evidence, `bean-coordination` §\"Closing a bean whose work has already landed\"), and never delete it."
-        },
-        {
-          "summary": "695 completed or scrapped beans are still inline in `beans/defs/`.",
-          "metric": "bean-resolved-inline",
-          "severity": "minor",
-          "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."
-        }
-      ]
+      "findings": []
     },
     {
       "id": "todo-store",
