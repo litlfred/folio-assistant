@@ -1461,8 +1461,7 @@ jobs:
           cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
           # The host's document sits under its own directory, like every layer's
           # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
-          # root `<stub>.jsonld` is the one-release tombstone the export writes there,
-          # and its `.json` alias forwards with it.
+          # root `<stub>.jsonld` is the one-release tombstone the export writes there.
 
           # EVERY OTHER declared instance's graph, one document each — bean
           # `4ak5` item 1. The set is derived from the declarations by the
