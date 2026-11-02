@@ -6,15 +6,15 @@
   },
   "text" : {
     "status" : "generated",
-    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide smart.who.int.trust-phw</b></p><a name=\"smart.who.int.trust-phw\"> </a><a name=\"hcsmart.who.int.trust-phw\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"file://C:\\work\\ImplementationGuides\\ig-release\\who\\smart-base\\output/StructureDefinition-SGImplementationGuide.html\">SMART Guidelines ImplementationGuide</a></p></div><h2>trustphw</h2><p>The official URL for this implementation guide is: </p><pre>http://smart.who.int/trust-phw/ImplementationGuide/smart.who.int.trust-phw</pre><div><p>Describes common workflows and specifications for usage of personal health wallets on the WHO GDHCN Trust Network</p>\n</div></div>"
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide smart.who.int.trust-phw</b></p><a name=\"smart.who.int.trust-phw\"> </a><a name=\"hcsmart.who.int.trust-phw\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\"/><p style=\"margin-bottom: 0px\">Profile: <a href=\"file://C:\\work\\ImplementationGuides\\ig-release\\who\\smart-base\\output/StructureDefinition-SGImplementationGuide.html\">SMART Guidelines ImplementationGuide</a></p></div><h2>trust-phw</h2><p>The official URL for this implementation guide is: </p><pre>http://smart.who.int/trust-phw/ImplementationGuide/smart.who.int.trust-phw</pre><div><p>Describes common workflows and specifications for usage of personal health wallets on the WHO GDHCN Trust Network</p>\n</div></div>"
   },
   "url" : "http://smart.who.int/trust-phw/ImplementationGuide/smart.who.int.trust-phw",
   "version" : "0.1.0",
-  "name" : "trustphw",
+  "name" : "trust-phw",
   "title" : "GDHCN Trust Network - Personal Health Wallet",
   "status" : "draft",
   "experimental" : false,
-  "date" : "2026-10-30T17:37:34+01:00",
+  "date" : "2026-11-02T00:42:25+00:00",
   "publisher" : "WHO",
   "contact" : [{
     "name" : "WHO",
@@ -162,6 +162,18 @@
       "name" : "Consent Registry",
       "description" : "[IHE PCF Consent Registry](https://profiles.ihe.net/ITI/PCF/volume-1.html#153112-consent-registry) actor",
       "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Permission"
+      }],
+      "reference" : {
+        "reference" : "Permission/DSAPermissionExample"
+      },
+      "name" : "Data sharing agreement 42 v3 rendered as a FHIR R5 Permission (output only)",
+      "description" : "A worked example of the one-way rendering of an ODRL 2.2 `Agreement` to a FHIR R5 `Permission` (bean folio-assistant-jfbm; output only, the ODRL Agreement stays the source of truth). Ministry M shares its immunization coverage dataset with Institute I for public health use in 2026-2027, and may not have it redistributed.\n\nMapped: `conflict` prohibit to `combining` deny-overrides; `assigner` to `asserter`; the permission's `dateTime` constraints to `validity`; `uid` (the fixed-version URL) to `justification.evidence` as a logical reference; `permission` / `prohibition` to `rule.type` permit / deny; `target` to `rule.data.resource`; `assignee` to `rule.activity.actor`; `action` to `rule.activity.action` (consentaction); `purpose` to `rule.activity.purpose` (HL7 PurposeOfUse); the `delete` duty to `rule.limit` (v3 ObligationPolicy DELAU).\n\nDropped, with no home in Permission: the policy type `Agreement`; the agreement's SHA-256 (`spdx:checksum`; `Attachment.hash` is SHA-1 and `Reference` has no hash); the operator `isA` (only the code is kept); the exclusive bound of `lt` (Period end is inclusive, so the end is rendered as the last second before the bound); the `delete` duty's deadline constraint; the `inform` duty and its `informedParty`. Also without a home in Permission, though not used in this example: `refinement` on actions, assets or parties; the `elapsedTime` and other per-action constraints; `remedy` and `consequence`; logical constraints (`or`, `xone`, `and`, `andSequence`); `AssetCollection` / `PartyCollection` and `partOf`; `inheritFrom`; `profile`; `conflict` `invalid`; and duties other than those with an ObligationPolicy code (these map only roughly to `rule.limit`).",
+      "isExample" : true
     },
     {
       "extension" : [{
@@ -628,6 +640,18 @@
     {
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Organization"
+      }],
+      "reference" : {
+        "reference" : "Organization/InstituteI"
+      },
+      "name" : "Institute I (data recipient)",
+      "description" : "Institute I, the data recipient: the ODRL `assignee` of the example data sharing agreement.",
+      "isExample" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "ActorDefinition"
       }],
       "reference" : {
@@ -636,6 +660,18 @@
       "name" : "Issuer",
       "description" : "Issuer (system) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
       "isExample" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Organization"
+      }],
+      "reference" : {
+        "reference" : "Organization/MinistryM"
+      },
+      "name" : "Ministry M (data provider)",
+      "description" : "Ministry M, the data provider: the ODRL `assigner` of the example data sharing agreement.",
+      "isExample" : true
     },
     {
       "extension" : [{
@@ -921,6 +957,12 @@
           "sourceUrl" : "business-processes.html",
           "name" : "business-processes.html",
           "title" : "Business Processes",
+          "generation" : "markdown"
+        },
+        {
+          "sourceUrl" : "example-pilgrimage.html",
+          "name" : "example-pilgrimage.html",
+          "title" : "Worked Example: IPS Pilgrimage (Hajj)",
           "generation" : "markdown"
         },
         {

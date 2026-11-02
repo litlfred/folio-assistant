@@ -9,7 +9,6 @@ function fill(d,f,r){
   while(d.firstChild)d.removeChild(d.firstChild);
   d.appendChild(document.createTextNode('\u2014 '));
   var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
-  var rv=el('span',{'data-fa-staging-review':''});d.appendChild(rv);
   d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
   d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
   d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
@@ -31,27 +30,6 @@ function fill(d,f,r){
   stamp(f);
   measure();
   fresh(d,f);
-  review(rv,r,rel);
-}
-// The preview's review page (owner, 2026-11-01, Q-REV-1): reviewers could not
-// find it from a staging page. A folio writes it at <root>/<locale>/review/,
-// an IG at <root>/review/. Asked with HEAD, which the staging worker passes
-// through, so a 404 here is not answered with the live site's page. No review
-// page, no link.
-function review(s,r,rel){
-  if(typeof fetch!=='function')return;
-  var c=[],m=rel.match(/^([a-z]{2,3}(?:-[A-Za-z0-9]+)?)\//);
-  if(m)c.push(r+m[1]+'/review/');
-  c.push(r+'review/');
-  (function next(i){
-    if(i>=c.length)return;
-    fetch(c[i]+'index.html',{method:'HEAD',cache:'no-store'}).then(function(x){
-      if(!x.ok)return next(i+1);
-      s.appendChild(sep());
-      s.appendChild(link(c[i],'\ud83d\udd0d Review changes','font-weight:bold'));
-      measure();
-    }).catch(function(){next(i+1);});
-  })(0);
 }
 // Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
 // head now and say so when it has moved past the commit this preview was
@@ -108,4 +86,4 @@ function share(){
 measure();share();
 if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
-})();</script><header class="iga-top fa-page-bar"><a class="iga-home" href="../">smart.who.int.trust-phw (AST build)</a><a href="../">all 61 artefacts</a></header><main class="iga fa-page-main"><h1>Retrieve PKI material</h1><p class="iga-key"><code>Requirements/retrieve-pki-material</code></p><nav class="iga-tabs" aria-label="Views of this artefact"><a href="Requirements-retrieve-pki-material.html" aria-current="page">Content</a><a href="Requirements-retrieve-pki-material.json.html">JSON</a></nav><div class="iga-body" aria-live="polite"><p class="iga-state">Loading the artefact…</p></div></main><footer id="ig-footer" class="fa-page-foot"></footer><noscript><p>This page draws Requirements/retrieve-pki-material from <a href="Requirements-retrieve-pki-material.jsonld">its JSON-LD node</a> and <a href="../../ast-data/resources/Requirements/retrieve-pki-material--780bb00f.json">the resource's JSON</a>; it needs JavaScript to draw them. <a href="../">All 61 artefacts</a>.</p></noscript><script type="application/json" id="ig-artifact-page">{"node":"Requirements-retrieve-pki-material.jsonld","home":"../","footer":"../assets/ig-footer.json","prev":"Requirements-receive-pki-material.html","next":"StructureDefinition-Bundle-uv-ips-DVC.html","astLoader":"../assets/ast-resource.js","pages":"../assets/ast-pages.json"}</script><script src="../assets/ig-artifact.js"></script></body></html>
+})();</script><header class="iga-top fa-page-bar"><a class="iga-home" href="../">smart.who.int.trust-phw (AST build)</a><a href="../">all 64 artefacts</a></header><main class="iga fa-page-main"><h1>Retrieve PKI material</h1><p class="iga-key"><code>Requirements/retrieve-pki-material</code></p><nav class="iga-tabs" aria-label="Views of this artefact"><a href="Requirements-retrieve-pki-material.html" aria-current="page">Content</a><a href="Requirements-retrieve-pki-material.json.html">JSON</a></nav><div class="iga-body" aria-live="polite"><p class="iga-state">Loading the artefact…</p></div></main><footer id="ig-footer" class="fa-page-foot"></footer><noscript><p>This page draws Requirements/retrieve-pki-material from <a href="Requirements-retrieve-pki-material.jsonld">its JSON-LD node</a> and <a href="../../ast-data/resources/Requirements/retrieve-pki-material--780bb00f.json">the resource's JSON</a>; it needs JavaScript to draw them. <a href="../">All 64 artefacts</a>.</p></noscript><script type="application/json" id="ig-artifact-page">{"node":"Requirements-retrieve-pki-material.jsonld","home":"../","footer":"../assets/ig-footer.json","prev":"Requirements-receive-pki-material.html","next":"StructureDefinition-Bundle-uv-ips-DVC.html","astLoader":"../assets/ast-resource.js","pages":"../assets/ast-pages.json"}</script><script src="../assets/ig-artifact.js"></script></body></html>

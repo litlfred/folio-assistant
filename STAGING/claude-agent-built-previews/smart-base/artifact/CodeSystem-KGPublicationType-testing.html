@@ -9,7 +9,6 @@ function fill(d,f,r){
   while(d.firstChild)d.removeChild(d.firstChild);
   d.appendChild(document.createTextNode('\u2014 '));
   var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
-  var rv=el('span',{'data-fa-staging-review':''});d.appendChild(rv);
   d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
   d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
   d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
@@ -31,27 +30,6 @@ function fill(d,f,r){
   stamp(f);
   measure();
   fresh(d,f);
-  review(rv,r,rel);
-}
-// The preview's review page (owner, 2026-11-01, Q-REV-1): reviewers could not
-// find it from a staging page. A folio writes it at <root>/<locale>/review/,
-// an IG at <root>/review/. Asked with HEAD, which the staging worker passes
-// through, so a 404 here is not answered with the live site's page. No review
-// page, no link.
-function review(s,r,rel){
-  if(typeof fetch!=='function')return;
-  var c=[],m=rel.match(/^([a-z]{2,3}(?:-[A-Za-z0-9]+)?)\//);
-  if(m)c.push(r+m[1]+'/review/');
-  c.push(r+'review/');
-  (function next(i){
-    if(i>=c.length)return;
-    fetch(c[i]+'index.html',{method:'HEAD',cache:'no-store'}).then(function(x){
-      if(!x.ok)return next(i+1);
-      s.appendChild(sep());
-      s.appendChild(link(c[i],'\ud83d\udd0d Review changes','font-weight:bold'));
-      measure();
-    }).catch(function(){next(i+1);});
-  })(0);
 }
 // Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
 // head now and say so when it has moved past the commit this preview was
@@ -108,4 +86,4 @@ function share(){
 measure();share();
 if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
 window.addEventListener('resize',measure);window.addEventListener('load',measure);
-})();</script><div class="ig-topbar fa-page-bar" role="navigation" aria-label="SMART Base menu"><a class="ig-topbar-home" href="../../smart-base/index.html">SMART Base</a><a class="ig-topbar-group ig-topbar-link" href="../../smart-base/index.html">Home</a><details class="ig-topbar-group"><summary>Authoring</summary><ul><li><a href="../../smart-base/authoring-process.html">Process</a></li><li><a href="../../smart-base/authoring-personas.html">Personas</a></li><li><a href="../../smart-base/authoring-skills.html">Skills</a></li></ul></details><a class="ig-topbar-group ig-topbar-link" href="../../smart-base/downloads.html">Downloads</a><details class="ig-topbar-group"><summary>Indices</summary><ul><li><a href="../../smart-base/artifacts.html">Artifact Index</a></li><li><a href="../../smart-base/dak-api.html">DAK API</a></li></ul></details></div><main class="ig-main main-content fa-page-main" id="main-content"><p><span hidden="" data-fa-figure-images="ig"></span></p><link rel="stylesheet" href="../assets/ig-pages.css" /><link rel="stylesheet" href="../assets/ig-chrome.css" /><div class="st-ig"><div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div><div id="ig-status"><p><span class="st-ig-title">WHO SMART Base</span><br /><span>0.3.0</span></p></div><p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/base">http://smart.who.int/base</a>.</p></div><p><a href="CodeSystem-KGPublicationType.html">Narrative Content</a> · <a href="CodeSystem-KGPublicationType.json.html">JSON</a></p><h2 id="codesystem-knowledge-graph-l1-publication-type---testing">CodeSystem: Knowledge graph L1: publication type - Testing</h2><p>Active as of 2026-11-01</p><h3 id="test-plans">Test Plans</h3><p>No test plans are currently available for the CodeSystem.</p><h3 id="test-scripts">Test Scripts</h3><p>No test scripts are currently available for the CodeSystem.</p><link rel="stylesheet" href="../assets/ig-pages.css" /><link rel="stylesheet" href="../assets/ig-chrome.css" /><footer id="ig-footer" class="st-ig"><p class="ig-footer-nav"><a href="#">top</a></p><p class="ig-footer-band">IG © 2023+ <a href="http://who.int" rel="external">WHO</a>. Package <code>smart.who.int.base#0.3.0</code> based on <a href="http://hl7.org/fhir/R4/" rel="external">FHIR 4.0.1</a>. </p><p class="ig-footer-links">Links: <a href="../toc.html">Table of Contents</a> | <a href="https://spdx.org/licenses/CC-BY-SA-3.0-IGO.html" rel="external">License</a></p></footer></main></body></html>
+})();</script><div class="ig-topbar fa-page-bar" role="navigation" aria-label="SMART Base menu"><a class="ig-topbar-home" href="../../smart-base/index.html">SMART Base</a><a class="ig-topbar-group ig-topbar-link" href="../../smart-base/index.html">Home</a><details class="ig-topbar-group"><summary>Authoring</summary><ul><li><a href="../../smart-base/authoring-process.html">Process</a></li><li><a href="../../smart-base/authoring-personas.html">Personas</a></li><li><a href="../../smart-base/authoring-skills.html">Skills</a></li></ul></details><a class="ig-topbar-group ig-topbar-link" href="../../smart-base/downloads.html">Downloads</a><details class="ig-topbar-group"><summary>Indices</summary><ul><li><a href="../../smart-base/artifacts.html">Artifact Index</a></li><li><a href="../../smart-base/dak-api.html">DAK API</a></li></ul></details></div><main class="ig-main main-content fa-page-main" id="main-content"><p><span hidden="" data-fa-figure-images="ig"></span></p><link rel="stylesheet" href="../assets/ig-pages.css" /><link rel="stylesheet" href="../assets/ig-chrome.css" /><div class="st-ig"><div class="st-ig-bar"><a href="http://smart.who.int/base">smart.who.int.base</a></div><div id="ig-status"><p><span class="st-ig-title">WHO SMART Base</span><br /><span>0.3.0</span></p></div><p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/base">http://smart.who.int/base</a>.</p></div><p><a href="CodeSystem-KGPublicationType.html">Narrative Content</a> · <a href="CodeSystem-KGPublicationType.json.html">JSON</a></p><h2 id="codesystem-knowledge-graph-l1-publication-type---testing">CodeSystem: Knowledge graph L1: publication type - Testing</h2><p>Active as of 2026-11-02</p><h3 id="test-plans">Test Plans</h3><p>No test plans are currently available for the CodeSystem.</p><h3 id="test-scripts">Test Scripts</h3><p>No test scripts are currently available for the CodeSystem.</p><link rel="stylesheet" href="../assets/ig-pages.css" /><link rel="stylesheet" href="../assets/ig-chrome.css" /><footer id="ig-footer" class="st-ig"><p class="ig-footer-nav"><a href="#">top</a></p><p class="ig-footer-band">IG © 2023+ <a href="http://who.int" rel="external">WHO</a>. Package <code>smart.who.int.base#0.3.0</code> based on <a href="http://hl7.org/fhir/R4/" rel="external">FHIR 4.0.1</a>. </p><p class="ig-footer-links">Links: <a href="../toc.html">Table of Contents</a> | <a href="https://spdx.org/licenses/CC-BY-SA-3.0-IGO.html" rel="external">License</a></p></footer></main></body></html>
