@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-02T18:32:00Z
+updated_at: 2026-11-02T18:43:00Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -34,7 +34,7 @@ Resume prompt: "read bean folio-assistant-4j43 on branch cat/cat-harness/beans o
 
 ## Open items (18:32Z: 26 of 35 done)
 
-- [ ] cat-harness-tools#1399 (PR, check-workflow-script-paths `./` fix; taken over by the drain thread). New red was test order: docs/todos.jsonld was built only by an earlier test in the shard (#411 pattern). Fixed in 8c020c4 (ensureDocsPages in subgraph-node-checkout and todo-graph-repo-root). Merge on green.
+- [x] cat-harness-tools#1399 (merged 18:43Z, fe808ba) (PR, check-workflow-script-paths `./` fix; taken over by the drain thread). New red was test order: docs/todos.jsonld was built only by an earlier test in the shard (#411 pattern). Fixed in 8c020c4 (ensureDocsPages in subgraph-node-checkout and todo-graph-repo-root). Merge on green.
 - [ ] cat-harness-tools#1299 — 13 of 16 reds wait on the fa re-pin train (fa#2921, which needs owner command Q-SLASH-8). Recount after the train merges. Owner thread: Finish idle harness issues (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9E2MM936aKdTfuSSRD7GVeN).
 - [ ] cat-harness-tools#1378, #1379 — slash IRIs; owner thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G95HvJ9m7xBV6qWhqn6M2rVj.
 - [ ] cat-harness-tools#1356 — L1 ingestion; owner thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9MzQpc26tsYwzKvRWEvTqXn.
@@ -47,3 +47,5 @@ Other open harness PRs (not drain items): cat-harness#972 (draft, content, card 
 Done since 06:50Z: fhir-harness#269, #271, #275, #280; cat-harness#978; cat-harness-tools#1354, #1259 (via #1406, cat-harness#975), #400 (via fa#2915); bean 8bm7; plus the merged/closed rows in the report table.
 
 _2026-11-02T18:32:00Z_ — Plan and state written here as the drain's durable memory (owner asked 18:26Z: "make sure workplan beaned up may stall"). Session https://claude.ai/code/session_01Qmmkt5upL17RB2jgQPi8Mx
+
+_2026-11-02T18:43:00Z_ — cat-harness-tools#1399 merged (fe808ba) after the test-order fix went green. Its paired issue fhir-harness#269 was already closed.
