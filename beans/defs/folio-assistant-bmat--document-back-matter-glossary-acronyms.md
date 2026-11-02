@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-02T19:15:00Z
+updated_at: 2026-11-02T19:26:00Z
 tags:
     - document-structure
     - glossary
@@ -57,3 +57,5 @@ _2026-11-02T19:10Z_ — Q-BM-4 = A (owner tap 18:59Z). smart-ra#230 is reorder-o
 _2026-11-02T19:13Z_ — STALL CHECKPOINT. All work pushed. Open: smart-ra#230 (reorder only, head 216203a, merge on green — approved Q-BM-2), cat-harness-tools#1416 (ready, merge on green — approved Q-BM-4 A), dth-sc#24 / dth-phc#33 / core#622 (drafts; card Q-BM-3 cmsg_017WNUkNK8kdDziPK58Pv6G98igzjYcWvZu1rDWuHfoRsT unanswered). Then: re-pin cat-harness-tools (after #1416 merges) in smart-ra, dth-sc, dth-phc; open PR from smart-ra branch claude/glossary-acronyms-nest (b118b26). dth-sc/dth-phc corpus-gate passes only with #1416 pinned.
 
 _2026-11-02T19:15Z_ — smart-ra#230 MERGED (8257473): dpi-h-ra opens on Executive summary; Glossary, Acronyms after Appendix. Site publish is agent-run (stage-local.ts), not done yet.
+
+_2026-11-02T19:26Z_ — cat-harness-tools#1416 MERGED (8560fbe). Asked Re-pin train thread (cmsg_017WNUkNK8kdDziPK58Pv6G9MmDK4fGPz89Zs2mtVYEY36) to pin cat-harness-tools >= 8560fbe in smart-ra, dth-sc, dth-phc. After pins land: open PR from smart-ra claude/glossary-acronyms-nest (rebase on main first); merge dth-sc#24, dth-phc#33, core#622 per card Q-BM-3.
