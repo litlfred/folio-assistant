@@ -5,7 +5,7 @@ title: docs-site must rebuild when the bean branch moves (ref + concurrency)
 status: in-progress
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-11-02T07:15:00Z
+updated_at: 2026-11-02T07:08:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -258,3 +258,5 @@ _2026-10-31T15:35:00Z_ — Follow-up updates on Option B writer-records, preview
 _2026-11-01T20:50Z_ — Moved under folio-assistant-1xhc: the old epic closes (owner card Q-DQ-1 A). Session https://claude.ai/code/session_01Qmmkt7h4RWc6UwiBW5kbZ2
 
 _2026-11-02T07:15:00Z_ — What is left (harness drain, bean c1ev): none of the three Done-when boxes is met on main; `docs-site.yml` still has `branches: [main]` and `concurrency.group: docs-site-${{ github.ref }}`, and its last five main runs failed or were cancelled (latest 2026-11-02 06:17Z). The writer-cache side tracked under cat-harness-tools#400 (now narrowed to box 4: Feature Staging re-renders only layers whose pins moved) is open in folio-assistant#2875, #2904 and draft cat-harness-tools#1129. Session https://claude.ai/code/session_01Qmmkt5kB8npnFWHCHTjq7j
+
+_2026-11-02T07:08:00Z_ — [`litlfred/cat-harness-tools#1129`](https://github.com/litlfred/cat-harness-tools/pull/1129) merged (`99a2b49`, via the meta-merge tools#1385 at 07:03Z): remaining post-#1084 deploy stamps blanked and 22 more writers recordable. Still open: folio-assistant#2875 and #2904, a folio-assistant re-pin of tools to include `99a2b49`, cat-harness-tools#400 box 4, and this bean's three Done-when boxes (docs-site still `branches: [main]`, per-ref concurrency). Session https://claude.ai/code/session_01Qmmkt5kB8npnFWHCHTjq7j
