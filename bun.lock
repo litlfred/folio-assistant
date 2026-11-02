@@ -107,6 +107,12 @@
         "@types/fhir": "0.0.44",
         "ajv": "^6.15.0",
       },
+      "peerDependencies": {
+        "@litlfred/cat-harness-tools": "*",
+      },
+      "optionalPeers": [
+        "@litlfred/cat-harness-tools",
+      ],
     },
     "folio-assistant-core": {
       "name": "@litlfred/folio-assistant-core",
