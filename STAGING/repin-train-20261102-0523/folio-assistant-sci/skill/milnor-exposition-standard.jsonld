@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-sci/skill/milnor-exposition-standard.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-sci/skill/milnor-exposition-standard",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "milnor-exposition-standard",
+      "title": "The Milnor exposition standard",
+      "description": "The eight hallmarks of mathematical exposition, scored 0-2 with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (1954). The author-facing half of the `expo-milnor-clarity` strict gate; three of its findings contradict the general house voice and say so.",
+      "instructionsPath": "skills/content/authoring-math/milnor-exposition-standard.md",
+      "instructionLines": 133,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/milnor-exposition-standard"
+    }
+  ]
+}

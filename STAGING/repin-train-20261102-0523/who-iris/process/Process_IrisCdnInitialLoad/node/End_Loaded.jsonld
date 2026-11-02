@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Initial release published and verified",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/process/Process_IrisCdnInitialLoad#flow/F14"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/End_Loaded"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/archimate-from-glossary/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/archimate-from-glossary.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Make an ArchiMate model agree with the instance's folio-glossary/v1 terms whose `focus` is an ArchiMate element: elements matched by their `skosConcept` property (never by name) take the term's prefLabel and definition, a term with no element gets one on no view, and the relationships the terms list are added. A type that disagrees is reported, never changed. A relationship between two linked elements that no term lists is reported, and removed with `--prune` along with the lines that draw it. No box or line is moved. Without `--write` it only reports; `--check` fails when anything would change.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat archimate:from-glossary"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--instance"
+            },
+            "description": "The instance root holding `glossary/*.glossary.json` and `archimate/cat-archimate.config.json`.",
+            "name": "instance",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--model"
+            },
+            "description": "The model's id in the ArchiMate config.",
+            "name": "model",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ArchimateModelId"
+          },
+          {
+            "arg": {
+              "flag": "--write"
+            },
+            "description": "Write the changes into the model file.",
+            "name": "write",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--prune"
+            },
+            "description": "Also remove relationships between linked elements that no term lists.",
+            "name": "prune",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--check"
+            },
+            "description": "Fail if the model and the graph disagree.",
+            "name": "check",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The model file, rewritten in place with `--write`.",
+            "name": "model",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "archimate-from-glossary",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+      "title": "ArchiMate model from the glossary"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/archimate-from-glossary",
+  "path": "tools/archimate-from-glossary/"
+}

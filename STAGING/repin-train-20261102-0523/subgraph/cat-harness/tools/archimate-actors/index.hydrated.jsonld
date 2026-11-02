@@ -1,0 +1,89 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/archimate-actors/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-actors.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Actors come first (owner, 2026-11-01, smart-ra#166 D4): the IG's ActorDefinitions are written from the DAK's personas, and an ArchiMate model only points at them. For one model an instance's `cat-archimate.config.json` names, this reads every element carrying the Archi property `fhir-actor`, whose value is an ActorDefinition's canonical URL, and the IG's ActorDefinitions: FSH `InstanceOf: ActorDefinition` under `input/fsh/`, and FHIR JSON under `fsh-generated/resources/` or `input/resources/`, each canonical being `<sushi-config canonical>/ActorDefinition/<id>` unless its `url` says otherwise. It fails on a value that is not a canonical URL, a tag that names no ActorDefinition, an element kind that cannot be an actor (a data object, a goal), and a type mismatch (a `#person` actor on an application or technology element, a `#system` actor on a business actor or role). It warns about each ActorDefinition no element realizes; `--strict` makes that a failure. `--json` prints element → actors and actor → elements, for page back-links. It never writes an ActorDefinition or any FSH, and never matches boxes to actors by name.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat archimate:actors"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--instance"
+            },
+            "description": "The instance root whose ArchiMate model is read.",
+            "name": "instance",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--model"
+            },
+            "description": "The model's id from the config.",
+            "name": "model",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/ArchimateModelId"
+          },
+          {
+            "arg": {
+              "flag": "--ig"
+            },
+            "description": "The IG directory holding `sushi-config.yaml` and `input/fsh/`; absent, the instance root.",
+            "name": "ig",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--strict"
+            },
+            "description": "Fail, not only warn, when an ActorDefinition is realized by no element of the model.",
+            "name": "strict",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--json"
+            },
+            "description": "Print the back-links as JSON (element → actors, actor → elements, problems, unrealized) instead of the report.",
+            "name": "json",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The problems, the unrealized ActorDefinitions and a summary line; with `--json`, the back-links as JSON. Exit 1 on any problem, or on an unrealized actor under `--strict`.",
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "archimate-actors",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models",
+      "title": "Check that an ArchiMate model's fhir-actor tags point at the IG's FHIR ActorDefinitions"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/archimate-actors",
+  "path": "tools/archimate-actors/"
+}

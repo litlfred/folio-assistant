@@ -1,0 +1,219 @@
+{
+  "$ref": "#/definitions/RenderedMeasured",
+  "definitions": {
+    "RenderedMeasured": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "rendered-measured/v1"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "known",
+            "not-base"
+          ]
+        },
+        "baseCommit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "beforeCommit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "measured": {
+          "type": "object",
+          "properties": {
+            "$schema": {
+              "type": "string",
+              "const": "rendered-impact/v1"
+            },
+            "renderer": {
+              "type": "string",
+              "minLength": 1
+            },
+            "method": {
+              "type": "string",
+              "enum": [
+                "cone",
+                "build-diff"
+              ]
+            },
+            "site": {
+              "type": "string"
+            },
+            "base": {
+              "type": "string"
+            },
+            "head": {
+              "type": "string"
+            },
+            "inputs": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "change": {
+                    "type": "string",
+                    "enum": [
+                      "changed",
+                      "added",
+                      "removed"
+                    ]
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "content",
+                      "data",
+                      "index"
+                    ]
+                  },
+                  "via": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "anchors": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "hash": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "path",
+                  "change",
+                  "role"
+                ]
+              }
+            },
+            "undetermined": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "scope": {
+                    "default": "unknown",
+                    "type": "string",
+                    "enum": [
+                      "unknown",
+                      "all"
+                    ]
+                  },
+                  "hash": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "input",
+                  "reason"
+                ]
+              }
+            }
+          },
+          "required": [
+            "$schema",
+            "renderer",
+            "method",
+            "files"
+          ]
+        },
+        "check": {
+          "type": "object",
+          "properties": {
+            "missed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "confirmed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "unconfirmed": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "content",
+                      "data",
+                      "index"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "role"
+                ]
+              }
+            }
+          },
+          "required": [
+            "missed",
+            "confirmed",
+            "unconfirmed"
+          ]
+        }
+      },
+      "required": [
+        "$schema",
+        "status",
+        "baseCommit",
+        "beforeCommit",
+        "measured",
+        "check"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rendered-impact/RenderedMeasuredSchema.schema.json",
+  "title": "RenderedMeasuredSchema",
+  "description": "Generated from `RenderedMeasuredSchema` in schemas/ui/rendered-impact.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  }
+}

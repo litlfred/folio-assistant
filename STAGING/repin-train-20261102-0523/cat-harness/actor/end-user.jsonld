@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/actor/end-user.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/actor/end-user",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Actor",
+      "localId": "end-user",
+      "actorKind": "person",
+      "title": "End user",
+      "description": "The person the assistant is working for — the one who states intent and answers what the agent cannot decide from the filesystem.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/role/user"
+      ],
+      "permissionName": [
+        "adjudication"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/end-user"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/decision/signing-route/Decision_SigningRoute.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/decision/signing-route/Decision_SigningRoute",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Decision",
+      "name": "Which signing route?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/sdlc/decisions/signing-route.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/signing-route/Decision_SigningRoute"
+    }
+  ]
+}

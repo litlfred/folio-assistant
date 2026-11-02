@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/skill/deep-document-research.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/skill/deep-document-research",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "deep-document-research",
+      "title": "Deep document research",
+      "description": "Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. The four roles, the two stopping conditions and why both are load-bearing, the granularity choice, and the three things this repository must NOT adopt along with the method.",
+      "instructionsPath": "skills/deep-document-research.md",
+      "instructionLines": 102,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/deep-document-research"
+    }
+  ]
+}

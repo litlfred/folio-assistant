@@ -1,0 +1,97 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Review and publish a folio",
+      "summary": "Review a rendered folio and publish it, or send it back with changes.",
+      "description": "Review a rendered folio and publish it, or send it back with changes. Shared by every authoring process: authoring-a-document (this instance) and authoring-a-paper (folio-assistant-sci) call it after they validate and render, so review, publish and committee feedback are drawn once (shared block G6 of the BPMN guidance review, owner Q-BR-7 A, 2026-11-01). What differs by folio kind stays with the caller: its writing loop, its own check (the content profile for a document, the Lean build for a paper), and its renderer. It ends one of three ways. `Published`: the caller closes its bean. `Changes asked` and `Feedback in: changes asked`: the caller goes back to its writing loop.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/folio-review-publish.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/folio-review-publish.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/assets/img/workflows/folio-review-publish.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Start_Rendered"
+      ],
+      "nodeCount": 8,
+      "flowCount": 7,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish#flow/F1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Start_Rendered",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Review",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish#flow/F2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Review",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Gateway_ReviewOutcome",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish#flow/F3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "iterate",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Gateway_ReviewOutcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/End_ChangesAsked",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish#flow/F4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "approved",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Gateway_ReviewOutcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Publish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish#flow/F5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Publish",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/End_Published",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish#flow/F6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "Authoring Committee feedback",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Gateway_ReviewOutcome",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Call_ContributorFeedback",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish#flow/F7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/Call_ContributorFeedback",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/process/Process_FolioReviewPublish/node/End_FeedbackIn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F7"
+    }
+  ]
+}

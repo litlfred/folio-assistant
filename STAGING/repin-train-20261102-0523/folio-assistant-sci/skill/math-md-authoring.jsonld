@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-sci/skill/math-md-authoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-sci/skill/math-md-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "math-md-authoring",
+      "title": "Math markdown authoring",
+      "description": "The math half of the harness's md-authoring: display and inline math, KaTeX limits, math in titles and table cells, and what the LaTeX pipeline does with tables, for a paper folio's .md blocks.",
+      "instructionsPath": "skills/content/authoring-math/math-md-authoring.md",
+      "instructionLines": 129,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/math-md-authoring"
+    }
+  ]
+}

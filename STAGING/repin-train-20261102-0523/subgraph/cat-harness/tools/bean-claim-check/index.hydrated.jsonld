@@ -1,0 +1,145 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/bean-claim-check/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/bean-claim-check.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "For one bean: fetch every bean copy, read the last three commits on its file, skip it if another agent committed within the window or its last note is a claim, look for an open PR naming it in every listed repository, and only then set it in-progress with a dated claim note as a plain commit on every copy. A rejected push is fetched, rebased and re-checked, never forced.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "scripts/bean-claim-check.ts"
+        },
+        "shell": "bun run cat beans:claim-check"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "positional": 0
+            },
+            "description": "The bean, full or short id.",
+            "name": "id",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanId"
+          },
+          {
+            "arg": {
+              "flag": "--copy"
+            },
+            "description": "A local checkout of a bean copy. Repeat once per copy. Defaults to the current checkout.",
+            "name": "copy",
+            "repeated": true,
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--repo"
+            },
+            "description": "A repository whose open PRs are searched for the id. Repeat. Defaults to the copies' repositories.",
+            "name": "repo",
+            "repeated": true,
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+          },
+          {
+            "arg": {
+              "flag": "--mine-pr"
+            },
+            "description": "The link of an open PR that is the caller's own, when resuming a bean it already holds. Every cloud thread's PR has the same author, so without this any open PR naming the bean is a skip.",
+            "name": "minePr",
+            "repeated": true,
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+          },
+          {
+            "arg": {
+              "flag": "--as"
+            },
+            "description": "Which agent is asking, by its name in the agents table. Defaults to `cloud`.",
+            "name": "as",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--session"
+            },
+            "description": "The caller's session link, matched against the `Claude-Session:` trailer so a sibling thread of the same agent is told apart. Defaults to $CLAUDE_SESSION_URL.",
+            "name": "session",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+          },
+          {
+            "arg": {
+              "flag": "--agents"
+            },
+            "description": "A JSON file of agents and their commit authors, as in the skill's input schema.",
+            "name": "agents",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--window"
+            },
+            "description": "Defaults to 24h.",
+            "name": "window",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/TimeWindow"
+          },
+          {
+            "arg": {
+              "flag": "--dry-run"
+            },
+            "description": "Check only; report `would-claim` and write nothing.",
+            "name": "dryRun",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--json"
+            },
+            "description": "Emit `definitions.claimCheck` as JSON.",
+            "name": "json",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "One of claimed, would-claim, skip-recent-commit, skip-claim-note, skip-open-pr, skip-closed or unknown, with the evidence per copy and the open PRs found. Exit 0 for claimed or would-claim, 1 for a skip, 2 for unknown. Unknown is never reported as free. With --json, `definitions.claimCheck` of schemas/skills/bean-drain/output.schema.json.",
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "description": "With --json, the check as one `BeanClaimCheck` record: the state, the evidence per copy and the open PRs found. Programs and BPMN gateways read this; people read `check`.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanClaimCheck"
+          }
+        ]
+      },
+      "name": "bean-claim-check",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+      "title": "Check a bean is free, then claim it on every copy"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/bean-claim-check",
+  "path": "tools/bean-claim-check/"
+}

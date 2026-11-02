@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/MountSeed",
+  "definitions": {
+    "MountSeed": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*=[A-Za-z0-9][A-Za-z0-9-]*\\/[A-Za-z0-9._-]+@[0-9a-f]{40}$",
+      "description": "A remote instance to seed, e.g. <instance>=<owner>/<repo>@<40-hex sha>"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/MountSeedSchema.schema.json",
+  "title": "MountSeedSchema",
+  "description": "Generated from `MountSeedSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  }
+}

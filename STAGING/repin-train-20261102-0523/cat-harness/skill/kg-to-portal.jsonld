@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/skill/kg-to-portal.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/skill/kg-to-portal",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "kg-to-portal",
+      "title": "KG → package → distribution → portal",
+      "description": "Getting a knowledge graph out to a public portal — the six stages between \"the graph is in the repository\" and \"a reader's browser has the bytes\", why a CDN is a layer rather than a publication host, and which decisions are the deployment's to make rather than the pipeline's.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/kg-to-portal.md",
+      "instructionLines": 241,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-to-portal"
+    }
+  ]
+}

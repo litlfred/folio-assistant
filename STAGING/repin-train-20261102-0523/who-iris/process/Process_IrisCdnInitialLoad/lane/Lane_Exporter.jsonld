@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Lane",
+      "name": "IRIS CDN Exporter (agent)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/process/Process_IrisCdnInitialLoad",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/role/iris-cdn-exporter",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter"
+    }
+  ]
+}

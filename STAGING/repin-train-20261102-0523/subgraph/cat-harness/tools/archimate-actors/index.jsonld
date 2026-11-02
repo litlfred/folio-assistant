@@ -1,0 +1,19 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/archimate-actors/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-actors.jsonld",
+      "@type": "cat-harness:Tool",
+      "name": "archimate-actors",
+      "title": "Check that an ArchiMate model's fhir-actor tags point at the IG's FHIR ActorDefinitions"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/archimate-actors",
+  "path": "tools/archimate-actors/"
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/skill/harness-projections.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/skill/harness-projections",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "harness-projections",
+      "title": "Harness projections: CI writes them, the owner consents to every hand edit",
+      "description": "Who may write under `.claude/`, and when. The generated projections of the knowledge graph (`.claude/commands/*.md` from `skill:commands`, the assembled agent memory under `.claude/agents/` and `.claude/agent-memory/`) are written by CI, which commits them to the PR branch, and never by an agent. A hand-edited `.claude/` file (`settings.json`, its hooks, a hand-written command or agent definition) changes only with the owner's explicit consent to that change: the agent shows the exact diff and the reason, asks first, and records the consent. Read before staging any path under `.claude/`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/package/conduct-core"
+      ],
+      "instructionsPath": "skills/conduct/conduct-core/harness-projections.md",
+      "instructionLines": 123,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-projections"
+    }
+  ]
+}

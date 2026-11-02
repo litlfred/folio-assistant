@@ -1,0 +1,33 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/arxiv-2404.04834v4",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "LLM-Based Multi-Agent Systems for Software Engineering: Literature Review, Vision and the Road Ahead",
+      "dcterms:creator": [
+        "Literature Review, Vision",
+        "Ahead, the Road"
+      ],
+      "dcterms:issued": "D:20250721",
+      "bibo:doi": "10.1145/nnnnnnn",
+      "dcterms:identifier": "https://arxiv.org/abs/2404.04834",
+      "dcterms:source": "cat-harness/library/arxiv-2404.04834v4/manifest.jsonld",
+      "dcterms:hasVersion": "cat-harness/library/arxiv-2404.04834v4"
+    }
+  ]
+}

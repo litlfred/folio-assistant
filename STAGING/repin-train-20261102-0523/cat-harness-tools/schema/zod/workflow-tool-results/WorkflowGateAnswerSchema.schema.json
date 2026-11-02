@@ -1,0 +1,149 @@
+{
+  "$ref": "#/definitions/WorkflowGateAnswer",
+  "definitions": {
+    "WorkflowGateAnswer": {
+      "type": "object",
+      "properties": {
+        "allowed": {
+          "type": "boolean"
+        },
+        "gate": {
+          "type": "object",
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "relaxedBy": {
+              "type": "object",
+              "properties": {
+                "process": {
+                  "type": "string"
+                },
+                "activity": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "scope": {
+                  "type": "string"
+                },
+                "package": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "process",
+                "activity",
+                "reason",
+                "package"
+              ]
+            }
+          },
+          "required": [
+            "allowed",
+            "reason"
+          ]
+        },
+        "authorization": {
+          "type": "object",
+          "properties": {
+            "allowed": {
+              "type": "boolean"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "advisory",
+                "strict"
+              ]
+            },
+            "authenticatedBy": {
+              "type": "string",
+              "enum": [
+                "github",
+                "http-gateway",
+                "asserted",
+                "none"
+              ]
+            },
+            "actor": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "account": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "assignment": {
+              "type": "string",
+              "enum": [
+                "eligible",
+                "unconstrained",
+                "not-eligible",
+                "no-role",
+                "unknown-actor"
+              ]
+            },
+            "authorized": {
+              "type": "string",
+              "enum": [
+                "permit",
+                "deny",
+                "unknown"
+              ]
+            },
+            "access": {
+              "type": "string",
+              "enum": [
+                "permit",
+                "deny",
+                "unknown"
+              ]
+            },
+            "findings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "allowed",
+            "mode",
+            "authenticatedBy",
+            "actor",
+            "assignment",
+            "authorized",
+            "findings"
+          ]
+        },
+        "namedActor": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "allowed",
+        "gate",
+        "authorization"
+      ],
+      "description": "May a step run now: the process gate and the task authorization, either of which refuses."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workflow-tool-results/WorkflowGateAnswerSchema.schema.json",
+  "title": "WorkflowGateAnswerSchema",
+  "description": "Generated from `WorkflowGateAnswerSchema` in schemas/tools/workflow-tool-results.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  }
+}

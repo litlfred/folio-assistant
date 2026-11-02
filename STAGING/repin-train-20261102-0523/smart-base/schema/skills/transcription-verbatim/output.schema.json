@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transcription Verbatim Output",
+  "description": "The verdict on each authored L1 file: every statement verbatim in the image narrative or transcription it names, every transcription word corroborated by the text layer unless listed under inspectionOnly, and unique keys.",
+  "type": "object",
+  "required": [
+    "report"
+  ],
+  "properties": {
+    "report": {
+      "type": "string",
+      "description": "One summary line per file and one FINDING line per failure. Exit 0 clean, 1 findings, 2 nothing to check (not a pass)."
+    }
+  },
+  "additionalProperties": false,
+  "$id": "http://smart.who.int/base/schema/skills/transcription-verbatim/output.schema.json",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  }
+}

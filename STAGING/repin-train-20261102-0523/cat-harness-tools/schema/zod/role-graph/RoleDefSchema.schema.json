@@ -1,0 +1,189 @@
+{
+  "$ref": "#/definitions/RoleDef",
+  "definitions": {
+    "RoleDef": {
+      "type": "object",
+      "properties": {
+        "persona": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actorKinds": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "person",
+              "agent",
+              "system",
+              "external"
+            ]
+          }
+        },
+        "otherNames": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "formerNames": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "retiredOn": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              }
+            },
+            "required": [
+              "name",
+              "retiredOn"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "skills": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "A skill name, e.g. todo-manager"
+          }
+        },
+        "inherits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "judgementOnly": {
+          "type": "boolean"
+        },
+        "requiredCapabilities": {
+          "type": "object",
+          "properties": {
+            "reasoning_tier": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "expert"
+              ]
+            },
+            "tool_use": {
+              "type": "boolean"
+            },
+            "context_window": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "multimodal": {
+              "type": "boolean"
+            },
+            "capabilities": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "store": {
+          "type": "object",
+          "properties": {
+            "holds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "api": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "style": {
+                    "type": "string",
+                    "enum": [
+                      "openapi",
+                      "fhir-capability",
+                      "graphql",
+                      "cli",
+                      "json-schema-files",
+                      "git"
+                    ]
+                  },
+                  "document": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tools": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "required": [
+                  "style"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "realisedBy": {
+              "type": "string",
+              "minLength": 1
+            },
+            "published": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "actorKinds"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/RoleDefSchema.schema.json",
+  "title": "RoleDefSchema",
+  "description": "Generated from `RoleDefSchema` in schemas/process/role-graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  }
+}

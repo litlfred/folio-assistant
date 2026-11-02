@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/smart-base/process/Process_SgEndToEnd/node/Task_L3Ready.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3Ready.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_SgEndToEnd/node/Task_L3Ready",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Check L3 readiness",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_SgEndToEnd",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_SgEndToEnd/lane/Lane_Agent",
+      "requires": [
+        "http://smart.who.int/base/skill/l3-readiness"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E20"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_SgEndToEnd#flow/E38"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

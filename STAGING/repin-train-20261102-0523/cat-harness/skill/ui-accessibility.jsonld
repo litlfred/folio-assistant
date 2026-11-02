@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/skill/ui-accessibility.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/skill/ui-accessibility",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "name": "ui-accessibility",
+      "title": "All UI must follow accessibility guidelines",
+      "description": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, why an automated pass is not the standard, and what a rendering built client-side owes a reader — there is no no-JavaScript floor here, and the two gates that look like one are narrower than their names.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/ui-accessibility.md",
+      "instructionLines": 187,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ui-accessibility"
+    }
+  ]
+}

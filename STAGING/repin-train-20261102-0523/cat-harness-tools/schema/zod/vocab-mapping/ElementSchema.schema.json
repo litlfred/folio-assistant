@@ -1,0 +1,251 @@
+{
+  "$ref": "#/definitions/Element",
+  "definitions": {
+    "Element": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display": {
+          "type": "string"
+        },
+        "valueSet": {
+          "type": "string",
+          "minLength": 1
+        },
+        "noMap": {
+          "type": "boolean"
+        },
+        "target": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "display": {
+                "type": "string"
+              },
+              "valueSet": {
+                "type": "string",
+                "minLength": 1
+              },
+              "relationship": {
+                "type": "string",
+                "enum": [
+                  "related-to",
+                  "equivalent",
+                  "source-is-narrower-than-target",
+                  "source-is-broader-than-target",
+                  "not-related-to"
+                ]
+              },
+              "equivalence": {
+                "type": "string",
+                "enum": [
+                  "relatedto",
+                  "equivalent",
+                  "equal",
+                  "wider",
+                  "subsumes",
+                  "narrower",
+                  "specializes",
+                  "inexact",
+                  "unmatched",
+                  "disjoint"
+                ]
+              },
+              "comment": {
+                "type": "string"
+              },
+              "property": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "value": {}
+                      },
+                      "required": [
+                        "type",
+                        "value"
+                      ]
+                    },
+                    "extra": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "value"
+                  ]
+                }
+              },
+              "dependsOn": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "attribute": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "value": {}
+                      },
+                      "required": [
+                        "type",
+                        "value"
+                      ]
+                    },
+                    "valueSet": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "system": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "display": {
+                      "type": "string"
+                    },
+                    "extra": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": [
+                    "attribute"
+                  ]
+                }
+              },
+              "product": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "attribute": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "value": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "value": {}
+                      },
+                      "required": [
+                        "type",
+                        "value"
+                      ]
+                    },
+                    "valueSet": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "system": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "display": {
+                      "type": "string"
+                    },
+                    "extra": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": [
+                    "attribute"
+                  ]
+                }
+              },
+              "key": {
+                "type": "string",
+                "minLength": 1
+              },
+              "authority": {
+                "type": "string",
+                "enum": [
+                  "authoritative",
+                  "derived"
+                ]
+              },
+              "derivedFrom": {
+                "type": "string",
+                "minLength": 1
+              },
+              "transform": {
+                "type": "string",
+                "enum": [
+                  "copy",
+                  "flag",
+                  "code"
+                ]
+              },
+              "extra": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {}
+              }
+            },
+            "required": [
+              "relationship"
+            ]
+          }
+        },
+        "extra": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/vocab-mapping/ElementSchema.schema.json",
+  "title": "ElementSchema",
+  "description": "Generated from `ElementSchema` in schemas/content/vocab-mapping.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  }
+}

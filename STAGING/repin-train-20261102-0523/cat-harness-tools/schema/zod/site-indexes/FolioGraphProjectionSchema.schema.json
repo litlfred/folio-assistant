@@ -1,0 +1,174 @@
+{
+  "$ref": "#/definitions/FolioGraphProjection",
+  "definitions": {
+    "FolioGraphProjection": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-graph-projection/v1"
+        },
+        "tile": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "count",
+              "unit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "directories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dir": {
+                "type": "string"
+              },
+              "present": {
+                "type": "boolean"
+              },
+              "nodes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "bytes": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "size": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "bytes",
+                    "size"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "dir",
+              "present",
+              "nodes",
+              "files"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "theme": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "anchor": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "declaredIn": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "href": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "href"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "chars": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "file": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "summary",
+              "theme",
+              "anchor",
+              "declaredIn",
+              "links",
+              "chars",
+              "file"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "directories",
+        "nodes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site-indexes/FolioGraphProjectionSchema.schema.json",
+  "title": "FolioGraphProjectionSchema",
+  "description": "Generated from `FolioGraphProjectionSchema` in schemas/ui/site-indexes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  }
+}

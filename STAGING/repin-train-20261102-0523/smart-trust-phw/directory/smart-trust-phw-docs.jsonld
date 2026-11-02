@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/smart-trust-phw/directory/smart-trust-phw-docs.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/smart-trust-phw/directory/smart-trust-phw-docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "name": "smart-trust-phw-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/docs",
+        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/ig-pages"
+      ],
+      "description": "The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust-phw:pages` (`fhir-harness/scripts/gen-ig-pages.ts`). These are the artefact pages of smart-trust-phw's IG site (`igSite`, bean `mftp`): they build into smart-trust-phw's own IG site at `/smart-trust-phw/` under the IG's menu. Generated at publish, never authored or committed.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/smart-trust-phw/directory/smart-trust-phw-docs",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-docs"
+    }
+  ]
+}

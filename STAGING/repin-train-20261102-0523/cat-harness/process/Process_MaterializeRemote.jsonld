@@ -1,0 +1,128 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "name": "Materialize remote content: the shared subprocess",
+      "summary": "One process, called wherever remote content is landed locally.",
+      "description": "One process, called wherever remote content is landed locally. The owner, 2026-09-20: \"so if large remote collection, and no restrictions known in context, user can import/maertialize locally. size considerations apply. similar concept in bootstrapping harness... it is remtoe. content. bootstrape materelaiz cat-harness locally (or other harness)... similar, should share common subprocess.\"\n\nTwo callers today and they are genuinely the same shape: sample-import.bpmn landing three items out of an ~0.7 TB catalogue, and bootstrap fetching a harness. upstream-pins.json is half of the second one's refresh and names itself neither.\n\nSTRICT, and the five gates are why. Each is a decision a person makes and none is answerable from a file, so a gate that only warned would be a gate nobody fails — the xom7 shape, a workflow that failed all thirty times it ran with nothing in the repository saying so.\n\nThe three states (referenced / materialized / unknown) and the five gates are schemas/materialization.ts in folio-assist-core. Nothing here restates them.",
+      "enforcement": "strict",
+      "sourcePath": "processes/library/materialize-remote.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/library/materialize-remote.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/assets/img/workflows/materialize-remote.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/StartEvent_Asked"
+      ],
+      "nodeCount": 11,
+      "flowCount": 10,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/externalSchema/w3c-xsd11-structures"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote#flow/Flow_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/StartEvent_Asked",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_Purpose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote#flow/Flow_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_Purpose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_Enumerate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote#flow/Flow_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_Enumerate",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_Size",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote#flow/Flow_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_Size",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_AnswerGates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote#flow/Flow_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_AnswerGates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Gateway_Gates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote#flow/Flow_Yes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Gateway_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_Fetch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote#flow/Flow_No",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "name": "no, or unknown",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Gateway_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_StayRef",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote#flow/Flow_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_Fetch",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_Declare",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote#flow/Flow_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_Declare",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/EndEvent_Done",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote#flow/Flow_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/Task_StayRef",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/process/Process_MaterializeRemote/node/EndEvent_Refused",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_8"
+    }
+  ]
+}

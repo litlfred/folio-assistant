@@ -1,0 +1,101 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/open-work-lookup/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/open-work-lookup.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Answer whether a path, a path prefix or a bean id appears on a repository's default branch or on the head of any of its open pull requests, and where: the PR number, head branch, first commit author and creation time. A path or prefix matches files at the default branch and files each open PR changes; a bean id matches PR titles, bodies and head branch names. Repositories or PRs that could not be read are listed, so an empty answer is never mistaken for absence.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "scripts/open-work-lookup.ts"
+        },
+        "shell": "bun run cat lookup:open-work"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--path"
+            },
+            "description": "An exact repository path.",
+            "name": "path",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--prefix"
+            },
+            "description": "A directory or file-name prefix; every path under or starting with it matches.",
+            "name": "prefix",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--bean"
+            },
+            "description": "A bean id, full or short.",
+            "name": "bean",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanId"
+          },
+          {
+            "arg": {
+              "flag": "--repo"
+            },
+            "description": "Repositories to search. Repeat. Defaults to the current checkout's origin.",
+            "name": "repo",
+            "repeated": true,
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoFullName"
+          },
+          {
+            "arg": {
+              "flag": "--json"
+            },
+            "description": "Emit `definitions.lookup` as JSON.",
+            "name": "json",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "One line per hit: repository, default branch or PR number, head, author, when, and what matched. Then what could not be read. Exactly one of path, prefix or bean must be given. With --json, `definitions.lookup` of schemas/skills/bean-drain/output.schema.json.",
+            "name": "lookup",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "description": "With --json, the hits as one `OpenWorkLookup` record, with what could not be read. Programs read this; people read `lookup`.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/OpenWorkLookup"
+          }
+        ]
+      },
+      "name": "open-work-lookup",
+      "requirements": {
+        "network": true,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/issue-working"
+      ],
+      "title": "Does a path or bean exist on main or any open PR"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/open-work-lookup",
+  "path": "tools/open-work-lookup/"
+}

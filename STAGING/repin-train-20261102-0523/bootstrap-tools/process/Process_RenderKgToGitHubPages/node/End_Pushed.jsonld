@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/End_Pushed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/End_Pushed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "name": "Pushed, and the message says what is live",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/bootstrap-tools/role/site-publisher",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/bootstrap-tools/directory/bootstrap-tools-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/End_Pushed"
+    }
+  ]
+}

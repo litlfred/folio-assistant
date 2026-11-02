@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/capability/git-push.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261102-0523",
+    "sha": "eb175776eff0ff91451f04fa333c1dd761b417e4",
+    "pr": "2906/merge",
+    "run": "41394098092"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261102-0523/cat-harness/capability/git-push",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Capability",
+      "localId": "git-push",
+      "name": "Git Push",
+      "description": "Ability to push commits to the remote Git repository.",
+      "detection": {
+        "method": "command",
+        "command": "git remote -v"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/git-push"
+    }
+  ]
+}

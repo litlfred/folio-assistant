@@ -1,0 +1,286 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/coe-bioethics-vaccine-pass-2021",
+      "@type": [
+        "fabio:Work",
+        "bibo:Report"
+      ],
+      "dcterms:title": "Statement on human rights considerations relevant to “vaccine pass” and similar documents",
+      "dcterms:creator": [
+        "Committee on Bioethics"
+      ],
+      "dcterms:issued": "2021-05-04",
+      "dcterms:publisher": "Council of Europe",
+      "dcterms:identifier": "https://rm.coe.int/dh-bio-2021-7-final-statement-vaccines-e/1680a259dd"
+    },
+    {
+      "@id": "references/who-vaccination-certificates-ethics",
+      "@type": [
+        "fabio:Work",
+        "bibo:Report"
+      ],
+      "dcterms:title": "COVID-19 Vaccination certificates and lifting public health and social measures: ethical considerations",
+      "dcterms:publisher": "World Health Organization"
+    },
+    {
+      "@id": "references/hl7-shc-vaccination-ig",
+      "@type": [
+        "fabio:Work",
+        "bibo:Webpage"
+      ],
+      "dcterms:title": "COVID-19 vaccine and testing-specific specification",
+      "dcterms:identifier": "http://build.fhir.org/ig/HL7/fhir-shc-vaccination-ig"
+    },
+    {
+      "@id": "references/ehn-dcc-techspec-vol1-2021",
+      "@type": [
+        "fabio:Work",
+        "bibo:Report"
+      ],
+      "dcterms:title": "Technical Specifications for Digital COVID Certificates Volume 1",
+      "dcterms:creator": [
+        "eHealth Network"
+      ],
+      "dcterms:identifier": "https://ec.europa.eu/health/sites/health/files/ehealth/docs/digital-green-certificates_v1_en.pdf"
+    },
+    {
+      "@id": "references/ehn-trust-framework-2021",
+      "@type": [
+        "fabio:Work",
+        "bibo:Report"
+      ],
+      "dcterms:title": "Interoperability of health certificates – Trust Framework",
+      "dcterms:creator": [
+        "eHealth Network"
+      ],
+      "dcterms:issued": "2021-03-12",
+      "dcterms:identifier": "https://ec.europa.eu/health/sites/health/files/ehealth/docs/trust-framework_interoperability_certificates_en.pdf"
+    },
+    {
+      "@id": "references/etsi-en-319-102-1-2016",
+      "@type": [
+        "fabio:Work",
+        "bibo:Standard"
+      ],
+      "dcterms:title": "ETSI EN 319 102-1: Electronic Signatures and Infrastructures (ESI); Procedures for Creation and Validation of AdES Digital Signatures; Part 1: Creation and Validation",
+      "dcterms:issued": "2016",
+      "dcterms:identifier": "https://www.etsi.org/deliver/etsi_en/319100_319199/31910201/01.01.01_60/en_31910201v010101p.pdf"
+    },
+    {
+      "@id": "references/smart-health-cards-spec",
+      "@type": [
+        "fabio:Work",
+        "bibo:Webpage"
+      ],
+      "dcterms:title": "General SMART Health Card specification",
+      "dcterms:identifier": "https://spec.smarthealth.cards"
+    },
+    {
+      "@id": "references/who-surveillance-ethics-2017",
+      "@type": [
+        "fabio:Work",
+        "bibo:Book"
+      ],
+      "dcterms:title": "Guidelines on ethical issues in public health surveillance",
+      "dcterms:issued": "2017",
+      "dcterms:publisher": "World Health Organization",
+      "dcterms:identifier": "https://www.who.int/publications/i/item/who-guidelines-on-ethical-issues-in-public-health-surveillance"
+    },
+    {
+      "@id": "references/hl7-cql-authors-guide",
+      "@type": [
+        "fabio:Work",
+        "bibo:Webpage"
+      ],
+      "dcterms:title": "CQL Authoring Guide",
+      "dcterms:creator": [
+        "HL7 International"
+      ],
+      "dcterms:identifier": "https://cql.hl7.org/02-authorsguide.html"
+    },
+    {
+      "@id": "references/hl7-cql-introduction",
+      "@type": [
+        "fabio:Work",
+        "bibo:Webpage"
+      ],
+      "dcterms:title": "CQL Introduction",
+      "dcterms:creator": [
+        "HL7 International"
+      ],
+      "dcterms:identifier": "https://cql.hl7.org/01-introduction.html"
+    },
+    {
+      "@id": "references/hl7-crmi-using-cql",
+      "@type": [
+        "fabio:Work",
+        "bibo:Webpage"
+      ],
+      "dcterms:title": "CRMI IG CQL Guidelines",
+      "dcterms:creator": [
+        "HL7 International"
+      ],
+      "dcterms:identifier": "https://build.fhir.org/ig/HL7/crmi-ig/branches/master/using-cql.html"
+    },
+    {
+      "@id": "references/hl7-crmi-packaging",
+      "@type": [
+        "fabio:Work",
+        "bibo:Webpage"
+      ],
+      "dcterms:title": "CRMI IG Packaging Guidelines",
+      "dcterms:creator": [
+        "HL7 International"
+      ],
+      "dcterms:identifier": "https://build.fhir.org/ig/HL7/cqf-measures/packaging.html"
+    },
+    {
+      "@id": "references/icao-vds-nc",
+      "@type": [
+        "fabio:Work",
+        "bibo:Standard"
+      ],
+      "dcterms:title": "VDS NC",
+      "dcterms:creator": [
+        "ICAO"
+      ],
+      "dcterms:identifier": "https://www.icao.int/vdsnc-spec"
+    },
+    {
+      "@id": "references/eu-implementing-decision-2021-1073",
+      "@type": [
+        "fabio:Work",
+        "bibo:Legislation"
+      ],
+      "dcterms:title": "Implementing Decision (EU) 2021/1073, Annex I",
+      "dcterms:identifier": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=uriserv%3AOJ.L_.2021.230.01.0032.01.ENG"
+    },
+    {
+      "@id": "references/swiss-taskforce-vaccination-proof-2021",
+      "@type": [
+        "fabio:Work",
+        "bibo:Report"
+      ],
+      "dcterms:title": "Requiring proof of Covid-19 vaccination (vaccine “passports”/“certificates”): Key ethical, legal, and social issues. Policy brief",
+      "dcterms:issued": "2021-02-19",
+      "dcterms:publisher": "ETH Board",
+      "dcterms:isPartOf": "Swiss National COVID-19 Science Task Force [website]",
+      "dcterms:identifier": "https://sciencetaskforce.ch/en/policy-brief/requiring-proof-of-covid-19-vaccination-vaccine-passports-certificates-key-ethicallegal-and-social-issues"
+    },
+    {
+      "@id": "references/ec-dcc-techspec-vol1-5",
+      "@type": [
+        "fabio:Work",
+        "bibo:Webpage"
+      ],
+      "dcterms:title": "Technical specifications for EU Digital COVID Certificates - Volumes 1-5",
+      "dcterms:identifier": "https://health.ec.europa.eu/publications/technical-specifications-eu-digital-covid-certificates-volumes-1-5_en"
+    },
+    {
+      "@id": "references/royal-society-setc-vaccine-passports-2021",
+      "@type": [
+        "fabio:Work",
+        "bibo:Report"
+      ],
+      "dcterms:title": "Twelve criteria for the development and use of COVID-19 vaccine passports. Pre-print paper",
+      "dcterms:creator": [
+        "The Royal Society SET-C (Science in Emergencies Tasking – COVID)"
+      ],
+      "dcterms:issued": "2021-02-14",
+      "dcterms:publisher": "The Royal Society",
+      "dcterms:identifier": "https://royalsociety.org/-/media/policy/projects/set-c/set-c-vaccine-passports.pdf"
+    },
+    {
+      "@id": "references/ec-dcc-vol1-2022",
+      "@type": [
+        "fabio:Work",
+        "bibo:Report"
+      ],
+      "dcterms:title": "Volume 1: Formats and trust management",
+      "dcterms:identifier": "https://health.ec.europa.eu/system/files/2022-02/digital-covid-certificates_v1_en.pdf"
+    },
+    {
+      "@id": "references/voo2021",
+      "@type": [
+        "fabio:Work",
+        "bibo:AcademicArticle"
+      ],
+      "dcterms:title": "Immunity certification for COVID-19: ethical considerations",
+      "dcterms:creator": [
+        "Voo, TC",
+        "Reis, AA",
+        "Thomé, B",
+        "Ho, CW",
+        "Tam, CC",
+        "Kelly-Cirino, C",
+        "et al."
+      ],
+      "dcterms:issued": "2021",
+      "dcterms:isPartOf": "Bulletin of the World Health Organization",
+      "bibo:volume": "99",
+      "bibo:issue": "2",
+      "bibo:pages": "155–61",
+      "bibo:doi": "10.2471/BLT.20.280701"
+    },
+    {
+      "@id": "references/w3c-did-core",
+      "@type": [
+        "fabio:Work",
+        "bibo:Standard"
+      ],
+      "dcterms:title": "DID Core",
+      "dcterms:creator": [
+        "W3C"
+      ],
+      "dcterms:identifier": "https://www.w3.org/TR/did-core/"
+    },
+    {
+      "@id": "references/ada-lovelace-vaccine-passports-2021",
+      "@type": [
+        "fabio:Work",
+        "bibo:Report"
+      ],
+      "dcterms:title": "What place should COVID-19 vaccine passports have in society?",
+      "dcterms:issued": "2021-02-17",
+      "dcterms:publisher": "Ada Lovelace Institute",
+      "dcterms:identifier": "https://www.adalovelaceinstitute.org/wp-content/uploads/2021/02/COVID-19-vaccine-passports-rapid-expert-deliberation.pdf"
+    },
+    {
+      "@id": "references/who-guideline-handbook",
+      "@type": [
+        "fabio:Work",
+        "bibo:Book"
+      ],
+      "dcterms:title": "Handbook for guideline development",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:identifier": "https://www.who.int/publications/i/item/9789241548960"
+    },
+    {
+      "@id": "references/who-smart-guidelines",
+      "@type": [
+        "fabio:Work",
+        "bibo:Webpage"
+      ],
+      "dcterms:title": "SMART Guidelines",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:identifier": "https://www.who.int/teams/digital-health-and-innovation/smart-guidelines"
+    }
+  ]
+}
