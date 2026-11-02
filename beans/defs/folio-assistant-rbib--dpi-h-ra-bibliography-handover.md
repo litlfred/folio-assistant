@@ -34,3 +34,4 @@ Resume prompt: "read bean folio-assistant-rbib on branch cat/cat-harness/beans o
 ## Log
 
 _2026-11-02T18:30Z_ — PR #232 opened draft at 5ac8299; CI running; card posted to owner.
+_2026-11-02T18:29Z_ — Owner tapped A (merge as is) at 18:28:18Z. PR marked ready for full CI; merge on green.
