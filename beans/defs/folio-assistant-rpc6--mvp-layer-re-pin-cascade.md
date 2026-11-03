@@ -7,6 +7,7 @@ type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
 updated_at: 2026-11-02T19:15:00Z
+parent: folio-assistant-rwmf
 ---
 
 Thread "Prepare the layer re-pin cascade" (cmsg_017WNUkNK8kdDziPK58Pv6G9FDPvN5ktTn4HS2iruRVeZj), session_01Qmmkt5oYY58dMFeUfYD8ee. Epic litlfred/folio-assistant#2894. Merge window to 2026-11-03 00:40Z (freeze lifted 17:54Z).

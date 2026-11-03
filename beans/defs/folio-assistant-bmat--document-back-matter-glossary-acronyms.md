@@ -7,6 +7,7 @@ type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
 updated_at: 2026-11-02T19:26:00Z
+parent: folio-assistant-npuo
 tags:
     - document-structure
     - glossary
