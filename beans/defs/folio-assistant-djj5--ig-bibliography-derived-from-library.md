@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T07:41:35Z
+updated_at: 2026-11-03T08:33:16Z
 tags:
     - references
     - library
@@ -62,3 +62,5 @@ _2026-11-03T07:07:10Z_ — Owner (card): "Merge now" → **smart-base#298 merged
 _2026-11-03T07:19:17Z_ — Owner (card): "Re-pin smart-base". Opened litlfred/smart-base#300: all 7 platform mounts re-pinned to their mains with consent recorded per pin; workflow refs move to the locked commits; ci.yml ghbuild caller kept. At the new pins `check-reference-direction --findings` reports none of the 7. Watching; merges on green (non-content).
 
 _2026-11-03T07:41:35Z_ — **smart-base#300 merged (67f4edc)**, green: smart-base pins the platform mains, so the 7 reference-direction findings are gone. smart-immunizations#111 failed `check:qa-reviewer-permission` twice on 65b6979 ("could not determine": `cat-harness/test/results` absent in CI); it passes locally on main and the branch; the diff touches nothing that gate reads. Put to the owner.
+
+_2026-11-03T08:33:16Z_ — Defect in smart-trust#139, found by folio-assistant#2924 (session_01EucfRp9ycxtZrrBKaipNy5): 20 intakes declared `files: []`, which the library graph rejects (viz-generators.test.ts, declaredFiles > 0). Fix: litlfred/smart-trust#140 removes them and records each failed attempt in its catalogue node; records and citations unchanged; checks clean. Content PR: owner asked.
