@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T05:47:38Z
+updated_at: 2026-11-03T05:49:36Z
 tags:
     - references
     - library
@@ -40,3 +40,5 @@ _2026-11-03T05:42:02Z_ — Owner decided (card): **approach 2, "Library + catalo
 _2026-11-03T05:44:52Z_ — Owner asked where a non-ingested work lives ("uploads/ or catalog only... what is URL of catalogue? and relation to library?"), and decided (card): **"Catalogue + uploads/ copy"**. A non-ingested cited work = a `catalogue/nodes/item-<slug>.json` in state `referenced` (no `libraryId`) with `metadataRef` → `catalogue/records/<slug>.dc.json`, PLUS a capture in `uploads/` queued for later ingestion; citations resolve through the record only. Answered: the catalogue has no page of its own (no visualiser covers `catalogue` alone); each record renders on the KG Bibliography as `#ref-<slug>`; a reference's IRI is `references/<key>` under the folio base (cat-harness-tools `resolveReferenceKey`) and stays unchanged. Open per capture: its licence; a capture is recorded with its role, as who-iris does.
 
 _2026-11-03T05:47:38Z_ — Step (a) up: litlfred/folio-assistant-core#628 (DC ↔ CSL keeps container/volume/issue/pages via `dc.relation.ispartof`, `dc.citation.*`; CSL-spelled `dc.type` kept; `contributor.editor`; no `ingestedAt` publication date). 680 tests pass in the index checkout. Step (b), smart-base `check:ig-citations` reading `library` + `catalogue`, is BLOCKED: this session was refused push access to litlfred/smart-base (add_repo denied by the session's permission classifier); it has a read-only clone at db7f311.
+
+_2026-11-03T05:49:36Z_ — Owner granted smart-base access (card: "Grant smart-base"). Step (b) up: branch `claude/djj5-ig-citations-library` on litlfred/smart-base — `check:ig-citations` reads `library` entries (slug key; manifest `sourceUrl`/`meta.doi`; ISBN in slug); a library alone is not adoption; `references` still read until the content PRs retire it. 10 tests pass; the check on the three IG mains gives 0 findings before and after. Next: step (c), the content PRs (owner OK needed).
