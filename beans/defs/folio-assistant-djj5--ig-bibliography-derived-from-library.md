@@ -2,11 +2,11 @@
 # folio-assistant-djj5
 $schema: bean/1.0.0
 title: 'IG bibliographies derived from library/, not a hand-kept references/ directory'
-status: todo
+status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T05:32:31Z
+updated_at: 2026-11-03T05:35:56Z
 tags:
     - references
     - library
@@ -32,3 +32,5 @@ An ingested source already lives under `library/<group>/<slug>/`, with its struc
 - [ ] The next re-pin train takes both IGs at their mains again.
 
 _2026-11-03T05:32:31Z_ — Filed by the drain session https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5 on the owner's card (option 3); a sibling session picks it up.
+
+_2026-11-03T05:35:56Z_ — Claimed by https://claude.ai/code/session_01EucfRodNcVYWoFyT9Zwyb3. Proposal put to the owner as a card (no code yet). Findings at the mains: phw and immz now HOLD `references/` (5 and 10 entries, all `authored`), so the "declared and not on disk" failure may already be gone at their mains; smart-trust holds 27 `.json` entries (28 files with the README), none of them ingested in any library. folio-assistant-core's bibliography page already reads `library/` (`libraryItemToReference`, provenance `library`); smart-base's `check:ig-citations` reads only `references` and `catalogue`. 5 of the 42 IG entries name works who-iris already holds (9789240010567-eng, 9789241548960-eng ×3, the IMMZ DAK 10665/380303).
