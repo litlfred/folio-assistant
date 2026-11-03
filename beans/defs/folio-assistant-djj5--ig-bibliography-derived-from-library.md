@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T08:33:16Z
+updated_at: 2026-11-03T09:23:29Z
 tags:
     - references
     - library
@@ -64,3 +64,5 @@ _2026-11-03T07:19:17Z_ — Owner (card): "Re-pin smart-base". Opened litlfred/sm
 _2026-11-03T07:41:35Z_ — **smart-base#300 merged (67f4edc)**, green: smart-base pins the platform mains, so the 7 reference-direction findings are gone. smart-immunizations#111 failed `check:qa-reviewer-permission` twice on 65b6979 ("could not determine": `cat-harness/test/results` absent in CI); it passes locally on main and the branch; the diff touches nothing that gate reads. Put to the owner.
 
 _2026-11-03T08:33:16Z_ — Defect in smart-trust#139, found by folio-assistant#2924 (session_01EucfRp9ycxtZrrBKaipNy5): 20 intakes declared `files: []`, which the library graph rejects (viz-generators.test.ts, declaredFiles > 0). Fix: litlfred/smart-trust#140 removes them and records each failed attempt in its catalogue node; records and citations unchanged; checks clean. Content PR: owner asked.
+
+_2026-11-03T09:23:29Z_ — Owner: "uploads/ only should exist in fol-asst… should have Tools"; then (card): **"instantiated harnesses can have an uploads/ but that is data store for that repo, not part of the KG"**. My djj5 declarations of `uploads/` as a KG directory (graph typology `uploads`) in the three IGs were wrong: they made folio-assistant mount them and tripped check:state-on-main. Fixes: smart-trust#140 (c85a5c4: declaration removed + 20 empty intakes), smart-trust-phw#31 (8f48b6a), smart-immunizations#111 (85f02ba). The intakes stay as repository data. who-iris still declares `who-iris-uploads` (predates djj5; left as is, noted for the owner). All three are content PRs awaiting owner OK.
