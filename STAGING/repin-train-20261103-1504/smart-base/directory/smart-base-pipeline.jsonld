@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/smart-base/directory/smart-base-pipeline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-pipeline.jsonld",
+  "staging": {
+    "branch": "repin-train/20261103-1504",
+    "sha": "b03605887a6bd56c3a539d516d224d36ffd480b3",
+    "pr": "repin-train/20261103-1504",
+    "run": "41660125730"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-pipeline",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-pipeline",
+      "path": "pipeline/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "`pipeline/qa-checkers-dak.ts`, the automated DAK checkers `qa-checkers/` names (`DAK_AUTOMATED_CHECKERS`). Declared at the cutover (bean hupw) so a remote mount brings it; it was `content/pipeline/` until every layer's pipeline moved to `pipeline/` (owner, 2026-10-14, the rnfl move cat-harness-tools made on 2026-10-12).",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-pipeline"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/smart-base/process/Process_L2Dak/node/Gateway_AuthorMerge.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorMerge.jsonld",
+  "staging": {
+    "branch": "repin-train/20261103-1504",
+    "sha": "b03605887a6bd56c3a539d516d224d36ffd480b3",
+    "pr": "repin-train/20261103-1504",
+    "run": "41660125730"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorMerge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Gateway_AuthorMerge",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B03",
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B19"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B04"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/schema/todo-graph.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261103-1504",
+    "sha": "b03605887a6bd56c3a539d516d224d36ffd480b3",
+    "pr": "repin-train/20261103-1504",
+    "run": "41660125730"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/schema/todo-graph",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "todo-graph",
+      "title": "todo-graph",
+      "summary": "The todo graph — what `todos/` is, rather than where it happens to be.",
+      "module": "schemas/sdlc/todo-graph.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/todo-graph"
+    }
+  ]
+}

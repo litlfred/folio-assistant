@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "StructureDefinition-KGRecommendation.jsonld",
+  "@type": "fhir:StructureDefinition",
+  "dcterms:identifier": "StructureDefinition/KGRecommendation",
+  "schema:name": "KGRecommendation",
+  "dcterms:title": "Knowledge graph L1: Recommendation",
+  "dcterms:description": "A normative statement from a WHO guideline. Kinds other than a graded recommendation (context-specific, research-only, good practice statement, no-recommendation) are the same node with a different kind. statement is verbatim and is the only stored copy. intervention, population, setting, provider and timing are verbatim slots taken from the statement, its remarks, or the enclosing caption or heading. setting absorbs the former conditionality. identifier is the published number (e.g. A.1.1), used in the IRI; sub-recommendations append their letter. Class IRI: http://smart.who.int/kg/recommendation.",
+  "schema:version": "0.3.0",
+  "dcterms:type": "Structures: Logical Models",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/base/StructureDefinition/KGRecommendation"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/StructureDefinition/KGRecommendation--3c591ebe.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "39ae30b9ff072a4ca460b378afdb4ed082d316d0"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.base",
+    "schema:version": "0.3.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/base"
+    }
+  }
+}

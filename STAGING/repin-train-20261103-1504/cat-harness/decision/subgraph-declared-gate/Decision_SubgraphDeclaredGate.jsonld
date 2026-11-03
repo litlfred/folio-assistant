@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/decision/subgraph-declared-gate/Decision_SubgraphDeclaredGate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261103-1504",
+    "sha": "b03605887a6bd56c3a539d516d224d36ffd480b3",
+    "pr": "repin-train/20261103-1504",
+    "run": "41660125730"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/decision/subgraph-declared-gate/Decision_SubgraphDeclaredGate",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Decision",
+      "name": "Declared in place?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/kg/decisions/subgraph-declared-gate.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/subgraph-declared-gate/Decision_SubgraphDeclaredGate"
+    }
+  ]
+}

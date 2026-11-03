@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/process/Process_TestPlanExecution/lane/Lane_Certifier.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261103-1504",
+    "sha": "b03605887a6bd56c3a539d516d224d36ffd480b3",
+    "pr": "repin-train/20261103-1504",
+    "run": "41660125730"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/process/Process_TestPlanExecution/lane/Lane_Certifier",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Certifier",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/process/Process_TestPlanExecution",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/role/certifier",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1504/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Certifier"
+    }
+  ]
+}
