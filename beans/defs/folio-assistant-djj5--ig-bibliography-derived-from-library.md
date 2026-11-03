@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T05:59:21Z
+updated_at: 2026-11-03T06:00:51Z
 tags:
     - references
     - library
@@ -48,3 +48,5 @@ _2026-11-03T05:50:41Z_ — smart-base#298 opened and watched. Owner decided (car
 _2026-11-03T05:54:22Z_ — Content PR 1/3 up, awaiting owner OK: litlfred/smart-trust-phw#30. 5 entries → `catalogue/records/<key>.dc.json` (keys kept) + referenced item nodes + `uploads/<key>/intake.json`; `references` declaration dropped, `smart-trust-phw-uploads` declared. No capture bytes committed: a CC link on a WHO product page is the publication's licence, not the page's, so it is recorded as evidence, not taken as permission. `check:ig-citations` (smart-base#298 branch): 0 findings; `check-catalogue`: clean. The converter is in this session's scratchpad (references-to-catalogue.ts); smart-trust (27) and smart-immunizations (10) next.
 
 _2026-11-03T05:59:21Z_ — Content PRs 2/3 and 3/3 up, awaiting owner OK: litlfred/smart-immunizations#111 (10 entries; new `smart-immunizations-catalogue`, `smart-immunizations-uploads` declared; IMMZ DAK node carries handle 10665/380303) and litlfred/smart-trust#139 (27 entries; `smart-trust-uploads` declared). core#628 also gained `publisher-place`, `accessed`, `version`, `status` ↔ `dc.publisher.place`, `dc.date.accessed`, `dc.citation.version|status` (681 tests), because smart-trust's entries carry them. smart-trust captures: 7 captured (no bytes committed), 15 refused by this session's network policy (proxy CONNECT 403), 3 refused by host, 2 no URL; each intake records it. All three IGs: `check:ig-citations` 0 findings from catalogue alone; `check-catalogue` clean. Re-pin consequence: folio-assistant `index.config.json` override for smart-trust lists `references`; drain session told.
+
+_2026-11-03T06:00:51Z_ — Owner approved (card, option 1 "Approve all once green"): smart-trust-phw#30, smart-immunizations#111 and smart-trust#139 merge once CI is green, with no copy bytes committed; licences and the 15 network-blocked smart-trust captures are handled later, one by one. None touches subscriptions/.
