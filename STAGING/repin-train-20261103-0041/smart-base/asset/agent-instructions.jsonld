@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0041/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0041/smart-base/asset/agent-instructions.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0041/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/asset/agent-instructions.jsonld",
+  "staging": {
+    "branch": "repin-train/20261103-0041",
+    "sha": "7f5c65091b7281e76537bace1493b295a1c3c93e",
+    "pr": "repin-train/20261103-0041",
+    "run": "41554690147"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — smart-base",
+      "description": "Cold start for work in this layer: what is ingested rather than authored, what is referenced upstream rather than vendored, and why a voice rule with no resolvable citation is refused."
+    }
+  ]
+}

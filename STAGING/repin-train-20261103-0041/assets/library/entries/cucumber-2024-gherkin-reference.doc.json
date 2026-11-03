@@ -1,0 +1,720 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "cucumber-2024-gherkin-reference",
+  "title": "Gherkin Reference",
+  "variant": "text",
+  "pages": null,
+  "tocSource": "headings",
+  "tocMethod": null,
+  "toc": [],
+  "sections": [
+    {
+      "id": "s001-gherkin-reference",
+      "number": null,
+      "title": "Gherkin Reference",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 239,
+      "summary": {
+        "text": "Introduces the Gherkin reference (Cucumber syntax: Given, When, Then): Gherkin uses keywords, translated into many spoken languages, to structure executable specifications, and most lines begin with one. Comments start a line with optional spaces and #, block comments are not supported, and indentation may be spaces or tabs, two spaces recommended. A 'Guess the word' feature shows two scenarios; the text after each step keyword is matched to a step definition, and a colon after a keyword that takes none causes the tests to be ignored.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "gherkin",
+          "heading": true
+        },
+        {
+          "term": "reference",
+          "heading": true
+        },
+        {
+          "term": "spaces",
+          "heading": false
+        },
+        {
+          "term": "followed",
+          "heading": false
+        },
+        {
+          "term": "comments",
+          "heading": false
+        }
+      ],
+      "extract": "title: Gherkin Reference subtitle: \"Cucumber syntax: Given, When, Then\" Gherkin uses a set of special keywords to give structure and meaning to executable specifications. Each keyword is translated to many spoken languages; in this reference we'll use English. Most lines in a Gherkin document start with one of the keywords. Comments are only permitted at the start of a new line, anywhere in the feature file. They",
+      "extractCut": true
+    },
+    {
+      "id": "s002-keywords",
+      "number": null,
+      "title": "Keywords",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 120,
+      "summary": {
+        "text": "States that every non-blank line must start with a keyword, except free-form descriptions under Example/Scenario, Background, Scenario Outline and Rule. It lists the primary keywords (Feature, Rule from Gherkin 6, Example or Scenario, the step keywords Given, When, Then, And, But or *, Background, Scenario Outline or Scenario Template, and Examples or Scenarios) and the secondary ones (\"\"\" for Doc Strings, | for Data Tables, @ for tags, # for comments), noting each spoken language has its own equivalents.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "keywords",
+          "heading": true
+        },
+        {
+          "term": "gherkin",
+          "heading": false
+        },
+        {
+          "term": "doc",
+          "heading": false
+        }
+      ],
+      "extract": "Each line that isn't a blank line has to start with a Gherkin keyword, followed by any text you like. The only exceptions are the free-form descriptions placed underneath Example/Scenario, Background, Scenario Outline and Rule lines. The primary keywords are: Feature Rule (as of Gherkin 6) Example (or Scenario) Given, When, Then, And, But for steps (or *) Background Scenario Outline (or Scenario Template) Examples",
+      "extractCut": true
+    },
+    {
+      "id": "s003-feature",
+      "number": null,
+      "title": "Feature",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 221,
+      "summary": {
+        "text": "Explains Feature: it describes a software feature at a high level and groups related scenarios, and must be the first primary keyword, followed by a colon and a short name. Free-form description lines beneath it are ignored at runtime but available to reporting, and serve to document things such as business rules; the description ends at the first Background, Rule, Example or Scenario Outline. Tags above Feature group related features, and a .feature file holds only one Feature.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "feature",
+          "heading": true
+        },
+        {
+          "term": "description",
+          "heading": false
+        },
+        {
+          "term": "document",
+          "heading": false
+        },
+        {
+          "term": "group",
+          "heading": false
+        },
+        {
+          "term": "reporting",
+          "heading": false
+        }
+      ],
+      "extract": "The purpose of the Feature keyword is to provide a high-level description of a software feature, and to group related scenarios. The first primary keyword in a Gherkin document must always be Feature, followed by a : and a short text that describes the feature. You can add free-form text underneath Feature to add more description. These description lines are ignored by Cucumber at runtime, but are available for",
+      "extractCut": true
+    },
+    {
+      "id": "s004-descriptions",
+      "number": null,
+      "title": "Descriptions",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 52,
+      "summary": {
+        "text": "Says free-form descriptions may also sit under Example/Scenario, Background, Scenario Outline and Rule, may contain anything as long as no line starts with a keyword, and may be written in Markdown, which formatters such as the official HTML formatter support.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "descriptions",
+          "heading": true
+        },
+        {
+          "term": "markdown",
+          "heading": false
+        },
+        {
+          "term": "formatter",
+          "heading": false
+        }
+      ],
+      "extract": "Free-form descriptions (as described above for Feature) can also be placed underneath Example/Scenario, Background, Scenario Outline and Rule. You can write anything you like, as long as no line starts with a keyword. Descriptions can be in the form of Markdown - formatters including the official HTML formatter support this.",
+      "extractCut": false
+    },
+    {
+      "id": "s005-rule",
+      "number": null,
+      "title": "Rule",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 205,
+      "summary": {
+        "text": "Explains the optional Rule keyword, part of Gherkin since v6 and not yet supported by every Cucumber implementation: a Rule represents one business rule to implement and groups the scenarios that illustrate it, as a 'Highlander' feature with two rules shows.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "rule",
+          "heading": true
+        },
+        {
+          "term": "business rule",
+          "heading": false
+        },
+        {
+          "term": "cucumber implementation",
+          "heading": false
+        }
+      ],
+      "extract": "The (optional) Rule keyword has been part of Gherkin since v6. {{% note \"Cucumber Support for Rule\"%}} The Rule keyword is still pretty new. It has been ported in a lot of Cucumber implementation already. Yet if you encounter issues, check the documentation of your Cucumber implementation to make sure it supports it. {{% /note %}} The purpose of the Rule keyword is to represent one business rule that should be",
+      "extractCut": true
+    },
+    {
+      "id": "s006-example",
+      "number": null,
+      "title": "Example",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 114,
+      "summary": {
+        "text": "Defines Example (synonym Scenario) as a concrete example illustrating a business rule, made of steps; 3–5 steps are recommended since too many weaken it as specification and documentation. Taken together, examples are an executable specification, each describing an initial context (Given), an event (When) and an expected outcome (Then).",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "documentation",
+          "heading": false
+        },
+        {
+          "term": "steps",
+          "heading": false
+        },
+        {
+          "term": "rule",
+          "heading": false
+        }
+      ],
+      "extract": "This is a concrete example that illustrates a business rule. It consists of a list of steps. The keyword Scenario is a synonym of the keyword Example. You can have as many steps as you like, but we recommend 3-5 steps per example. Having too many steps will cause the example to lose its expressive power as a specification and documentation. In addition to being a specification and documentation, an example is also a",
+      "extractCut": true
+    },
+    {
+      "id": "s007-steps",
+      "number": null,
+      "title": "Steps",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 140,
+      "summary": {
+        "text": "Explains that each step starts with Given, When, Then, And or But and that Cucumber runs a scenario's steps in order, matching each to a step definition. Keywords are ignored in that matching, so two steps with the same text but different keywords count as duplicates, which pushes authors towards a less ambiguous domain language, as the account-balance example shows.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "step definition",
+          "heading": false
+        },
+        {
+          "term": "cucumber",
+          "heading": false
+        },
+        {
+          "term": "account",
+          "heading": false
+        }
+      ],
+      "extract": "Each step starts with Given, When, Then, And, or But. Cucumber executes each step in a scenario one at a time, in the sequence you’ve written them in. When Cucumber tries to execute a step, it looks for a matching step definition to execute. Keywords are not taken into account when looking for a step definition. This means you cannot have a Given, When, Then, And or But step with the same text as another step.",
+      "extractCut": true
+    },
+    {
+      "id": "s008-given",
+      "number": null,
+      "title": "Given",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 148,
+      "summary": {
+        "text": "Explains Given steps: they describe the initial context, typically something in the past, and put the system in a known state (creating objects or test data) before any interaction, like preconditions in a use case. User interaction belongs elsewhere, several Givens may be chained with And or But, and examples such as 'I am logged in' are given.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "system",
+          "heading": false
+        },
+        {
+          "term": "state",
+          "heading": false
+        },
+        {
+          "term": "executes",
+          "heading": false
+        },
+        {
+          "term": "external",
+          "heading": false
+        }
+      ],
+      "extract": "Given steps are used to describe the initial context of the system - the scene of the scenario. It is typically something that happened in the past. When Cucumber executes a Given step, it will configure the system to be in a well-defined state, such as creating and configuring objects or adding data to a test database. The purpose of Given steps is to put the system in a known state before the user (or external",
+      "extractCut": true
+    },
+    {
+      "id": "s009-when",
+      "number": null,
+      "title": "When",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 99,
+      "summary": {
+        "text": "Explains When steps: they describe an event or action, by a person or by another system, such as guessing a word or withdrawing money. A note advises imagining it is 1922 and writing examples free of assumptions about technology or user interface, leaving implementation details to step definitions.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "event",
+          "heading": false
+        },
+        {
+          "term": "system",
+          "heading": false
+        },
+        {
+          "term": "implementation",
+          "heading": false
+        }
+      ],
+      "extract": "When steps are used to describe an event, or an action. This can be a person interacting with the system, or it can be an event triggered by another system. Examples: Guess a word Invite a friend Withdraw money {{% note \"Imagine it's 1922\" %}} Most software does something people could do manually (just not as efficiently). Try hard to come up with examples that don't make any assumptions about technology or user",
+      "extractCut": true
+    },
+    {
+      "id": "s010-then",
+      "number": null,
+      "title": "Then",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 143,
+      "summary": {
+        "text": "Explains Then steps: they describe an expected outcome, and their step definitions should assert the actual outcome against it. The outcome should be observable output from the system, such as a report, user interface or message, not internal state such as a database record, which Then steps should resist checking.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "expected outcome",
+          "heading": false
+        },
+        {
+          "term": "system",
+          "heading": false
+        },
+        {
+          "term": "database",
+          "heading": false
+        },
+        {
+          "term": "step",
+          "heading": false
+        }
+      ],
+      "extract": "Then steps are used to describe an expected outcome, or result. The step definition of a Then step should use an assertion to compare the actual outcome (what the system actually does) to the expected outcome (what the step says the system is supposed to do). An outcome should be on an observable output. That is, something that comes out of the system (report, user interface, message), and not a behaviour deeply",
+      "extractCut": true
+    },
+    {
+      "id": "s011-and-but",
+      "number": null,
+      "title": "And, But",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 221,
+      "summary": {
+        "text": "Shows that successive Given or Then steps can be written with And and But to read more fluidly, and that an asterisk may replace any step keyword, which suits steps that are effectively a list, as a shopping-list scenario illustrates.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "express",
+          "heading": false
+        },
+        {
+          "term": "expressed",
+          "heading": false
+        },
+        {
+          "term": "supports",
+          "heading": false
+        }
+      ],
+      "extract": "If you have successive Given's or Then's, you could write: Example: Multiple Givens Given one thing Given another thing Given yet another thing When I open my eyes Then I should see something Then I shouldn't see something else Or, you could make the example more fluidly structured by replacing the successive Given's or Then's with And's and But's: Example: Multiple Givens Given one thing And another thing And yet",
+      "extractCut": true
+    },
+    {
+      "id": "s012-background",
+      "number": null,
+      "title": "Background",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 408,
+      "summary": {
+        "text": "Explains Background: Given steps repeated in every scenario of a Feature are incidental and can be moved into a Background, whose steps run before each scenario but after any Before hooks; it is placed before the first scenario at the same indentation. Examples show it at Feature level (a multi-blog posting feature) and at Rule level (overdue-task notifications). There can be only one Background per Feature or Rule; differing needs call for more Rules or Features, and conditional hooks are a less explicit alternative.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "background",
+          "heading": true
+        },
+        {
+          "term": "scenarios",
+          "heading": false
+        },
+        {
+          "term": "level",
+          "heading": false
+        },
+        {
+          "term": "different",
+          "heading": false
+        }
+      ],
+      "extract": "Occasionally you'll find yourself repeating the same Given steps in all of the scenarios in a Feature. Since it is repeated in every scenario, this is an indication that those steps are not essential to describe the scenarios; they are incidental details. You can literally move such Given steps to the background, by grouping them under a Background section. A Background allows you to add some context to the",
+      "extractCut": true
+    },
+    {
+      "id": "s013-tips-for-using-background",
+      "number": null,
+      "title": "Tips for using Background",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 174,
+      "summary": {
+        "text": "Gives tips for Background: avoid setting up complicated state the client does not need to know, using higher-level steps instead; keep it short, around four lines at most; make it vivid with colourful names that tell a story; and keep scenarios short and few, so the Background stays in view, using higher-level steps or splitting the file otherwise.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "names",
+          "heading": false
+        },
+        {
+          "term": "background",
+          "heading": true
+        },
+        {
+          "term": "section",
+          "heading": false
+        },
+        {
+          "term": "short",
+          "heading": false
+        },
+        {
+          "term": "don't",
+          "heading": false
+        }
+      ],
+      "extract": "Don't use Background to set up complicated states, unless that state is actually something the client needs to know. For example, if the user and site names don't matter to the client, use a higher-level step such as Given I am logged in as a site owner. Keep your Background section short. The client needs to actually remember this stuff when reading the scenarios. If the Background is more than 4 lines long,",
+      "extractCut": true
+    },
+    {
+      "id": "s014-scenario-outline",
+      "number": null,
+      "title": "Scenario Outline",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 167,
+      "summary": {
+        "text": "Explains Scenario Outline (synonym Scenario Template), which runs the same scenario several times with different values: rather than copying near-identical scenarios, such as eating 5 cucumbers out of 12 and out of 20, the steps become a template with <>-delimited parameters filled from an Examples table.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "scenario",
+          "heading": true
+        },
+        {
+          "term": "values",
+          "heading": false
+        },
+        {
+          "term": "different",
+          "heading": false
+        }
+      ],
+      "extract": "The Scenario Outline keyword can be used to run the same Scenario multiple times, with different combinations of values. The keyword Scenario Template is a synonym of the keyword Scenario Outline. Copying and pasting scenarios to use different values quickly becomes tedious and repetitive: Scenario: eat 5 out of 12 Given there are 12 cucumbers When I eat 5 cucumbers Then I should have 7 cucumbers Scenario: eat 5 out",
+      "extractCut": true
+    },
+    {
+      "id": "s015-examples",
+      "number": null,
+      "title": "Examples",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 102,
+      "summary": {
+        "text": "Explains Examples (or Scenarios): a Scenario Outline must have at least one such section, its steps form a template that is never run directly, and the outline runs once per table row after the header. Parameters in <> name the table's headers and are substituted before step matching, and may also appear in outline descriptions and multiline step arguments.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "parameters",
+          "heading": false
+        },
+        {
+          "term": "section",
+          "heading": false
+        },
+        {
+          "term": "step",
+          "heading": false
+        }
+      ],
+      "extract": "A Scenario Outline must contain one or more Examples (or Scenarios) section(s). Its steps are interpreted as a template which is never directly run. Instead, the Scenario Outline is run once for each row in the Examples section beneath it (not counting the first header row). The steps can use <> delimited parameters that reference headers in the examples table. Cucumber will replace these parameters with values from",
+      "extractCut": true
+    },
+    {
+      "id": "s016-step-arguments",
+      "number": null,
+      "title": "Step Arguments",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 32,
+      "summary": {
+        "text": "Introduces step arguments: when a step needs more data than fits on one line, Gherkin offers Doc Strings and Data Tables.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "In some cases you might want to pass more data to a step than fits on a single line. For this purpose Gherkin has Doc Strings and Data Tables.",
+      "extractCut": false
+    },
+    {
+      "id": "s017-doc-strings",
+      "number": null,
+      "title": "Doc Strings",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 321,
+      "summary": {
+        "text": "Explains Doc Strings, which pass a larger text to a step definition as its last argument: the text sits between lines of three double quotes or three backticks; the opening delimiter's indentation does not matter, but lines are dedented relative to it so further indentation is kept. A content type such as markdown may follow the opening delimiter. Notes say that all current Cucumber versions support backticks and content types but many text editors do not yet.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "doc strings",
+          "heading": true
+        },
+        {
+          "term": "content types",
+          "heading": false
+        },
+        {
+          "term": "tool support",
+          "heading": false
+        },
+        {
+          "term": "cucumber support",
+          "heading": false
+        },
+        {
+          "term": "like text",
+          "heading": false
+        },
+        {
+          "term": "step definition",
+          "heading": false
+        },
+        {
+          "term": "indentation",
+          "heading": false
+        }
+      ],
+      "extract": "Doc Strings are handy for passing a larger piece of text to a step definition. The text should be offset by delimiters consisting of three double-quote marks on lines of their own: Given a blog post named \"Random\" with Markdown body \"\"\" Some Title, Eh? =============== Here is the first paragraph of my blog post. Lorem ipsum dolor sit amet, consectetur adipiscing elit. \"\"\" In your step definition, there’s no need to",
+      "extractCut": true
+    },
+    {
+      "id": "s018-data-tables",
+      "number": null,
+      "title": "Data Tables",
+      "level": 2,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 69,
+      "summary": {
+        "text": "Explains Data Tables, which pass a list of values to a step definition as its last argument, illustrated with a table of users' names, emails and Twitter handles.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Data Tables are handy for passing a list of values to a step definition: Given the following users exist: name; email; twitter Aslak; aslak@cucumber.io; @aslak_hellesoy Julien; julien@cucumber.io; @jbpros Matt; matt@cucumber.io; @mattwynne Just like Doc Strings, Data Tables will be passed to the step definition as the last argument.",
+      "extractCut": false
+    },
+    {
+      "id": "s019-table-cell-escaping",
+      "number": null,
+      "title": "Table Cell Escaping",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 51,
+      "summary": {
+        "text": "Gives the escapes for Data Table cells: \\n for a newline, \\| for a pipe and \\\\ for a backslash.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "If you want to use a newline character in a table cell, you can write this as \\n. If you need a | as part of the cell, you can escape it as |. And finally, if you need a `, you can escape that with \\`.",
+      "extractCut": false
+    },
+    {
+      "id": "s020-data-table-api",
+      "number": null,
+      "title": "Data Table API",
+      "level": 3,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 26,
+      "summary": {
+        "text": "Notes that Cucumber offers a rich API for manipulating tables in step definitions and points to the Data Table API reference in the cucumber-jvm repository.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "Cucumber provides a rich API for manipulating tables from within step definitions. See the Data Table API reference reference for more details.",
+      "extractCut": false
+    },
+    {
+      "id": "s021-spoken-languages",
+      "number": null,
+      "title": "Spoken Languages",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 175,
+      "summary": {
+        "text": "Advises writing Gherkin in the language users and domain experts use, to avoid translating, which is why Gherkin exists in over 70 languages; a Norwegian scenario is shown. A '# language:' header on a file's first line selects the language (e.g. fr), English is the default without it, and some implementations allow setting the default in configuration.",
+        "status": "draft"
+      },
+      "keywords": [
+        {
+          "term": "languages",
+          "heading": true
+        },
+        {
+          "term": "spoken",
+          "heading": true
+        },
+        {
+          "term": "header",
+          "heading": false
+        }
+      ],
+      "extract": "The language you choose for Gherkin should be the same language your users and domain experts use when they talk about the domain. Translating between two languages should be avoided. This is why Gherkin has been translated to over 70 languages . Here is a Gherkin scenario written in Norwegian: language: no Funksjonalitet: Gjett et ord Eksempel: Ordmaker starter et spill Når Ordmaker starter et spill Så må Ordmaker",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "keywords": [
+    {
+      "term": "step definition",
+      "heading": false
+    },
+    {
+      "term": "cucumber support",
+      "heading": false
+    },
+    {
+      "term": "like text",
+      "heading": false
+    },
+    {
+      "term": "cucumber implementation",
+      "heading": false
+    },
+    {
+      "term": "gherkin document",
+      "heading": false
+    },
+    {
+      "term": "cucumber executes",
+      "heading": false
+    },
+    {
+      "term": "external system",
+      "heading": false
+    },
+    {
+      "term": "feature file",
+      "heading": false
+    },
+    {
+      "term": "business rule",
+      "heading": false
+    },
+    {
+      "term": "keyword",
+      "heading": false
+    },
+    {
+      "term": "spoken languages",
+      "heading": true
+    },
+    {
+      "term": "tools like",
+      "heading": false
+    }
+  ],
+  "links": {
+    "repo": "litlfred/fhir-harness",
+    "branch": "main",
+    "dir": "library/cucumber-2024-gherkin-reference"
+  }
+}

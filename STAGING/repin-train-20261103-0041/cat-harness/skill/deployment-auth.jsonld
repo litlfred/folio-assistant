@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0041/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0041/cat-harness/skill/deployment-auth.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0041/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261103-0041",
+    "sha": "7f5c65091b7281e76537bace1493b295a1c3c93e",
+    "pr": "repin-train/20261103-0041",
+    "run": "41554690147"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0041/cat-harness/skill/deployment-auth",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "deployment-auth",
+      "title": "Deployment & Auth Skill",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0041/cat-harness/package/folio-core"
+      ],
+      "instructionsPath": "skills/tools/folio-core/deployment-auth.md",
+      "instructionLines": 195,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0041/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-auth"
+    }
+  ]
+}

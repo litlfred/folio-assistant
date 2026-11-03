@@ -1,0 +1,71 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/archimate-blocks/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-blocks.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "For each table an instance's `cat-archimate.config.json` lists under `tables`, rewrites the block's Markdown table from an `archimate-relationship-rules/v1` file (`relationship-rules`: source, relationship, target, note; `relationship-types`: picture, verb, meaning), keeping the caption and footnotes. For each figure under `figures` that names an `svg`, writes the view as SVG (the same drawing as the view's page). For a rules table that names a `model`, reports the rules the model never uses, the relationships no rule covers, the rules ArchiMate's relationship table refuses, and the relationship types the rules use without a meaning. The rules are in charge: nothing is rewritten from the model.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat archimate:blocks"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--instance"
+            },
+            "description": "The instance root whose config, models, rules and blocks are read.",
+            "name": "instance",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--check"
+            },
+            "description": "Write nothing; exit 1 when a block or SVG is not what the data draws.",
+            "name": "check",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          },
+          {
+            "arg": {
+              "flag": "--strict"
+            },
+            "description": "Also exit 1 when the model has relationships no rule covers, or a rule is one ArchiMate does not allow.",
+            "name": "strict",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The rewritten table blocks and figure SVGs, at the paths the config names; the rules check on stdout.",
+            "name": "blocks",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "archimate-blocks",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models",
+      "title": "Draw a document's tables and figures from its ArchiMate data, and check the model against the document's relationship rules"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/archimate-blocks",
+  "path": "tools/archimate-blocks/"
+}

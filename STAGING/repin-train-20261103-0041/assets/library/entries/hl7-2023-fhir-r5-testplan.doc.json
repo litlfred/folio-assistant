@@ -1,0 +1,289 @@
+{
+  "$schema": "folio-library-document/v1",
+  "id": "hl7-2023-fhir-r5-testplan",
+  "title": "FHIR R5 (5.0.0) — TestPlan resource",
+  "variant": "text",
+  "pages": null,
+  "tocSource": "files",
+  "tocMethod": null,
+  "toc": [],
+  "sections": [
+    {
+      "id": "s001-source-testplan-testplan-introduction-xml",
+      "number": null,
+      "title": "source/testplan/testplan-introduction.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 392,
+      "summary": {
+        "text": "The FHIR R5 build-source introduction to TestPlan. Scope and Usage: TestPlan is a canonical resource defining how a system or specification is to be tested, covering the business and planning side around TestScript, which handles part of execution. It describes purpose, dependencies, scope, test environment, framework and output, and holds test cases with entry criteria (preconditions), exit criteria and test data or instructions for obtaining it, supporting traditional and agile (TDD, BDD) testing. Test plans can depend on or extend others for reuse, e.g. a national specification requiring conformance to IHE profiles, WHO datasets, ISO IDMP and OpenHIE. Boundaries: TestPlan says what to test and is maintained from a business perspective, TestScript says how to test; a TestPlan can be tied to any canonical resource, including a whole ImplementationGuide or some of its artifacts.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <div xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/1999/xhtml ../../schema/fhir-xhtml.xsd\" xmlns=\"http://www.w3.org/1999/xhtml\"> <div> <a name=\"bnc\"></a> <h2>Scope and Usage</h2> <p> The TestPlan is a canonical resource that defines how an system or specifications (which can be represented by FHIR artifacts or by narrative) are to be tested. It contains the",
+      "extractCut": true
+    },
+    {
+      "id": "s002-source-testplan-testplan-notes-xml",
+      "number": null,
+      "title": "source/testplan/testplan-notes.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 57,
+      "summary": {
+        "text": "The build-source notes for TestPlan: a trial-use note saying TestPlan is a draft resource whose viability needs implementation to assess, that it may be removed from future FHIR releases if no implementer feedback arrives, and that feedback is welcome through the HL7 FHIR issue tracker.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <div xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/1999/xhtml ../../schema/fhir-xhtml.xsd\" xmlns=\"http://www.w3.org/1999/xhtml\"> <!-- insert xhtml content here --> [%stu-note dstu2%] TestPlan is a draft resource. Implementation is needed to assess its viability and implementer feedback is welcome. If no implementation feedback is available, the resource may be",
+      "extractCut": true
+    },
+    {
+      "id": "s003-source-testplan-structuredefinition-testplan-xml",
+      "number": null,
+      "title": "source/testplan/structuredefinition-TestPlan.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 3312,
+      "summary": {
+        "text": "The FHIR 5.0.0 StructureDefinition for TestPlan (draft, maturity 0, FHIR Infrastructure, a specialisation of CanonicalResource described as 'a plan for executing testing on an artifact or specifications'). Besides the canonical metadata elements (url, identifier, version, versionAlgorithm, name, title, a required status, experimental, date, publisher, contact, description, useContext, jurisdiction, purpose, copyright, copyrightLabel) it defines category, scope (what is tested), testTools, dependency (description and predecessor), exitCriteria, and testCase with sequence, scope, dependency, testRun (narrative, or a script with language such as gherkin or testscript and source), testData (a required type such as 'synthea', content and source) and assertion (type, object, result). It also carries the cnl-0 and cnl-1 warning constraints on name and url.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <?xml version=\"1.0\" encoding=\"UTF-8\"?> <StructureDefinition xmlns=\"http://hl7.org/fhir\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://hl7.org/fhir ../../schema/fhir-single.xsd\"> <id value=\"TestPlan\"/> <meta> <lastUpdated value=\"2021-01-02T08:58:31.578+11:00\"/> </meta> <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-category\"> <valueString",
+      "extractCut": true
+    },
+    {
+      "id": "s004-source-testplan-bundle-testplan-search-params-xm",
+      "number": null,
+      "title": "source/testplan/bundle-TestPlan-search-params.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 163,
+      "summary": {
+        "text": "The build-source Bundle of TestPlan search parameters: scope (reference), identifier (token) and status (token), all draft, and url (uri), marked normative.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <?xml version=\"1.0\" encoding=\"UTF-8\"?> <Bundle xmlns=\"http://hl7.org/fhir\"> <id value=\"TestPlan-search-params\"/> <entry> <resource> <SearchParameter> <id value=\"TestPlan-scope\"/> <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status\"> <valueCode value=\"draft\"/> </extension> <extension url=\"http://hl7.org/fhir/build/StructureDefinition/path\"> <valueString",
+      "extractCut": true
+    },
+    {
+      "id": "s005-source-testplan-codesystem-testplan-counttype-xm",
+      "number": null,
+      "title": "source/testplan/codesystem-testplan-counttype.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 132,
+      "summary": {
+        "text": "The build-source CodeSystem testplan-counttype (version 5.0.0, draft, trial-use, maturity 0), named and titled InventoryCountType and described as 'the type of count'. Its two concepts are about inventory reports, not test plans: snapshot (current quantities at hand) and difference (items added or subtracted since a previous count).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <?xml version=\"1.0\" encoding=\"UTF-8\"?><CodeSystem xmlns=\"http://hl7.org/fhir\"> <id value=\"testplan-counttype\"/> <meta> <profile value=\"http://hl7.org/fhir/StructureDefinition/shareablecodesystem\"/> </meta> <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-wg\"> <valueCode value=\"oo\"/> </extension> <extension",
+      "extractCut": true
+    },
+    {
+      "id": "s006-source-testplan-codesystem-testplan-status-xml",
+      "number": null,
+      "title": "source/testplan/codesystem-testplan-status.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 166,
+      "summary": {
+        "text": "The build-source CodeSystem testplan-status (TestPlanStatus, version 5.0.0, draft, trial-use, maturity 0), 'the status of the TestPlan', with four concepts whose definitions speak of a report: draft, requested (an inventory report requested with no data yet), active (submitted as current) and entered-in-error (withdrawn after a previous final release).",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <?xml version=\"1.0\" encoding=\"UTF-8\"?><CodeSystem xmlns=\"http://hl7.org/fhir\"> <id value=\"testplan-status\"/> <meta> <profile value=\"http://hl7.org/fhir/StructureDefinition/shareablecodesystem\"/> </meta> <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-wg\"> <valueCode value=\"oo\"/> </extension> <extension",
+      "extractCut": true
+    },
+    {
+      "id": "s007-source-testplan-list-testplan-examples-xml",
+      "number": null,
+      "title": "source/testplan/list-TestPlan-examples.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 34,
+      "summary": {
+        "text": "The build-source List of TestPlan examples, with one entry: TestPlan/example, titled testplan-example and displayed as 'General'.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <?xml version=\"1.0\" encoding=\"UTF-8\"?> <List xmlns=\"http://hl7.org/fhir\"> <id value=\"TestPlan-examples\"/> <status value=\"current\"/> <mode value=\"working\"/> <entry> <extension url=\"http://hl7.org/fhir/build/StructureDefinition/description\"> <valueString value=\"Example of testplan\"/> </extension> <extension url=\"http://hl7.org/fhir/build/StructureDefinition/title\"> <valueString value=\"testplan-example\"/>",
+      "extractCut": true
+    },
+    {
+      "id": "s008-source-testplan-list-testplan-operations-xml",
+      "number": null,
+      "title": "source/testplan/list-TestPlan-operations.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 14,
+      "summary": {
+        "text": "The build-source List of TestPlan operations, current and in working mode, with no entries: TestPlan defines no operations.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <?xml version=\"1.0\" encoding=\"UTF-8\"?> <List xmlns=\"http://hl7.org/fhir\"> <id value=\"TestPlan-operations\"/> <status value=\"current\"/> <mode value=\"working\"/> </List> ```",
+      "extractCut": false
+    },
+    {
+      "id": "s009-source-testplan-list-testplan-packs-xml",
+      "number": null,
+      "title": "source/testplan/list-TestPlan-packs.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 14,
+      "summary": {
+        "text": "The build-source List of TestPlan packs, current and in working mode, with no entries.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <?xml version=\"1.0\" encoding=\"UTF-8\"?> <List xmlns=\"http://hl7.org/fhir\"> <id value=\"TestPlan-packs\"/> <status value=\"current\"/> <mode value=\"working\"/> </List> ```",
+      "extractCut": false
+    },
+    {
+      "id": "s010-source-testplan-testplan-definition-mapping-exce",
+      "number": null,
+      "title": "source/testplan/testplan-definition-mapping-exceptions.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 1569,
+      "summary": {
+        "text": "The build-source exceptions to TestPlan's mapping onto the workflow Definition pattern. Thirteen elements diverge from the pattern, mostly in wording of short names, definitions, comments or requirements: url, identifier, version, name, title (summary flag differs), status, experimental, date, description, useContext, jurisdiction, purpose and copyright. Thirteen pattern elements are unmapped, among them derivedFromCanonical, derivedFromUri, approvalDate, lastReviewDate, effectivePeriod, copyrightLabel, versionAlgorithm, subject, product, code, performerType, partOf and topic, all with reason 'Unknown'.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <mappingExceptions pattern=\"Definition\" resource=\"TestPlan\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"../../tools/schema/mappingExceptions.xsd\"> <!--For information on the contents of this file and how to properly update it, see https://confluence.hl7.org/display/FHIR/Mapping+to+Patterns.--> <divergentElement patternPath=\"Definition.url\" resourcePath=\"TestPlan.url\">",
+      "extractCut": true
+    },
+    {
+      "id": "s011-source-testplan-testplan-example-xml",
+      "number": null,
+      "title": "source/testplan/testplan-example.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 22,
+      "summary": {
+        "text": "The build-source TestPlan example: a stub resource with id 'example', status draft, and a placeholder comment where its contents should go.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <?xml version=\"1.0\" encoding=\"UTF-8\"?> <TestPlan xmlns=\"http://hl7.org/fhir\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://hl7.org/fhir ../../schema/[name].xsd\"> <id value=\"example\" /> <status value=\"draft\" /> <!-- insert contents here --> </TestPlan> ```",
+      "extractCut": false
+    },
+    {
+      "id": "s012-source-testplan-testplan-examples-header-xml",
+      "number": null,
+      "title": "source/testplan/testplan-examples-header.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 13,
+      "summary": {
+        "text": "The build-source header for TestPlan's examples page: an empty XHTML div with a placeholder comment and no content.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <div xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/1999/xhtml ../../schema/fhir-xhtml.xsd\" xmlns=\"http://www.w3.org/1999/xhtml\"> <!-- content goes here --> </div> ```",
+      "extractCut": false
+    },
+    {
+      "id": "s013-source-testplan-testplan-fivews-mapping-exceptio",
+      "number": null,
+      "title": "source/testplan/testplan-fivews-mapping-exceptions.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 63,
+      "summary": {
+        "text": "The build-source exceptions to TestPlan's FiveWs pattern mapping: thirteen FiveWs elements are unmapped (what, author, actor, cause, where, context, init, source, who, grade, planned, done and subject), each with reason 'Unknown'.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <mappingExceptions pattern=\"FiveWs\" resource=\"TestPlan\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"../../tools/schema/mappingExceptions.xsd\"> <!--For information on the contents of this file and how to properly update it, see https://confluence.hl7.org/display/FHIR/Mapping+to+Patterns.--> <unmappedElement patternPath=\"FiveWs.what\" reason=\"Unknown\"/> <unmappedElement",
+      "extractCut": true
+    },
+    {
+      "id": "s014-source-testplan-valueset-testplan-counttype-xml",
+      "number": null,
+      "title": "source/testplan/valueset-testplan-counttype.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 79,
+      "summary": {
+        "text": "The build-source ValueSet testplan-counttype (named InventoryCountType, version 5.0.0, draft, trial-use, immutable), 'the type of count', which includes the whole testplan-counttype code system.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <?xml version=\"1.0\" encoding=\"UTF-8\"?><ValueSet xmlns=\"http://hl7.org/fhir\"> <id value=\"testplan-counttype\"/> <meta> <profile value=\"http://hl7.org/fhir/StructureDefinition/shareablevalueset\"/> </meta> <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-wg\"> <valueCode value=\"oo\"/> </extension> <extension",
+      "extractCut": true
+    },
+    {
+      "id": "s015-source-testplan-valueset-testplan-status-xml",
+      "number": null,
+      "title": "source/testplan/valueset-testplan-status.xml",
+      "level": 1,
+      "pageStart": null,
+      "pageEnd": null,
+      "labelStart": null,
+      "labelEnd": null,
+      "words": 74,
+      "summary": {
+        "text": "The build-source ValueSet testplan-status (TestPlanStatus, version 5.0.0, draft, trial-use, immutable), 'the status of the TestPlan', which includes the whole testplan-status code system.",
+        "status": "draft"
+      },
+      "keywords": [],
+      "extract": "```xml <?xml version=\"1.0\" encoding=\"UTF-8\"?><ValueSet xmlns=\"http://hl7.org/fhir\"> <id value=\"testplan-status\"/> <meta> <profile value=\"http://hl7.org/fhir/StructureDefinition/shareablevalueset\"/> </meta> <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-wg\"> <valueCode value=\"oo\"/> </extension> <extension url=\"http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status\">",
+      "extractCut": true
+    }
+  ],
+  "checks": {},
+  "withheld": false,
+  "links": {
+    "repo": "litlfred/fhir-harness",
+    "branch": "main",
+    "dir": "library/hl7-2023-fhir-r5-testplan"
+  }
+}

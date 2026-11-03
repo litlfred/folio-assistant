@@ -1,0 +1,86 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "@type": "bootstrap:Subgraph",
+      "name": "processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_Brief",
+      "@type": "bootstrap:Task",
+      "name": "Brief the work"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_CloseTrackingIssue",
+      "@type": "bootstrap:Task",
+      "name": "Close the tracking issue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_Drain",
+      "@type": "bootstrap:Task",
+      "name": "Drain: land, close or re-target the open PRs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_EnsureTrackingLabel",
+      "@type": "bootstrap:Task",
+      "name": "Ensure the tracking label exists"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_ExtractPot",
+      "@type": "bootstrap:Task",
+      "name": "Extract translatable strings (POT)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_InjectPo",
+      "@type": "bootstrap:Task",
+      "name": "Inject the PO into translated Markdown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_LogRetained",
+      "@type": "bootstrap:Task",
+      "name": "Append `retained` with the reason"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_RecordSignoff",
+      "@type": "bootstrap:Task",
+      "name": "Record the sign-off as a requirement-signoff attestation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_ReportWhatMoves",
+      "@type": "bootstrap:Task",
+      "name": "Report what would move — sizes, and what breaks"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_RoundTripQa",
+      "@type": "bootstrap:Task",
+      "name": "Round-trip translation QA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_TrackIssue",
+      "@type": "bootstrap:Task",
+      "name": "Open or EDIT the one tracking issue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_WriteTranslationStatus",
+      "@type": "bootstrap:Task",
+      "name": "Write status.json"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/content/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/kg/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/library/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/process/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/sdlc/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/ui/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "processes",
+  "path": "processes/"
+}
