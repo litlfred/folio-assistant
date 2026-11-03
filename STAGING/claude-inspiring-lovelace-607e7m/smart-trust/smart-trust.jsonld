@@ -366,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-03T08:03:02.472Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/891ecb7f6dfb8cfb3ea3550e0dee0dd48ead288f",
-  "sourceCommitSha": "891ecb7f6dfb8cfb3ea3550e0dee0dd48ead288f",
-  "sourceCommitAt": "2026-11-03T08:44:09+01:00",
+  "generatedAt": "2026-11-03T08:28:14.793Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/02c840e0f133444f16dae13c3d76a89492cb3e3d",
+  "sourceCommitSha": "02c840e0f133444f16dae13c3d76a89492cb3e3d",
+  "sourceCommitAt": "2026-11-03T08:09:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -384,6 +384,13 @@
       "name": "docs",
       "renderable": true,
       "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. An L1 library's catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/uploads",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "uploads",
+      "renderable": false,
+      "summary": "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus: a document here reads as absent to every consumer."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library",
@@ -447,13 +454,6 @@
       "name": "glossary",
       "renderable": false,
       "summary": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/references",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
-      "name": "references",
-      "renderable": false,
-      "summary": "Bibliographic references, one folio-reference/v1 node per work: a CSL-JSON item at `references/<key>`, the IRI every `\\cite{key}` already points at, read as Dublin Core and BIBO through its JSON-LD."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/smart-trust/directory/smart-trust-ast",
@@ -575,7 +575,8 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/catalogue"
       ],
-      "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and materialization fixity (`folio-catalogue-node/v1`) records for the documents materialized in `library/`: the GDHCN Administrative and Operational Framework 1.2. `bun run cat check:catalogue` and `bun run cat check:materialized-fixity` verify every node, metadataRef, libraryId, localPath and SHA-256 digest.",
+      "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and catalogue node (`folio-catalogue-node/v1`) records. Two kinds of item: the document materialized in `library/` (the GDHCN Administrative and Operational Framework 1.2), and, since bean folio-assistant-djj5 (owner, 2026-11-03: references/ retired, \"Library + catalogue only\"), every work the IG cites that is not ingested, as a `referenced` item whose record is the IG's bibliography entry for it (the key is the citation's: `#ref-<slug>`) and whose capture is `uploads/<slug>/`. `bun run cat check:catalogue` and `bun run cat check:materialized-fixity` verify every node, metadataRef, libraryId, localPath and SHA-256 digest.",
+      "readmePath": "catalogue/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/smart-trust/directory/smart-trust-catalogue",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-catalogue"
@@ -598,20 +599,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/glossary"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/smart-trust/directory/references",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/smart-trust/directory/smart-trust-uploads",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
-      "name": "references",
-      "path": "references/",
+      "name": "smart-trust-uploads",
+      "path": "uploads/",
       "contentSource": {
         "kind": "directory",
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/references"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/uploads"
       ],
-      "description": "smart-trust's bibliography: one folio-reference/v1 CSL-JSON entry per cited work, `<key>.json`. The IG is one document with one bibliography page, the KG Bibliography the site publishes (`en/folio-assistant-core/bibliography/`, the IG menu's Bibliography item); the IG pages hold no reference lists of their own, and each in-text citation links to its entry there as `en/folio-assistant-core/bibliography/#ref-<key>`. smart-base's `check:ig-citations` fails on a citation with no entry, a page reference list, or a reference-section link to a work this directory does not hold",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/smart-trust/directory/references",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/references"
+      "description": "The incoming queue: one `uploads/<slug>/intake.json` (`folio-intake/v1`) per cited work that is not ingested, recording its capture (upstream URL, when, size and sha256, or why it failed) and its licence (bean folio-assistant-djj5; owner, 2026-11-03: \"Catalogue + uploads/ copy\"). NOT L1 and not greppable as corpus. A capture's bytes are committed only once a licence that permits a copy is established; until then the intake records them and says so. Each intake names its catalogue record (`record`) and item node (`item`).",
+      "readmePath": "uploads/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/smart-trust/directory/smart-trust-uploads",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-uploads"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/smart-trust/directory/smart-trust-translations",
@@ -653,8 +656,8 @@
   ],
   "staging": {
     "branch": "claude/inspiring-lovelace-607e7m",
-    "sha": "891ecb7f6dfb8cfb3ea3550e0dee0dd48ead288f",
+    "sha": "02c840e0f133444f16dae13c3d76a89492cb3e3d",
     "pr": "2924/merge",
-    "run": "41598286690"
+    "run": "41601154440"
   }
 }

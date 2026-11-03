@@ -5,9 +5,9 @@
     "position": "complete",
     "next": null,
     "counts": {
-      "done": 13,
+      "done": 14,
       "not-done": 0,
-      "could-not-determine": 6,
+      "could-not-determine": 5,
       "stated": 0
     },
     "steps": [
@@ -83,12 +83,11 @@
         "detail": "holds glossary"
       },
       {
-        "id": "directory:references",
+        "id": "directory:smart-trust-uploads",
         "namedBy": "smart-trust",
-        "what": "declared directory references/ exists",
-        "state": "could-not-determine",
-        "detail": "not mounted in this index checkout (index.lock.json brings part of this instance only)",
-        "action": "check it in the instance's own repository"
+        "what": "declared directory uploads/ exists",
+        "state": "done",
+        "detail": "holds uploads"
       },
       {
         "id": "directory:smart-trust-translations",
@@ -157,7 +156,7 @@
       {
         "id": "initialization",
         "state": "unknown",
-        "label": "6 setup step(s) could not be checked from here"
+        "label": "5 setup step(s) could not be checked from here"
       },
       {
         "id": "repository",
