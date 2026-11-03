@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T05:44:52Z
+updated_at: 2026-11-03T05:47:38Z
 tags:
     - references
     - library
@@ -38,3 +38,5 @@ _2026-11-03T05:35:56Z_ — Claimed by https://claude.ai/code/session_01EucfRodNc
 _2026-11-03T05:42:02Z_ — Owner decided (card): **approach 2, "Library + catalogue only"**: an ingested work is cited from its `library/` entry; a work that is not ingested is a metadata-only `catalogue/records/<slug>.dc.json` record; `references/` is retired in all three IGs. **smart-trust's 27 entries: "Convert to catalogue"** (phw's 5 and immz's 10 likewise, minus the who-iris-held works, which are cited from who-iris). Plan: (a) core: `dublinCoreToReference` reads `dc.relation.ispartof` / `dc.citation.volume|issue|spage|epage`; a library entry with a catalogue record is projected from that record; no `ingestedAt` publication date. (b) smart-base: `check:ig-citations` reads `library` (own and `--with` layers) and `catalogue`, not `references`. (c) content PRs (owner OK): CSL→DC conversion of each IG's entries and removal of the `references` declaration.
 
 _2026-11-03T05:44:52Z_ — Owner asked where a non-ingested work lives ("uploads/ or catalog only... what is URL of catalogue? and relation to library?"), and decided (card): **"Catalogue + uploads/ copy"**. A non-ingested cited work = a `catalogue/nodes/item-<slug>.json` in state `referenced` (no `libraryId`) with `metadataRef` → `catalogue/records/<slug>.dc.json`, PLUS a capture in `uploads/` queued for later ingestion; citations resolve through the record only. Answered: the catalogue has no page of its own (no visualiser covers `catalogue` alone); each record renders on the KG Bibliography as `#ref-<slug>`; a reference's IRI is `references/<key>` under the folio base (cat-harness-tools `resolveReferenceKey`) and stays unchanged. Open per capture: its licence; a capture is recorded with its role, as who-iris does.
+
+_2026-11-03T05:47:38Z_ — Step (a) up: litlfred/folio-assistant-core#628 (DC ↔ CSL keeps container/volume/issue/pages via `dc.relation.ispartof`, `dc.citation.*`; CSL-spelled `dc.type` kept; `contributor.editor`; no `ingestedAt` publication date). 680 tests pass in the index checkout. Step (b), smart-base `check:ig-citations` reading `library` + `catalogue`, is BLOCKED: this session was refused push access to litlfred/smart-base (add_repo denied by the session's permission classifier); it has a read-only clone at db7f311.
