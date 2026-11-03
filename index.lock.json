@@ -24,7 +24,7 @@
     {
       "harness": "smart-trust",
       "repository": "litlfred/smart-trust",
-      "ref": "388fcf34e38a70e0539c836d20a065431de5c1de"
+      "ref": "a094f1844fe9b66fae737d7ada5dc471659277f9"
     },
     {
       "harness": "smart-trust-phw",
@@ -59,7 +59,7 @@
     {
       "harness": "smart-immunizations",
       "repository": "litlfred/smart-immunizations",
-      "ref": "689558616373ca7fca41219b89d4483e5328fbf5"
+      "ref": "9675397d2541f9165ca280f9f1f4675f88b29b67"
     }
   ],
   "instances": [
@@ -326,14 +326,14 @@
     {
       "instance": "smart-immunizations",
       "repository": "litlfred/smart-immunizations",
-      "sha": "689558616373ca7fca41219b89d4483e5328fbf5",
+      "sha": "9675397d2541f9165ca280f9f1f4675f88b29b67",
       "upstreamRoot": "",
       "path": "smart-immunizations",
       "via": "smart-immunizations",
       "pinnedBy": "declared",
       "declaration": {
         "file": "smart-immunizations.json",
-        "sha256": "b38d5b187ba66ae3adf4a173e06727f6217e7dfa77a43db162b7806c728cac81"
+        "sha256": "db7b76265cf1359664d8e21fcfeeb7f87b0018a179d18622bd52411a621e1f16"
       },
       "directories": [
         {
@@ -370,6 +370,13 @@
           "upstreamPath": "web-annexes",
           "treeDigest": "9a0c31ed06553a81d66007bf16fc8101755cd940f482dd0c4c4d94cc51821e2d",
           "files": 2
+        },
+        {
+          "id": "smart-immunizations-catalogue",
+          "path": "smart-immunizations/catalogue",
+          "upstreamPath": "catalogue",
+          "treeDigest": "0ad58e05b658b296f21587d21f2ae2f7607d2cab0519d76a625eebdf3acffd14",
+          "files": 22
         }
       ],
       "assets": [
@@ -385,8 +392,8 @@
       "trust": {
         "basis": "consent",
         "by": "litlfred",
-        "on": "2026-11-01",
-        "ref": "689558616373ca7fca41219b89d4483e5328fbf5",
+        "on": "2026-11-03",
+        "ref": "9675397d2541f9165ca280f9f1f4675f88b29b67",
         "approver": "declared",
         "standing": {
           "follows": "main",
@@ -397,14 +404,14 @@
     {
       "instance": "smart-trust",
       "repository": "litlfred/smart-trust",
-      "sha": "388fcf34e38a70e0539c836d20a065431de5c1de",
+      "sha": "a094f1844fe9b66fae737d7ada5dc471659277f9",
       "upstreamRoot": "",
       "path": "smart-trust",
       "via": "smart-trust",
       "pinnedBy": "declared",
       "declaration": {
         "file": "smart-trust.json",
-        "sha256": "0d28506848913b0be7a01f65cd557aeb9ec99dccd51d172280c4e9b6ecaea002"
+        "sha256": "8319072d9f3d5c7aeaa7ebc3d5b0b2dce1f3bf7ae64c5185492b83b1602ed8ae"
       },
       "directories": [
         {
@@ -439,7 +446,7 @@
           "id": "smart-trust-catalogue",
           "path": "smart-trust/catalogue",
           "upstreamPath": "catalogue",
-          "treeDigest": "5065ca77384164916dbf899496e1cae67b318f8865c32a9fb0e755886effc37d",
+          "treeDigest": "137cbd75d82711ba3e56dd06fec10744ae32c285ee269ae92e73b2390e9dd4cb",
           "files": 58
         },
         {
@@ -455,13 +462,6 @@
           "upstreamPath": "translations",
           "treeDigest": "fe3646173f3acef314ae11a9aa14864844d668db70eaba785334fd07a8a1c9f2",
           "files": 5
-        },
-        {
-          "id": "smart-trust-uploads",
-          "path": "smart-trust/uploads",
-          "upstreamPath": "uploads",
-          "treeDigest": "4044b1998eca84472b8bfc447ab5d8b0e0a0ac57cdf9b3f1178b0e39ca4cf9e4",
-          "files": 28
         }
       ],
       "assets": [
@@ -478,7 +478,7 @@
         "basis": "consent",
         "by": "litlfred",
         "on": "2026-11-03",
-        "ref": "388fcf34e38a70e0539c836d20a065431de5c1de",
+        "ref": "a094f1844fe9b66fae737d7ada5dc471659277f9",
         "approver": "declared",
         "standing": {
           "follows": "main",
