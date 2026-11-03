@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-03T05:51:10Z
+updated_at: 2026-11-03T05:54:25Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -155,3 +155,5 @@ _2026-11-03T05:33:36Z_ — Owner, 04:56Z: "merge (non-content) that is green and
 - The cat-harness-tools bsd1 stack (#1420, #1421) is left to sibling https://claude.ai/code/session_01EucfRmD6JzE3AYLeUkX1KU, which is merging it.
 
 _2026-11-03T05:51:10Z_ — Merge sweep: merged fa#2898 (CODEOWNERS, SECURITY.md, Dependabot cooldown; owner-approved) at 50961d8. Its only red, kg-validate-nested-instances (bean 676g), also fails on main's gates run 41581340069 (97d2e407).
+
+_2026-11-03T05:54:25Z_ — Merge sweep: merged cat-harness#1004 (process: each layer publishes its own QA results; docs/skills/BPMN documentation, bean 7mwa) at 1e9b973, all green, clean.
