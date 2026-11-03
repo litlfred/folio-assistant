@@ -50,7 +50,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "f96dfff8443d6dda56cf0c60c0f19d38a6b2ee59",
+          "ref": "e1b91907f54388a1c410c9b7a11262697d35a3d4",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -60,8 +60,8 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-11-02",
-              "ref": "f96dfff8443d6dda56cf0c60c0f19d38a6b2ee59",
+              "on": "2026-11-03",
+              "ref": "e1b91907f54388a1c410c9b7a11262697d35a3d4",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -83,7 +83,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-core",
-          "ref": "91dcc595af0ab0f79b8e84328b6d421ae58cecb3",
+          "ref": "a916be27622c099f417fa1f17c6e74538d8d1a29",
           "overrides": {
             "folio-assistant-core": {
               "whole": true
@@ -94,7 +94,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-03",
-              "ref": "91dcc595af0ab0f79b8e84328b6d421ae58cecb3",
+              "ref": "a916be27622c099f417fa1f17c6e74538d8d1a29",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -465,6 +465,11 @@
   ],
   "gateExemptions": {
     "steps": [
+      {
+        "match": "bun run cat bibliography:page --instance \"$INSTANCE\" --site",
+        "kind": "ci-only",
+        "reason": "feature-staging.yml and docs-site.yml write each composed IG's own bibliography page (owner, 2026-11-03, bean djj5) into ./_docs/<instance>/, which the IG compose step builds only in those jobs: a WRITE of a page, not a check of the tree. Its logic is pinned by folio-assistant-core's bibliography-page tests in `bun test`."
+      },
       {
         "match": "bun run cat-harness-tools/scripts/preview-record.ts write --site ./_site",
         "kind": "ci-only",
