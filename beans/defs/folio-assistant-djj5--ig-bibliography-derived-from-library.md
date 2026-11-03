@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T15:46:20Z
+updated_at: 2026-11-03T15:54:51Z
 tags:
     - references
     - library
@@ -84,3 +84,5 @@ _2026-11-03T15:31:12Z_ — Owner: "Fix who Iris uploads too". litlfred/who-iris#
 _2026-11-03T15:42:15Z_ — who-iris#176 needs a matching cat-harness-tools change: `test/coordinator/navbar-checkout.test.ts` lists who-iris's declared kinds and includes `uploads` (twice). This session was refused push access to cat-harness-tools (add_repo denied by the permission classifier), so the two-line patch went to the drain session to open. #176 is held until that PR is green, so a train takes both together.
 
 _2026-11-03T15:46:20Z_ — Owner (card): allow cat-harness-tools. litlfred/cat-harness-tools#1453 (d08ebde, stacked on #1452's attestations commit) drops `uploads` from both who-iris lists in navbar-checkout.test.ts; 8 pass with who-iris#176's declaration. who-iris#176 merges together with it.
+
+_2026-11-03T15:54:51Z_ — who-iris#176 CI red on two gates caused by the change: `check:state-on-main` (stale `who-iris::who-iris-uploads` baseline line) and `check:reference-direction` (two now-undeclared intakes name smart-base and smart-immunizations as provenance). Both fixed in cat-harness-tools#1453 (ef1a501): baseline line removed; exemption `INSTANCE_UPLOADS_DATA` for `<instance>/uploads/` quoting the owner's ruling; 135 tests pass. Order: #1452 → #1453 → #176 re-pins who-iris's cat-harness-tools to #1453's merge.
