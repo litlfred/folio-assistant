@@ -366,15 +366,15 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-03T08:28:12.726Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/02c840e0f133444f16dae13c3d76a89492cb3e3d",
-  "sourceCommitSha": "02c840e0f133444f16dae13c3d76a89492cb3e3d",
-  "sourceCommitAt": "2026-11-03T08:09:02Z",
+  "generatedAt": "2026-11-03T11:25:52.661Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/97a1738b2ae607a5cbcb171e224ae8353b4b4d2e",
+  "sourceCommitSha": "97a1738b2ae607a5cbcb171e224ae8353b4b4d2e",
+  "sourceCommitAt": "2026-11-03T11:11:43Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 6,
-    "Subgraph": 6,
+    "GraphTypology": 7,
+    "Subgraph": 7,
     "Asset": 2
   },
   "@graph": [
@@ -405,6 +405,13 @@
       "name": "ig-annex",
       "renderable": false,
       "summary": "Annexes an IG's narrative pages load on demand: an `annexes.json` (`ig-annexes/v1`) naming, for each annex, the page it belongs on, the file beside the declaration that holds it, and the columns its table shows before a row is opened. The IG site build (`stage-ig-sites.ts`, and `ig-repo-site.ts compose` for an IG repository's own site) copies each file to `assets/annex/` and mounts `ig-annex.js` on the page. A `.md` annex is appended to its page as written, so its links address that page (`shownOnPublishedPages`); `check:ig-annex-links` judges them from there."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/catalogue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "catalogue",
+      "renderable": false,
+      "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/l1-extraction",
@@ -531,6 +538,24 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/smart-immunizations/directory/smart-immunizations-catalogue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-immunizations-catalogue",
+      "path": "catalogue/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/catalogue"
+      ],
+      "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and catalogue node (`folio-catalogue-node/v1`) records of the works this IG cites that are not ingested, each a `referenced` item whose record is the IG's bibliography entry for it (the key is the citation's: `#ref-<slug>`) (a capture of it, when one exists, is kept in the repository's `uploads/` data store, which is not part of the KG). Bean folio-assistant-djj5 (owner, 2026-11-03: references/ retired, \"Library + catalogue only\"). `bun run cat check:catalogue` verifies every node and metadataRef.",
+      "readmePath": "catalogue/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/smart-immunizations/directory/smart-immunizations-catalogue",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/smart-immunizations-catalogue"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/smart-immunizations/asset/agent-instructions",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Asset",
       "name": "agent-instructions",
@@ -553,8 +578,8 @@
   ],
   "staging": {
     "branch": "claude/inspiring-lovelace-607e7m",
-    "sha": "02c840e0f133444f16dae13c3d76a89492cb3e3d",
+    "sha": "97a1738b2ae607a5cbcb171e224ae8353b4b4d2e",
     "pr": "2924/merge",
-    "run": "41601154440"
+    "run": "41625513733"
   }
 }

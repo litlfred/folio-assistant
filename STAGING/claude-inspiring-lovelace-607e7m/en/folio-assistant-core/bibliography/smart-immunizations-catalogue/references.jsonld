@@ -1,0 +1,150 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/openhie-architecture-specification",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Open Health Information Exchange (OpenHIE) Specification and Architecture",
+      "dcterms:creator": [
+        "OpenHIE"
+      ],
+      "dcterms:identifier": "https://guides.ohie.org/arch-spec/architecture-specification/overview-of-the-architecture",
+      "dcterms:source": "smart-immunizations/catalogue/records/openhie-architecture-specification.dc.json"
+    },
+    {
+      "@id": "references/dak-immz-dictionary",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Core data dictionary",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:identifier": "https://smart.who.int/dak-immz/dictionary.html",
+      "dcterms:source": "smart-immunizations/catalogue/records/dak-immz-dictionary.dc.json"
+    },
+    {
+      "@id": "references/dak-immz-decision-logic",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Decision-support and scheduling logic",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:identifier": "https://smart.who.int/dak-immz/decision-logic.html",
+      "dcterms:source": "smart-immunizations/catalogue/records/dak-immz-decision-logic.dc.json"
+    },
+    {
+      "@id": "references/who-guideline-handbook",
+      "@type": [
+        "fabio:Work",
+        "bibo:Book"
+      ],
+      "dcterms:title": "Handbook for guideline development",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:identifier": "https://www.who.int/publications/i/item/9789241548960",
+      "dcterms:source": "smart-immunizations/catalogue/records/who-guideline-handbook.dc.json"
+    },
+    {
+      "@id": "references/dak-tb-system-requirements",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "High-level functional and non functional requirements",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:identifier": "https://smart.who.int/dak-tb/system-requirements.html",
+      "dcterms:source": "smart-immunizations/catalogue/records/dak-tb-system-requirements.dc.json"
+    },
+    {
+      "@id": "references/dak-immz-indicators",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Indicators and performance metrics table",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:identifier": "https://smart.who.int/dak-immz/indicators.html",
+      "dcterms:source": "smart-immunizations/catalogue/records/dak-immz-indicators.dc.json"
+    },
+    {
+      "@id": "references/smart-ig-starter-kit-references",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "References section of the SMART IG starter kit",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:identifier": "https://worldhealthorganization.github.io/smart-ig-starter-kit/references.html#2",
+      "dcterms:source": "smart-immunizations/catalogue/records/smart-ig-starter-kit-references.dc.json"
+    },
+    {
+      "@id": "references/who-smart-guidelines",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "SMART Guidelines",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:identifier": "https://www.who.int/teams/digital-health-and-innovation/smart-guidelines",
+      "dcterms:source": "smart-immunizations/catalogue/records/who-smart-guidelines.dc.json"
+    },
+    {
+      "@id": "references/9789240010567-eng",
+      "@type": [
+        "fabio:Work",
+        "bibo:Book"
+      ],
+      "dcterms:title": "Digital implementation investment guide (DIIG): integrating digital interventions into health programmes",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:issued": "2020",
+      "bibo:isbn": "9789240010567",
+      "dcterms:identifier": "https://www.who.int/publications/i/item/9789240010567",
+      "dcterms:source": "smart-immunizations/catalogue/records/9789240010567-eng.dc.json"
+    },
+    {
+      "@id": "references/who-dak-immunizations",
+      "@type": [
+        "fabio:Work",
+        "bibo:Book"
+      ],
+      "dcterms:title": "Digital adaptation kit for immunizations: operational requirements for implementing WHO recommendations in digital systems",
+      "dcterms:creator": [
+        "World Health Organization"
+      ],
+      "dcterms:issued": "2024",
+      "bibo:isbn": "9789240099456",
+      "dcterms:identifier": "https://iris.who.int/handle/10665/380303",
+      "dcterms:source": "smart-immunizations/catalogue/records/who-dak-immunizations.dc.json"
+    }
+  ]
+}
