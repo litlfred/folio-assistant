@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T15:42:15Z
+updated_at: 2026-11-03T15:46:20Z
 tags:
     - references
     - library
@@ -82,3 +82,5 @@ _2026-11-03T12:47:39Z_ — Follow-ups found by the #2924 re-pin to core 91dcc59,
 _2026-11-03T15:31:12Z_ — Owner: "Fix who Iris uploads too". litlfred/who-iris#176 (e04d239) drops the `who-iris-uploads` declaration and its generated README; intakes stay as repository data. Watching; merges on green.
 
 _2026-11-03T15:42:15Z_ — who-iris#176 needs a matching cat-harness-tools change: `test/coordinator/navbar-checkout.test.ts` lists who-iris's declared kinds and includes `uploads` (twice). This session was refused push access to cat-harness-tools (add_repo denied by the permission classifier), so the two-line patch went to the drain session to open. #176 is held until that PR is green, so a train takes both together.
+
+_2026-11-03T15:46:20Z_ — Owner (card): allow cat-harness-tools. litlfred/cat-harness-tools#1453 (d08ebde, stacked on #1452's attestations commit) drops `uploads` from both who-iris lists in navbar-checkout.test.ts; 8 pass with who-iris#176's declaration. who-iris#176 merges together with it.
