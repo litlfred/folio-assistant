@@ -307,32 +307,6 @@
       "name": "detangled"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement#flow/SF_Bean_1",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "claimed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement#flow/SF_Bean_2",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement#flow/SF_Bean_3",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "not yours"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement#flow/SF_Bean_4",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement#flow/SF_Bean_5",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement#flow/SF_Bean_6",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/lane/Lane_Admin",
       "@type": "cat-harness:Lane",
       "name": "Administrator"
@@ -341,31 +315,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "name": "Authoring agent"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/node/Call_BeanClose",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/node/Call_BeanClose_2",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/node/Call_BeanClose_3",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/node/Call_BeanOpen",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Open the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/node/End_BeanNotYours",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Not yours — left alone"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/node/End_Declined",
@@ -381,11 +330,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/node/End_Unknown",
       "@type": "bootstrap:ProcessNode",
       "name": "UNKNOWN — stop. Not “not yet”, not clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/node/GW_BeanYours",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement/node/GW_Declared",
@@ -610,44 +554,6 @@
       "name": "leaks or stale"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/SF_Bean_1",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "claimed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/SF_Bean_2",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/SF_Bean_3",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "not yours"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/SF_Bean_4",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/SF_Bean_5",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/SF_Bean_6",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/SF_Bean_7",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/SF_Bean_8",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/SF_Bean_9",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/lane/Lane_Admin",
       "@type": "cat-harness:Lane",
       "name": "Administrator"
@@ -671,46 +577,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/lane/Lane_Publication",
       "@type": "cat-harness:Lane",
       "name": "Publication manager"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/Call_BeanClose",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/Call_BeanClose_2",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/Call_BeanClose_3",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/Call_BeanClose_4",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/Call_BeanClose_5",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/Call_BeanClose_6",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/Call_BeanOpen",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Open the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/End_BeanNotYours",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Not yours — left alone"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/End_CutoverUnknown",
@@ -746,11 +612,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/GW_Alone",
       "@type": "bootstrap:ProcessNode",
       "name": "Green alone?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/GW_BeanYours",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/GW_Closed",
@@ -1633,39 +1494,6 @@
       "name": "no — red"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/Flow_GW_BeanClosedHow",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_1",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "claimed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_2",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_3",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "not yours"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_4",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "red"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_5",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "shipped"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish#flow/SF_Bean_6",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "stopped"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/lane/Lane_Author",
       "@type": "cat-harness:Lane",
       "name": "Platform authoring agent"
@@ -1711,21 +1539,6 @@
       "name": "Wire it: gate, deploy line, search, tests"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/Call_BeanClose_2",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/Call_BeanOpen",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Open the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/End_BeanNotYours",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Not yours — left alone"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/End_Red",
       "@type": "bootstrap:ProcessNode",
       "name": "Job RED"
@@ -1739,16 +1552,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/End_Stopped",
       "@type": "bootstrap:ProcessNode",
       "name": "Stopped, with its measurement"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/GW_BeanClosedHow",
-      "@type": "bootstrap:ProcessNode",
-      "name": "How did it end?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/GW_BeanYours",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/GW_Budget",
@@ -1912,48 +1715,6 @@
       "name": "green"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/SF_Bean_1",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "claimed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/SF_Bean_10",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/SF_Bean_2",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/SF_Bean_3",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "not yours"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/SF_Bean_4",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/SF_Bean_5",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/SF_Bean_6",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/SF_Bean_7",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/SF_Bean_8",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/SF_Bean_9",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/lane/Lane_Admin",
       "@type": "cat-harness:Lane",
       "name": "Administrator (owner)"
@@ -1972,51 +1733,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/lane/Lane_Platform",
       "@type": "cat-harness:Lane",
       "name": "Platform authoring agent"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_BeanClose",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_BeanClose_2",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_BeanClose_3",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_BeanClose_4",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_BeanClose_5",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_BeanClose_6",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_BeanClose_7",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_BeanOpen",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Open the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_BeanNotYours",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Not yours — left alone"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_Declined",
@@ -2057,11 +1773,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Alone",
       "@type": "bootstrap:ProcessNode",
       "name": "Green alone?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_BeanYours",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Bean claimed?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Fresh",

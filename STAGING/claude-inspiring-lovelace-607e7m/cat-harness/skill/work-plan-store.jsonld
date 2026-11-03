@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/inspiring-lovelace-607e7m",
-    "sha": "68ec2697d7c6d22a1c88e8b00bba72e6e877ee69",
+    "sha": "304e37a22d4a2ef297baf7c6e99777b631fa9cc8",
     "pr": "2924/merge",
-    "run": "41644816559"
+    "run": "41650826460"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "work-plan-store",
       "title": "The work plan's contract",
-      "description": "The contract the work plan (beans) keeps as a data store: give back a bean exactly as written, keep ids unique, keep links between beans pointing at beans that exist, keep status and type to their closed lists, lose nothing when two writers push at once, and keep the history of who changed what. A mechanical Actor plays this Role; this is what it must do.",
+      "description": "The contract the work plan (beans) keeps as a data store, as operations any Tool must provide: get, list, create, update with ifMatch, note, history, and where a bean is in its processes. Give back a bean exactly as written, keep ids unique and links whole, keep status and type to their closed lists, lose nothing to concurrent writers, and answer a bean's history. A mechanical Actor plays this Role through whichever Tool the deployment names.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/work-plan-store.md",
-      "instructionLines": 64,
+      "instructionLines": 113,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

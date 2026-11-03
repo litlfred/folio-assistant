@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/inspiring-lovelace-607e7m",
-    "sha": "68ec2697d7c6d22a1c88e8b00bba72e6e877ee69",
+    "sha": "304e37a22d4a2ef297baf7c6e99777b631fa9cc8",
     "pr": "2924/merge",
-    "run": "41644816559"
+    "run": "41650826460"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/StartEvent_Wanted"
       ],
-      "nodeCount": 28,
-      "flowCount": 33,
+      "nodeCount": 23,
+      "flowCount": 27,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/externalSchema/omg-dd-1.0"
@@ -36,7 +36,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/StartEvent_Wanted",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/Call_BeanOpen",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/Task_Pin",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_1"
     },
@@ -83,7 +83,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/Task_Refuse",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_6"
     },
@@ -282,67 +282,9 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/Task_Summarise",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_24"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "claimed",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/GW_BeanYours",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/Task_Pin",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_1"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/Call_BeanOpen",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/GW_BeanYours",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_2"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "not yours",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/GW_BeanYours",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/End_BeanNotYours",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_3"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg#flow/Flow_GW_BeanClosedHow",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/GW_BeanClosedHow",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_GW_BeanClosedHow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "subscribed",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/GW_BeanClosedHow",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/EndEvent_Done",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "refused",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/GW_BeanClosedHow",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_5"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_24"
     }
   ]
 }

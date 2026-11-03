@@ -242,7 +242,15 @@ rely on the harness that now exists.</li><li><strong>Publish the instance’s JS
 the one-line caller of the tools layer’s <code class="language-plaintext highlighter-rouge">layer-publish-context.yml</code>;
 <code class="language-plaintext highlighter-rouge">init-folio --instance</code> writes both. After its first run on <code class="language-plaintext highlighter-rouge">main</code>, the
 owner switches GitHub Pages on: <em>Deploy from a branch: <code class="language-plaintext highlighter-rouge">gh-pages</code>, <code class="language-plaintext highlighter-rouge">/ (root)</code></em>.
-See <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/instance-publication.html"><code class="language-plaintext highlighter-rouge">instance-publication</code></a>.</li><li><strong>Re-enter through this harness.</strong> Read <em>its</em> next steps rather than any
+See <a href="https://litlfred.github.io/folio-assistant/reference/skill-instructions/instance-publication.html"><code class="language-plaintext highlighter-rouge">instance-publication</code></a>.</li><li><strong>Publish the instance’s QA results.</strong> An instance that declares a <code class="language-plaintext highlighter-rouge">qa</code>
+directory with <code class="language-plaintext highlighter-rouge">storage</code> (<code class="language-plaintext highlighter-rouge">test/results/</code> on <code class="language-plaintext highlighter-rouge">cat/cat-harness/qa-reports</code>,
+keyed by commit) keeps its results on that branch of <strong>its own</strong>
+repository: add <code class="language-plaintext highlighter-rouge">.github/workflows/publish-qa.yml</code>, the caller of the tools
+layer’s <code class="language-plaintext highlighter-rouge">layer-qa-publish.yml</code>, and ignore <code class="language-plaintext highlighter-rouge">test/results/</code>. <code class="language-plaintext highlighter-rouge">init-folio
+--instance</code> writes the caller. The branch is created by its first run; an
+instance with no <code class="language-plaintext highlighter-rouge">qa</code> directory of its own is skipped with a notice, and its
+results are the index’s. Before 2026-11-03 this step did not exist, so no
+layer’s declared store was ever written (bean folio-assistant-7mwa).</li><li><strong>Re-enter through this harness.</strong> Read <em>its</em> next steps rather than any
 list held in bootstrap — the set of available steps changed the moment the
 harness arrived, and the authority on what they are is the harness, not the
 bootstrap that predates it.</li></ol><h2 id="what-this-instance-expects-that-a-bare-one-does-not"><a href="#what-this-instance-expects-that-a-bare-one-does-not" class="anchor-heading" aria-labelledby="what-this-instance-expects-that-a-bare-one-does-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this instance expects that a bare one does not

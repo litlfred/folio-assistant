@@ -253,7 +253,8 @@
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/where-a-proposal-goes",
             "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-restructure",
-            "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store"
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store",
+            "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store-git-branch"
           ],
           "description": "Software-delivery practice for agents and people working in the harness: the work plan (beans, claiming, blocking, briefs, turn reports), issues and PRs, continual progress, review and merge (prepare-merge, staging review, visual diff, rendered verification), CI health and platform gates, release and deployment, and coordinating sessions and swarms. Moved out of folio-core into the sdlc topic (bean 9umr, owner ruling 2026-09-30); crdm and spec-kit are its siblings in the same topic.",
           "hasManifest": true,
@@ -1221,13 +1222,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 153,
+          "instructionLines": 178,
           "instructionsPath": "skills/sdlc/sdlc-core/qa-reports.md",
           "name": "qa-reports",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/be05c93529715b94d910b330baae4aec28a1a930f43137b6958ac0dd0eeddf90",
-            "bytes": 8807,
-            "sha256": "be05c93529715b94d910b330baae4aec28a1a930f43137b6958ac0dd0eeddf90"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fe8968dd2628d708bfe609da677f0e55727b07ac8ea3d1dc8bf104d98418977c",
+            "bytes": 10298,
+            "sha256": "fe8968dd2628d708bfe609da677f0e55727b07ac8ea3d1dc8bf104d98418977c"
           },
           "title": "QA reports — derived results on a branch, judgements on `main`"
         },
@@ -1583,13 +1584,13 @@
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 759,
+          "instructionLines": 752,
           "instructionsPath": "skills/sdlc/sdlc-core/todo-manager.md",
           "name": "todo-manager",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3d23616ee49423e98eafb2a77cc72b929c16efcf839bbd5d4a13913b3728967a",
-            "bytes": 41469,
-            "sha256": "3d23616ee49423e98eafb2a77cc72b929c16efcf839bbd5d4a13913b3728967a"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/803884dc4e47287d062446835b6774ae68cf973a213fc189be40ebbe5ca070c0",
+            "bytes": 41213,
+            "sha256": "803884dc4e47287d062446835b6774ae68cf973a213fc189be40ebbe5ca070c0"
           },
           "title": "Session Task Manager (`beans`)"
         },
@@ -1729,20 +1730,39 @@
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store",
           "@type": "bootstrap:Skill",
           "ambiguous": false,
-          "description": "The contract the work plan (beans) keeps as a data store: give back a bean exactly as written, keep ids unique, keep links between beans pointing at beans that exist, keep status and type to their closed lists, lose nothing when two writers push at once, and keep the history of who changed what. A mechanical Actor plays this Role; this is what it must do.",
+          "description": "The contract the work plan (beans) keeps as a data store, as operations any Tool must provide: get, list, create, update with ifMatch, note, history, and where a bean is in its processes. Give back a bean exactly as written, keep ids unique and links whole, keep status and type to their closed lists, lose nothing to concurrent writers, and answer a bean's history. A mechanical Actor plays this Role through whichever Tool the deployment names.",
           "hasIOContract": false,
           "hasInstructions": true,
           "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-          "instructionLines": 64,
+          "instructionLines": 113,
           "instructionsPath": "skills/sdlc/sdlc-core/work-plan-store.md",
           "name": "work-plan-store",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a1065d07912594a0f2240fa4f9662761051a5ed94c6f7ad8b1fdffa4488f80eb",
-            "bytes": 2998,
-            "sha256": "a1065d07912594a0f2240fa4f9662761051a5ed94c6f7ad8b1fdffa4488f80eb"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/83f6026fea716777e4090cba86951d341c1dd0f3a6d369c68a7e565e167a3e50",
+            "bytes": 5948,
+            "sha256": "83f6026fea716777e4090cba86951d341c1dd0f3a6d369c68a7e565e167a3e50"
           },
           "title": "The work plan's contract"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store-git-branch",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "How the git state branch Tool performs the work-plan store's operations: the branch per graph, the mount at beans/, which command does get, list, create, update, note, history and positions, and how it keeps the race guarantee by fetching, rebuilding on the tip and pushing, never forcing. Read this only when the deployment's work-plan Tool is the git branch.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+          "instructionLines": 74,
+          "instructionsPath": "skills/sdlc/sdlc-core/work-plan-store-git-branch.md",
+          "name": "work-plan-store-git-branch",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2c033396283518c079d45b91b58b2907319b94c101d5b1a09bbdf556bd65977b",
+            "bytes": 3678,
+            "sha256": "2c033396283518c079d45b91b58b2907319b94c101d5b1a09bbdf556bd65977b"
+          },
+          "title": "The work plan on a git state branch"
         }
       ],
       "hasSubgraph": [
