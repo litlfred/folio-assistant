@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-03T05:02:05Z
+updated_at: 2026-11-03T05:30:04Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -144,3 +144,5 @@ _2026-11-03T00:02:38Z_ — MERGED cat-harness-tools#1422 as 13c77e3: green on ev
 _2026-11-03T00:41:16Z_ — Merge window closed. Merged in the window by the drain session: fa#2921 (2e10fd3), cat-harness#1000, #1001, cat-harness-tools#1422, who-iris#165, core#624. Bean 4j43 is completed and carries the final report and the open list.
 
 _2026-11-03T05:02:05Z_ — 04:56Z, owner in session https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY: merge green, ready, non-content PRs for 4 hours (until 08:56Z). At start, cat-harness#992 and #993 had just been merged by someone else, and fa#2919/#2904/#2885/#2875 were merged by litlfred at 04:57-05:00Z. Owner cards: fa#2864 closed as superseded by the trains, and fa#2898 (CODEOWNERS) to be merged on green. Its branch was updated from main to replace an 18h-old red (the fsh-guts test, since green on main). The train fa#2922 stays with …RqHz. I'm sweeping every ~30 min.
+
+_2026-11-03T05:30:04Z_ — Merge sweep: merged cat-harness#1002 (generated PROV logs for the slash wave 2 IRIs, opened by …RqHz for the train) at e7c2966, all green. fa#2898 is held: its only red is kg-validate-nested-instances (bean 676g), which none of its 3 .github files can touch. main's own gates run (41581340069 at 97d2e407) is still queued, so whether main has that red too is undetermined.
