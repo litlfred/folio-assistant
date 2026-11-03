@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-03T05:30:04Z
+updated_at: 2026-11-03T05:33:36Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -146,3 +146,10 @@ _2026-11-03T00:41:16Z_ — Merge window closed. Merged in the window by the drai
 _2026-11-03T05:02:05Z_ — 04:56Z, owner in session https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY: merge green, ready, non-content PRs for 4 hours (until 08:56Z). At start, cat-harness#992 and #993 had just been merged by someone else, and fa#2919/#2904/#2885/#2875 were merged by litlfred at 04:57-05:00Z. Owner cards: fa#2864 closed as superseded by the trains, and fa#2898 (CODEOWNERS) to be merged on green. Its branch was updated from main to replace an 18h-old red (the fsh-guts test, since green on main). The train fa#2922 stays with …RqHz. I'm sweeping every ~30 min.
 
 _2026-11-03T05:30:04Z_ — Merge sweep: merged cat-harness#1002 (generated PROV logs for the slash wave 2 IRIs, opened by …RqHz for the train) at e7c2966, all green. fa#2898 is held: its only red is kg-validate-nested-instances (bean 676g), which none of its 3 .github files can touch. main's own gates run (41581340069 at 97d2e407) is still queued, so whether main has that red too is undetermined.
+
+_2026-11-03T05:33:36Z_ — Owner, 04:56Z: "merge (non-content) that is green and ready for 4 hrs", so the watch runs to about 08:56Z. Done so far:
+- MERGED folio-assistant#2919 (8ff5e4d), dependabot Actions bump.
+- MERGED cat-harness#1002 (e7c2966), the PROV regen for slash wave 2; it fixes check:prov-qaqc on train #2922.
+- Bean djj5 filed (IG bibliographies derived from library/, owner card option 3) and sibling https://claude.ai/code/session_01EucfRodNcVYWoFyT9Zwyb3 started on it. Trains keep smart-trust-phw and smart-immunizations on older pins until djj5 lands, because both declare a references/ directory that is not on disk.
+- Train #2922's nested-instances red reads a partial qa-reports entry for main 2e10fd3 (folio-assistant-sci: 0 kg-audit sidecars, against 16 at 7e745b9). To re-check on the 06:17Z train.
+- The cat-harness-tools bsd1 stack (#1420, #1421) is left to sibling https://claude.ai/code/session_01EucfRmD6JzE3AYLeUkX1KU, which is merging it.
