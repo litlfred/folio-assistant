@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LaTeX Authoring Output",
+  "description": "Output schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "outputFile",
+    "buildStatus"
+  ],
+  "properties": {
+    "outputFile": {
+      "type": "string",
+      "description": "Path to the compiled output (PDF, etc.)."
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pageCount": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/folio-assistant-sci/schema/skills/latex-authoring/output.schema.json",
+  "staging": {
+    "branch": "claude/inspiring-lovelace-607e7m",
+    "sha": "891ecb7f6dfb8cfb3ea3550e0dee0dd48ead288f",
+    "pr": "2924/merge",
+    "run": "41598286690"
+  }
+}

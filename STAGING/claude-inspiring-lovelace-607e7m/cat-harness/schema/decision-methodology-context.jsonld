@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/schema/decision-methodology-context.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/inspiring-lovelace-607e7m",
+    "sha": "891ecb7f6dfb8cfb3ea3550e0dee0dd48ead288f",
+    "pr": "2924/merge",
+    "run": "41598286690"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/schema/decision-methodology-context",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "decision-methodology-context",
+      "title": "decision-methodology-context",
+      "summary": "The context an agent provides when asking \"which decision methodology fits?\"",
+      "module": "schemas/process/decision-methodology-context.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/decision-methodology-context"
+    }
+  ]
+}

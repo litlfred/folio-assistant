@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_MaterializeRemote/lane/Lane_1.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/inspiring-lovelace-607e7m",
+    "sha": "891ecb7f6dfb8cfb3ea3550e0dee0dd48ead288f",
+    "pr": "2924/merge",
+    "run": "41598286690"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Ingestion engine (agent, runs unattended)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/process/Process_MaterializeRemote",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/role/ingestion-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/references-render/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/references-render.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Rewrite each reference-list block of a document (a block whose `meta.referenceList` is set) from the folio-reference/v1 nodes its `cites` names, in that order: the node's `printed` text verbatim when it has one, otherwise WHO style (or the short `Authors. Title. Year.` form), as a numbered or bulleted list. The block's `.md` is generated whole. `--check` writes nothing and fails when a list is stale.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat references:render"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--instance"
+            },
+            "description": "The instance root whose folio blocks and references directories are read.",
+            "name": "instance",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          },
+          {
+            "arg": {
+              "flag": "--check"
+            },
+            "description": "Fail if a list is stale, instead of writing.",
+            "name": "check",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "The rewritten reference-list blocks: each block's `.md`.",
+            "name": "blocks",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+          }
+        ]
+      },
+      "name": "references-render",
+      "requirements": {
+        "network": false,
+        "runtime": [
+          "bun"
+        ]
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-rendering",
+      "title": "Reference list from reference nodes"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/references-render",
+  "path": "tools/references-render/"
+}

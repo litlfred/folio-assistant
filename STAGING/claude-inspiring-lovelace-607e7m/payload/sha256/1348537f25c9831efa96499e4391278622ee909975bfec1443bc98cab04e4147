@@ -1,0 +1,21 @@
+---
+# folio-assistant-c1ev
+$schema: bean/1.0.0
+title: 'Phase 5: harness bean tidy-up (6fez, fwtz, p7mb, iirv)'
+status: completed
+type: task
+priority: low
+created_at: 2026-11-02T06:50:00Z
+updated_at: 2026-11-02T06:58:00Z
+parent: folio-assistant-4j43
+tags:
+    - harness-drain-2026-11-02
+---
+
+After cat-harness#934 merges: close 6fez. iirv stays open until pga6 is done. Record what is left on fwtz and p7mb. rwmf and yj32 stay open as umbrellas; nbp9 is the owner's own to-do.
+
+_2026-11-02T06:50:00Z_ — Filed by the harness drain thread (owner card Q-HDR-1 A, 2026-11-02 06:44Z), session https://claude.ai/code/session_01Qmmkt5upL17RB2jgQPi8Mx
+
+_2026-11-02T07:15:00Z_ — Claimed by the phase 2 thread. p7mb completed (last box met), fwtz note recorded. 6fez waits on litlfred/cat-harness#934, which has a merge conflict and no commits since 2026-11-01 21:52Z. Session https://claude.ai/code/session_01Qmmkt5kB8npnFWHCHTjq7j
+
+_2026-11-02T06:58:00Z_ — Completed. 6fez, iirv and vke6 are left to the "Separate the repos" thread: it rebuilt cat-harness#934 on current main (13fe03b, 74 entries, no conflict), merges it on green under the owner's Q-SEP-4 tap, and closes those three beans itself. Session https://claude.ai/code/session_01Qmmkt5kB8npnFWHCHTjq7j
