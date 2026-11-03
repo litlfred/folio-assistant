@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "core-schemas": {
-      "count": 40,
+      "count": 41,
       "unit": "modules"
     }
   },
@@ -3404,6 +3404,14 @@
       "graphNode": "undeclared",
       "summary": "A term about an organization (owner, 2026-10-31, option B: SKOS plus W3C",
       "isTest": true
+    },
+    {
+      "module": "folio-assistant-core/schemas/glossary-tables.ts",
+      "instance": "folio-assistant-core",
+      "name": "glossary-tables",
+      "graphNode": "schema",
+      "summary": "`folio-glossary-tables/v1`: which document blocks show which glossary as a",
+      "isTest": false
     },
     {
       "module": "folio-assistant-core/schemas/glossary.test.ts",
@@ -78872,6 +78880,63 @@
       "exported": false
     },
     {
+      "id": "folio-assistant-core/schemas/glossary-tables.ts#GlossaryTables",
+      "name": "GlossaryTables",
+      "module": "folio-assistant-core/schemas/glossary-tables.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary-tables.ts#GlossaryTablesSchema",
+      "name": "GlossaryTablesSchema",
+      "module": "folio-assistant-core/schemas/glossary-tables.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(GLOSSARY_TABLES_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tables",
+          "type": "z .array( z .object({ glossary: RelPath.refine((f) => f.endsWith(\".json\"), \"a .json glossary\"), block: RelPath.refine((…",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/glossary-tables.ts#RelPath"
+      ],
+      "unresolved": [],
+      "external": [
+        "GLOSSARY_TABLES_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary-tables.ts#RelPath",
+      "name": "RelPath",
+      "module": "folio-assistant-core/schemas/glossary-tables.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "folio-assistant-core/schemas/glossary.ts#ArchimateFocus",
       "name": "ArchimateFocus",
       "module": "folio-assistant-core/schemas/glossary.ts",
@@ -98015,6 +98080,14 @@
       "array": false
     },
     {
+      "from": "folio-assistant-core/schemas/glossary-tables.ts#GlossaryTablesSchema",
+      "to": "folio-assistant-core/schemas/glossary-tables.ts#RelPath",
+      "via": "tables",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "folio-assistant-core/schemas/glossary.ts#ArchimateFocusSchema",
       "to": "folio-assistant-core/schemas/glossary.ts#ArchimateRelationshipSchema",
       "via": "relationships",
@@ -99592,6 +99665,15 @@
       "instance": "cat-harness",
       "typologies": [
         "library"
+      ]
+    },
+    {
+      "id": "folio-glossary-tables/v1",
+      "source": "family",
+      "decl": "folio-assistant-core/schemas/glossary-tables.ts#GlossaryTablesSchema",
+      "instance": "folio-assistant-core",
+      "typologies": [
+        "glossary"
       ]
     },
     {

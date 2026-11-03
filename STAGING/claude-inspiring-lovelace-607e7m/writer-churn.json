@@ -39,7 +39,7 @@
         "render:bpmn",
         "processes:viz"
       ],
-      "seconds": 243.90354679299963
+      "seconds": 372.1152489749999
     },
     {
       "cause": "not recorded: the trace is 492194660 bytes, more than 268435456",
@@ -47,15 +47,7 @@
       "reran": [
         "subgraph:jsonld"
       ],
-      "seconds": 20.47853341199999
-    },
-    {
-      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "writtenBy": "-",
-      "reran": [
-        "ig-index:build"
-      ],
-      "seconds": 12.260063118000005
+      "seconds": 30.993995445000007
     },
     {
       "cause": "not recorded: the trace is 283858655 bytes, more than 268435456",
@@ -63,7 +55,15 @@
       "reran": [
         "slice:sqlite"
       ],
-      "seconds": 9.742853928000025
+      "seconds": 14.69611266600003
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 11.229747938999994
     },
     {
       "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
@@ -71,7 +71,7 @@
       "reran": [
         "site:viz"
       ],
-      "seconds": 1.488713339000009
+      "seconds": 1.2553142740000038
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
@@ -79,15 +79,7 @@
       "reran": [
         "smart-base:pages"
       ],
-      "seconds": 0.8150668350000051
-    },
-    {
-      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
-      "writtenBy": "-",
-      "reran": [
-        "smart:pages"
-      ],
-      "seconds": 0.7651978029999882
+      "seconds": 1.2259841170000145
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
@@ -95,7 +87,7 @@
       "reran": [
         "smart-trust:pages"
       ],
-      "seconds": 0.7470361860000412
+      "seconds": 1.1414850699999952
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
@@ -103,7 +95,15 @@
       "reran": [
         "smart-trust-phw:pages"
       ],
-      "seconds": 0.4840881759999902
+      "seconds": 0.8545716370000155
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.8271695870000403
     }
   ],
   "writers": [
@@ -114,7 +114,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 7.588250497000001
+      "seconds": 11.564006087000017
     },
     {
       "writer": "avatars:css",
@@ -123,7 +123,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.10256338599999436
+      "seconds": 0.15380637299991212
     },
     {
       "writer": "bibliography:page",
@@ -132,7 +132,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.4936579009999987
+      "seconds": 0.6949810270000016
     },
     {
       "writer": "docs:harness",
@@ -141,7 +141,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 3.318172003999993
+      "seconds": 5.463274381999974
     },
     {
       "writer": "docs:pages",
@@ -150,7 +150,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 1.5490171299999929
+      "seconds": 2.454161783999996
     },
     {
       "writer": "document-kinds:viz",
@@ -159,7 +159,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.6241040550000034
+      "seconds": 1.0925137819999946
     },
     {
       "writer": "external-schemas:viz",
@@ -168,7 +168,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 4.556895796000026
+      "seconds": 6.875540298999986
     },
     {
       "writer": "folio:viz",
@@ -177,13 +177,13 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.505826761000033
+      "seconds": 0.7991383170000045
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
       "why": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "seconds": 12.260063118000005
+      "seconds": 11.229747938999994
     },
     {
       "writer": "jsonld:contexts",
@@ -192,7 +192,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 1.2094991789999767
+      "seconds": 1.8103413709999876
     },
     {
       "writer": "kg:viewer",
@@ -201,7 +201,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.3540417269999743
+      "seconds": 0.5489402830000035
     },
     {
       "writer": "kind:table",
@@ -210,7 +210,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.09249653199996101
+      "seconds": 0.14415173399995546
     },
     {
       "writer": "library:viz",
@@ -219,7 +219,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 4.085530606999994
+      "seconds": 6.097748232999991
     },
     {
       "writer": "methodologies:viz",
@@ -228,7 +228,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 1.6887365069999942
+      "seconds": 2.5099332560000476
     },
     {
       "writer": "navbar:include",
@@ -237,7 +237,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.11780822200002149
+      "seconds": 0.1837387610001024
     },
     {
       "writer": "node-kinds",
@@ -246,7 +246,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 1.1801773469999899
+      "seconds": 1.8034804970000404
     },
     {
       "writer": "openapi:viz",
@@ -255,7 +255,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.1650873670000001
+      "seconds": 0.2629551099999808
     },
     {
       "writer": "processes:viz",
@@ -264,7 +264,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 6.892602068999957
+      "seconds": 10.782163027999923
     },
     {
       "writer": "render:bpmn",
@@ -273,7 +273,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 4.374783996000013
+      "seconds": 6.586657578999992
     },
     {
       "writer": "schema:viz",
@@ -282,13 +282,13 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 2.6980926119999493
+      "seconds": 3.9417371250000435
     },
     {
       "writer": "site:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 1.488713339000009
+      "seconds": 1.2553142740000038
     },
     {
       "writer": "skills:docs",
@@ -297,13 +297,13 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 4.78194378999999
+      "seconds": 7.727532242999994
     },
     {
       "writer": "slice:sqlite",
       "did": "ran",
       "why": "not recorded: the trace is 283858655 bytes, more than 268435456",
-      "seconds": 9.742853928000025
+      "seconds": 14.69611266600003
     },
     {
       "writer": "smart-base:document-kinds",
@@ -312,7 +312,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.47860690899999464
+      "seconds": 0.7179661530000158
     },
     {
       "writer": "smart-base:l1-extraction:pages",
@@ -321,31 +321,31 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.6311282800000044
+      "seconds": 0.9355622540000477
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "seconds": 0.8150668350000051
+      "seconds": 1.2259841170000145
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
-      "seconds": 0.4840881759999902
+      "seconds": 0.8545716370000155
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "seconds": 0.7470361860000412
+      "seconds": 1.1414850699999952
     },
     {
       "writer": "smart:pages",
       "did": "ran",
       "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
-      "seconds": 0.7651978029999882
+      "seconds": 0.8271695870000403
     },
     {
       "writer": "state:visualizer",
@@ -354,13 +354,13 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 6.002558237999969
+      "seconds": 10.20061553099996
     },
     {
       "writer": "subgraph:jsonld",
       "did": "ran",
       "why": "not recorded: the trace is 492194660 bytes, more than 268435456",
-      "seconds": 20.47853341199999
+      "seconds": 30.993995445000007
     },
     {
       "writer": "subscriptions:viz",
@@ -369,7 +369,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.16407872399996268
+      "seconds": 0.25651986900006885
     },
     {
       "writer": "theme:viz",
@@ -378,7 +378,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.46432685499999204
+      "seconds": 0.7241585649999907
     },
     {
       "writer": "themes:css",
@@ -387,7 +387,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.41207895199995254
+      "seconds": 0.6694888839999912
     },
     {
       "writer": "tools:viz",
@@ -396,7 +396,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 2.535927976000006
+      "seconds": 3.7085644570000005
     },
     {
       "writer": "uml:overview",
@@ -405,7 +405,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 184.07184016699998
+      "seconds": 279.08505107199994
     },
     {
       "writer": "uploads:viz",
@@ -414,7 +414,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 2.0789621499999775
+      "seconds": 3.2708253869999897
     },
     {
       "writer": "voices:viz",
@@ -423,7 +423,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.6847510569999576
+      "seconds": 1.0496955319999834
     }
   ]
 }
