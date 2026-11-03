@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T11:34:46Z
+updated_at: 2026-11-03T11:51:23Z
 tags:
     - references
     - library
@@ -72,3 +72,5 @@ _2026-11-03T11:07:39Z_ — Owner (card): merge #111, #140, #31 each when green. 
 _2026-11-03T11:08:23Z_ — **smart-trust#140 merged (a094f18)** and **smart-trust-phw#31 merged (d0d0394)**, green, on the owner's OK. All djj5 PRs are merged: folio-assistant-core#628, smart-base#298, #300, smart-trust-phw#30, #31, smart-trust#139, #140, smart-immunizations#111. No IG declares `references` or `uploads`; bibliographies are catalogue records; `uploads/` is repository data (owner, 2026-11-03). Drain session given the merge commits for folio-assistant#2924. Remaining: the third "Done when" (the next re-pin train takes both IGs at their mains) is the drain session's; captures for the 18 failed and 7 unlicensed works wait on licences and network access, one by one.
 
 _2026-11-03T11:34:46Z_ — folio-assistant#2924 (drain session) fails Feature Staging. (2) `check:duplicate-ids` on the combined bibliography: same key in two IG catalogues. Fixed in litlfred/folio-assistant-core#630 (per-page unique anchors; first keeps `ref-<key>`), watching, merges on green. (1) dead links `/smart-trust/en/folio-assistant-core/bibliography/` (1680) and `/smart-immunizations/...` (48): the IG pages link the bibliography relative to their own site root (check:ig-citations convention) and no writer builds a per-IG bibliography in the composed index site; smart-trust linked it at the old pin too, so not caused by djj5. Design question put to the owner.
+
+_2026-11-03T11:51:23Z_ — Owner (card): **build a bibliography page per IG**. folio-assistant-core#630 (2734d7b) adds `bibliography:page --instance <name> --site <dir>`: the instance and the layers it needs, own = it, permalinks under `/<name>/`; measured on smart-trust: 166 refs, page at /smart-trust/en/folio-assistant-core/bibliography/, no repeated id. 22 tests pass. folio-assistant needs one feature-staging step per IG in `_ig-list.txt`, landing with the core re-pin; sent to the drain session for #2924.
