@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/process/Process_SaturationMetaMerge/node/Task_SibHold.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261103-1624",
+    "sha": "31b8ff413d91fd55a9d1d20c9c900b4deeb9e0cd",
+    "pr": "repin-train/20261103-1624",
+    "run": "41673940321"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/process/Process_SaturationMetaMerge/node/Task_SibHold",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Hold, and name the heads to merge",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/process/Process_SaturationMetaMerge",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/role/sibling-session",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Sibling",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/skill/saturation-meta-merge"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/process/Process_SaturationMetaMerge#flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/process/Process_SaturationMetaMerge#flow/Flow_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_SibHold"
+    }
+  ]
+}

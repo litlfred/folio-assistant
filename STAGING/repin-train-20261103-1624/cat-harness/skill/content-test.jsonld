@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/skill/content-test.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261103-1624",
+    "sha": "31b8ff413d91fd55a9d1d20c9c900b4deeb9e0cd",
+    "pr": "repin-train/20261103-1624",
+    "run": "41673940321"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/skill/content-test",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-test",
+      "title": "Content Testing",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-test.md",
+      "instructionLines": 96,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/skills/content-test/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/skills/content-test/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-1624/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test"
+    }
+  ]
+}
