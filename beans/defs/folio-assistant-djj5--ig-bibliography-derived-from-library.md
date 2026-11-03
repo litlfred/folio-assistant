@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T05:50:41Z
+updated_at: 2026-11-03T05:54:22Z
 tags:
     - references
     - library
@@ -44,3 +44,5 @@ _2026-11-03T05:47:38Z_ — Step (a) up: litlfred/folio-assistant-core#628 (DC �
 _2026-11-03T05:49:36Z_ — Owner granted smart-base access (card: "Grant smart-base"). Step (b) up: branch `claude/djj5-ig-citations-library` on litlfred/smart-base — `check:ig-citations` reads `library` entries (slug key; manifest `sourceUrl`/`meta.doi`; ISBN in slug); a library alone is not adoption; `references` still read until the content PRs retire it. 10 tests pass; the check on the three IG mains gives 0 findings before and after. Next: step (c), the content PRs (owner OK needed).
 
 _2026-11-03T05:50:41Z_ — smart-base#298 opened and watched. Owner decided (card): content work is **one PR per IG**, records and `uploads/` copies together (the declaration change waits on the licence checks). Starting with smart-trust-phw (5 entries).
+
+_2026-11-03T05:54:22Z_ — Content PR 1/3 up, awaiting owner OK: litlfred/smart-trust-phw#30. 5 entries → `catalogue/records/<key>.dc.json` (keys kept) + referenced item nodes + `uploads/<key>/intake.json`; `references` declaration dropped, `smart-trust-phw-uploads` declared. No capture bytes committed: a CC link on a WHO product page is the publication's licence, not the page's, so it is recorded as evidence, not taken as permission. `check:ig-citations` (smart-base#298 branch): 0 findings; `check-catalogue`: clean. The converter is in this session's scratchpad (references-to-catalogue.ts); smart-trust (27) and smart-immunizations (10) next.
