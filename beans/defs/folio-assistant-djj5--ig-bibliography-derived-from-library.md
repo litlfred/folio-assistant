@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T15:31:12Z
+updated_at: 2026-11-03T15:42:15Z
 tags:
     - references
     - library
@@ -80,3 +80,5 @@ _2026-11-03T12:15:50Z_ — **folio-assistant-core#630 merged (91dcc59)**, green:
 _2026-11-03T12:47:39Z_ — Follow-ups found by the #2924 re-pin to core 91dcc59, opened by the drain session: folio-assistant-core#631 (my `/smart-trust` example in the `outputs()` doc comment named a higher layer; now `<instance>`; check:reference-direction) and cat-harness-tools#1447 (core's new glossary.json in the standalone fixture). Agreed; the drain session re-pins both in #2924.
 
 _2026-11-03T15:31:12Z_ — Owner: "Fix who Iris uploads too". litlfred/who-iris#176 (e04d239) drops the `who-iris-uploads` declaration and its generated README; intakes stay as repository data. Watching; merges on green.
+
+_2026-11-03T15:42:15Z_ — who-iris#176 needs a matching cat-harness-tools change: `test/coordinator/navbar-checkout.test.ts` lists who-iris's declared kinds and includes `uploads` (twice). This session was refused push access to cat-harness-tools (add_repo denied by the permission classifier), so the two-line patch went to the drain session to open. #176 is held until that PR is green, so a train takes both together.
