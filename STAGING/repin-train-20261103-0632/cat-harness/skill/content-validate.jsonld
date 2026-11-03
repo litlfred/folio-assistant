@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/cat-harness/skill/content-validate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261103-0632",
+    "sha": "752c74fb7a3346a178097efb8653e8448a6db33f",
+    "pr": "2923/merge",
+    "run": "41591570523"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/cat-harness/skill/content-validate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-validate",
+      "title": "Content Validation",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-validate.md",
+      "instructionLines": 33,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/cat-harness/skills/content-validate/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/cat-harness/skills/content-validate/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate"
+    }
+  ]
+}
