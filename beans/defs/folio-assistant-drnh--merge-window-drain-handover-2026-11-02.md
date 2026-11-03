@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-03T00:41:16Z
+updated_at: 2026-11-03T05:02:05Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -142,3 +142,5 @@ _2026-11-02T23:52:30Z_ — MERGED who-iris#165 (83c2e00) and folio-assistant-cor
 _2026-11-03T00:02:38Z_ — MERGED cat-harness-tools#1422 as 13c77e3: green on every check (index gates, standalone and tests, all "no new failures"). The tools#1299 recount is waiting on folio-assistant-core's main run 41505485739, re-run against the new pins and still running.
 
 _2026-11-03T00:41:16Z_ — Merge window closed. Merged in the window by the drain session: fa#2921 (2e10fd3), cat-harness#1000, #1001, cat-harness-tools#1422, who-iris#165, core#624. Bean 4j43 is completed and carries the final report and the open list.
+
+_2026-11-03T05:02:05Z_ — 04:56Z, owner in session https://claude.ai/code/session_01EucfRo4LGSMzJn5kq6PucY: merge green, ready, non-content PRs for 4 hours (until 08:56Z). At start, cat-harness#992 and #993 had just been merged by someone else, and fa#2919/#2904/#2885/#2875 were merged by litlfred at 04:57-05:00Z. Owner cards: fa#2864 closed as superseded by the trains, and fa#2898 (CODEOWNERS) to be merged on green. Its branch was updated from main to replace an 18h-old red (the fsh-guts test, since green on main). The train fa#2922 stays with …RqHz. I'm sweeping every ~30 min.
