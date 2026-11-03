@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T06:51:37Z
+updated_at: 2026-11-03T07:07:10Z
 tags:
     - references
     - library
@@ -56,3 +56,5 @@ _2026-11-03T06:17:07Z_ — smart-trust-phw#30 CI: one new failure, `readme:subgr
 _2026-11-03T06:44:07Z_ — **Merged:** folio-assistant-core#628; smart-trust-phw#30 (5bec992) and smart-trust#139 (388fcf3), green, on the owner's approval. smart-trust-phw no longer declares `references`. **Open:** smart-immunizations#111 is red on `translation:block-qa:check` (missing translations in the mounted platform `docs/`, not this diff); re-run once and commented. smart-base#298 is red on `check:reference-direction:check` (7 findings in mounted platform files against the recorded qa-reports baseline; passes locally on main and branch); the re-run failed the same way, so it is blocked on the platform repositories, not on smart-base.
 
 _2026-11-03T06:51:37Z_ — Drain session confirms train fa#2923 takes smart-trust-phw and smart-immunizations at their mains (check:harness-dirs passes). smart-immunizations#111: main moved 3 commits (publish-qa.yml, `.gitignore` now ignores `/test/results/`, where the failing translation-qa sidecars live); merged main into the branch (65b6979), CI re-running. smart-base#298: red twice on `check:reference-direction:check`. smart-base main's own post-merge QA at db7f311 is red (dth-terms, processes:render), so no fresh baseline was published and PRs compare against qa-reports main/97d2e40; the 7 findings are in mounted platform files and come from platform moves since that baseline. Nothing merged depends on #298 (the IGs now cite catalogue records, which the check already reads). Owner asked whether to hold or merge.
+
+_2026-11-03T07:07:10Z_ — Owner (card): "Merge now" → **smart-base#298 merged (c2922bb)** over the inherited `check:reference-direction` red. Then owner: "fix platform files". Finding: the 7 flagged references are already gone from the platform mains (cat-harness-tools 750d74c, bootstrap-tools aa25987, folio-assistant-core main: `figure-rebuild.md` no longer names who-iris or fhir-harness; the other five files name none of the flagged instances). They remain only at smart-base's pinned platform commits, and the standing re-pin consent is "All except smart-base", so the train does not move them. smart-immunizations#111: merged main (65b6979); new red `check:qa-reviewer-permission` is "could not determine" (QA corpus not restored in CI); passes locally on main and branch; re-run once, commented.
