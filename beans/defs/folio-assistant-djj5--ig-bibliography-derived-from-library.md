@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T06:00:51Z
+updated_at: 2026-11-03T06:17:07Z
 tags:
     - references
     - library
@@ -50,3 +50,5 @@ _2026-11-03T05:54:22Z_ — Content PR 1/3 up, awaiting owner OK: litlfred/smart-
 _2026-11-03T05:59:21Z_ — Content PRs 2/3 and 3/3 up, awaiting owner OK: litlfred/smart-immunizations#111 (10 entries; new `smart-immunizations-catalogue`, `smart-immunizations-uploads` declared; IMMZ DAK node carries handle 10665/380303) and litlfred/smart-trust#139 (27 entries; `smart-trust-uploads` declared). core#628 also gained `publisher-place`, `accessed`, `version`, `status` ↔ `dc.publisher.place`, `dc.date.accessed`, `dc.citation.version|status` (681 tests), because smart-trust's entries carry them. smart-trust captures: 7 captured (no bytes committed), 15 refused by this session's network policy (proxy CONNECT 403), 3 refused by host, 2 no URL; each intake records it. All three IGs: `check:ig-citations` 0 findings from catalogue alone; `check-catalogue` clean. Re-pin consequence: folio-assistant `index.config.json` override for smart-trust lists `references`; drain session told.
 
 _2026-11-03T06:00:51Z_ — Owner approved (card, option 1 "Approve all once green"): smart-trust-phw#30, smart-immunizations#111 and smart-trust#139 merge once CI is green, with no copy bytes committed; licences and the 15 network-blocked smart-trust captures are handled later, one by one. None touches subscriptions/.
+
+_2026-11-03T06:17:07Z_ — smart-trust-phw#30 CI: one new failure, `readme:subgraphs:check` (catalogue/README.md stale, uploads/ had none). Fixed on all three content PRs by regenerating those two READMEs (phw 621f1ad, immz 089e370, smart-trust e1c4459). smart-trust main already has 6 stale READMEs in other directories; the branch leaves those 5 untouched (not this change).
