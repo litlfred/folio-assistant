@@ -1232,6 +1232,22 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/kg/memory-record.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "memory-record.test",
+      "graphNode": "undeclared",
+      "summary": "The memory record, and the bean as one with more structure (cat-harness#991",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness-tools/schemas/kg/memory-record.ts",
+      "instance": "cat-harness-tools",
+      "name": "memory-record",
+      "graphNode": "undeclared",
+      "summary": "**The memory record**: the base every kept memory shares, and the layer a",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/kg/mount-trust.test.ts",
       "instance": "cat-harness-tools",
       "name": "mount-trust.test",
@@ -1312,6 +1328,14 @@
       "name": "nquads-distribution",
       "graphNode": "schema",
       "summary": "Partitioned RDF N-Quads Dataset Distribution & Named Query Manifest Schema.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts",
+      "instance": "cat-harness-tools",
+      "name": "opt-in-subgraphs",
+      "graphNode": "undeclared",
+      "summary": "Opt-in named sub-graphs: which are switched on for a folio, and whether a",
       "isTest": false
     },
     {
@@ -25644,6 +25668,13 @@
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
         },
         {
+          "name": "enableSubgraphs",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "The opt-in sub-graphs this instance switches on FOR ITSELF, qualified"
+        },
+        {
           "name": "taskIo",
           "type": "Record< string, { inputs?: string[]; outputs?: string[]; /** The task that REPAIRS this check when the `X` / `X:check` …",
           "optional": true,
@@ -25952,6 +25983,13 @@
           "doc": "This directory's contents are STORED on a branch, keyed by commit or tip, and the"
         },
         {
+          "name": "optIn",
+          "type": "true",
+          "optional": true,
+          "array": false,
+          "doc": "A named sub-graph that is OFF in every layer, its own included, unless that layer enables it. See the schema field and `opt-in-subgraphs.ts`."
+        },
+        {
           "name": "derivedFrom",
           "type": "string[]",
           "optional": true,
@@ -26007,6 +26045,13 @@
           "type": "SubgraphCoverageSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "optIn",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A named sub-graph that is OFF in every layer — including the one that"
         },
         {
           "name": "tile",
@@ -27567,6 +27612,13 @@
           "optional": true,
           "array": false,
           "doc": "The id of the directory that declared this one FROM WITHIN (bean `cmsl`,"
+        },
+        {
+          "name": "optInSubgraph",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The nearest opt-in sub-graph this entry is, or sits within, qualified"
         }
       ],
       "extendsNames": [
@@ -27575,6 +27627,30 @@
       "values": [],
       "refs": [
         "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectory"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/cat-harness.ts#ResolveOptions",
+      "name": "ResolveOptions",
+      "module": "cat-harness-tools/schemas/kg/cat-harness.ts",
+      "kind": "interface",
+      "doc": "What {@link resolveDirectories} is asked to resolve FOR.",
+      "fields": [
+        {
+          "name": "enabledSubgraphs",
+          "type": "EnabledSubgraphs",
+          "optional": true,
+          "array": false,
+          "doc": "The opt-in sub-graphs switched on. Absent: the chain ROOT's own"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts#EnabledSubgraphs"
       ],
       "unresolved": [],
       "external": [],
@@ -32750,6 +32826,147 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/kg/memory-record.ts#MemoryEntry",
+      "name": "MemoryEntry",
+      "module": "cat-harness-tools/schemas/kg/memory-record.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/memory-record.ts#MemoryEntryKind",
+      "name": "MemoryEntryKind",
+      "module": "cat-harness-tools/schemas/kg/memory-record.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/memory-record.ts#MemoryEntrySchema",
+      "name": "MemoryEntrySchema",
+      "module": "cat-harness-tools/schemas/kg/memory-record.ts",
+      "kind": "zod-object",
+      "doc": "One kept entry. `process`, `step`, `instance` and `role` are filled by the",
+      "fields": [
+        {
+          "name": "at",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.enum(MEMORY_ENTRY_KINDS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "process",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "step",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "instance",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "MEMORY_ENTRY_KINDS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/memory-record.ts#MemoryRecordCoreKind",
+      "name": "MemoryRecordCoreKind",
+      "module": "cat-harness-tools/schemas/kg/memory-record.ts",
+      "kind": "zod-object",
+      "doc": "The fields every memory record and every bean share. Snake case, as the `beans` CLI writes them.",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/memory-record.ts#MemoryRecordKind",
+      "name": "MemoryRecordKind",
+      "module": "cat-harness-tools/schemas/kg/memory-record.ts",
+      "kind": "zod-object",
+      "doc": "A memory record on its own, as a store that is not the work plan keeps it.",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/memory-record.ts#MemoryScope",
+      "name": "MemoryScope",
+      "module": "cat-harness-tools/schemas/kg/memory-record.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/kg/mount-trust.test.ts#Mount",
       "name": "Mount",
       "module": "cat-harness-tools/schemas/kg/mount-trust.test.ts",
@@ -34329,6 +34546,98 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts#DeclaredOptIns",
+      "name": "DeclaredOptIns",
+      "module": "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts",
+      "kind": "interface",
+      "doc": "One instance of a chain, as {@link enableSubgraphsProblems} needs it.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "directories",
+          "type": "ReadonlyArray<{ id: string; optIn?: boolean }>",
+          "optional": false,
+          "array": false,
+          "doc": "Every directory the instance declares — top level and from within — with its `optIn`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts#EnabledSubgraphs",
+      "name": "EnabledSubgraphs",
+      "module": "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts",
+      "kind": "type-alias",
+      "doc": "What is switched on: a set of qualified ids, or `\"all\"` for a reader that",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "all"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts#OptInCarrier",
+      "name": "OptInCarrier",
+      "module": "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts",
+      "kind": "interface",
+      "doc": "The fields of a directory entry this module reads.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "optIn",
+          "type": "boolean",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "declaredBy",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The instance whose declaration (or declaration file from within) wrote the entry."
+        },
+        {
+          "name": "within",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The id of the entry this one was declared from within."
+        },
+        {
+          "name": "optInSubgraph",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Set by `resolveDirectories`: the nearest enclosing opt-in sub-graph, qualified."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -45311,6 +45620,13 @@
           "type": "LiveData",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "stores",
+          "type": "Record<string, string>",
+          "optional": true,
+          "array": false,
+          "doc": "The Tool that backs each store Role in this deployment, keyed by the"
         }
       ],
       "extendsNames": [],
@@ -45386,6 +45702,12 @@
           "type": "z.enum(LIVE_DATA)",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "stores",
+          "type": "z.record(StoreIdSchema, StoreIdSchema).optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -45393,7 +45715,8 @@
       "refs": [
         "cat-harness-tools/schemas/kg/cat-harness.ts#TopologySchema",
         "cat-harness-tools/schemas/process/deployment-description.ts#JurisdictionSchema",
-        "cat-harness-tools/schemas/process/deployment-description.ts#PlacementSchema"
+        "cat-harness-tools/schemas/process/deployment-description.ts#PlacementSchema",
+        "cat-harness-tools/schemas/process/deployment-description.ts#StoreIdSchema"
       ],
       "unresolved": [
         "PUBLICATION_HOSTS"
@@ -45775,6 +46098,20 @@
         "z"
       ],
       "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/deployment-description.ts#StoreIdSchema",
+      "name": "StoreIdSchema",
+      "module": "cat-harness-tools/schemas/process/deployment-description.ts",
+      "kind": "zod-scalar",
+      "doc": "A Role or Tool id: lower-case words joined by hyphens.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness-tools/schemas/process/deployment-resolver.ts#DeploymentReport",
@@ -90256,6 +90593,14 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/kg/cat-harness.ts#ResolveOptions",
+      "to": "cat-harness-tools/schemas/kg/opt-in-subgraphs.ts#EnabledSubgraphs",
+      "via": "enabledSubgraphs",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/kg/cat-harness.ts#SubgraphCoverageSchema",
       "to": "cat-harness-tools/schemas/kg/cat-harness.ts#VisualiserDeclarationSchema",
       "via": "visualiser",
@@ -92902,6 +93247,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/deployment-description.ts#DeploymentDescriptionSchema",
+      "to": "cat-harness-tools/schemas/process/deployment-description.ts#StoreIdSchema",
+      "via": "stores",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness-tools/schemas/process/deployment-description.ts#DeploymentProblem",
@@ -99279,7 +99632,9 @@
       "source": "node-kind",
       "instance": "cat-harness",
       "tag": "bean/1.0.0",
-      "parents": [],
+      "parents": [
+        "memory-record-core"
+      ],
       "subclasses": [],
       "typologies": [
         "bean-defs"
@@ -100251,6 +100606,16 @@
       "typologies": [
         "memory"
       ]
+    },
+    {
+      "id": "memory-record-core",
+      "source": "node-kind",
+      "parents": [],
+      "subclasses": [
+        "bean"
+      ],
+      "typologies": [],
+      "note": "reached only as an ancestor — a mixin no typology names directly"
     },
     {
       "id": "merge-review/v1",

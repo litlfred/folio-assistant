@@ -872,6 +872,10 @@
                   }
                 }
               },
+              "optIn": {
+                "type": "boolean",
+                "const": true
+              },
               "tile": {
                 "type": "object",
                 "properties": {
@@ -1946,6 +1950,13 @@
             "minLength": 1
           }
         },
+        "enableSubgraphs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*\\.[^\\s]+$"
+          }
+        },
         "taskIo": {
           "type": "object",
           "propertyNames": {
@@ -2252,8 +2263,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/inspiring-lovelace-607e7m",
-    "sha": "b17717f723c8104b701e29df705a8adfeebb6537",
+    "sha": "68ec2697d7c6d22a1c88e8b00bba72e6e877ee69",
     "pr": "2924/merge",
-    "run": "41634619044"
+    "run": "41644816559"
   }
 }
