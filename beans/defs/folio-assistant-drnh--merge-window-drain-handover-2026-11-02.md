@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-03T08:09:37Z
+updated_at: 2026-11-03T08:13:21Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -180,3 +180,5 @@ _2026-11-03T08:07:49Z_ — 07:24Z to 08:08Z:
 - Lesson: an index.config.json ref must change with the lock. state:mount rebuilt the lock from the config, which undid one edit.
 
 _2026-11-03T08:09:37Z_ — Merge sweep: merged cat-harness#1012 (train fix: work-plan-store skills name no higher layer, plus the readme regen) at d2bf0a3, and cat-harness#1011 (diagrams outside sdlc drop bean markup, #991 step 17, ruling Q13; its prerequisites tools#1435 and #1436 are on tools main) at f9423d7. Both all green. cat-harness main is now f9423d7. fa#2924 (drop smart-trust references/ mount) is waiting on CI: shard 3/4 red, 3 pending.
+
+_2026-11-03T08:13:21Z_ — Merge sweep: fa#2924 (drop smart-trust references/ mount) is NOT merged. It has a new red main lacks, declared-dirs.test.ts 'every declared directory in this repository resolves' (job 125795843598). Smart-trust's current pin still declares references/, so the change likely belongs with the smart-trust re-pin to 388fcf3 in the next train. Author …Rp9y and train owner …RqHz told.
