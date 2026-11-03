@@ -38,7 +38,7 @@ jobs:
       group: writer-records
       cancel-in-progress: false
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -60,18 +60,27 @@ jobs:
         run: bun run cat ig-index:build
       - name: Build the mounted IG instances' pages
         run: bun run smart:pages
-      - name: Produce the QA working copy (some writers read it)
-        run: bun run cat qa:working-copy
+      - name: strace
+        run: |
+          if command -v strace >/dev/null; then strace -V | head -1; exit 0; fi
+          sudo apt-get update -qq && sudo apt-get install -y -qq strace && strace -V | head -1
+      # Each QA step runs traced too, so a preview reruns only the QA steps
+      # whose reads changed (owner card Q-CONE-2 B, 2026-11-01; records in
+      # build/writer-cone/qa-records.json, kept by the cache below).
+      - name: Produce the QA working copy, every step traced (some writers read it)
+        env:
+          CAT_WRITER_RECORD: '1'
+          GITHUB_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: |
+          start=$(date +%s)
+          bun run cat qa:working-copy
+          echo "traced QA working copy took $(( $(date +%s) - start ))s" | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Generate the mounted SMART IG instances' pages
         run: bun run smart:pages:publish
       - name: Java runtime the PlantUML release declares
         uses: ./.github/actions/plantuml-java
       - name: Install Chromium for the BPMN drawings
         run: npx --yes playwright install --with-deps chromium
-      - name: strace
-        run: |
-          if command -v strace >/dev/null; then strace -V | head -1; exit 0; fi
-          sudo apt-get update -qq && sudo apt-get install -y -qq strace && strace -V | head -1
       - name: derive:publish, every writer traced
         env:
           CAT_WRITER_RECORD: '1'
@@ -93,6 +102,8 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: writer-records
-          path: build/writer-cone/records.json
+          path: |
+            build/writer-cone/records.json
+            build/writer-cone/qa-records.json
           retention-days: 14
           if-no-files-found: error
