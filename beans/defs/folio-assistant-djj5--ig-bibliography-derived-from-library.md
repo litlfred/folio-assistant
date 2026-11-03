@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T12:47:39Z
+updated_at: 2026-11-03T15:31:12Z
 tags:
     - references
     - library
@@ -78,3 +78,5 @@ _2026-11-03T11:51:23Z_ — Owner (card): **build a bibliography page per IG**. f
 _2026-11-03T12:15:50Z_ — **folio-assistant-core#630 merged (91dcc59)**, green: per-page unique bibliography anchors and `bibliography:page --instance`. The drain session (session_01EucfRp9ycxtZrrBKaipNy5) re-pins core in folio-assistant#2924 to it, with the per-IG bibliography step in feature-staging.yml and docs-site.yml (between the IG compose step and the Jekyll build). It confirmed the per-IG dead links were pre-existing and report-only; check:duplicate-ids was the gating failure.
 
 _2026-11-03T12:47:39Z_ — Follow-ups found by the #2924 re-pin to core 91dcc59, opened by the drain session: folio-assistant-core#631 (my `/smart-trust` example in the `outputs()` doc comment named a higher layer; now `<instance>`; check:reference-direction) and cat-harness-tools#1447 (core's new glossary.json in the standalone fixture). Agreed; the drain session re-pins both in #2924.
+
+_2026-11-03T15:31:12Z_ — Owner: "Fix who Iris uploads too". litlfred/who-iris#176 (e04d239) drops the `who-iris-uploads` declaration and its generated README; intakes stay as repository data. Watching; merges on green.
