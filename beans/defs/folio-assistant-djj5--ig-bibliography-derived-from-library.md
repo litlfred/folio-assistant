@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T07:19:17Z
+updated_at: 2026-11-03T07:41:35Z
 tags:
     - references
     - library
@@ -60,3 +60,5 @@ _2026-11-03T06:51:37Z_ — Drain session confirms train fa#2923 takes smart-trus
 _2026-11-03T07:07:10Z_ — Owner (card): "Merge now" → **smart-base#298 merged (c2922bb)** over the inherited `check:reference-direction` red. Then owner: "fix platform files". Finding: the 7 flagged references are already gone from the platform mains (cat-harness-tools 750d74c, bootstrap-tools aa25987, folio-assistant-core main: `figure-rebuild.md` no longer names who-iris or fhir-harness; the other five files name none of the flagged instances). They remain only at smart-base's pinned platform commits, and the standing re-pin consent is "All except smart-base", so the train does not move them. smart-immunizations#111: merged main (65b6979); new red `check:qa-reviewer-permission` is "could not determine" (QA corpus not restored in CI); passes locally on main and branch; re-run once, commented.
 
 _2026-11-03T07:19:17Z_ — Owner (card): "Re-pin smart-base". Opened litlfred/smart-base#300: all 7 platform mounts re-pinned to their mains with consent recorded per pin; workflow refs move to the locked commits; ci.yml ghbuild caller kept. At the new pins `check-reference-direction --findings` reports none of the 7. Watching; merges on green (non-content).
+
+_2026-11-03T07:41:35Z_ — **smart-base#300 merged (67f4edc)**, green: smart-base pins the platform mains, so the 7 reference-direction findings are gone. smart-immunizations#111 failed `check:qa-reviewer-permission` twice on 65b6979 ("could not determine": `cat-harness/test/results` absent in CI); it passes locally on main and the branch; the diff touches nothing that gate reads. Put to the owner.
