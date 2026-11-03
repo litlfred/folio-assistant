@@ -598,7 +598,7 @@ jobs:
       # 6 h limit (#2550's sed worked around that). Measured on the composed
       # docs source: the same 554 pages, hrefs, titles and SEO tags, 18 s
       # against 137 s. It runs as the runner user, so `_site/` needs no chown.
-      - uses: ruby/setup-ruby@26e5b7d197ebf60545ee9667bcbace0be11ccaec # v1.334.0
+      - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1.336.0
         with:
           ruby-version: "3.3"
           bundler-cache: true
@@ -739,9 +739,7 @@ jobs:
           cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
           # The host's document sits under its own directory, like every layer's
           # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
-          # root `<stub>.jsonld` is the one-release tombstone the export writes there,
-          # and its `.json` alias forwards with it.
-          cp "./_site/${STUB}.jsonld" "./_site/${STUB}.json"
+          # root `<stub>.jsonld` is the one-release tombstone the export writes there.
 
           # bootstrap's OWN graph, as its own document.
           #
@@ -822,7 +820,6 @@ jobs:
 
           bun run cat-harness-tools/scripts/glossary-export.ts --out "./_site/${STUB}/${STUB}-glossary.jsonld"
           cp "./_site/${STUB}/${STUB}-glossary.jsonld" "./_site/${STUB}/${STUB}-glossary.json"
-          cp "./_site/${STUB}-glossary.jsonld" "./_site/${STUB}-glossary.json"
           if [ -n "$BOOT_DIR" ]; then
             bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
           fi
