@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T11:51:23Z
+updated_at: 2026-11-03T12:15:50Z
 tags:
     - references
     - library
@@ -74,3 +74,5 @@ _2026-11-03T11:08:23Z_ — **smart-trust#140 merged (a094f18)** and **smart-trus
 _2026-11-03T11:34:46Z_ — folio-assistant#2924 (drain session) fails Feature Staging. (2) `check:duplicate-ids` on the combined bibliography: same key in two IG catalogues. Fixed in litlfred/folio-assistant-core#630 (per-page unique anchors; first keeps `ref-<key>`), watching, merges on green. (1) dead links `/smart-trust/en/folio-assistant-core/bibliography/` (1680) and `/smart-immunizations/...` (48): the IG pages link the bibliography relative to their own site root (check:ig-citations convention) and no writer builds a per-IG bibliography in the composed index site; smart-trust linked it at the old pin too, so not caused by djj5. Design question put to the owner.
 
 _2026-11-03T11:51:23Z_ — Owner (card): **build a bibliography page per IG**. folio-assistant-core#630 (2734d7b) adds `bibliography:page --instance <name> --site <dir>`: the instance and the layers it needs, own = it, permalinks under `/<name>/`; measured on smart-trust: 166 refs, page at /smart-trust/en/folio-assistant-core/bibliography/, no repeated id. 22 tests pass. folio-assistant needs one feature-staging step per IG in `_ig-list.txt`, landing with the core re-pin; sent to the drain session for #2924.
+
+_2026-11-03T12:15:50Z_ — **folio-assistant-core#630 merged (91dcc59)**, green: per-page unique bibliography anchors and `bibliography:page --instance`. The drain session (session_01EucfRp9ycxtZrrBKaipNy5) re-pins core in folio-assistant#2924 to it, with the per-IG bibliography step in feature-staging.yml and docs-site.yml (between the IG compose step and the Jekyll build). It confirmed the per-IG dead links were pre-existing and report-only; check:duplicate-ids was the gating failure.
