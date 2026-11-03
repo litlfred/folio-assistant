@@ -579,6 +579,18 @@ jobs:
           bun run fhir-harness/scripts/stage-ig-sites.ts --work ./_ig --baseurl "/${REPO_NAME}" \
             --plantuml-jar /tmp/plantuml.jar --compose-into ./_docs > ./_ig-list.txt
 
+      # Each IG's own bibliography (owner, 2026-11-03, bean djj5): an IG's
+      # pages link en/folio-assistant-core/bibliography/ relative to the IG's
+      # site, which the step above composes at /<instance>/. Needs
+      # folio-assistant-core 91dcc59 (core#630), whose bibliography:page takes
+      # --instance; an older core would write the root page there instead.
+      - name: Write each IG's own bibliography page
+        run: |
+          while read -r INSTANCE SRC AT; do
+            [ -n "$INSTANCE" ] || continue
+            bun run cat bibliography:page --instance "$INSTANCE" --site "./_docs/${INSTANCE}"
+          done < ./_ig-list.txt
+
       # The exact source the next step renders, handed to the SEPARATE
       # undefined-variable check (liquid-undefined.yml; owner, 2026-10-09,
       # bean 8pyz: "CI is in CI not part of render"). continue-on-error: the
