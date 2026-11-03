@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T11:07:39Z
+updated_at: 2026-11-03T11:08:23Z
 tags:
     - references
     - library
@@ -27,8 +27,8 @@ An ingested source already lives under `library/<group>/<slug>/`, with its struc
 
 ## Done when
 
-- [ ] A short proposal, put to the owner as a card before any code: derive each IG's bibliography (and `check:ig-citations`' entry set) from the `library/` entries it cites, keeping `references/` only for works that are not ingested, if at all. Say what CSL fields (volume, issue, pages) a library entry lacks and where they would come from.
-- [ ] Once approved: the derivation, `check:ig-citations` reading it, and the three IG declarations changed to match. smart-trust-phw and smart-immunizations then no longer declare a directory they do not have.
+- [x] A short proposal, put to the owner as a card before any code: derive each IG's bibliography (and `check:ig-citations`' entry set) from the `library/` entries it cites, keeping `references/` only for works that are not ingested, if at all. Say what CSL fields (volume, issue, pages) a library entry lacks and where they would come from.
+- [x] Once approved: the derivation, `check:ig-citations` reading it, and the three IG declarations changed to match. smart-trust-phw and smart-immunizations then no longer declare a directory they do not have.
 - [ ] The next re-pin train takes both IGs at their mains again.
 
 _2026-11-03T05:32:31Z_ — Filed by the drain session https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5 on the owner's card (option 3); a sibling session picks it up.
@@ -68,3 +68,5 @@ _2026-11-03T08:33:16Z_ — Defect in smart-trust#139, found by folio-assistant#2
 _2026-11-03T09:23:29Z_ — Owner: "uploads/ only should exist in fol-asst… should have Tools"; then (card): **"instantiated harnesses can have an uploads/ but that is data store for that repo, not part of the KG"**. My djj5 declarations of `uploads/` as a KG directory (graph typology `uploads`) in the three IGs were wrong: they made folio-assistant mount them and tripped check:state-on-main. Fixes: smart-trust#140 (c85a5c4: declaration removed + 20 empty intakes), smart-trust-phw#31 (8f48b6a), smart-immunizations#111 (85f02ba). The intakes stay as repository data. who-iris still declares `who-iris-uploads` (predates djj5; left as is, noted for the owner). All three are content PRs awaiting owner OK.
 
 _2026-11-03T11:07:39Z_ — Owner (card): merge #111, #140, #31 each when green. **smart-immunizations#111 merged (9675397)**. #140 and #31 CI running.
+
+_2026-11-03T11:08:23Z_ — **smart-trust#140 merged (a094f18)** and **smart-trust-phw#31 merged (d0d0394)**, green, on the owner's OK. All djj5 PRs are merged: folio-assistant-core#628, smart-base#298, #300, smart-trust-phw#30, #31, smart-trust#139, #140, smart-immunizations#111. No IG declares `references` or `uploads`; bibliographies are catalogue records; `uploads/` is repository data (owner, 2026-11-03). Drain session given the merge commits for folio-assistant#2924. Remaining: the third "Done when" (the next re-pin train takes both IGs at their mains) is the drain session's; captures for the 18 failed and 7 unlicensed works wait on licences and network access, one by one.
