@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T07:07:10Z
+updated_at: 2026-11-03T07:19:17Z
 tags:
     - references
     - library
@@ -58,3 +58,5 @@ _2026-11-03T06:44:07Z_ — **Merged:** folio-assistant-core#628; smart-trust-phw
 _2026-11-03T06:51:37Z_ — Drain session confirms train fa#2923 takes smart-trust-phw and smart-immunizations at their mains (check:harness-dirs passes). smart-immunizations#111: main moved 3 commits (publish-qa.yml, `.gitignore` now ignores `/test/results/`, where the failing translation-qa sidecars live); merged main into the branch (65b6979), CI re-running. smart-base#298: red twice on `check:reference-direction:check`. smart-base main's own post-merge QA at db7f311 is red (dth-terms, processes:render), so no fresh baseline was published and PRs compare against qa-reports main/97d2e40; the 7 findings are in mounted platform files and come from platform moves since that baseline. Nothing merged depends on #298 (the IGs now cite catalogue records, which the check already reads). Owner asked whether to hold or merge.
 
 _2026-11-03T07:07:10Z_ — Owner (card): "Merge now" → **smart-base#298 merged (c2922bb)** over the inherited `check:reference-direction` red. Then owner: "fix platform files". Finding: the 7 flagged references are already gone from the platform mains (cat-harness-tools 750d74c, bootstrap-tools aa25987, folio-assistant-core main: `figure-rebuild.md` no longer names who-iris or fhir-harness; the other five files name none of the flagged instances). They remain only at smart-base's pinned platform commits, and the standing re-pin consent is "All except smart-base", so the train does not move them. smart-immunizations#111: merged main (65b6979); new red `check:qa-reviewer-permission` is "could not determine" (QA corpus not restored in CI); passes locally on main and branch; re-run once, commented.
+
+_2026-11-03T07:19:17Z_ — Owner (card): "Re-pin smart-base". Opened litlfred/smart-base#300: all 7 platform mounts re-pinned to their mains with consent recorded per pin; workflow refs move to the locked commits; ci.yml ghbuild caller kept. At the new pins `check-reference-direction --findings` reports none of the 7. Watching; merges on green (non-content).
