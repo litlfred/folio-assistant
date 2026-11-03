@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-03T05:33:36Z
+updated_at: 2026-11-03T05:51:10Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -153,3 +153,5 @@ _2026-11-03T05:33:36Z_ — Owner, 04:56Z: "merge (non-content) that is green and
 - Bean djj5 filed (IG bibliographies derived from library/, owner card option 3) and sibling https://claude.ai/code/session_01EucfRodNcVYWoFyT9Zwyb3 started on it. Trains keep smart-trust-phw and smart-immunizations on older pins until djj5 lands, because both declare a references/ directory that is not on disk.
 - Train #2922's nested-instances red reads a partial qa-reports entry for main 2e10fd3 (folio-assistant-sci: 0 kg-audit sidecars, against 16 at 7e745b9). To re-check on the 06:17Z train.
 - The cat-harness-tools bsd1 stack (#1420, #1421) is left to sibling https://claude.ai/code/session_01EucfRmD6JzE3AYLeUkX1KU, which is merging it.
+
+_2026-11-03T05:51:10Z_ — Merge sweep: merged fa#2898 (CODEOWNERS, SECURITY.md, Dependabot cooldown; owner-approved) at 50961d8. Its only red, kg-validate-nested-instances (bean 676g), also fails on main's gates run 41581340069 (97d2e407).
