@@ -87,12 +87,6 @@ digraph "smart_trust_phw" {
     "grid_pkg_smart_trust_phw_smart_trust_phw_catalogue_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_smart_trust_phw_smart_trust_phw_catalogue_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
-  subgraph "cluster_pkg_smart_trust_phw_references" {
-    label=<<b>smart-trust-phw/references</b><br/><i>«references»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
-    "n_smart_trust_phw_references_references" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_references fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>references: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family references names (1 named)</i></td></tr></table>>];
-    "grid_pkg_smart_trust_phw_references_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
-    "grid_pkg_smart_trust_phw_references_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
-  }
   "smart_trust_phw_smart_trust_phw_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2" -> "smart_trust_phw_smart_trust_phw_artifact_index_folio_fhir_artifact_index_v2_Context" [dir=both, arrowtail=diamond, arrowhead=none, label="contexts", headlabel="0..*", class="fa_uml_composition"];
   "smart_trust_phw_smart_trust_phw_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2" -> "smart_trust_phw_smart_trust_phw_artifact_index_folio_fhir_artifact_index_v2_SidecarsUnbound" [dir=both, arrowtail=diamond, arrowhead=none, label="sidecarsUnbound", headlabel="0..*", class="fa_uml_composition"];
   "smart_trust_phw_smart_trust_phw_artifact_index_folio_fhir_artifact_index_v2_folio_fhir_artifact_index_v2" -> "smart_trust_phw_smart_trust_phw_artifact_index_folio_fhir_artifact_index_v2_Artifact" [dir=both, arrowtail=diamond, arrowhead=none, label="artifacts", headlabel="0..*", class="fa_uml_composition"];
@@ -180,11 +174,8 @@ digraph "smart_trust_phw" {
   "smart_trust_phw_smart_trust_phw_catalogue_folio_catalogue_node_v1_Bitstream" -> "grid_pkg_smart_trust_phw_smart_trust_phw_catalogue_bottom" [style=invis, class="kg-graph-anchor"];
   "smart_trust_phw_smart_trust_phw_catalogue_folio_catalogue_node_v1_folio_catalogue_node_v1" -> "grid_pkg_smart_trust_phw_smart_trust_phw_catalogue_bottom" [style=invis, class="kg-graph-anchor"];
   "smart_trust_phw_smart_trust_phw_catalogue_folio_catalogue_v1_folio_catalogue_v1" -> "grid_pkg_smart_trust_phw_smart_trust_phw_catalogue_bottom" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_smart_trust_phw_references_top" -> "n_smart_trust_phw_references_references" [style=invis, class="kg-graph-anchor"];
-  "n_smart_trust_phw_references_references" -> "grid_pkg_smart_trust_phw_references_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_trust_phw_smart_trust_phw_ast_bottom" -> "grid_pkg_smart_trust_phw_smart_trust_phw_document_kinds_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_trust_phw_smart_trust_phw_artifact_index_bottom" -> "grid_pkg_smart_trust_phw_smart_trust_phw_docs_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_trust_phw_smart_trust_phw_document_kinds_bottom" -> "grid_pkg_smart_trust_phw_library_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_smart_trust_phw_smart_trust_phw_docs_bottom" -> "grid_pkg_smart_trust_phw_smart_trust_phw_catalogue_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_smart_trust_phw_library_bottom" -> "grid_pkg_smart_trust_phw_references_top" [style=invis, class="kg-graph-anchor"];
 }

@@ -50,8 +50,6 @@ Every write is then **pushed to the branch**, never committed to a code PR on
 `main`:
 
 ```sh
-bun cat-harness-tools/scripts/branch-store.ts push --id beans
-# or equivalently:
 bun run cat state:push
 ```
 
@@ -63,8 +61,7 @@ that read is refused as a conflict, so the caller re-reads and retries. A push
 refused only because the tip moved for another file fetches, rebuilds the
 change on the new tip and pushes again. It is never forced. Two sessions
 writing the same bean both land, and the later one sees the earlier one's
-change before it writes. The conformance suite holds this Tool to it
-(cat-harness-tools#1418).
+change before it writes. The work-plan store's conformance suite holds this Tool to it.
 
 ## Limits
 

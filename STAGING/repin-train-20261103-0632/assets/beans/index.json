@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 30,
+      "count": 31,
       "unit": "open beans"
     }
   },
@@ -55,14 +55,14 @@
     {
       "id": "folio-assistant-4j43",
       "title": "Harness drain 2026-11-02: cat-harness, cat-harness-tools, fhir-harness",
-      "status": "completed",
+      "status": "in-progress",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T06:50:00Z",
-      "updatedAt": "2026-11-03T00:41:16Z",
+      "updatedAt": "2026-11-03T07:13:38Z",
       "preview": "Drain of the open issues, PRs and beans in the three harness repos, plan A (owner card Q-HDR-1 A, 2026-11-02 06:44Z). Analysis and plan: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr\n\nCounted 06:45Z: 15 issues, 13 PRs, 20 open beans; 35 in scope after leaving out paused and committee/DTH items (cat-harness#686; beans amom, oz9e, 17iw, 9hxd, fvec, r29x, nvhg, dthl, cysv, ls3t, max2, llxa).\n\nRul",
       "file": "beans/defs/folio-assistant-4j43--harness-drain-2026-11-02-cat-harness-tools-fhir-harness.md"
     },
@@ -272,7 +272,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-03T05:32:31Z",
-      "updatedAt": "2026-11-03T06:44:07Z",
+      "updatedAt": "2026-11-03T07:41:35Z",
       "preview": "Owner, 2026-11-03 (card, option 3): *\"why is references/ required dir? any references that were ingested should be under library/.\"* Then: \"sibling on 3\".\n\n## What is there now\n\n- smart-trust, smart-trust-phw and smart-immunizations each declare a `references` directory (`folio-reference/v1` CSL-JSON, one `<key>.json` per cited work). smart-trust holds 28 entries. smart-trust-phw and smart-immuniz",
       "file": "beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md"
     },
@@ -286,7 +286,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T18:20:00Z",
-      "updatedAt": "2026-11-03T06:43:35Z",
+      "updatedAt": "2026-11-03T08:07:49Z",
       "preview": "## How to resume (read this first)\n\nThis bean is the drain's durable memory. Complete it when the window closes and every item below is merged, handed off or carded.\n\n1. Read this whole bean, newest comment last. The last comment is the current state.\n2. Re-check each PR live on GitHub (checks, mergeable) before acting; this bean may be minutes old.\n3. Work the list. Take over any item whose owner",
       "file": "beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md"
     },
@@ -846,18 +846,18 @@
         "status": "in-progress",
         "epics": 2,
         "total": 22,
-        "closed": 5,
-        "open": 17,
-        "inProgress": 9,
+        "closed": 4,
+        "open": 18,
+        "inProgress": 10,
         "todo": 8,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.22727272727272727
+        "share": 0.18181818181818182
       }
     ],
     "orphanOpen": 12,
-    "openTotal": 30,
-    "coveredOpen": 17,
+    "openTotal": 31,
+    "coveredOpen": 18,
     "duplicateIds": 0
   }
 }

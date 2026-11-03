@@ -99,12 +99,11 @@ Each line is something a test can check against any Tool.
 
 ## Tests
 
-None merged yet. The conformance suite is open as cat-harness-tools#1418
+The conformance suite lives in the tools layer
 (`scripts/tests/sdlc/work-plan-store-conformance.ts`, one `describe` per
-responsibility above), and cat-harness-tools#1420 runs it against both of the
-git Tool's access modes. Until it merges, `kg-audit` reports this role as
-`mechanical-role-untested`, which is the truth; this file gains a
-`tested-by:` line when it lands.
+responsibility above) and runs against both of the git Tool's access modes.
+Until this file carries a `tested-by:` line, `kg-audit` reports this role as
+`mechanical-role-untested`.
 
 ## Not its responsibility
 

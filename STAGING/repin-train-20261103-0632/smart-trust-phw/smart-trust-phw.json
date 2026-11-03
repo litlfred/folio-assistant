@@ -366,15 +366,15 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-03T07:02:01.901Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/752c74fb7a3346a178097efb8653e8448a6db33f",
-  "sourceCommitSha": "752c74fb7a3346a178097efb8653e8448a6db33f",
-  "sourceCommitAt": "2026-11-03T06:42:18Z",
+  "generatedAt": "2026-11-03T08:23:52.209Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bdcf007b3b1fac7142f8a60f1a7be91fd1f8584f",
+  "sourceCommitSha": "bdcf007b3b1fac7142f8a60f1a7be91fd1f8584f",
+  "sourceCommitAt": "2026-11-03T08:06:45Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 8,
-    "Subgraph": 7,
+    "GraphTypology": 7,
+    "Subgraph": 6,
     "Asset": 2
   },
   "@graph": [
@@ -426,13 +426,6 @@
       "name": "catalogue",
       "renderable": false,
       "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/references",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
-      "name": "references",
-      "renderable": false,
-      "summary": "Bibliographic references, one folio-reference/v1 node per work: a CSL-JSON item at `references/<key>`, the IRI every `\\cite{key}` already points at, read as Dublin Core and BIBO through its JSON-LD."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/smart-trust-phw/directory/smart-trust-phw-ast",
@@ -544,22 +537,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-catalogue"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/smart-trust-phw/directory/references",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
-      "name": "references",
-      "path": "references/",
-      "contentSource": {
-        "kind": "directory",
-        "declaredIn": "default"
-      },
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/references"
-      ],
-      "description": "smart-trust-phw's bibliography: one folio-reference/v1 CSL-JSON entry per cited work, `<key>.json`. The IG is one document with one bibliography page, the KG Bibliography the site publishes (`en/folio-assistant-core/bibliography/`, the IG menu's Bibliography item); the IG pages hold no reference lists of their own, and each in-text citation links to its entry there as `en/folio-assistant-core/bibliography/#ref-<key>`. smart-base's `check:ig-citations` fails on a citation with no entry, a page reference list, or a reference-section link to a work this directory does not hold",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/smart-trust-phw/directory/references",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/references"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261103-0632/smart-trust-phw/asset/agent-instructions",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Asset",
       "name": "agent-instructions",
@@ -582,8 +559,8 @@
   ],
   "staging": {
     "branch": "repin-train/20261103-0632",
-    "sha": "752c74fb7a3346a178097efb8653e8448a6db33f",
+    "sha": "bdcf007b3b1fac7142f8a60f1a7be91fd1f8584f",
     "pr": "2923/merge",
-    "run": "41591570523"
+    "run": "41600870795"
   }
 }

@@ -2,11 +2,11 @@
 # folio-assistant-4j43
 $schema: bean/1.0.0
 title: 'Harness drain 2026-11-02: cat-harness, cat-harness-tools, fhir-harness'
-status: completed
+status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-03T00:41:16Z
+updated_at: 2026-11-03T07:13:38Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -132,3 +132,5 @@ _2026-11-03T00:41:16Z_ — Written by the drain session https://claude.ai/code/s
 - Beans fwtz and pga6: not closable. fwtz has 0 of 3 boxes met, under the owner's 2026-10-20 "leave as is"; pga6 is deferred until after the MVP freeze (Q-SEP-1 A).
 - Beans bmat and rpc6: open with no `parent`, so check:bean-parents is red on the shared work plan. Their threads should give each an epic parent.
 - Bean nbp9 is the owner's own; umbrella beans rwmf and yj32 stay open while their children are open.
+
+_2026-11-03T07:13:38Z_ — Re-opened (owner, 2026-11-03, card "1. Re-open 4j43"): it was completed at window close with 5 children still open (drnh, gzgh, fbmk, rbib, sbpn), so `check:bean-rollup` failed in every layer's CI ("completed with 5 open children"). It closes when they do. Session https://claude.ai/code/session_01EucfRp9ycxtZrrBKaipNy5.
