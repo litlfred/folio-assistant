@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-03T08:13:21Z
+updated_at: 2026-11-03T08:49:21Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -182,3 +182,25 @@ _2026-11-03T08:07:49Z_ — 07:24Z to 08:08Z:
 _2026-11-03T08:09:37Z_ — Merge sweep: merged cat-harness#1012 (train fix: work-plan-store skills name no higher layer, plus the readme regen) at d2bf0a3, and cat-harness#1011 (diagrams outside sdlc drop bean markup, #991 step 17, ruling Q13; its prerequisites tools#1435 and #1436 are on tools main) at f9423d7. Both all green. cat-harness main is now f9423d7. fa#2924 (drop smart-trust references/ mount) is waiting on CI: shard 3/4 red, 3 pending.
 
 _2026-11-03T08:13:21Z_ — Merge sweep: fa#2924 (drop smart-trust references/ mount) is NOT merged. It has a new red main lacks, declared-dirs.test.ts 'every declared directory in this repository resolves' (job 125795843598). Smart-trust's current pin still declares references/, so the change likely belongs with the smart-trust re-pin to 388fcf3 in the next train. Author …Rp9y and train owner …RqHz told.
+
+_2026-11-03T08:49:21Z_ — 4-hour merge watch (owner 04:56Z), close-out by https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5.
+
+**Merged by this session (9):**
+- folio-assistant#2919: Actions bump.
+- cat-harness#1002: PROV regen. (…Ro4L merged it at the same moment.)
+- cat-harness#1009: command stubs.
+- cat-harness#1012: work-plan-store skills by role, and the skills index.
+- folio-assistant-core#627: publish-qa workflow.
+- folio-assistant-core#628: djj5 DC↔CSL.
+- cat-harness-tools#1441: tools names no content layer.
+- Plus two re-runs started (smart-base#297, who-iris#174).
+
+**Train fa#2923 (repin-train/20261103-0632) is NOT merged.** At d0ea1d7: 26 checks pass; the verdict is "1 new failure vs main 50961d8". The one red is bun test shard 2, instance-exports "code lists … fragment": the test expects `#level` after slash wave 2. The fix is open as cat-harness-tools#1442 (test-only, one line).
+
+**For the next train:**
+1. Take cat-harness-tools#1442, or tools main once it merges.
+2. Re-pin smart-trust to 388fcf3 (smart-trust#139, references/ retired). Drop "references" from smart-trust's index.config.json directory list in the same change; that is fa#2924's change, and fa#2924 is red alone.
+3. smart-trust-phw: its main 5bec992 (#30) no longer declares references/, so it can be taken. Keep smart-immunizations held until smart-immunizations#111 merges.
+4. cat-harness main f9423d7 carries #1011, which rewires 6+ process diagrams; expect process checks to move.
+5. Change an index.config.json ref together with its index.lock.json ref: state:mount rebuilds the lock from the config.
+6. Known reds, red on main too: kg:validate nested instances (qa-reports entries are partial until the layer-qa-publish rollout lands); bean-parents (bmat, rpc6 have no parent).
