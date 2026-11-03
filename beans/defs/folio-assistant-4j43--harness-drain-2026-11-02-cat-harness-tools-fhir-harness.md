@@ -2,11 +2,11 @@
 # folio-assistant-4j43
 $schema: bean/1.0.0
 title: 'Harness drain 2026-11-02: cat-harness, cat-harness-tools, fhir-harness'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-03T00:02:38Z
+updated_at: 2026-11-03T00:41:16Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -35,10 +35,10 @@ Resume prompt: "read bean folio-assistant-4j43 on branch cat/cat-harness/beans o
 ## Open items (18:32Z: 26 of 35 done)
 
 - [x] cat-harness-tools#1399 (merged 18:43Z, fe808ba) (PR, check-workflow-script-paths `./` fix; taken over by the drain thread). New red was test order: docs/todos.jsonld was built only by an earlier test in the shard (#411 pattern). Fixed in 8c020c4 (ensureDocsPages in subgraph-node-checkout and todo-graph-repo-root). Merge on green.
-- [ ] cat-harness-tools#1299 — 13 of 16 reds wait on the fa re-pin train (fa#2921, which needs owner command Q-SLASH-8). Recount after the train merges. Owner thread: Finish idle harness issues (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9E2MM936aKdTfuSSRD7GVeN).
-- [ ] cat-harness-tools#1378, #1379 — slash IRIs; owner thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G95HvJ9m7xBV6qWhqn6M2rVj.
-- [ ] cat-harness-tools#1356 — L1 ingestion; owner thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9MzQpc26tsYwzKvRWEvTqXn.
-- [ ] beans fwtz (docs site rebuild on bean-branch move), pga6 (separation) — close-outs thread.
+- [x] cat-harness-tools#1299 (recount posted 00:30Z; 8 lower-layer reds left, tracked on the issue) — 13 of 16 reds wait on the fa re-pin train (fa#2921, which needs owner command Q-SLASH-8). Recount after the train merges. Owner thread: Finish idle harness issues (https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9E2MM936aKdTfuSSRD7GVeN).
+- [x] cat-harness-tools#1378, #1379 (issues; handed to sibling …RmD6, #1379 waits on the next train) — slash IRIs; owner thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G95HvJ9m7xBV6qWhqn6M2rVj.
+- [x] cat-harness-tools#1356 (issue; tools part merged in #1357, rest in smart-base#282 and core) — L1 ingestion; owner thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9MzQpc26tsYwzKvRWEvTqXn.
+- [x] beans fwtz (not closable: owner ruling and MVP freeze; see notes) (docs site rebuild on bean-branch move), pga6 (separation) — close-outs thread.
 - [ ] bean nbp9 — owner's own to-do (security).
 - [ ] umbrella beans rwmf, yj32 — complete when their children are done.
 
@@ -103,3 +103,32 @@ _2026-11-02T23:29:34Z_ — MERGED the re-pin train folio-assistant#2921 as 2e10f
 _2026-11-02T23:52:30Z_ — MERGED who-iris#165 (83c2e00) and folio-assistant-core#624 (e987b89), both green and clean after re-running against folio-assistant main's new pins. drnh's plan was to merge #165 after the train; main already pinned its head. cat-harness-tools#1422: its Standalone check found 1 new failure (the core table-Tool pair, absent when core is not mounted). The expectation is now conditional on core's Tools being loaded; pushed, CI running.
 
 _2026-11-03T00:02:38Z_ — MERGED cat-harness-tools#1422 as 13c77e3: green on every check (index gates, standalone and tests, all "no new failures"). The tools#1299 recount is waiting on folio-assistant-core's main run 41505485739, re-run against the new pins and still running.
+
+## Final report (window closed 2026-11-03 00:40Z)
+
+_2026-11-03T00:41:16Z_ — Written by the drain session https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5, which held the drain and, from about 20:20Z on the owner's choice, the re-pin train.
+
+**Merged in the window, by this session (6):**
+- folio-assistant#2921, the re-pin train: merged as 2e10fd3 at 23:28Z. Verdict "no new failures vs main 7e745b9 (1 known)".
+- cat-harness#1000 (d7ebe6e): meta-merge regen.
+- cat-harness#1001 (f3e6197): slash process namespace, skills or no-skill reasons, process summaries, archimate-models layer naming, deck image paths and figure blocks.
+- cat-harness-tools#1422 (13c77e3): tests follow the lower layers, check-instance-render reads the slash type, and it carries #1419's nested-instances fix.
+- who-iris#165 (83c2e00).
+- folio-assistant-core#624 (e987b89).
+
+**Already merged when this session took over:** cat-harness#980, #959 and #981; cat-harness-tools#1411. **Also merged by the saturation sibling:** cat-harness#999.
+
+**Train fixes, each reproduced in a tree mounted from the train's lock and compared with main's:**
+- the root glossary tombstone copy, removed from the docs-site and feature-staging workflows (a9a2c6c);
+- tools pinned at the #1411 merge, not main, to keep slash wave 2 (#1417) out;
+- check:ig-citations declared no-folio in index.config.json.
+
+**Open at close:**
+- cat-harness-tools#1299: recount posted (https://github.com/litlfred/cat-harness-tools/issues/1299#issuecomment-6592120119). Core main is green on its own gates; 8 lower-layer reds remain, down from 16, all cat-harness-tools scripts.
+- cat-harness-tools#1378, #1379, #1356 (issues): held by sibling https://claude.ai/code/session_01EucfRmD6JzE3AYLeUkX1KU. #1379, slash wave 2, waits for the next train, now that #1417 is on tools main.
+- cat-harness#972: not merged; content, waiting on card Q-B1-2.
+- cat-harness#998: superseded by #999 and #1000; its owner session or the owner closes it.
+- cat-harness-tools#1419 (sibling): its change is on tools main via #1422; it can close as superseded.
+- Beans fwtz and pga6: not closable. fwtz has 0 of 3 boxes met, under the owner's 2026-10-20 "leave as is"; pga6 is deferred until after the MVP freeze (Q-SEP-1 A).
+- Beans bmat and rpc6: open with no `parent`, so check:bean-parents is red on the shared work plan. Their threads should give each an epic parent.
+- Bean nbp9 is the owner's own; umbrella beans rwmf and yj32 stay open while their children are open.
