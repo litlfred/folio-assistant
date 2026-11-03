@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-03T06:08:47Z
+updated_at: 2026-11-03T06:10:31Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -159,3 +159,5 @@ _2026-11-03T05:51:10Z_ — Merge sweep: merged fa#2898 (CODEOWNERS, SECURITY.md,
 _2026-11-03T05:54:25Z_ — Merge sweep: merged cat-harness#1004 (process: each layer publishes its own QA results; docs/skills/BPMN documentation, bean 7mwa) at 1e9b973, all green, clean.
 
 _2026-11-03T06:08:47Z_ — Merge sweep: merged cat-harness#1005 (deployments name their work-plan store Tool, #991) at c98180a, all green, clean.
+
+_2026-11-03T06:10:31Z_ — Merge sweep: merged cat-harness#1003 (proposal §4.9/§4.10, docs only) at bf77ac6 and cat-harness#1006 (BPMN rendering rules in skills, DI-only diagram fixes) at 45c78fc, both all green. Disjoint files, so no conflict between them.
