@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-03T06:10:31Z
+updated_at: 2026-11-03T06:43:35Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -161,3 +161,9 @@ _2026-11-03T05:54:25Z_ — Merge sweep: merged cat-harness#1004 (process: each l
 _2026-11-03T06:08:47Z_ — Merge sweep: merged cat-harness#1005 (deployments name their work-plan store Tool, #991) at c98180a, all green, clean.
 
 _2026-11-03T06:10:31Z_ — Merge sweep: merged cat-harness#1003 (proposal §4.9/§4.10, docs only) at bf77ac6 and cat-harness#1006 (BPMN rendering rules in skills, DI-only diagram fixes) at 45c78fc, both all green. Disjoint files, so no conflict between them.
+
+_2026-11-03T06:43:35Z_ — 06:36Z sweep:
+- MERGED folio-assistant-core#627 (8c96ae9, publish-qa workflow) and folio-assistant-core#628 (ccb5997, djj5 Dublin Core/CSL code).
+- New train fa#2923 (repin-train/20261103-0632) takes every layer at its main. It needs no IG hold: check:harness-dirs passes at the smart-trust-phw and smart-immunizations mains. PROV and translate checks pass.
+- Its one new red, skill:commands:check: cat-harness lacked command stubs for saturation-meta-merge and merge-manager-watcher. Opened cat-harness#1009 (8a418ce); the train is re-pinned onto it (889ecfc).
+- Re-ran smart-base#297 and who-iris#174: their only red was a gate that differed because the two sides were pinned differently.
