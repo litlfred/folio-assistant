@@ -1,0 +1,28 @@
+{
+  "$ref": "#/definitions/CodeSource",
+  "definitions": {
+    "CodeSource": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/code-list/CodeSourceSchema.schema.json",
+  "title": "CodeSourceSchema",
+  "description": "Generated from `CodeSourceSchema` in schemas/library/code-list.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-subgraphs-and-deploy-fix",
+    "sha": "351273892d3935e91fc881284a0f6e7d30f61cf8",
+    "pr": "2926/merge",
+    "run": "41670069125"
+  }
+}

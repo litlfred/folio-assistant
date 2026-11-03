@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/QaReportFile",
+  "definitions": {
+    "QaReportFile": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timestamp": {
+          "type": "string",
+          "minLength": 1
+        },
+        "details": {}
+      },
+      "required": [
+        "file",
+        "status",
+        "timestamp"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-report/QaReportFileSchema.schema.json",
+  "title": "QaReportFileSchema",
+  "description": "Generated from `QaReportFileSchema` in schemas/sdlc/qa-report.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-subgraphs-and-deploy-fix",
+    "sha": "351273892d3935e91fc881284a0f6e7d30f61cf8",
+    "pr": "2926/merge",
+    "run": "41670069125"
+  }
+}

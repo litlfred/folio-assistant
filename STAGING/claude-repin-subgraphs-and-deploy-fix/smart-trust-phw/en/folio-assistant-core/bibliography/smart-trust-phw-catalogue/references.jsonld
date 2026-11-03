@@ -1,0 +1,52 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/ihe-iti-pcf-1-1-0",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "IHE IT Infrastructure Technical Framework Supplement — Privacy Consent on FHIR (PCF)",
+      "dcterms:creator": [
+        "IHE IT Infrastructure Technical Committee"
+      ],
+      "dcterms:issued": "2023-08-04",
+      "dcterms:publisher": "Integrating the Healthcare Enterprise (IHE)",
+      "dcterms:identifier": "https://profiles.ihe.net/ITI/PCF/1.1.0/",
+      "dcterms:language": "en",
+      "dcterms:abstract": "The Privacy Consent on FHIR (PCF) Profile supports the use of a FHIR Consent resource to capture, discover, and enforce patient privacy consent directives across healthcare actors using the Access Consent [ITI-108] transaction and progressive Basic, Intermediate, and Advanced Consent profiles.",
+      "dcterms:source": "smart-trust-phw/catalogue/records/ihe-iti-pcf-1-1-0.dc.json",
+      "dcterms:hasVersion": "smart-trust-phw/library/ihe-iti-pcf-1-1-0"
+    },
+    {
+      "@id": "references/ihe-iti-vhl-1-0-0-comment",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "IHE IT Infrastructure Technical Framework Supplement — Verifiable Health Links (VHL)",
+      "dcterms:creator": [
+        "IHE IT Infrastructure Technical Committee"
+      ],
+      "dcterms:issued": "2026-06-14",
+      "dcterms:publisher": "Integrating the Healthcare Enterprise (IHE)",
+      "dcterms:identifier": "https://profiles.ihe.net/ITI/VHL/1.0.0-comment/",
+      "dcterms:language": "en",
+      "dcterms:abstract": "The Verifiable Health Links (VHL) Profile specifies actors (VHL Holder, VHL Sharer, VHL Receiver, Trust Anchor) and transactions ([ITI-YY1] Submit PKI Material with DID, [ITI-YY2] Retrieve Trust List with DID, [ITI-YY3] Generate VHL, [ITI-YY4] Provide VHL, [ITI-YY5] Retrieve Manifest) for issuing, presenting, verifying, and redeeming cryptographically verifiable links to health documents in a trust-anchor-neutral manner.",
+      "dcterms:source": "smart-trust-phw/catalogue/records/ihe-iti-vhl-1-0-0-comment.dc.json",
+      "dcterms:hasVersion": "smart-trust-phw/library/ihe-iti-vhl-1-0-0-comment"
+    }
+  ]
+}
