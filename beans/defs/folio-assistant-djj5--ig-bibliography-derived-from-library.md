@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T05:42:02Z
+updated_at: 2026-11-03T05:44:52Z
 tags:
     - references
     - library
@@ -36,3 +36,5 @@ _2026-11-03T05:32:31Z_ — Filed by the drain session https://claude.ai/code/ses
 _2026-11-03T05:35:56Z_ — Claimed by https://claude.ai/code/session_01EucfRodNcVYWoFyT9Zwyb3. Proposal put to the owner as a card (no code yet). Findings at the mains: phw and immz now HOLD `references/` (5 and 10 entries, all `authored`), so the "declared and not on disk" failure may already be gone at their mains; smart-trust holds 27 `.json` entries (28 files with the README), none of them ingested in any library. folio-assistant-core's bibliography page already reads `library/` (`libraryItemToReference`, provenance `library`); smart-base's `check:ig-citations` reads only `references` and `catalogue`. 5 of the 42 IG entries name works who-iris already holds (9789240010567-eng, 9789241548960-eng ×3, the IMMZ DAK 10665/380303).
 
 _2026-11-03T05:42:02Z_ — Owner decided (card): **approach 2, "Library + catalogue only"**: an ingested work is cited from its `library/` entry; a work that is not ingested is a metadata-only `catalogue/records/<slug>.dc.json` record; `references/` is retired in all three IGs. **smart-trust's 27 entries: "Convert to catalogue"** (phw's 5 and immz's 10 likewise, minus the who-iris-held works, which are cited from who-iris). Plan: (a) core: `dublinCoreToReference` reads `dc.relation.ispartof` / `dc.citation.volume|issue|spage|epage`; a library entry with a catalogue record is projected from that record; no `ingestedAt` publication date. (b) smart-base: `check:ig-citations` reads `library` (own and `--with` layers) and `catalogue`, not `references`. (c) content PRs (owner OK): CSL→DC conversion of each IG's entries and removal of the `references` declaration.
+
+_2026-11-03T05:44:52Z_ — Owner asked where a non-ingested work lives ("uploads/ or catalog only... what is URL of catalogue? and relation to library?"), and decided (card): **"Catalogue + uploads/ copy"**. A non-ingested cited work = a `catalogue/nodes/item-<slug>.json` in state `referenced` (no `libraryId`) with `metadataRef` → `catalogue/records/<slug>.dc.json`, PLUS a capture in `uploads/` queued for later ingestion; citations resolve through the record only. Answered: the catalogue has no page of its own (no visualiser covers `catalogue` alone); each record renders on the KG Bibliography as `#ref-<slug>`; a reference's IRI is `references/<key>` under the folio base (cat-harness-tools `resolveReferenceKey`) and stays unchanged. Open per capture: its licence; a capture is recorded with its role, as who-iris does.
