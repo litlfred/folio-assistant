@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T06:17:07Z
+updated_at: 2026-11-03T06:44:07Z
 tags:
     - references
     - library
@@ -52,3 +52,5 @@ _2026-11-03T05:59:21Z_ — Content PRs 2/3 and 3/3 up, awaiting owner OK: litlfr
 _2026-11-03T06:00:51Z_ — Owner approved (card, option 1 "Approve all once green"): smart-trust-phw#30, smart-immunizations#111 and smart-trust#139 merge once CI is green, with no copy bytes committed; licences and the 15 network-blocked smart-trust captures are handled later, one by one. None touches subscriptions/.
 
 _2026-11-03T06:17:07Z_ — smart-trust-phw#30 CI: one new failure, `readme:subgraphs:check` (catalogue/README.md stale, uploads/ had none). Fixed on all three content PRs by regenerating those two READMEs (phw 621f1ad, immz 089e370, smart-trust e1c4459). smart-trust main already has 6 stale READMEs in other directories; the branch leaves those 5 untouched (not this change).
+
+_2026-11-03T06:44:07Z_ — **Merged:** folio-assistant-core#628; smart-trust-phw#30 (5bec992) and smart-trust#139 (388fcf3), green, on the owner's approval. smart-trust-phw no longer declares `references`. **Open:** smart-immunizations#111 is red on `translation:block-qa:check` (missing translations in the mounted platform `docs/`, not this diff); re-run once and commented. smart-base#298 is red on `check:reference-direction:check` (7 findings in mounted platform files against the recorded qa-reports baseline; passes locally on main and branch); the re-run failed the same way, so it is blocked on the platform repositories, not on smart-base.
