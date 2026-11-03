@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T23:52:30Z
+updated_at: 2026-11-03T00:02:38Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -138,3 +138,5 @@ _2026-11-02T23:29:34Z_ — MERGED the re-pin train folio-assistant#2921 as 2e10f
 - Re-running against the new main pins: who-iris#165, core#624, cat-harness-tools#1422 (their only reds were the comparison against the old pins).
 
 _2026-11-02T23:52:30Z_ — MERGED who-iris#165 (83c2e00) and folio-assistant-core#624 (e987b89), both green and clean after re-running against folio-assistant main's new pins. drnh's plan was to merge #165 after the train; main already pinned its head. cat-harness-tools#1422: its Standalone check found 1 new failure (the core table-Tool pair, absent when core is not mounted). The expectation is now conditional on core's Tools being loaded; pushed, CI running.
+
+_2026-11-03T00:02:38Z_ — MERGED cat-harness-tools#1422 as 13c77e3: green on every check (index gates, standalone and tests, all "no new failures"). The tools#1299 recount is waiting on folio-assistant-core's main run 41505485739, re-run against the new pins and still running.
