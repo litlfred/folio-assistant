@@ -539,8 +539,11 @@ export async function judgeTrain(api: Api, repo: string, sha: string, opts: Judg
 
 /**
  * The open trains a sweep judges: this repository's own, whose head has no
- * final verdict yet. A `failure` or `error` is final (the next train replaces
- * it); a `success` still open is judged again, so a merge that failed is
+ * final verdict yet. A `failure` or `error` blocks the merge for good (the
+ * next train replaces it), but it is judged again while any check on the
+ * head is still running, so the comment ends up listing every failure, not
+ * only those that had finished when the first one did (#2931 listed 1 of
+ * 10). A `success` still open is judged again, so a merge that failed is
  * retried.
  */
 export async function trainsToJudge(api: Api, repo: string): Promise<string[]> {
@@ -549,6 +552,7 @@ export async function trainsToJudge(api: Api, repo: string): Promise<string[]> {
   for (const p of pulls.filter((x) => isOwnTrain(x, repo))) {
     const v = await statusOf(api, repo, p.head.sha);
     if (v !== "failure" && v !== "error") out.push(p.head.sha);
+    else if ((await checkRuns(api, repo, p.head.sha)).some((r) => r.status !== "completed")) out.push(p.head.sha);
   }
   return out;
 }
