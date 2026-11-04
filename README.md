@@ -126,8 +126,7 @@ from it.
 
 ### `smart-trust`
 
-This is the WHO SMART Trust Implementation Guide 
-<br> </br>
+The WHO SMART Trust Implementation Guide.
 
 → [smart-trust/README.md](smart-trust/README.md)
 
