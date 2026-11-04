@@ -132,7 +132,10 @@ The WHO SMART Trust Implementation Guide.
 
 ### `smart-trust-phw`
 
-This is an empty framework, to be used to create SMART Implementation Guides.
+The WHO SMART Guidelines implementation guide for using personal health wallets
+on the WHO GDHCN Trust Network (package `smart.who.int.trust-phw`, FHIR R5).
+The FHIR IG source is under `input/`; `_genonce.sh` builds it with the IG
+Publisher.
 
 → [smart-trust-phw/README.md](smart-trust-phw/README.md)
 
