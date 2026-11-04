@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Indicator Extraction Output",
+  "description": "What indicator-extraction produced for one source.",
+  "type": "object",
+  "required": [
+    "entry",
+    "indicators",
+    "subIndicators",
+    "programIndicators"
+  ],
+  "properties": {
+    "entry": {
+      "type": "string"
+    },
+    "indicators": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "L1 indicator nodes for top-level indicators."
+    },
+    "subIndicators": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "L1 indicator nodes for sub-indicators."
+    },
+    "programIndicators": {
+      "type": "string",
+      "description": "Path of the L2 program-indicator drafts."
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "L2 ids with a ProgramIndicator 1..1 element the source does not print."
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Sheets skipped, e.g. no printed number."
+    }
+  },
+  "additionalProperties": false,
+  "$id": "http://smart.who.int/base/schema/skills/indicator-extraction/output.schema.json",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  }
+}

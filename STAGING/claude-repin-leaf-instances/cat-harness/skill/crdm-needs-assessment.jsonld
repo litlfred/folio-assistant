@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/cat-harness/skill/crdm-needs-assessment.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/cat-harness/skill/crdm-needs-assessment",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "crdm-needs-assessment",
+      "title": "Phase 1 — Needs assessment (detail)",
+      "description": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/cat-harness/package/crdm"
+      ],
+      "instructionsPath": "skills/sdlc/crdm/crdm-needs-assessment.md",
+      "instructionLines": 113,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-needs-assessment"
+    }
+  ]
+}

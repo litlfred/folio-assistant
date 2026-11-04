@@ -1,0 +1,35 @@
+{
+  "$ref": "#/definitions/DcValue",
+  "definitions": {
+    "DcValue": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "language": {
+          "type": "string",
+          "minLength": 1
+        },
+        "authority": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-core/schema/zod/dublin-core/DcValueSchema.schema.json",
+  "title": "DcValueSchema",
+  "description": "Generated from `DcValueSchema` in schemas/dublin-core.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  }
+}

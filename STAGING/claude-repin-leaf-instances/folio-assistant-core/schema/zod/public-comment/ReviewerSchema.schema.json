@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/Reviewer",
+  "definitions": {
+    "Reviewer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string"
+        },
+        "organisation": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "acknowledge": {
+          "type": "boolean"
+        },
+        "github": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-core/schema/zod/public-comment/ReviewerSchema.schema.json",
+  "title": "ReviewerSchema",
+  "description": "Generated from `ReviewerSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  }
+}

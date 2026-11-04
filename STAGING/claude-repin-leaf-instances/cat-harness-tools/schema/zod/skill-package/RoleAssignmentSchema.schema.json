@@ -1,0 +1,45 @@
+{
+  "$ref": "#/definitions/RoleAssignment",
+  "definitions": {
+    "RoleAssignment": {
+      "type": "object",
+      "properties": {
+        "userPattern": {
+          "type": "string"
+        },
+        "identitySource": {
+          "type": "string",
+          "enum": [
+            "git-config",
+            "github-oauth",
+            "google-oauth",
+            "env-var",
+            "bearer-token",
+            "default"
+          ]
+        },
+        "actorId": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "userPattern",
+        "identitySource",
+        "actorId",
+        "priority"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/skill-package/RoleAssignmentSchema.schema.json",
+  "title": "RoleAssignmentSchema",
+  "description": "Generated from `RoleAssignmentSchema` in schemas/kg/skill-package.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/cat-harness/tool-types/ReadmeSection.schema.json",
+  "title": "ReadmeSection",
+  "type": "string",
+  "enum": [
+    "folio:toc",
+    "folio:lean-coverage",
+    "folio:lean-modules",
+    "folio:simulators",
+    "folio:workflows",
+    "skills:index"
+  ],
+  "description": "A generated README section, named by its marker.",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  }
+}

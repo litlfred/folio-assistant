@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/LibraryName",
+  "definitions": {
+    "LibraryName": {
+      "type": "string",
+      "pattern": "^(@[a-z0-9][a-z0-9._-]*\\/)?[a-z0-9][a-z0-9._-]*$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/software-library/LibraryNameSchema.schema.json",
+  "title": "LibraryNameSchema",
+  "description": "Generated from `LibraryNameSchema` in schemas/library/software-library.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/OpenInstance",
+  "definitions": {
+    "OpenInstance": {
+      "type": "object",
+      "properties": {
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "process": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$",
+          "description": "A BPMN process element id, e.g. Process_CRDM"
+        },
+        "atNode": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "instance",
+        "process"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/session-context/OpenInstanceSchema.schema.json",
+  "title": "OpenInstanceSchema",
+  "description": "Generated from `OpenInstanceSchema` in schemas/sdlc/session-context.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  }
+}

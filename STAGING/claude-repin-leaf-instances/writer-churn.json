@@ -1,0 +1,501 @@
+{
+  "against": "409f5be49981375de983b400c2a29b4328c233f7",
+  "skipped": 0,
+  "ran": 37,
+  "reused": 0,
+  "groups": [
+    {
+      "cause": ".",
+      "writtenBy": "the commit",
+      "reran": [
+        "smart-base:document-kinds",
+        "uml:overview"
+      ],
+      "seconds": 209.56083886000002
+    },
+    {
+      "cause": ".gitignore",
+      "writtenBy": "the commit",
+      "reran": [
+        "subgraph:jsonld",
+        "jsonld:contexts",
+        "auto:docs"
+      ],
+      "seconds": 34.25155785600009
+    },
+    {
+      "cause": ".git/branch-mounts",
+      "writtenBy": "the commit",
+      "reran": [
+        "skills:docs",
+        "node-kinds",
+        "schema:viz",
+        "docs:pages",
+        "processes:viz"
+      ],
+      "seconds": 19.783439189999946
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "writtenBy": "-",
+      "reran": [
+        "state:visualizer",
+        "site:viz"
+      ],
+      "seconds": 13.99391356700001
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 13.412188173000002
+    },
+    {
+      "cause": ".github/scripts/repin-train.ts",
+      "writtenBy": "the commit",
+      "reran": [
+        "external-schemas:viz",
+        "docs:harness"
+      ],
+      "seconds": 9.301480780999992
+    },
+    {
+      "cause": "fhir-harness/package.json",
+      "writtenBy": "the commit",
+      "reran": [
+        "theme:viz",
+        "uploads:viz",
+        "document-kinds:viz",
+        "bibliography:page",
+        "smart-base:l1-extraction:pages",
+        "openapi:viz",
+        "methodologies:viz",
+        "subscriptions:viz",
+        "kind:table",
+        "avatars:css",
+        "themes:css",
+        "kg:viewer"
+      ],
+      "seconds": 8.681920708000021
+    },
+    {
+      "cause": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html",
+      "writtenBy": "auto:docs",
+      "reran": [
+        "library:viz",
+        "tools:viz"
+      ],
+      "seconds": 8.580710234999948
+    },
+    {
+      "cause": "cat-harness/docs/assets/img/workflows/activity-log.svg",
+      "writtenBy": "the commit",
+      "reran": [
+        "render:bpmn"
+      ],
+      "seconds": 5.047246848999988
+    },
+    {
+      "cause": "cat-harness/docs/reference/skill-instructions",
+      "writtenBy": "skills:docs",
+      "reran": [
+        "voices:viz"
+      ],
+      "seconds": 0.8743175400000182
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-base:pages"
+      ],
+      "seconds": 0.8598107980000205
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust:pages"
+      ],
+      "seconds": 0.7798719669999554
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.7353626679999871
+    },
+    {
+      "cause": "cat-harness/docs/en/cat-harness/folio",
+      "writtenBy": "the commit",
+      "reran": [
+        "folio:viz"
+      ],
+      "seconds": 0.5932749760000151
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust-phw:pages"
+      ],
+      "seconds": 0.5519703779999982
+    },
+    {
+      "cause": "cat-harness/docs/_data/harness.json",
+      "writtenBy": "docs:harness",
+      "reran": [
+        "navbar:include"
+      ],
+      "seconds": 0.13040745699999387
+    }
+  ],
+  "writers": [
+    {
+      "writer": "auto:docs",
+      "did": "ran",
+      "why": ".gitignore changed (+85 more: cat-harness/docs/assets/img/uml/overview/who-iris, cat-harness/docs/en/cat-harness/attestations, cat-harness/docs/en/cat-harness/attestations/cat-harness/index.html, cat-harness/docs/en/cat-harness/attestations/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/attestations/folio-assistant-sci/index.html, cat-harness/docs/en/cat-harness/attestations/index.html, cat-harness/docs/en/cat-harness/attestations/smart-base/index.html, and 78 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".gitignore"
+      },
+      "seconds": 8.257241998000012
+    },
+    {
+      "writer": "avatars:css",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+4 more: smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/who-iris.json)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 0.10958016200002749
+    },
+    {
+      "writer": "bibliography:page",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+8 more: index.lock.json, smart-immunizations/smart-immunizations.json, smart-trust-phw/catalogue/nodes, smart-trust-phw/catalogue/records, smart-trust-phw/library/README.md, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, and 1 others)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 0.5463590919999988
+    },
+    {
+      "writer": "docs:harness",
+      "did": "ran",
+      "why": ".github/scripts/repin-train.ts changed (+74 more: .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/repin-train-verdict.yml, .github/workflows/repin-train.yml, .gitignore, README.md, cat-harness/docs/_data, and 67 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github/scripts/repin-train.ts"
+      },
+      "seconds": 3.841076426999993
+    },
+    {
+      "writer": "docs:pages",
+      "did": "ran",
+      "why": ".git/branch-mounts changed (+199 more: beans/defs, beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, cat-harness/docs/assets/img/uml/overview/who-iris, cat-harness/docs/en/cat-harness/attestations, cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/smart-immunizations, and 192 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".git/branch-mounts"
+      },
+      "seconds": 1.8039813459999858
+    },
+    {
+      "writer": "document-kinds:viz",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+6 more: index.config.json, index.lock.json, smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/who-iris.json)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 0.8035917009999975
+    },
+    {
+      "writer": "external-schemas:viz",
+      "did": "ran",
+      "why": ".github/scripts/repin-train.ts changed (+562 more: .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/repin-train-verdict.yml, .github/workflows/repin-train.yml, .gitignore, README.md, beans/defs, and 555 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github/scripts/repin-train.ts"
+      },
+      "seconds": 5.460404353999999
+    },
+    {
+      "writer": "folio:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/folio changed (+8 more: fhir-harness/package.json, index.config.json, index.lock.json, smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/test/attestations, and 1 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/folio"
+      },
+      "seconds": 0.5932749760000151
+    },
+    {
+      "writer": "ig-index:build",
+      "did": "ran",
+      "why": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "seconds": 13.412188173000002
+    },
+    {
+      "writer": "jsonld:contexts",
+      "did": "ran",
+      "why": ".gitignore changed (+59 more: bootstrap, cat-harness/docs/assets/img/uml/overview/who-iris, cat-harness/docs/en/cat-harness/attestations, cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/smart-immunizations, cat-harness/docs/en/folio-assistant-core/bibliography/references.jsonld, cat-harness/docs/en/folio-assistant-core/bibliography/smart-trust-phw-catalogue/references.jsonld, and 52 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".gitignore"
+      },
+      "seconds": 1.6430031550000421
+    },
+    {
+      "writer": "kg:viewer",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+4 more: smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/who-iris.json)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 0.40120480399997904
+    },
+    {
+      "writer": "kind:table",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+4 more: smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/who-iris.json)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 0.10433640899998135
+    },
+    {
+      "writer": "library:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html changed (+316 more: cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html, cat-harness/docs/subgraph/who-iris/index.jsonld, cat-harness/test/attestations/kg-qa/processes/sdlc/code-quality-gates.attestations.json, and 309 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html"
+      },
+      "seconds": 5.514441166999982
+    },
+    {
+      "writer": "methodologies:viz",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+18 more: fhir-harness/processes, fhir-harness/processes/content/ig-ast-cache.checklist.md, fhir-harness/scripts, fhir-harness/skills/fhir-ig-base/fhir-ig-create.md, fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md, fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md, fhir-harness/tools, and 11 others)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 1.7870778660000068
+    },
+    {
+      "writer": "navbar:include",
+      "did": "ran",
+      "why": "cat-harness/docs/_data/harness.json changed (+5 more: fhir-harness/package.json, smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/who-iris.json)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/_data/harness.json"
+      },
+      "seconds": 0.13040745699999387
+    },
+    {
+      "writer": "node-kinds",
+      "did": "ran",
+      "why": ".git/branch-mounts changed (+13 more: fhir-harness/package.json, index.config.json, index.lock.json, smart-immunizations/AGENTS.md, smart-immunizations/README.md, smart-immunizations/smart-immunizations.json, smart-trust-phw/AGENTS.md, and 6 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".git/branch-mounts"
+      },
+      "seconds": 1.453005812999967
+    },
+    {
+      "writer": "openapi:viz",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+5 more: index.lock.json, smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/who-iris.json)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 0.18117886799998814
+    },
+    {
+      "writer": "processes:viz",
+      "did": "ran",
+      "why": ".git/branch-mounts changed (+25 more: beans/defs, beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, fhir-harness/docs/source/fhir-ig-publisher/fhir-ig-publisher.json, fhir-harness/package.json, fhir-harness/processes, and 18 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".git/branch-mounts"
+      },
+      "seconds": 7.826269006999908
+    },
+    {
+      "writer": "render:bpmn",
+      "did": "ran",
+      "why": "cat-harness/docs/assets/img/workflows/activity-log.svg changed (+94 more: cat-harness/docs/assets/img/workflows/actor-role-administration.svg, cat-harness/docs/assets/img/workflows/adjudication.svg, cat-harness/docs/assets/img/workflows/archimate-publish.svg, cat-harness/docs/assets/img/workflows/ask-the-person.svg, cat-harness/docs/assets/img/workflows/bean-close.svg, cat-harness/docs/assets/img/workflows/bean-drain.svg, cat-harness/docs/assets/img/workflows/bean-lifecycle.svg, and 87 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/assets/img/workflows/activity-log.svg"
+      },
+      "seconds": 5.047246848999988
+    },
+    {
+      "writer": "schema:viz",
+      "did": "ran",
+      "why": ".git/branch-mounts changed (+13 more: cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html, fhir-harness/package.json, index.config.json, and 6 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".git/branch-mounts"
+      },
+      "seconds": 2.7879591530000325
+    },
+    {
+      "writer": "site:viz",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 1.4228459150000126
+    },
+    {
+      "writer": "skills:docs",
+      "did": "ran",
+      "why": ".git/branch-mounts changed (+18 more: fhir-harness/package.json, fhir-harness/processes, fhir-harness/processes/content/ig-ast-cache.bpmn, fhir-harness/processes/content/ig-ast-cache.checklist.md, fhir-harness/scripts/library-strip/README.md, fhir-harness/skills/fhir-ig-base/fhir-ig-create.md, fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md, and 11 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".git/branch-mounts"
+      },
+      "seconds": 5.9122238710000525
+    },
+    {
+      "writer": "smart-base:document-kinds",
+      "did": "ran",
+      "why": ". changed (+12 more: cat-harness/docs, cat-harness/docs/cat-harness/auto-docs/auto-docs.json, cat-harness/docs/todos.json, fhir-harness/package.json, fhir-harness/scripts, index.config.json, index.lock.json, and 5 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 0.4690347419999889
+    },
+    {
+      "writer": "smart-base:l1-extraction:pages",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+9 more: fhir-harness/scripts, index.config.json, index.lock.json, smart-immunizations/examples/l1-recommendation-scenarios/README.md, smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, and 2 others)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 0.713776033000031
+    },
+    {
+      "writer": "smart-base:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "seconds": 0.8598107980000205
+    },
+    {
+      "writer": "smart-trust-phw:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "seconds": 0.5519703779999982
+    },
+    {
+      "writer": "smart-trust:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "seconds": 0.7798719669999554
+    },
+    {
+      "writer": "smart:pages",
+      "did": "ran",
+      "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "seconds": 0.7353626679999871
+    },
+    {
+      "writer": "state:visualizer",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 12.571067651999998
+    },
+    {
+      "writer": "subgraph:jsonld",
+      "did": "ran",
+      "why": ".gitignore changed (+51 more: beans/defs, cat-harness/docs/assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld, cat-harness/docs/assets/glossary/fhir-harness--kg-skills.skos.jsonld, cat-harness/docs/assets/glossary/fhir-harness--kg-tools.skos.jsonld, cat-harness/docs/assets/img/uml/overview/who-iris, cat-harness/docs/en/cat-harness/attestations, cat-harness/docs/en/cat-harness/code, and 44 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".gitignore"
+      },
+      "seconds": 24.351312703000033
+    },
+    {
+      "writer": "subscriptions:viz",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+5 more: index.config.json, smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/who-iris.json)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 0.1835049219999928
+    },
+    {
+      "writer": "theme:viz",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+7 more: fhir-harness/scripts, index.config.json, index.lock.json, smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/who-iris.json)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 0.5950810209999908
+    },
+    {
+      "writer": "themes:css",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+7 more: fhir-harness/scripts, index.config.json, index.lock.json, smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/who-iris.json)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 0.46947752700001
+    },
+    {
+      "writer": "tools:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html changed (+21 more: cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html, fhir-harness/package.json, fhir-harness/processes, and 14 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html"
+      },
+      "seconds": 3.066269067999965
+    },
+    {
+      "writer": "uml:overview",
+      "did": "ran",
+      "why": ". changed (+3044 more: .git/branch-mounts, .gitignore, cat-harness/docs, cat-harness/docs/_data, cat-harness/docs/_data/todo_listing.json, cat-harness/docs/_includes, cat-harness/docs/_includes/generated, and 3037 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 209.09180411800003
+    },
+    {
+      "writer": "uploads:viz",
+      "did": "ran",
+      "why": "fhir-harness/package.json changed (+13 more: fhir-harness/processes, fhir-harness/scripts, fhir-harness/tools, index.config.json, index.lock.json, smart-immunizations/smart-immunizations.json, smart-trust-phw/catalogue/nodes, and 6 others)",
+      "cause": {
+        "kind": "path",
+        "path": "fhir-harness/package.json"
+      },
+      "seconds": 2.7867523030000156
+    },
+    {
+      "writer": "voices:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/reference/skill-instructions changed (+8 more: fhir-harness/package.json, index.config.json, index.lock.json, smart-immunizations/smart-immunizations.json, smart-trust-phw/smart-trust-phw.json, smart-trust/smart-trust.json, who-iris/test/attestations, and 1 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/reference/skill-instructions"
+      },
+      "seconds": 0.8743175400000182
+    }
+  ]
+}

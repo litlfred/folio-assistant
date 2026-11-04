@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Formalize.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Formalize",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Formalise in Lean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/role/lean-toolchain",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Lean",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/skill/lean-formalization",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/skill/proof-verification"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/process/Process_PaperAuthoring#flow/A08",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/process/Process_PaperAuthoring#flow/A10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/process/Process_PaperAuthoring#flow/A09"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Formalize"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-leaf-instances/cat-harness/tool-types/SkillName.schema.json",
+  "title": "SkillName",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[a-z][a-z0-9-]*$",
+  "description": "A skill name, e.g. todo-manager",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  }
+}

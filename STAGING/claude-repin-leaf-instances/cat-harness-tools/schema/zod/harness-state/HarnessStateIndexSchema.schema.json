@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/HarnessStateIndex",
+  "definitions": {
+    "HarnessStateIndex": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-harness-state-index/v1"
+        },
+        "harnesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "harness": {
+                "type": "string",
+                "minLength": 1
+              },
+              "file": {
+                "type": "string",
+                "minLength": 1
+              },
+              "position": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "harness",
+              "file",
+              "position"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "harnesses"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/harness-state/HarnessStateIndexSchema.schema.json",
+  "title": "HarnessStateIndexSchema",
+  "description": "Generated from `HarnessStateIndexSchema` in schemas/sdlc/harness-state.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-leaf-instances",
+    "sha": "4c642763a1bfe7d92530e99d9f040d757926265f",
+    "pr": "2936/merge",
+    "run": "41844852121"
+  }
+}
