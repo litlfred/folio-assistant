@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/process/Process_MergeManagerWatch/node/End_Idle.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-0201",
+    "sha": "b38ef00d28d14cdc3a78b22de9bf76c0da34e156",
+    "pr": "repin-train/20261104-0201",
+    "run": "41758016652"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/process/Process_MergeManagerWatch/node/End_Idle",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Nothing to do",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/process/Process_MergeManagerWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/process/Process_MergeManagerWatch#flow/Flow_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/End_Idle"
+    }
+  ]
+}

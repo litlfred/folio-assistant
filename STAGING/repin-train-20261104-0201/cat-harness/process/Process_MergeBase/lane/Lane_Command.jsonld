@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/process/Process_MergeBase/lane/Lane_Command.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-0201",
+    "sha": "b38ef00d28d14cdc3a78b22de9bf76c0da34e156",
+    "pr": "repin-train/20261104-0201",
+    "run": "41758016652"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/process/Process_MergeBase/lane/Lane_Command",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "merge:main command",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/process/Process_MergeBase",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0201/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/lane/Lane_Command"
+    }
+  ]
+}
