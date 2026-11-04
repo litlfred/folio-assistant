@@ -4,17 +4,17 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/globalTask/GT_LogRetained",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Task",
       "name": "Append `retained` with the reason",
-      "summary": "Records that a removal was considered and refused, or that a preview still stands because a signal fired.",
-      "description": "Records that a removal was considered and refused, or that a preview still stands because a signal fired. A reason is REQUIRED — the tool refuses without one.",
+      "summary": "The entry that makes the log worth reading.",
+      "description": "The entry that makes the log worth reading. A removal was considered and refused, or a preview still stands because a signal fired; without an entry that leaves no trace, and the next person asking \"why is this preview still up\" has nothing to consult. A reason is REQUIRED — the tool refuses without one.",
       "bpmnType": "bpmn:GlobalScriptTask",
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/skill/render-logging"

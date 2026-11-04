@@ -103,7 +103,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Reader (any actor)",
-      "scopeNote": "ANY reader, not only an editor. Refusing a copy would not protect the original, because the original is protected by being read-only; a permission here would only stop people working. So this lane has no entry condition, and the one decision in it is about the TARGET rather than about the actor.",
+      "scopeNote": "ANY reader, and that is a ruling rather than an oversight — the owner, 2026-09-22, chose it over restricting the copy-out to an editor. Refusing a copy would not protect the original, because the original is protected by being read-only; a permission here would only stop people working. So this lane has no entry condition, and the one decision in it is about the TARGET rather than about the actor.",
       "source": "cat-harness/processes/library/copy-out-materialized.bpmn"
     },
     {
@@ -112,7 +112,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/process/Process_Ingestion",
       "label": "Contributor (human or agent)",
-      "scopeNote": "Whoever puts the file in the queue.\n\n\"HUMAN OR AGENT\" IS A MEASUREMENT, NOT A HEDGE: both place files here. That is why Task_Place is a plain `bpmn:task` rather than a `userTask` — asserting a human performs it would contradict the lane's own role graph, which is what `activity-fulfilment-kind` exists to catch.\n\nWHAT THE LANE IS ACCOUNTABLE FOR, and where it ends. Choosing a route, writing the bytes into the DECLARED queue of the instance that will own them, and discharging afterwards whatever that route could not — the web form has no working tree, so no pre-commit hook and no generator runs on it. The lane does NOT ingest and does not clean the queue: it hands over, and Lane_1 takes it from there. `upload-routes` carries the routes and their obligations.",
+      "scopeNote": "Whoever puts the file in the queue. UNDOCUMENTED UNTIL 2026-09-30, and legitimately so until then: the lane held nothing but a start event, and a lane with no activity has no performer to describe. Task_Place gave it one.\n\n\"HUMAN OR AGENT\" IS A MEASUREMENT, NOT A HEDGE. Over this repository's own history both have stood here: files have reached a queue in commits authored by `Carl Leitner` (including 16 made through the forge's web form, committer `GitHub`) and in commits authored by `Claude`. That is why Task_Place is a plain `bpmn:task` rather than a `userTask` — asserting a human performs it would contradict the lane's own role graph, which is what `activity-fulfilment-kind` exists to catch.\n\nWHAT THE LANE IS ACCOUNTABLE FOR, and where it ends. Choosing a route, writing the bytes into the DECLARED queue of the instance that will own them, and discharging afterwards whatever that route could not — the web form has no working tree, so no pre-commit hook and no generator runs on it. The lane does NOT ingest and does not clean the queue: it hands over, and Lane_1 takes it from there. `upload-routes` carries the routes and their obligations.",
       "source": "cat-harness/processes/library/document-ingestion.bpmn"
     },
     {
@@ -121,7 +121,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/process/Process_MaterializeRemote",
       "label": "Contributor (human or agent)",
-      "scopeNote": "One task, asked first for a reason: working vs. archival is not just an input to the five gates that follow, it changes what three of them MEAN — an archival copy is the only one that can discharge source loss, and a process that gated before asking this would be judging a copy against obligations it did not yet know applied.",
+      "scopeNote": "One task, asked first for a reason: working vs. archival is not just an input to the five gates that follow, it changes what three of them MEAN — an archival copy is the only one that can discharge source loss, and a process that gated before asking this would be judging a copy against obligations it did not yet know applied. This lane's single decision is load-bearing for everything downstream, not a formality that precedes the real work.",
       "source": "cat-harness/processes/library/materialize-remote.bpmn"
     },
     {
@@ -286,7 +286,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/role/author",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Copier's own folio/",
-      "scopeNote": "Where the copy lands: the copier's own folio, never a scratch area, because a directory nobody declared is a directory nobody gates. The two writes here are ordered and both required — Task_Land puts the bytes somewhere, Task_RecordProvenance says what they are a copy OF, and a process that stopped after the first would produce a file indistinguishable from original work one rename later.",
+      "scopeNote": "Where the copy lands, chosen by the owner 2026-09-22 over a scratch area. A scratch area lost because it makes the copy publishable by accident: a directory nobody declared is a directory nobody gates. The two writes here are ordered and both required — Task_Land puts the bytes somewhere, Task_RecordProvenance says what they are a copy OF, and a process that stopped after the first would produce a file indistinguishable from original work one rename later.",
       "source": "cat-harness/processes/library/copy-out-materialized.bpmn"
     },
     {
@@ -360,7 +360,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/process/Process_Review",
       "label": "Reviewer / SME",
-      "scopeNote": "Makes exactly one decision on its own — what changed, at Task_ClassifyChange — and for everything after that descends into a subprocess, taking on the narrative- or code-reviewer role for that call path only rather than carrying both statically. A change that is both prose and code goes to the pair review; neither role widens the other.",
+      "scopeNote": "Makes exactly one decision on its own — what changed, at Task_ClassifyChange — and for everything after that descends into a subprocess, taking on the narrative- or code-reviewer role for that call path only rather than carrying both statically. A change that is both visits both subprocesses in turn, and neither role widens the other.",
       "source": "cat-harness/processes/content/review-task.bpmn"
     },
     {
@@ -1383,7 +1383,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/process/Process_Ingestion",
       "label": "Ingestion Engine (agent, runs unattended)",
-      "scopeNote": "Runs the basic flow from the metadata step to the placement in library/, unattended: every decision in it is decidable from the material and its declarations. It asks one question — is the asset materialized? — and that is answered from the materialization state vocabulary (`schemas/kg/materialization-state.ts`), not by judgement. It does NOT choose a reader for the bytes, derive sections or blocks, or describe images: those are a refining process's work, which calls this flow first.\n\nTHE FLOW ENDS IN THIS LANE. The asset catalogued in library/ — held, or recorded as referenced — is the terminal state, and every knowledge-graph reference to it resolves through library/ from here; a refining process continues from it rather than being drawn into this one. There is no separate corpus lane: it would hold only the end event, and a lane with no activity has no performer to describe.",
+      "scopeNote": "Runs the basic flow from the metadata step to the placement in library/, unattended: every decision in it is decidable from the material and its declarations. It asks one question — is the asset materialized? — and that is answered from the materialization state vocabulary (`schemas/kg/materialization-state.ts`, placement PR5), not by judgement. It does NOT choose a reader for the bytes, derive sections or blocks, or describe images: those are a refining process's work, which calls this flow first.\n\nTHE FLOW ENDS IN THIS LANE. The asset catalogued in library/ — held, or recorded as referenced — is the terminal state, and every knowledge-graph reference to it resolves through library/ from here; a refining process continues from it rather than being drawn into this one. There is no separate corpus lane: it would hold only the end event, and a lane with no activity has no performer to describe.",
       "source": "cat-harness/processes/library/document-ingestion.bpmn"
     },
     {
@@ -1437,7 +1437,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/process/Process_ThemeUIReview",
       "label": "Agent",
-      "scopeNote": "Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override.",
+      "scopeNote": "Four measured passes into R_Judge — inventory, accessibility, branding, locales — each one required to MEASURE rather than assert, because an automated pass alone missed three defects a rendered look caught outright. If GW_Findings comes back yes, this lane still does not fix anything: A_RaiseFindings sends the finding back to whoever authored the theme choice, since picking it was a judgement call this lane does not get to override.",
       "source": "cat-harness/processes/ui/theme-ui-review.bpmn"
     },
     {
@@ -2092,7 +2092,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/role/corpus",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Source graph — read-only",
-      "scopeNote": "This lane holds exactly one task and it WRITES NOTHING, which is the point of drawing it at all. A lane that is only ever read from is the visible form of the rule: the arrow runs out of here and never back.",
+      "scopeNote": "This lane holds exactly one task and it WRITES NOTHING, which is the point of drawing it at all. A lane that is only ever read from is the visible form of the rule: the arrow runs out of here and never back. Task_ReadSource is where the process would go wrong if anybody added a step, so its emptiness is load-bearing rather than incidental.",
       "source": "cat-harness/processes/library/copy-out-materialized.bpmn"
     },
     {

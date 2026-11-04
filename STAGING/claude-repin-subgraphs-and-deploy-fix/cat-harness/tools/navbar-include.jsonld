@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "navbar-include",
       "title": "Write the site sidebar's harness navbar include",
-      "description": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from.",
+      "description": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235).",
       "install": {
         "none": true
       },

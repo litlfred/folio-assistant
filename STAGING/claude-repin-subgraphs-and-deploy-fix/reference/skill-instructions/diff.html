@@ -238,8 +238,8 @@ clickable viewer link and 1-line explanation.</p><h3 id="finding-changed-blocks-
 links the platform. Its stderr line is the summary. The JSON
 (<code class="language-plaintext highlighter-rouge">folio-changeset/v1</code>, schema in
 the content core’s <code class="language-plaintext highlighter-rouge">schemas/changeset.ts</code>) lists every block that differs,
-keyed on its <strong>label</strong>, in reading order.</p><p><strong>Do not use <code class="language-plaintext highlighter-rouge">git diff --name-only</code> over <code class="language-plaintext highlighter-rouge">.ts</code> files.</strong> It misses three
-things a reviewer needs:</p><ul><li><strong>A prose-only edit.</strong> The <code class="language-plaintext highlighter-rouge">.md</code> changed and the <code class="language-plaintext highlighter-rouge">.ts</code> did not, which is
+keyed on its <strong>label</strong>, in reading order.</p><p><strong>Why not <code class="language-plaintext highlighter-rouge">git diff --name-only</code> over <code class="language-plaintext highlighter-rouge">.ts</code> files</strong>, which this section used
+to do. That misses three things a reviewer needs:</p><ul><li><strong>A prose-only edit.</strong> The <code class="language-plaintext highlighter-rouge">.md</code> changed and the <code class="language-plaintext highlighter-rouge">.ts</code> did not, which is
 the commonest edit in a document folio.</li><li><strong>A move</strong> between sections. It either vanishes or reads as noise.</li><li><strong>A rename.</strong> A relabelled block reads as a different block.</li></ul><p>The ChangeSet matches blocks by label, follows <code class="language-plaintext highlighter-rouge">renamedFrom</code>, and reads
 section position from the manifests.</p><p>It reads the base ref as text and never executes it. An unresolvable base is
 an error, not “no changes”. Say so rather than reporting an empty diff.</p><h3 id="viewer-link-format"><a href="#viewer-link-format" class="anchor-heading" aria-labelledby="viewer-link-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Viewer link format
@@ -265,9 +265,10 @@ and the <code class="language-plaintext highlighter-rouge">id-stable</code> QA c
 paper over it.</li></ul></li></ul><p><strong>Once the branch is pushed, link the review page as well.</strong> The folio’s
 staging preview publishes this same ChangeSet as <code class="language-plaintext highlighter-rouge">changeset.json</code> and renders
 it at <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/review/</code>: before and after for every block, the heat
-map, and the outline. Give that URL next to the table: a reviewer can open
-it without a local server.</p><p>Rendered-asset changes (re-rendered or new SVGs) are not in the ChangeSet.
-Report them separately, from <code class="language-plaintext highlighter-rouge">rendered[]</code> hashes.</p><h2 id="3-viewer-features-for-reviewing-changes"><a href="#3-viewer-features-for-reviewing-changes" class="anchor-heading" aria-labelledby="3-viewer-features-for-reviewing-changes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Viewer features for reviewing changes
+map, and the outline. Give that URL next to the table. It is the one a
+reviewer can open without a local server, and it shows the same changes in
+the same words, because it reads the same file.</p><p>Rendered-asset changes (re-rendered or new SVGs) are not in the ChangeSet.
+Report them separately from <code class="language-plaintext highlighter-rouge">rendered[]</code> hashes, as before.</p><h2 id="3-viewer-features-for-reviewing-changes"><a href="#3-viewer-features-for-reviewing-changes" class="anchor-heading" aria-labelledby="3-viewer-features-for-reviewing-changes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Viewer features for reviewing changes
   
   
 </h2><p>Point the user to these built-in viewer features:</p><ul><li><strong>Changelog</strong> (<code class="language-plaintext highlighter-rouge">hist</code> button on each block): shows git log for that

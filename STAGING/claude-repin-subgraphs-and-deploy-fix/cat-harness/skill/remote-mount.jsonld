@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "remote-mount",
       "title": "Remote-mount a harness",
-      "description": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: a `source.remote` entry in the downstream's root `index.config.json` (legacy: `remoteMounts` on its declaration) and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states.",
+      "description": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: a `source.remote` entry in the downstream's root `index.config.json` (legacy: `remoteMounts` on its declaration) and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/remote-mount.md",
-      "instructionLines": 407,
+      "instructionLines": 438,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

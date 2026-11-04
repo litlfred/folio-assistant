@@ -226,27 +226,27 @@ bun <span class="nb">install
 bun run <span class="nb">cat </span>lint      <span class="c"># eslint</span>
 bun run <span class="nb">cat test</span>:e2e      <span class="c"># e2e (test:e2e)</span>
 </code></pre></div></div><h2 id="work-plan-with-beans"><a href="#work-plan-with-beans" class="anchor-heading" aria-labelledby="work-plan-with-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Work-plan with <code class="language-plaintext highlighter-rouge">beans</code></h2><p>This project uses <a href="https://github.com/hmans/beans"><code class="language-plaintext highlighter-rouge">beans</code></a> as the single
-todo/work-plan mechanism (the <code class="language-plaintext highlighter-rouge">todo-manager</code> skill). Do <strong>not</strong> stand up a separate todo
-store.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat-harness-tools/scripts/install-beans.sh <span class="o">&amp;&amp;</span> <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.local/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+todo/work-plan mechanism (see <code class="language-plaintext highlighter-rouge">AGENTS.md</code>). Do <strong>not</strong> stand up a separate todo
+store.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/install-beans.sh
 beans list
 beans create <span class="s2">"&lt;title&gt;"</span>
-bun run <span class="nb">cat </span>beans:claim &lt;<span class="nb">id</span><span class="o">&gt;</span>      <span class="c"># claim before you work</span>
+beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>   <span class="c"># claim before you work</span>
 </code></pre></div></div><p><code class="language-plaintext highlighter-rouge">beans ≠ sidecars</code>: never <code class="language-plaintext highlighter-rouge">beans create</code> bulk machine-generated queues (QA,
 witness, watcher) — those stay as bulk JSON.</p><h2 id="agent-guidance"><a href="#agent-guidance" class="anchor-heading" aria-labelledby="agent-guidance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agent guidance
   
   
-</h2><p><code class="language-plaintext highlighter-rouge">AGENTS.md</code> is the agent-generic bootstrap pointer (read natively by Claude
-Code, Gemini CLI, Antigravity, Cursor, Copilot); <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> / <code class="language-plaintext highlighter-rouge">GEMINI.md</code> are
-thin stubs that point to it. The rules live in skills: to change how agents
-behave, edit the skill, not <code class="language-plaintext highlighter-rouge">AGENTS.md</code>.</p><h2 id="documentation"><a href="#documentation" class="anchor-heading" aria-labelledby="documentation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Documentation
+</h2><p><code class="language-plaintext highlighter-rouge">AGENTS.md</code> is the agent-generic source of truth (read natively by Claude Code,
+Gemini CLI, Antigravity, Cursor, Copilot). <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> / <code class="language-plaintext highlighter-rouge">GEMINI.md</code> are thin
+stubs that point to it. Update <code class="language-plaintext highlighter-rouge">AGENTS.md</code> rather than a tool-specific file when
+changing agent guidance.</p><h2 id="documentation"><a href="#documentation" class="anchor-heading" aria-labelledby="documentation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Documentation
   
   
 </h2><ul><li>Prose docs live under <code class="language-plaintext highlighter-rouge">docs/</code> (this Jekyll site).</li><li><p><strong>Skill schema reference</strong> is generated — never hand-edit
 <code class="language-plaintext highlighter-rouge">docs/reference/skills/*.md</code>. Edit the JSON Schemas under
-<code class="language-plaintext highlighter-rouge">schemas/skills/&lt;skill&gt;/</code> and regenerate:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat-harness-tools/scripts/gen-schema-docs.ts
+<code class="language-plaintext highlighter-rouge">schemas/skills/&lt;skill&gt;/</code> and regenerate:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/gen-schema-docs.ts
 </code></pre></div></div></li><li><p><strong>Skill instructions</strong> (<code class="language-plaintext highlighter-rouge">docs/reference/skill-instructions/*.md</code>) are also
-generated — never hand-edit them. Edit the skill bodies under <code class="language-plaintext highlighter-rouge">skills/</code>,
-<code class="language-plaintext highlighter-rouge">sdlc/skills/</code> or <code class="language-plaintext highlighter-rouge">work-plan/skills/</code> and regenerate:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat-harness-tools/scripts/gen-skill-docs.ts
+generated — never hand-edit them. Edit the skill bodies under
+<code class="language-plaintext highlighter-rouge">skills/authoring/content-lifecycle/*.md</code> or <code class="language-plaintext highlighter-rouge">src/skills/*.md</code> and regenerate:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/gen-skill-docs.ts
 </code></pre></div></div></li><li>The <strong>TypeScript API reference</strong> (<code class="language-plaintext highlighter-rouge">/api/</code>) is generated by TypeDoc in CI.</li><li>The site is built and deployed to GitHub Pages by
 <code class="language-plaintext highlighter-rouge">.github/workflows/docs-site.yml</code> on every push to <code class="language-plaintext highlighter-rouge">main</code> that touches docs,
 schemas, or the source.</li></ul><p>Preview locally:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>docs
@@ -255,9 +255,8 @@ bundle <span class="nb">install
 </code></pre></div></div><h2 id="shipping-a-change"><a href="#shipping-a-change" class="anchor-heading" aria-labelledby="shipping-a-change"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Shipping a change
   
   
-</h2><p>Open the PR at the first commit and push small increments
-(<code class="language-plaintext highlighter-rouge">sdlc/skills/sdlc-core/continual-progress.md</code>); take the branch to a clean,
-green, pushed state with <code class="language-plaintext highlighter-rouge">sdlc/skills/sdlc-core/prepare-merge.md</code>. Keep the <strong>formalism of the framework
+</h2><p>Verify → confirm mergeable → push → (only if asked) open a PR. See
+<code class="language-plaintext highlighter-rouge">sdlc/skills/sdlc-core/prepare-merge.md</code>. Keep the <strong>formalism of the framework
 separate from content</strong> — content belongs in its own repository, and any content
 in these docs is illustrative only.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed

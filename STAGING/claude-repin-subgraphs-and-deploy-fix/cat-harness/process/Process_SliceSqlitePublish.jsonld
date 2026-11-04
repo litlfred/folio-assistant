@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Build and publish a per-slice SQLite file",
       "summary": "Build one named slice of a knowledge graph as a SQLite file a browser mounts without parsing, and publish it beside its manifest and its payloads.",
-      "description": "Build one named slice of a knowledge graph as a SQLite file a browser mounts without parsing, and publish it beside its manifest and its payloads. The contract is `kg-export` §\"Per-slice SQLite\"; the builder is the `slice-sqlite` Tool (`cat-harness-tools/scripts/gen-slice-sqlite.ts`), one table-driven builder with one definition per slice; the search is one page, `slices/search.html?slice=<name>`.\n\nTHE SIZE IS MEASURED BEFORE THE SLICE IS WIRED. A slice that is wired first and measured afterwards ships whatever it weighs, because by then a manifest, a gate, two deploy steps and a page depend on it. The budget gateway sits between measuring and wiring so that an oversized slice stops with its measurement reported, rather than arriving on a reader's connection.\n\nNO BINARY IS COMMITTED. The file is built at deploy from the tree being published, so the gate cannot compare against a committed copy; it proves determinism (two builds, one sha256) and a row-content digest read back from the file against one computed from the source.",
+      "description": "Build one named slice of a knowledge graph as a SQLite file a browser mounts without parsing, and publish it beside its manifest and its payloads. The contract is `kg-export` §\"Per-slice SQLite\"; the builder is the `slice-sqlite` Tool (`cat-harness-tools/scripts/gen-slice-sqlite.ts`), one table-driven builder with one definition per slice; the search is one page, `slices/search.html?slice=<name>`. Bean `q8ar`.\n\nTHE SIZE IS MEASURED BEFORE THE SLICE IS WIRED, AND THAT IS WHY THIS IS A DIAGRAM. A slice that is wired first and measured afterwards ships whatever it weighs, because by then a manifest, a gate, two deploy steps and a page depend on it. The budget gateway sits between measuring and wiring so that an oversized slice stops with its measurement reported, rather than arriving on a reader's connection.\n\nNO BINARY IS COMMITTED. The file is built at deploy from the tree being published, so the gate cannot compare against a committed copy; it proves determinism (two builds, one sha256) and a row-content digest read back from the file against one computed from the source.",
       "enforcement": "strict",
       "sourcePath": "processes/kg/slice-sqlite-publish.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/kg/slice-sqlite-publish.bpmn",

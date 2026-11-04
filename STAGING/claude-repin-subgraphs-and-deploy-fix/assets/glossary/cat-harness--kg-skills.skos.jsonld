@@ -41,7 +41,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Settle a review that reached no mechanical or consensus agreement. What makes a disagreement adjudicable, the shape its implementations share, why the adjudication LEADS the criterion while the checker's entry is kept beneath it, and the dispensation that records the reason — scoped to a version, never precedent."
+          "@value": "Settle a review that reached no mechanical or consensus agreement. What makes a disagreement adjudicable, the shape seven implementations here already share, why the adjudication LEADS the criterion while the checker's entry is kept beneath it, and the dispensation that records the reason — scoped to a version, never precedent."
         }
       ],
       "skos:notation": "adjudication",
@@ -241,7 +241,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Declare a harness this one knows about and does not hold (`associatedHarnesses`): a folio in another repository, published at its own site. Referenced, never loaded, never materialized."
+          "@value": "Declare a harness this one knows about and does not hold (`associatedHarnesses`): a folio in another repository, published at its own site. Referenced, never loaded, never materialized. Issue #1146."
         }
       ],
       "skos:notation": "associate-harness",
@@ -321,7 +321,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Pointer to the bean-based session work-plan system (the `beans` CLI flat-file issue tracker, data under `beans/`). Operational usage lives in todo-manager.md / session-intent.md; this file is the canonical copy of the coordinator logic that downstream repositories sync from."
+          "@value": "Pointer to the bean-based session work-plan system (the `beans` CLI flat-file issue tracker, data under `beans/`). Operational usage lives in todo-manager.md / session-intent.md; the generic coordinator/orchestrator logic is owned by the folio-assistant platform."
         }
       ],
       "skos:notation": "bean-coordination",
@@ -596,7 +596,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Derivation-discipline integration watcher — watches the default branch + open active PRs + newly-opened PRs for non-canonical empirical / fitting / calibration inputs beyond the project's declared set, numerology, or justification/rationalization in place of derivation. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol, backlog-found PR spin-up, handover docs) from `sdlc-core/integration-watcher`."
+          "@value": "Derivation-discipline integration watcher — watches the default branch + open active PRs + newly-opened PRs for non-canonical empirical / fitting / calibration inputs beyond the project's declared set, numerology, or justification/rationalization in place of derivation. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol, backlog-found PR spin-up, handover docs) from `local/integration-watcher`."
         }
       ],
       "skos:notation": "canonical-watcher",
@@ -1406,7 +1406,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository uses to sit at different points on it, the four axes an answer has to name, what is measured today, and the three research questions — which are open, and marked as open."
+          "@value": "Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository already uses to sit at different points on it, the four axes an answer has to name, what is measured today, and the three research questions — which are open, and marked as open."
         }
       ],
       "skos:notation": "deterministic-and-agentic",
@@ -1536,7 +1536,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "How a domain-specific rule is kept out of the platform without being lost — the opt-in axis mechanism, why a profile is not a fence, and the test for whether a rule generalizes at all."
+          "@value": "How a domain-specific rule is kept out of the platform without being lost — the opt-in axis mechanism, the one criterion that should use it and does not, and the test for whether a rule generalizes at all."
         }
       ],
       "skos:notation": "domain-fencing",
@@ -1726,7 +1726,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Scaffold a new folio instance from the harness — the instantiate affordance of the knowledge graph. Covers when to run folio-init vs remote-mount, what the scaffold writes, the builder shim, state branch seeding, write capability requirements, and --dry-run degradation."
+          "@value": "Scaffold a new folio instance from the harness — the instantiate affordance of the knowledge graph. Covers when to run folio-init vs remote-mount, what the scaffold writes, the builder shim, state branch seeding, write capability requirements, and --dry-run degradation. Bean dp1j."
         }
       ],
       "skos:notation": "folio-init",
@@ -1846,7 +1846,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Drive a tangled graph toward a clean partition, so a sub-graph can be split off when it grows too large or when a business reason separates it. The staged practice — declare in place, detangle, isolate, extract — and the seventeen moves for measurement, ordering, judgement and enforcement."
+          "@value": "Drive a tangled graph toward a clean partition, so a sub-graph can be split off when it grows too large or when a business reason separates it. The staged practice — declare in place, detangle, isolate, extract — with the seventeen moves that were measured rather than argued, and the failures each one cost."
         }
       ],
       "skos:notation": "graph-detanglement",
@@ -1866,7 +1866,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Draw any graph in a harness (schemas, processes, a folio's block graph and any formal relation its content type adds, a detangle partition) so the picture is derived, checkable and readable. Ten rules, which engine to lay a graph out with and why, and how each graph typology here applies them."
+          "@value": "Draw any graph in a harness (schemas, processes, a folio's block graph and any formal relation its content type adds, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph typology here applies them."
         }
       ],
       "skos:notation": "graph-rendering",
@@ -2001,7 +2001,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "While idle or waiting on a long-running async task (a build, a long compute script, a CI run, a background agent), pull the applicable backlog in priority order and work non-conflicting items instead of stalling. Use whenever blocked on an async wait with no substantive output to produce."
+          "@value": "While idle or waiting on a long-running async task (a build, a long compute script, a CI run, a background agent), pull the applicable backlog in priority order and work non-conflicting items instead of stalling. Generalises AGENTS.md's 5-minute idle trigger into a reusable skill. Use whenever blocked on an async wait with no substantive output to produce."
         }
       ],
       "skos:notation": "idle-backlog",
@@ -2241,7 +2241,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The four affordances of a conformant knowledge graph — browse, materialise, instantiate and copy-into-folio — which capabilities each requires, how each writing verb degrades cleanly when no write capability is available, and how copying an asset stamps KgAsset.source provenance."
+          "@value": "The four affordances of a conformant knowledge graph — browse, materialise, instantiate and copy-into-folio — which capabilities each requires, how each writing verb degrades cleanly when no write capability is available, and how copying an asset stamps KgAsset.source provenance. Bean dp1j."
         }
       ],
       "skos:notation": "kg-affordances",
@@ -2321,7 +2321,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, rollback, and the post-move sweep that a move between the pair owes before the parent re-pins. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools and cat-harness + the tools layer are the worked examples."
+          "@value": "Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, rollback, and the post-move sweep that a move between the pair owes before the parent re-pins. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools is the worked example; cat-harness + the tools layer is next."
         }
       ],
       "skos:notation": "kg-separation",
@@ -2846,7 +2846,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "One-voice integration watcher — watches origin/main + open active PRs + newly-opened PRs for content-block changes (`.md`, `.ts`, proof files), runs the per-block QA suite covering scholarly voice, AI-slop detection, section/chapter fit, canonical-vs-deprecated notation usage, and domain-boundary placement. Persists every finding to a sibling `<block>.qa.json` audit report (multi-reviewer, per-field SHA staleness). The watcher NEVER stops — when no events arrive it falls back to idle-sweep of the staleness backlog, rebuilding the audit knowledge base that feeds future content reviews. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, sibling-PR comment protocol) from `integration-watcher`."
+          "@value": "One-voice integration watcher — watches origin/main + open active PRs + newly-opened PRs for content-block changes (`.md`, `.ts`, proof files), runs the per-block QA suite covering scholarly voice, AI-slop detection, section/chapter fit, canonical-vs-deprecated notation usage, and domain-boundary placement. Persists every finding to a sibling `<block>.qa.json` audit report (multi-reviewer, per-field SHA staleness). The watcher NEVER stops — when no events arrive it falls back to idle-sweep of the staleness backlog, rebuilding the audit knowledge base that feeds future content reviews. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, sibling-PR comment protocol) from `local/integration-watcher`."
         }
       ],
       "skos:notation": "one-voice-integration-watcher",
@@ -2926,7 +2926,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and how to find every sink that needs a check."
+          "@value": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check."
         }
       ],
       "skos:notation": "path-containment",
@@ -3146,7 +3146,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Distinguish PRODUCTION (derived-only, no fits) from EXPLORATORY (empirical-fit probes OK as shape-hints) from NUMEROLOGY (post-hoc fits to known constants). The bright-line guide for which output goes where, the derivation-menu check, and the escalation path for off-menu coefficients, so empirical fits are not promoted into production scripts, \"closed\" status, dashboards or named constants."
+          "@value": "Distinguish PRODUCTION (derived-only, no fits) from EXPLORATORY (empirical-fit probes OK as shape-hints) from NUMEROLOGY (post-hoc fits to known constants). The hidden-extra-input / empirical-fit antipattern is a common review-churn source: agents promote empirical fits into production scripts, \"closed\" status, dashboards, and named constants without a derivation. This skill is the bright-line guide for which output goes where, the derivation-menu check, and the escalation path for off-menu coefficients."
         }
       ],
       "skos:notation": "production-vs-exploratory-discipline",
@@ -3276,7 +3276,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A folio's README is the author's file; the platform owns only the marked regions it generates. How the sync/audit split works, why the platform never generates a folio's prose, and the third state both tools must report."
+          "@value": "A folio's README is the author's file; the platform owns only the marked regions it generates. How the sync/audit split works, why the whole-file generator it replaced could not, and the third state both tools must report."
         }
       ],
       "skos:notation": "readme-sections",
@@ -3376,7 +3376,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: a `source.remote` entry in the downstream's root `index.config.json` (legacy: `remoteMounts` on its declaration) and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states."
+          "@value": "Bring a harness, and every instance it depends on, into a checkout that does not hold it, from another repository at a pinned commit, as declared directories with a lock: a `source.remote` entry in the downstream's root `index.config.json` (legacy: `remoteMounts` on its declaration) and `mountDefaults` on the harness. Covers when to mount and when to subscribe instead, why there are no submodules and no `.deps/`, the transitive closure through `needs` and gitlinks, overrides by id, the lock, and the three states. Bean 0mpw."
         }
       ],
       "skos:notation": "remote-mount",
@@ -3646,7 +3646,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Adding, rotating and revoking the credentials the harness's automation needs, one mechanism at a time, with the exact GitHub UI path for each step. Every step that touches a value is a person's; an agent drafts the steps, checks names and expiry dates, and records what was done. Leads with the GitHub App on a personal account, the recommended mechanism."
+          "@value": "Adding, rotating and revoking the credentials the harness's automation needs, one mechanism at a time, with the exact GitHub UI path for each step. Every step that touches a value is a person's; an agent drafts the steps, checks names and expiry dates, and records what was done. Leads with the GitHub App on a personal account, the recommended mechanism (owner ruling D1=A)."
         }
       ],
       "skos:notation": "secrets",
@@ -3721,7 +3721,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Session-start intent declaration + session-end results recording, against the work plan's goals (milestone beans) and their open beans. Enforces the durable-handoff discipline so any agent can pick up another's thread."
+          "@value": "Session-start intent declaration + session-end results recording, against the goal-scoped master ledger and queue file. Enforces the durable-handoff discipline so any agent can pick up another's thread."
         }
       ],
       "skos:notation": "session-intent",
@@ -3981,7 +3981,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A sub-KG is a knowledge graph staged as a directory inside a harnessed repository, declared as its own instance, that may later leave for a repository of its own. The lifecycle: declare it in place, grow it, stage it for separation (one import seam, the separation guard, a self-contained rehearsal), and then, each behind an explicit owner confirmation, create the repository, copy the staged contents in with history, re-point the declaration, verify on a fresh clone and delete the in-repo copy. The light sibling of kg-separation: use this for a DATA instance that leaves whole, and kg-separation when a graph must split into a content repository and a tools repository."
+          "@value": "A sub-KG is a knowledge graph staged as a directory inside a harnessed repository, declared as its own instance, that may later leave for a repository of its own. The lifecycle: declare it in place, grow it, stage it for separation (one import seam, the separation guard, a self-contained rehearsal), and then, each behind an explicit owner confirmation, create the repository, copy the staged contents in with history, re-point the declaration, verify on a fresh clone and delete the in-repo copy. Extracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-06 (beans n3ni, rbz3, kg83, hcpz). The light sibling of kg-separation: use this for a DATA instance that leaves whole, and kg-separation when a graph must split into a content repository and a tools repository."
         }
       ],
       "skos:notation": "sub-kg-lifecycle",
@@ -4056,7 +4056,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Running a SWOT situation analysis — the activities of `swot-analysis.bpmn`, what each step must produce, and the one thing the technique must never be used for. The method itself lives in the `methodology` graph and is not repeated here."
+          "@value": "Running a SWOT situation analysis — the four activities of `swot-analysis.bpmn`, what each step must produce, and the one thing the technique must never be used for. The method itself lives in the `methodology` graph and is not repeated here."
         }
       ],
       "skos:notation": "swot-analysis",
@@ -4076,7 +4076,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic platform skill."
+          "@value": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic folio-assistant platform skill."
         }
       ],
       "skos:notation": "symbiotic-interaction",
@@ -4096,7 +4096,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role."
+          "@value": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict since 2026-09-24, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role."
         }
       ],
       "skos:notation": "task-authorization",
@@ -4291,7 +4291,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Turning a declared theme into CSS — `bun run cat themes:css` — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art."
+          "@value": "Turning a declared theme into CSS — `bun run cat themes:css` — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of \"still not image\" had that one cause."
         }
       ],
       "skos:notation": "theme-generation",
@@ -4311,7 +4311,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be. At ingestion only; called from ingest-theme. Measures rather than asserts, and raises findings rather than fixing them."
+          "@value": "Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be. At ingestion only, by owner ruling; called from ingest-theme. Measures rather than asserts, and raises findings rather than fixing them."
         }
       ],
       "skos:notation": "theme-ui-review",
@@ -4551,7 +4551,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What an ingested file may be CALLED. Read before adding anything to an `uploads` or `library` graph, before writing a generator that links to one, and before \"fixing\" a broken link in a generated README. Covers which characters break what, why the name is normalised as well as the link escaped, how a sidecar stays paired with its source, and the one case the fixer refuses."
+          "@value": "What an ingested file may be CALLED. Read before adding anything to an `uploads` or `library` graph, before writing a generator that links to one, and before \"fixing\" a broken link in a generated README. Covers which characters break what, why the name is normalised rather than the link escaped, how a sidecar stays paired with its source, and the one case the fixer refuses."
         }
       ],
       "skos:notation": "upload-naming",
@@ -4806,7 +4806,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The router for filing decisions. This repository answers \"where does this go?\" ten separate times; this says WHICH question you are asking, so an agent who does not know a rule exists can find it. One discriminating question per row, and the skill that owns the answer."
+          "@value": "The router for filing decisions. This repository answers \"where does this go?\" nine separate times, each well, and nothing says WHICH question you are asking — so an agent who does not know a rule exists cannot look it up. One discriminating question per row, and the skill that owns the answer."
         }
       ],
       "skos:notation": "where-does-this-go",

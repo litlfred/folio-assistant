@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "one-voice-integration-watcher",
       "title": "/one-voice-integration-watcher",
-      "description": "One-voice integration watcher — watches origin/main + open active PRs + newly-opened PRs for content-block changes (`.md`, `.ts`, proof files), runs the per-block QA suite covering scholarly voice, AI-slop detection, section/chapter fit, canonical-vs-deprecated notation usage, and domain-boundary placement. Persists every finding to a sibling `<block>.qa.json` audit report (multi-reviewer, per-field SHA staleness). The watcher NEVER stops — when no events arrive it falls back to idle-sweep of the staleness backlog, rebuilding the audit knowledge base that feeds future content reviews. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, sibling-PR comment protocol) from `integration-watcher`.",
+      "description": "One-voice integration watcher — watches origin/main + open active PRs + newly-opened PRs for content-block changes (`.md`, `.ts`, proof files), runs the per-block QA suite covering scholarly voice, AI-slop detection, section/chapter fit, canonical-vs-deprecated notation usage, and domain-boundary placement. Persists every finding to a sibling `<block>.qa.json` audit report (multi-reviewer, per-field SHA staleness). The watcher NEVER stops — when no events arrive it falls back to idle-sweep of the staleness backlog, rebuilding the audit knowledge base that feeds future content reviews. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, sibling-PR comment protocol) from `local/integration-watcher`.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/one-voice-integration-watcher.md",
-      "instructionLines": 283,
+      "instructionLines": 294,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

@@ -233,30 +233,35 @@ now?</strong> If yes, it is not blocked — it is in progress with a question at
   
 </h3><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## Blocked on</span>
 <span class="p">
--</span> <span class="gs">**waits on:**</span> the Tools-schema carrier decision
+-</span> <span class="gs">**waits on:**</span> the Tools-schema carrier decision (#223)
 <span class="p">-</span> <span class="gs">**since:**</span> 2026-09-18T17:20Z
 <span class="p">-</span> <span class="gs">**expires:**</span> 2026-09-20T17:20Z
 <span class="p">-</span> <span class="gs">**handoff:**</span> if no answer by then, proceed with the JSON-LD carrier as
   recommended and note the assumption in the PR body.
-</code></pre></div></div><p>The bean’s <code class="language-plaintext highlighter-rouge">status</code> stays <code class="language-plaintext highlighter-rouge">in-progress</code>. <strong><code class="language-plaintext highlighter-rouge">status: blocked</code> does not exist</strong>:
-<code class="language-plaintext highlighter-rouge">beans update --status</code> accepts only <code class="language-plaintext highlighter-rouge">in-progress</code>, <code class="language-plaintext highlighter-rouge">todo</code>, <code class="language-plaintext highlighter-rouge">draft</code>,
-<code class="language-plaintext highlighter-rouge">completed</code> and <code class="language-plaintext highlighter-rouge">scrapped</code> (<code class="language-plaintext highlighter-rouge">schemas/tools/tool-types.ts</code> lists the same
-five). A block written only in prose has no date that can expire.</p><p><strong><code class="language-plaintext highlighter-rouge">expires</code> is an ABSOLUTE timestamp, not <code class="language-plaintext highlighter-rouge">+48h</code>.</strong> A relative offset has to be
+</code></pre></div></div><p>The bean’s <code class="language-plaintext highlighter-rouge">status</code> stays <code class="language-plaintext highlighter-rouge">in-progress</code>. <strong><code class="language-plaintext highlighter-rouge">status: blocked</code> does not exist</strong>,
+and this skill told agents to write it until 2026-09-22 — which is why the
+record below was never created even once.</p><blockquote><div class="table-wrapper"><table><thead><tr><th>source</th><th>accepts</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">beans update --help</code></td><td><em>“in-progress, todo, draft, completed, scrapped”</em></td></tr><tr><td><code class="language-plaintext highlighter-rouge">schemas/tools/tool-types.ts</code></td><td>the same five — <em>“Exactly what <code class="language-plaintext highlighter-rouge">beans update --status</code> accepts”</em></td></tr></tbody></table></div><p>Measured across the 99 in-progress beans on <code class="language-plaintext highlighter-rouge">main</code> that day: <strong>0</strong> carried
+<code class="language-plaintext highlighter-rouge">expires</code>, <strong>0</strong> carried <code class="language-plaintext highlighter-rouge">status: blocked</code> (it does not parse), 4 asserted a
+block in a structured way and 26 more only in prose. A prescribed form the
+tool refuses is not a strict rule — it is a rule with a <strong>0 % compliance
+ceiling</strong>, and every one of those 26 blocks fell back to prose that no date
+can expire. Bean <code class="language-plaintext highlighter-rouge">zldg</code>.</p></blockquote><p><strong><code class="language-plaintext highlighter-rouge">expires</code> is an ABSOLUTE timestamp, not <code class="language-plaintext highlighter-rouge">+48h</code>.</strong> A relative offset has to be
 read against <code class="language-plaintext highlighter-rouge">since</code> by whoever finds it, which means a stale block stays
 arguable; a timestamp is either in the past or it is not. <code class="language-plaintext highlighter-rouge">check:bean-blocks</code>
 enforces the four fields on any bean carrying this heading.</p><h3 id="an-external-blocks-expiry-is-a-re-ask-date-not-a-takeover-date"><a href="#an-external-blocks-expiry-is-a-re-ask-date-not-a-takeover-date" class="anchor-heading" aria-labelledby="an-external-blocks-expiry-is-a-re-ask-date-not-a-takeover-date"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An external block’s expiry is a RE-ASK date, not a takeover date
   
   
-</h3><p>A bean waiting on an external party (a standards body finalising a model, for
-example) has no honest date on which an agent should “take that over” —
-inventing one would fabricate someone else’s schedule. So an expiry answers <em>“when should somebody look at this again”</em>, and the
+</h3><p>The corpus forced this the day the gate was written. <code class="language-plaintext highlighter-rouge">cz17</code> waits on <strong>WHO’s
+DAK Logical Model being final in FHIR</strong>. There is no honest date on which an
+agent should “take that over” — inventing one would be fabricating a schedule
+for a standards body, which is worse than no expiry at all.</p><p>So an expiry answers <em>“when should somebody look at this again”</em>, and the
 <strong>handoff says which kind it is</strong>:</p><ul><li>a block on work inside this repository → on expiry, take it over;</li><li>a block on an external party, an owner ruling, or another bean → on expiry,
 <strong>re-raise and move the date out</strong>, saying so.</li></ul><p>Both are checkable, and neither lets a bean sit forever unexamined. What the
 gate refuses is an expiry that is <em>absent</em>, not one that gets extended with a
 reason.</p><p><strong>The expiry is the part that matters.</strong> A block with no expiry is
-indistinguishable from abandoned work. An expired block is a <em>signal</em> to act on
-its handoff — take it over, or re-raise it — rather than a bean quietly sitting
-forever.</p><h2 id="prefer-sub-beans-to-blocking"><a href="#prefer-sub-beans-to-blocking" class="anchor-heading" aria-labelledby="prefer-sub-beans-to-blocking"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Prefer sub-beans to blocking
+indistinguishable from abandoned work, and the agent that finds it has no way
+to tell whether to wait or take over. An expired block is a <em>signal</em> — it means
+“take this over” — rather than a bean quietly sitting forever.</p><h2 id="prefer-sub-beans-to-blocking"><a href="#prefer-sub-beans-to-blocking" class="anchor-heading" aria-labelledby="prefer-sub-beans-to-blocking"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Prefer sub-beans to blocking
   
   
 </h2><p>Most blocks are really “one part of this is stuck”. Split it: the stuck part

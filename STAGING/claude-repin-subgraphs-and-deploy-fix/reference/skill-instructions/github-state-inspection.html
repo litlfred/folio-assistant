@@ -103,7 +103,7 @@
   @media print, (forced-colors: active) {
     html:root { background-image: none; }
   }
-</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/github-state-inspection.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-rule","label":"The rule"},{"href":"#first-check-for-any-deployment-question","label":"First check for ANY deployment question"},{"href":"#present-on-the-ref-is-not-the-same-as-served--read-the-pages-deployment","label":"Present on the ref is not the same as SERVED — read the Pages deployment"},{"href":"#why-curl-is-not-the-first-check-and-often-not-evidence-at-all","label":"Why curl is not the first check, and often not evidence at all"},{"href":"#ci-state--read-check-runs-on-the-head-sha","label":"CI state — read check RUNS on the head sha","children":[{"href":"#a-clean-check-set-and-a-complete-check-set-are-different-questions","label":"A clean check set and a COMPLETE check set are different questions","depth":1}],"fold":"1 sub-section"},{"href":"#order-of-resort","label":"Order of resort"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/github-state-inspection.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-rule","label":"The rule"},{"href":"#first-check-for-any-deployment-question","label":"First check for ANY deployment question"},{"href":"#present-on-the-ref-is-not-the-same-as-served--read-the-pages-deployment","label":"Present on the ref is not the same as SERVED — read the Pages deployment"},{"href":"#why-curl-is-not-the-first-check-and-often-not-evidence-at-all","label":"Why curl is not the first check, and often not evidence at all"},{"href":"#ci-state--read-check-runs-on-the-head-sha","label":"CI state — read check RUNS on the head sha","children":[{"href":"#a-clean-check-set-and-a-complete-check-set-are-different-questions","label":"A clean check set and a COMPLETE check set are different questions","depth":1}],"fold":"1 sub-section"},{"href":"#order-of-resort","label":"Order of resort"},{"href":"#where-the-agent-goes-wrong-measured","label":"Where the agent goes wrong, measured"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
 function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
 function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
@@ -222,13 +222,24 @@ in an HTTP request. This skill says which to reach for and in what order.</p><h2
   
   
 </h2><blockquote><p><strong>A published URL is LOOKED UP in the publish ref’s tree. It is never built
-from the source path.</strong></p></blockquote><p><code class="language-plaintext highlighter-rouge">cat-harness/docs/guides/agent-onboarding.md</code> publishes to
-<code class="language-plaintext highlighter-rouge">/docs/cat-harness/guides/agent-onboarding.html</code>: the layer segment moves from
-in front of <code class="language-plaintext highlighter-rouge">docs/</code> to behind it. Anyone composing the URL from the source
-path gets a 404 and concludes the page is missing.</p><p>Source paths also move, and some pages (proposals, for one) are kept in the
-repository but <strong>deliberately unpublished</strong>. A URL composed from a remembered
-source path can assert a page exists where the repository has decided none
-should.</p><h2 id="first-check-for-any-deployment-question"><a href="#first-check-for-any-deployment-question" class="anchor-heading" aria-labelledby="first-check-for-any-deployment-question"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> First check for ANY deployment question
+from the source path.</strong></p></blockquote><p><code class="language-plaintext highlighter-rouge">folio-assistant/docs/guides/agent-onboarding.md</code> publishes to
+<code class="language-plaintext highlighter-rouge">/guides/agent-onboarding.html</code>. The <code class="language-plaintext highlighter-rouge">folio-assistant/</code> segment is a
+source-tree stub that Jekyll does not carry into the site. Anyone composing
+the URL from the source path gets a 404 and concludes the page is missing.</p><p><strong>And a source path moves under you.</strong> The worked example below was
+<code class="language-plaintext highlighter-rouge">docs/folio-assistant/proposals/bootstrap.md</code>; the stub pattern inverted it to
+<code class="language-plaintext highlighter-rouge">folio-assistant/docs/proposals/</code> (bean <code class="language-plaintext highlighter-rouge">wggr</code>), and then proposals were
+relocated out of the site entirely to <code class="language-plaintext highlighter-rouge">fsh-guts/proposals/</code> — and back INTO it on
+2026-09-23, to <code class="language-plaintext highlighter-rouge">cat-harness/docs/proposals/</code>, on the owner’s ruling that a
+proposal belongs in the <code class="language-plaintext highlighter-rouge">docs/</code> of the stub that needs it. The sentence is kept
+rather than rewritten because what it describes did happen; what is kept and
+addressable but <strong>deliberately unpublished</strong> — so that page has no URL at all
+now. Three moves in one day, and a URL composed from any remembered source
+path would have been wrong after each. The third move is the worst case for
+composing, because the composed URL is not merely the wrong path: it asserts a
+page exists where the repository has decided none should.</p><p>This is the same defect <code class="language-plaintext highlighter-rouge">AGENTS.md</code> records for generated README links —
+<em>“It composed links instead of resolving them”</em>, where all twenty-three
+chapter PDF links were 404 and always had been — arriving one layer up, in an
+agent’s own reasoning rather than in a generator.</p><h2 id="first-check-for-any-deployment-question"><a href="#first-check-for-any-deployment-question" class="anchor-heading" aria-labelledby="first-check-for-any-deployment-question"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> First check for ANY deployment question
   
   
 </h2><p><strong>Look at the branch.</strong> Not the site.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git ls-remote origin refs/heads/gh-pages        <span class="c"># does the publish ref exist at all</span>
@@ -252,11 +263,13 @@ deployment is an older tree.</p><div class="language-sh highlighter-rouge"><div 
 </code></pre></div></div><p>and the deployments themselves, which only the API has:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>actions_list  method: list_workflow_runs
               workflow_runs_filter: { branch: "gh-pages", event: "dynamic" }
 </code></pre></div></div><p>Read <code class="language-plaintext highlighter-rouge">conclusion</code> per run, not just the newest — <code class="language-plaintext highlighter-rouge">cancelled</code> is the one that
-misleads, because nothing is red and yet nothing shipped from that commit.
-Each staging deploy pushes <em>two</em> commits about ten seconds apart, the payload
-(<code class="language-plaintext highlighter-rouge">staging(&lt;slug&gt;): from &lt;sha&gt;</code>) and then <code class="language-plaintext highlighter-rouge">render-log: rendered …</code>, and the
-second reliably cancels the first’s build, so on a busy publish ref many recent
-deployments read <code class="language-plaintext highlighter-rouge">cancelled</code>.</p><p>So when a preview 404s and the file <strong>is</strong> on the ref:</p><ol><li>Check whether a deployment has succeeded <em>since</em> the commit that added it.
+misleads, because nothing is red and yet nothing shipped from that commit.</p><p>Measured 2026-09-20, on a repository with four concurrent agent sessions:
+<strong>64 commits to <code class="language-plaintext highlighter-rouge">gh-pages</code> in 90 minutes</strong>, and <strong>6 of the last 10 Pages
+deployments <code class="language-plaintext highlighter-rouge">cancelled</code></strong>. The pattern was exact rather than random — each
+staging deploy pushes <em>two</em> commits about ten seconds apart, the payload
+(<code class="language-plaintext highlighter-rouge">staging(&lt;slug&gt;): from &lt;sha&gt;</code>) and then <code class="language-plaintext highlighter-rouge">render-log: rendered …</code>, and the second
+reliably cancels the first’s build. Two pushes, two builds, one of them always
+wasted.</p><p>So when a preview 404s and the file <strong>is</strong> on the ref:</p><ol><li>Check whether a deployment has succeeded <em>since</em> the commit that added it.
 A <code class="language-plaintext highlighter-rouge">cancelled</code> newest run with an older success means the tree being served
 predates your push.</li><li>Check whether your subtree survives in that older tree too — on a ref this
 busy, <code class="language-plaintext highlighter-rouge">git cat-file -e &lt;commit&gt;:&lt;path&gt;</code> over the recent commits answers
@@ -271,7 +284,9 @@ plus what you could and could not establish — not “it is probably propagatio
 </h2><p>Three distinct failures produce an identical-looking result, and only one of
 them means the page is missing:</p><div class="table-wrapper"><table><thead><tr><th>what you see</th><th>what it can mean</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">404</code></td><td>the page is not published — <strong>or</strong> your URL was composed wrong</td></tr><tr><td><code class="language-plaintext highlighter-rouge">000</code>, <code class="language-plaintext highlighter-rouge">CONNECT tunnel failed, response 403</code></td><td>the agent’s proxy blocks the host. Says <strong>nothing</strong> about the site</td></tr><tr><td><code class="language-plaintext highlighter-rouge">200</code> on a stale page</td><td>the deploy has not run yet; the old build is still served</td></tr></tbody></table></div><p>In a Claude Code container, outbound HTTPS goes through a proxy that <strong>blocks
 <code class="language-plaintext highlighter-rouge">github.io</code></strong>. A <code class="language-plaintext highlighter-rouge">curl</code> against a Pages URL from here returns <code class="language-plaintext highlighter-rouge">000</code> and a 403
-tunnel error regardless of whether the page exists.</p><p><strong>“Could not determine” is a third state and must never be rendered as a
+tunnel error regardless of whether the page exists. Reporting that as “could
+not determine whether it rendered” is honest but useless when the ref was
+sitting there with the answer.</p><p><strong>“Could not determine” is a third state and must never be rendered as a
 pass</strong> — but it is also not a place to stop when another source can determine
 it. Reach for the ref first, and a fetch only to confirm something the ref
 cannot tell you (that a redirect works, that a asset loads).</p><h2 id="ci-state--read-check-runs-on-the-head-sha"><a href="#ci-state--read-check-runs-on-the-head-sha" class="anchor-heading" aria-labelledby="ci-state--read-check-runs-on-the-head-sha"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> CI state — read check RUNS on the head sha
@@ -281,7 +296,7 @@ cannot tell you (that a redirect works, that a asset loads).</p><h2 id="ci-state
 the second. <code class="language-plaintext highlighter-rouge">pull_request_read</code> with <code class="language-plaintext highlighter-rouge">method: "get_status"</code> returns
 <code class="language-plaintext highlighter-rouge">{"state":"pending","total_count":0,"statuses":[]}</code> on a PR whose eight checks
 are green, because there are no legacy statuses to report. Use
-<code class="language-plaintext highlighter-rouge">method: "get_check_runs"</code>.</p><p>Further traps:</p><ul><li><strong>Check the sha.</strong> A <code class="language-plaintext highlighter-rouge">check_suite.completed</code> event names a <code class="language-plaintext highlighter-rouge">head_sha</code> that
+<code class="language-plaintext highlighter-rouge">method: "get_check_runs"</code>.</p><p>Two further traps:</p><ul><li><strong>Check the sha.</strong> A <code class="language-plaintext highlighter-rouge">check_suite.completed</code> event names a <code class="language-plaintext highlighter-rouge">head_sha</code> that
 may already be superseded by your own later push, and the staging workflow’s
 own commits appear as shas that are not PR heads at all. Compare against the
 PR’s current head before concluding anything.</li><li><strong><code class="language-plaintext highlighter-rouge">mergeable_state: "unknown"</code></strong> means GitHub has not finished computing it,
@@ -293,16 +308,20 @@ run list that is only PART of the check set. See below.</li></ul><h3 id="a-clean
 failed. Its own harness note admits the gap: <em>suites with no runs, cancelled
 suites and legacy statuses are not covered; verify the PR’s overall state
 before acting.</em> So the event is evidence about the suites that EXIST, and
-silence about the ones that do not yet.</p><p>The same hole exists one layer down: a classifier that guards only the EMPTY
-run list passes a PARTIAL one — one clean run where thirteen are owed reads as
-<code class="language-plaintext highlighter-rouge">PASS — 1 check(s) completed clean</code>.</p><p><strong>So before reading a clean check set as green, ask whether it is the whole
-set.</strong> <code class="language-plaintext highlighter-rouge">check:head-has-run</code> answers it — <code class="language-plaintext highlighter-rouge">coverageFor</code> reconciles the runs
-against the workflows the tree itself declares, and <code class="language-plaintext highlighter-rouge">mergeStateForHead</code>
-returns <code class="language-plaintext highlighter-rouge">conflicted</code> for the case below. <code class="language-plaintext highlighter-rouge">bun run cat ci:watch</code> composes both.
-<strong>Do not build a second reconciliation</strong>; two answers to one question are free
-to disagree.</p><p>Four causes of an absent-or-inert run, which must not collapse into one
-silence. The fourth is not an absence: the run exists, it completed, and it
-executed nothing.</p><div class="table-wrapper"><table><thead><tr><th>cause</th><th>how it reads</th><th>what to do</th></tr></thead><tbody><tr><td><strong>a conflicted head</strong></td><td>no <code class="language-plaintext highlighter-rouge">pull_request</code> run is published AT ALL — the forge mints no <code class="language-plaintext highlighter-rouge">refs/pull/N/merge</code>, and a <code class="language-plaintext highlighter-rouge">pull_request</code> run checks that ref out</td><td>merge the base in. The checks are not slow; they are never coming</td></tr><tr><td><strong>a filtered trigger that owed no run</strong></td><td>genuinely nothing was due</td><td>stay silent — loosening this produces false fires</td></tr><tr><td><strong>a run never created, unexplained</strong></td><td>a workflow the tree declares <code class="language-plaintext highlighter-rouge">on: pull_request</code> has no run and the head is mergeable</td><td>a <strong>finding</strong>, not a wait</td></tr><tr><td><strong>a bot-actor push</strong></td><td>the runs EXIST and are <code class="language-plaintext highlighter-rouge">completed</code>, with <code class="language-plaintext highlighter-rouge">conclusion: action_required</code> — approval was owed and never given, so no job ran</td><td>read the dispatched run instead; see below</td></tr></tbody></table></div><p>A <code class="language-plaintext highlighter-rouge">draft</code> PR is a fifth reading of the same silence: <code class="language-plaintext highlighter-rouge">Code-quality gates</code> does
+silence about the ones that do not yet.</p><p>The same hole one layer down cost real pushes. Measured twice on 2026-09-30:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>16:13:58  29b10a68923  PASS — 1 check(s) completed clean
+17:25:41  0d714756f3d  PASS — 1 check(s) completed clean
+</code></pre></div></div><p>exit <strong>0</strong> both times, against <code class="language-plaintext highlighter-rouge">total_count: 1</code>, while thirteen checks ran on
+neighbouring commits of the same branch. The second was authorised for merge on
+that verdict. The classifier guarded the EMPTY run list; with one clean run a
+PARTIAL list reached the pass branch carrying a plausible number, which is what
+made it convincing.</p><p><strong>So before reading a clean check set as green, ask whether it is the whole
+set.</strong> <code class="language-plaintext highlighter-rouge">check:head-has-run</code> (bean <code class="language-plaintext highlighter-rouge">3pqn</code>) already answers it — <code class="language-plaintext highlighter-rouge">coverageFor</code>
+reconciles the runs against the workflows the tree itself declares, and
+<code class="language-plaintext highlighter-rouge">mergeStateForHead</code> returns <code class="language-plaintext highlighter-rouge">conflicted</code> for the case below. <code class="language-plaintext highlighter-rouge">bun run cat ci:watch</code>
+composes both since #1664. <strong>Do not build a second reconciliation</strong>; two
+answers to one question are free to disagree.</p><p>Four causes of an absent-or-inert run, which must not collapse into one
+silence. The fourth is not an ABSENCE at all, which is why it hid: the run
+exists, it completed, and it executed nothing.</p><div class="table-wrapper"><table><thead><tr><th>cause</th><th>how it reads</th><th>what to do</th></tr></thead><tbody><tr><td><strong>a conflicted head</strong></td><td>no <code class="language-plaintext highlighter-rouge">pull_request</code> run is published AT ALL — the forge mints no <code class="language-plaintext highlighter-rouge">refs/pull/N/merge</code>, and a <code class="language-plaintext highlighter-rouge">pull_request</code> run checks that ref out (bean <code class="language-plaintext highlighter-rouge">52cz</code>)</td><td>merge the base in. The checks are not slow; they are never coming</td></tr><tr><td><strong>a filtered trigger that owed no run</strong></td><td>genuinely nothing was due</td><td>stay silent — <code class="language-plaintext highlighter-rouge">g62s</code> measured that loosening this produces false fires</td></tr><tr><td><strong>a run never created, unexplained</strong></td><td>a workflow the tree declares <code class="language-plaintext highlighter-rouge">on: pull_request</code> has no run and the head is mergeable</td><td>a <strong>finding</strong> (bean <code class="language-plaintext highlighter-rouge">3pqn</code>), not a wait</td></tr><tr><td><strong>a bot-actor push</strong></td><td>the runs EXIST and are <code class="language-plaintext highlighter-rouge">completed</code>, with <code class="language-plaintext highlighter-rouge">conclusion: action_required</code> — approval was owed and never given, so no job ran (bean <code class="language-plaintext highlighter-rouge">0qjq</code>)</td><td>read the dispatched run instead; see below</td></tr></tbody></table></div><p>A <code class="language-plaintext highlighter-rouge">draft</code> PR is a fifth reading of the same silence: <code class="language-plaintext highlighter-rouge">Code-quality gates</code> does
 not fire from <code class="language-plaintext highlighter-rouge">pull_request</code> while a PR is a draft, so a draft head owes those
 runs no more than a filtered trigger does. Mark it ready, do not dispatch.</p><h4 id="conclusion-action_required-is-not-a-failure-and-not-a-pass"><a href="#conclusion-action_required-is-not-a-failure-and-not-a-pass" class="anchor-heading" aria-labelledby="conclusion-action_required-is-not-a-failure-and-not-a-pass"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">conclusion: action_required</code> is not a failure, and not a pass
   
@@ -312,24 +331,30 @@ conclusion that is neither <code class="language-plaintext highlighter-rouge">su
 <code class="language-plaintext highlighter-rouge">conclusion != "failure"</code> reads it as fine and one written as
 <code class="language-plaintext highlighter-rouge">conclusion == "success"</code> reads the head as merely incomplete. Neither says
 what is true: <strong>the workflow was reached, approval was owed, and no job body
-executed.</strong></p><p>A head pushed by a bot actor gets <code class="language-plaintext highlighter-rouge">pull_request</code> runs that are all
-<code class="language-plaintext highlighter-rouge">action_required</code>; a head pushed by a session gets runs that execute.</p><p><strong>The merge-forward bot does not void the gates.</strong> With no <code class="language-plaintext highlighter-rouge">MERGE_MAIN_TOKEN</code>
-set, <code class="language-plaintext highlighter-rouge">merge-main.yml</code> <strong>dispatches</strong> both gating workflows —
-<code class="language-plaintext highlighter-rouge">code-quality-gates.yml</code> and <code class="language-plaintext highlighter-rouge">jsonld-gen-check.yml</code> — so the merge commit is
-proved by CI rather than trusted; Feature Staging is left alone because it is
-preview-only. Such a head shows the pair <code class="language-plaintext highlighter-rouge">pull_request: action_required</code> beside
+executed.</strong></p><p>Established by intervention rather than inference, on #1939, 2026-10-03 — four
+consecutive commits alternating strictly with the pushing actor:</p><div class="table-wrapper"><table><thead><tr><th>head</th><th>pushed by</th><th><code class="language-plaintext highlighter-rouge">pull_request</code> runs</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">915370757a0</code></td><td>bot</td><td>all three <code class="language-plaintext highlighter-rouge">action_required</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">4c188f31368</code></td><td>a session</td><td>executed</td></tr><tr><td><code class="language-plaintext highlighter-rouge">dea5195eece</code></td><td>bot</td><td>all three <code class="language-plaintext highlighter-rouge">action_required</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">96926836d53</code></td><td>a session</td><td>executed</td></tr></tbody></table></div><p><strong>And the compensation is real, which corrects the obvious conclusion.</strong> It is
+tempting to say the merge-forward bot voids the gates it helps. It does not:
+with no <code class="language-plaintext highlighter-rouge">MERGE_MAIN_TOKEN</code> set, <code class="language-plaintext highlighter-rouge">merge-main.yml</code> <strong>dispatches</strong> both gating
+workflows — <code class="language-plaintext highlighter-rouge">code-quality-gates.yml</code> and <code class="language-plaintext highlighter-rouge">jsonld-gen-check.yml</code> — so the merge
+commit is proved by CI rather than trusted, and Feature Staging is left alone
+because it is preview-only. Measured on #1947, #1888, #1892, #1808 and #1804:
+every one shows the same pair, <code class="language-plaintext highlighter-rouge">pull_request: action_required</code> beside
 <code class="language-plaintext highlighter-rouge">workflow_dispatch: success</code>, on the identical head sha.</p><p>So the rule for reading a head is <strong>by workflow and sha, never by event</strong>: a
 <code class="language-plaintext highlighter-rouge">workflow_dispatch</code> run of an owed workflow on the exact head is proof, and
 after a merge-forward it is arguably better proof, because the branch tip
 already contains the base and the dispatch tests the merged content rather
-than a synthesised merge ref. <code class="language-plaintext highlighter-rouge">check:head-has-run</code> already reads it this way,
-so do not add an event filter to it.</p><p><code class="language-plaintext highlighter-rouge">MERGE_MAIN_TOKEN</code> is a <strong>convenience</strong>, not a correctness fix: it makes the
-PR’s own runs fire on the bot’s push instead of needing a dispatch. Do not
-hand-push commits to “restore” gates that already ran.</p><p><strong>Ask whether the BASE moved before calling any verdict non-deterministic.</strong> A
+than a synthesised merge ref. <code class="language-plaintext highlighter-rouge">check:head-has-run</code> already reads it this way —
+its own header records crediting <code class="language-plaintext highlighter-rouge">Code-quality gates</code> via <code class="language-plaintext highlighter-rouge">workflow_dispatch</code>
+alone on #1222 — so do not add an event filter to it.</p><p>The consequence worth carrying: <code class="language-plaintext highlighter-rouge">MERGE_MAIN_TOKEN</code> (#1829 D1) is a
+<strong>convenience</strong>, not a correctness fix. It makes the PR’s own runs fire on the
+bot’s push instead of needing a dispatch. Saying the bot leaves its merges
+unproved is wrong, and a steward who believes it will hand-push commits to
+“restore” gates that already ran.</p><p><strong>Ask whether the BASE moved before calling any verdict non-deterministic.</strong> A
 <code class="language-plaintext highlighter-rouge">pull_request</code> run tests the head merged with <code class="language-plaintext highlighter-rouge">main</code> as it was at push time, so
-main moving flips verdicts in both directions with no change to your branch —
-a green head can become a red merge commit, and a red check can turn green when
-a sibling’s fix lands. That is not a flapping gate.</p><h2 id="order-of-resort"><a href="#order-of-resort" class="anchor-heading" aria-labelledby="order-of-resort"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Order of resort
+main moving flips verdicts in both directions with no change to your branch. On
+2026-09-30 it turned a green branch head into a red merge commit, and six
+minutes later turned a red check green when a sibling’s fix landed mid-cycle.
+The second was diagnosed as a flapping gate; it was not. One command settles it.</p><h2 id="order-of-resort"><a href="#order-of-resort" class="anchor-heading" aria-labelledby="order-of-resort"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Order of resort
   
   
 </h2><ol><li><strong>The ref</strong> — <code class="language-plaintext highlighter-rouge">git ls-tree</code> / <code class="language-plaintext highlighter-rouge">get_file_contents</code>. Authoritative for what
@@ -341,6 +366,15 @@ otherwise.</li></ol><p><strong>From a cloud agent container, use REST.</strong> 
 <code class="language-plaintext highlighter-rouge">gh pr view</code> and other GraphQL-backed <code class="language-plaintext highlighter-rouge">gh</code> commands fail; <code class="language-plaintext highlighter-rouge">gh api repos/...</code>
 works. Actions log blob URLs return 403 through the same proxy, so read logs
 with the GitHub MCP <code class="language-plaintext highlighter-rouge">get_job_logs</code> (<code class="language-plaintext highlighter-rouge">return_content</code>, <code class="language-plaintext highlighter-rouge">tail_lines</code>), not by
-fetching the URL it would hand you.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+fetching the URL it would hand you.</p><h2 id="where-the-agent-goes-wrong-measured"><a href="#where-the-agent-goes-wrong-measured" class="anchor-heading" aria-labelledby="where-the-agent-goes-wrong-measured"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the agent goes wrong, measured
+  
+  
+</h2><p>2026-09-19. A new proposal page was published and I reported that I <em>could not
+verify it rendered</em>, on the strength of two <code class="language-plaintext highlighter-rouge">curl</code> calls that returned <code class="language-plaintext highlighter-rouge">000</code>
+because the proxy had refused the tunnel — and I had built the URL from
+<code class="language-plaintext highlighter-rouge">docs/folio-assistant/proposals/</code> rather than resolving it. One
+<code class="language-plaintext highlighter-rouge">git ls-tree -r FETCH_HEAD | grep proposal</code> showed the page present at
+<code class="language-plaintext highlighter-rouge">proposals/bootstrap.html</code>. Both halves of the error — a composed URL and a
+fetch mistaken for evidence — are what this skill exists to prevent.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

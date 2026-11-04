@@ -221,8 +221,9 @@ something downstream consumes serially. <code class="language-plaintext highligh
 <code class="language-plaintext highlighter-rouge">cat/cat-harness/*</code> store branch is one. A feature branch is <strong>not</strong> — it has
 one writer and no downstream serialisation, and giving it a steward buys
 nothing and adds a single point of failure.</p><p>A watched ref is <code class="language-plaintext highlighter-rouge">main</code>, <code class="language-plaintext highlighter-rouge">gh-pages</code>, or a branch a declaring directory’s
-<code class="language-plaintext highlighter-rouge">storage</code> (or <code class="language-plaintext highlighter-rouge">source</code>) names. There is no central table. A ref nothing
-declares is not a watched ref, and this skill does not apply to it.</p><h2 id="what-a-steward-is-for-and-what-it-must-not-become"><a href="#what-a-steward-is-for-and-what-it-must-not-become" class="anchor-heading" aria-labelledby="what-a-steward-is-for-and-what-it-must-not-become"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a steward is FOR, and what it must not become
+<code class="language-plaintext highlighter-rouge">storage</code> (or <code class="language-plaintext highlighter-rouge">source</code>) names. There is no central table: <code class="language-plaintext highlighter-rouge">special-branches.json</code>
+was removed on 2026-10-05 (owner). A ref nothing declares is not a watched
+ref, and this skill does not apply to it.</p><h2 id="what-a-steward-is-for-and-what-it-must-not-become"><a href="#what-a-steward-is-for-and-what-it-must-not-become" class="anchor-heading" aria-labelledby="what-a-steward-is-for-and-what-it-must-not-become"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a steward is FOR, and what it must not become
   
   
 </h2><p><a href="../../reference/skill-instructions/role-model.html"><code class="language-plaintext highlighter-rouge">role-model</code></a>: nothing <em>is</em> a
@@ -230,20 +231,25 @@ steward. An actor <strong>acts as</strong> one inside a process, for the duratio
 over <strong>one named ref</strong>. The ref is a parameter of the lane instance, not a
 property of the persona — which is why <code class="language-plaintext highlighter-rouge">merge-steward</code> names no ref in its own
 description and why a second contended ref can acquire a steward without a
-schema change.</p><p>The rule it inherits from <a href="../../reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code></a>:</p><blockquote><p><strong>A steward stores DECISIONS. It never stores a fact the host already
+schema change.</p><p>The rule it inherits from <a href="../../reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code></a> is the one that keeps
+it honest:</p><blockquote><p><strong>A steward stores DECISIONS. It never stores a fact the host already
 knows.</strong></p></blockquote><p>So a window may record <em>when it opened, when it must close, who holds it, and
 who takes over</em>. It must never record the ref’s tip SHA, a deployment’s
 conclusion, or whether the site is live. Those move, and a stored copy is a
 second answer that goes stale on the next push.
 <code class="language-plaintext highlighter-rouge">MergeQueueEntrySchema.FORBIDDEN_FACT_KEYS</code> refuses the tempting ones by name;
-a ref window is a sibling object under the same rule.</p><h2 id="a-window-is-not-a-hold-and-the-difference-is-what-ends-it"><a href="#a-window-is-not-a-hold-and-the-difference-is-what-ends-it" class="anchor-heading" aria-labelledby="a-window-is-not-a-hold-and-the-difference-is-what-ends-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A window is NOT a hold, and the difference is what ends it
+a ref window is a sibling object under the same rule, and inherits the
+temptation along with it.</p><h2 id="a-window-is-not-a-hold-and-the-difference-is-what-ends-it"><a href="#a-window-is-not-a-hold-and-the-difference-is-what-ends-it" class="anchor-heading" aria-labelledby="a-window-is-not-a-hold-and-the-difference-is-what-ends-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A window is NOT a hold, and the difference is what ends it
   
   
-</h2><p>Per <a href="../../reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code> §”A hold has an EXPIRY and a trigger”</a>, a
-hold ends on <strong>the observation that lifts it, not a time</strong>. A hold whose reason
-you cannot restate from current facts is a habit.</p><p>A coalescing window looks like a hold and is a different object:</p><div class="table-wrapper"><table><thead><tr><th></th><th><strong>hold</strong></th><th><strong>coalescing window</strong></th></tr></thead><tbody><tr><td>what it is waiting for</td><td>a condition to become true</td><td><strong>more arrivals</strong></td></tr><tr><td>what ends it</td><td>the observation that lifts it</td><td>the clock, <em>and</em> a bound</td></tr><tr><td>why not the other way</td><td>a time cannot know the condition cleared</td><td><em>“no more arrivals”</em> is only ever observable by waiting</td></tr></tbody></table></div><p>A window is timed because it waits on the absence of a future event, which has
-no observation; a hold waits on a present condition, which does.</p><p><strong>A hold that never ends starves, and a window that never closes starves
-identically.</strong>
+</h2><p><a href="../../reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code> §”A hold has an EXPIRY and a trigger”</a> is
+emphatic, and right: a hold ends on <strong>the observation that lifts it, not a
+time</strong>. A hold whose reason you cannot restate from current facts is a habit,
+and the measured case cost four clean PRs roughly forty minutes.</p><p>A coalescing window looks like a hold and is a different object:</p><div class="table-wrapper"><table><thead><tr><th></th><th><strong>hold</strong></th><th><strong>coalescing window</strong></th></tr></thead><tbody><tr><td>what it is waiting for</td><td>a condition to become true</td><td><strong>more arrivals</strong></td></tr><tr><td>what ends it</td><td>the observation that lifts it</td><td>the clock, <em>and</em> a bound</td></tr><tr><td>why not the other way</td><td>a time cannot know the condition cleared</td><td><em>“no more arrivals”</em> is only ever observable by waiting</td></tr></tbody></table></div><p><strong>That is the whole justification for a window being timed, and it is narrow.</strong>
+A window batches writes that are arriving <em>now</em> into one write, so the thing it
+waits on is the absence of a future event — and absence of a future event has no
+observation. A hold waits on a present condition, which does.</p><p>Both fail the same way, and the symmetry is the thing to remember: <strong>a hold
+that never ends starves, and a window that never closes starves identically.</strong>
 So a window carries a hard maximum and closes at it even while pushes keep
 arriving. A window that extends on every arrival is not a window, it is an
 outage with a timer.</p><h2 id="coalesce-into-one-write-per-window"><a href="#coalesce-into-one-write-per-window" class="anchor-heading" aria-labelledby="coalesce-into-one-write-per-window"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Coalesce into one write per window
@@ -253,7 +259,7 @@ outage with a timer.</p><h2 id="coalesce-into-one-write-per-window"><a href="#co
 open window, opening one if none is open.</li><li>The window closes at its deadline — never later, whatever is still arriving.</li><li>The steward performs <strong>one</strong> write for the window, composing the requests.</li><li>Anything that arrived after the close belongs to the next window.</li></ol><p><strong>Composition is only sound when the writes do not contend</strong>, and for a
 route-keyed store they do not: <code class="language-plaintext highlighter-rouge">branch-store</code>’s <code class="language-plaintext highlighter-rouge">keyedBy: "route"</code> gives each
 route one owning generator, so <em>“nobody authored either side, so the newer
-generation wins”</em>. Two requests for <strong>different</strong> routes compose
+generation wins”</em> (bean <code class="language-plaintext highlighter-rouge">1j3q</code>). Two requests for <strong>different</strong> routes compose
 by union. Two for the <strong>same</strong> route compose by taking the newer.</p><p><strong>The case that must still be reported:</strong> two same-route requests where
 different authors wrote both sides. Route keying says the newer wins, and that
 is correct for a regenerated page and wrong for authored content. A steward that
@@ -261,50 +267,64 @@ silently takes the newer in that case has deleted the only signal that the two
 writers disagree. Report it; do not resolve it.</p><h3 id="why-a-github-concurrency-group-is-not-a-window"><a href="#why-a-github-concurrency-group-is-not-a-window" class="anchor-heading" aria-labelledby="why-a-github-concurrency-group-is-not-a-window"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why a GitHub concurrency group is not a window
   
   
-</h3><p><code class="language-plaintext highlighter-rouge">cancel-in-progress: false</code> governs the RUNNING job, not the pending one, and
-<strong>GitHub cancels a PENDING job when a newer one queues for the same group.</strong> So
-a concurrency group keeps at most one pending run. It is not a queue, and
+</h3><p><strong>Measured here, 2026-09-19</strong> (the comment lives in
+<code class="language-plaintext highlighter-rouge">.github/workflows/feature-staging.yml</code>): <code class="language-plaintext highlighter-rouge">cancel-in-progress: false</code> governs
+the RUNNING job, not the pending one, and <strong>GitHub cancels a PENDING job when a
+newer one queues for the same group.</strong> Three staging runs from three different
+branches inside 17 seconds gave two cancelled and one run.</p><p>So a concurrency group keeps at most one pending run. It is not a queue, and
 <code class="language-plaintext highlighter-rouge">cancel-in-progress: false</code> is not coalescing — it protects the job in flight
-and silently drops the intermediate ones. No concurrency setting can coalesce
-bursts of writes to a ref like <code class="language-plaintext highlighter-rouge">gh-pages</code>; that needs a steward.</p><h2 id="the-windows-four-durable-fields--because-of-handover"><a href="#the-windows-four-durable-fields--because-of-handover" class="anchor-heading" aria-labelledby="the-windows-four-durable-fields--because-of-handover"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The window’s four durable fields — because of HANDOVER
+and silently drops the intermediate ones. It is worth having for the first
+reason and must not be described as the second.</p><p>This is the measurement that moved the <code class="language-plaintext highlighter-rouge">gh-pages</code> fix from a workflow policy to
+a steward (bean <code class="language-plaintext highlighter-rouge">xp5j</code>): the published site was up to <strong>396.2 minutes</strong> behind
+<code class="language-plaintext highlighter-rouge">main</code> across a streak of <strong>24</strong> consecutive cancellations, and no concurrency
+setting can coalesce the bursts that caused it.</p><h2 id="the-windows-four-durable-fields--because-of-handover"><a href="#the-windows-four-durable-fields--because-of-handover" class="anchor-heading" aria-labelledby="the-windows-four-durable-fields--because-of-handover"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The window’s four durable fields — because of HANDOVER
   
   
-</h2><p>A window that lives in one agent’s head is lost at handover, and the next
-steward then either waits for a window that will never close or opens a second
-one and double-pushes. <strong>So the window is committed state, in the
-<code class="language-plaintext highlighter-rouge">workflow-state</code> graph under <code class="language-plaintext highlighter-rouge">beans/workflows/</code>, not a variable.</strong></p><p>The four fields are <code class="language-plaintext highlighter-rouge">HoldSchema</code>’s (<code class="language-plaintext highlighter-rouge">schemas/sdlc/merge-queue.ts</code>), for the
-same reason
-(<a href="../../reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking</code></a>’s <code class="language-plaintext highlighter-rouge">## Blocked on</code>):
-a window with no expiry cannot be told from an abandoned one.</p><p><code class="language-plaintext highlighter-rouge">schemas/sdlc/ref-window.ts</code> is the type. Three fields are <code class="language-plaintext highlighter-rouge">HoldSchema</code>’s verbatim
+</h2><p>A window that lives in one agent’s head is lost the moment that agent hands
+over, and the next steward then either waits for a window that will never close
+or opens a second one and double-pushes. <strong>So the window is committed state, in
+the <code class="language-plaintext highlighter-rouge">workflow-state</code> graph under <code class="language-plaintext highlighter-rouge">beans/workflows/</code>, not a variable.</strong></p><p>The four fields are <code class="language-plaintext highlighter-rouge">HoldSchema</code>’s, deliberately — <code class="language-plaintext highlighter-rouge">schemas/sdlc/merge-queue.ts</code>
+already derived them for the hold case, from the same reasoning
+(<a href="../../reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking</code></a>’s <code class="language-plaintext highlighter-rouge">## Blocked on</code>): <em>“a hold with no expiry
+cannot be told from an abandoned one.”</em> Read that sentence with “window” in it
+and nothing needs re-deriving.</p><p><code class="language-plaintext highlighter-rouge">schemas/sdlc/ref-window.ts</code> is the type. Three fields are <code class="language-plaintext highlighter-rouge">HoldSchema</code>’s verbatim
 and the fourth is narrowed:</p><div class="table-wrapper"><table><thead><tr><th>field</th><th>for a window</th><th>without it</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">ref</code></td><td>the watched ref — <code class="language-plaintext highlighter-rouge">HoldSchema</code>’s <code class="language-plaintext highlighter-rouge">waitsOn</code>, narrowed from prose to a declared ref</td><td>a reader cannot tell which ref this window is for</td></tr><tr><td><code class="language-plaintext highlighter-rouge">since</code></td><td>when it opened</td><td>the deadline cannot be checked, only trusted</td></tr><tr><td><code class="language-plaintext highlighter-rouge">expires</code></td><td>the hard close — <strong>after <code class="language-plaintext highlighter-rouge">since</code></strong>, enforced by refine</td><td>abandoned and open are indistinguishable</td></tr><tr><td><code class="language-plaintext highlighter-rouge">handoff</code></td><td>who takes it if this steward stops</td><td>the next steward cannot tell “mine to close” from “someone else’s in flight”</td></tr></tbody></table></div><p>Two more the type carries for the same reason. <code class="language-plaintext highlighter-rouge">heldBy</code> says whose window it
 is, and <code class="language-plaintext highlighter-rouge">closedAt</code> says whether the single write happened — <strong>absent means open
 OR abandoned, and <code class="language-plaintext highlighter-rouge">expires</code> is the only thing that tells those apart</strong>, so a
-reader must never take an absent <code class="language-plaintext highlighter-rouge">closedAt</code> for “still collecting”.</p><p>There is <strong>no <code class="language-plaintext highlighter-rouge">extend</code></strong>, and the object is strict, so an extra field is
-refused rather than ignored: <code class="language-plaintext highlighter-rouge">expires</code> is set once, at open. A hold’s expiry
-stops it outliving its justification; a window’s expiry <em>is</em> its
-justification, and also stops it outliving its burst.</p><h2 id="the-two-gaps-a-steward-reports-rather-than-fixes"><a href="#the-two-gaps-a-steward-reports-rather-than-fixes" class="anchor-heading" aria-labelledby="the-two-gaps-a-steward-reports-rather-than-fixes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two gaps a steward reports rather than fixes
+reader must never take an absent <code class="language-plaintext highlighter-rouge">closedAt</code> for “still collecting”.</p><p>There is <strong>no <code class="language-plaintext highlighter-rouge">extend</code></strong>, and the object is strict, so the field a well-meaning
+writer reaches for is refused rather than ignored. That makes “set once, at
+open” a property of the type instead of a promise in this paragraph.</p><p><strong><code class="language-plaintext highlighter-rouge">expires</code> does the work here that it does for a hold, for the same reason and
+with the opposite polarity.</strong> A hold’s expiry stops it outliving its
+justification; a window’s expiry <em>is</em> its justification, and also stops it
+outliving its burst.</p><h2 id="the-two-gaps-a-steward-reports-rather-than-fixes"><a href="#the-two-gaps-a-steward-reports-rather-than-fixes" class="anchor-heading" aria-labelledby="the-two-gaps-a-steward-reports-rather-than-fixes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two gaps a steward reports rather than fixes
   
   
 </h2><p>A declaration can disagree with the world in <strong>both</strong> directions, and a sweep
 that checks one direction reads as clean while the other is broken:</p><ul><li>a declared writer that no longer writes the ref — the declaration is stale;</li><li><strong>a workflow that writes the ref and is not declared</strong> — the declaration is
 incomplete, and this is the one a grep over the declaration cannot find,
-because it is looking in the wrong file.</li></ul><p>For example, an action that defaults <code class="language-plaintext highlighter-rouge">publish_branch: gh-pages</code> writes the ref
-without naming it. Adding the missing line is the symptom; the fix is a gate
+because it is looking in the wrong file.</li></ul><p>Measured on <code class="language-plaintext highlighter-rouge">gh-pages</code>, 2026-10-04: its <code class="language-plaintext highlighter-rouge">writers</code> list held <strong>4</strong>, and parsing
+all 35 workflows found <strong>5</strong> — <code class="language-plaintext highlighter-rouge">publish.yml</code> defaults <code class="language-plaintext highlighter-rouge">publish_branch:
+gh-pages</code> and was unlisted. Adding the line is the symptom; the fix is a gate
 comparing declared against measured and failing either way.</p><p>And a sweep <strong>prints its denominator</strong>
-(<a href="../../reference/skill-instructions/generalise-the-fix.html"><code class="language-plaintext highlighter-rouge">generalise-the-fix</code></a> §1.2a) — <code class="language-plaintext highlighter-rouge">parsed 35 of 35</code>
-beside the verdict — and parses rather than matching text, since a plain string
-match also counts comments.</p><h2 id="what-this-does-not-do-yet"><a href="#what-this-does-not-do-yet" class="anchor-heading" aria-labelledby="what-this-does-not-do-yet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this does not do yet
+(<a href="../../reference/skill-instructions/generalise-the-fix.html"><code class="language-plaintext highlighter-rouge">generalise-the-fix</code></a> §1.2a): the first pass over
+those workflows reported 6 producers because <code class="language-plaintext highlighter-rouge">'gh-pages' in text</code> matched a
+comment in <code class="language-plaintext highlighter-rouge">merge-main.yml</code>. <code class="language-plaintext highlighter-rouge">parsed 35 of 35</code> beside the verdict is what makes
+the number readable at all.</p><h2 id="what-this-does-not-do-yet"><a href="#what-this-does-not-do-yet" class="anchor-heading" aria-labelledby="what-this-does-not-do-yet"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this does not do yet
   
   
-</h2><ul><li><strong>No steward runs over <code class="language-plaintext highlighter-rouge">gh-pages</code>.</strong> The ref is declared; until its
-producers write through <code class="language-plaintext highlighter-rouge">branch-store</code>’s route keying there is no window to
-hold.</li><li><strong>No steward runs over the <code class="language-plaintext highlighter-rouge">cat/cat-harness/*</code> refs.</strong> They are seeded and
-declared and, per their declarations, <em>“not authoritative”</em>. A steward over a
-ref nobody reads from would be ceremony.</li><li><strong>Nothing writes a window yet.</strong> <code class="language-plaintext highlighter-rouge">schemas/sdlc/ref-window.ts</code> types one and
+</h2><ul><li><strong>No steward runs over <code class="language-plaintext highlighter-rouge">gh-pages</code>.</strong> The ref is declared, and bean <code class="language-plaintext highlighter-rouge">xp5j</code>
+carries the migration; until the five producers write through
+<code class="language-plaintext highlighter-rouge">branch-store</code>’s route keying there is no window to hold.</li><li><strong>No steward runs over the <code class="language-plaintext highlighter-rouge">cat/cat-harness/*</code> refs.</strong> They are seeded and
+declared and, per their declarations, <em>“not authoritative”</em> until arc
+<code class="language-plaintext highlighter-rouge">fs43</code>’s flip. A steward over a ref nobody reads from would be ceremony.</li><li><strong>Nothing writes a window yet.</strong> <code class="language-plaintext highlighter-rouge">schemas/sdlc/ref-window.ts</code> types one and
 <code class="language-plaintext highlighter-rouge">ref-window.test.ts</code> holds it to the handover rules, but no steward opens one,
 because there is nothing to coalesce until the producers stop pushing
-directly.</li><li><strong>The parity between the window and the hold is behavioural, not structural.</strong> <code class="language-plaintext highlighter-rouge">SHARED_LEASE_FIELDS</code> is the declared list and the test removes each field
-from both schemas and requires both to refuse. A key-list comparison would
-not work: a <code class="language-plaintext highlighter-rouge">.refine()</code> does not expose its inner object.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+directly. The type lands first on purpose: a steward written before the state
+it hands over is a steward whose handover is untested.</li><li><strong>The parity between the window and the hold is behavioural, not structural.</strong> <code class="language-plaintext highlighter-rouge">SHARED_LEASE_FIELDS</code> is the declared list and the test removes each field
+from both schemas and requires both to refuse. An earlier version compared key
+lists through <code class="language-plaintext highlighter-rouge">HoldSchema.def.innerType.shape</code>; it threw, because a
+<code class="language-plaintext highlighter-rouge">.refine()</code> does not expose its inner object there — and a parity check that
+silently compared two empty lists would have passed forever (the <code class="language-plaintext highlighter-rouge">dh4f</code>
+shape).</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

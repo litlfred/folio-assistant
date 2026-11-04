@@ -103,7 +103,7 @@
   @media print, (forced-colors: active) {
     html:root { background-image: none; }
   }
-</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/generalise-the-fix.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#move-1--what-class-is-this","label":"Move 1 — what class is this?","children":[{"href":"#11-what-was-the-defect-as-opposed-to-the-symptom","label":"What was the defect, as opposed to the symptom?","icon":"1.1","depth":1},{"href":"#12-what-else-has-this-shape","label":"What else has this shape?","icon":"1.2","depth":1},{"href":"#12a-a-sweep-must-report-its-own-coverage","label":"1.2a A sweep must report its own coverage","depth":1},{"href":"#13-is-the-fix-at-the-right-layer","label":"Is the fix at the right layer?","icon":"1.3","depth":1}],"fold":"4 sub-sections"},{"href":"#move-2--the-adversary","label":"Move 2 — the adversary","children":[{"href":"#the-two-axes-and-they-go-wrong-independently","label":"The two axes, and they go wrong independently","depth":1},{"href":"#four-tells-all-cheap-to-check","label":"Four tells, all cheap to check","depth":1},{"href":"#keep-the-discrimination-the-check-exists-for","label":"Keep the discrimination the check exists for","depth":1},{"href":"#the-strongest-outcome-is-when-the-adversary-reverses-you","label":"The strongest outcome is when the adversary reverses you","depth":1}],"fold":"4 sub-sections"},{"href":"#move-3--falsify-the-guard","label":"Move 3 — falsify the guard"},{"href":"#where-this-is-not-a-bug-fix","label":"Where this is NOT a bug fix"},{"href":"#what-this-deliberately-does-not-do","label":"What this deliberately does not do"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/generalise-the-fix.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#move-1--what-class-is-this","label":"Move 1 — what class is this?","children":[{"href":"#11-what-was-the-defect-as-opposed-to-the-symptom","label":"What was the defect, as opposed to the symptom?","icon":"1.1","depth":1},{"href":"#12-what-else-has-this-shape","label":"What else has this shape?","icon":"1.2","depth":1},{"href":"#12a-a-sweep-must-report-its-own-coverage","label":"1.2a A sweep must report its own coverage","depth":1},{"href":"#13-is-the-fix-at-the-right-layer","label":"Is the fix at the right layer?","icon":"1.3","depth":1}],"fold":"4 sub-sections"},{"href":"#move-2--the-adversary","label":"Move 2 — the adversary","children":[{"href":"#the-two-axes-and-they-go-wrong-independently","label":"The two axes, and they go wrong independently","depth":1},{"href":"#four-tells-all-cheap-to-check","label":"Four tells, all cheap to check","depth":1},{"href":"#keep-the-discrimination-the-check-exists-for","label":"Keep the discrimination the check exists for","depth":1},{"href":"#the-strongest-outcome-is-when-the-adversary-reverses-you","label":"The strongest outcome is when the adversary reverses you","depth":1}],"fold":"4 sub-sections"},{"href":"#move-3--falsify-the-guard","label":"Move 3 — falsify the guard"},{"href":"#where-this-is-not-a-bug-fix","label":"Where this is NOT a bug fix"},{"href":"#what-this-deliberately-does-not-do","label":"What this deliberately does not do"},{"href":"#provenance","label":"Provenance"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
 function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
 function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
@@ -228,18 +228,18 @@ this asks what the defect <strong>was</strong>, which you cannot answer until yo
   
   
 </h3><p>The symptom is where you noticed it. The defect is the rule that was wrong.
-They are rarely the same, and the fix belongs at the defect.</p><blockquote><p><strong>Symptom:</strong> two beans reported as having no options.
+They are rarely the same, and the fix belongs at the defect.</p><blockquote><p><code class="language-plaintext highlighter-rouge">vq8g</code>, 2026-09-23. <strong>Symptom:</strong> two beans reported as having no options.
 <strong>Defect:</strong> the counter recognised one markdown form — top-level list items —
 while MADR, the authority, is format-agnostic. The corpus was fine; the
 detector had invented a requirement. Fixing the two beans would have left the
-rule free to misjudge the next one.</p></blockquote><p><strong>The tell that you are fixing a symptom:</strong> the fix names a specific instance
-— two bean ids in a rule, <code class="language-plaintext highlighter-rouge">document-ingestion.html</code> in a selector, one
+rule free to misjudge the next one.</p></blockquote><p><strong>The tell that you are fixing a symptom:</strong> the fix names a specific instance.
+<code class="language-plaintext highlighter-rouge">j6t3</code> and <code class="language-plaintext highlighter-rouge">xgd8</code> in a rule, <code class="language-plaintext highlighter-rouge">document-ingestion.html</code> in a selector, one
 filename in a condition.</p><h3 id="12-what-else-has-this-shape"><a href="#12-what-else-has-this-shape" class="anchor-heading" aria-labelledby="12-what-else-has-this-shape"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1.2 What else has this shape?
   
   
-</h3><p>Look, do not guess. The corpus answers this and your memory does not.</p><blockquote><p>The same detector. A twelve-bean sweep over the store found <strong>ten</strong> using
-list items, <strong>two</strong> using bold enumerations — and one using subheadings and
-being <strong>over-counted ten for four options</strong>. The sweep found a second
+</h3><p>Look, do not guess. The corpus answers this and your memory does not.</p><blockquote><p><code class="language-plaintext highlighter-rouge">vq8g</code> again. A twelve-bean sweep over the store found <strong>ten</strong> using list
+items, <strong>two</strong> using bold enumerations — and one, <code class="language-plaintext highlighter-rouge">dhvf</code>, using subheadings
+and being <strong>over-counted ten for four options</strong>. The sweep found a second
 error direction nobody had reported, and it changed the design: three forms,
 most structured wins, <em>never summed</em>.</p></blockquote><p>A fix designed from one example handles one example. A fix designed from the
 sweep handles the class, and the sweep is usually one command.</p><h3 id="12a-a-sweep-must-report-its-own-coverage"><a href="#12a-a-sweep-must-report-its-own-coverage" class="anchor-heading" aria-labelledby="12a-a-sweep-must-report-its-own-coverage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1.2a A sweep must report its own coverage
@@ -247,7 +247,7 @@ sweep handles the class, and the sweep is usually one command.</p><h3 id="12a-a-
   
 </h3><p>The sweep in 1.2 is a measurement, so it answers to the same rule every other
 measurement here does: <strong>say what you covered, or a silent under-match reads as
-a clean corpus.</strong></p><blockquote><p>Sweeping the health checks for more findings whose
+a clean corpus.</strong></p><blockquote><p>Measured 2026-09-23, sweeping the health checks for more findings whose
 action could not clear them. The first pass regex-matched <code class="language-plaintext highlighter-rouge">action:</code> followed
 by string literals and reported <strong>6 actions, all sound</strong>. The file has
 <strong>15</strong>. The nine it missed included a ternary, and the pass would have
@@ -263,7 +263,7 @@ from a clean one is not a check.</strong></p><h3 id="13-is-the-fix-at-the-right-
   
 </h3><p>Walk outward from the symptom until you reach the thing that is actually
 wrong, and stop there. Both directions are failures: too deep and the siblings
-stay broken, too high and see Move 2.</p><blockquote><p>The search field was 44 % of its panel. Our rules said <code class="language-plaintext highlighter-rouge">width: 100 %</code>
+stay broken, too high and see Move 2.</p><blockquote><p><code class="language-plaintext highlighter-rouge">tcq2</code>. The search field was 44 % of its panel. Our rules said <code class="language-plaintext highlighter-rouge">width: 100 %</code>
 and <code class="language-plaintext highlighter-rouge">flex: 1 1 auto</code> and they were all correct — walking the box chain found
 the theme’s own <code class="language-plaintext highlighter-rouge">.search-input-wrap</code> at <code class="language-plaintext highlighter-rouge">max-width: 536px</code>, two layers above
 where the change felt like it belonged.</p></blockquote><hr /><h2 id="move-2--the-adversary"><a href="#move-2--the-adversary" class="anchor-heading" aria-labelledby="move-2--the-adversary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Move 2 — the adversary
@@ -273,8 +273,7 @@ where the change felt like it belonged.</p></blockquote><hr /><h2 id="move-2--th
 it passes. If it is anything else, that is the list to justify or narrow.</p><h3 id="the-two-axes-and-they-go-wrong-independently"><a href="#the-two-axes-and-they-go-wrong-independently" class="anchor-heading" aria-labelledby="the-two-axes-and-they-go-wrong-independently"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two axes, and they go wrong independently
   
   
-</h3><p>Most over-generalisation is one of these, and the worked case below is both
-at once.</p><div class="table-wrapper"><table><thead><tr><th>axis</th><th>the question</th><th>widened past the problem looks like</th></tr></thead><tbody><tr><td><strong>SCOPE</strong></td><td><em>which</em> things does it apply to?</td><td>the fix names a container when the problem was one child</td></tr><tr><td><strong>STATE</strong></td><td><em>when</em> does it apply?</td><td>the fix is unconditional when the conflict only arises in one state</td></tr></tbody></table></div><blockquote><p>The worked case. A rule was written so ONE panel could paint over a
+</h3><p>Most over-generalisation is one of these. <code class="language-plaintext highlighter-rouge">vfr8</code> was both at once.</p><div class="table-wrapper"><table><thead><tr><th>axis</th><th>the question</th><th>widened past the problem looks like</th></tr></thead><tbody><tr><td><strong>SCOPE</strong></td><td><em>which</em> things does it apply to?</td><td>the fix names a container when the problem was one child</td></tr><tr><td><strong>STATE</strong></td><td><em>when</em> does it apply?</td><td>the fix is unconditional when the conflict only arises in one state</td></tr></tbody></table></div><blockquote><p><code class="language-plaintext highlighter-rouge">vfr8</code>, the worked case. A rule was written so ONE panel could paint over a
 full-bleed figure. It was applied to <strong>the whole sidebar</strong> (scope) in <strong>every
 state</strong> (state), as <code class="language-plaintext highlighter-rouge">:root.fa-has-fullwidth .side-bar { z-index: auto }</code>. At
 specificity (0,3,0) it beat the open-nav rule’s (0,2,0) always — so on every
@@ -286,21 +285,22 @@ was in conflict; and only while a figure was expanded.</p></blockquote><h3 id="f
 </h3><ol><li><strong>The fix names a container, the bug named a child.</strong> <code class="language-plaintext highlighter-rouge">.side-bar</code> when the
 problem was <code class="language-plaintext highlighter-rouge">.fa-qr-panel</code>.</li><li><strong>The fix is unconditional and the conflict is not.</strong> Ask when the defect can
 occur. If the fix is broader than that window, narrow it or say why not.</li><li><strong>You summed where you should have chosen.</strong> Recognising three forms is
-right; adding their counts gave one bean <strong>14 options where it has 4</strong>. When
-alternatives are alternatives, take the most specific present — do not add.</li><li><strong>The label is doing work the relation should do.</strong> A stale-claim check
-keys on <code class="language-plaintext highlighter-rouge">parent</code> rather than <code class="language-plaintext highlighter-rouge">type: epic</code>, because <code class="language-plaintext highlighter-rouge">type</code> is a label a bean sets about
+right; adding their counts gave <code class="language-plaintext highlighter-rouge">dhvf</code> <strong>14 options where it has 4</strong>. When
+alternatives are alternatives, take the most specific present — do not add.</li><li><strong>The label is doing work the relation should do.</strong> <code class="language-plaintext highlighter-rouge">thux</code> keys on <code class="language-plaintext highlighter-rouge">parent</code>
+rather than <code class="language-plaintext highlighter-rouge">type: epic</code>, because <code class="language-plaintext highlighter-rouge">type</code> is a label a bean sets about
 <em>itself</em> while <code class="language-plaintext highlighter-rouge">parent</code> is a fact another bean asserts about it. Keying on
 the label would also have forced a ruling on what <code class="language-plaintext highlighter-rouge">feature</code> means.</li></ol><h3 id="keep-the-discrimination-the-check-exists-for"><a href="#keep-the-discrimination-the-check-exists-for" class="anchor-heading" aria-labelledby="keep-the-discrimination-the-check-exists-for"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Keep the discrimination the check exists for
   
   
 </h3><p>A generalisation that excuses everything has deleted the check. Name the case
-that must STILL fire, and test it.</p><blockquote><p>The stale-claim check excuses a claim whose child moved recently. The case
-that must still fire: a parent <strong>all</strong> of whose children are also quiet —
-8 open children, none moving — and it has a test of its own. Without it
+that must STILL fire, and test it.</p><blockquote><p><code class="language-plaintext highlighter-rouge">thux</code> excuses a claim whose child moved recently. The case that must still
+fire: a parent <strong>all</strong> of whose children are also quiet. <code class="language-plaintext highlighter-rouge">bzyu</code> is the worked
+one — 8 open children, none moving — and it has a test of its own. Without it
 the change would have excused every parent.</p></blockquote><h3 id="the-strongest-outcome-is-when-the-adversary-reverses-you"><a href="#the-strongest-outcome-is-when-the-adversary-reverses-you" class="anchor-heading" aria-labelledby="the-strongest-outcome-is-when-the-adversary-reverses-you"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The strongest outcome is when the adversary reverses you
   
   
-</h3><p>Expect to find a trade, and measure it rather than reasoning about it.</p><blockquote><p>The sidebar case. I expected <code class="language-plaintext highlighter-rouge">z-index: 100</code> to fix the nav <strong>at the cost of</strong> the panel
+</h3><p>Expect to find a trade, and measure it rather than reasoning about it. Twice
+today the measurement said the opposite of the reasoning.</p><blockquote><p><code class="language-plaintext highlighter-rouge">vfr8</code>. I expected <code class="language-plaintext highlighter-rouge">z-index: 100</code> to fix the nav <strong>at the cost of</strong> the panel
 the old rule protected, so I synthesised that panel and measured. Under <code class="language-plaintext highlighter-rouge">auto</code>
 it was <strong>not visible at its own centre</strong> — covered despite its <code class="language-plaintext highlighter-rouge">z-index: 1200</code>.
 Under <code class="language-plaintext highlighter-rouge">100</code> it was. The old value failed the case it was written for, so the
@@ -309,8 +309,8 @@ new one was better on both counts and there was no trade to weigh.</p></blockquo
   
 </h2><p>A guard that would not have caught the bug is worth nothing, and you cannot
 tell by reading it.</p><p><strong>Reintroduce the defect, watch the guard fail, restore, watch it pass.</strong> Two
-commands.</p><blockquote><p>The sidebar case: <code class="language-plaintext highlighter-rouge">sed</code> the value back to <code class="language-plaintext highlighter-rouge">auto</code> → both assertions fail;
-restore → 25 pass. A health finding: it fired before, is silent after, and the adjudicated
+commands.</p><blockquote><p><code class="language-plaintext highlighter-rouge">vfr8</code>: <code class="language-plaintext highlighter-rouge">sed</code> the value back to <code class="language-plaintext highlighter-rouge">auto</code> → both assertions fail; restore → 25
+pass. <code class="language-plaintext highlighter-rouge">o5qj</code>: the finding fired before, is silent after, and the adjudicated
 group is still counted so “never created” and “all resolved” cannot read the
 same.</p></blockquote><p>If the guard cannot be falsified — because the defect needs a state you cannot
 produce — say so where the guard lives, and say what does cover it instead.</p><hr /><h2 id="where-this-is-not-a-bug-fix"><a href="#where-this-is-not-a-bug-fix" class="anchor-heading" aria-labelledby="where-this-is-not-a-bug-fix"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where this is NOT a bug fix
@@ -318,7 +318,7 @@ produce — say so where the guard lives, and say what does cover it instead.</p
   
 </h2><p>The moves are the same; only the vocabulary changes.</p><ul><li><strong>A schema or model change.</strong> Scope is <em>which records must now satisfy this</em>;
 state is <em>from when</em>. A field made required is a fix applied unconditionally
-to every record ever written — the sidebar shape in a schema.</li><li><strong>A detector or gate.</strong> Its class is the set of inputs it judges. Sweep the
+to every record ever written — the <code class="language-plaintext highlighter-rouge">vfr8</code> shape in a schema.</li><li><strong>A detector or gate.</strong> Its class is the set of inputs it judges. Sweep the
 corpus (1.2) before changing the rule, or you will tune it to the two
 examples in front of you.</li><li><strong>A claim in a paper.</strong> The generalisation is the theorem’s hypothesis; the
 adversary asks which objects now satisfy it that the proof does not cover.
@@ -333,8 +333,16 @@ The cost of the pass is a few minutes; the cost of inventing a class that is
 not there is a rule nobody can satisfy.</p><p><strong>It does not replace <a href="../../reference/skill-instructions/rendered-verification.html"><code class="language-plaintext highlighter-rouge">rendered-verification</code></a> or a
 test.</strong> It asks whether the fix is aimed correctly. Whether it <em>works</em> is a
 different question and comes first.</p><p><strong>It does not decide a trade the owner should decide.</strong> When narrowing the
-generalisation costs something real — say, a corner magnifier under the
-staging banner, where raising it defeats the banner and lowering it costs
-the position — report the measurement and the two options rather than picking.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+generalisation costs something real — <code class="language-plaintext highlighter-rouge">tcq2</code> found the corner magnifier under
+the staging banner, where raising it defeats the banner and lowering it costs
+the position — report the measurement and the two options rather than picking.</p><h2 id="provenance"><a href="#provenance" class="anchor-heading" aria-labelledby="provenance"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Provenance
+  
+  
+</h2><p>Written 2026-09-23 from five fixes in one session, at the owner’s ask: <em>“try to
+generalize pattern of a fix. adversarty skill, did you genrealize too much…
+are you picking up unindeneded things.”</em></p><p><code class="language-plaintext highlighter-rouge">vfr8</code> (both axes widened, adversary reversed the conclusion), <code class="language-plaintext highlighter-rouge">vq8g</code> (detector
+too narrow, and the sweep found a second error direction), <code class="language-plaintext highlighter-rouge">o5qj</code> and <code class="language-plaintext highlighter-rouge">thux</code>
+(findings no permitted action could clear), <code class="language-plaintext highlighter-rouge">tcq2</code> (the constraint two layers
+above where the fix felt like it belonged).</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Narrative review",
       "summary": "Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does.",
-      "description": "Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does.\n\nYou are in this process when prose changed. `review-code` is its sibling for code nodes and `review-task` is what dispatches to either, so arriving here means somebody has already decided the change is narrative.\n\nEverything this lane produces is ADVICE. The reviewer records findings; accepting or refusing the change belongs to the editor's lane in `review-task`.",
+      "description": "Judging changed PROSE: read what the mechanical checkers flagged, decide which findings are real, then look at the two things no checker can judge — whether the editorial dependencies still hold and whether a translation still says what the source does.\n\nYou are in this process when prose changed. `review-code` is its sibling for code nodes and `review-task` is what dispatches to either, so arriving here means somebody has already decided the change is narrative.\n\nEverything this lane produces is ADVICE. The reviewer records findings; accepting or refusing the change belongs to the editor's lane in `review-task`. The separation is why a review can be thorough without being a veto.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/review-narrative.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/content/review-narrative.bpmn",

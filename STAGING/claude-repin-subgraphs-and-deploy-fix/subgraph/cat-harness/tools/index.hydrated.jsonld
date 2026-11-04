@@ -30,7 +30,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/agent-memory.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are not generated.",
+          "description": "Assemble every declared `memory` directory's nodes into each agent's memory, per vendor: Claude Code's `.claude/agent-memory/<agent>/MEMORY.md` (a marked region, injected when the subagent starts) and Antigravity's workspace skill `.agents/skills/<agent>-memory/SKILL.md`. Other vendors (Gemini CLI, Copilot, Codex, Cursor) are beaned under `31ni` and not generated.",
           "install": {
             "none": true
           },
@@ -71,7 +71,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/archimate-actors.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Actors come first: the IG's ActorDefinitions are written from the DAK's personas, and an ArchiMate model only points at them. For one model an instance's `cat-archimate.config.json` names, this reads every element carrying the Archi property `fhir-actor`, whose value is an ActorDefinition's canonical URL, and the IG's ActorDefinitions: FSH `InstanceOf: ActorDefinition` under `input/fsh/`, and FHIR JSON under `fsh-generated/resources/` or `input/resources/`, each canonical being `<sushi-config canonical>/ActorDefinition/<id>` unless its `url` says otherwise. It fails on a value that is not a canonical URL, a tag that names no ActorDefinition, an element kind that cannot be an actor (a data object, a goal), and a type mismatch (a `#person` actor on an application or technology element, a `#system` actor on a business actor or role). It warns about each ActorDefinition no element realizes; `--strict` makes that a failure. `--json` prints element → actors and actor → elements, for page back-links. It never writes an ActorDefinition or any FSH, and never matches boxes to actors by name.",
+          "description": "Actors come first (owner, 2026-11-01, smart-ra#166 D4): the IG's ActorDefinitions are written from the DAK's personas, and an ArchiMate model only points at them. For one model an instance's `cat-archimate.config.json` names, this reads every element carrying the Archi property `fhir-actor`, whose value is an ActorDefinition's canonical URL, and the IG's ActorDefinitions: FSH `InstanceOf: ActorDefinition` under `input/fsh/`, and FHIR JSON under `fsh-generated/resources/` or `input/resources/`, each canonical being `<sushi-config canonical>/ActorDefinition/<id>` unless its `url` says otherwise. It fails on a value that is not a canonical URL, a tag that names no ActorDefinition, an element kind that cannot be an actor (a data object, a goal), and a type mismatch (a `#person` actor on an application or technology element, a `#system` actor on a business actor or role). It warns about each ActorDefinition no element realizes; `--strict` makes that a failure. `--json` prints element → actors and actor → elements, for page back-links. It never writes an ActorDefinition or any FSH, and never matches boxes to actors by name.",
           "install": {
             "none": true
           },
@@ -733,7 +733,7 @@
             ],
             "outputs": [
               {
-                "description": "One committed `<stem>.checklist.md` per diagram in every instance, beside its `.bpmn`.",
+                "description": "One committed `<stem>.checklist.md` per diagram in every instance, beside its `.bpmn` (owner, 2026-10-14: commit them).",
                 "name": "checklists",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
               }
@@ -1015,7 +1015,7 @@
             "inputs": [],
             "outputs": [
               {
-                "description": "The satisfies map, the count of skills with and without a Tool, then the verdict. Exit 0 every join holds, 1 at least one does not. A skill with NO Tool is reported and is NOT a failure: many skills are pure judgement.",
+                "description": "The satisfies map, the count of skills with and without a Tool, then the verdict. Exit 0 every join holds, 1 at least one does not. A skill with NO Tool is reported and is deliberately NOT a failure — many are pure judgement, and failing on them would make the report unusable.",
                 "name": "report",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
               }
@@ -1045,7 +1045,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ci-health.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow, so it stays inside the unauthenticated 60/hr limit.",
+          "description": "Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start.",
           "install": {
             "none": true
           },
@@ -1058,7 +1058,7 @@
                 "arg": {
                   "flag": "--markdown"
                 },
-                "description": "Emit the block the session-start sweep prints. ALWAYS exits 0: the sweep runs it as `if ! …; then`.",
+                "description": "Emit the block the session-start sweep prints. ALWAYS exits 0, deliberately: the sweep runs it as `if ! …; then` and would otherwise print the report AND declare it unchecked every time CI is red.",
                 "name": "markdown",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
@@ -1076,7 +1076,7 @@
                 "arg": {
                   "flag": "--out"
                 },
-                "description": "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0.",
+                "description": "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0. The notifier gets its own flag rather than one API call being spent twice.",
                 "name": "out",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -1118,7 +1118,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/compose-docs.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome.",
+          "description": "Write the Jekyll source the docs site is built from: the base docs layer, the repository overlay on top (an overlay's `_config.yml` merged, every override reported), and each `composed` instance under its own name. `--staging` keeps staging-only visualisations; `--changed-files` stubs instances a branch does not reach. `--shell` writes the CHROME only — the layers' Jekyll machinery and assets, no page, no instance, and the host's generated includes empty — which an IG repository composes its IG into so its own site wears the main site's chrome (#2235).",
           "install": {
             "none": true
           },
@@ -1339,7 +1339,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/content-graph-build.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean.",
+          "description": "Build the content graph under a path and report its edges, separated into the EDITORIAL relation an author maintains and the FORMAL one derived from Lean. Reading the two as one number is how the editorial signal gets overwritten.",
           "install": {
             "none": true
           },
@@ -1610,7 +1610,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/declaration-resolution.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Read every instance declaration in the checkout and resolve what it names: `directories` (and those declared from within) through `check:declared-dirs`, `assets` through `check:declared-assets`, `visualisers[].renderedBy` through `check:visualiser-routes`, `needs` through the instance-graph resolver, and `visualisers[].coversKinds` against the graph typologies registered IN THIS CHECKOUT — its own and those a mounted layer contributes, read from the checkout under inspection rather than from where the harness module sits. A declaration that does not parse is a finding. One verdict per instance and field, naming the gate that decided it. Exit 0 every reference resolves, 1 one does not, 2 could not determine; a certain finding is reported before anything undetermined.",
+          "description": "Read every instance declaration in the checkout and resolve what it names: `directories` (and those declared from within) through `check:declared-dirs`, `assets` through `check:declared-assets`, `visualisers[].renderedBy` through `check:visualiser-routes`, `needs` through the instance-graph resolver, and `visualisers[].coversKinds` against the graph typologies registered IN THIS CHECKOUT — its own and those a mounted layer contributes, read from the checkout under inspection rather than from where the harness module sits (lesson 6). A declaration that does not parse is a finding. One verdict per instance and field, naming the gate that decided it. Exit 0 every reference resolves, 1 one does not, 2 could not determine; a certain finding is reported before anything undetermined.",
           "install": {
             "none": true
           },
@@ -1864,7 +1864,7 @@
                 "arg": {
                   "flag": "--cleanup-slug"
                 },
-                "description": "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. For an orphan preview the health sweep reports: its pull request is already closed, so the close event cannot remove it.",
+                "description": "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. It exists because the label path cannot reach the previews the health sweep reports — being findable as an orphan REQUIRES the pull request to be closed, so the close event has already fired with no label (bean `w2g5`).",
                 "name": "cleanup_slug",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -1873,7 +1873,7 @@
                 "arg": {
                   "flag": "--cleanup-confirm"
                 },
-                "description": "The slug again, exactly. Anything else refuses, so a confirmation cannot carry over to a DIFFERENT preview.",
+                "description": "The slug again, exactly. Anything else refuses. A confirmation therefore cannot be carried over from a previous run against a DIFFERENT preview, which a boolean would have allowed.",
                 "name": "cleanup_confirm",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -1881,7 +1881,7 @@
             ],
             "outputs": [
               {
-                "description": "Where the preview is served.",
+                "description": "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for.",
                 "name": "preview",
                 "render": {
                   "as": "url",
@@ -2167,7 +2167,7 @@
             ],
             "outputs": [
               {
-                "description": "One line per gate, then a pass count or the failures. Three exit codes: 0 every gate passed, 1 a gate failed, 2 the gate set could NOT BE DERIVED — the workflow it reads is absent or yields nothing. A caller must not read 2 as either verdict; it matters most downstream, where this Tool is inherited and `.github/workflows/` is not.",
+                "description": "One line per gate, then a pass count or the failures. Three exit codes, because two cannot carry the distinction: 0 every gate passed, 1 a gate failed, 2 the gate set could NOT BE DERIVED — the workflow it reads is absent or yields nothing. A caller must not read 2 as either verdict; it matters most downstream, where this Tool is inherited and `.github/workflows/` is not.",
                 "name": "report",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
               }
@@ -3709,7 +3709,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/kg-audit.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. The sidecar distinguishes \"unbound since it was drawn\" from \"broken in the commit under review\".",
+          "description": "Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes \"unbound since it was drawn\" distinguishable from \"broken in the commit under review\".",
           "install": {
             "none": true
           },
@@ -3739,7 +3739,7 @@
             ],
             "outputs": [
               {
-                "description": "The QA tree, mirroring each subject's own path (several basenames occur twice).",
+                "description": "The QA tree, mirroring each subject's own path — flat would collide, since several basenames already occur twice.",
                 "name": "sidecars",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
               },
@@ -3926,7 +3926,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/kg-validate.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Check one file against the schema for its graph typology. ONE tool for every schema: the kind is resolved from the declared directory that holds the file.",
+          "description": "Check one file against the schema for its graph typology. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
           "install": {
             "none": true
           },
@@ -4046,7 +4046,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/l1-complete-check.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Is a `library/<bib-slug>/` entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE.",
+          "description": "Is a `library/<bib-slug>/` entry complete as L1 source content? Each requirement is met, unmet, or NOT-DERIVABLE, so a document that cannot yield an artefact is distinguished from one that simply has not.",
           "install": {
             "none": true
           },
@@ -4864,7 +4864,7 @@
             "inputs": [],
             "outputs": [
               {
-                "description": "Every narrative awaiting a person, NUMBERED, with its subject, its text and its file — then the two commands that act on a number, then the rejection reasons, also numbered. Numbered so every action is a selection, not a typed sentence (`interaction-modality`'s `low-dexterity` profile).",
+                "description": "Every narrative awaiting a person, NUMBERED, with its subject, its text and its file — then the two commands that act on a number, then the rejection reasons, also numbered. Numbered throughout because the person this is for has very limited hand function and every action must be a selection rather than a typed sentence; `interaction-modality`'s `low-dexterity` profile is the general rule.",
                 "name": "queue",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
               }
@@ -4894,7 +4894,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/navbar-include.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from.",
+          "description": "Render `_includes/generated/navbar-footer.html` from `docs/_data/harness.json` with the same renderer every railed page uses. With `--instance`, render the navbar of an IG repository's OWN site instead — that instance first, then what it needs; its own pages at this site's root, every other link to the main site at `--link-root` — into the shell that site is built from (#2235).",
           "install": {
             "none": true
           },
@@ -4969,7 +4969,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/node-kind-pages.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/.",
+          "description": "Render a page for every node kind, every harness holding nodes of it, and every node, under /<locale>/<declaring>/<kind>/ (issue #2195).",
           "install": {
             "none": true
           },
@@ -6009,7 +6009,7 @@
             ],
             "outputs": [
               {
-                "description": "The HTML fragment on stdout. TypeScript callers import `embed` from the module that implements this Tool instead.",
+                "description": "The HTML fragment on stdout. TypeScript callers import `embed` from the module that implements this Tool instead, as the IRIS replica's `scripts/gen-iris-pages.ts` does.",
                 "name": "fragment",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
               }
@@ -6484,7 +6484,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/readme-sync.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched. The instance's AGENTS.md is synced too, for the `skills:index` index only: the skills the instance publishes, or, past 32 KiB, their directories with the full list in SKILLS.md.",
+          "description": "Rewrite each generated README region, and only where the README already carries that section's marker pair. Nothing outside a marked region is touched. The instance's AGENTS.md is synced too, for the `skills:index` index only: the skills the instance publishes, or, past 32 KiB, their directories with the full list in SKILLS.md (bean e0uk).",
           "install": {
             "none": true
           },
@@ -6569,7 +6569,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/release-please.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository.",
+          "description": "Propose the next version of each package from conventional-commit messages, open a release PR with the CHANGELOG and version bump, and — when that PR is merged — create the tag and GitHub release. Does not publish to a registry. Declared here, not configured: no config file and no tag exist in this repository (bean `frq2`).",
           "install": {
             "cli": "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)"
           },
@@ -6627,7 +6627,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/remote-mount.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Lay down each declared remote mount — a `source.remote` instance in the root `index.config.json`, or, in a folio with no index, a `remoteMounts` entry on its declaration (both at once is refused) — and its dependency closure, from another repository at a full commit SHA. Write the lock, `index.lock.json` (a legacy `<name>.mount-lock.json` is read, and renamed onto it when rewritten), and, with an index, regenerate the root `.gitignore` block that ignores each mount path. It READS the declared mounts and never writes them: a tool that changes a mount writes through `writeDeclaredMounts` into `index.config.json`. Before anything is checked out, each mount must pass the trust gate (`schemas/kg/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither. A directory id an override or `mountDefaults` names may be one the instance declares in its `<name>.json` or one it declares FROM WITHIN a declared directory (`skills/skills.json` naming `voices`), resolved at the pin through `instanceDirectories`; an id in neither is refused at plan time. `tools` on an override names Tools by id and mounts each one runnable: its definition (`<tools dir>/<id>/<id>.ts`), its implementation (the `inProcess.module`, or the script its `bun run cat <key>` resolves to) and their import closure, walked by bootstrap-tools' `importClosure` (the one closure walker), as every declared directory that closure touches — the lock still records directories only. A `hydrated` mount lays each chosen directory down as its published `index.hydrated.jsonld` only: read from the pin's git tree when a commit carries it, otherwise fetched from the pin's subgraph index package (the `subgraph-index-<sha>` release asset `subgraph-index-package` publishes), its tarball checked against its `folio-binary-release/v1` record, its manifest against the repository, pin and harness asked for, and each file against its sha256, `SubgraphHydratedSchema` and the subgraph IRI; the lock records the package's URL and sha256 so a replay fetches the same bytes. `--check` compares the disk against the lock and never fetches. When a run CHANGES the lock, it then re-renders the agent surface (`skill:commands` → `.claude/commands/`, `agent-memory` → `.claude/agent-memory/` and `.agents/`) from the checkout root, so a re-pin commit carries the skills and memory the new layers define; a generator that fails fails the run, and `--no-agent-surface` opts out.",
+          "description": "Lay down each declared remote mount — a `source.remote` instance in the root `index.config.json`, or, in a folio with no index, a `remoteMounts` entry on its declaration (both at once is refused) — and its dependency closure, from another repository at a full commit SHA. Write the lock, `index.lock.json` (a legacy `<name>.mount-lock.json` is read, and renamed onto it when rewritten), and, with an index, regenerate the root `.gitignore` block that ignores each mount path. It READS the declared mounts and never writes them: a tool that changes a mount writes through `writeDeclaredMounts` into `index.config.json`. Before anything is checked out, each mount must pass the trust gate (`schemas/kg/mount-trust.ts`, rule H8): a person's consent recorded for THIS pin, or a signature in a declared trust network. No signature verifier exists yet, so a signature alone is could-not-determine and does not mount. Unsigned and unconsented is refused. `--staging` mounts for a preview and needs neither, by the owner's ruling. A directory id an override or `mountDefaults` names may be one the instance declares in its `<name>.json` or one it declares FROM WITHIN a declared directory (`skills/skills.json` naming `voices`), resolved at the pin through `instanceDirectories` (bean `mo75` G3); an id in neither is refused at plan time. `tools` on an override names Tools by id and mounts each one runnable (bean `mo75` G3; owner, 2026-10-24): its definition (`<tools dir>/<id>/<id>.ts`), its implementation (the `inProcess.module`, or the script its `bun run cat <key>` resolves to) and their import closure, walked by bootstrap-tools' `importClosure` (the one closure walker), as every declared directory that closure touches — the lock still records directories only. A `hydrated` mount (bean `mo75`) lays each chosen directory down as its published `index.hydrated.jsonld` only: read from the pin's git tree when a commit carries it, otherwise fetched from the pin's subgraph index package (the `subgraph-index-<sha>` release asset `subgraph-index-package` publishes), its tarball checked against its `folio-binary-release/v1` record, its manifest against the repository, pin and harness asked for, and each file against its sha256, `SubgraphHydratedSchema` and the subgraph IRI; the lock records the package's URL and sha256 so a replay fetches the same bytes. `--check` compares the disk against the lock and never fetches. When a run CHANGES the lock, it then re-renders the agent surface (`skill:commands` → `.claude/commands/`, `agent-memory` → `.claude/agent-memory/` and `.agents/`) from the checkout root, so a re-pin commit carries the skills and memory the new layers define; a generator that fails fails the run, and `--no-agent-surface` opts out.",
           "install": {
             "none": true
           },
@@ -6685,7 +6685,7 @@
                 "arg": {
                   "flag": "--seed"
                 },
-                "description": "`<name>=<owner/repo>@<40-char sha>`: create or re-pin that remote instance in `index.config.json` instead of mounting, writing its `trust.consent` for that pin in the same write (needs `consentBy` and `evidence`; repeatable; `--whole` mounts every tracked file). Refused while a mount it moves has edits the lock does not hold, since the next mount would leave that mount at the old commit; `fresh` lets it through.",
+                "description": "`<name>=<owner/repo>@<40-char sha>`: create or re-pin that remote instance in `index.config.json` instead of mounting, writing its `trust.consent` for that pin in the same write (needs `consentBy` and `evidence`; repeatable; `--whole` mounts every tracked file). Refused while a mount it moves has edits the lock does not hold, since the next mount would leave that mount at the old commit (folio-assistant#2682); `fresh` lets it through.",
                 "name": "seed",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/MountSeed"
@@ -6703,7 +6703,7 @@
                 "arg": {
                   "flag": "--choose"
                 },
-                "description": "`<harness>[:<instance>]`: write a review's choice (`directories` and/or `tools`) into that mount entry's `overrides.<instance>` instead of mounting, so a fresh clone replays it. The pin and its consent are untouched; the next mount resolves the choice and the lock records what it resolved to.",
+                "description": "`<harness>[:<instance>]`: write a review's choice (`directories` and/or `tools`) into that mount entry's `overrides.<instance>` instead of mounting, so a fresh clone replays it (bean `mo75`). The pin and its consent are untouched; the next mount resolves the choice and the lock records what it resolved to.",
                 "name": "choose",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/MountChoice"
@@ -6796,7 +6796,7 @@
                 "arg": {
                   "flag": "--dir"
                 },
-                "description": "A checkout of the publish branch, or a publish directory about to become one. This tool NEVER fetches, commits or pushes: the calling workflows hold the checkout and do that.",
+                "description": "A checkout of the publish branch, or a publish directory about to become one. This tool NEVER fetches, commits or pushes: the workflows that call it already hold the checkout with their own retry and concurrency handling, and a second pusher racing those is a new way to lose a deploy.",
                 "name": "dir",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -6805,7 +6805,7 @@
                 "arg": {
                   "flag": "--event"
                 },
-                "description": "`rendered`, `removed`, `restored` or `retained`. `retained` records a removal CONSIDERED and refused.",
+                "description": "`rendered`, `removed`, `restored` or `retained`. `retained` is the one that makes the log worth reading — a removal CONSIDERED and refused, which otherwise leaves no trace at all.",
                 "name": "event",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RenderEvent"
@@ -6814,7 +6814,7 @@
                 "arg": {
                   "flag": "--kind"
                 },
-                "description": "What was rendered — `staging-preview`, `site`, `export`. Open, not an enum: the publish branch carries more than previews.",
+                "description": "What was rendered — `staging-preview`, `site`, `export`. Open on purpose: the publish branch carries more than previews, and a closed enum would put a schema change between somebody and logging what they published.",
                 "name": "kind",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
@@ -6823,7 +6823,7 @@
                 "arg": {
                   "flag": "--path"
                 },
-                "description": "The path on the publish branch. Checked as a VALUE, never trusted by provenance: the slug sanitiser can emit `..`, which is only safe for a slug taken from a git ref, and a dispatch input is not one.",
+                "description": "The path on the publish branch. Checked as a VALUE, never trusted by provenance: the slug sanitiser can emit `..`, and that is only safe for a slug taken from a git ref — a dispatch input is not one (bean `fuzm`).",
                 "name": "path",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -6868,7 +6868,7 @@
                 "arg": {
                   "stdin": true
                 },
-                "description": "One JSON object on STDIN: `{summary, reason?, detail?, format?}`. `summary` is required and one line. `reason` is required by the SCRIPT for `removed` and `retained`. `format` declares how the prose reads (absent means plain text, never sniffed). Build it with `jq -n --arg`, never by concatenation.",
+                "description": "One JSON object on STDIN: `{summary, reason?, detail?, format?}`. `summary` is required and one line. `reason` is required by the SCRIPT for `removed` and `retained` — an entry saying an artefact went and not why is the ambiguity the log exists to prevent. `format` declares how the prose reads (absent means plain text, never sniffed). Build it with `jq -n --arg`, never by concatenation.",
                 "name": "prose",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
@@ -6876,7 +6876,7 @@
             ],
             "outputs": [
               {
-                "description": "The day's JSONL the entry was APPENDED to. Append is the only verb: there is no `--remove`, no `--edit` and no `--id`, so a takedown is a `removed` ENTRY rather than the erasure of the `rendered` one before it.",
+                "description": "The day's JSONL the entry was APPENDED to. Append is the only verb: there is no `--remove`, no `--edit` and no `--id`, so a takedown is a `removed` ENTRY rather than the erasure of the `rendered` one before it — the never-delete rule made structural instead of a guard three cleanup paths have to remember.",
                 "name": "entry",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
               }
@@ -7255,7 +7255,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/secrets-check.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Compare each repository's declared credential needs (`credentials/needs.json`, profile and registry) with the `secrets.NAME` expressions its workflows reference (GitHub Actions' dollar-and-double-brace form, said in words because this text is rendered on a Jekyll page), with the secret names GitHub lists when a token allows it, and with any recorded expiry. NAMES ONLY — no value is ever read. Findings: used-not-declared, declared-not-used, declared-not-present, present-not-declared (reported, never deleted), naming advisories, and expiry (≤30 days minor, ≤7 major, expired critical). Exits 2 when anything could not be determined, which outranks clean; else 1 on a major or critical finding; else 0.",
+          "description": "Compare each repository's declared credential needs (`credentials/needs.json`, profile and registry) with the `secrets.NAME` expressions its workflows reference (GitHub Actions' dollar-and-double-brace form, said in words because this text is rendered on a Jekyll page), with the secret names GitHub lists when a token allows it, and with any recorded expiry. NAMES ONLY — no value is ever read. Findings per §6.2: used-not-declared, declared-not-used, declared-not-present, present-not-declared (reported, never deleted), naming advisories, and expiry (≤30 days minor, ≤7 major, expired critical). Exits 2 when anything could not be determined, which outranks clean; else 1 on a major or critical finding; else 0.",
           "install": {
             "none": true
           },
@@ -7648,7 +7648,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/site-build-local.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds: local and GitHub builds are two Tools for one skill.",
+          "description": "Build the published site on this machine, so a page can be looked at rather than described: the same Jekyll build `pages-publish` runs in CI, into a directory of your choosing, and never pushed. The local half of the two site builds (owner, 2026-10-05: local and GitHub builds are two Tools for one skill).",
           "install": {
             "none": true
           },
@@ -7741,7 +7741,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/site-search-scopes.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site. Run on the assembled site after the index is written or borrowed.",
+          "description": "The site search index cut into one index per scope — each declared instance, each target locale, and the platform — plus `assets/js/search/manifest.json` naming them, so a reader's search loads its own scope rather than the whole site (issue #1972, bean `m7mn`). Run on the assembled site after the index is written or borrowed.",
           "install": {
             "none": true
           },
@@ -8509,7 +8509,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/sub-kg-verify-clone.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its `gates` script, else its `test` script (a person may pass `--gate` on the command line instead; it is not part of this contract because it is a shell command). Reports `green`, `red` or `unknown`; an empty tree, a failed clone or a repository with no gate is `unknown`, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's `node_modules` and environment. Writes only inside the scratch directory.",
+          "description": "Clone a separated sub-KG's repository (with submodules, and any sibling checkouts it needs) into an empty scratch directory, install, and run its gates: its `gates` script, else its `test` script (a person may pass `--gate` on the command line instead; it is not part of this contract because it is a shell command). Reports `green`, `red` or `unknown`; an empty tree, a failed clone or a repository with no gate is `unknown`, never green. Catches what a rehearsal inside this checkout cannot, because a rehearsal shares this checkout's `node_modules` and environment (#2082). Writes only inside the scratch directory.",
           "install": {
             "none": true
           },
@@ -8936,7 +8936,7 @@
             "inputs": [],
             "outputs": [
               {
-                "description": "Four tiers with A, B and C listed by name and their evidence, D as a count. Always exit 0: this REPORTS a judgement queue and never gates; an uncovered skill is not a defect.",
+                "description": "Four tiers with A, B and C listed by name and their evidence, D as a count. Always exit 0: this REPORTS a judgement queue and never gates — an uncovered skill is not a defect, and failing on one would make stubbing a gap turn CI red.",
                 "name": "triage",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
               }
@@ -9233,7 +9233,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/transcribe-whisper-cpp.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload.",
+          "description": "Transcribe an audio file to a timed transcript with whisper.cpp, offline, on CPU. A declared OPTION: not installed in this repository until the first audio upload (bean `1r0p`).",
           "install": {
             "cli": "build whisper.cpp from source and download a ggml model (tiny ≈ 75 MB, base ≈ 142 MB)"
           },
@@ -9893,7 +9893,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/upload-url.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Compose the forge URL a person can drop a file at, from the instance's own declaration: the `uploads` graph's directory, resolved against the ROOT its scope names, expressed relative to the repository, and appended to the origin remote as GitHub's `/upload/<branch>/<path>`. Every failure is NAMED and no URL is guessed — no declaration, no declared `uploads` graph, a declared queue absent from disk, no `origin` remote, and a non-github.com remote each return a reason and a remedy instead. The declared path is relative to the INSTANCE and a forge URL needs it relative to the REPOSITORY, so pasting the declared path can mint a 404.",
+          "description": "Compose the forge URL a person can drop a file at, from the instance's own declaration: the `uploads` graph's directory, resolved against the ROOT its scope names, expressed relative to the repository, and appended to the origin remote as GitHub's `/upload/<branch>/<path>`. Every failure is NAMED and no URL is guessed — no declaration, no declared `uploads` graph, a declared queue absent from disk, no `origin` remote, and a non-github.com remote each return a reason and a remedy instead. It exists because the obvious composition mints a live 404: the declared path `uploads/` is relative to the INSTANCE and a forge URL needs it relative to the REPOSITORY, so pasting the declared path drops the `cat-harness/` segment. Owner, 2026-09-20, on the hand-written form: \"were it to exist, but it doesmt on main!!!!!\"",
           "install": {
             "none": true
           },
@@ -9906,7 +9906,7 @@
                 "arg": {
                   "positional": 0
                 },
-                "description": "The branch the upload form targets. Defaults to `main`; pass the working branch to send somebody to a pull request's head instead.",
+                "description": "The branch the upload form targets. Defaults to `main`, which is what a forge's web upload form targets when nobody says otherwise — pass the working branch to send somebody at a pull request's head instead, which is the difference between a commit CI judges and one it never sees.",
                 "name": "branch",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
@@ -9914,7 +9914,7 @@
             ],
             "outputs": [
               {
-                "description": "The upload URL on stdout, exit 0 — or, on stderr and exit 1, the reason it could not be composed and the remedy for that reason. Never a guessed URL.",
+                "description": "The upload URL on stdout, exit 0 — or, on stderr and exit 1, the reason it could not be composed and the remedy for that reason. Never a guessed URL: a URL is believed, and somebody sent to a wrong one cannot tell it from an empty directory.",
                 "name": "url",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
               }
@@ -10007,7 +10007,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/user-auth.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "User authentication and authorization. Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.",
+          "description": "User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path.",
           "install": {
             "none": true
           },

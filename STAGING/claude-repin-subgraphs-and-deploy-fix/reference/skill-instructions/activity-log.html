@@ -218,33 +218,49 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   
 </h1><p><strong>Write an entry when you start a task, when you end one, and whenever you
 have something a later reader would need.</strong> Entries go to <code class="language-plaintext highlighter-rouge">fsh-guts/logs/</code>,
-and <strong>nothing reaches the git data store unless capture is explicitly on.</strong></p><h2 id="the-role-is-mechanical"><a href="#the-role-is-mechanical" class="anchor-heading" aria-labelledby="the-role-is-mechanical"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The role is mechanical
+and <strong>nothing reaches the git data store unless capture is explicitly on.</strong></p><p>Owner, 2026-09-19:</p><blockquote><p>an agent whenever it starts or ends a task or has a log message, they
+should add an entry to a log entry in the trash. […] by default commit
+audit log to git data store is turned off - need explict like (cpature log
+when agent runs this workflow).</p></blockquote><h2 id="the-role-is-mechanical"><a href="#the-role-is-mechanical" class="anchor-heading" aria-labelledby="the-role-is-mechanical"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The role is mechanical
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">log</code> in <code class="language-plaintext highlighter-rouge">scenarios/roles.json</code>: <code class="language-plaintext highlighter-rouge">actorKinds: ["system"]</code>. It is written to
 and emptied <em>by</em> an actor, and it decides nothing. The precedents are
-<code class="language-plaintext highlighter-rouge">work-plan</code> and <code class="language-plaintext highlighter-rouge">corpus</code>. A mechanical role is still a real role: this skill
-is its <strong>contract</strong> — the shape of an entry and where it goes.</p><h2 id="the-entry"><a href="#the-entry" class="anchor-heading" aria-labelledby="the-entry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The entry
+<code class="language-plaintext highlighter-rouge">work-plan</code> and <code class="language-plaintext highlighter-rouge">corpus</code>, and this is deliberately the same shape rather than
+a new one. A mechanical role is still a real role (owner, 2026-10-16): this
+skill is its <strong>contract</strong> — the shape of an entry and where it goes — and the
+<code class="language-plaintext highlighter-rouge">actedUpon</code> flag that once exempted it from <code class="language-plaintext highlighter-rouge">role-has-actor</code> is retired.</p><h2 id="the-entry"><a href="#the-entry" class="anchor-heading" aria-labelledby="the-entry"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The entry
   
   
-</h2><p><code class="language-plaintext highlighter-rouge">schemas/sdlc/log-entry.ts</code>. Every entry carries <code class="language-plaintext highlighter-rouge">$schema: folio-log/v1</code>: a
-directory says what to EXPECT and the file says what it IS.</p><div class="table-wrapper"><table><thead><tr><th>field</th><th>why it is there</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">event</code></td><td><code class="language-plaintext highlighter-rouge">task-start</code> · <code class="language-plaintext highlighter-rouge">task-end</code> · <code class="language-plaintext highlighter-rouge">message</code> · <code class="language-plaintext highlighter-rouge">error</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">summary</code></td><td>one line, so a long log stays skimmable; detail goes in <code class="language-plaintext highlighter-rouge">detail</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">actor</code>, <code class="language-plaintext highlighter-rouge">role</code></td><td>who, and which lane they were acting in</td></tr><tr><td><code class="language-plaintext highlighter-rouge">process</code>, <code class="language-plaintext highlighter-rouge">task</code></td><td>the BPMN process and step, when inside one</td></tr><tr><td><code class="language-plaintext highlighter-rouge">bean</code>, <code class="language-plaintext highlighter-rouge">branch</code>, <code class="language-plaintext highlighter-rouge">session</code></td><td>so a run’s entries can be found and emptied together</td></tr><tr><td><code class="language-plaintext highlighter-rouge">references[]</code></td><td><strong>what this entry points at</strong> — a chat, an issue, a commit, a command. See below</td></tr><tr><td><code class="language-plaintext highlighter-rouge">execution</code></td><td>command-execution detail, when the entry IS one</td></tr><tr><td><code class="language-plaintext highlighter-rouge">capture</code></td><td>whether this entry persists — <strong>three-valued</strong>, see below</td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">role</code>, <code class="language-plaintext highlighter-rouge">process</code> and <code class="language-plaintext highlighter-rouge">task</code> are <strong>optional and meant to be</strong>. An agent
+</h2><p><code class="language-plaintext highlighter-rouge">schemas/sdlc/log-entry.ts</code>. Every entry carries <code class="language-plaintext highlighter-rouge">$schema: folio-log/v1</code>, because
+a directory says what to EXPECT and the file says what it IS — without it, a
+log entry is told apart from a discarded proposal by its folder alone, which
+is the coincidence-not-contract problem the bean and workflow stores already
+fixed.</p><div class="table-wrapper"><table><thead><tr><th>field</th><th>why it is there</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">event</code></td><td><code class="language-plaintext highlighter-rouge">task-start</code> · <code class="language-plaintext highlighter-rouge">task-end</code> · <code class="language-plaintext highlighter-rouge">message</code> · <code class="language-plaintext highlighter-rouge">error</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">summary</code></td><td>one line, so a long log stays skimmable; detail goes in <code class="language-plaintext highlighter-rouge">detail</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">actor</code>, <code class="language-plaintext highlighter-rouge">role</code></td><td>who, and which lane they were acting in</td></tr><tr><td><code class="language-plaintext highlighter-rouge">process</code>, <code class="language-plaintext highlighter-rouge">task</code></td><td>the BPMN process and step, when inside one</td></tr><tr><td><code class="language-plaintext highlighter-rouge">bean</code>, <code class="language-plaintext highlighter-rouge">branch</code>, <code class="language-plaintext highlighter-rouge">session</code></td><td>so a run’s entries can be found and emptied together</td></tr><tr><td><code class="language-plaintext highlighter-rouge">references[]</code></td><td><strong>what this entry points at</strong> — a chat, an issue, a commit, a command. See below</td></tr><tr><td><code class="language-plaintext highlighter-rouge">execution</code></td><td>command-execution detail, when the entry IS one</td></tr><tr><td><code class="language-plaintext highlighter-rouge">capture</code></td><td>whether this entry persists — <strong>three-valued</strong>, see below</td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">role</code>, <code class="language-plaintext highlighter-rouge">process</code> and <code class="language-plaintext highlighter-rouge">task</code> are <strong>optional and meant to be</strong>. An agent
 writes log lines outside any process, and inventing a lane for those would
 be the fake-reference failure <code class="language-plaintext highlighter-rouge">activity-names-skill</code> exists to prevent.</p><h2 id="what-an-entry-points-at--references-is-open"><a href="#what-an-entry-points-at--references-is-open" class="anchor-heading" aria-labelledby="what-an-entry-points-at--references-is-open"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What an entry points at — <code class="language-plaintext highlighter-rouge">references[]</code> is OPEN
   
   
-</h2><p>An entry references whatever the work touched — discussions, chats, command
-executions and more — and nobody enumerates that in advance. So <code class="language-plaintext highlighter-rouge">kind</code> is an
-open string with a KNOWN SET, and an unrecognised kind is <strong>accepted and flagged</strong>, never
+</h2><p>Owner, 2026-09-19:</p><blockquote><p>log should be rich schema including references to discussion/chats, cmn
+execution logs, etc.</p></blockquote><p><strong>The <code class="language-plaintext highlighter-rouge">etc.</code> is the specification, not a trailing-off.</strong> A closed list is
+wrong within a week — the interesting thing to reference is whatever the work
+touched, and nobody enumerates that in advance. So <code class="language-plaintext highlighter-rouge">kind</code> is an open string
+with a KNOWN SET, and an unrecognised kind is <strong>accepted and flagged</strong>, never
 refused:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>discussion · comment · issue · pull-request · commit · command · workflow · artefact
 </code></pre></div></div><p>A reference is <code class="language-plaintext highlighter-rouge">{ kind, ref }</code> plus an optional <code class="language-plaintext highlighter-rouge">title</code> and <code class="language-plaintext highlighter-rouge">at</code>. <strong><code class="language-plaintext highlighter-rouge">ref</code> is
-required</strong>: a kind with nothing to point at gives the reader no way to reach
-it.</p><p><strong>A list, not named fields</strong>, because one entry routinely touches several of
-one kind (a step that answers three review threads has three comments).</p><p><strong>Unknown kinds are surfaced rather than rejected.</strong> Open is the point, but a
+required</strong> — a kind with nothing to point at records that something of that
+sort was involved and gives the reader no way to reach it, which is the
+abandonment-or-accident ambiguity in a different store.</p><p><strong>A list, not named fields.</strong> <code class="language-plaintext highlighter-rouge">issue</code> / <code class="language-plaintext highlighter-rouge">pr</code> / <code class="language-plaintext highlighter-rouge">commitSha</code> would have been the
+obvious shape and is wrong: one entry routinely touches several of one kind. A
+step that answers three review threads has three comments to point at, and
+<code class="language-plaintext highlighter-rouge">comment1</code>..<code class="language-plaintext highlighter-rouge">comment3</code> is where that design ends up.</p><p><strong>Unknown kinds are surfaced rather than rejected.</strong> Open is the point, but a
 <em>silently</em> open list is how <code class="language-plaintext highlighter-rouge">issue</code>, <code class="language-plaintext highlighter-rouge">issues</code> and <code class="language-plaintext highlighter-rouge">gh-issue</code> end up in one
 store with nothing able to query it. <code class="language-plaintext highlighter-rouge">writeLogEntry</code> returns
 <code class="language-plaintext highlighter-rouge">unknownRefKinds</code>, and the one-line report says so — so a typo is noticeable
-without the parser being able to refuse a legitimate extension.</p><h3 id="command-execution-has-its-own-shape-and-no-output-field"><a href="#command-execution-has-its-own-shape-and-no-output-field" class="anchor-heading" aria-labelledby="command-execution-has-its-own-shape-and-no-output-field"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Command execution has its own shape, and no output field
+without the parser being able to refuse a legitimate extension.</p><blockquote><p><code class="language-plaintext highlighter-rouge">cmn</code> was read as <strong>command</strong>. There is no CMMN in this codebase — the
+process standards here are BPMN and DMN — and “execution logs” pairs with a
+command. If CMMN was meant, it arrives as <code class="language-plaintext highlighter-rouge">kind: "case"</code> with <strong>no schema
+change</strong>, which is exactly what an open list buys.</p></blockquote><h3 id="command-execution-has-its-own-shape-and-no-output-field"><a href="#command-execution-has-its-own-shape-and-no-output-field" class="anchor-heading" aria-labelledby="command-execution-has-its-own-shape-and-no-output-field"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Command execution has its own shape, and no output field
   
   
 </h3><p><code class="language-plaintext highlighter-rouge">execution</code> carries <code class="language-plaintext highlighter-rouge">command</code>, <code class="language-plaintext highlighter-rouge">argv</code>, <code class="language-plaintext highlighter-rouge">exitCode</code>, <code class="language-plaintext highlighter-rouge">durationMs</code>, <code class="language-plaintext highlighter-rouge">cwd</code> and
@@ -254,23 +270,32 @@ filter on. <strong>An absent <code class="language-plaintext highlighter-rouge">
 the third state again.</p><p><strong>There is deliberately no field to inline output into.</strong> <code class="language-plaintext highlighter-rouge">outputRef</code> points
 at where stdout and stderr went. Command output is the likeliest place for a
 token or a connection string to appear, and <code class="language-plaintext highlighter-rouge">capture: "on"</code> puts an entry in
-git in a repository that may be public, and <strong>an absent field is stronger than
-a warning.</strong> The same caution applies to <code class="language-plaintext highlighter-rouge">command</code> itself: a
+git in a repository that may be public. An <code class="language-plaintext highlighter-rouge">output: string</code> field would invite
+exactly the leak the section below warns about, and <strong>an absent field is
+stronger than a warning.</strong> The same caution applies to <code class="language-plaintext highlighter-rouge">command</code> itself: a
 command line carries its own arguments, and <code class="language-plaintext highlighter-rouge">--token=…</code> is a command line.</p><h2 id="turning-it-on--cat-harnessprocesseslog-captureon-on-the-process"><a href="#turning-it-on--cat-harnessprocesseslog-captureon-on-the-process" class="anchor-heading" aria-labelledby="turning-it-on--cat-harnessprocesseslog-captureon-on-the-process"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Turning it on — <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:log capture="on"/&gt;</code> on the process
   
   
-</h2><p>Capture is a declaration on the <strong>process</strong>, parsed at load and <strong>throwing on a
-value the engine cannot honour</strong>, exactly as <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean op&gt;</code>
-does. A diagram asking for a mode that does not exist must not load and quietly
-log nothing.</p><p><code class="language-plaintext highlighter-rouge">workflow_start</code> writes <code class="language-plaintext highlighter-rouge">task-start</code>; <code class="language-plaintext highlighter-rouge">workflow_complete</code> writes <code class="language-plaintext highlighter-rouge">task-end</code>
+</h2><p>Owner: <em>“need explicit like (capture log when agent runs this workflow).”</em>
+That is a declaration on the <strong>process</strong>, parsed at load and <strong>throwing on a
+value the engine cannot honour</strong>, exactly as <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean op&gt;</code> does. A diagram
+asking for a mode that does not exist must not load and quietly log nothing —
+worse here than elsewhere, because the missing artefact <em>is</em> the record.</p><p><code class="language-plaintext highlighter-rouge">workflow_start</code> writes <code class="language-plaintext highlighter-rouge">task-start</code>; <code class="language-plaintext highlighter-rouge">workflow_complete</code> writes <code class="language-plaintext highlighter-rouge">task-end</code>
 for the step just recorded, with the instance’s status in the detail. The step
 is the unit, not the whole process: waiting for the process to finish would
-lose every intermediate entry, which is most of what a log is read for.</p><p>Marked in this layer: <code class="language-plaintext highlighter-rouge">crdm-requirements</code> and <code class="language-plaintext highlighter-rouge">actor-role-administration</code>.</p><p><strong>Not a call activity.</strong> A call activity is a <strong>node in the control flow</strong>,
-so the log would become a step to complete in sequence, and in a
-<code class="language-plaintext highlighter-rouge">enforcement="strict"</code> process <code class="language-plaintext highlighter-rouge">workflow_gate</code> refuses a step that is not
-enabled. An extension element adds no node and no flow; a test asserts the
-strict processes enforce exactly what their diagrams say.</p><p><strong><code class="language-plaintext highlighter-rouge">unknown</code> is not writable as a declared value.</strong> It is what the <em>absence</em> of
-a declaration resolves to.</p><h2 id="capture-is-off-by-default-and-unknown-is-a-real-answer"><a href="#capture-is-off-by-default-and-unknown-is-a-real-answer" class="anchor-heading" aria-labelledby="capture-is-off-by-default-and-unknown-is-a-real-answer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Capture is off by default, and <code class="language-plaintext highlighter-rouge">unknown</code> is a real answer
+lose every intermediate entry, which is most of what a log is read for.</p><p>Marked today: <code class="language-plaintext highlighter-rouge">crdm-requirements</code>, <code class="language-plaintext highlighter-rouge">editing-hci-validation</code>,
+<code class="language-plaintext highlighter-rouge">content-lifecycle</code>.</p><p><strong>Not a call activity, and the reason is load-bearing.</strong> “Connect it to
+existing processes” reads as <em>add a <code class="language-plaintext highlighter-rouge">callActivity</code></em> — but a call activity is a
+<strong>node in the control flow</strong>, so the log would become a step that must be
+completed in sequence. Two of those three are <code class="language-plaintext highlighter-rouge">enforcement="strict"</code>, where
+<code class="language-plaintext highlighter-rouge">workflow_gate</code> refuses a step that is not enabled, so it would have changed
+what those diagrams say and needed policy relaxations for a concern that is
+not a phase of anything. An extension element adds no node and no flow, and
+there is a test asserting the strict processes still enforce exactly what they
+did.</p><p><strong><code class="language-plaintext highlighter-rouge">unknown</code> is not writable as a declared value.</strong> It is what the <em>absence</em> of
+a declaration resolves to; writing it down would be a diagram asserting that
+nobody could tell, which is not something a diagram is in a position to assert
+about itself.</p><h2 id="capture-is-off-by-default-and-unknown-is-a-real-answer"><a href="#capture-is-off-by-default-and-unknown-is-a-real-answer" class="anchor-heading" aria-labelledby="capture-is-off-by-default-and-unknown-is-a-real-answer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Capture is off by default, and <code class="language-plaintext highlighter-rouge">unknown</code> is a real answer
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">fsh-guts/logs/</code> is inside the repository, so writing there <em>would</em> be
@@ -279,8 +304,9 @@ ignored by git</strong> — the agent can read back what it wrote this session, 
 nothing enters the data store until a workflow or the config asks.</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>off      the default — written, not committed
 on       explicitly enabled, for this workflow or by config
 unknown  the setting could not be determined
-</code></pre></div></div><p>A logging system that silently keeps nothing is worse than none, because the
-agent believes it has an audit trail. So:</p><ul><li>absent configuration resolves to <code class="language-plaintext highlighter-rouge">unknown</code>, <strong>never to <code class="language-plaintext highlighter-rouge">off</code></strong> — they are
+</code></pre></div></div><p><strong><code class="language-plaintext highlighter-rouge">unknown</code> is not a tidy-up, it is the point.</strong> A logging system that
+silently keeps nothing is worse than none, because the agent believes it has
+an audit trail and acts on that belief. So:</p><ul><li>absent configuration resolves to <code class="language-plaintext highlighter-rouge">unknown</code>, <strong>never to <code class="language-plaintext highlighter-rouge">off</code></strong> — they are
 different claims. <code class="language-plaintext highlighter-rouge">off</code> says somebody decided; <code class="language-plaintext highlighter-rouge">unknown</code> says nobody could
 tell, and the first is a choice while the second is a bug.</li><li><code class="language-plaintext highlighter-rouge">unknown</code> does <strong>not</strong> persist. When the setting cannot be determined the
 safe reading is the default, and committing an audit trail nobody asked
@@ -298,15 +324,21 @@ next agent does not re-enter it. <strong>A log entry records no decision.</stron
 a trace of activity, it is expected to be voluminous, and keeping it forever
 would drown the directory that exists to make discarded <em>decisions</em>
 findable.</p><p>So: logs may be emptied without confirmation; <strong>everything else in
-<code class="language-plaintext highlighter-rouge">fsh-guts/</code> may not.</strong></p><h3 id="the-exception-was-granted-to-a-kind-of-file-not-to-a-path"><a href="#the-exception-was-granted-to-a-kind-of-file-not-to-a-path" class="anchor-heading" aria-labelledby="the-exception-was-granted-to-a-kind-of-file-not-to-a-path"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The exception was granted to a KIND OF FILE, not to a path
+<code class="language-plaintext highlighter-rouge">fsh-guts/</code> may not.</strong> Stated here because an agent reading both skills and
+finding no exception would either never empty the log or start deleting
+proposals, and both are wrong.</p><h3 id="the-exception-was-granted-to-a-kind-of-file-not-to-a-path"><a href="#the-exception-was-granted-to-a-kind-of-file-not-to-a-path" class="anchor-heading" aria-labelledby="the-exception-was-granted-to-a-kind-of-file-not-to-a-path"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The exception was granted to a KIND OF FILE, not to a path
   
   
 </h3><p><code class="language-plaintext highlighter-rouge">emptyLog(root, selector)</code> in <code class="language-plaintext highlighter-rouge">src/logging/log-sweep.ts</code>, with the selector
 being one of <code class="language-plaintext highlighter-rouge">{ id }</code>, <code class="language-plaintext highlighter-rouge">{ session }</code>, <code class="language-plaintext highlighter-rouge">{ before }</code> or <code class="language-plaintext highlighter-rouge">{ all: true }</code>. There
 is <strong>no default selector</strong>: an operation with no undo that empties everything
-when the caller passed nothing is the wrong way round.</p><p><strong>A file is removed only if it declares itself a <code class="language-plaintext highlighter-rouge">folio-log/v1</code> entry</strong>, never
-by path. A stray proposal dropped in the log directory keeps every protection
-it would have had one folder up.</p><p>Three consequences worth knowing before you call it:</p><ul><li><strong>“Could not tell” resolves to KEEP.</strong> A file that will not parse is a file
+when the caller passed nothing is the wrong way round.</p><p><strong>A file is removed only if it declares itself a <code class="language-plaintext highlighter-rouge">folio-log/v1</code> entry.</strong> The
+obvious implementation — <code class="language-plaintext highlighter-rouge">rm</code> the directory’s contents — would relax the
+never-delete rule for a <em>path</em>, which is not what was granted. A stray
+proposal dropped in the log directory keeps every protection it would have
+had one folder up. Same <code class="language-plaintext highlighter-rouge">$schema</code> contract the bean and workflow stores use,
+and the same reason: extension is a coincidence of the current layout, a
+declaration inside the file is the contract.</p><p>Three consequences worth knowing before you call it:</p><ul><li><strong>“Could not tell” resolves to KEEP.</strong> A file that will not parse is a file
 whose kind could not be established, and this module deletes.</li><li><strong>A symlink out of the directory is refused</strong>, checked by <code class="language-plaintext highlighter-rouge">realpath</code> rather
 than <code class="language-plaintext highlighter-rouge">resolve</code> — string arithmetic would not catch it, and here the cost of
 getting containment wrong is a loss rather than a leak.</li><li><strong>Everything not removed says WHY</strong>, and <code class="language-plaintext highlighter-rouge">describeSweep</code> separates a
@@ -317,8 +349,8 @@ know about. <code class="language-plaintext highlighter-rouge">scanned</code> is
   
 </h2><p><code class="language-plaintext highlighter-rouge">fsh-guts/logs/</code> is inside <code class="language-plaintext highlighter-rouge">fsh-guts/</code>, which <code class="language-plaintext highlighter-rouge">UNPUBLISHED_GRAPH_TYPOLOGIES</code>
 strips from every published graph — the kind, the directory, the skill and
-every edge naming them
-(<a href="../../reference/skill-instructions/kg-export.html"><code class="language-plaintext highlighter-rouge">kg-export</code></a>).</p><p>That is placement doing the work rather than a second rule, which is why
+every edge naming them (bean <code class="language-plaintext highlighter-rouge">folio-assistant-uv09</code>,
+<a href="../../reference/skill-instructions/kg-export.html"><code class="language-plaintext highlighter-rouge">kg-export</code></a>).</p><p>That is placement doing the work rather than a second rule, which is why
 logs can be as detailed as they need to be. <strong>There is a test asserting it
 for logs specifically</strong>, rather than trusting that the parent rule reaches
 them.</p><h2 id="what-not-to-log"><a href="#what-not-to-log" class="anchor-heading" aria-labelledby="what-not-to-log"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What not to log
@@ -327,8 +359,8 @@ them.</p><h2 id="what-not-to-log"><a href="#what-not-to-log" class="anchor-headi
 </h2><ul><li><strong>Secrets, tokens, credentials or personal data.</strong> Not-published is not
 the same as not-committed and not the same as private: capture <code class="language-plaintext highlighter-rouge">on</code> puts
 entries in git, and the repository may be public.</li><li><strong>A substitute for a bean.</strong> A log says what happened; a bean says what is
-being worked on and what it waits on. Log in addition to claiming, never
-instead.</li><li><strong>A substitute for the turn report.</strong> The log is for a later reader; the
+being worked on and what it waits on. An agent that logs instead of
+claiming is the 2026-09-18 unclaimed-work failure wearing a new hat.</li><li><strong>A substitute for the turn report.</strong> The log is for a later reader; the
 report is for the person in the room now.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   
   

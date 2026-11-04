@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "path-containment",
       "title": "Path containment — two questions that look like one",
-      "description": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and how to find every sink that needs a check.",
+      "description": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/package/security"
       ],
       "instructionsPath": "skills/conduct/security/path-containment.md",
-      "instructionLines": 69,
+      "instructionLines": 102,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

@@ -218,12 +218,17 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   
 </h1><p>A walkthrough recording is the best source a CRDM round can have: the
 stakeholder reacting to a working thing, in their own words. It is also easy to
-over-trust, because a transcript reads like a record and is not one.</p><p>The tool is <code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/meeting-recording.py</code> (stdlib + ffmpeg;
+over-trust, because a transcript reads like a record and is not one. This skill
+is what turned a 17-minute call into
+<a href="../../proposals/public-comment-round-2-crd-2026-10-06.html">the round 2 public-comment CRD</a>
+(bean <code class="language-plaintext highlighter-rouge">uphx</code>), and every rule below was paid for there.</p><p>The tool is <code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/meeting-recording.py</code> (stdlib + ffmpeg;
 <code class="language-plaintext highlighter-rouge">--help</code> per subcommand).</p><h2 id="1-inventory-what-was-actually-uploaded"><a href="#1-inventory-what-was-actually-uploaded" class="anchor-heading" aria-labelledby="1-inventory-what-was-actually-uploaded"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Inventory what was actually uploaded
   
   
-</h2><p>List the files before promising anything. <strong>A Teams .docx transcript never
-contains the shared screen</strong>; its images are speaker avatars. Say what is
+</h2><p>List the files before promising anything. On 2026-10-06 the first upload was a
+Teams <code class="language-plaintext highlighter-rouge">.docx</code> and a <code class="language-plaintext highlighter-rouge">.vtt</code>; the request said “there is video”, and there was
+none. The <code class="language-plaintext highlighter-rouge">.docx</code>’s 86 images were speaker avatars, not screen content.
+<strong>A Teams .docx transcript never contains the shared screen.</strong> Say what is
 missing, do what can be done, and list what waits for the missing file.</p><h2 id="2-two-exports-of-one-recognition-are-one-transcript"><a href="#2-two-exports-of-one-recognition-are-one-transcript" class="anchor-heading" aria-labelledby="2-two-exports-of-one-recognition-are-one-transcript"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. Two exports of one recognition are one transcript
   
   
@@ -242,21 +247,29 @@ already packaged somewhere the network allows, take <strong>only the model files
 and never run code that came with them.</p><h2 id="4-screenshots-where-the-screen-changed-and-where-a-speaker-points"><a href="#4-screenshots-where-the-screen-changed-and-where-a-speaker-points" class="anchor-heading" aria-labelledby="4-screenshots-where-the-screen-changed-and-where-a-speaker-points"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Screenshots: where the screen changed and where a speaker points
   
   
-</h2><ol><li><code class="language-plaintext highlighter-rouge">scenes VIDEO --min-gap 10</code> lists when the shared screen changed.</li><li>Grep the transcript for deictic phrases: “you can see”, “here”, “this”,
+</h2><ol><li><code class="language-plaintext highlighter-rouge">scenes VIDEO --min-gap 10</code> lists when the shared screen changed. On the
+walkthrough, activity clustered at 1:38–4:34, 8:19–8:43 and 10:31–12:58;
+the long stretch between was faces and talk.</li><li>Grep the transcript for deictic phrases: “you can see”, “here”, “this”,
 “looking at the screen”, “select these”. Their timestamps are the
 candidates; a scene change a second or two later is the frame to take.</li><li><code class="language-plaintext highlighter-rouge">frames VIDEO --at 1:52,2:26 --out DIR --crop W:H:X:Y --width 1280 --webp</code>.
 <strong>Crop out the participants’ camera tiles</strong>: a requirements document needs
-the screen, not the faces. Check the crop on one frame first.</li><li><strong>Look at every frame you keep.</strong> A frame cut for one thing can show a
-defect or a requirement that is already half-built, and either changes the
-requirements document.</li><li>WebP at quality 80 cut nine 1280-wide frames from 2.8 MB to 476 KB.</li></ol><h2 id="5-from-transcript-to-requirements"><a href="#5-from-transcript-to-requirements" class="anchor-heading" aria-labelledby="5-from-transcript-to-requirements"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. From transcript to requirements
+the screen, not the faces. Check the crop on one frame first.</li><li><strong>Look at every frame you keep.</strong> On 2026-10-06, a frame cut for “the type
+dropdown” also showed the defect itself (the counter read “12 of 2632
+shown” while the table above it had not changed), and the frame of the
+new-change-set form showed REQ-10 was half-built already (“Only the
+review committee and the editor can create a change-set”). Both changed
+the requirements document.</li><li>WebP at quality 80 cut nine 1280-wide frames from 2.8 MB to 476 KB.</li></ol><h2 id="5-from-transcript-to-requirements"><a href="#5-from-transcript-to-requirements" class="anchor-heading" aria-labelledby="5-from-transcript-to-requirements"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. From transcript to requirements
   
   
 </h2><p>Follow <a href="../../reference/skill-instructions/crdm-requirements-template.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-template</code></a>. In
 addition, for a recording:</p><ul><li><strong>Every requirement cites a timestamp</strong>, and every defect the demo exposed is
 listed separately from the requirements, with the timestamp and “not yet
 reproduced” until it is.</li><li><strong>Say what already exists</strong> (<em>Today:</em>) for each requirement, measured
-against the code or the data, not recalled.</li><li><strong>Who signs off is part of the requirement set.</strong> Ask who it is if the
-recording does not say.</li><li><strong>Do not build from the recording.</strong> A speaker telling the recording agent
+against the code or the data, not recalled. The editor’s own categories were
+already in the imported log as verbatim labels, which turned “compare human
+and agent categorisation” from a plan into a measured 48 of 100.</li><li><strong>Who signs off is part of the requirement set.</strong> The owner ruled
+2026-10-06 that the chief editor signs off before anything merges or is
+built. Ask who it is if the recording does not say.</li><li><strong>Do not build from the recording.</strong> A speaker telling the recording agent
 “implement them on a staging site” is a requirement about the process (P-1),
 not approval of the requirements.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed

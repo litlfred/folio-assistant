@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "A sub-KG is staged in place, then leaves for its own repository",
       "summary": "Create a knowledge graph inside a harnessed repository as an instance of its own, grow it there, and when it should leave, stage it for separation and move it whole into a new repository.",
-      "description": "Create a knowledge graph inside a harnessed repository as an instance of its own, grow it there, and when it should leave, stage it for separation and move it whole into a new repository. Declared in place with a planned `repository` and a `livesAt` saying where it sits today; staged by one import seam (`<name>/platform.ts`), the separation guard and a self-contained rehearsal; then, each behind an explicit owner confirmation, the repository is created, the staged contents are copied in with their history, the declaration is re-pointed, a fresh clone is verified, and the in-repo copy is frozen in the kept trashcan.\n\nThe light sibling of kg-separation, which splits a graph into a content and a tools repository; this moves a data instance whole, and shares kg-separation's seeding gateway and decision table.",
+      "description": "Create a knowledge graph inside a harnessed repository as an instance of its own, grow it there, and when it should leave, stage it for separation and move it whole into a new repository. Declared in place with a planned `repository` and a `livesAt` saying where it sits today; staged by one import seam (`<name>/platform.ts`), the separation guard and a self-contained rehearsal; then, each behind an explicit owner confirmation, the repository is created, the staged contents are copied in with their history, the declaration is re-pointed, a fresh clone is verified, and the in-repo copy is deleted.\n\nExtracted in retrospect from the staged IG separations of 2026-09-21 to 2026-10-06 (beans n3ni, kg83, rbz3, hcpz). The light sibling of kg-separation, which splits a graph into a content and a tools repository; this moves a data instance whole, and shares kg-separation's seeding gateway and decision table.",
       "enforcement": "strict",
       "sourcePath": "processes/kg/sub-kg-lifecycle.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/kg/sub-kg-lifecycle.bpmn",

@@ -106,7 +106,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Scan the source content and write the translatable strings to .pot files at the configured granularity: segment prose by paragraph, shield what must not be translated (math, code, labels, Lean companions) as placeholders, normalise whitespace, and extract metadata such as titles, alt text and captions. Tool: the translation_extract MCP tool."
+          "@value": "Scan the source content and write the translatable strings to .pot files at the configured granularity: segment prose by paragraph, shield what must not be translated (math, code, labels, Lean companions) as placeholders, normalise whitespace, and extract metadata such as titles, alt text and captions. Tool: the translation_extract MCP tool, or bun run content/pipeline/pot-extract.ts."
         }
       ],
       "skos:notation": "GT_ExtractPot",
@@ -126,7 +126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Read the .po file and the source .md, substitute msgstr for msgid, unshield the placeholders, and write the translated .md to translations/<locale>/. Check structure (paragraph count, heading levels) and completeness (no empty msgstr), and lint (doubled punctuation, orphaned placeholders). Tool: the translation_inject MCP tool."
+          "@value": "Read the .po file and the source .md, substitute msgstr for msgid, unshield the placeholders, and write the translated .md to translations/<locale>/. Check structure (paragraph count, heading levels) and completeness (no empty msgstr), and lint (doubled punctuation, orphaned placeholders). Tool: the translation_inject MCP tool, or bun run content/pipeline/po-inject.ts."
         }
       ],
       "skos:notation": "GT_InjectPo",
@@ -146,7 +146,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Records that a removal was considered and refused, or that a preview still stands because a signal fired. A reason is REQUIRED — the tool refuses without one."
+          "@value": "The entry that makes the log worth reading. A removal was considered and refused, or a preview still stands because a signal fired; without an entry that leaves no trace, and the next person asking \"why is this preview still up\" has nothing to consult. A reason is REQUIRED — the tool refuses without one."
         }
       ],
       "skos:notation": "GT_LogRetained",
@@ -166,7 +166,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "THE RECORD, and not relaxable (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
+          "@value": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
         }
       ],
       "skos:notation": "GT_RecordSignoff",
@@ -206,7 +206,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original. It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool."
+          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original (bean folio-assistant-ktt2). It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool."
         }
       ],
       "skos:notation": "GT_RoundTripQa",
@@ -1686,7 +1686,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Composed from the declaration by the `upload-url` Tool, never written by hand: the queue is declared with INSTANCE scope, and a forge URL needs the path relative to the REPOSITORY. Every failure is named — no origin remote, a non-GitHub forge, a declared-but-absent queue. On failure, fall back to the conversation."
+          "@value": "Composed from the declaration, never written by hand. The queue is declared with INSTANCE scope, so its declared path is missing the segment a repository-relative forge URL needs: /upload/main/uploads is a 404 and /upload/main/cat-harness/uploads is not, verified against GitHub 2026-09-20. Every failure is named — no origin remote, a non-GitHub forge, a declared-but-absent queue — because a URL is believed, and somebody sent to a wrong one cannot tell it from an empty directory. On failure, fall back to the conversation. Uses `scripts/upload-url.ts`."
         }
       ],
       "skos:notation": "A_PointToUpload",
@@ -1986,7 +1986,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The step that is easy to omit and impossible to reconstruct afterwards. `provenance` is a PAIR: `upstream` is the remote thing, `local` is the original in this repository. A copy-out writes `local`; it does not overwrite `upstream`, and it does not reuse `upstream` for a local value. Without `local`, one rename later the copy is indistinguishable from original work and nothing downstream can repair it, because the information was never written down."
+          "@value": "The step that is easy to omit and impossible to reconstruct afterwards. `provenance` is a PAIR: `upstream` is the remote thing, `local` is the original in this repository. A copy-out writes `local`; it does not overwrite `upstream`, and it does not reuse `upstream` for a local value — that was one field until 2026-09-22, and by then 5 of the 9 who-iris item records were using it for a local one in violation of its own documentation. Without `local`, one rename later the copy is indistinguishable from original work and nothing downstream can repair it, because the information was never written down."
         }
       ],
       "skos:notation": "Task_RecordProvenance",
@@ -2086,7 +2086,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Between requirements and sign-off, and the order is the argument: requirements are statements about things, and the model says what the things ARE. Drafted earlier it is invented from nothing, since the entities come from the phase-2 BPA; drafted later, sign-off approves requirements whose nouns were never pinned — which is how two stakeholders approve one sentence meaning different things."
+          "@value": "Between requirements and sign-off, and the order is the argument: requirements are statements about things, and the model says what the things ARE. Drafted earlier it is invented from nothing, since the entities come from the phase-2 BPA; drafted later, sign-off approves requirements whose nouns were never pinned — which is how two stakeholders approve one sentence meaning different things. Owner, 2026-09-20."
         }
       ],
       "skos:notation": "Call_DataModel",
@@ -2226,7 +2226,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "THE RECORD, and not relaxable (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
+          "@value": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
         }
       ],
       "skos:notation": "A_RecordSignoff",
@@ -2246,7 +2246,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so. It IS an adjudication with the requirement-set answers: an approval here moves the set to `accepted`, which `check:requirements` refuses unless it is a human's and every approved member is `in-force`."
+          "@value": "The business analyst confirms every acceptance criterion from the requirements is met. The issue closes only on their authorisation — an agent never closes an issue on its own say-so. Since issue #2405 (FR-013) it IS an adjudication with the requirement-set answers: an approval here moves the set to `accepted`, which `check:requirements` refuses unless it is a human's and every approved member is `in-force`."
         }
       ],
       "skos:notation": "BA_Confirm",
@@ -2306,7 +2306,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A model in prose is a proposal; a model in the declaration is a model. Ship a reader in the same change: a model that is only documentation goes inert."
+          "@value": "A model in prose is a proposal; a model in the declaration is a model. Ship a reader in the same change — everything here that was only documentation went inert within weeks."
         }
       ],
       "skos:notation": "A_Declare",
@@ -2426,7 +2426,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "An MVP is shared AS A STAGING DEPLOY, not as a description of one. `feature-staging.yml` publishes the branch under `STAGING/<branch-slug>/` on gh-pages and comments the URL on the PR, so the stakeholder who tests it is looking at the built artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work."
+          "@value": "An MVP is shared AS A STAGING DEPLOY, not as a description of one. `feature-staging.yml` publishes the branch under `STAGING/<branch-slug>/` on gh-pages and comments the URL on the PR, so the stakeholder who tests it is looking at the built artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work. Measured in this repo on 2026-09-16: holding a rendered change back for assessment made assessment harder, not safer."
         }
       ],
       "skos:notation": "A_DeployStaging",
@@ -2546,7 +2546,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries a `note` on the bean (its claim is the OPEN that `Process_CRDM` calls first); this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed."
+          "@value": "On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries a `note` on the bean (its claim is the OPEN that `Process_CRDM` calls first); this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed."
         }
       ],
       "skos:notation": "Call_OptionsAnalysis",
@@ -2646,7 +2646,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "When the requirement is initiated or updated through a human-agent chat, search the beans and the repository's issues and open PRs for relevance, categorize and summarize them, and ask the user whether and how to coordinate. Judgement decides the categories; the user decides the coordination."
+          "@value": "When the requirement is initiated or updated through a human-agent chat, search the beans and the repository's issues and open PRs for relevance, categorize and summarize them, and ask the user whether and how to coordinate. Judgement decides the categories; the user decides the coordination. Owner, 2026-09-23 (issue #1023)."
         }
       ],
       "skos:notation": "Call_RelatedWork",
@@ -2766,7 +2766,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Two skills, because this step is two things: the requirements come from the CRDM process, the impact half is a question about the entities and relations the change touches, which is what data modelling answers."
+          "@value": "Two skills, because this step is two things: the requirements come from the CRDM process, the impact half is a question about the entities and relations the change touches, which is what data modelling answers. It named `content-graph` until placement PR3 (bean `63wl`): that is a folio-content skill, and this diagram is the harness's own."
         }
       ],
       "skos:notation": "A_DefineReqs",
@@ -2826,7 +2826,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Design use of wireframe-design-review, before implementation: a written design intent, at least two mid-fidelity candidates each with a web and a mobile layout, the mechanical checks, and a blind review. The candidates are committed as assets of the request's proposal, under docs/proposals/<slug>/wireframes/ beside docs/proposals/<slug>.md, on the feature branch so feature-staging publishes them, and shown where the requester will look, chosen from context — the conversation, the issue the request came from, the pull request, or several of these — each place carrying the same staging deep links and screenshots (staging-review, the deep-link rule, point 5: where it goes is a judgement). The requester or BA is the human reviewer and chooses one at BA_ReviewReqs. A wireframe is part of the design process for adjudication (methodologies/wiregen.md). The candidates ARE the options A_CompareOptions lays out, so this merges into it rather than producing a second comparison."
+          "@value": "Design use of wireframe-design-review, before implementation: a written design intent, at least two mid-fidelity candidates each with a web and a mobile layout, the mechanical checks, and a blind review. The candidates are committed as assets of the request's proposal, under docs/proposals/<slug>/wireframes/ beside docs/proposals/<slug>.md, on the feature branch so feature-staging publishes them, and shown where the requester will look, chosen from context — the conversation, the issue the request came from, the pull request, or several of these — each place carrying the same staging deep links and screenshots (staging-review, the deep-link rule, point 5: where it goes is a judgement). The requester or BA is the human reviewer and chooses one at BA_ReviewReqs. The owner asked for this on 2026-09-23 (methodologies/wiregen.md): a wireframe is part of the design process for adjudication. The candidates ARE the options A_CompareOptions lays out, so this merges into it rather than producing a second comparison."
         }
       ],
       "skos:notation": "Call_Wireframe",
@@ -2906,7 +2906,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Without this step, agreed and signed-off requirements exist only as an issue and a conversation, and the knowledge graph never learns them. ONE question for the SET, not one per requirement: a six-phase run can agree many, and asking six times is the same failure as a form that re-asks what it was already told. The options are DERIVED from the graphs this instance declares in `<name>.json`, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory."
+          "@value": "THE STEP THAT WAS MISSING. Requirements were elicited, agreed and signed off, and then existed as an issue and a conversation — so the output of the process that exists to produce durable requirements was the one thing the knowledge graph never learned. ONE question for the SET, not one per requirement: a six-phase run can agree many, and asking six times is the same failure as a form that re-asks what it was already told. The options are DERIVED from the graphs this instance declares in `<name>.json`, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory."
         }
       ],
       "skos:notation": "A_OfferKg",
@@ -2946,7 +2946,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "THE RECORD, and not relaxable (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
+          "@value": "THE RECORD, and not relaxable: a judgement nobody wrote down is indistinguishable from one never made (`adjudication`, A_RecordEntry). Append one `requirement-signoff` record to `test/attestations/requirement-signoff/<set slug>.attestations.json` — who (kind, id, actor), at, scope (the set or one member), the outcome from the requirement-set code list, the stage it moves the set to, the reason, and the permalink to the issue comment where it was decided — and set the set's `stage` to match. Issue #2405 FR-011 / FR-012. GW_SignoffRecorded after this reads the record back, so this step cannot be skipped by completing it: a sign-off that left no attestation loops here again."
         }
       ],
       "skos:notation": "A_RecordSignoff",
@@ -2986,7 +2986,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf. It IS an adjudication: it calls Process_Adjudication with the requirement-set answers, and every answer goes through A_RecordSignoff before anything follows it."
+          "@value": "The business analyst / requester signs off on the agreed requirement set, on the issue: what was agreed and what was deferred. Recorded as their decision, with its reason, never by an agent on their behalf. Since issue #2405 (FR-013) it IS an adjudication: it calls Process_Adjudication with the requirement-set answers, and every answer goes through A_RecordSignoff before anything follows it."
         }
       ],
       "skos:notation": "BA_Signoff",
@@ -3541,7 +3541,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration."
+          "@value": "What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration — this practice's own fired, took edges 5 to 12, and rewrote the plan."
         }
       ],
       "skos:notation": "Task_Brief",
@@ -3621,7 +3621,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`bun run cat check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The edge count can rise when the measurement improves (previously unjudged edges are folded in); that is correct."
+          "@value": "`bun run cat check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in."
         }
       ],
       "skos:notation": "Task_Measure",
@@ -4041,7 +4041,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Scan the source content and write the translatable strings to .pot files at the configured granularity: segment prose by paragraph, shield what must not be translated (math, code, labels, Lean companions) as placeholders, normalise whitespace, and extract metadata such as titles, alt text and captions. Tool: the translation_extract MCP tool."
+          "@value": "Scan the source content and write the translatable strings to .pot files at the configured granularity: segment prose by paragraph, shield what must not be translated (math, code, labels, Lean companions) as placeholders, normalise whitespace, and extract metadata such as titles, alt text and captions. Tool: the translation_extract MCP tool, or bun run content/pipeline/pot-extract.ts."
         }
       ],
       "skos:notation": "Task_ExtractPOT",
@@ -4081,7 +4081,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Read the .po file and the source .md, substitute msgstr for msgid, unshield the placeholders, and write the translated .md to translations/<locale>/. Check structure (paragraph count, heading levels) and completeness (no empty msgstr), and lint (doubled punctuation, orphaned placeholders). Tool: the translation_inject MCP tool."
+          "@value": "Read the .po file and the source .md, substitute msgstr for msgid, unshield the placeholders, and write the translated .md to translations/<locale>/. Check structure (paragraph count, heading levels) and completeness (no empty msgstr), and lint (doubled punctuation, orphaned placeholders). Tool: the translation_inject MCP tool, or bun run content/pipeline/po-inject.ts."
         }
       ],
       "skos:notation": "Task_InjectPO",
@@ -4181,7 +4181,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original. It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool. No gateway follows: drift or clean, the translation goes to Task_SMEReview with the findings attached. Which of two readings is right is a human call (translation-manager, \"route drift to a human reviewer\"), and every translation in this workflow is reviewed and signed off anyway, so a clean result is evidence for the reviewer and never a way around them."
+          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original (bean folio-assistant-ktt2). It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool. No gateway follows: drift or clean, the translation goes to Task_SMEReview with the findings attached. Which of two readings is right is a human call (translation-manager, \"route drift to a human reviewer\"), and every translation in this workflow is reviewed and signed off anyway, so a clean result is evidence for the reviewer and never a way around them."
         }
       ],
       "skos:notation": "Task_RoundTripQA",
@@ -4321,7 +4321,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "THE METADATA STEP. What enters the knowledge graph is the asset's INDEX — what it is, how big, what type, when it says it was written — and, for a container, what is in it; its contents do not go in unless somebody asks, with a reason. The tool is `cat-harness-tools/scripts/extract-assets.ts`, writing a `folio-extraction/v1` record (`schemas/content/extraction.ts`). The media type is sniffed from the leading bytes, never taken from the extension."
+          "@value": "THE METADATA STEP. What enters the knowledge graph is the asset's INDEX — what it is, how big, what type, when it says it was written — and, for a container, what is in it; its contents do not go in unless somebody asks, with a reason. Owner, 2026-09-20: \"make sure you have zip ingestion skills to extract metadata of assets into KG. don't extract contents unless explict ask by user.\" The tool is `cat-harness-tools/scripts/extract-assets.ts`, writing a `folio-extraction/v1` record (`schemas/content/extraction.ts`, moved down to this layer in placement PR5). The media type is sniffed from the leading bytes, never taken from the extension."
         }
       ],
       "skos:notation": "Task_ExtractMetadata",
@@ -4341,7 +4341,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "THE FIRST LINK: everything downstream of here takes a file that is already in the queue. WHAT THIS STEP IS. The basic flow's ACCEPT step: choosing an arrival route, writing the bytes into the declared queue of the instance that will own them, and discharging what that route does not discharge for you. The routes, what each writer owes, and the two that are mechanisms against the one that is a persona are in the `upload-routes` skill; `upload-url` composes the forge URL for the web route from the declaration rather than from a literal. WHY A PLAIN `bpmn:task` AND NOT A `userTask`. A `userTask` asserts a human performs it, and this lane is \"Contributor (human or agent)\" because both do; asserting human-only would be an `activity-fulfilment-kind` contradiction. A plain task asserts nothing about the performer. WHY THE BEAN OP IS `note` AND NOT `claim`. Placing a file claims nothing; it adds to a queue. What it owes the work plan is visibility. A note against the ingestion bean is what makes the queue's growth something another session can see."
+          "@value": "THE FIRST LINK, and it did not exist until 2026-09-30. Everything downstream of here takes a file that is already in the queue, and both ingest Tools type their first input as \"The upload to ingest, under the declared `uploads` graph\". So the act of PUTTING it there was performed by three different mechanisms and governed by none of them. WHAT THIS STEP IS. The basic flow's ACCEPT step: choosing an arrival route, writing the bytes into the declared queue of the instance that will own them, and discharging what that route does not discharge for you. The routes, what each writer owes, and the two that are mechanisms against the one that is a persona are in the `upload-routes` skill; `upload-url` composes the forge URL for the web route from the declaration rather than from a literal, because a hand-written one 404'd. WHY A PLAIN `bpmn:task` AND NOT A `userTask`. A `userTask` asserts a human performs it, and this lane is named \"Contributor (human or agent)\" precisely because both do — measured over this repository's own history, files have reached `uploads/` in commits authored by `Carl Leitner` and in commits authored by `Claude`. Asserting human-only here would be the `activity-fulfilment-kind` contradiction written deliberately: the diagram saying one thing and the lane's role graph another. A plain task asserts nothing about the performer, which is the truth. WHY THE BEAN OP IS `note` AND NOT `claim`. Placing a file claims nothing; it adds to a queue. What it owes the work plan is visibility — three batches of PDFs arrived through the forge's web UI (`c8349950fa5`, `f4ddfc65c8d`, `b8549160bb1`) with no bean, no PR and no note, and the first sibling to notice was a generator going stale. A note against the ingestion bean is what makes the queue's growth something another session can see."
         }
       ],
       "skos:notation": "Task_Place",
@@ -4361,7 +4361,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The materialized branch. The asset lands in library/<slug>/ with its metadata record, its provenance and its fixity. The folder name IS the citation key, so a citation and a directory are the same string. The upload is then RETIRED, not left and not deleted: it moves to fsh-guts/uploads/ beside a sidecar naming where it came from and when, and `check:uploads-retired` finds one that was not. A refining process that derives content from the bytes does so before that retirement; `library-ingestion` carries the rule."
+          "@value": "The materialized branch. The asset lands in library/<slug>/ with its metadata record, its provenance and its fixity. The folder name IS the citation key, so a citation and a directory are the same string. The upload is then RETIRED, not left and not deleted: it moves to fsh-guts/uploads/ beside a sidecar naming where it came from and when (owner, 2026-09-29), and `check:uploads-retired` finds one that was not. A refining process that derives content from the bytes does so before that retirement; `library-ingestion` carries the rule."
         }
       ],
       "skos:notation": "Task_PlaceInLibrary",
@@ -4381,7 +4381,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A step because sources do contradict themselves (one colour given two values on different pages). A contradiction silently resolved is indistinguishable from one nobody noticed, so it is kept as data and the reading taken is stated as a choice."
+          "@value": "A step because it happened twice on the first real ingestion: the WHO guide states its black logo as both K:100 and R:100 G:100 B:100, and gives the logo blue as C:95 on page 6 and C:90 on page 12. A contradiction silently resolved is indistinguishable from one nobody noticed, so it is kept as data and the reading taken is stated as a choice."
         }
       ],
       "skos:notation": "Task_Contradictions",
@@ -4461,7 +4461,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "THEME REVIEW HAPPENS HERE AND NOWHERE ELSE: graphical assets are reviewed at ingestion, in the context of the website or app design they are for. So this step CALLS `theme-ui-review.bpmn`. WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step, `R_Judge`: a person looks at the ingested assets laid out in their design at a web and a mobile width. So ingesting a THEME SOURCE is attended at that step. Ingesting anything else stays unattended: it never reaches this subprocess. THE AUTOMATED CHECK IS INSIDE THE CALL. \"A theme sets the stripe's hue; it never sets its width to zero\" — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees (\"Never red with green, never blue with yellow\"). That check is `A_Accessibility` in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning."
+          "@value": "THEME REVIEW HAPPENS HERE AND NOWHERE ELSE. Owner, 2026-09-23: \"theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI\"; asked directly on 2026-09-24 whether that meant ONLY at ingestion: \"Yes only at ingestion\". Bean `9fdi`. So this step now CALLS `theme-ui-review.bpmn` rather than performing one automated check out of it. Until 2026-09-24 it carried a `folio:no-call` reason — \"calling it would put a human gate into an automated ingest\" — and the review ran post-MVP from `crdm-deliver.bpmn` instead. That call is gone, and the reason for not calling is withdrawn rather than left standing beside a call it contradicts. WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step, `R_Judge`: a person looks at the ingested assets laid out in their design at a web and a mobile width. So ingesting a THEME SOURCE is attended at that step. Ingesting anything else stays unattended — `Gateway_ThemeSource` in `document-ingestion.bpmn` routes non-theme documents past this subprocess entirely. THE OLD AUTOMATED CHECK IS INSIDE THE CALL, NOT DROPPED. \"A theme sets the stripe's hue; it never sets its width to zero\" — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees (\"Never red with green, never blue with yellow\"). That check is `A_Accessibility` in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning."
         }
       ],
       "skos:notation": "Task_Review",
@@ -4581,7 +4581,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It retires the parent's copy, frozen, never refreshed and never rendered, rather than deleting it. Where the copy goes is the sub-kg-lifecycle skill's stage 13; this diagram does not name that store, because the published graph must not."
+          "@value": "The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It retires the parent's copy, frozen, never refreshed and never rendered, rather than deleting it (owner, 2026-10-06). Where the copy goes is the sub-kg-lifecycle skill's stage 13; this diagram does not name that store, because the published graph must not."
         }
       ],
       "skos:notation": "Task_Cutover",
@@ -4601,7 +4601,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Run `bun run cat separation:cutover:check --site` in the SEPARATED repository (Tool `separation-cutover-check`). Six conditions, each decided by an existing gate and none assumed: every declared layer mounted at its pin; every path a declaration names resolves (`check:declaration-resolution` — directories, assets, visualisers, needs); no wiring still names the monorepo (`livesAt`, a submodule, a reusable workflow, a path into the old checkout); no import or reference against the layer order; and the site builds from the mounts alone. A finding inside a mounted layer is upstream's and is listed, not counted."
+          "@value": "Run `bun run cat separation:cutover:check --site` in the SEPARATED repository (Tool `separation-cutover-check`). Six conditions, each decided by an existing gate and none assumed: every declared layer mounted at its pin; every path a declaration names resolves (`check:declaration-resolution` — directories, assets, visualisers, needs); no wiring still names the monorepo (`livesAt`, a submodule, a reusable workflow, a path into the old checkout — lessons 15 and 16); no import or reference against the layer order; and the site builds from the mounts alone. A finding inside a mounted layer is upstream's and is listed, not counted."
         }
       ],
       "skos:notation": "Task_CutoverCheck",
@@ -4681,7 +4681,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "QA verdicts, translation templates, the exported graph and the glossary ledger are harness output ABOUT the graph: they live with the harness (kgQaHomeFor, translationsHomeFor). The content keeps only what its own checks need; the leak test's pending list is empty. The one exception is a separated layer that declares a `qa` directory of its own with `storage`: its verdicts are its own repository's, published to that repository's qa-reports branch (step 10), and read by a host at the commit it pins."
+          "@value": "QA verdicts, translation templates, the exported graph and the glossary ledger are harness output ABOUT the graph: they live with the harness (kgQaHomeFor, translationsHomeFor). The content keeps only what its own checks need; the leak test's pending list is empty. The one exception is a separated layer that declares a `qa` directory of its own with `storage`: its verdicts are its own repository's, published to that repository's qa-reports branch (step 10), and read by a host at the commit it pins (owner, 2026-11-03, bean folio-assistant-7mwa)."
         }
       ],
       "skos:notation": "Task_Hosted",
@@ -4821,7 +4821,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Seed main, then bring the content and the tools in as reviewed pull requests with their history, so neither repository's first commit is unreviewable. The seed includes every publisher the declaration promises (`sub-kg-lifecycle` stage 10): a `qa` directory with `storage` needs `.github/workflows/publish-qa.yml`, the caller of the tools layer's `layer-qa-publish.yml`, and `test/results/` ignored. Without it the declared store is never written, and once the layer stops committing its results no reader finds them."
+          "@value": "Seed main, then bring the content and the tools in as reviewed pull requests with their history, so neither repository's first commit is unreviewable. The seed includes every publisher the declaration promises (`sub-kg-lifecycle` stage 10): a `qa` directory with `storage` needs `.github/workflows/publish-qa.yml`, the caller of the tools layer's `layer-qa-publish.yml`, and `test/results/` ignored. Without it the declared store is never written, and once the layer stops committing its results no reader finds them (bean folio-assistant-7mwa, 2026-11-03)."
         }
       ],
       "skos:notation": "Task_Seed",
@@ -4881,7 +4881,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Reach host behaviour through publication.host, never by assuming GitHub Pages' behaviour — Pages CANNOT serve application/ld+json and a local server can. A CDN in front is a layer, not the host: the canonical URL stays the origin's, and the cache is an accelerated route to the same bytes. Uploading and exposing are separable steps on purpose, because collapsing them removes the last moment at which a bad URL layout can still be caught."
+          "@value": "Reach host behaviour through publication.host, never by assuming GitHub Pages' behaviour — Pages CANNOT serve application/ld+json and a local server can. A CDN in front is a layer, not the host: the canonical URL stays the origin's, and the cache is an accelerated route to the same bytes. Uploading and exposing are separable steps on purpose (xies, gate 4), because collapsing them removes the last moment at which a bad URL layout can still be caught."
         }
       ],
       "skos:notation": "A_Distribute",
@@ -4961,7 +4961,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Money, network traffic, graph size, latency. Each needs a NUMBER and each number needs a denominator, because a constraint with no denominator is a preference: \"the graph is too big\" is not a finding, \"6.2 MB per publication against a 100 GB free tier\" is. Say which figures were measured, which were quoted from a vendor, and which could not be obtained; a figure from a chat message is none of the three."
+          "@value": "Money, network traffic, graph size, latency. Each needs a NUMBER and each number needs a denominator, because a constraint with no denominator is a preference: \"the graph is too big\" is not a finding, \"6.2 MB per publication against a 100 GB free tier\" is. Say which figures were measured, which were quoted from a vendor, and which could not be obtained — a figure from a chat message is none of the three, and the who-iris catalogue carries the worked example where \"0.7 TB\" propagated through ten files and the measured figure was about half."
         }
       ],
       "skos:notation": "D_Constraints",
@@ -5001,7 +5001,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Easy to drop because merging to main looks like an approval. It is not: merging approves the CHANGE, and this approves what a reader will actually see. A description cannot stand in for it (`continual-progress`)."
+          "@value": "Bean xies, gate 3, and the one that is easy to drop because gate 2 (merge to main) looks like an approval. It is not: merging approves the CHANGE, and this approves what a reader will actually see. continual-progress measured why a description cannot stand in for it (PR #178, 2026-09-16)."
         }
       ],
       "skos:notation": "E_HumanEyes",
@@ -5041,7 +5041,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Against a GDHCN DID trustlist, which means the verifier needs THE NETWORK and not only the bytes — the key is resolved from the trustlist rather than read out of the package. The trustlist is itself static JSON served from a CDN (`tng-cdn.who.int`), and its path is a hierarchical filter — domain, participant, key usage, with `-` as a wildcard — so a verifier fetches the slice it needs rather than the whole list. The stage that gets dropped, because every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. A portal that CANNOT verify reports `unknown` — a portal nobody asked is not a portal that checked."
+          "@value": "Against a GDHCN DID trustlist, which means the verifier needs THE NETWORK and not only the bytes — the key is resolved from the trustlist rather than read out of the package. The trustlist is itself static JSON served from a CDN (`tng-cdn.who.int`), and its path is a hierarchical filter — domain, participant, key usage, with `-` as a wildcard — so a verifier fetches the slice it needs rather than the whole list. WHO's own trust network is therefore the same shape as this diagram one layer down, which is the strongest argument the design has. The stage that gets dropped, because every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. A portal that CANNOT verify reports `unknown` — a portal nobody asked is not a portal that checked."
         }
       ],
       "skos:notation": "P_Verify",
@@ -5061,7 +5061,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "THE TRUST ANCHOR IS GDHCN, SPECIFIED BY THE WHO SMART TRUST IG. READ OFF THAT IG rather than from general knowledge: a GDHCN trustlist distributes KEY MATERIAL as W3C DID documents, and says nothing about what you wrap your bytes in — the health-certificate envelope is a separate specification in the same IG, and a document package is not a health certificate. So what is settled is where a verifier GETS THE KEY, not what it verifies. A portal that can fetch the bytes but not reach the trustlist cannot verify, which is `unknown` and not a failure — air-gapped is a declared deployment value, so that case is answered rather than assumed away. Still OPEN and unread: the rotation and revocation model, and whether a document-package signature can be expressed for a GDHCN-aware verifier at all. Two schemes with different properties remain to choose between, and the trustlist does not choose between them. A PACKAGE signature over the manifest verifies the SET — nothing added, removed or altered — and must be reissued whenever any file changes. A PER-ASSET signature verifies one file independently, which is what an edge cache serving one asset can actually check, and it cannot detect a removal because there is nothing left to verify. They compose; composing them is the safer and more expensive default, and it is the deployment's choice rather than the pipeline's."
+          "@value": "THE TRUST ANCHOR IS GDHCN, SPECIFIED BY THE WHO SMART TRUST IG (owner, 2026-09-20, paraphrased: proposal signing is GDHCN, as the WHO SMART Trust IG specifies). READ OFF THAT IG rather than from general knowledge: a GDHCN trustlist distributes KEY MATERIAL as W3C DID documents, and says nothing about what you wrap your bytes in — the health-certificate envelope is a separate specification in the same IG, and a document package is not a health certificate. So what is settled is where a verifier GETS THE KEY, not what it verifies. A portal that can fetch the bytes but not reach the trustlist cannot verify, which is `unknown` and not a failure — air-gapped is a declared deployment value, so that case is answered rather than assumed away. Still OPEN and unread: the rotation and revocation model, and whether a document-package signature can be expressed for a GDHCN-aware verifier at all. Two schemes with different properties remain to choose between, and the trustlist does not choose between them. A PACKAGE signature over the manifest verifies the SET — nothing added, removed or altered — and must be reissued whenever any file changes. A PER-ASSET signature verifies one file independently, which is what an edge cache serving one asset can actually check, and it cannot detect a removal because there is nothing left to verify. They compose; composing them is the safer and more expensive default, and it is the deployment's choice rather than the pipeline's."
         }
       ],
       "skos:notation": "S_Sign",
@@ -5081,7 +5081,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Restrictions, copyright, retention and source loss, each answered permitted, refused or unknown. They are four answers to one decision, and Gateway_Gates reads them with size through decisions/materialization-gate.dmn. RESTRICTIONS. 'No restrictions known in context' is a STATE, not a green light. GateVerdict is three-valued for this reason alone, and `unknown` is never rendered as `permitted`. COPYRIGHT. What the licence permits for THIS bitstream, and separately whether it permits the derivation. LICENSE-CONTENT.md exists in this repository and the ingestion pipeline does not read it. RETENTION. A copy with no expiry cannot be told from an abandoned one — the same argument bean-blocking makes about a block with no expiry. An ARCHIVAL copy is the exception and it is a specification rather than an omission: freshness() reports it `permanent`, not `no-expiry`. SOURCE LOSS. Not hypothetical. The one IRIS record this repository holds carries a handle on iris.wpro.who.int, a regional instance merged into the global one. Only an ARCHIVAL copy of the original bytes discharges this; a working copy cannot, because the derived sections are not the publication."
+          "@value": "Restrictions, copyright, retention and source loss, each answered permitted, refused or unknown. They were four steps in a row; they are four answers to one decision (shared block G10 of the BPMN guidance review, 2026-11-01), and Gateway_Gates reads them with size through decisions/materialization-gate.dmn. RESTRICTIONS. The owner's phrase is 'no restrictions known in context', and that is a STATE, not a green light. GateVerdict is three-valued for this reason alone, and `unknown` is never rendered as `permitted`. COPYRIGHT. What the licence permits for THIS bitstream, and separately whether it permits the derivation. LICENSE-CONTENT.md exists in this repository and the ingestion pipeline does not read it. RETENTION. A copy with no expiry cannot be told from an abandoned one — the same argument bean-blocking makes about a block with no expiry. An ARCHIVAL copy is the exception and it is a specification rather than an omission: freshness() reports it `permanent`, not `no-expiry`. SOURCE LOSS. Not hypothetical. The one IRIS record this repository holds carries a handle on iris.wpro.who.int, a regional instance merged into the global one. Only an ARCHIVAL copy of the original bytes discharges this; a working copy cannot, because the derived sections are not the publication."
         }
       ],
       "skos:notation": "Task_AnswerGates",
@@ -5121,7 +5121,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Resolve the request against the source's descriptor (one per corpus, in the declared sources/ of the instance that owns it, e.g. who-iris/sources/), read against cat-harness/schemas/library/source-descriptor.ts BEFORE any gate. Three things come from it and none may be guessed. (1) Which subset strategies the source supports — supportsSubset(). (2) Whether a subset stands on its own: when subsetIsSelfContained is false (mathlib), the request is closed over its dependencies here, and every gate after this one is asked about the CLOSURE, because a subset that omits what its members depend on is not a smaller corpus, it is one that does not build. (3) What enumerating the whole costs — enumerationCost(), which is undefined when the descriptor has no measured denominator; SIZE then refuses rather than estimates. A source with no descriptor is not an error here: it is an unknown, and SIZE refuses on it. The descriptor is CALLED here rather than restated."
+          "@value": "Resolve the request against the source's descriptor (one per corpus, in the declared sources/ of the instance that owns it, e.g. who-iris/sources/), read against cat-harness/schemas/library/source-descriptor.ts BEFORE any gate. Three things come from it and none may be guessed. (1) Which subset strategies the source supports — supportsSubset(). (2) Whether a subset stands on its own: when subsetIsSelfContained is false (mathlib), the request is closed over its dependencies here, and every gate after this one is asked about the CLOSURE, because a subset that omits what its members depend on is not a smaller corpus, it is one that does not build. (3) What enumerating the whole costs — enumerationCost(), which is undefined when the descriptor has no measured denominator; SIZE then refuses rather than estimates. A source with no descriptor is not an error here: it is an unknown, and SIZE refuses on it. Bean w5bn: the descriptor is CALLED here rather than restated."
         }
       ],
       "skos:notation": "Task_Enumerate",
@@ -6321,7 +6321,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Each script, CLI or checker the process relies on gets a Tool node (`tools/<id>/<id>.json`) that satisfies a named skill, validated by folio-assistant's ToolDefinitionSchema."
+          "@value": "Each script, CLI or checker the process relies on gets a Tool node in cat-harness/tools/index.ts that satisfies a named skill, validated by folio-assistant's ToolDefinitionSchema."
         }
       ],
       "skos:notation": "A_Tools",
@@ -6341,7 +6341,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The harness's basic ingestion flow (`document-ingestion.bpmn`, `Process_Ingestion`): the source is accepted, its metadata goes into the KG, and it is catalogued in library/ — held if materialized, recorded as referenced if not. The flow makes no content-type decision: reading a document into sections and blocks — choosing the rung mechanically (embedded outline, pages, OCR), and writing section text only when the licence allows it — is a refinement in the layer above, which calls this same flow first."
+          "@value": "The harness's basic ingestion flow (`document-ingestion.bpmn`, `Process_Ingestion`): the source is accepted, its metadata goes into the KG, and it is catalogued in library/ — held if materialized, recorded as referenced if not. Since placement PR6 (bean `apcg`) the flow makes no content-type decision: reading a document into sections and blocks — choosing the rung mechanically (embedded outline, pages, OCR), and writing section text only when the licence allows it — is a refinement in the layer above, which calls this same flow first."
         }
       ],
       "skos:notation": "Call_Ingest",
@@ -6456,7 +6456,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "When the lock changed, the layers an agent's skills and memory are generated from changed with it. `mount:remote` re-runs the generators of what an agent actually reads — `skill:commands` (`.claude/commands/`) and `agent-memory` (`.claude/agent-memory/` and the `.agents/` copies) — from the checkout root, and a generator that fails fails the run. A re-pin commit therefore carries the new layers AND the surface rendered from them."
+          "@value": "When the lock changed, the layers an agent's skills and memory are generated from changed with it. `mount:remote` re-runs the generators of what an agent actually reads — `skill:commands` (`.claude/commands/`) and `agent-memory` (`.claude/agent-memory/` and the `.agents/` copies) — from the checkout root, and a generator that fails fails the run. A re-pin commit therefore carries the new layers AND the surface rendered from them; shipping the first without the second is how folio-assistant#2526 went red on three agent-memory tests. Owner, 2026-10-10: \"it may have new agentic skills to re-render and add. same for memory.\""
         }
       ],
       "skos:notation": "Task_RenderAgentSurface",
@@ -6536,7 +6536,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A `remote` source: another repository's tree at a full 40-character commit. `bun run cat mount:remote` lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through a `source.remote` instance in the root `index.config.json` (legacy: `remoteMounts`), which expands a whole harness and its closure — `Process_MountDependency`."
+          "@value": "A `remote` source (bean `0mpw`): another repository's tree at a full 40-character commit. `bun run cat mount:remote` lays it down at the declared path and locks its tree digest; it is never written back, because the bytes are somebody else's at somebody else's pin. Usually reached through a `source.remote` instance in the root `index.config.json` (legacy: `remoteMounts`), which expands a whole harness and its closure — `Process_MountDependency`."
         }
       ],
       "skos:notation": "Task_MountRemotePin",
@@ -6556,7 +6556,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A kind added to the union (a graph database, say) before this diagram and the mount tool learn it. Refused with its own exit code — reading it as a directory would scan an empty path and report it clean."
+          "@value": "A kind added to the union (a graph database, say) before this diagram and the mount tool learn it. Refused with its own exit code — reading it as a directory would scan an empty path and report it clean, the `dh4f` defect."
         }
       ],
       "skos:notation": "Task_RefuseUnknownKind",
@@ -7656,7 +7656,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The gates are re-asked, not inherited: a licence can change, and a collection can grow past the size a caller agreed to. AND THE NEW FIXITY IS RECORDED IN THE SAME CHANGE. This step rewrites bytes that a materialization record describes, so leaving the old digest behind would make a CORRECT run of this process fail check:materialized-fixity as a mismatch — the gate reading \"somebody edited held content without saying so\" about the one process whose job is to replace it. This is the publication exception, stated as a rule rather than as a carve-out. The exception is NOT \"these actors may skip the rule\"; it is \"say what you did\". A writer that updates the digest alongside the bytes passes, and the record then describes what is actually there. A writer that does not fails, correctly, because it has forked upstream silently."
+          "@value": "The gates are re-asked, not inherited: a licence can change, and a collection can grow past the size a caller agreed to. AND THE NEW FIXITY IS RECORDED IN THE SAME CHANGE. This step rewrites bytes that a materialization record describes, so leaving the old digest behind would make a CORRECT run of this process fail check:materialized-fixity as a mismatch — the gate reading \"somebody edited held content without saying so\" about the one process whose job is to replace it. Measured 2026-09-22 (bean 10s1): this task named no fixity write at all. This is the owner's publication exception, stated as a rule rather than as a carve-out. The exception is NOT \"these actors may skip the rule\"; it is \"say what you did\". A writer that updates the digest alongside the bytes passes, and the record then describes what is actually there. A writer that does not fails, correctly, because it has forked upstream silently. A list of permitted writers would go stale the first time somebody added a sixth one; this does not."
         }
       ],
       "skos:notation": "Task_Apply",
@@ -7776,7 +7776,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late. Reachability is asked by `bun run cat sources:liveness <instance>` against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error."
+          "@value": "Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late. Reachability is asked by `bun run cat sources:liveness <instance>` against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error (bean 08u4)."
         }
       ],
       "skos:notation": "Task_Upstream",
@@ -8011,7 +8011,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A full-replace deploy (`docs-site.yml`, the only publisher without keep_files) wipes the branch; `restore-staging` carries the previews AND this log back in. Its own event rather than a second `rendered`, because \"somebody pushed this branch\" and \"an unrelated merge nearly deleted it\" are different facts."
+          "@value": "A full-replace deploy (`docs-site.yml`, the only publisher without keep_files) wipes the branch; `restore-staging` carries the previews AND this log back in. Its own event rather than a second `rendered`, because \"somebody pushed this branch\" and \"an unrelated merge nearly deleted it\" are different facts — and bean `plj1` is what happens when the second is invisible."
         }
       ],
       "skos:notation": "A_LogRestored",
@@ -8031,7 +8031,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Records that a removal was considered and refused, or that a preview still stands because a signal fired. A reason is REQUIRED — the tool refuses without one."
+          "@value": "The entry that makes the log worth reading. A removal was considered and refused, or a preview still stands because a signal fired; without an entry that leaves no trace, and the next person asking \"why is this preview still up\" has nothing to consult. A reason is REQUIRED — the tool refuses without one."
         }
       ],
       "skos:notation": "A_LogRetained",
@@ -8051,7 +8051,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`previewLiveness` — a disjunction over open-pr, unmerged-branch and recent-commit, shared with the health sweep so the two cannot disagree. A preview whose pull request is closed is NOT necessarily an abandoned one."
+          "@value": "`previewLiveness` — a disjunction over open-pr, unmerged-branch and recent-commit, shared with the health sweep so the two cannot disagree. Bean `w2g5`: a preview whose pull request is closed is NOT an abandoned one."
         }
       ],
       "skos:notation": "A_Preflight",
@@ -8311,7 +8311,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Descend into Process_NarrativeCodeReview: judge what the pair checks could not settle (a stale pair, a false or undetermined claim), and send a disagreement with a checker to adjudication."
+          "@value": "Descend into Process_NarrativeCodeReview: judge what the pair checks could not settle (a stale pair, a false or undetermined claim), and send a disagreement with a checker to adjudication. Issue #1042, stage C."
         }
       ],
       "skos:notation": "Call_NarrativeCodeReview",
@@ -8351,7 +8351,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Prose, code nodes, or both. This is the only decision the generic lane makes on its own: everything after it is made inside a subprocess by the role that lane binds. Binds `content-review`, the same skill as Task_Consolidate in this lane. A paper process that wants semantic scoping adds it by calling this process."
+          "@value": "Prose, code nodes, or both. This is the only decision the generic lane makes on its own: everything after it is made inside a subprocess by the role that lane binds. Binds `content-review`, the same skill as Task_Consolidate in this lane, since placement PR3 (bean `63wl`): it named a paper skill the science layer owns, which this harness diagram cannot reach. A paper process that wants semantic scoping adds it by calling this process."
         }
       ],
       "skos:notation": "Task_ClassifyChange",
@@ -8831,7 +8831,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The one step that needs a person. Asked ONCE and recorded, never re-asked: `memory/interaction.json` and the record exist so that a preference stated once is not requested again, which is WCAG 2.2 SC 3.3.7."
+          "@value": "The one step that needs a person. Asked ONCE and recorded, never re-asked: `cat-harness/memory/interaction.json` and the record exist so that a preference stated once is not requested again, which is WCAG 2.2 SC 3.3.7."
         }
       ],
       "skos:notation": "A_AskWhoIsActing",
@@ -9366,7 +9366,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The agent reports the files that would move, their size, the new repository and the commit the copy matches, then asks: (1) freeze it in the kept trashcan now, (2) keep in place until the first release, (3) show the file list first. Default if there is no answer: (2), nothing moves. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. The host keeps a FROZEN copy in the kept trashcan, not a refreshed mirror and not a deletion; the live copy is the remote mount or subscription set up at stage 10."
+          "@value": "The agent reports the files that would move, their size, the new repository and the commit the copy matches, then asks: (1) freeze it in the kept trashcan now, (2) keep in place until the first release, (3) show the file list first. Default if there is no answer: (2), nothing moves. A green fresh clone is the precondition for asking, not the answer. Non-relaxable. Owner ruling, 2026-10-06 (bean 3tza, \"1\"): the host keeps a FROZEN copy in the kept trashcan, not a refreshed mirror and not a deletion; the live copy is the submodule or subscription set up at stage 10."
         }
       ],
       "skos:notation": "Task_ConfirmCutover",
@@ -9446,7 +9446,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`<name>/<name>.json` with name, version, `repository` (the planned home), `livesAt` (where it sits today), `needs`, and only the directories that exist, each declared with its files in one commit. `<name>/platform.ts` from the first commit, so no climb out of the directory ever needs rerouting. Scaffolded by `init-folio --staged <path>`, which writes those two files and nothing at the host root; never `--instance`, which writes a whole repository."
+          "@value": "`<name>/<name>.json` with name, version, `repository` (the planned home), `livesAt` (where it sits today), `needs`, and only the directories that exist, each declared with its files in one commit (bean dh4f). `<name>/platform.ts` from the first commit, so no climb out of the directory ever needs rerouting. Scaffolded by `init-folio --staged <path>`, which writes those two files and nothing at the host root; never `--instance`, which writes a whole repository."
         }
       ],
       "skos:notation": "Task_Declare",
@@ -9486,7 +9486,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`bun run cat sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. Nothing in a seed runs standalone until the seam is re-pointed, so a missing module shows here."
+          "@value": "`bun run cat sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. The measured falsifier (#2082): the first seeded fork failed with \"Cannot find module\" because nothing in a seed runs standalone until the seam is re-pointed."
         }
       ],
       "skos:notation": "Task_FreshClone",
@@ -9526,7 +9526,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Move what is generic into the harness below before the seam is closed, and consolidate what the sub-KG needs into the harness it instantiates. Wrong-direction edges hide in declarations and data as well as imports: run check:import-direction, check:reference-direction and check:process-bindings."
+          "@value": "Move what is generic into the harness below before the seam is closed, and consolidate what the sub-KG needs into the harness it instantiates. Wrong-direction edges hide in declarations and data as well as imports: run check:import-direction, check:reference-direction and check:process-bindings. Learned from stages A-D of bean n3ni (#1768, #1782, #1783, #1795)."
         }
       ],
       "skos:notation": "Task_PushDown",
@@ -9546,7 +9546,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`bun run cat seed:ready --layer <name> --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: a static scan misses files the gates load at run time, and renaming the directory changes every generated page."
+          "@value": "`bun run cat seed:ready --layer <name> --rehearse` copies the layer and what it needs into a scratch workspace of sibling directories and runs the tests there. Run the gates rather than scanning imports: the fork rehearsal (bean rbz3) found a static scan saw 20 of the 23 platform files the gates loaded, and that renaming the directory changed every generated page."
         }
       ],
       "skos:notation": "Task_Rehearse",
@@ -9561,12 +9561,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "10 · Re-point: livesAt, seam, mount or subscription"
+          "@value": "10 · Re-point: livesAt, seam, submodule or subscription"
         }
       ],
       "skos:definition": [
         {
-          "@value": "In the new repository `livesAt` goes (absent means it sits at the root of `repository`) and `platform.ts` points at where the platform now is. The host consumes it as a remote mount (a `source.remote` instance in its root `index.config.json`) if it imports its code, or a subscription if it only reads its content, pinned to a commit while staging. Additive: the host keeps its copy."
+          "@value": "In the new repository `livesAt` goes (absent means it sits at the root of `repository`) and `platform.ts` points at where the platform now is. The host consumes it as a submodule if it imports its code, or a subscription if it only reads its content, pinned to a commit while staging. Additive: the host keeps its copy."
         }
       ],
       "skos:notation": "Task_Repoint",
@@ -9606,7 +9606,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Every platform symbol the sub-KG uses is re-exported from `<name>/platform.ts`, so re-pointing the platform is a one-file edit. A merge from main is where new climbs arrive; reroute them here."
+          "@value": "Every platform symbol the sub-KG uses is re-exported from `<name>/platform.ts`, so re-pointing the platform is a one-file edit. A merge from main is where new climbs arrive; reroute them here. Learned from #1767 and #1860."
         }
       ],
       "skos:notation": "Task_Seam",
@@ -9626,7 +9626,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`git subtree split --prefix=<name>` in the host, then the split branch added to the new repository on a branch, as a draft pull request, never straight to main. The new repository's own root files are a second commit, so the copy stays byte-identical and reviewable."
+          "@value": "`git subtree split --prefix=<name>` in the host, then the split branch added to the new repository on a branch, as a draft pull request, never straight to main. The new repository's own root files are a second commit, so the copy stays byte-identical and reviewable. The first fork seed carried 378 commits this way (bean n3ni, stage E)."
         }
       ],
       "skos:notation": "Task_Seed",
@@ -10486,7 +10486,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Which graphical assets arrived, for which surfaces of the website or app design, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width. Read off the ingested artefacts rather than off the intent — a layout the source declares but does not supply is not in the inventory, and a surface the design needs but no asset covers is the one that would ship wrong."
+          "@value": "Which graphical assets arrived, for which surfaces of the website or app design, in which locales, and at which VIEWPORTS: every surface at a web width and at a mobile width (owner, 2026-09-23, issue #1023). Read off the ingested artefacts rather than off the intent — a layout the source declares but does not supply is not in the inventory, and a surface the design needs but no asset covers is the one that would ship wrong."
         }
       ],
       "skos:notation": "A_Inventory",
@@ -10546,7 +10546,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A person looks at the ingested assets laid out in the design they are for, at BOTH a web and a mobile width. THIS IS A HUMAN STEP INSIDE INGESTION, stated rather than hidden: ingestion of a THEME SOURCE is attended at this step, while ingestion of everything else never reaches it. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be."
+          "@value": "A person looks at the ingested assets laid out in the design they are for, at BOTH a web and a mobile width. THIS IS A HUMAN STEP INSIDE INGESTION, and that is stated rather than hidden: `ingest-theme.bpmn` used to refuse to call this process for exactly that reason. The owner's ruling puts theme review at ingestion only, and a ruling that moves a review does not remove the person who performs it — so ingestion of a THEME SOURCE is attended at this step, while ingestion of everything else stays unattended because `Gateway_ThemeSource` routes it past. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking."
         }
       ],
       "skos:notation": "R_Judge",
@@ -10651,7 +10651,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Read the .po file and the source .md, substitute msgstr for msgid, unshield the placeholders, and write the translated .md to translations/<locale>/. Check structure (paragraph count, heading levels) and completeness (no empty msgstr), and lint (doubled punctuation, orphaned placeholders). Tool: the translation_inject MCP tool."
+          "@value": "Read the .po file and the source .md, substitute msgstr for msgid, unshield the placeholders, and write the translated .md to translations/<locale>/. Check structure (paragraph count, heading levels) and completeness (no empty msgstr), and lint (doubled punctuation, orphaned placeholders). Tool: the translation_inject MCP tool, or bun run content/pipeline/po-inject.ts."
         }
       ],
       "skos:notation": "Task_PoInject",
@@ -10671,7 +10671,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Scan the source content and write the translatable strings to .pot files at the configured granularity: segment prose by paragraph, shield what must not be translated (math, code, labels, Lean companions) as placeholders, normalise whitespace, and extract metadata such as titles, alt text and captions. Tool: the translation_extract MCP tool."
+          "@value": "Scan the source content and write the translatable strings to .pot files at the configured granularity: segment prose by paragraph, shield what must not be translated (math, code, labels, Lean companions) as placeholders, normalise whitespace, and extract metadata such as titles, alt text and captions. Tool: the translation_extract MCP tool, or bun run content/pipeline/pot-extract.ts."
         }
       ],
       "skos:notation": "Task_PotExtract",
@@ -10691,7 +10691,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original. It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool."
+          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original (bean folio-assistant-ktt2). It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool."
         }
       ],
       "skos:notation": "Task_RoundTripQA",
@@ -11311,7 +11311,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A rule its own quote does not support is a finding against the voice, not against the block."
+          "@value": "A rule its own quote does not support is a finding against the voice, not against the block. Measured precedent: `voice-editorializing` flags \"clearly\", and the exemplar the Milnor gate is named after uses it fourteen times as proof economy (bean `2t41`)."
         }
       ],
       "skos:notation": "Task_RuleIsWrong",
@@ -11331,7 +11331,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. Reviewers disagreeing on ONE criterion is a criterion disagreement, so this calls the QA-criterion specialisation: the failing entry stands, the criterion does not apply to this screen, or a dispensation is granted with its reason. The entry condition matches exactly rather than approximately: GW_Agree asks whether the blind reviewers' entries agree and takes `no` here, and `Process_CriterionAdjudication` starts at \"entries for one criterion disagree\" — R_Review records pass, warn or fail PER CRITERION with a reason, so the disagreement reaching this step is a per-criterion disagreement between reviewer entries and nothing else."
+          "@value": "folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. Reviewers disagreeing on ONE criterion is a criterion disagreement, so this calls the QA-criterion specialisation (bean `bvuk`, owner 2026-09-23): the failing entry stands, the criterion does not apply to this screen, or a dispensation is granted with its reason. FOR THIS CALLER THE SPLIT WAS A REGRESSION, not a fix, and that is worth keeping because the PR that made it said the opposite. When `bvuk` moved the outcome half out of `adjudication.bpmn`, #1074 reported that all four remaining callers \"no longer reach A_ScopeCriterion or A_Dispensation\" and framed it as the intended effect. True for three of them, whose question never admitted those steps. Here it removed the two steps the sentence above already documents, so the call was left pointing at a shared judgement that no longer runs either. Repointing restores what the documentation always claimed rather than changing it. The entry condition matches exactly rather than approximately: GW_Agree asks whether the blind reviewers' entries agree and takes `no` here, and `Process_CriterionAdjudication` starts at \"entries for one criterion disagree\" — R_Review records pass, warn or fail PER CRITERION with a reason, so the disagreement reaching this step is a per-criterion disagreement between reviewer entries and nothing else."
         }
       ],
       "skos:notation": "Call_Adjudicate",

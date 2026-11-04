@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "where-does-this-go",
       "title": "Where does this go? — the question, then the skill that answers it",
-      "description": "The router for filing decisions. This repository answers \"where does this go?\" ten separate times; this says WHICH question you are asking, so an agent who does not know a rule exists can find it. One discriminating question per row, and the skill that owns the answer.",
+      "description": "The router for filing decisions. This repository answers \"where does this go?\" nine separate times, each well, and nothing says WHICH question you are asking — so an agent who does not know a rule exists cannot look it up. One discriminating question per row, and the skill that owns the answer.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/where-does-this-go.md",
-      "instructionLines": 82,
+      "instructionLines": 115,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

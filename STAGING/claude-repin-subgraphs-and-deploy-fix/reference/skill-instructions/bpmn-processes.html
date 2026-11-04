@@ -218,7 +218,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   
 </h1><p><strong>The <code class="language-plaintext highlighter-rouge">.bpmn</code> file is the source of truth.</strong> The rendered SVGs are generated —
 regenerate after editing one, and the staleness check fails the build if you
-forget. Never hand-edit a rendered diagram.</p><p><strong>Do not quote a count of diagrams from prose.</strong> Count the directory.</p><h2 id="authoring-if-it-has-actors-activities-and-a-control-flow-it-is-a-process"><a href="#authoring-if-it-has-actors-activities-and-a-control-flow-it-is-a-process" class="anchor-heading" aria-labelledby="authoring-if-it-has-actors-activities-and-a-control-flow-it-is-a-process"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Authoring: if it has actors, activities and a control flow, it is a process
+forget. Never hand-edit a rendered diagram.</p><p><strong>Do not quote a count of diagrams from prose.</strong> This repository’s own
+<code class="language-plaintext highlighter-rouge">AGENTS.md</code> said “six <code class="language-plaintext highlighter-rouge">.bpmn</code> files” long after there were far more, in a file
+that elsewhere warns against exactly that. Count the directory.</p><h2 id="authoring-if-it-has-actors-activities-and-a-control-flow-it-is-a-process"><a href="#authoring-if-it-has-actors-activities-and-a-control-flow-it-is-a-process" class="anchor-heading" aria-labelledby="authoring-if-it-has-actors-activities-and-a-control-flow-it-is-a-process"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Authoring: if it has actors, activities and a control flow, it is a process
   
   
 </h2><p>Author it as <strong>BPMN</strong>, not as a diagram-in-a-fence. Fenced diagrams stay for the
@@ -237,17 +239,26 @@ Tool</code> — and a <code class="language-plaintext highlighter-rouge">&lt;…
 answering the same question, free to disagree with the first.</p><p>It would also put the edge on the wrong side. <code class="language-plaintext highlighter-rouge">satisfies</code> is owned by the Tool,
 which knows what it implements and is versioned with it; a <code class="language-plaintext highlighter-rouge">tool</code> ref would be
 owned by the diagram author, who would have to track Tools across every
-instance: Tools are discovered from the <code class="language-plaintext highlighter-rouge">tools/</code> graphs of several instances,
-so a diagram in one instance would be asserting facts about others.</p><p><strong>The join is not fully populated</strong>, and that is reported rather than gated:
-<code class="language-plaintext highlighter-rouge">activity-skill-has-tool</code> (<code class="language-plaintext highlighter-rouge">minor</code>) locates each activity whose skill no Tool
-satisfies, and <code class="language-plaintext highlighter-rouge">check:tools</code> carries the corpus-wide count. A skill with no
-Tool is <strong>not</strong> an error, since plenty of skills are pure judgement. Read
-counts from a run of <code class="language-plaintext highlighter-rouge">tools/discover.ts</code> (never a grep); <code class="language-plaintext highlighter-rouge">check:tools</code> and the
-per-activity criterion count different sets, so their totals differ.</p><h3 id="a-tools-own-procedure-is-the-tools-subprocess-not-the-skills-prose"><a href="#a-tools-own-procedure-is-the-tools-subprocess-not-the-skills-prose" class="anchor-heading" aria-labelledby="a-tools-own-procedure-is-the-tools-subprocess-not-the-skills-prose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A Tool’s OWN procedure is the Tool’s subprocess, not the skill’s prose
+instance — measured 2026-09-26, <strong>116</strong> Tools are discovered from four
+<code class="language-plaintext highlighter-rouge">tools/</code> graphs (<code class="language-plaintext highlighter-rouge">cat-harness</code>, the DAK layer, the content core,
+the FHIR IG layer), so a diagram in one instance would be asserting facts about
+three others.</p><p><strong>What is NOT being claimed</strong> is that the join is well populated. Measured the
+same day over the authoritative registry (<code class="language-plaintext highlighter-rouge">tools/discover.ts</code>, never a grep):</p><div class="table-wrapper"><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>distinct skills named by an activity, across all 74 <code class="language-plaintext highlighter-rouge">.bpmn</code></td><td><strong>99</strong></td></tr><tr><td>…of those, some Tool satisfies</td><td><strong>32</strong></td></tr><tr><td>…of those, no Tool satisfies</td><td><strong>67</strong></td></tr><tr><td>distinct skills some Tool satisfies, corpus-wide</td><td>69</td></tr></tbody></table></div><p>The gap is real and is reported rather than gated —
+<code class="language-plaintext highlighter-rouge">activity-skill-has-tool</code> (<code class="language-plaintext highlighter-rouge">minor</code>) locates it per activity, and
+<code class="language-plaintext highlighter-rouge">check:tools</code> carries the corpus-wide count with the ruling that a skill with
+no Tool is <strong>not</strong> an error, since plenty of skills are pure judgement. Those
+two are a location and a count, not two answers: a corpus total cannot say
+<em>which</em> activity hands a performer a skill whose mechanism is still inlined in
+its prose.</p><p>One number here disagrees with <code class="language-plaintext highlighter-rouge">check:tools</code>, which reports “64 skill(s) have a
+Tool” against the 69 above, and the disagreement is recorded rather than
+reconciled away: the two count different sets (a <code class="language-plaintext highlighter-rouge">satisfies</code> naming a skill
+that does not resolve is in one and not the other), and neither is wrong for
+its own question.</p><h3 id="a-tools-own-procedure-is-the-tools-subprocess-not-the-skills-prose"><a href="#a-tools-own-procedure-is-the-tools-subprocess-not-the-skills-prose" class="anchor-heading" aria-labelledby="a-tools-own-procedure-is-the-tools-subprocess-not-the-skills-prose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A Tool’s OWN procedure is the Tool’s subprocess, not the skill’s prose
   
   
-</h3><p>A Tool may describe its own specific subprocess, so the general skill and
-process stay general. The direction of the edge stays the one above — the Tool owns it. A Tool
+</h3><p>Owner, 2026-09-30 (placement ruling 6): <em>“in general tools can describe
+their own specific subprocesses if needed to not bog down general skills”</em>.
+The direction of the edge stays the one above — the Tool owns it. A Tool
 whose way of exercising a skill has steps of its own (a retry loop, a staging
 directory, a two-pass mode) names that diagram in <strong><code class="language-plaintext highlighter-rouge">subprocesses</code></strong>, a list
 of process ids on its Tool node; <code class="language-plaintext highlighter-rouge">check:tools</code> refuses one no <code class="language-plaintext highlighter-rouge">.bpmn</code> in the
@@ -268,46 +279,65 @@ moves no diagram out of reach; the rules are in
 groups”, checked by <code class="language-plaintext highlighter-rouge">check:concern-groups</code>.</p><h3 id="a-process-binds-only-skills-its-instance-can-reach-strict"><a href="#a-process-binds-only-skills-its-instance-can-reach-strict" class="anchor-heading" aria-labelledby="a-process-binds-only-skills-its-instance-can-reach-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A process binds only skills its instance can reach (STRICT)
   
   
-</h3><p>A process may bind only skills (and, through them, Tools) from <strong>its own
-instance or one it <code class="language-plaintext highlighter-rouge">needs</code></strong>, transitively. A <code class="language-plaintext highlighter-rouge">&lt;bootstrap.processes:skill ref&gt;</code> to a skill that only
+</h3><p>Owner, 2026-10-03: a process may bind only skills (and, through them, Tools)
+from <strong>its own instance or one it <code class="language-plaintext highlighter-rouge">needs</code></strong>, transitively, <em>“general rule, not
+just fhir-harness”</em>. A <code class="language-plaintext highlighter-rouge">&lt;bootstrap.processes:skill ref&gt;</code> to a skill that only
 a HIGHER instance holds is a wrong-direction edge, the same as an upward
 import: the diagram cannot be lifted into its own repository without the layer
 above it.</p><p><code class="language-plaintext highlighter-rouge">bun run cat check:process-bindings</code> gates it, with the same <code class="language-plaintext highlighter-rouge">allowedFromNeeds</code>
 direction as <code class="language-plaintext highlighter-rouge">check:import-direction</code> and <code class="language-plaintext highlighter-rouge">check:reference-direction</code>.
-<strong><code class="language-plaintext highlighter-rouge">skill-ref-resolves</code> does not catch this:</strong> it resolves against
-<code class="language-plaintext highlighter-rouge">knownSkills(root)</code>, which in a multi-instance checkout is checkout-scoped, so
-“resolves” means “exists somewhere”. <code class="language-plaintext highlighter-rouge">skill-ref-resolves</code> is existence only,
-and its own summary names this gate as the answer on direction. Existing
-wrong-direction bindings are held in a ratchet baseline.</p><p>When it fires there are two fixes, and choosing between them is a placement
+<strong><code class="language-plaintext highlighter-rouge">skill-ref-resolves</code> does not catch this, and that is why the gate exists:</strong>
+it resolves against <code class="language-plaintext highlighter-rouge">knownSkills(root)</code>, which in a pre-split checkout is
+checkout-scoped, so “resolves” means “exists somewhere”. On 2026-10-03 that
+hid 33 wrong-direction bindings in 9 diagrams behind a green audit. They are
+in a ratchet baseline, cleared under bean <code class="language-plaintext highlighter-rouge">mlux</code>.</p><p><strong>The two say so about each other</strong> (owner, 2026-10-04, option 1 of 3):
+<code class="language-plaintext highlighter-rouge">skill-ref-resolves</code> is existence only, and its own summary names this gate
+as the answer on direction. That leaves one implementation of “may this process
+bind this skill”, not two free to disagree.</p><p>When it fires there are two fixes, and choosing between them is a placement
 decision, not a mechanical one:</p><ul><li><strong>move the process up</strong> to the instance that holds the skill, when the
 process is about that layer’s concern;</li><li><strong>move the skill down</strong>, when the skill is generic and only happens to live
 too high.</li></ul><p>Never widen the baseline to admit a new binding.</p><h3 id="binding-the-extension-namespaces"><a href="#binding-the-extension-namespaces" class="anchor-heading" aria-labelledby="binding-the-extension-namespaces"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Binding the extension namespaces
   
   
-</h3><p><strong>An element’s prefix names the Subgraph that declares it.</strong> A diagram binds one address per vocabulary it uses:</p><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
+</h3><p><strong>An element’s prefix names the Subgraph that declares it</strong> (owner, 2026-09-24,
+bean <code class="language-plaintext highlighter-rouge">12s9</code>). A diagram binds one address per vocabulary it uses:</p><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
 xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/v0/processes/ns/"
 </code></pre></div></div><ul><li><code class="language-plaintext highlighter-rouge">bootstrap.processes:</code> for <code class="language-plaintext highlighter-rouge">skill</code>, <code class="language-plaintext highlighter-rouge">role</code> and <code class="language-plaintext highlighter-rouge">precondition</code>, which bootstrap
 declares in <code class="language-plaintext highlighter-rouge">bootstrap/processes/ns.jsonld</code>.</li><li><code class="language-plaintext highlighter-rouge">cat-harness.processes:</code> for every other element (<code class="language-plaintext highlighter-rouge">bean</code>, <code class="language-plaintext highlighter-rouge">policy</code>,
 <code class="language-plaintext highlighter-rouge">adjudication</code>, <code class="language-plaintext highlighter-rouge">raci</code>, …), declared in <code class="language-plaintext highlighter-rouge">cat-harness/processes/ns.jsonld</code>.</li></ul><p>Readers match <strong>the address, never the prefix text</strong>, so a diagram that binds a
 different prefix to the same address reads identically, and <code class="language-plaintext highlighter-rouge">folio:</code> bound to
-anyone else’s address is not ours. The address <code class="language-plaintext highlighter-rouge">…/folio-assistant/bpmn</code> is
-<strong>retired</strong>: an element under it is not read, and <code class="language-plaintext highlighter-rouge">external-schemas</code> reports a
-diagram that still binds it as drift. A test fails if an element is written under an address whose
+anyone else’s address is not ours. The older single address,
+<code class="language-plaintext highlighter-rouge">…/folio-assistant/bpmn</code>, is <strong>retired</strong> (2026-09-24). An element under it is
+no longer read, and <code class="language-plaintext highlighter-rouge">external-schemas</code> reports a diagram that still binds it
+as drift. A test fails if an element is written under an address whose
 vocabulary does not define it.</p><h2 id="edge-routing-rectilinear-and-never-over-a-task"><a href="#edge-routing-rectilinear-and-never-over-a-task" class="anchor-heading" aria-labelledby="edge-routing-rectilinear-and-never-over-a-task"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Edge routing: rectilinear, and never over a task
   
   
-</h2><p><strong>Rectilinear.</strong> A sequence flow turns at right angles. A diagonal reads as a
-different kind of edge, and the notation has no such kind.</p><p><strong>Never over a task, a lane label or another edge.</strong></p><p>A loop-back belongs in the <strong>channel below the lane’s tasks</strong> — out of the row,
+</h2><p>Owner, 2026-09-23, on <code class="language-plaintext highlighter-rouge">document-ingestion</code>’s rendered diagram: <strong>“keep
+rectilinear if possible, no overlapping.”</strong> Two rules, and the second is the
+one that actually bites.</p><p><strong>Rectilinear.</strong> A sequence flow turns at right angles. A diagonal reads as a
+different kind of edge to anybody who has seen a BPMN diagram before, and the
+notation has no such kind — so the reader spends attention deciding whether
+the difference means something. It does not.</p><p><strong>Never over a task, a lane label or another edge.</strong> The case that prompted
+this: the <code class="language-plaintext highlighter-rouge">gap</code> flow from <em>Record the gap as a bean</em> back to <em>Derive content
+from the assets</em> was drawn as one long diagonal crossing the full width of the
+process, passing under every task in the lane. It is a perfectly ordinary
+loop-back and it was the hardest edge on the page to follow.</p><p>A loop-back belongs in the <strong>channel below the lane’s tasks</strong> — out of the row,
 back along it, and up into its target. That is where a reader already looks for
 one, and it crosses nothing.</p><p><strong>This is about the DIAGRAM, not the process.</strong> <code class="language-plaintext highlighter-rouge">BPMNDiagram</code> carries where a
 thing was drawn and the process carries what is true, so a routing fix changes
 no semantics and needs no re-validation of the flow — the same split
-<code class="language-plaintext highlighter-rouge">board-diagram-interchange</code> draws one level up.</p><p><strong>Check it by looking at the rendered SVG, not the XML.</strong> Waypoints that look
+<code class="language-plaintext highlighter-rouge">board-diagram-interchange</code> draws one level up. What it changes is whether
+somebody can read the thing.</p><p><strong>Check it by looking at the rendered SVG, not the XML.</strong> Waypoints that look
 orderly in source can still emit a diagonal, and <code class="language-plaintext highlighter-rouge">render:bpmn</code> is what a reader
-sees; <code class="language-plaintext highlighter-rouge">preview:site</code> shows the rendered page.</p><h2 id="rendering-what-a-reader-can-click-and-what-must-not-collide"><a href="#rendering-what-a-reader-can-click-and-what-must-not-collide" class="anchor-heading" aria-labelledby="rendering-what-a-reader-can-click-and-what-must-not-collide"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rendering: what a reader can click, and what must not collide
+sees. The rendered page is the artefact under review — <code class="language-plaintext highlighter-rouge">preview:site</code> exists
+for exactly this reason, after a generator shipped 22 headings with one anchor
+and every gate was green across it.</p><h2 id="rendering-what-a-reader-can-click-and-what-must-not-collide"><a href="#rendering-what-a-reader-can-click-and-what-must-not-collide" class="anchor-heading" aria-labelledby="rendering-what-a-reader-can-click-and-what-must-not-collide"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rendering: what a reader can click, and what must not collide
   
   
-</h2><p><code class="language-plaintext highlighter-rouge">render:bpmn</code>
+</h2><p>Owner, 2026-11-03 (cat-harness#991), on the published diagrams: <em>“linked
+tasks should be on the task title only, not the whole box. the subprocess
+should be opened by the [+] not the whole box.”</em> <code class="language-plaintext highlighter-rouge">render:bpmn</code>
 (<code class="language-plaintext highlighter-rouge">cat-harness-tools/src/workflow/diagram-links.ts</code>) draws the links; the
 layout rules are checked by <code class="language-plaintext highlighter-rouge">bpmn:detangle</code>
 (<a href="../../reference/skill-instructions/bpmn-detangle.html"><code class="language-plaintext highlighter-rouge">bpmn-detangle</code></a>).</p><p><strong>Links.</strong></p><ul><li>A step’s <strong>title</strong> links to the step’s own page (<code class="language-plaintext highlighter-rouge">process/P/node/T</code>). The
@@ -341,7 +371,8 @@ generic engine behaviour, so <strong>do not draw an authorization task into a
 diagram</strong>: a check drawn into some processes is a check missing from the rest.
 What a diagram owes the check is a lane bound to a declared role. See
 <a href="../../reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>.</p><p><strong>Instance state is committed</strong>, alongside the work plan, so a sibling session
-sees the same position. Do not hand-roll a second tracker.</p><h2 id="strict-by-default-and-what-a-package-may-never-relax"><a href="#strict-by-default-and-what-a-package-may-never-relax" class="anchor-heading" aria-labelledby="strict-by-default-and-what-a-package-may-never-relax"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Strict by default, and what a package may never relax
+sees the same position. That is the whole reason not to hand-roll a second
+tracker: a second answer to <em>where are we</em> is free to disagree with the first.</p><h2 id="strict-by-default-and-what-a-package-may-never-relax"><a href="#strict-by-default-and-what-a-package-may-never-relax" class="anchor-heading" aria-labelledby="strict-by-default-and-what-a-package-may-never-relax"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Strict by default, and what a package may never relax
   
   
 </h2><p>Base processes carry <strong><code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:policy enforcement="strict"/&gt;</code></strong> — the gate
@@ -371,11 +402,12 @@ the table and the reference and nothing else; the loader checks that every
 outcome the table can return names a real branch.</p><h2 id="a-bean-marked-step-performs-the-operation-not-a-note-about-it"><a href="#a-bean-marked-step-performs-the-operation-not-a-note-about-it" class="anchor-heading" aria-labelledby="a-bean-marked-step-performs-the-operation-not-a-note-about-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A bean-marked step performs the operation, not a note about it
   
   
-</h2><p>An activity carrying a bean operation <strong>does it</strong> when you complete the step:</p><div class="table-wrapper"><table><thead><tr><th>op</th><th>what happens</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">claim</code></td><td>sets in-progress, idempotent</td></tr><tr><td><code class="language-plaintext highlighter-rouge">note</code></td><td>appends what you pass</td></tr><tr><td><code class="language-plaintext highlighter-rouge">resolve</code></td><td>completes the bean <strong>only once the instance itself has completed</strong> (or has nothing left but archive steps)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">archive</code></td><td>moves a completed or scrapped bean into the archive, <strong>only once the instance has completed</strong></td></tr></tbody></table></div><p><strong>The <code class="language-plaintext highlighter-rouge">resolve</code> row is a judgement guard.</strong> A still-running
+</h2><p>An activity carrying a bean operation <strong>does it</strong> when you complete the step:</p><div class="table-wrapper"><table><thead><tr><th>op</th><th>what happens</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">claim</code></td><td>sets in-progress, idempotent</td></tr><tr><td><code class="language-plaintext highlighter-rouge">note</code></td><td>appends what you pass</td></tr><tr><td><code class="language-plaintext highlighter-rouge">resolve</code></td><td>completes the bean <strong>only once the instance itself has completed</strong> (or has nothing left but archive steps)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">archive</code></td><td>moves a completed or scrapped bean into the archive, <strong>only once the instance has completed</strong></td></tr></tbody></table></div><p><strong>That <code class="language-plaintext highlighter-rouge">resolve</code> row is a judgement guard, not a sequencing detail.</strong> A still-running
 process gets a note instead, because whether work is done is a judgement and a
 bean is never closed on someone else’s say-so — the same rule that stops you
 resolving a sibling’s.</p><p><strong>You do not draw <code class="language-plaintext highlighter-rouge">claim</code>, <code class="language-plaintext highlighter-rouge">resolve</code> or <code class="language-plaintext highlighter-rouge">archive</code> yourself.</strong> They live in two
-called processes and nowhere else: <code class="language-plaintext highlighter-rouge">Process_BeanOpen</code> (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-open.bpmn</code>: check,
+called processes and nowhere else (bean <code class="language-plaintext highlighter-rouge">folio-assistant-m8gz</code>, owner
+2026-10-24): <code class="language-plaintext highlighter-rouge">Process_BeanOpen</code> (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-open.bpmn</code>: check,
 create, whose bean, claim or leave alone) and <code class="language-plaintext highlighter-rouge">Process_BeanClose</code>
 (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-close.bpmn</code>: complete or scrap, then one shared archive
 step; or record the blocker and hand back). A process that works on a bean
@@ -383,7 +415,8 @@ calls OPEN where the bean becomes its own, follows it with a <code class="langua
 <code class="language-plaintext highlighter-rouge">not yours</code> gateway, and calls CLOSE straight before each end it reaches from
 there. <code class="language-plaintext highlighter-rouge">note</code> stays on the steps where the work happens. <code class="language-plaintext highlighter-rouge">check:bean-calls</code>
 (run inside <code class="language-plaintext highlighter-rouge">check:workflow-refs</code>) refuses the three ops anywhere else, and a
-process that calls one of the pair without the other. See
+process that calls one of the pair without the other. Why: 219 beans resolved
+and never archived, and 7 processes that claimed and never closed —
 <a href="../../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> §”Archiving — two dispositions”.</p><p>Work-plan priming reports every instance’s position next to its bean, so the
 plan and the process are one answer rather than two.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed

@@ -219,8 +219,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h1><p>The <code class="language-plaintext highlighter-rouge">Task_Review</code> step of
 <a href="../../en/cat-harness/processes/code-change-review.html"><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></a>,
 for a change an agent touched. Its verdict is what <code class="language-plaintext highlighter-rouge">check:adversarial-review</code>
-reads. The gate is warn-only: a missing, stale or failing verdict is reported,
-not blocking, until an owner promotes the gate.</p><h2 id="who-may-review"><a href="#who-may-review" class="anchor-heading" aria-labelledby="who-may-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Who may review
+reads (bean <code class="language-plaintext highlighter-rouge">w8jq</code>, proposal <code class="language-plaintext highlighter-rouge">docs/proposals/merge-gate-2026-10-02.md</code> §5–§6).
+It is warn-only by the owner’s ruling of 2026-10-03: a missing, stale or
+failing verdict is reported, not blocking, until the owner promotes the gate.</p><h2 id="who-may-review"><a href="#who-may-review" class="anchor-heading" aria-labelledby="who-may-review"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Who may review
   
   
 </h2><p><strong>Not the author.</strong> A different session id from every <code class="language-plaintext highlighter-rouge">Claude-Session:</code> /
@@ -242,7 +243,8 @@ file into <code class="language-plaintext highlighter-rouge">coverage.files_tota
 </h2><p>The RED FLAG categories are closed and live in <code class="language-plaintext highlighter-rouge">schemas/sdlc/red-flag.ts</code>:
 <code class="language-plaintext highlighter-rouge">security</code>, <code class="language-plaintext highlighter-rouge">data-loss</code>, <code class="language-plaintext highlighter-rouge">correctness</code>, <code class="language-plaintext highlighter-rouge">false-green</code>, <code class="language-plaintext highlighter-rouge">provenance</code>,
 <code class="language-plaintext highlighter-rouge">scope-breach</code>, <code class="language-plaintext highlighter-rouge">irreversible-action</code> and <code class="language-plaintext highlighter-rouge">licence</code>. Read the definitions
-there rather than from a copy. Beyond the categories, ask:</p><ul><li>can a new or changed check report green without evaluating its subject?</li><li>does prose (a skill, the PR body, the bean) assert something the code does
+there rather than from a copy: the proposal’s own table already differs from
+the schema. Beyond the categories, ask:</p><ul><li>can a new or changed check report green without evaluating its subject?</li><li>does prose (a skill, the PR body, the bean) assert something the code does
 not do? That is <a href="../../reference/skill-instructions/narrative-asserts-code.html"><code class="language-plaintext highlighter-rouge">narrative-asserts-code</code></a>;</li><li>does the change reach outside its bean, or hand-edit a generated file?</li></ul><p><strong>A finding is blocking only with evidence</strong>: a reproducible observation, such
 as an input and its wrong output, or a command and what it printed. Without
 one it is recorded as a <code class="language-plaintext highlighter-rouge">suggestion</code>. The author may answer each flag once;
@@ -251,7 +253,7 @@ then the verdict is final.</p><h2 id="recording-the-verdict"><a href="#recording
   
 </h2><p>The verdict lives on its own state branch, <strong>never in the pull request</strong>.
 Committing it into the pull request moves the head it names, which makes it
-stale at once.</p><ol><li><code class="language-plaintext highlighter-rouge">bun run cat state:mount</code> mounts the <code class="language-plaintext highlighter-rouge">merge-reviews</code> graph at
+stale at once (owner, 2026-10-20, “State branch”).</p><ol><li><code class="language-plaintext highlighter-rouge">bun run cat state:mount</code> mounts the <code class="language-plaintext highlighter-rouge">merge-reviews</code> graph at
 <code class="language-plaintext highlighter-rouge">merge-reviews/</code>.</li><li>Write <code class="language-plaintext highlighter-rouge">merge-reviews/&lt;head sha&gt;.json</code>, a <code class="language-plaintext highlighter-rouge">merge-review/v1</code> document:
 <code class="language-plaintext highlighter-rouge">pr</code>, <code class="language-plaintext highlighter-rouge">repository</code> (<code class="language-plaintext highlighter-rouge">owner/repo</code>, so the store’s viewer can link the pull
 request), <code class="language-plaintext highlighter-rouge">base_sha</code>, <code class="language-plaintext highlighter-rouge">head_sha</code> and <code class="language-plaintext highlighter-rouge">reviews[]</code>. Each review records:

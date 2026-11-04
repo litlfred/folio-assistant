@@ -11,7 +11,7 @@
         "smart-base:document-kinds",
         "uml:overview"
       ],
-      "seconds": 242.838823888
+      "seconds": 211.497235225
     },
     {
       "cause": "cat-harness",
@@ -36,7 +36,7 @@
         "kg:viewer",
         "render:bpmn"
       ],
-      "seconds": 40.60729177699983
+      "seconds": 31.410850926999995
     },
     {
       "cause": "beans/defs",
@@ -46,7 +46,15 @@
         "docs:pages",
         "processes:viz"
       ],
-      "seconds": 35.60676209599985
+      "seconds": 29.439544079000072
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 13.447329189999989
     },
     {
       "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
@@ -55,15 +63,7 @@
         "state:visualizer",
         "site:viz"
       ],
-      "seconds": 16.277583757000045
-    },
-    {
-      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "writtenBy": "-",
-      "reran": [
-        "ig-index:build"
-      ],
-      "seconds": 13.80915424200002
+      "seconds": 13.01019870400004
     },
     {
       "cause": ".agents/rules/agent-memory.md",
@@ -72,7 +72,7 @@
         "external-schemas:viz",
         "docs:harness"
       ],
-      "seconds": 10.589829341999954
+      "seconds": 8.58524471400003
     },
     {
       "cause": ".claude/skills/local/bean-coordination.md",
@@ -80,7 +80,7 @@
       "reran": [
         "skills:docs"
       ],
-      "seconds": 6.029162934000022
+      "seconds": 4.680800313999993
     },
     {
       "cause": "bootstrap",
@@ -88,7 +88,7 @@
       "reran": [
         "jsonld:contexts"
       ],
-      "seconds": 1.7927590809999965
+      "seconds": 1.5135401859999984
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
@@ -96,7 +96,7 @@
       "reran": [
         "smart-base:pages"
       ],
-      "seconds": 0.9476828530000057
+      "seconds": 0.833873659999983
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
@@ -104,7 +104,7 @@
       "reran": [
         "smart-trust:pages"
       ],
-      "seconds": 0.8659748370000161
+      "seconds": 0.8003637529999833
     },
     {
       "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
@@ -112,7 +112,7 @@
       "reran": [
         "smart:pages"
       ],
-      "seconds": 0.7676575970000121
+      "seconds": 0.6520631360000115
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
@@ -120,7 +120,7 @@
       "reran": [
         "smart-trust-phw:pages"
       ],
-      "seconds": 0.6822352630000096
+      "seconds": 0.590520858999982
     },
     {
       "cause": "its script, imports or tools",
@@ -130,19 +130,19 @@
         "kind:table",
         "avatars:css"
       ],
-      "seconds": 0.383422409000108
+      "seconds": 0.30446360399998956
     }
   ],
   "writers": [
     {
       "writer": "auto:docs",
       "did": "ran",
-      "why": "cat-harness changed (+1136 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/computation-witness.ts, cat-harness-tools/schemas/conduct/interaction.ts, cat-harness-tools/schemas/conduct/memory.ts, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/conduct/waiver.ts, cat-harness-tools/schemas/content/attribution.ts, and 1129 others)",
+      "why": "cat-harness changed (+712 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/computation-witness.ts, cat-harness-tools/schemas/conduct/interaction.ts, cat-harness-tools/schemas/conduct/memory.ts, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/conduct/waiver.ts, cat-harness-tools/schemas/content/attribution.ts, and 705 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 9.711273809999925
+      "seconds": 7.42873271099996
     },
     {
       "writer": "avatars:css",
@@ -151,7 +151,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.11988670400006231
+      "seconds": 0.09855164600000717
     },
     {
       "writer": "bibliography:page",
@@ -161,27 +161,27 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.6245492180000292
+      "seconds": 0.45803791699995056
     },
     {
       "writer": "docs:harness",
       "did": "ran",
-      "why": ".agents/rules/agent-memory.md changed (+270 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 263 others)",
+      "why": ".agents/rules/agent-memory.md changed (+255 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 248 others)",
       "cause": {
         "kind": "path",
         "path": ".agents/rules/agent-memory.md"
       },
-      "seconds": 4.632107738999999
+      "seconds": 3.4709692500000235
     },
     {
       "writer": "docs:pages",
       "did": "ran",
-      "why": "beans/defs changed (+1238 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/memory.ts, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, and 1231 others)",
+      "why": "beans/defs changed (+742 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/memory.ts, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, and 735 others)",
       "cause": {
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 1.988918267999892
+      "seconds": 1.683184951000032
     },
     {
       "writer": "document-kinds:viz",
@@ -191,43 +191,43 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.8636592470000032
+      "seconds": 0.6486147639999981
     },
     {
       "writer": "external-schemas:viz",
       "did": "ran",
-      "why": ".agents/rules/agent-memory.md changed (+3123 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 3116 others)",
+      "why": ".agents/rules/agent-memory.md changed (+2165 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 2158 others)",
       "cause": {
         "kind": "path",
         "path": ".agents/rules/agent-memory.md"
       },
-      "seconds": 5.957721602999954
+      "seconds": 5.114275464000006
     },
     {
       "writer": "folio:viz",
       "did": "ran",
-      "why": "cat-harness changed (+89 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/content-type.ts, cat-harness-tools/schemas/content/odrl.ts, and 82 others)",
+      "why": "cat-harness changed (+84 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/content-type.ts, cat-harness-tools/schemas/content/odrl.ts, and 77 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.6407882370000006
+      "seconds": 0.5219000909999595
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
       "why": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "seconds": 13.80915424200002
+      "seconds": 13.447329189999989
     },
     {
       "writer": "jsonld:contexts",
       "did": "ran",
-      "why": "bootstrap changed (+279 more: cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/prov.ts, cat-harness-tools/schemas/content/sticky-contribution.ts, cat-harness-tools/schemas/content/vocabulary.ts, and 272 others)",
+      "why": "bootstrap changed (+236 more: cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/prov.ts, cat-harness-tools/schemas/content/sticky-contribution.ts, cat-harness-tools/schemas/content/vocabulary.ts, and 229 others)",
       "cause": {
         "kind": "path",
         "path": "bootstrap"
       },
-      "seconds": 1.7927590809999965
+      "seconds": 1.5135401859999984
     },
     {
       "writer": "kg:viewer",
@@ -237,7 +237,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.44735224699997345
+      "seconds": 0.3686808230000315
     },
     {
       "writer": "kind:table",
@@ -246,27 +246,27 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.11614925700007006
+      "seconds": 0.09218977899994935
     },
     {
       "writer": "library:viz",
       "did": "ran",
-      "why": "cat-harness changed (+1633 more: cat-harness-tools/adapters/README.md, cat-harness-tools/archimate/schemas/README.md, cat-harness-tools/archimate/scripts/README.md, cat-harness-tools/beans/defs, cat-harness-tools/beans/defs/cat-tools-d5j0--subgraph-context-drops-a-needed-prefix-when-the-ch.md, cat-harness-tools/beans/defs/folio-assistant-1acg--checkhead-has-run-counts-an-action-required-run-as.md, cat-harness-tools/beans/defs/folio-assistant-3ozg--bun-test-rewrites-72-committed-script-sidecars-so.md, and 1626 others)",
+      "why": "cat-harness changed (+1260 more: cat-harness-tools/adapters/README.md, cat-harness-tools/archimate/schemas/README.md, cat-harness-tools/archimate/scripts/README.md, cat-harness-tools/beans/defs, cat-harness-tools/beans/defs/cat-tools-d5j0--subgraph-context-drops-a-needed-prefix-when-the-ch.md, cat-harness-tools/beans/defs/folio-assistant-1acg--checkhead-has-run-counts-an-action-required-run-as.md, cat-harness-tools/beans/defs/folio-assistant-3ozg--bun-test-rewrites-72-committed-script-sidecars-so.md, and 1253 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 5.7578051490000215
+      "seconds": 4.58371351500001
     },
     {
       "writer": "methodologies:viz",
       "did": "ran",
-      "why": "cat-harness changed (+394 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/content-type.ts, cat-harness-tools/schemas/content/document-structure.ts, and 387 others)",
+      "why": "cat-harness changed (+289 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/content-type.ts, cat-harness-tools/schemas/content/document-structure.ts, and 282 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 1.9924620529999957
+      "seconds": 1.7285565519999946
     },
     {
       "writer": "navbar:include",
@@ -275,17 +275,17 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.14738644799997563
+      "seconds": 0.11372217900003306
     },
     {
       "writer": "node-kinds",
       "did": "ran",
-      "why": "cat-harness changed (+165 more: cat-harness-tools/AGENTS.md, cat-harness-tools/README.md, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/computation-witness.ts, cat-harness-tools/schemas/conduct/interaction.ts, cat-harness-tools/schemas/conduct/memory.ts, cat-harness-tools/schemas/conduct/model-capabilities.ts, and 158 others)",
+      "why": "cat-harness changed (+163 more: cat-harness-tools/AGENTS.md, cat-harness-tools/README.md, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/computation-witness.ts, cat-harness-tools/schemas/conduct/interaction.ts, cat-harness-tools/schemas/conduct/memory.ts, cat-harness-tools/schemas/conduct/model-capabilities.ts, and 156 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 1.4748504479998956
+      "seconds": 1.1332558850000496
     },
     {
       "writer": "openapi:viz",
@@ -295,27 +295,27 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.22017724400002045
+      "seconds": 0.16184616200003074
     },
     {
       "writer": "processes:viz",
       "did": "ran",
-      "why": "beans/defs changed (+534 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/beans/defs/cat-tools-d5j0--subgraph-context-drops-a-needed-prefix-when-the-ch.md, cat-harness-tools/beans/defs/folio-assistant-1acg--checkhead-has-run-counts-an-action-required-run-as.md, cat-harness-tools/beans/defs/folio-assistant-3ozg--bun-test-rewrites-72-committed-script-sidecars-so.md, cat-harness-tools/beans/defs/folio-assistant-xxku--flushable-containers-a-named-store-with-a-buffer-l.md, and 527 others)",
+      "why": "beans/defs changed (+386 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/beans/defs/cat-tools-d5j0--subgraph-context-drops-a-needed-prefix-when-the-ch.md, cat-harness-tools/beans/defs/folio-assistant-1acg--checkhead-has-run-counts-an-action-required-run-as.md, cat-harness-tools/beans/defs/folio-assistant-3ozg--bun-test-rewrites-72-committed-script-sidecars-so.md, cat-harness-tools/beans/defs/folio-assistant-xxku--flushable-containers-a-named-store-with-a-buffer-l.md, and 379 others)",
       "cause": {
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 8.555513379000011
+      "seconds": 6.78366968900006
     },
     {
       "writer": "render:bpmn",
       "did": "ran",
-      "why": "cat-harness changed (+177 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/content-type.ts, cat-harness-tools/schemas/content/narrative.ts, and 170 others)",
+      "why": "cat-harness changed (+135 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/content-type.ts, cat-harness-tools/schemas/content/narrative.ts, and 128 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 6.550330706999986
+      "seconds": 4.486401667999977
     },
     {
       "writer": "schema:viz",
@@ -325,23 +325,23 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 3.190091219999944
+      "seconds": 2.5249224050000194
     },
     {
       "writer": "site:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 1.608651164000039
+      "seconds": 1.3573036390000488
     },
     {
       "writer": "skills:docs",
       "did": "ran",
-      "why": ".claude/skills/local/bean-coordination.md changed (+639 more: .claude/skills/local/todo-manager.md, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/memory.ts, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, and 632 others)",
+      "why": ".claude/skills/local/bean-coordination.md changed (+486 more: .claude/skills/local/todo-manager.md, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/memory.ts, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, and 479 others)",
       "cause": {
         "kind": "path",
         "path": ".claude/skills/local/bean-coordination.md"
       },
-      "seconds": 6.029162934000022
+      "seconds": 4.680800313999993
     },
     {
       "writer": "smart-base:document-kinds",
@@ -351,7 +351,7 @@
         "kind": "path",
         "path": ""
       },
-      "seconds": 0.5648114540000096
+      "seconds": 0.5252751250000147
     },
     {
       "writer": "smart-base:l1-extraction:pages",
@@ -361,47 +361,47 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.7820999580000062
+      "seconds": 0.6105165329999872
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "seconds": 0.9476828530000057
+      "seconds": 0.833873659999983
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
-      "seconds": 0.6822352630000096
+      "seconds": 0.590520858999982
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "seconds": 0.8659748370000161
+      "seconds": 0.8003637529999833
     },
     {
       "writer": "smart:pages",
       "did": "ran",
       "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
-      "seconds": 0.7676575970000121
+      "seconds": 0.6520631360000115
     },
     {
       "writer": "state:visualizer",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 14.668932593000005
+      "seconds": 11.65289506499999
     },
     {
       "writer": "subgraph:jsonld",
       "did": "ran",
-      "why": "beans/defs changed (+854 more: cat-harness, cat-harness-tools/AGENTS.md, cat-harness-tools/README.md, cat-harness-tools/adapters/README.md, cat-harness-tools/archimate/schemas/README.md, cat-harness-tools/archimate/scripts/README.md, cat-harness-tools/beans/defs, and 847 others)",
+      "why": "beans/defs changed (+663 more: cat-harness, cat-harness-tools/AGENTS.md, cat-harness-tools/README.md, cat-harness-tools/adapters/README.md, cat-harness-tools/archimate/schemas/README.md, cat-harness-tools/archimate/scripts/README.md, cat-harness-tools/beans/defs, and 656 others)",
       "cause": {
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 25.062330448999944
+      "seconds": 20.97268943899998
     },
     {
       "writer": "subscriptions:viz",
@@ -411,7 +411,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.20191450299997815
+      "seconds": 0.16506377199996497
     },
     {
       "writer": "theme:viz",
@@ -421,7 +421,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.6290564950000261
+      "seconds": 0.4722946510000038
     },
     {
       "writer": "themes:css",
@@ -431,17 +431,17 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.5401987449999432
+      "seconds": 0.4360472249999875
     },
     {
       "writer": "tools:viz",
       "did": "ran",
-      "why": "cat-harness changed (+235 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/content-type.ts, cat-harness-tools/schemas/content/content-types-base.ts, and 228 others)",
+      "why": "cat-harness changed (+151 more: cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/content-type.ts, cat-harness-tools/schemas/content/content-types-base.ts, and 144 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 3.286144636000041
+      "seconds": 2.727192085000046
     },
     {
       "writer": "uml:overview",
@@ -451,7 +451,7 @@
         "kind": "path",
         "path": ""
       },
-      "seconds": 242.27401243399999
+      "seconds": 210.9719601
     },
     {
       "writer": "uploads:viz",
@@ -461,7 +461,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 2.8218897049999794
+      "seconds": 2.273723926000006
     },
     {
       "writer": "voices:viz",
@@ -471,7 +471,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.8726481550000608
+      "seconds": 0.681350242000015
     }
   ]
 }

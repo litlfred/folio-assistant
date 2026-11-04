@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Secure agent permissions",
       "summary": "Secure the permissions a coding agent needs to take part in this harness's processes, from the human who can grant them, and write each grant into the agent Tool's own configuration through that Tool's adapter.",
-      "description": "Secure the permissions a coding agent needs to take part in this harness's processes, from the human who can grant them, and write each grant into the agent Tool's own configuration through that Tool's adapter. VENDOR-NEUTRAL: the coding agent is a Tool, and Claude Code is one of several (Gemini CLI, Cursor, Copilot, Codex). Nothing in this diagram names a vendor's file; the adapter for the Tool in use does. Skill: `agent-permissions`.\n\nCALLED FROM SESSION START (`session-state-machine.bpmn`, Call_SecurePermissions, after the session record opens), so it is part of initiating the harness for an actor. It also runs on demand when an agent hits a denied action: the denial is a reason to ask, never to edit the Tool's config itself. A run that finds every needed permission already granted and recorded ends at End_Current without asking anything.\n\nNEVER SELF-GRANTED. The grant is the owner's (Task_OwnerGrants, a person only) and the config write is done by the person, or by the agent with their explicit consent to that exact diff. An agent that edits its own permission configuration is self-modification.\n\nMERGE IS NOT A GRANTABLE PERMISSION HERE. Merging to main stays a separate owner-authorised step on every occasion (`merge-to-main.bpmn`); this process never writes an allow-rule for it.",
+      "description": "Secure the permissions a coding agent needs to take part in this harness's processes, from the human who can grant them, and write each grant into the agent Tool's own configuration through that Tool's adapter. VENDOR-NEUTRAL: the coding agent is a Tool, and Claude Code is one of several (Gemini CLI, Cursor, Copilot, Codex). Nothing in this diagram names a vendor's file; the adapter for the Tool in use does. Skill: `agent-permissions`.\n\nCALLED FROM SESSION START (`session-state-machine.bpmn`, Call_SecurePermissions, after the session record opens), so it is part of initiating the harness for an actor. It also runs on demand when an agent hits a denied action: the denial is a reason to ask, never to edit the Tool's config itself. A run that finds every needed permission already granted and recorded ends at End_Current without asking anything.\n\nNEVER SELF-GRANTED. The grant is the owner's (Task_OwnerGrants, a person only) and the config write is done by the person, or by the agent with their explicit consent to that exact diff. An agent that edits its own permission configuration is self-modification; an auto-mode classifier blocked exactly that on 2026-10-09, when an agent tried to edit `.claude/settings.json`.\n\nMERGE IS NOT A GRANTABLE PERMISSION HERE. Merging to main stays a separate owner-authorised step on every occasion (`merge-to-main.bpmn`); this process never writes an allow-rule for it.",
       "enforcement": "strict",
       "sourcePath": "processes/process/secure-agent-permissions.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/secure-agent-permissions.bpmn",

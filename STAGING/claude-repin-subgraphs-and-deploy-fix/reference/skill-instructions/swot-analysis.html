@@ -218,7 +218,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   
 </h1><p><strong>The method is not in this file.</strong> It is the <code class="language-plaintext highlighter-rouge">swot</code> node in the <code class="language-plaintext highlighter-rouge">methodology</code>
 graph, rendered from an ingested source, and this skill is the instruction for
-performing it (<code class="language-plaintext highlighter-rouge">methodology-adoption</code>’s split).</p><p>Read <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/swot.md"><code class="language-plaintext highlighter-rouge">methodologies/swot.md</code></a> first — in
+performing it. That split is <code class="language-plaintext highlighter-rouge">methodology-adoption</code>’s: a skill names the
+methodology it follows, and the method’s own text lives once, so two skills
+quoting it cannot drift apart.</p><p>Read <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/swot.md"><code class="language-plaintext highlighter-rouge">methodologies/swot.md</code></a> first — in
 particular §”What this platform adopts, and what it refuses”. Ask the
 <code class="language-plaintext highlighter-rouge">methodology</code> graph for it rather than assuming the path.</p><h2 id="the-one-refusal-before-anything-else"><a href="#the-one-refusal-before-anything-else" class="anchor-heading" aria-labelledby="the-one-refusal-before-anything-else"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The one refusal, before anything else
   
@@ -226,14 +228,15 @@ particular §”What this platform adopts, and what it refuses”. Ask the
 </h2><p><strong>A SWOT never decides.</strong> It produces the raw material a decision is made from.
 If you find yourself choosing between options inside a SWOT, you have left the
 methodology: stop, and go to <code class="language-plaintext highlighter-rouge">options-analysis</code>, which selects a decision
-methodology by context.</p><p><code class="language-plaintext highlighter-rouge">swot-analysis.bpmn</code> has no path that decides. If a scan seems to need one, you
-are in the wrong process.</p><h2 id="what-each-step-must-produce"><a href="#what-each-step-must-produce" class="anchor-heading" aria-labelledby="what-each-step-must-produce"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What each step must produce
+methodology by context.</p><p>The diagram enforces this — <code class="language-plaintext highlighter-rouge">swot-analysis.bpmn</code> has no path that decides. If a
+scan you are running seems to need one, that is a signal you are in the wrong
+process, not a gap in this one.</p><h2 id="what-each-step-must-produce"><a href="#what-each-step-must-produce" class="anchor-heading" aria-labelledby="what-each-step-must-produce"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What each step must produce
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>step</th><th>produces</th><th>the trap</th></tr></thead><tbody><tr><td><strong>Name the subject and the level</strong></td><td>one sentence: what, and at which level (individual, organisational, national)</td><td>skipping it — quadrant criteria depend on the level, and a country is not a company</td></tr><tr><td><strong>Scan the environment</strong></td><td>opportunities and threats, worked through the source’s six categories of change</td><td>free-associating instead of working the checklist</td></tr><tr><td><strong>Scan the subject</strong></td><td>strengths and weaknesses, worked through the source’s seven business functions</td><td>recording a strength as a fact; it is a claim, and where evidence exists, cite it</td></tr><tr><td><strong>Pool knowledge</strong></td><td>the lists reviewed by more than their author</td><td>treating this as optional politeness rather than the method’s own bias control</td></tr><tr><td><strong>Record what did not classify</strong></td><td>the factors sitting in two quadrants or none</td><td>forcing every factor into one quadrant, which reports a cleanliness the method does not have</td></tr><tr><td><strong>Cross the axes</strong></td><td>SO, WO, ST, WT candidate strategies</td><td>stopping at four lists, which is the source’s own central criticism of SWOT</td></tr></tbody></table></div><p><strong>External is scanned before internal.</strong> That is Weihrich’s argument as the
 source reports it — opportunities and threats are outside the subject and
 largely beyond its control, and must be managed using its strengths and
-weaknesses.</p><h2 id="two-things-you-will-want-to-do-and-must-not"><a href="#two-things-you-will-want-to-do-and-must-not" class="anchor-heading" aria-labelledby="two-things-you-will-want-to-do-and-must-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two things you will want to do, and must not
+weaknesses — not a house preference.</p><h2 id="two-things-you-will-want-to-do-and-must-not"><a href="#two-things-you-will-want-to-do-and-must-not" class="anchor-heading" aria-labelledby="two-things-you-will-want-to-do-and-must-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two things you will want to do, and must not
   
   
 </h2><p><strong>Do not rank or score the factors.</strong> SWOT has no priority mechanism; the source
@@ -241,14 +244,16 @@ is explicit that “quantity does not mean quality”. A scored list asserts a
 ranking the technique did not produce. When ranking is genuinely needed, use a
 methodology adopted for ranking — not a weighting invented here.</p><p><strong>Do not blend in another method to patch the gap.</strong> The source surveys a long
 line of quantitative extensions (AHP, ANP, fuzzy variants, SMART, SMAA-O, MADM,
-TRIZ). None is adopted; blending one in is the composite
-<code class="language-plaintext highlighter-rouge">methodology-adoption</code> forbids.</p><h2 id="when-swot-is-the-wrong-tool-entirely"><a href="#when-swot-is-the-wrong-tool-entirely" class="anchor-heading" aria-labelledby="when-swot-is-the-wrong-tool-entirely"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When SWOT is the wrong tool entirely
+TRIZ). None is adopted. Reaching for one produces the composite
+<code class="language-plaintext highlighter-rouge">methodology-adoption</code> forbids: a house method that cites nobody while claiming
+everybody’s authority.</p><h2 id="when-swot-is-the-wrong-tool-entirely"><a href="#when-swot-is-the-wrong-tool-entirely" class="anchor-heading" aria-labelledby="when-swot-is-the-wrong-tool-entirely"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When SWOT is the wrong tool entirely
   
   
 </h2><p>Ask <code class="language-plaintext highlighter-rouge">methodology-adoption</code>’s selection question. SWOT is <strong>situation analysis</strong>,
 and it is the answer to none of those four questions — it is what you do <em>before</em>
 them. If the task is choosing among options, grading evidence, recording a
-decision, or computing a recurring branch, you want a different methodology.</p><h2 id="related"><a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
+decision, or computing a recurring branch, you want a different methodology and
+a SWOT would be ceremony in front of it.</p><h2 id="related"><a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
   
   
 </h2><ul><li><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/swot.md"><code class="language-plaintext highlighter-rouge">methodologies/swot.md</code></a> — the method, its

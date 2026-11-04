@@ -225,7 +225,8 @@ after landing. It is only run when the owner asks for it, and on a card that
 names every PR. The process is
 <a href="../../en/cat-harness/processes/saturation-meta-merge.html"><code class="language-plaintext highlighter-rouge">sdlc/processes/saturation-meta-merge.bpmn</code></a>
 (<code class="language-plaintext highlighter-rouge">Process_SaturationMetaMerge</code>), called from the merge manager’s watch loop
-(<a href="../../reference/skill-instructions/merge-manager-watcher.html"><code class="language-plaintext highlighter-rouge">merge-manager-watcher</code></a>).</p><h2 id="trigger"><a href="#trigger" class="anchor-heading" aria-labelledby="trigger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Trigger
+(<a href="../../reference/skill-instructions/merge-manager-watcher.html"><code class="language-plaintext highlighter-rouge">merge-manager-watcher</code></a>).</p><p>First run: 2026-11-02 07:03Z, on this layer (#956, 7 PRs) and on two
+layers that build on it (4 PRs and 1 PR).</p><h2 id="trigger"><a href="#trigger" class="anchor-heading" aria-labelledby="trigger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Trigger
   
   
 </h2><p>Offer the meta-merge, but do not run it, when either of these holds on a
@@ -255,10 +256,10 @@ GitHub marks each included PR as merged.</li></ul><p>Options: A go with green an
 run only, D cancel. Recommend A. A PR the card does not name gets no merge
 from this card. The safety check refuses it, and the owner must tap again.
 The owner taps the card in the thread that merges. An answer relayed
-from the project chat or another thread is refused by the safety check,
-so post the merge card in this thread.</p></li><li><strong>Cancel the queued PR runs</strong> on the repositories in scope, and log each
+from the project chat or another thread is refused by the safety check
+(round 2, 2026-11-02), so post the merge card in this thread.</p></li><li><strong>Cancel the queued PR runs</strong> on the repositories in scope, and log each
 one to a TSV file. Do NOT cancel a <code class="language-plaintext highlighter-rouge">main</code> push run that has already
-started. It is cancelled by the next push anyway, and cancelling
+started (Q-CIS-1). It is cancelled by the next push anyway, and cancelling
 it by hand loses the record of <code class="language-plaintext highlighter-rouge">main</code>.</li><li><strong>Build and push</strong> with <code class="language-plaintext highlighter-rouge">PUSH=1</code>, against fresh <code class="language-plaintext highlighter-rouge">origin/main</code>. <code class="language-plaintext highlighter-rouge">main</code>
 moves while the card waits, so check the script’s output again. A PR that
 is already merged is skipped as a no-op.</li><li><strong>Open one PR per repository</strong> from the meta-merge branch, listing its
@@ -267,7 +268,7 @@ members and the card. Merge it with <code class="language-plaintext highlighter-
 GitHub. Its commits are on <code class="language-plaintext highlighter-rouge">main</code>, so close it with a comment saying so. Comment on each
 with a link to the meta-merge PR and the session. Post <code class="language-plaintext highlighter-rouge">meta-merge done</code>
 to every sibling you held, with what landed and what is still open.</li><li><strong>Watch <code class="language-plaintext highlighter-rouge">main</code>.</strong> Re-run any <code class="language-plaintext highlighter-rouge">main</code> run that a closing PR’s run cancelled
-(a closed PR’s run can join <code class="language-plaintext highlighter-rouge">main</code>’s concurrency group).
+(until tools#1384, a closed PR’s run joins <code class="language-plaintext highlighter-rouge">main</code>’s concurrency group).
 Report green or red to the owner. On red, open the fix as a normal PR
 against <code class="language-plaintext highlighter-rouge">main</code>, and never revert the whole meta-merge without the owner.</li></ol><h2 id="safety-rules-strict"><a href="#safety-rules-strict" class="anchor-heading" aria-labelledby="safety-rules-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Safety rules (STRICT)
   

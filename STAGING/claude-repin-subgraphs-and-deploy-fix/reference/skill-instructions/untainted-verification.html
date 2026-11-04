@@ -220,9 +220,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 literature search differ in what they read and in what counts as a finding.
 They do not differ in this:</p><blockquote><p><strong>The party that produced the artefact does not get to write the verdict on
 it, and the checking party is given a controlled context rather than the run
-of the repository.</strong></p></blockquote><p>Everything below is that sentence made operational, for any domain;
-<code class="language-plaintext highlighter-rouge">translation-manager.md</code> §”The agentic round trip” is the translation
-instance.</p><h2 id="the-parties"><a href="#the-parties" class="anchor-heading" aria-labelledby="the-parties"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The parties
+of the repository.</strong></p></blockquote><p>Everything below is that sentence made operational. It is generic on purpose —
+<code class="language-plaintext highlighter-rouge">translation-manager.md</code> §”The agentic round trip” is where it was first
+written down, in translation vocabulary, and taking the translation out changed
+nothing structural.</p><h2 id="the-parties"><a href="#the-parties" class="anchor-heading" aria-labelledby="the-parties"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The parties
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>party</th><th>is given</th><th>produces</th></tr></thead><tbody><tr><td><strong>producer</strong></td><td>the task</td><td>the artefact</td></tr><tr><td><strong>checker</strong></td><td>the artefact’s declared <code class="language-plaintext highlighter-rouge">checker_sees</code>, and nothing that would let it shortcut</td><td>an independent rendering or finding</td></tr><tr><td><strong>adjudicator</strong></td><td><code class="language-plaintext highlighter-rouge">adjudicator_sees</code> and the checker’s output — never the artefact itself</td><td><code class="language-plaintext highlighter-rouge">pass</code> / <code class="language-plaintext highlighter-rouge">warn</code> / <code class="language-plaintext highlighter-rouge">fail</code>, each drift named</td></tr></tbody></table></div><h2 id="three-rules-and-the-failure-each-one-stops"><a href="#three-rules-and-the-failure-each-one-stops" class="anchor-heading" aria-labelledby="three-rules-and-the-failure-each-one-stops"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three rules, and the failure each one stops
@@ -258,10 +259,12 @@ this skill exists to stop.</p><h2 id="three-states-and-the-third-is-what-lets-it
   
 </h2><ol><li><strong>verified</strong> — the adjudicator ruled. Two entries, adjudicator first.</li><li><strong>could not dispatch</strong> — no dispatch capability was available. One entry,
 <code class="language-plaintext highlighter-rouge">result: "n/a"</code>, <code class="language-plaintext highlighter-rouge">metrics.dispatch: "unavailable"</code>, and a <strong>required</strong>
-reason. <strong>The producer may write this one, and only this one.</strong></li><li><strong>not attempted</strong> — no entry at all.</li></ol><p>Without state 2 the discipline cannot gate anywhere: a producer forbidden from
-writing a verdict has <em>nothing</em> to write in an environment with no subagents,
-so the gate reads an absence it cannot tell from negligence. Recording it keeps
-“could not dispatch” distinguishable from “nobody tried”.</p><p><strong>It is never a pass.</strong> <code class="language-plaintext highlighter-rouge">isVerified()</code> is the predicate a gate asks, and it is
+reason. <strong>The producer may write this one, and only this one.</strong></li><li><strong>not attempted</strong> — no entry at all.</li></ol><p>State 2 is the owner’s ruling of 2026-09-21, and without it the discipline
+cannot gate anywhere. A producer forbidden from writing a verdict has <em>nothing</em>
+to write in an environment with no subagents, so the gate reads an absence it
+cannot tell from negligence. Recording it keeps “could not dispatch”
+distinguishable from “nobody tried” — the same three-state rule <code class="language-plaintext highlighter-rouge">ci-health</code> and
+<code class="language-plaintext highlighter-rouge">readme-sections</code> already apply, reached here from the opposite direction.</p><p><strong>It is never a pass.</strong> <code class="language-plaintext highlighter-rouge">isVerified()</code> is the predicate a gate asks, and it is
 false for state 2 and for state 3 alike. A consumer that reads <code class="language-plaintext highlighter-rouge">n/a</code> as
 “nothing to see” turns the honest gap straight back into the silent one.</p><h2 id="recording"><a href="#recording" class="anchor-heading" aria-labelledby="recording"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Recording
   
@@ -275,8 +278,10 @@ model is not observable from the session that dispatched it: it inherits the
 parent unless the harness overrides, and the hand-back does not say which model
 served the turn. A bare model string is an inference printed as a fact. Absent
 both, a reader gets “not recorded”, which is true and acceptable.</p><p><strong>A sweep replaces only entries whose reviewer is itself.</strong> <code class="language-plaintext highlighter-rouge">mergeUntainted</code>
-carries everything else through, so an unrelated re-run never silently deletes
-another party’s verdict. A human ruling is never superseded here.</p><p><strong>A verdict is hashed to what it was about.</strong> Edit the subject and the verdict
+carries everything else through. This rule exists because
+<code class="language-plaintext highlighter-rouge">translation-block-qa</code> once deleted a round trip a pair of agents had produced,
+on an unrelated re-run, silently, with nothing in the output to say so. A human
+ruling is never superseded here.</p><p><strong>A verdict is hashed to what it was about.</strong> Edit the subject and the verdict
 goes stale. This matters more for an agent ruling than a script one, because
 nobody can cheaply re-run it.</p><h3 id="where-the-verdict-is-kept-the-attestation-store-not-the-derived-file"><a href="#where-the-verdict-is-kept-the-attestation-store-not-the-derived-file" class="anchor-heading" aria-labelledby="where-the-verdict-is-kept-the-attestation-store-not-the-derived-file"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the verdict is kept: the attestation store, not the derived file
   
@@ -286,35 +291,39 @@ so their durable home is the <code class="language-plaintext highlighter-rouge">
 <code class="language-plaintext highlighter-rouge">test/attestations/&lt;family&gt;/&lt;mirrored subject path&gt;.attestations.json</code>
 (<code class="language-plaintext highlighter-rouge">qa-attestations/v1</code>), on <code class="language-plaintext highlighter-rouge">main</code>. The derived <code class="language-plaintext highlighter-rouge">test/results/</code> file beside
 them is a working copy whose record lives on the <code class="language-plaintext highlighter-rouge">qa-reports</code> branch, and a
-regeneration cannot reproduce an agent ruling.</p><p><code class="language-plaintext highlighter-rouge">recordUntainted</code> writes the store <strong>first</strong>, through the same
-<code class="language-plaintext highlighter-rouge">resolvePrior</code> / <code class="language-plaintext highlighter-rouge">finalizeCriteria</code> API as every other attesting writer, and
-refreshes the derived report only if one already exists — it
+regeneration cannot reproduce an agent ruling (arc <code class="language-plaintext highlighter-rouge">3fva</code>, owner ruling D2
+(a)).</p><p><code class="language-plaintext highlighter-rouge">recordUntainted</code> writes the store <strong>first</strong>, through the same
+<code class="language-plaintext highlighter-rouge">resolvePrior</code> / <code class="language-plaintext highlighter-rouge">finalizeCriteria</code> API as every other attesting writer (bean
+<code class="language-plaintext highlighter-rouge">8iqt</code>), and refreshes the derived report only if one already exists — it
 never invents one. So the verdict lands whether or not the derived file is on
 the branch, and the store file it returns is the one to commit. What puts a
 subject in scope is the subject existing (<code class="language-plaintext highlighter-rouge">&lt;subject&gt;.md</code> or <code class="language-plaintext highlighter-rouge">.ts</code>), not its
-derived report, which does not live beside it. A corrupt or unreadable store
+derived report, which no longer lives beside it. A corrupt or unreadable store
 reads UNKNOWN and is refused, with nothing written, rather than overwritten.</p><h2 id="why-the-instrument-is-the-thing-to-watch"><a href="#why-the-instrument-is-the-thing-to-watch" class="anchor-heading" aria-labelledby="why-the-instrument-is-the-thing-to-watch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why the instrument is the thing to watch
   
   
-</h2><p><strong>A measurement whose author has to explain it away is about the instrument,
-not the subject</strong> — for example a failure count that is really a count of
-entries missing from the checker’s reference map. Remove such a measurement
-rather than publish it.
-<a href="../../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a>
-§”The instrument, not the translation” has the worked case.</p><h2 id="this-is-one-rule-with-two-homes"><a href="#this-is-one-rule-with-two-homes" class="anchor-heading" aria-labelledby="this-is-one-rule-with-two-homes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> This is one rule with two homes
+</h2><p>A measurement shipped with a <code class="language-plaintext highlighter-rouge">description</code> explaining its own failures away as
+expected <em>“with limited vocabulary back-translator”</em>. The back-translation map
+it scored against held six entries for thirty-six strings, so the failure count
+was a count of absences.</p><p><strong>A measurement whose author has to explain it away is about the instrument,
+not the subject.</strong> All of it was removed — the numbers, the field, the badge
+and both scripts. The incident in full, with its numbers, is in
+<a href="../../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a> §”The instrument, not the
+translation”, where it happened.</p><h2 id="this-is-one-rule-with-two-homes"><a href="#this-is-one-rule-with-two-homes" class="anchor-heading" aria-labelledby="this-is-one-rule-with-two-homes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> This is one rule with two homes
   
   
 </h2><p>It is not a platform invention. Guideline methodology separates the systematic
-review team from the guideline development group for the same reason, and the
-identical rule applies to evidence-based literature review for living
-guidelines. When adding a domain’s rules here, run them through
+review team from the guideline development group for the same reason, and
+<code class="language-plaintext highlighter-rouge">8rwa</code> carries the identical rule into evidence-based literature review for
+living guidelines. When adding a domain’s rules here, run them through
 <a href="../../reference/skill-instructions/domain-fencing.html"><code class="language-plaintext highlighter-rouge">domain-fencing</code></a>’s three questions
 first: a rule that fails all three is a folio’s rule, correctly located, and
 fencing it and saying so is the honest move.</p><h2 id="related"><a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
   
   
 </h2><ul><li><code class="language-plaintext highlighter-rouge">translation-manager.md</code> §”The agentic round trip” — the first instance, and
-the translation-specific drift definition that does <em>not</em> generalise.</li><li><code class="language-plaintext highlighter-rouge">permissions.json</code> <code class="language-plaintext highlighter-rouge">qa-reporting</code> — who may emit a verdict at all.</li><li><code class="language-plaintext highlighter-rouge">pipeline/untainted-verification.ts</code> — the recorder. It deliberately
+the translation-specific drift definition that does <em>not</em> generalise.</li><li><code class="language-plaintext highlighter-rouge">permissions.json</code> <code class="language-plaintext highlighter-rouge">qa-reporting</code> — who may emit a verdict at all. Bean
+<code class="language-plaintext highlighter-rouge">a58y</code> gives it its first consumer.</li><li><code class="language-plaintext highlighter-rouge">pipeline/untainted-verification.ts</code> — the recorder. It deliberately
 does <strong>not</strong> call a model: the payload is written by whatever ran the
 parties, so recording works the same for two subagents, two API calls, or two
 people.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Refresh materialized remote content",
       "summary": "Keep a materialized copy of remote content current: what changed upstream, what changed locally, and what to do when both did — an archival copy is never re-fetched and gets a fixity check instead.",
-      "description": "Keep a materialized copy of remote content current: what changed upstream, what changed locally, and what to do when both did — an archival copy is never re-fetched and gets a fixity check instead. One general process, used everywhere.\n\nREFRESH IS NOT RE-IMPORT: it needs three answers, not one: what changed upstream, what changed locally since, and what to do when BOTH did. upstream-pins.json answers the first for one caller and nothing answers the other two anywhere.\n\nAn ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exists to survive the source, so replacing it with whatever the source says today discards exactly the state it was keeping. What an archive gets instead is a FIXITY CHECK — has our copy rotted — which is a different question with a different remedy.",
+      "description": "Keep a materialized copy of remote content current: what changed upstream, what changed locally, and what to do when both did — an archival copy is never re-fetched and gets a fixity check instead. Owner, 2026-09-20: \"also need to know about refreshing amterialed remote content. general process used everywhere.\"\n\nREFRESH IS NOT RE-IMPORT, and the difference is the whole diagram. It needs three answers, not one: what changed upstream, what changed locally since, and what to do when BOTH did. upstream-pins.json answers the first for one caller and nothing answers the other two anywhere.\n\nAn ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exists to survive the source, so replacing it with whatever the source says today discards exactly the state it was keeping. What an archive gets instead is a FIXITY CHECK — has our copy rotted — which is a different question with a different remedy.",
       "enforcement": "strict",
       "sourcePath": "processes/library/refresh-materialized.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/library/refresh-materialized.bpmn",

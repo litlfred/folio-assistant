@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
+    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
     "pr": "2926/merge",
-    "run": "41833034695"
+    "run": "41837580823"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "symbiotic-interaction",
       "title": "symbiotic-interaction — the three registers of author input",
-      "description": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic platform skill.",
+      "description": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic folio-assistant platform skill.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/symbiotic-interaction.md",
-      "instructionLines": 163,
+      "instructionLines": 190,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
