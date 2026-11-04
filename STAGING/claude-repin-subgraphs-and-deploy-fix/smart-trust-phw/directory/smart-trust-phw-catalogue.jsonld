@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-trust-phw/smart-trust-phw.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "fd7f78b0d95a60ffbd2eef79f81212be810e8b2e",
+    "sha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
     "pr": "2926/merge",
-    "run": "41904754854"
+    "run": "41917059660"
   },
   "@graph": [
     {
@@ -21,7 +21,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/catalogue"
       ],
-      "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and materialization fixity (`folio-catalogue-node/v1`) records for the upstream IHE ITI specifications materialized in `library/`: IHE ITI PCF 1.1.0 and IHE ITI VHL 1.0.0-comment. `bun run cat check:catalogue` and `bun run cat check:materialized-fixity` verify every node, metadataRef, libraryId, localPath, and SHA-256 digest. Bean sl5v.",
+      "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and catalogue node (`folio-catalogue-node/v1`) records for two kinds of item: the IHE ITI specifications materialized in `library/` (PCF 1.1.0 and VHL 1.0.0-comment), and every work the IG cites that is not ingested, as a `referenced` item whose record is the IG's bibliography entry, keyed by the citation's `#ref-<slug>`. A capture of a cited work, when one exists, is in the repository's `uploads/` data store, which is not part of the KG. `bun run cat check:catalogue` and `bun run cat check:materialized-fixity` verify every node, metadataRef, libraryId, localPath and SHA-256 digest.",
       "readmePath": "catalogue/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-trust-phw/directory/smart-trust-phw-catalogue",

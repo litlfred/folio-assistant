@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/directory/smart-base-themes.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "fd7f78b0d95a60ffbd2eef79f81212be810e8b2e",
+    "sha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
     "pr": "2926/merge",
-    "run": "41904754854"
+    "run": "41917059660"
   },
   "@graph": [
     {
@@ -22,7 +22,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/themes"
       ],
-      "description": "The WHO SMART IG template's web theme, measured from `who.template.root`'s own `who.css` and pinned by commit. Colour and geometry only: the IG's top navbar is deliberately not reproduced, because the owner asked for the nav to stay on the LEFT (2026-09-30). `upstream/who.css` is the vendored source the tests re-read, CC0-1.0.",
+      "description": "The WHO SMART IG template's web theme, measured from `who.template.root`'s own `who.css` and pinned by commit. Colour and geometry only: the IG's top navbar is not reproduced, because the nav stays on the left. `upstream/who.css` is the vendored source the tests re-read, CC0-1.0.",
       "readmePath": "themes/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-themes"

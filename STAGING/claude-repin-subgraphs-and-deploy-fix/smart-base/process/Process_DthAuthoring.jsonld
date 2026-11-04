@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/process/Process_DthAuthoring.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "fd7f78b0d95a60ffbd2eef79f81212be810e8b2e",
+    "sha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
     "pr": "2926/merge",
-    "run": "41904754854"
+    "run": "41917059660"
   },
   "@graph": [
     {
@@ -15,7 +15,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "DTH authoring",
       "summary": "Produces a WHO Digital Transformation Handbook (DTH) from its sources to publication, in seven stages that each end in a recorded milestone: initiate (M0 charter), ingest sources into the library (M1 library frozen), outline and scope (M2 outline agreed), str…",
-      "description": "Produces a WHO Digital Transformation Handbook (DTH) from its sources to publication, in seven stages that each end in a recorded milestone: initiate (M0 charter), ingest sources into the library (M1 library frozen), outline and scope (M2 outline agreed), structured drafting (M3 zero draft), working-group feedback (M4), public comment (M5 released, M6 dispositioned), and finalise and publish (M7).\nMilestones are recorded checkpoints, not gates; review runs beside drafting as QA, as in smart-guideline-end-to-end.bpmn. Structured drafting uses the smart-base DAK block kinds for personas, scenarios, processes, decisions, data elements, indicators and requirements (owner, 2026-10-31: a DTH uses the DAK kinds for its personas and similar content), and each track calls Process_L2ComponentEditReview, as l2-dak-authoring.bpmn does. Contributor feedback from the contributor log sheet and from GitHub pc: comments lands in one review store.\nHandbooks ingested from a published WHO PDF (PHC, SC, PC, SFP) enter at stage 1 with their library built and their outline given by the publication; dth-hrh, authored natively, is the pilot. Steps whose platform subprocess does not exist yet are marked as placeholders in their documentation.\nEmpirical content (figures, statistics, country examples) stays as cited narrative blocks and never enters formal content.",
+      "description": "Produces a WHO Digital Transformation Handbook (DTH) from its sources to publication, in seven stages that each end in a recorded milestone: initiate (M0 charter), ingest sources into the library (M1 library frozen), outline and scope (M2 outline agreed), structured drafting (M3 zero draft), working-group feedback (M4), public comment (M5 released, M6 dispositioned), and finalise and publish (M7).\nMilestones are recorded checkpoints, not gates: each is written as a note on the handbook's epic bean (which milestone, when, evidence), so the site can show stage and progress. Review runs beside drafting as QA, as in smart-guideline-end-to-end.bpmn.\nStructured drafting uses the smart-base DAK block kinds for personas, scenarios, processes, decisions, data elements, indicators and requirements, and each track calls Process_L2ComponentEditReview, as l2-dak-authoring.bpmn does. Contributor feedback from the contributor log sheet and from GitHub pc: comments lands in one review store.\nHandbooks ingested from a published WHO PDF (PHC, SC, PC, SFP) enter at stage 1 with their library built and their outline given by the publication; dth-hrh, authored natively, is the pilot. Steps with no platform subprocess are marked as placeholders in their documentation.\nEmpirical content (figures, statistics, country examples) stays as cited narrative blocks and never enters formal content.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/dth-authoring.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/dth-authoring.bpmn",

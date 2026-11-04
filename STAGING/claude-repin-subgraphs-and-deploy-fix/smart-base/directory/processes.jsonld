@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/directory/processes.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "fd7f78b0d95a60ffbd2eef79f81212be810e8b2e",
+    "sha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
     "pr": "2926/merge",
-    "run": "41904754854"
+    "run": "41917059660"
   },
   "@graph": [
     {
@@ -22,7 +22,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes"
       ],
-      "description": "The executable half of this layer's methodologies -- `diig-investment-path.bpmn` renders DIIG's own nine chapters as a process with its two progress checks as gateways. A SEPARATE declaration from `methodologies/` even though it nests inside it, because `processes` and `methodology` are different graph typologies and a directory entry names one graph: the prose node says what the method IS, the diagram says how it RUNS. Bean `x4v4` raised whether `methodologies/` is a graph or a folder; this follows the shape already on main, where `methodology-crdm-processes` is declared beside `methodologies/` rather than inferred from it. Issue #877, bean `qnvy`.",
+      "description": "The executable half of this layer's methodologies: `diig-investment-path.bpmn` renders DIIG's nine chapters as a process with its two progress checks as gateways. Declared separately from `methodologies/` because a directory entry names one graph typology: the prose says what the method is, the diagram how it runs.",
       "readmePath": "methodologies/processes/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/processes"

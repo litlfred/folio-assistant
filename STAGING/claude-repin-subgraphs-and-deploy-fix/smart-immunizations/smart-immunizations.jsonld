@@ -366,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-04T20:35:44.572Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fd7f78b0d95a60ffbd2eef79f81212be810e8b2e",
-  "sourceCommitSha": "fd7f78b0d95a60ffbd2eef79f81212be810e8b2e",
-  "sourceCommitAt": "2026-11-04T20:14:44Z",
+  "generatedAt": "2026-11-04T22:01:34.556Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/412736646b38f1f87aa904e766a1b4baac8e78fc",
+  "sourceCommitSha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
+  "sourceCommitAt": "2026-11-04T21:32:33Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -439,7 +439,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library"
       ],
-      "description": "L1 source content for this DAK: one `<bib-slug>/` per ingested WHO publication (`sections/*.md`, `structure.json`, `manifest.jsonld`, `blocks/`) and, beside each L1 source the DAK's Component 1 cites, its own L1 3.0 knowledge graph `smart-kg-l1-library.jsonld`. The DAK itself (`9789240099456-eng/`) is L2 and library-only, with no L1 graph (owner, 2026-10-08). The id is `library`, the CONVENTIONAL one, so this entry overrides the default rather than joining it. Declared EXPLICITLY although the default already resolves `library/` in this checkout: remote-mount reads only declared directories, so without this entry an index mounting smart-immunizations mounts none of it, and gen-instance-contexts reads no document to build `ns/context/v1.jsonld` from.",
+      "description": "L1 source content for this DAK: one `<bib-slug>/` per ingested WHO publication (`sections/*.md`, `structure.json`, `manifest.jsonld`, `blocks/`) and, beside each L1 source the DAK's Component 1 cites, its own L1 3.0 knowledge graph `smart-kg-l1-library.jsonld`. The DAK itself is L2 with no L1 graph, and who-iris holds it (`who-iris/library/9789240099456-eng`). The id is the conventional `library`, so this entry overrides the default. It is declared explicitly because remote-mount reads only declared directories: without it an index mounts none of `library/`, and gen-instance-contexts has no document to build `ns/context/v1.jsonld` from.",
       "readmePath": "library/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-immunizations/directory/library",
@@ -457,7 +457,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/l1-extraction"
       ],
-      "description": "The measles L1 recommendation-scenarios worked example (`measles/`: the 2017 position paper's L1 recommendations, the immunization vocabulary and mapping it resolves against, and the L2 scenario candidates `l1-recommendation-scenarios.ts` derives from them), moved here from smart-base by its 0c679ec (owner, Q2 of the folio-assistant#2529 reference-direction review: \"Move it\"), and out of library/ on 2026-10-15 (owner: \"Mount it everywhere\"). It is smart-base's `l1-extraction` kind, not a library entry.",
+      "description": "The measles L1 recommendation-scenarios worked example (`measles/`): the 2017 position paper's L1 recommendations, the immunization vocabulary and mapping they resolve against, and the L2 scenario candidates `l1-recommendation-scenarios.ts` derives from them. It is smart-base's `l1-extraction` kind, not a library entry.",
       "readmePath": "examples/l1-recommendation-scenarios/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-immunizations/directory/l1-recommendation-scenarios",
@@ -475,7 +475,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/document-kinds"
       ],
-      "description": "How this IG realises the document kinds of the layers it needs: today `dak.coverage.smart-immunizations.json`, the DAK view of the IG's artefact index, which places each artefact in one of the ten DAK components by its FHIR resource type and lists what no rule places. Written by the DAK layer's `gen-document-kinds.ts` (`bun run cat smart-base:document-kinds`) into the `document-kinds` directory of the IG it is about; it lived beside the DAK kind in the layer below until wrong-direction move M13 (folio-assistant#2598), where it was a lower layer holding a file about a higher one. The report was computed from an artefact index (`from`) that this repository does not hold today, so the generator cannot re-derive it here until one is ingested; until then it is carried as it was computed, and its `--check` does not cover it. Declared with its file in one commit, per bean `dh4f`.",
+      "description": "How this IG realises the document kinds of the layers it needs: `dak.coverage.smart-immunizations.json`, the DAK view of the IG's artefact index, which places each artefact in one of the ten DAK components by its FHIR resource type and lists what no rule places. Written by smart-base's `gen-document-kinds.ts` (`bun run cat smart-base:document-kinds`). The artefact index it was computed from (`from`) is not in this repository, so the generator cannot re-derive the report here and its `--check` does not cover it.",
       "readmePath": "document-kinds/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-immunizations/directory/smart-immunizations-document-kinds",
@@ -493,7 +493,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/ig-annex"
       ],
-      "description": "The web annexes this IG's pages load on demand (bean folio-assistant-fm9n; owner, 2026-10-10, option 2a: the data dictionary in the knowledge graph, loaded dynamically, not the full workbook). `annexes.json` (`ig-annexes/v1`) puts `../web-annexes/dak-data-dictionary.json` on `dictionary.md`, showing six columns and opening the rest per row; and `personas-swimlanes.md` on `personas.md` and `processes-swimlanes.md` on `business-processes.md` (litlfred/aai-programme#28, bean folio-assistant-cydz; owner, 2026-10-10, option 1a: \"personas/roles should cross link to swimlane in process\"), appended to their pages as written: each persona with the processes whose swimlanes name it, and each process figure's lanes with the persona each is or why it is not one. Those two are written by smart-base's `dak-swimlanes.ts` from `input/pagecontent/personas.md`, the business-process figures and `input/business-processes/swimlanes.json`: regenerate them, never edit them; its QA record goes to `test/results/` on the qa branch, not here. fhir-harness's IG site build finds it through this `ig-annex` declaration, both `stage-ig-sites` for an index and `ig-repo-site.ts compose` for this repository's own site. It is a directory of its own, not `fhir-artifact-index/`, because an IG repository commits no artefact index (fhir-harness#124; owner, 2026-10-24, option B).",
+      "description": "The web annexes this IG's pages load on demand. `annexes.json` (`ig-annexes/v1`) places each on its page: `../web-annexes/dak-data-dictionary.json` on `dictionary.md` (six columns shown, the rest opened per row), `personas-swimlanes.md` on `personas.md` and `processes-swimlanes.md` on `business-processes.md`. The two swimlane annexes are appended to their pages as written: each persona with the processes whose swimlanes name it, and each process figure's lanes with the persona each is or why it is not one. smart-base's `dak-swimlanes.ts` writes them from `input/pagecontent/personas.md`, the business-process figures and `input/business-processes/swimlanes.json`: regenerate them, never edit them; its QA record goes to `test/results/` on the qa branch. fhir-harness's IG site build (`stage-ig-sites` for an index, `ig-repo-site.ts compose` for this repository's own site) finds the directory through this `ig-annex` declaration. An IG repository commits no artefact index, so this is a directory of its own, not `fhir-artifact-index/`.",
       "readmePath": "annexes/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-immunizations/directory/smart-immunizations-annexes",
@@ -511,7 +511,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/web-annex"
       ],
-      "description": "The annex files themselves, as smart-base's `web-annex` kind (a WHO publication's web annexes, L1 or L2; owner, 2026-10-24, option A), which types them and judges them (`check:web-annexes`). `dak-data-dictionary.json` is Web Annex A of the IMMZ DAK (`annexOf` `who-iris/library/9789240099456-eng`, the held library entry of the DAK `dictionary.md` links to, IRIS 10665/380303; `section` `dak#core-data-elements`; no `iris` of its own, since none could be verified): the core data dictionary workbook (`input/L2/IMMZ DAK_core data dictionary.xlsx`) as `dak-data-dictionary/v1`, written by smart-base's `dak-data-dictionary.ts` (`--annex-of who-iris/library/9789240099456-eng --label \"Web Annex A\" --section dak#core-data-elements`). It records the workbook's sha256: regenerate it, never edit it. It is a sibling of `annexes/` rather than sharing that directory, because each kind owns the `$schema` families of its own directory, and not nested inside it, because a declared directory inside another declared one fails `check:layout-norms` (no typology here declares `within`).",
+      "description": "The annex files themselves, as smart-base's `web-annex` kind (a WHO publication's web annexes, L1 or L2), typed and judged by `check:web-annexes`. `dak-data-dictionary.json` is Web Annex A of the IMMZ DAK (`annexOf` `who-iris/library/9789240099456-eng`, IRIS 10665/380303; `section` `dak#core-data-elements`; no `iris` of its own, since none could be verified): the core data dictionary workbook (`input/L2/IMMZ DAK_core data dictionary.xlsx`) as `dak-data-dictionary/v1`, written by smart-base's `dak-data-dictionary.ts` (`--annex-of who-iris/library/9789240099456-eng --label \"Web Annex A\" --section dak#core-data-elements`). It records the workbook's sha256: regenerate it, never edit it. It sits beside `annexes/`, not inside it: each kind owns the `$schema` families of its own directory, and a declared directory inside another declared one fails `check:layout-norms`.",
       "readmePath": "web-annexes/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-immunizations/directory/smart-immunizations-web-annexes",
@@ -532,7 +532,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/qa"
       ],
-      "description": "What auditing THIS instance produced: one QA verdict sidecar per audited subject, among them the check:l1-complete verdict of each library/ entry. Stored on the cat/cat-harness/qa-reports branch keyed by commit, as who-iris, smart-base and folio-assistant-sci declare theirs, so the working copy is not a record and a consumer reads every verdict as unknown until it names the commit it is about, never as current. `qa` is a perInstance graph typology: these verdicts are about this instance's nodes.",
+      "description": "What auditing this instance produced: one QA verdict sidecar per audited subject, among them the check:l1-complete verdict of each library/ entry. Stored on the cat/cat-harness/qa-reports branch keyed by commit, so the working copy is not a record: a consumer reads a verdict as unknown until it names the commit it is about. `qa` is a perInstance graph typology: these verdicts are about this instance's nodes.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-immunizations/directory/qa",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/qa"
@@ -549,7 +549,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/catalogue"
       ],
-      "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and catalogue node (`folio-catalogue-node/v1`) records of the works this IG cites that are not ingested, each a `referenced` item whose record is the IG's bibliography entry for it (the key is the citation's: `#ref-<slug>`) (a capture of it, when one exists, is kept in the repository's `uploads/` data store, which is not part of the KG). Bean folio-assistant-djj5 (owner, 2026-11-03: references/ retired, \"Library + catalogue only\"). `bun run cat check:catalogue` verifies every node and metadataRef.",
+      "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and catalogue node (`folio-catalogue-node/v1`) records of the works this IG cites that are not ingested. Each is a `referenced` item whose record is the IG's bibliography entry for it, keyed by the citation (`#ref-<slug>`). A capture of a work, when one exists, is kept in the repository's `uploads/` data store, which is not part of the KG. `bun run cat check:catalogue` verifies every node and metadataRef.",
       "readmePath": "catalogue/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-immunizations/directory/smart-immunizations-catalogue",
@@ -562,7 +562,7 @@
       "path": "AGENTS.md",
       "assetRole": "agent-instructions",
       "title": "AGENTS.md — smart-immunizations",
-      "description": "Cold start for work here, and its one rule: the declaration names only what an index mounting this instance has. folio-assistant mounts `library/` and `examples/l1-recommendation-scenarios/` (owner B1 and \"Mount it everywhere\", 2026-10-15).",
+      "description": "Cold start for work here, and its one rule: the declaration names only what an index mounting this instance has.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/asset/agent-instructions"
     },
     {
@@ -578,8 +578,8 @@
   ],
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "fd7f78b0d95a60ffbd2eef79f81212be810e8b2e",
+    "sha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
     "pr": "2926/merge",
-    "run": "41904754854"
+    "run": "41917059660"
   }
 }

@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/skill/l2-component-edit-review.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "fd7f78b0d95a60ffbd2eef79f81212be810e8b2e",
+    "sha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
     "pr": "2926/merge",
-    "run": "41904754854"
+    "run": "41917059660"
   },
   "@graph": [
     {
@@ -17,7 +17,7 @@
       "title": "l2-component-edit-review",
       "description": "How one L2 DAK component is edited by the agent and reviewed by a person: personas and user scenarios, BPMN business processes, DMN decision and scheduling logic, core data elements and glossary with their terminology bindings, indicators and requirements. One subprocess for all of them. The agent edits, checks, renders and stages with a before/after, then hands the component on, and review forks alongside it without blocking. Per component, it lists the authoring skill, checker, renderer and diff, reviewing role, and what the reviewer judges. Read before authoring or reviewing any L2 component, and when an L2 track asks what its reviewer needs to see.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-component-edit-review.md",
-      "instructionLines": 116,
+      "instructionLines": 108,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

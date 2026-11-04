@@ -103,7 +103,7 @@
   @media print, (forced-colors: active) {
     html:root { background-image: none; }
   }
-</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/smart-base-tools.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-direction-of-travel-reversed-on-2026-09-22--and-this-rule-did-not","label":"The direction of travel reversed on 2026-09-22 — and this rule did not"},{"href":"#before-you-start","label":"Before you start"},{"href":"#transforms","label":"Transforms"},{"href":"#two-things-to-expect","label":"Two things to expect"},{"href":"#what-else-is-in-there","label":"What else is in there"},{"href":"#adapting-a-dak-use-the-toolchain-the-upstream-used","label":"Adapting a DAK: use the toolchain the upstream used"},{"href":"#what-the-generic-authoring-skills-need-to-know-here","label":"What the generic authoring skills need to know here"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/smart-base-tools.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#before-you-start","label":"Before you start"},{"href":"#transforms","label":"Transforms"},{"href":"#two-things-to-expect","label":"Two things to expect"},{"href":"#what-else-is-in-there","label":"What else is in there"},{"href":"#adapting-a-dak-use-the-toolchain-the-upstream-used","label":"Adapting a DAK: use the toolchain the upstream used"},{"href":"#what-the-generic-authoring-skills-need-to-know-here","label":"What the generic authoring skills need to know here"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
 function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
 function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
@@ -218,28 +218,15 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   
 </h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">smart-base-tools</code> · Package:
 <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code></p></blockquote><p>Run WHO’s DAK toolchain from a <code class="language-plaintext highlighter-rouge">smart-base</code> checkout. <strong>Load it; never vendor
-it.</strong></p><blockquote><h2 id="the-direction-of-travel-reversed-on-2026-09-22--and-this-rule-did-not"><a href="#the-direction-of-travel-reversed-on-2026-09-22--and-this-rule-did-not" class="anchor-heading" aria-labelledby="the-direction-of-travel-reversed-on-2026-09-22--and-this-rule-did-not"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The direction of travel reversed on 2026-09-22 — and this rule did not
-  
-  
-</h2><p>The owner: <em>“the skill/tools under smart-base should consolidate under the
-<code class="language-plaintext highlighter-rouge">smart-base/tools/</code> directory under this repo”</em>, serving <em>“want to slowly get
-smart-base back to a more conventional IG state w/o tooling”</em>. So
-<code class="language-plaintext highlighter-rouge">WorldHealthOrganization/smart-base</code> is to stop being a toolchain host and
-become an ordinary FHIR IG, with the capabilities moving here.</p><p><strong>That is not a licence to copy the Python in.</strong> <code class="language-plaintext highlighter-rouge">smart-base/tools/</code> holds
-<strong>Tool nodes</strong> — declarations of what each capability consumes, produces and
-satisfies. Declaring that <code class="language-plaintext highlighter-rouge">dmn_questionnaire_generator.py</code> exists and turns
-DMN into <code class="language-plaintext highlighter-rouge">Questionnaire</code> resources duplicates none of it, and is what lets a
-BPMN activity bind the step at all.</p><p><strong>Declare here, execute upstream, until the execution moves too.</strong> When it
-does move, it moves as one migration with a cutover, not as a copy that
-quietly becomes a fork — which is the failure this rule was written against
-and is still the failure to avoid.</p><p>Eleven tools are declared. Two upstream scripts deliberately are <strong>not</strong>:
-<code class="language-plaintext highlighter-rouge">strip_library_binaries.py</code> and <code class="language-plaintext highlighter-rouge">strip_library_content.py</code> are not DAK-shaped
-and belong to <code class="language-plaintext highlighter-rouge">fhir-harness</code> — see
-<a href="../../reference/skill-instructions/smart-stack-layering.html"><code class="language-plaintext highlighter-rouge">smart-stack-layering</code></a>. The DAK repositories’ own GitHub Actions invoke those scripts in place,
-so <code class="language-plaintext highlighter-rouge">WorldHealthOrganization/smart-base</code> stays their authoritative home — a copy
-here would be a second, drifting toolchain, which is the argument
-<code class="language-plaintext highlighter-rouge">docs/proposals/rag-document-ingestion.md</code> §2c makes about corpora, applied to
-code.</p></blockquote><h2 id="before-you-start"><a href="#before-you-start" class="anchor-heading" aria-labelledby="before-you-start"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you start
+it.</strong></p><p><code class="language-plaintext highlighter-rouge">smart-base/tools/</code> holds <strong>Tool nodes</strong>: declarations of what each upstream
+capability consumes, produces and satisfies, so a BPMN activity can bind it.
+A Tool node duplicates no code. The Python stays in
+<code class="language-plaintext highlighter-rouge">WorldHealthOrganization/smart-base</code>, which the DAK repositories’ GitHub
+Actions run in place; a copy here would be a second, drifting toolchain.
+<strong>Declare here, execute upstream</strong>, until the execution moves as one
+migration with a cutover (<a href="../../reference/skill-instructions/toolchain-ownership.html"><code class="language-plaintext highlighter-rouge">toolchain-ownership</code></a>).</p><p><code class="language-plaintext highlighter-rouge">strip_library_binaries.py</code> and <code class="language-plaintext highlighter-rouge">strip_library_content.py</code> are not declared
+here: they are not DAK-shaped and belong to <code class="language-plaintext highlighter-rouge">fhir-harness</code>
+(<a href="../../reference/skill-instructions/smart-stack-layering.html"><code class="language-plaintext highlighter-rouge">smart-stack-layering</code></a>).</p><h2 id="before-you-start"><a href="#before-you-start" class="anchor-heading" aria-labelledby="before-you-start"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before you start
   
   
 </h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">SMART_BASE_HOME</span><span class="o">=</span>/path/to/smart-base       <span class="c"># default: /opt/smart-base</span>
@@ -249,9 +236,8 @@ skill degrades to <code class="language-plaintext highlighter-rouge">skip</code>
 it never had.</p><h2 id="transforms"><a href="#transforms" class="anchor-heading" aria-labelledby="transforms"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Transforms
   
   
-</h2><p>Both are the <em>render</em> direction — an authored source artefact producing a
-published representation, which is what §12.15 wants and what the extractors
-are the inverse of.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># BPMN → FHIR Shorthand</span>
+</h2><p>Both render an authored source artefact into a published representation
+(the extractors go the other way).</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># BPMN → FHIR Shorthand</span>
 python3 smart-base/scripts/smart-base-transform.py bpmn2fsh &lt;file.bpmn|dir&gt; <span class="nt">-o</span> OUTDIR
 
 <span class="c"># DMN → HTML</span>
@@ -263,15 +249,13 @@ python3 smart-base/scripts/smart-base-transform.py dmn2html &lt;file.dmn|dir&gt;
 <code class="language-plaintext highlighter-rouge">&lt;files&gt;&lt;file name="…"&gt;…&lt;/file&gt;…&lt;/files&gt;</code>, and each entry is a separate
 artefact at the path the transform names. Measured on <code class="language-plaintext highlighter-rouge">smart-dak-immz</code>: 8
 business processes → <strong>313 files</strong>, one process alone accounting for 157.</p><p><strong>Paths collide across inputs.</strong> Those 313 land at only 201 distinct paths,
-because shared actors and two near-duplicate copies of one process name the
-same outputs. The runner counts and names every collision on stderr rather than
-overwriting silently — 313 successes leaving 201 files is exactly the kind of
-quiet arithmetic that hides a problem. Decide deliberately whether a collision
-is a duplicate input to remove or two processes that legitimately contribute
-the same actor.</p><h2 id="what-else-is-in-there"><a href="#what-else-is-in-there" class="anchor-heading" aria-labelledby="what-else-is-in-there"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What else is in there
+because shared actors and near-duplicate processes name the same outputs. The
+runner counts and names every collision on stderr instead of overwriting
+silently. Decide for each whether it is a duplicate input to remove or two
+processes that legitimately contribute the same actor.</p><h2 id="what-else-is-in-there"><a href="#what-else-is-in-there" class="anchor-heading" aria-labelledby="what-else-is-in-there"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What else is in there
   
   
-</h2><p><code class="language-plaintext highlighter-rouge">smart-base</code> carries ~54 Python scripts (see the survey in the proposal §12.16):
+</h2><p><code class="language-plaintext highlighter-rouge">smart-base</code> carries ~54 Python scripts:
 extractors (<code class="language-plaintext highlighter-rouge">dd_extractor</code>, <code class="language-plaintext highlighter-rouge">dt_extractor</code>, <code class="language-plaintext highlighter-rouge">req_extractor</code>, <code class="language-plaintext highlighter-rouge">extractpr</code>),
 generators (<code class="language-plaintext highlighter-rouge">generate_jsonld_vocabularies</code>, <code class="language-plaintext highlighter-rouge">generate_*_schemas</code>,
 <code class="language-plaintext highlighter-rouge">dmn_questionnaire_generator</code>), a translation subsystem, and IG build/CI
@@ -296,18 +280,15 @@ indicators). Jurisdiction training material where there is some, e.g.
 litlfred/uganda-sg-training for Uganda.</li></ol><p>Only when all three come back empty is something new written, and then as a
 <strong>Tool node</strong> under <a href="../../reference/skill-instructions/tool-authoring.html"><code class="language-plaintext highlighter-rouge">tool-authoring</code></a>,
 with the search recorded in the dependency row (<code class="language-plaintext highlighter-rouge">toolchain: none</code>, and where
-it looked). A script written into the adaptation repository with no Tool node
-is the 2026-10-15 failure: the Uganda adaptation wrote its own YAML → DMN
-builder, CQL compile script and test runner while the upstream kept its
-decision tables in the DAK spreadsheet and had a converter, a CQL refresh and
-YAML test cases. None of those was a declared Tool, which is why a graph
-search alone would not have found them, and why step 2 is not optional.</p><p><strong>There is no PDF renderer in smart-base.</strong> Its only PDF dependency is
+it looked). Never write a script into the adaptation repository without a Tool
+node. Step 2 is not optional: upstream converters, CQL refresh scripts and
+test formats are usually not declared Tools, so the graph search alone misses
+them.</p><p><strong>There is no PDF renderer in smart-base.</strong> Its only PDF dependency is
 <code class="language-plaintext highlighter-rouge">pdfplumber</code>, used to <em>read</em> PDFs when extracting personas.</p><h2 id="what-the-generic-authoring-skills-need-to-know-here"><a href="#what-the-generic-authoring-skills-need-to-know-here" class="anchor-heading" aria-labelledby="what-the-generic-authoring-skills-need-to-know-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the generic authoring skills need to know here
   
   
 </h2><p>The platform’s <code class="language-plaintext highlighter-rouge">bpmn-authoring</code>, <code class="language-plaintext highlighter-rouge">dmn-authoring</code> and <code class="language-plaintext highlighter-rouge">translation-manager</code>
-are generic and name no DAK (bean <code class="language-plaintext highlighter-rouge">lthi</code>, 2026-10-09: the references used to
-point up from them to this skill). What a DAK adds to each is said here:</p><ul><li><strong>BPMN is a source artefact.</strong> <code class="language-plaintext highlighter-rouge">bpmn2fsh</code> turns an authored business
+are generic and name no DAK. What a DAK adds to each:</p><ul><li><strong>BPMN is a source artefact.</strong> <code class="language-plaintext highlighter-rouge">bpmn2fsh</code> turns an authored business
 process into FHIR Shorthand, so names and ids chosen in the diagram appear
 in the generated FSH. Author it knowing it will be transformed. A changed
 diagram also changes its picture and its translation templates: re-render
@@ -319,8 +300,7 @@ the caveats are §”Two things to expect” above.</li><li><strong>Translation.
 <code class="language-plaintext highlighter-rouge">SGAuthoring.Persona.Translator</code>, with the skill requirements
 <code class="language-plaintext highlighter-rouge">SGAuthoring.Skills.TranslateContent</code> and
 <code class="language-plaintext highlighter-rouge">SGAuthoring.Skills.ReviewTranslations</code>. The translation subsystem is
-invoked from a smart-base checkout, never copied — the same
-<em>load it; never vendor it</em> rule as every tool here.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+invoked from a smart-base checkout, never copied.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/smart-guideline-end-to-end.html">SMART Guideline end to end</a></td><td>3 · Choose L2 dependencies (WHO / jurisdiction DAKs); 4 · Create / adapt L2 DAK assets; 5 · Choose L3 dependencies (WHO / jurisdiction IGs); 6 · Produce L3 assets</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
