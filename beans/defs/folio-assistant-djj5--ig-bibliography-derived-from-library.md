@@ -104,3 +104,5 @@ _2026-11-04T20:12Z_ — cat-harness-tools#1473 merged (7225be8). fa branch claud
 _2026-11-04T20:59Z_ — who-iris#176 green and MERGED (35f23d3). folio-assistant#2941 opened: re-pins cat-harness-tools 7225be8 + who-iris 35f23d3 together (state-on-main and reference-direction exit 0 locally). Told the train and #2926 sessions. Next: #2941 green → merge; then the who-iris index-ref follow-up.
 
 _2026-11-04T22:21Z_ — folio-assistant#2941: main merged (8346f62); cat-harness-tools pin moved to c807dc9 (#1481 slide-10 fix) after shard 3 failed only on slide 10 at 7225be8. Now 8212130; same pins as #2926.
+
+_2026-11-04T23:38Z_ — folio-assistant#2941 MERGED (9537d71), green on all 35 checks: the index pins cat-harness-tools c807dc9 + who-iris 35f23d3. who-iris uploads/ is repository data end to end. Follow-up who-iris#179 drops the temporary index-ref. Told the train and #2926 sessions.
