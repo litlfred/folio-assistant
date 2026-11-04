@@ -94,3 +94,5 @@ _2026-11-04T06:51:32Z_ — Resumed (relayed by session_01EucfRoX2s5Q9rHUMB8HHbH)
 _2026-11-04T07:03:12Z_ — Owner: "Repin and merge when needed and ready for the next 3 hours". **cat-harness-tools#1453 merged (42af00b)**, green. who-iris#176: merged main, re-pinned cat-harness-tools to 42af00b with consent recorded (f783f7d); CI running; merges on green.
 
 _2026-11-04T12:54Z_ — who-iris#176 still red: layer-mode CI mounts the folio-assistant index lock (cat-harness-tools d5c25d7, pre-#1453), not who-iris's own pin. Re-pin train folio-assistant#2935 moves it to 5e1644e (includes #1453). The remaining check:declared-dirs finding (undeclared-state uploads/) is fixed in the platform by cat-harness-tools#1468, under the owner's 2026-11-03 uploads ruling.
+
+_2026-11-04T13:12Z_ — cat-harness-tools#1468 merged (4dea8fc). folio-assistant branch claude/repin-tools-who-iris-uploads (a8006dc) re-pins cat-harness-tools to it; who-iris#176 now judged against that branch via index-ref (e52e628). Next: #176 green → merge → re-pin who-iris on the same branch → open the fa PR (lands before #2926, agreed with its session).
