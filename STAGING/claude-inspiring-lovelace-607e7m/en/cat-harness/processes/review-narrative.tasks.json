@@ -1,0 +1,225 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_NarrativeReview",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview",
+ "tasks": {
+  "Task_ReadFindings": {
+   "id": "Task_ReadFindings",
+   "name": "Read the sidecar findings",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/node/Task_ReadFindings",
+   "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/lane/Lane_NarrativeReviewer",
+   "skills": [
+    {
+     "name": "content-review"
+    }
+   ],
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "uses-editorial-review"
+     },
+     {
+      "name": "voice-editorial-review"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_AdjudicateVoice": {
+   "id": "Task_AdjudicateVoice",
+   "name": "Adjudicate the voice findings",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/node/Task_AdjudicateVoice",
+   "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/lane/Lane_NarrativeReviewer",
+   "skills": [
+    {
+     "name": "voice-editorial-review"
+    },
+    {
+     "name": "adjudication"
+    }
+   ],
+   "calls": {
+    "name": "Criterion adjudication",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+    "diagram": "criterion-adjudication.html"
+   },
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "uses-editorial-review"
+     },
+     {
+      "name": "voice-editorial-review"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Call_VoiceOverlay": {
+   "id": "Call_VoiceOverlay",
+   "name": "Voice overlay review",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/node/Call_VoiceOverlay",
+   "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/lane/Lane_NarrativeReviewer",
+   "skills": [
+    {
+     "name": "voice-overlay-review"
+    }
+   ],
+   "calls": {
+    "name": "Voice overlay review",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
+    "diagram": "voice-review.html"
+   },
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "uses-editorial-review"
+     },
+     {
+      "name": "voice-editorial-review"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_ReviewTranslation": {
+   "id": "Task_ReviewTranslation",
+   "name": "Review the translation",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/node/Task_ReviewTranslation",
+   "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/lane/Lane_NarrativeReviewer",
+   "skills": [
+    {
+     "name": "translation-manager"
+    }
+   ],
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "uses-editorial-review"
+     },
+     {
+      "name": "voice-editorial-review"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_RecordFindings": {
+   "id": "Task_RecordFindings",
+   "name": "Record findings as advice",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/node/Task_RecordFindings",
+   "lane": "Narrative reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview/lane/Lane_NarrativeReviewer",
+   "skills": [
+    {
+     "name": "content-feedback"
+    }
+   ],
+   "role": {
+    "name": "narrative-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
+    "title": "Narrative reviewer",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "uses-editorial-review"
+     },
+     {
+      "name": "voice-editorial-review"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  }
+ }
+}

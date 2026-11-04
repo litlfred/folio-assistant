@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/fhir-harness/role/ig-publisher-service.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-inspiring-lovelace-607e7m/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service.jsonld",
+  "staging": {
+    "branch": "claude/inspiring-lovelace-607e7m",
+    "sha": "bcc26aa636bb50c7b229ee6d9ecac1d511f8d6be",
+    "pr": "2930/merge",
+    "run": "41750910188"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/role/ig-publisher-service",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "IG publisher + validator",
+      "title": "IG publisher + validator",
+      "notation": "ig-publisher-service",
+      "description": "The JVM services an IG build shells out to. External in behaviour, internal in configuration.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication"
+      ]
+    }
+  ]
+}

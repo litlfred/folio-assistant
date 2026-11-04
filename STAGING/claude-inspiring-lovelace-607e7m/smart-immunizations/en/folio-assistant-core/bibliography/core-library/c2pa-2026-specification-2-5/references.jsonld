@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/c2pa-2026-specification-2-5",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Content Credentials : C2PA Technical Specification, version 2.5",
+      "dcterms:issued": "2026",
+      "dcterms:source": "folio-assistant-core/library/c2pa-2026-specification-2-5/manifest.jsonld",
+      "dcterms:hasVersion": "folio-assistant-core/library/c2pa-2026-specification-2-5"
+    }
+  ]
+}
