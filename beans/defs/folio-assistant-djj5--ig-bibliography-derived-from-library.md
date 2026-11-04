@@ -100,3 +100,5 @@ _2026-11-04T13:12Z_ — cat-harness-tools#1468 merged (4dea8fc). folio-assistant
 _2026-11-04T13:59Z_ — who-iris#176 re-run against the index branch: every gate passes; one test newly fails, cat-harness-tools two-greys (asserted who-iris uploads as a writable graph). Fixed in cat-harness-tools#1473, which reads who-iris.json and passes in both states. Next: merge #1473, move the fa branch pin to it, re-run #176.
 
 _2026-11-04T20:12Z_ — cat-harness-tools#1473 merged (7225be8). fa branch claude/repin-tools-who-iris-uploads moved to it (6c933d1). who-iris#176 checks re-run in full (run 41835915254, attempt 3) against that branch.
+
+_2026-11-04T20:59Z_ — who-iris#176 green and MERGED (35f23d3). folio-assistant#2941 opened: re-pins cat-harness-tools 7225be8 + who-iris 35f23d3 together (state-on-main and reference-direction exit 0 locally). Told the train and #2926 sessions. Next: #2941 green → merge; then the who-iris index-ref follow-up.
