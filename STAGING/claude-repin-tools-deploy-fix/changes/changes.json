@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "f8f511b60325e52645166ea900dfa400ae5bba14",
+    "head": "e50d0a7208170fddf11a318a411283b1a9a0220a",
     "changes": [
       {
         "path": ".github/workflows/cancel-on-close.yml",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/cancel-on-close.yml",
-        "ref": "f8f511b60325e52645166ea900dfa400ae5bba14",
+        "ref": "e50d0a7208170fddf11a318a411283b1a9a0220a",
         "mounted": true
       },
       {
@@ -18,7 +18,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/main-qa.yml",
-        "ref": "f8f511b60325e52645166ea900dfa400ae5bba14",
+        "ref": "e50d0a7208170fddf11a318a411283b1a9a0220a",
         "mounted": true
       },
       {
@@ -26,7 +26,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "f8f511b60325e52645166ea900dfa400ae5bba14",
+        "ref": "e50d0a7208170fddf11a318a411283b1a9a0220a",
         "mounted": true
       },
       {
@@ -34,7 +34,25 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "f8f511b60325e52645166ea900dfa400ae5bba14",
+        "ref": "e50d0a7208170fddf11a318a411283b1a9a0220a",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/.github/scripts/layer-pr-checks/compare-gates.py",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": ".github/scripts/layer-pr-checks/compare-gates.py",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/.github/scripts/layer-pr-checks/run-gates.py",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": ".github/scripts/layer-pr-checks/run-gates.py",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
+        "instance": "cat-harness-tools",
         "mounted": true
       },
       {
@@ -42,7 +60,34 @@
         "status": "added",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "beans/defs/cat-tools-d5j0--subgraph-context-drops-a-needed-prefix-when-the-ch.md",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/libraries/modelcontextprotocol__sdk.library.json",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "libraries/modelcontextprotocol__sdk.library.json",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/libraries/playwright__test.library.json",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "libraries/playwright__test.library.json",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/libraries/zod.library.json",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "libraries/zod.library.json",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -51,7 +96,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "package.json",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -60,7 +105,7 @@
         "status": "added",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/context-leak.ts",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -69,7 +114,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/gates.ts",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -78,7 +123,7 @@
         "status": "added",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/instantiate-harness.ts",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -87,7 +132,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/processed-beans.ts",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -96,7 +141,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/publish-gh-pages.sh",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -105,7 +150,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/task-io.ts",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -114,7 +159,7 @@
         "status": "added",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/tests/instantiate-harness.test.ts",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -123,7 +168,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/tests/narratives.test.ts",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -132,7 +177,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/tests/processed-beans.test.ts",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       },
@@ -141,7 +186,25 @@
         "status": "added",
         "repository": "litlfred/cat-harness-tools",
         "upstreamPath": "scripts/tests/sdlc/context-leak.test.ts",
-        "ref": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/test/coordinator/navbar-checkout.test.ts",
+        "status": "modified",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "test/coordinator/navbar-checkout.test.ts",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
+        "instance": "cat-harness-tools",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness-tools/test/layer-pr-checks-findings.test.ts",
+        "status": "added",
+        "repository": "litlfred/cat-harness-tools",
+        "upstreamPath": "test/layer-pr-checks-findings.test.ts",
+        "ref": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
         "instance": "cat-harness-tools",
         "mounted": true
       }
@@ -151,8 +214,8 @@
         "instance": "cat-harness-tools",
         "repository": "litlfred/cat-harness-tools",
         "from": "4f43e1c5f2e3c03d9c4ac4c23b9113359a3a81ca",
-        "to": "8c452b9b01f74a1cbdb679aaf47b8db4b9d747b6",
-        "files": 12
+        "to": "d5c25d7caf7c75e5e93c1f2f113e2ba3908d7a36",
+        "files": 19
       }
     ]
   },
@@ -168,6 +231,24 @@
         "reason": "the staging cone carries cat-harness-tools/beans (the branch changes cat-harness-tools/beans/defs/cat-tools-d5j0--subgraph-context-drops-a-needed-prefix-when-the-ch.md); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
         "hash": "17838082a63885a7363539b307b865ee213adcc2e6ae987b038e4b5740738d89"
+      },
+      {
+        "input": "cat-harness-tools/libraries/modelcontextprotocol__sdk.library.json",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-libraries (the branch changes cat-harness-tools/libraries/modelcontextprotocol__sdk.library.json); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "75e120bcc7ab66bd144ce5459e4c53256e5e895438716a76603fa0e6638c5085"
+      },
+      {
+        "input": "cat-harness-tools/libraries/playwright__test.library.json",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-libraries (the branch changes cat-harness-tools/libraries/playwright__test.library.json); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b3af2d426b6954da5e93215aba7f2ac6ed06e01dc73cb7ef8632cadcc366ffd2"
+      },
+      {
+        "input": "cat-harness-tools/libraries/zod.library.json",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-libraries (the branch changes cat-harness-tools/libraries/zod.library.json); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "01dbd02dfb49f64dda6576c9f4254fb019475dd8ba01181ec7a277b050fc75c8"
       },
       {
         "input": "cat-harness-tools/scripts/context-leak.ts",
@@ -228,6 +309,18 @@
         "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-scripts (the branch changes cat-harness-tools/scripts/tests/sdlc/context-leak.test.ts); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
         "hash": "93948d880744213582bdfd36844cfc64f0878f2871167ee5a801a3af3a391e3e"
+      },
+      {
+        "input": "cat-harness-tools/test/coordinator/navbar-checkout.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-tests (the branch changes cat-harness-tools/test/coordinator/navbar-checkout.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "16e09459dd7487ccfacd368233552ab8f2d85b2b4ffeb619311ee96816c9d494"
+      },
+      {
+        "input": "cat-harness-tools/test/layer-pr-checks-findings.test.ts",
+        "reason": "the staging cone carries cat-harness-tools/cat-harness-tools-tests (the branch changes cat-harness-tools/test/layer-pr-checks-findings.test.ts); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "652b55301fcfd30d8538e6cc532a345b09ce49f54a74c0e7bf2b73578c79563a"
       }
     ]
   },
