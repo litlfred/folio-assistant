@@ -773,8 +773,8 @@ jobs:
         # locally, and so does not list it as a gate.
         #
         # The build's `skill:register` step re-ran nine checks (233 s on
-        # docs-site job 124653530529) that `gates-kg` asks again over this same
-        # tree with `skill:register:check`, so they are left to it
+        # docs-site job 124653530529) that `skill-registration-chain` asks again
+        # over this same tree with `skill:register:check`, so they are left to it
         # (CAT_SKILL_REGISTER_VERIFIED_BY_GATES, as layer-pr-checks and the
         # preview do; #2865). The record lists them as not run here, never as
         # passed. If the names cannot be read, every check runs, as before.
@@ -1938,22 +1938,13 @@ jobs:
       - name: skill manifests and framework JSON
         run: bun run cat check:skills
 
-      # A skill that arrived without its declarations, REFUSED HERE instead of
-      # surfacing as six obscure failures on somebody else's PR. Seven merges
-      # between 2026-09-24 and 2026-09-26 each broke the gate set that way, and
-      # each was repaired by whoever opened the next PR rather than by its
-      # author -- because CI judges the MERGE of each head into the base, so the
-      # cost lands downstream of the change that caused it. The failure names
-      # `bun run cat skill:register`, which performs the whole chain; a gate that
-      # states the defect and not the remedy is how six tests came to mean
-      # "somebody read the corpus and work it out".
-      #
-      # The command it names was `skills:register` until the owner consolidated
-      # the two (2026-09-26). Keep this step pointed at whichever one survives:
-      # the gate is the only thing that makes the obligation binding, and for
-      # four days it was on the command that was NOT in CI.
-      - name: every skill is declared, and declares nothing absent
-        run: bun run cat skill:register:check
+      # `skill:register:check` (every skill is declared, and declares nothing
+      # absent) is NOT here: the `skill-registration-chain` job runs the same
+      # command over the same restored tree, as a hard gate (bean `fjwi` chose
+      # that job for it). It ran here too, a second time, and at 668 s
+      # (run 41625513600) it was most of this job, the workflow's critical path.
+      # Keep the gate pointed at whichever command survives: it is what makes
+      # the obligation binding.
 
       # The same obligation one level out, for a graph TYPOLOGY (bean `uoij`). Added
       # 2026-10-04 with the command, because an unenforced chain is exactly the

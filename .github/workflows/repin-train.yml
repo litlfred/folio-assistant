@@ -11,7 +11,7 @@
 #      those pins and the lock ONCE, with `mount:repin:standing`;
 #   2. records the git tree that commit would test, and SKIPS when an earlier
 #      train already tested that tree, when the previous train is still being
-#      checked, or when it passed and is waiting for a person's merge
+#      checked, or when it passed and is waiting for its merge
 #      (`.github/scripts/repin-train.ts decide`);
 #   3. otherwise pushes `repin-train/<stamp>` and opens ONE PR labelled
 #      `repin-train`, closing an earlier train that had new failures.
@@ -20,8 +20,11 @@
 # next train picks up whatever merged in the meantime.
 #
 # The merge rule is `repin-train-verdict.yml`: a train PR may merge when its
-# checks show no new failures compared with fa main. This workflow never
-# merges; a person does.
+# checks show no new failures compared with fa main, judged check by check.
+# Since the owner's ruling of 2026-11-03 the verdict merges a green train
+# itself, within 15 minutes of its checks finishing; a train with new failures
+# never merges. This workflow never merges: it cuts the next train from main,
+# and a merge here would land under it.
 
 #
 # TRIGGERS, ACTUAL (the owner's decision, card Q-SPD-3 B): `schedule` (every two hours) and `workflow_dispatch`. It
@@ -109,11 +112,13 @@ jobs:
           echo "stamp=$stamp" >> "$GITHUB_OUTPUT"
           echo "tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_OUTPUT"
 
-      # The verdict workflow starts on workflow_run, but the train's CI is
-      # dispatched with GITHUB_TOKEN when no bot token is set, and a run
-      # started by that token triggers no workflow_run. So each open train
-      # is judged here too, before the decision reads its verdict (#2896
-      # stayed "still being checked" for hours after its checks finished).
+      # The verdict workflow sweeps open trains every 15 minutes (its
+      # workflow_run trigger never fires for CI started by GITHUB_TOKEN). Each
+      # open train is judged here too, so the decision reads a current verdict
+      # (#2896 stayed "still being checked" for hours after its checks
+      # finished). `--no-merge`: this run cuts the next train from the main it
+      # checked out, so a green train is left to the verdict's sweep to merge,
+      # and `decide` skips while it waits.
       - name: Judge the open trains
         env:
           GH_TOKEN: ${{ github.token }}
@@ -121,7 +126,7 @@ jobs:
           set -euo pipefail
           for sha in $(gh api "repos/$GITHUB_REPOSITORY/pulls?state=open&per_page=100" \
               --jq '.[] | select(any(.labels[]; .name == "repin-train")) | .head.sha'); do
-            bun .github/scripts/repin-train.ts verdict --sha "$sha"
+            bun .github/scripts/repin-train.ts verdict --sha "$sha" --no-merge
           done
 
       - name: Skip a tree already tested, or a train still running
@@ -174,7 +179,7 @@ jobs:
             echo
             cat "$RUNNER_TEMP/repin.md" 2>/dev/null || true
             echo
-            echo "**Merge rule:** this PR may merge when the status \`repin-train / no new failures\` is green: no check fails here that passes on fa main. A person merges it."
+            echo "**Merge rule:** this PR merges itself when the status \`repin-train / no new failures\` is green: no check fails here that passes on fa main, compared check by check (owner, 2026-11-03). A train with new failures never merges; the next train replaces it."
             echo
             echo "<!-- repin-train:tree=$TREE -->"
           } > "$RUNNER_TEMP/body.md"

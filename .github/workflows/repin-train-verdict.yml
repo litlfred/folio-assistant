@@ -1,24 +1,44 @@
 # The re-pin train's merge rule — issue #2873 (owner, 2026-11-01, card
 # Q-SPD-3 B): a train PR may merge when its checks show NO NEW FAILURES
-# compared with fa main.
+# compared with fa main. Owner, 2026-11-03: a train with no new failures
+# MERGES ITSELF; a train with a new failure never merges.
 #
-# It runs when a check workflow's run completes on a `repin-train/` branch
-# (workflow_run), and on dispatch. Each time it compares every check run on the
-# train head with those on main's newest commit whose checks have all
-# finished (`.github/scripts/repin-train.ts verdict`):
+# Each run compares the train head with main (`.github/scripts/repin-train.ts
+# verdict`), CHECK BY CHECK: a failing job that left a per-check record
+# (`CQG-REPORT-V1` in its log, `cqg_judge.py`) is compared step by step and
+# test by test with the same job's record on main, so a job red on main for
+# one reason does not mask a new failure inside it. A job with no record on
+# either side is compared as a whole job.
 #
 #   - a check failing on the train and passing on main (or not run there) is a
 #     NEW failure, and the status is red;
 #   - a check failing on both is main's known debt, and does not block;
-#   - a check still running keeps the status pending.
+#   - a check still running keeps the status pending;
+#   - a failure that cannot be compared check by check is `error`: never green.
 #
 # The result is the commit status `repin-train / no new failures` on the train
-# head, and one PR comment edited in place. Could-not-determine is never
-# green. It never merges: a person does.
+# head, and one PR comment edited in place. When it is green and GitHub calls
+# the PR mergeable, the PR is merged with a merge commit, the judged head as
+# the expected sha. The merge uses the harness App's token or
+# PUSH_BRANCH_TRIGGERING_CI when set, so main's push workflows run on the merge;
+# with only GITHUB_TOKEN, the gates are dispatched on main instead.
+#
+# WHY A SCHEDULE. The train's CI is dispatched with GITHUB_TOKEN when no bot
+# token is set, and a run started by that token triggers no `workflow_run`, so
+# the `workflow_run` trigger never fired for a train. repin-train.yml judged
+# open trains only at its own 2-hour tick. The 15-minute sweep below judges
+# every open train whose head has no final verdict yet, so a train is judged,
+# and merged, within 15 minutes of its checks finishing. A sweep, not a wait
+# inside repin-train.yml: it holds no runner while the checks run (~35 min,
+# past that job's 30-minute cap), it survives a re-run of a failed check, and
+# it retries a merge that GitHub refused. With no open train, a sweep is a
+# sparse checkout and one API call.
 
 #
-# TRIGGERS, ACTUAL (the owner's decision, card Q-SPD-3 B): `workflow_run` (a check workflow completed) and
-# `workflow_dispatch`. It judges PRs; no PR or push to main triggers it.
+# TRIGGERS, ACTUAL (the owner's decision, card Q-SPD-3 B; schedule added
+# 2026-11-03): `workflow_run` (a check workflow completed), `schedule` (every
+# 15 minutes, open trains only) and `workflow_dispatch`. It judges and merges
+# train PRs; no PR or push to main triggers it.
 
 name: Re-pin train verdict
 
@@ -26,31 +46,38 @@ on:
   workflow_run:
     workflows: ["Code-quality gates", "Feature Staging (GitHub Pages)"]
     types: [completed]
+  schedule:
+    - cron: '4,19,34,49 * * * *'
   workflow_dispatch:
     inputs:
       sha:
-        description: The train head commit to judge
-        required: true
+        description: The train head commit to judge (empty judges every open train)
+        required: false
 
 permissions:
   contents: read
 
+# One group for every verdict: two runs judging (and merging) the same
+# train at once would race, and a sweep covers every open train anyway.
 concurrency:
-  group: repin-train-verdict-${{ github.event.workflow_run.head_sha || inputs.sha }}
+  group: repin-train-verdict
   cancel-in-progress: false
 
 jobs:
   verdict:
     name: No new failures compared with fa main
     # Only this repository's own re-pin branches: a fork can name a branch
-    # `repin-train/…` too, and this job holds statuses and pull-requests write
-    # (security audit V2, 2026-11-01).
-    if: ${{ github.event_name == 'workflow_dispatch' || (startsWith(github.event.workflow_run.head_branch, 'repin-train/') && github.event.workflow_run.head_repository.full_name == github.repository) }}
+    # `repin-train/…` too, and this job holds statuses, pull-requests and
+    # contents write (security audit V2, 2026-11-01). A sweep and the script
+    # check the same for every PR they touch (`isOwnTrain`), and the merge
+    # refuses any other.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' || (startsWith(github.event.workflow_run.head_branch, 'repin-train/') && github.event.workflow_run.head_repository.full_name == github.repository) }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
-      contents: read
+      contents: write  # the merge (owner, 2026-11-03)
       checks: read
+      actions: write  # job logs (the per-check records), and the gates' dispatch on main
       statuses: write
       pull-requests: write
       issues: write
@@ -65,8 +92,24 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.4.4
-      - name: Compare the train head with main
+      # The merge goes through a token whose push starts main's own workflows
+      # when one is set up (as repin-train.yml pushes), so the merged pins get
+      # main's gates and deploy.
+      - id: bot
+        if: vars.HARNESS_BOT_ID != ''
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ vars.HARNESS_BOT_ID }}
+          private-key: ${{ secrets.HARNESS_BOT_PRIVATE_KEY }}
+      - name: Compare the train head with main, and merge it when green
         env:
           GH_TOKEN: ${{ github.token }}
+          MERGE_TOKEN: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || github.token }}
+          MERGE_TRIGGERS_CI: ${{ steps.bot.outputs.token != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '' }}
           SHA: ${{ github.event.workflow_run.head_sha || inputs.sha }}
-        run: bun .github/scripts/repin-train.ts verdict --sha "$SHA"
+        run: |
+          if [ -n "$SHA" ]; then
+            bun .github/scripts/repin-train.ts verdict --sha "$SHA"
+          else
+            bun .github/scripts/repin-train.ts verdict --open
+          fi
