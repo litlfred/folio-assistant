@@ -2,13 +2,13 @@
 # folio-assistant-dkqd
 $schema: bean/1.0.0
 title: Say 'work item', not 'bean', in prose; generate a glossary of node kinds and harnesses
-status: todo
+status: in-progress
 type: feature
 tags:
     - vocabulary
     - glossary
 created_at: 2026-11-04T06:55:38Z
-updated_at: 2026-11-04T06:55:38Z
+updated_at: 2026-11-04T06:57:32Z
 ---
 
 ## Asked (2026-11-04)
@@ -37,3 +37,5 @@ Renaming identifiers (CLI, paths, branches, Tool ids); the #991 sub-graph move.
 ## Falsified if
 
 The generated glossary lacks a "Work item" entry, or the prose check passes a file that says "bean" outside code.
+
+_2026-11-04T06:57:32Z_ — Claimed by claude/work-item-vocabulary — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
