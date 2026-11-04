@@ -102,3 +102,5 @@ _2026-11-04T13:59Z_ — who-iris#176 re-run against the index branch: every gate
 _2026-11-04T20:12Z_ — cat-harness-tools#1473 merged (7225be8). fa branch claude/repin-tools-who-iris-uploads moved to it (6c933d1). who-iris#176 checks re-run in full (run 41835915254, attempt 3) against that branch.
 
 _2026-11-04T20:59Z_ — who-iris#176 green and MERGED (35f23d3). folio-assistant#2941 opened: re-pins cat-harness-tools 7225be8 + who-iris 35f23d3 together (state-on-main and reference-direction exit 0 locally). Told the train and #2926 sessions. Next: #2941 green → merge; then the who-iris index-ref follow-up.
+
+_2026-11-04T22:21Z_ — folio-assistant#2941: main merged (8346f62); cat-harness-tools pin moved to c807dc9 (#1481 slide-10 fix) after shard 3 failed only on slide 10 at 7225be8. Now 8212130; same pins as #2926.
