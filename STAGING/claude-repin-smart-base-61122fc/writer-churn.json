@@ -1,0 +1,529 @@
+{
+  "against": "409f5be49981375de983b400c2a29b4328c233f7",
+  "skipped": 0,
+  "ran": 37,
+  "reused": 0,
+  "groups": [
+    {
+      "cause": ".",
+      "writtenBy": "the commit",
+      "reran": [
+        "smart-base:document-kinds",
+        "uml:overview"
+      ],
+      "seconds": 196.76434635200002
+    },
+    {
+      "cause": "beans/defs",
+      "writtenBy": "the commit",
+      "reran": [
+        "subgraph:jsonld",
+        "docs:pages",
+        "processes:viz"
+      ],
+      "seconds": 30.49604592299997
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "writtenBy": "-",
+      "reran": [
+        "state:visualizer",
+        "site:viz"
+      ],
+      "seconds": 13.706514258000011
+    },
+    {
+      "cause": "index.config.json",
+      "writtenBy": "the commit",
+      "reran": [
+        "theme:viz",
+        "uploads:viz",
+        "document-kinds:viz",
+        "skills:docs",
+        "node-kinds",
+        "smart-base:l1-extraction:pages",
+        "methodologies:viz",
+        "subscriptions:viz",
+        "themes:css"
+      ],
+      "seconds": 12.565524273999968
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 12.477187577999983
+    },
+    {
+      "cause": ".github/scripts/repin-train.ts",
+      "writtenBy": "the commit",
+      "reran": [
+        "external-schemas:viz",
+        "docs:harness"
+      ],
+      "seconds": 9.118769753000059
+    },
+    {
+      "cause": "cat-harness/docs/en/cat-harness/attestations/index.html",
+      "writtenBy": "state:visualizer",
+      "reran": [
+        "auto:docs"
+      ],
+      "seconds": 7.7267885450000175
+    },
+    {
+      "cause": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html",
+      "writtenBy": "auto:docs",
+      "reran": [
+        "library:viz",
+        "tools:viz"
+      ],
+      "seconds": 7.308518366000033
+    },
+    {
+      "cause": "cat-harness/docs/assets/img/workflows/activity-log.svg",
+      "writtenBy": "the commit",
+      "reran": [
+        "render:bpmn"
+      ],
+      "seconds": 5.156788691999973
+    },
+    {
+      "cause": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html",
+      "writtenBy": "state:visualizer",
+      "reran": [
+        "schema:viz"
+      ],
+      "seconds": 2.6461414329999826
+    },
+    {
+      "cause": "bootstrap",
+      "writtenBy": "the commit",
+      "reran": [
+        "jsonld:contexts"
+      ],
+      "seconds": 1.4715064119999879
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust:pages"
+      ],
+      "seconds": 0.7871701260000118
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-base:pages"
+      ],
+      "seconds": 0.765852613999974
+    },
+    {
+      "cause": "cat-harness/docs/reference/skill-instructions",
+      "writtenBy": "skills:docs",
+      "reran": [
+        "voices:viz"
+      ],
+      "seconds": 0.7098997129999917
+    },
+    {
+      "cause": "index.lock.json",
+      "writtenBy": "the commit",
+      "reran": [
+        "bibliography:page",
+        "openapi:viz"
+      ],
+      "seconds": 0.6363631359999999
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.6255412630000501
+    },
+    {
+      "cause": "smart-base/smart-base.json",
+      "writtenBy": "the commit",
+      "reran": [
+        "kind:table",
+        "avatars:css",
+        "kg:viewer"
+      ],
+      "seconds": 0.5955320339999743
+    },
+    {
+      "cause": "cat-harness/docs/en/cat-harness/folio",
+      "writtenBy": "the commit",
+      "reran": [
+        "folio:viz"
+      ],
+      "seconds": 0.5908041760000051
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust-phw:pages"
+      ],
+      "seconds": 0.5450401619999903
+    },
+    {
+      "cause": "cat-harness/docs/_data/harness.json",
+      "writtenBy": "docs:harness",
+      "reran": [
+        "navbar:include"
+      ],
+      "seconds": 0.13032230800000252
+    }
+  ],
+  "writers": [
+    {
+      "writer": "auto:docs",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/attestations/index.html changed (+141 more: cat-harness/docs/en/cat-harness/beans/beans-processed/index.html, cat-harness/docs/en/cat-harness/beans/cat-harness/beans-processed/index.html, cat-harness/docs/en/cat-harness/beans/cat-harness/index.html, cat-harness/docs/en/cat-harness/beans/index.html, cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/bootstrap-tools/index.html, cat-harness/docs/en/cat-harness/code/cat-harness-tools/index.html, and 134 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/attestations/index.html"
+      },
+      "seconds": 7.7267885450000175
+    },
+    {
+      "writer": "avatars:css",
+      "did": "ran",
+      "why": "smart-base/smart-base.json changed (+3 more: smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "smart-base/smart-base.json"
+      },
+      "seconds": 0.11359622999996645
+    },
+    {
+      "writer": "bibliography:page",
+      "did": "ran",
+      "why": "index.lock.json changed (+6 more: smart-base/library/README.md, smart-base/site-docs/docs.json, smart-base/smart-base.json, smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "index.lock.json"
+      },
+      "seconds": 0.46422819900000467
+    },
+    {
+      "writer": "docs:harness",
+      "did": "ran",
+      "why": ".github/scripts/repin-train.ts changed (+54 more: .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/repin-train-verdict.yml, .github/workflows/repin-train.yml, README.md, cat-harness/docs/_data, cat-harness/docs/assets/auto-docs/index.json, and 47 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github/scripts/repin-train.ts"
+      },
+      "seconds": 3.797876520000049
+    },
+    {
+      "writer": "docs:pages",
+      "did": "ran",
+      "why": "beans/defs changed (+222 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md, cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/smart-immunizations, cat-harness/docs/en/cat-harness/methodologies/index.md, cat-harness/docs/en/cat-harness/methodologies/smart-base/diig/index.md, and 215 others)",
+      "cause": {
+        "kind": "path",
+        "path": "beans/defs"
+      },
+      "seconds": 1.7828192140000174
+    },
+    {
+      "writer": "document-kinds:viz",
+      "did": "ran",
+      "why": "index.config.json changed (+6 more: index.lock.json, smart-base/site-docs/docs.json, smart-base/smart-base.json, smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "index.config.json"
+      },
+      "seconds": 0.666839485000004
+    },
+    {
+      "writer": "external-schemas:viz",
+      "did": "ran",
+      "why": ".github/scripts/repin-train.ts changed (+688 more: .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/repin-train-verdict.yml, .github/workflows/repin-train.yml, README.md, beans/defs, beans/defs/archive/folio-assistant-0ytk--code-lists-closed-sets-of-codes-as-skos-nodes-each.md, and 681 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github/scripts/repin-train.ts"
+      },
+      "seconds": 5.320893233000009
+    },
+    {
+      "writer": "folio:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/folio changed (+7 more: index.config.json, index.lock.json, smart-base/site-docs/docs.json, smart-base/smart-base.json, smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/folio"
+      },
+      "seconds": 0.5908041760000051
+    },
+    {
+      "writer": "ig-index:build",
+      "did": "ran",
+      "why": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "seconds": 12.477187577999983
+    },
+    {
+      "writer": "jsonld:contexts",
+      "did": "ran",
+      "why": "bootstrap changed (+55 more: cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/smart-immunizations, cat-harness/docs/payload/sha256, cat-harness/docs/subgraph/smart-base/index.jsonld, cat-harness/docs/subgraph/smart-base/library/index.hydrated.jsonld, cat-harness/docs/subgraph/smart-base/methodologies/processes/index.hydrated.jsonld, cat-harness/docs/subgraph/smart-base/processes/content/index.hydrated.jsonld, and 48 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap"
+      },
+      "seconds": 1.4715064119999879
+    },
+    {
+      "writer": "kg:viewer",
+      "did": "ran",
+      "why": "smart-base/smart-base.json changed (+3 more: smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "smart-base/smart-base.json"
+      },
+      "seconds": 0.375619458000001
+    },
+    {
+      "writer": "kind:table",
+      "did": "ran",
+      "why": "smart-base/smart-base.json changed (+3 more: smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "smart-base/smart-base.json"
+      },
+      "seconds": 0.10631634600000689
+    },
+    {
+      "writer": "library:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html changed (+394 more: cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html, cat-harness/docs/subgraph/smart-base/index.jsonld, cat-harness/test/attestations/kg-qa/processes/sdlc/code-quality-gates.attestations.json, cat-harness/test/attestations/kg-qa/processes/sdlc/feature-staging.attestations.json, and 387 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html"
+      },
+      "seconds": 4.630421895999985
+    },
+    {
+      "writer": "methodologies:viz",
+      "did": "ran",
+      "why": "index.config.json changed (+49 more: index.lock.json, smart-base/code-lists, smart-base/methodologies/diig.md, smart-base/methodologies/terminology-coding.md, smart-base/pipeline, smart-base/platform, smart-base/processes/content/classify-and-code-content.checklist.md, and 42 others)",
+      "cause": {
+        "kind": "path",
+        "path": "index.config.json"
+      },
+      "seconds": 1.6220026770000113
+    },
+    {
+      "writer": "navbar:include",
+      "did": "ran",
+      "why": "cat-harness/docs/_data/harness.json changed (+4 more: smart-base/smart-base.json, smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/_data/harness.json"
+      },
+      "seconds": 0.13032230800000252
+    },
+    {
+      "writer": "node-kinds",
+      "did": "ran",
+      "why": "index.config.json changed (+10 more: index.lock.json, smart-base/AGENTS.md, smart-base/README.md, smart-base/schemas, smart-base/smart-base.json, smart-base/typologies, smart-base/validators, and 3 others)",
+      "cause": {
+        "kind": "path",
+        "path": "index.config.json"
+      },
+      "seconds": 1.2462791849999921
+    },
+    {
+      "writer": "openapi:viz",
+      "did": "ran",
+      "why": "index.lock.json changed (+4 more: smart-base/smart-base.json, smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "index.lock.json"
+      },
+      "seconds": 0.17213493699999527
+    },
+    {
+      "writer": "processes:viz",
+      "did": "ran",
+      "why": "beans/defs changed (+67 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md, cat-harness/docs/en/cat-harness/methodologies/index.md, index.config.json, index.lock.json, smart-base/code-lists, and 60 others)",
+      "cause": {
+        "kind": "path",
+        "path": "beans/defs"
+      },
+      "seconds": 7.739135377999977
+    },
+    {
+      "writer": "render:bpmn",
+      "did": "ran",
+      "why": "cat-harness/docs/assets/img/workflows/activity-log.svg changed (+105 more: cat-harness/docs/assets/img/workflows/actor-role-administration.svg, cat-harness/docs/assets/img/workflows/adjudication.svg, cat-harness/docs/assets/img/workflows/archimate-publish.svg, cat-harness/docs/assets/img/workflows/ask-the-person.svg, cat-harness/docs/assets/img/workflows/bean-close.svg, cat-harness/docs/assets/img/workflows/bean-drain.svg, cat-harness/docs/assets/img/workflows/bean-lifecycle.svg, and 98 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/assets/img/workflows/activity-log.svg"
+      },
+      "seconds": 5.156788691999973
+    },
+    {
+      "writer": "schema:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html changed (+11 more: cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html, index.config.json, index.lock.json, smart-base/schemas, smart-base/site-docs/docs.json, and 4 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html"
+      },
+      "seconds": 2.6461414329999826
+    },
+    {
+      "writer": "site:viz",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 1.4437811210000073
+    },
+    {
+      "writer": "skills:docs",
+      "did": "ran",
+      "why": "index.config.json changed (+50 more: index.lock.json, smart-base/methodologies/terminology-coding.md, smart-base/processes/content/SGAuthoring.DAKLifecycle.bpmn, smart-base/processes/content/classify-and-code-content.bpmn, smart-base/processes/content/classify-and-code-content.checklist.md, smart-base/processes/content/dak-l3-ig.bpmn, smart-base/processes/content/dth-authoring.bpmn, and 43 others)",
+      "cause": {
+        "kind": "path",
+        "path": "index.config.json"
+      },
+      "seconds": 4.916889464000007
+    },
+    {
+      "writer": "smart-base:document-kinds",
+      "did": "ran",
+      "why": ". changed (+14 more: cat-harness/docs, cat-harness/docs/cat-harness/auto-docs/auto-docs.json, cat-harness/docs/todos.json, index.config.json, index.lock.json, smart-base/document-kinds, smart-base/platform, and 7 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 0.48019746500000476
+    },
+    {
+      "writer": "smart-base:l1-extraction:pages",
+      "did": "ran",
+      "why": "index.config.json changed (+9 more: index.lock.json, smart-base/l1-extractions/9789240116191-eng, smart-base/platform, smart-base/scripts, smart-base/site-docs/docs.json, smart-base/smart-base.json, smart-base/typologies, and 2 others)",
+      "cause": {
+        "kind": "path",
+        "path": "index.config.json"
+      },
+      "seconds": 0.6668098549999996
+    },
+    {
+      "writer": "smart-base:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "seconds": 0.765852613999974
+    },
+    {
+      "writer": "smart-trust-phw:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "seconds": 0.5450401619999903
+    },
+    {
+      "writer": "smart-trust:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "seconds": 0.7871701260000118
+    },
+    {
+      "writer": "smart:pages",
+      "did": "ran",
+      "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "seconds": 0.6255412630000501
+    },
+    {
+      "writer": "state:visualizer",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 12.262733137000003
+    },
+    {
+      "writer": "subgraph:jsonld",
+      "did": "ran",
+      "why": "beans/defs changed (+109 more: cat-harness/docs/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld, cat-harness/docs/assets/glossary/smart-base--kg-skills.skos.jsonld, cat-harness/docs/assets/glossary/smart-base--kg-tools.skos.jsonld, cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/smart-immunizations, cat-harness/docs/reference, cat-harness/docs/reference/skill-instructions, and 102 others)",
+      "cause": {
+        "kind": "path",
+        "path": "beans/defs"
+      },
+      "seconds": 20.974091330999975
+    },
+    {
+      "writer": "subscriptions:viz",
+      "did": "ran",
+      "why": "index.config.json changed (+4 more: smart-base/smart-base.json, smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "index.config.json"
+      },
+      "seconds": 0.16937883000000148
+    },
+    {
+      "writer": "theme:viz",
+      "did": "ran",
+      "why": "index.config.json changed (+7 more: index.lock.json, smart-base/platform, smart-base/site-docs/docs.json, smart-base/smart-base.json, smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "index.config.json"
+      },
+      "seconds": 0.4748805940000457
+    },
+    {
+      "writer": "themes:css",
+      "did": "ran",
+      "why": "index.config.json changed (+7 more: index.lock.json, smart-base/platform, smart-base/site-docs/docs.json, smart-base/smart-base.json, smart-base/typologies, smart-base/validators, smart-trust/smart-trust.json)",
+      "cause": {
+        "kind": "path",
+        "path": "index.config.json"
+      },
+      "seconds": 0.4845243939999491
+    },
+    {
+      "writer": "tools:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html changed (+32 more: cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html, index.config.json, index.lock.json, smart-base/platform, and 25 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html"
+      },
+      "seconds": 2.678096470000048
+    },
+    {
+      "writer": "uml:overview",
+      "did": "ran",
+      "why": ". changed (+3041 more: cat-harness/docs, cat-harness/docs/_data, cat-harness/docs/_data/todo_listing.json, cat-harness/docs/_includes, cat-harness/docs/_includes/generated, cat-harness/docs/_includes/generated/todo-listing, cat-harness/docs/ar, and 3034 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 196.28414888700001
+    },
+    {
+      "writer": "uploads:viz",
+      "did": "ran",
+      "why": "index.config.json changed (+16 more: index.lock.json, smart-base/code-lists, smart-base/library/README.md, smart-base/pipeline, smart-base/platform, smart-base/scenarios, smart-base/schemas, and 9 others)",
+      "cause": {
+        "kind": "path",
+        "path": "index.config.json"
+      },
+      "seconds": 2.3179197899999564
+    },
+    {
+      "writer": "voices:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/reference/skill-instructions changed (+10 more: index.config.json, index.lock.json, smart-base/site-docs/docs.json, smart-base/skills/voices/README.md, smart-base/skills/voices/who-digital-health/SKILL.md, smart-base/skills/voices/who-digital-transformation-handbook/SKILL.md, smart-base/smart-base.json, and 3 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/reference/skill-instructions"
+      },
+      "seconds": 0.7098997129999917
+    }
+  ]
+}

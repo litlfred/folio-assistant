@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/schema/bean-note.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-61122fc",
+    "sha": "1e79c980ee5dd64e70592320e44cbbbfa5f8425f",
+    "pr": "2940/merge",
+    "run": "41909304156"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/schema/bean-note",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "bean-note",
+      "title": "bean-note",
+      "summary": "A BEAN NOTE — one pull request's addendum to a bean, in a file of its own.",
+      "module": "schemas/sdlc/bean-note.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/bean-note"
+    }
+  ]
+}

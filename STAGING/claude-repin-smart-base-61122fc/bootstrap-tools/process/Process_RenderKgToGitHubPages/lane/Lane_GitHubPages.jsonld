@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-61122fc",
+    "sha": "1e79c980ee5dd64e70592320e44cbbbfa5f8425f",
+    "pr": "2940/merge",
+    "run": "41909304156"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "GitHub Pages",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/bootstrap-tools/role/github-pages",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/bootstrap-tools/directory/bootstrap-tools-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages"
+    }
+  ]
+}

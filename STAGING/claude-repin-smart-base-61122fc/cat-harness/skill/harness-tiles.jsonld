@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/skill/harness-tiles.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-61122fc",
+    "sha": "1e79c980ee5dd64e70592320e44cbbbfa5f8425f",
+    "pr": "2940/merge",
+    "run": "41909304156"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/skill/harness-tiles",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "harness-tiles",
+      "title": "A tile is the harness's, not the node's",
+      "description": "A tile is a function of the harness watching a directory, not of nodes. Where the tile set comes from, what a tile opens, and the two gaps it reports rather than hides.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/harness-tiles.md",
+      "instructionLines": 686,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-tiles"
+    }
+  ]
+}

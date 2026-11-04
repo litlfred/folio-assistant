@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/process/Process_SubKgLifecycle/node/End_Stays.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-61122fc",
+    "sha": "1e79c980ee5dd64e70592320e44cbbbfa5f8425f",
+    "pr": "2940/merge",
+    "run": "41909304156"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/process/Process_SubKgLifecycle/node/End_Stays",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Stays in place",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/process/Process_SubKgLifecycle",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/role/administrator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/process/Process_SubKgLifecycle/lane/Lane_Admin",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/process/Process_SubKgLifecycle#flow/F4"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_Stays"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/decision/isolation-gate/Decision_IsolationGate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-61122fc",
+    "sha": "1e79c980ee5dd64e70592320e44cbbbfa5f8425f",
+    "pr": "2940/merge",
+    "run": "41909304156"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/decision/isolation-gate/Decision_IsolationGate",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Decision",
+      "name": "Stands alone?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/kg/decisions/isolation-gate.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-61122fc/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/isolation-gate/Decision_IsolationGate"
+    }
+  ]
+}
