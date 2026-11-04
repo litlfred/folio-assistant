@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/cat-harness/globalTask/GT_LogRetained.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1824",
+    "sha": "2091425e215ab289761ba67534e865925853dee9",
+    "pr": "repin-train/20261104-1824",
+    "run": "41887011789"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/cat-harness/globalTask/GT_LogRetained",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Task",
+      "name": "Append `retained` with the reason",
+      "summary": "Records that a removal was considered and refused, or that a preview still stands because a signal fired.",
+      "description": "Records that a removal was considered and refused, or that a preview still stands because a signal fired. A reason is REQUIRED — the tool refuses without one.",
+      "bpmnType": "bpmn:GlobalScriptTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/cat-harness/skill/render-logging"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_LogRetained"
+    }
+  ]
+}

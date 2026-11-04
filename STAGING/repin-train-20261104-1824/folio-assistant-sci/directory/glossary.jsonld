@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/folio-assistant-sci/directory/glossary.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1824",
+    "sha": "2091425e215ab289761ba67534e865925853dee9",
+    "pr": "repin-train/20261104-1824",
+    "run": "41887011789"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/folio-assistant-sci/directory/glossary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "glossary",
+      "path": "glossary/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/v0/ns/graphTypology/glossary"
+      ],
+      "description": "Science's generated glossary (`glossary/generated/folio-assistant-sci/`): candidate `folio-glossary/v1` schemes extracted from this layer's tools, skills, BPMN activities and DMN decisions by core's `glossary:page`. A scheme is keyed by (instance, scheme), and each layer holds its own glossary.",
+      "readmePath": "glossary/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1824/folio-assistant-sci/directory/glossary",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/glossary"
+    }
+  ]
+}
