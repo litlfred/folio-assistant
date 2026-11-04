@@ -1,10 +1,10 @@
-# bean-coordination — see `skills/sdlc/sdlc-core/`
+# bean-coordination — see `cat-harness/work-plan/skills/work-plan/`
 
 **This is a stub. The skill lives in the `kg` graph, not here.**
 
 `skill_fetch("bean-coordination")` serves
-[`skills/sdlc/sdlc-core/bean-coordination.md`](../../../skills/sdlc/sdlc-core/bean-coordination.md)
-— `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` holds `skills/sdlc/sdlc-core` and
+[`work-plan/skills/work-plan/bean-coordination.md`](../../../cat-harness/work-plan/skills/work-plan/bean-coordination.md)
+— `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` holds `sdlc/skills/sdlc-core` and
 no `.claude/skills/local` entry.
 
 A 62-line hand-authored copy sat here until 2026-09-19. It described *itself* as
