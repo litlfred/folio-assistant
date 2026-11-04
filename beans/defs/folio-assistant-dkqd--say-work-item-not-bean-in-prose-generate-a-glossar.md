@@ -4,11 +4,13 @@ $schema: bean/1.0.0
 title: Say 'work item', not 'bean', in prose; generate a glossary of node kinds and harnesses
 status: in-progress
 type: feature
+priority: normal
 tags:
     - vocabulary
     - glossary
 created_at: 2026-11-04T06:55:38Z
-updated_at: 2026-11-04T21:00:00Z
+updated_at: 2026-11-04T21:08:39Z
+parent: folio-assistant-yj32
 ---
 
 ## Asked (2026-11-04)
