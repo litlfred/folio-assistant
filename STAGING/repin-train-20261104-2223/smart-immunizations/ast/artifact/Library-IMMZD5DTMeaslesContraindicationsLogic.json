@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "Library-IMMZD5DTMeaslesContraindicationsLogic.jsonld",
+  "@type": "fhir:Library",
+  "dcterms:identifier": "Library/IMMZD5DTMeaslesContraindicationsLogic",
+  "schema:name": "IMMZD5DTMeaslesContraindicationsLogic",
+  "dcterms:title": "IMMZD5DTMeaslesContraindicationsLogic",
+  "dcterms:description": "This library defines decision support logic for the IMMZ.D5.DT.Measles contraindications decision table in the Immunization CPG",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Other",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/Library/IMMZD5DTMeaslesContraindicationsLogic"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/Library/IMMZD5DTMeaslesContraindicationsLogic--8f59bae4.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "1f5b81da352b37240cbc53c8cce67bdef57d63f9"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

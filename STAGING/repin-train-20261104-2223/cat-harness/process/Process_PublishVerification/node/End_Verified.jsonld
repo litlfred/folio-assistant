@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/process/Process_PublishVerification/node/End_Verified.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-2223",
+    "sha": "bd54c39b8ea63806547c0656d8bb6896b02a38ce",
+    "pr": "repin-train/20261104-2223",
+    "run": "41924952349"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/process/Process_PublishVerification/node/End_Verified",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Verified",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/process/Process_PublishVerification",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/process/Process_PublishVerification/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/process/Process_PublishVerification#flow/F_5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification/node/End_Verified"
+    }
+  ]
+}

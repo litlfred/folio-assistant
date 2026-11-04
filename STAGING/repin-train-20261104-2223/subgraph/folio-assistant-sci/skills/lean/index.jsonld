@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/skills/lean/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-formal-edges",
+      "@type": "bootstrap:Skill",
+      "name": "lean-formal-edges",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/293b5ab9e9187988fa4f03dd70d766b0ae27c05c4c62224881f88f93e6426e52",
+        "bytes": 6269,
+        "sha256": "293b5ab9e9187988fa4f03dd70d766b0ae27c05c4c62224881f88f93e6426e52"
+      },
+      "title": "Lean formal edges (elaborated)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-html-docs",
+      "@type": "bootstrap:Skill",
+      "name": "lean-html-docs",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4ba935ebece7676c558cbbf7d37941975e2aa62aecabe0346d2c036fac722f20",
+        "bytes": 7941,
+        "sha256": "4ba935ebece7676c558cbbf7d37941975e2aa62aecabe0346d2c036fac722f20"
+      },
+      "title": "Lean HTML docs — the `lean` directory's visualiser"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/lean",
+  "path": "skills/lean/"
+}

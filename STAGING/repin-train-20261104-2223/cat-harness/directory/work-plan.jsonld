@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/directory/work-plan.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-2223",
+    "sha": "bd54c39b8ea63806547c0656d8bb6896b02a38ce",
+    "pr": "repin-train/20261104-2223",
+    "run": "41924952349"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/directory/work-plan",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "work-plan",
+      "path": "work-plan/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The work-plan sub-graph — a NAMED SUB-GRAPH of the harness, OPT-IN like `sdlc`: off in every layer unless that layer lists `cat-harness.work-plan` in its own `enableSubgraphs` (owner, 2026-11-03, rulings Q15 and Q18; cat-harness#991 step 23.2). It holds the bean Tool's skills (the `work-plan` package) and the Tool definitions of the work plan and the process engine (beans CLI, bean query, claim check, drain queue, `work_plan_prime`, the `workflow_*` tools); the graphs inside it — `work-plan-skills` and `work-plan-tools` — are declared FROM WITHIN, in `work-plan/graph.json`. Used by `sdlc` and by collaborative content development; the memory-store Role and its neutral tools stay in cat-harness itself, outside it (proposal §4.14).",
+      "readmePath": "work-plan/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2223/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/work-plan"
+    }
+  ]
+}
