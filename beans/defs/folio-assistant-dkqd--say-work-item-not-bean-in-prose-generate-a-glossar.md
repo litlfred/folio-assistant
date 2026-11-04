@@ -8,7 +8,7 @@ tags:
     - vocabulary
     - glossary
 created_at: 2026-11-04T06:55:38Z
-updated_at: 2026-11-04T06:57:32Z
+updated_at: 2026-11-04T21:00:00Z
 ---
 
 ## Asked (2026-11-04)
@@ -39,3 +39,9 @@ Renaming identifiers (CLI, paths, branches, Tool ids); the #991 sub-graph move.
 The generated glossary lacks a "Work item" entry, or the prose check passes a file that says "bean" outside code.
 
 _2026-11-04T06:57:32Z_ — Claimed by claude/work-item-vocabulary — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Progress (2026-11-04 21:00Z)
+
+- cat-harness-tools#1478 (merge first): glossary of graph kinds, node kinds (Work item narrower than Memory record) and harnesses; check:retired-prose-words.
+- cat-harness#1030: glossary data, 266 files of prose renamed, retired-prose-words code list, todo-manager/agent-memory say a work item is a memory record.
+- Not done: BPMN names/documentation; the work plan ↔ process instance model (owner decision pending).
