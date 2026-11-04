@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 31,
+      "count": 32,
       "unit": "open beans"
     }
   },
@@ -272,9 +272,23 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-03T05:32:31Z",
-      "updatedAt": "2026-11-03T15:54:51Z",
+      "updatedAt": "2026-11-04T06:51:32Z",
       "preview": "Owner, 2026-11-03 (card, option 3): *\"why is references/ required dir? any references that were ingested should be under library/.\"* Then: \"sibling on 3\".\n\n## What is there now\n\n- smart-trust, smart-trust-phw and smart-immunizations each declare a `references` directory (`folio-reference/v1` CSL-JSON, one `<key>.json` per cited work). smart-trust holds 28 entries. smart-trust-phw and smart-immuniz",
       "file": "beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md"
+    },
+    {
+      "id": "folio-assistant-dkqd",
+      "title": "Say 'work item', not 'bean', in prose; generate a glossary of node kinds and harnesses",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "",
+      "parent": "",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-04T06:55:38Z",
+      "updatedAt": "2026-11-04T06:57:32Z",
+      "preview": "## Asked (2026-11-04)\n\n\"Instead of saying Bean in the documentation text can we instead Work Item and make sure it's in the glossary somewhere. I don't think we have a auto-generated glossary of node kinds and harness yet, That should probably be added.\"\n\nAnswers to the two cards: **prose only** (literal names `beans` CLI, `beans/`, `beans:claim`, `cat/<harness>/beans`, Tool ids stay, in code font",
+      "file": "beans/defs/folio-assistant-dkqd--say-work-item-not-bean-in-prose-generate-a-glossar.md"
     },
     {
       "id": "folio-assistant-drnh",
@@ -855,8 +869,8 @@
         "share": 0.18181818181818182
       }
     ],
-    "orphanOpen": 12,
-    "openTotal": 31,
+    "orphanOpen": 13,
+    "openTotal": 32,
     "coveredOpen": 18,
     "duplicateIds": 0
   }
