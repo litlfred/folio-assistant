@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-23T07:55:00Z
-updated_at: 2026-11-02T07:15:00Z
+updated_at: 2026-11-04T12:00:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -49,6 +49,8 @@ The run's own report shows `changedFiles: []`, and the only tracked change came 
 **Next:** a PR declaring the 14 SKOS files and the root folio pair `builtAtPublish`, and a fix so post-merge regen ignores builtAtPublish outputs. The READMEs, and the committed inputs that derive from the whole checkout (glossary/generated, detangle), need an owner call: they cannot move to publish without changing who reads them.
 
 ## 2026-10-23 — owner ruling on the directory READMEs: accept the lag (option 1)
+
+> **Reversed by the owner on 2026-11-04** ("keep READMEs current automatically", option 3); see the 2026-11-04 entry at the end of this bean. The directory READMEs no longer lag by design: post-merge regen writes them again.
 
 The generated table in each declared directory's README is the one committed artefact that does go stale on main after concurrent merges. It has been a non-blocking QA report since 2026-10-16. The owner chose to accept the lag: no change, and the next PR that touches the directory refreshes the table. The alternatives were not taken: moving the table to the site at publish, and requiring up-to-date branches.
 
@@ -180,3 +182,13 @@ _2026-10-31T20:25:00Z_ — Evening merges and open green PRs across `cat-harness
   - **Merged (`2026-11-01T07:20Z–09:52Z`)**: [`litlfred/bootstrap-tools#59`](https://github.com/litlfred/bootstrap-tools/pull/59) (`2b8ddf7`), [`litlfred/cat-harness-tools#1212`](https://github.com/litlfred/cat-harness-tools/pull/1212) (`da81742`), [`litlfred/cat-harness-tools#1142`](https://github.com/litlfred/cat-harness-tools/pull/1142) (`1bd7f6b2`), [`litlfred/cat-harness-tools#1159`](https://github.com/litlfred/cat-harness-tools/pull/1159) (`a6265737`, `fix/2781-e2e-sidebar-rail-and-iris-search`); **Open & Ready for Review**: [`litlfred/smart-base#261`](https://github.com/litlfred/smart-base/pull/261) (`fix/bpmn-svgs-bootstrap-tools-72344e1`, `2f22e8d`, ready for review)
 
 _2026-11-02T07:15:00Z_ — Last box met, bean completed (harness drain, bean c1ev). cat-harness "Post-merge regen check and repair" reported `status: clean`, `changedFiles: []` on two mains in a row: 96a17f2 (run 41386143042) and 5d9ff3e (run 41390211912), after unrelated merges. tools#590 merged 2026-10-23. Session https://claude.ai/code/session_01Qmmkt5kB8npnFWHCHTjq7j
+
+## 2026-11-04 — owner reverses the README ruling: keep READMEs current automatically (option 3)
+
+The owner asked, 2026-11-04, that cat-harness's directory READMEs, and every layer's, be kept current automatically ("keep READMEs current automatically", option 3). This deliberately reverses the 2026-10-23 ruling above (option 1, accept the lag) and the change it produced, cat-harness-tools#590.
+
+- [`litlfred/cat-harness-tools#1476`](https://github.com/litlfred/cat-harness-tools/pull/1476) (`claude/readme-auto-regen`, `20196b3b`; open, not merged) restores the "Regenerate the caller's directory READMEs in its own checkout" step of `.github/workflows/layer-post-merge-regen.yml`. It replaces the advisory `--check`, and the READMEs it writes ride the repair branch again. The workflow is reusable, so every layer that calls it gets the step.
+- The third Done-when box's "accept the lag on directory READMEs" is superseded: the directory READMEs are kept current by the post-merge repair. `glossary/generated`, `detangle` and `lsi:skills` are unchanged.
+- Still open, NEEDS-OWNER and not built for: the repair branch's PR cannot be opened while the cat-harness setting (Settings, Actions, General, "Allow GitHub Actions to create and approve pull requests") is off. The workflow's warning now names that setting and links the compare page.
+
+Session https://claude.ai/code/session_01XueePufkpx8fwJxavyDS5h
