@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/skill/crdm-requirements-template.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-0825",
+    "sha": "a5f23f9ef1cf751ce4d256b179e1da70edaeccc7",
+    "pr": "repin-train/20261104-0825",
+    "run": "41799498971"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/skill/crdm-requirements-template",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "crdm-requirements-template",
+      "title": "Phase 3 — Requirements definition (detail)",
+      "description": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/package/crdm"
+      ],
+      "instructionsPath": "sdlc/skills/crdm/crdm-requirements-template.md",
+      "instructionLines": 194,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-template"
+    }
+  ]
+}

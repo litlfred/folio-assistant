@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/tool-types/SessionSweep.schema.json",
+  "title": "SessionSweep",
+  "type": "object",
+  "properties": {
+    "since": {
+      "type": "string"
+    },
+    "commitsScanned": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "sessions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "session": {
+            "type": "string"
+          },
+          "commits": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "first": {
+            "type": "string"
+          },
+          "last": {
+            "type": "string"
+          },
+          "branches": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "latestSubject": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "session",
+          "commits",
+          "first",
+          "last",
+          "branches",
+          "latestSubject"
+        ]
+      }
+    },
+    "untrailered": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    }
+  },
+  "required": [
+    "since",
+    "commitsScanned",
+    "sessions",
+    "untrailered"
+  ],
+  "description": "The sessions that committed in a window, read from Claude-Session trailers.",
+  "staging": {
+    "branch": "repin-train/20261104-0825",
+    "sha": "a5f23f9ef1cf751ce4d256b179e1da70edaeccc7",
+    "pr": "repin-train/20261104-0825",
+    "run": "41799498971"
+  }
+}

@@ -1,0 +1,1628 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/crdm/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "@type": "cat-harness:SkillPackage",
+          "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "crdm",
+          "path": "sdlc/skills/crdm"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-data-model",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The CRDM data-modelling phase — when in the requirements process a model is built, what it is built from, who confirms it, and what it hands to the phases either side. The technique it invokes is `data-modelling`; this skill carries only the sequencing and the sign-off.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 84,
+          "instructionsPath": "sdlc/skills/crdm/crdm-data-model.md",
+          "name": "crdm-data-model",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8d1f21b6ef8c4155bc3124136b708ebdb65b2b2fb051c2702ad6ffab9c7dba05",
+            "bytes": 3692,
+            "sha256": "8d1f21b6ef8c4155bc3124136b708ebdb65b2b2fb051c2702ad6ffab9c7dba05"
+          },
+          "title": "CRDM — the data-modelling phase"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-detect",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Detect when a request needs requirements agreed before anything is built, and which of the two parallel requirements methodologies governs it.",
+          "hasIOContract": true,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/crdm-detect/input.schema.json",
+          "instructionLines": 307,
+          "instructionsPath": "sdlc/skills/crdm/crdm-detect.md",
+          "name": "crdm-detect",
+          "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/crdm-detect/output.schema.json",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1c7b0550316b5bdf1ab353a5cd4ced77b0b2cf999afd58eb2357a021ba70b453",
+            "bytes": 14488,
+            "sha256": "1c7b0550316b5bdf1ab353a5cd4ced77b0b2cf999afd58eb2357a021ba70b453"
+          },
+          "title": "Feature-request detection (CRDM trigger)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-impact-analysis",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 134,
+          "instructionsPath": "sdlc/skills/crdm/crdm-impact-analysis.md",
+          "name": "crdm-impact-analysis",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db41b1896716a2e4041dc0f9f0b388103ecd010cf15d68eb0f212ac91244c568",
+            "bytes": 3847,
+            "sha256": "db41b1896716a2e4041dc0f9f0b388103ecd010cf15d68eb0f212ac91244c568"
+          },
+          "title": "Phase 4 — Impact analysis (detail)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-needs-assessment",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 113,
+          "instructionsPath": "sdlc/skills/crdm/crdm-needs-assessment.md",
+          "name": "crdm-needs-assessment",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db4038eb2903e7e504d521407b99cd4e47c626d776e37dacad9556f666ff5139",
+            "bytes": 4102,
+            "sha256": "db4038eb2903e7e504d521407b99cd4e47c626d776e37dacad9556f666ff5139"
+          },
+          "title": "Phase 1 — Needs assessment (detail)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-recorded-walkthrough",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Turn a recorded requirements walkthrough (a video call where a business analyst demonstrates a feature and a stakeholder asks for changes) into CRDM Phase 3 requirements with evidence: transcripts compared, an independent transcript where one can be made, screenshots cut at the moments the speakers point at the screen, and every requirement traced to a timestamp. Use when someone uploads a meeting recording, a Teams/Zoom transcript (.vtt, .docx) or both, and asks for requirements from it.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 96,
+          "instructionsPath": "sdlc/skills/crdm/crdm-recorded-walkthrough.md",
+          "name": "crdm-recorded-walkthrough",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/80910a85b6f99daad4654561535dbff6fca737605d9a60371d61e1e6627b94e6",
+            "bytes": 5111,
+            "sha256": "80910a85b6f99daad4654561535dbff6fca737605d9a60371d61e1e6627b94e6"
+          },
+          "title": "Requirements from a recorded walkthrough"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-template",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 194,
+          "instructionsPath": "sdlc/skills/crdm/crdm-requirements-template.md",
+          "name": "crdm-requirements-template",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/aa4edbffc505f98a3fadd4edcf2f2efff3e169497a4fa261d5e1a7f1c6ecbac0",
+            "bytes": 7897,
+            "sha256": "aa4edbffc505f98a3fadd4edcf2f2efff3e169497a4fa261d5e1a7f1c6ecbac0"
+          },
+          "title": "Phase 3 — Requirements definition (detail)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-workflow",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 532,
+          "instructionsPath": "sdlc/skills/crdm/crdm-requirements-workflow.md",
+          "name": "crdm-requirements-workflow",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/aa137986aef0f69bce93799cf422559c4c1dd8b53b10f30afc66f47ac59d40b8",
+            "bytes": 30481,
+            "sha256": "aa137986aef0f69bce93799cf422559c4c1dd8b53b10f30afc66f47ac59d40b8"
+          },
+          "title": "CRDM requirements workflow"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "sdlc/skills/crdm",
+      "path": "sdlc/skills/crdm/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/sdlc-core/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "@type": "cat-harness:SkillPackage",
+          "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "sdlc-core",
+          "path": "sdlc/skills/sdlc-core"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/activity-log",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 228,
+          "instructionsPath": "sdlc/skills/sdlc-core/activity-log.md",
+          "name": "activity-log",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9af25970b999fb01bb3407bfca7aa30cb7d383423f518d66a0adf878d0bdc1e1",
+            "bytes": 11715,
+            "sha256": "9af25970b999fb01bb3407bfca7aa30cb7d383423f518d66a0adf878d0bdc1e1"
+          },
+          "title": "Activity log — what an agent did, kept out of the graph"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Settle a review that reached no mechanical or consensus agreement. What makes a disagreement adjudicable, the shape seven implementations here already share, why the adjudication LEADS the criterion while the checker's entry is kept beneath it, and the dispensation that records the reason — scoped to a version, never precedent.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 278,
+          "instructionsPath": "sdlc/skills/sdlc-core/adjudication.md",
+          "name": "adjudication",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/797b9eb974a7b0b99bf98689a011e830eec530cf8c49b1e7025def865cb18a1a",
+            "bytes": 16211,
+            "sha256": "797b9eb974a7b0b99bf98689a011e830eec530cf8c49b1e7025def865cb18a1a"
+          },
+          "title": "Adjudication — judgement, when the mechanism ran out of facts"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adversarial-code-review",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Review a pull request an agent touched by building the strongest case that it is wrong, unsafe, or not what it claims, and record the verdict where the merge gate reads it: one `merge-review/v1` file per head, on the `merge-reviews` state branch, never in the pull request itself. Covers who may review, what the whole-diff scope is, the RED FLAG categories and their evidence rule, the one rebuttal round, overrides, and how a per-head verdict composes with a merge train.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 105,
+          "instructionsPath": "sdlc/skills/sdlc-core/adversarial-code-review.md",
+          "name": "adversarial-code-review",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f21ce07a5eafe507479a1bd78c906f4c524ab67f4d437493b1409bda7a6121d5",
+            "bytes": 4944,
+            "sha256": "f21ce07a5eafe507479a1bd78c906f4c524ab67f4d437493b1409bda7a6121d5"
+          },
+          "title": "Adversarial code review"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-handoff",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Governs handing ONE task to an agent in another environment — a local agent with network the cloud session lacks, a sibling on a different machine, anything that cannot read the coordinator's context and that a person may relay to. States who writes which bean, where the receiver reports, what the person pastes (one sentence: bean, branch, repository) and the brief the bean opens with (second person, to the executor), what the receiver checks before acting, who closes, who may grant an exception, and how to recognise and answer the five ways an executor fails. Use when writing a bean for another agent to execute, and as the receiver before acting on one. Triggers on: hand off, handoff, local agent, agy, mac agent, needs network, executor failed, agent went silent, re-hand, \"give me a branch and bean for them\", relay, the other agent.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 300,
+          "instructionsPath": "sdlc/skills/sdlc-core/agent-handoff.md",
+          "name": "agent-handoff",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/58b518e10cd678025e02637db3c49e7f35094463d234a786caf180bdcd3f3a17",
+            "bytes": 16417,
+            "sha256": "58b518e10cd678025e02637db3c49e7f35094463d234a786caf180bdcd3f3a17"
+          },
+          "title": "One task, two agents, one human between them"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/before-after-preview",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Make a reviewer-facing BEFORE/AFTER preview of a change to anything that is rendered — a docs site, a paper's PDF, a FHIR IG, a slide deck, a website — and put it where the review and feedback processes expect it. Covers one build with one variable, stable capture, pairing every picture with a measured count and its method, the viewports and colour schemes to shoot, an honest status line, publishing with alt text, a section per content type naming this repository's own build and render tools, and how reviewer feedback on the preview becomes beans. Use before asking anyone to review a rendered change, at the HCI validation gate, and whenever a reviewer asks \"what did it look like before\".",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 407,
+          "instructionsPath": "sdlc/skills/sdlc-core/before-after-preview.md",
+          "name": "before-after-preview",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/108e1bfd7ef77d80cfb1c03a9d55ea94e5d58cf7340fecba3df2149f82d5bfef",
+            "bytes": 20747,
+            "sha256": "108e1bfd7ef77d80cfb1c03a9d55ea94e5d58cf7340fecba3df2149f82d5bfef"
+          },
+          "title": "/before-after-preview — show the reviewer the change, not a description of it"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/benchmarking-mode",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Benchmarking output is a synthesized report across models and configurations, deliberately excluded from declared knowledge-graph typologies. Contrast with QA review mode, where reports land (build/benchmarks/ or reports/), and path guards preventing benchmark data from polluting the knowledge graph.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 56,
+          "instructionsPath": "sdlc/skills/sdlc-core/benchmarking-mode.md",
+          "name": "benchmarking-mode",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/59032b41923b3e480522505c830ddedf69b2f3e828f6d51e0a02d94358a079ed",
+            "bytes": 5401,
+            "sha256": "59032b41923b3e480522505c830ddedf69b2f3e828f6d51e0a02d94358a079ed"
+          },
+          "title": "Benchmarking mode — reports across models, deliberately excluded from the KG"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/blocked-build-dependencies",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "A build or a model download fails from an agent container. Read which of three different refusals it is before doing anything — a policy denial (403 on CONNECT), an upstream rate limit (429), or a host that is simply down — because each has a different remedy. Covers the Maven Central mirror that gets a Gradle or Maven build through a 429, which hosts were measured open and shut, and when the work belongs to an agent with different network access instead.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 90,
+          "instructionsPath": "sdlc/skills/sdlc-core/blocked-build-dependencies.md",
+          "name": "blocked-build-dependencies",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1e86760e482c13880c2675bb13c374e2fffebd284a3a16d3c8f63979aa37e173",
+            "bytes": 4512,
+            "sha256": "1e86760e482c13880c2675bb13c374e2fffebd284a3a16d3c8f63979aa37e173"
+          },
+          "title": "Blocked build dependencies — read the refusal before you work around it"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/branch-archaeology",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Classify every remote branch against the default branch (merged, landed by squash or cherry-pick, partially landed, unlanded, undetermined) by commit ancestry, patch-id and merge-tree, not by subject line. Report only, never delete. A branch touching content or mathematics is a salvage-review item and never a delete candidate. Covers the treeless fetch that makes thousands of branches cheap, caching by tip sha, and the report's shape. Read before answering \"which branches can go?\" or \"what work never landed?\".",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 184,
+          "instructionsPath": "sdlc/skills/sdlc-core/branch-archaeology.md",
+          "name": "branch-archaeology",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/773edbf73e91da2676e7a4b14eb3fcec55b09679eab2ed52d4265f069029eb4e",
+            "bytes": 9807,
+            "sha256": "773edbf73e91da2676e7a4b14eb3fcec55b09679eab2ed52d4265f069029eb4e"
+          },
+          "title": "Branch archaeology: what each branch holds that main does not"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/branch-freshness",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 112,
+          "instructionsPath": "sdlc/skills/sdlc-core/branch-freshness.md",
+          "name": "branch-freshness",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cf59c142359842693c9cf44f00164fa201e65a070869e0cbdb3b17326d8c74ed",
+            "bytes": 3604,
+            "sha256": "cf59c142359842693c9cf44f00164fa201e65a070869e0cbdb3b17326d8c74ed"
+          },
+          "title": "Branch freshness — stay current with main"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bun-use",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "How Bun is used as the JavaScript/TypeScript execution runtime, test runner, package manager, and tarball packager across separated repositories: standalone subgraph configuration (bunfig.toml, package.json, tsconfig.json), test preloads, dependency resolution without rootDir pitfalls, packaging with bun pm pack, and coordinator vs standalone execution models.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 134,
+          "instructionsPath": "sdlc/skills/sdlc-core/bun-use.md",
+          "name": "bun-use",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2af207ff5c2826a51bc6de062d221b650630ee8010112f5cf85def31b30cf47f",
+            "bytes": 5462,
+            "sha256": "2af207ff5c2826a51bc6de062d221b650630ee8010112f5cf85def31b30cf47f"
+          },
+          "title": "Bun Runtime, Toolchain, and Multi-Repo Conventions"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ci-health",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "A red workflow looks exactly like a green one from inside a checkout. How to read a default-branch health report, the three verdicts that keep it honest, why a watchdog needs both a session-start print and an unattended run, and the separate external question the Pages deployments need.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 302,
+          "instructionsPath": "sdlc/skills/sdlc-core/ci-health.md",
+          "name": "ci-health",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bef143d16b42ea0562a2478989851960174ccf00099bec1ca944d4ac77e02bf8",
+            "bytes": 17041,
+            "sha256": "bef143d16b42ea0562a2478989851960174ccf00099bec1ca944d4ac77e02bf8"
+          },
+          "title": "CI health — a red workflow looks exactly like a green one from in here"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/code-review-process",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 82,
+          "instructionsPath": "sdlc/skills/sdlc-core/code-review-process.md",
+          "name": "code-review-process",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/87bc0000290a96ea6065fffb38e5508e5ba9d786372cd666e61e2fcfe87f20fa",
+            "bytes": 3608,
+            "sha256": "87bc0000290a96ea6065fffb38e5508e5ba9d786372cd666e61e2fcfe87f20fa"
+          },
+          "title": "Code review process — from PR to release approval"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Make in-flight work trackable by others in real time — open a PR from the first commit, push small coherent increments continuously (never hoard uncommitted work), keep a live status checklist in the PR body, and post brief intent on the PR + any overlapping sibling PRs. Use on any multi-step or long-running task, especially when siblings/agents or the author may need to follow, cherry-pick, or take over mid-flight.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 337,
+          "instructionsPath": "sdlc/skills/sdlc-core/continual-progress.md",
+          "name": "continual-progress",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f489ceed6cbb0c92a63063e7ad9f4f35eb585d348f7350b1fb2ff82b1c628c9c",
+            "bytes": 18142,
+            "sha256": "f489ceed6cbb0c92a63063e7ad9f4f35eb585d348f7350b1fb2ff82b1c628c9c"
+          },
+          "title": "/continual-progress — trackable, always-PR'd, continually-committed work"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Coordinate work across multiple in-flight Claude PRs working toward a shared goal. Post intent + asks on related PRs, identify cherry-pickable work, respond to code-review comments on your own PR, periodically triage sibling PR activity (new comments, CI status, new commits), watch main + newly created branches/PRs, escalate inconsistent findings to the author, and keep a coordination ledger up to date.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 570,
+          "instructionsPath": "sdlc/skills/sdlc-core/coordinate.md",
+          "name": "coordinate",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c9d1b724549e325ea54700296b1a793949227017caa08c22d47f490d62b09c99",
+            "bytes": 29894,
+            "sha256": "c9d1b724549e325ea54700296b1a793949227017caa08c22d47f490d62b09c99"
+          },
+          "title": "/coordinate — multi-agent / multi-PR coordination"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Record why a decision was made, or why a finding in it was left. Required of whoever adjudicates a gate, and of the agent that assembles the citations for them. Every overrule of a mechanical finding carries a note, and every note cites corpus evidence.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 93,
+          "instructionsPath": "sdlc/skills/sdlc-core/decision-audit.md",
+          "name": "decision-audit",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b82f7cb9bb4b0ce41e5fd2386ed6e16be355b63cd1265267fd163530713f977",
+            "bytes": 4643,
+            "sha256": "3b82f7cb9bb4b0ce41e5fd2386ed6e16be355b63cd1265267fd163530713f977"
+          },
+          "title": "A decision is not a finding, and neither is a substitute for the other"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/delivery-summary",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Post-delivery summary with server restart command and viewer links",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 72,
+          "instructionsPath": "sdlc/skills/sdlc-core/delivery-summary.md",
+          "name": "delivery-summary",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f04a0fc2a7d9b9c9a5dbd0e926e9b0e738ea9b1b1e73a1746def348cb1331cc0",
+            "bytes": 2899,
+            "sha256": "f04a0fc2a7d9b9c9a5dbd0e926e9b0e738ea9b1b1e73a1746def348cb1331cc0"
+          },
+          "title": "Delivery Summary"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/diff",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Show per-block content changes with viewer links, changelog, and undo impact analysis",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 164,
+          "instructionsPath": "sdlc/skills/sdlc-core/diff.md",
+          "name": "diff",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8d499aba99302bddbc5c6f2aaf012bd4ede09319e32d7a95d7698a94fb53f9c1",
+            "bytes": 6435,
+            "sha256": "8d499aba99302bddbc5c6f2aaf012bd4ede09319e32d7a95d7698a94fb53f9c1"
+          },
+          "title": "Diff — Content Block Change Report"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/dispatch-agent",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Dispatch one or more background sub-agents against parallel research/build fronts with a STANDARDIZED live progress contract, and monitor them on a 2-minute heartbeat. Every dispatched agent emits consistent DID/DOING/NEXT/BLOCKERS blocks with real log output (not static \"still running\"); the parent extracts the latest block from each agent every ~120 s and posts one consolidated synthesis table. Use when the user says \"dispatch agents\", \"fan out\", \"run these in parallel with monitoring\", \"give me status every 2 minutes\", or when you are about to launch ≥ 2 background Agents on independent work.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 255,
+          "instructionsPath": "sdlc/skills/sdlc-core/dispatch-agent.md",
+          "name": "dispatch-agent",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a0b8064c658987b1fec2ab1149a242231e8d7ce2c00656ec4125874faf7c43a7",
+            "bytes": 12309,
+            "sha256": "a0b8064c658987b1fec2ab1149a242231e8d7ce2c00656ec4125874faf7c43a7"
+          },
+          "title": "/dispatch-agent — parallel dispatch with a live 2-minute status heartbeat"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Manages feature-branch staging deployments under gh-pages/STAGING/<branch-slug>/ for before/after publication review comparison. Handles branch creation, staging deployment, commit SHA stamping, and cleanup.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 574,
+          "instructionsPath": "sdlc/skills/sdlc-core/feature-staging.md",
+          "name": "feature-staging",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5abd55a27409079ea51f97e409460cd03a378d98a8fd733ec62a22dfc16f127b",
+            "bytes": 32320,
+            "sha256": "5abd55a27409079ea51f97e409460cd03a378d98a8fd733ec62a22dfc16f127b"
+          },
+          "title": "Feature-branch staging"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/finding-software",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "A script needs a program or module the container does not have (tesseract, pdftoppm, PyMuPDF, a CLI from a GitHub release). Get it: `bun run cat software:ensure`, which tries apt, pip, then a pinned and checksummed GitHub release, from the declared table `scripts/software.json`. Do not route around a missing tool with a cache, a weaker backend or a skipped step, and do not report \"not installed\" as if it were a finding about the work.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 85,
+          "instructionsPath": "sdlc/skills/sdlc-core/finding-software.md",
+          "name": "finding-software",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5661ebbf9937100e10d5bbf18dc9305a51894062cb99df5bd546c239733b2ad0",
+            "bytes": 4322,
+            "sha256": "5661ebbf9937100e10d5bbf18dc9305a51894062cb99df5bd546c239733b2ad0"
+          },
+          "title": "Finding software — get it, do not route around it"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/gate-tree-mutation",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Reading `bun run cat gates`' \"NOT clean\" verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 184,
+          "instructionsPath": "sdlc/skills/sdlc-core/gate-tree-mutation.md",
+          "name": "gate-tree-mutation",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a95539fd443b4cccd57ee03098454c0a3fc72bcb767baaf840c5ee9173785146",
+            "bytes": 9107,
+            "sha256": "a95539fd443b4cccd57ee03098454c0a3fc72bcb767baaf840c5ee9173785146"
+          },
+          "title": "\"NOT clean\" is a verdict about the RUN, not about your diff"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/generalise-the-fix",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "You have a fix. Before it ships, ask what CLASS of defect it belongs to and whether the fix sits at the right layer — then attack your own answer: name what the fix now catches that the bug did not. Two axes go wrong, SCOPE and STATE, and widening either past the problem is how a fix becomes the next defect. Applies to a bug fix, a schema change, a detector, or a claim in a paper. Use after the fix works and before the pull request.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 223,
+          "instructionsPath": "sdlc/skills/sdlc-core/generalise-the-fix.md",
+          "name": "generalise-the-fix",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2cabb15bf86d3b737477be0c714e1f87f1b51344243ed6b30c33bacc52155980",
+            "bytes": 10250,
+            "sha256": "2cabb15bf86d3b737477be0c714e1f87f1b51344243ed6b30c33bacc52155980"
+          },
+          "title": "Generalise the fix, then attack the generalisation"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/github-state-inspection",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Answer questions about GitHub-hosted state — is a page published, where does it live, did CI pass, does a branch exist — by reading the ref or the API, never by composing a URL or fetching one. The first check for any deployment or 404 question is `git ls-tree` of the publish ref.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 276,
+          "instructionsPath": "sdlc/skills/sdlc-core/github-state-inspection.md",
+          "name": "github-state-inspection",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/75c0a8088cc32e5519686c4d435c38c8e1b165d16c994f573e44206671daa5ba",
+            "bytes": 14463,
+            "sha256": "75c0a8088cc32e5519686c4d435c38c8e1b165d16c994f573e44206671daa5ba"
+          },
+          "title": "Reading GitHub state — resolve the ref, do not compose the URL"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/goal-review",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Cold start, then review a time window of activity — sibling sessions, the work plan, issues, change proposals, branches, CI — and prioritise what it finds against goals stated in the owner's words. Inputs are the window, the goals, the scope and the axes; the output is a synopsis (closed, open, needs doing, with effort), a priority queue per goal with selectable next actions, and the instruction gaps met on the way, each recorded as a work item. Use when asked \"what happened\", \"what is stalled\", \"what should we do next for X\", or at the start of a session that inherits parallel work.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 399,
+          "instructionsPath": "sdlc/skills/sdlc-core/goal-review.md",
+          "name": "goal-review",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f1e1a415f2d0a16e2ae4448bc5383ff6dbcfcfb72b07b7f67c83c2d0946834b4",
+            "bytes": 23172,
+            "sha256": "f1e1a415f2d0a16e2ae4448bc5383ff6dbcfcfb72b07b7f67c83c2d0946834b4"
+          },
+          "title": "Goal review — cold start, sweep a window, prioritise against stated goals"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/handover-report",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Write a handover report: a templated snapshot of an agent's current state, committed as a bean note, so that a session or subagent that stalls, runs out of context, or loses its container can be picked up by another agent without re-deriving anything. Use it when you are told a stall is likely, at the end of every long arc, before a risky or long-running step, and whenever a steward asks for one. Its reader is `stalled-agent-triage`.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 154,
+          "instructionsPath": "sdlc/skills/sdlc-core/handover-report.md",
+          "name": "handover-report",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a26a90f24a1f3e91cc381e2eaaffa304b52b65ba8dfab3791b1e0bfe43eb6f7f",
+            "bytes": 6842,
+            "sha256": "a26a90f24a1f3e91cc381e2eaaffa304b52b65ba8dfab3791b1e0bfe43eb6f7f"
+          },
+          "title": "Handover report"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-backlog",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Dispatcher for the `/integration-backlog <axes>` slash command. Works the backlog identified by the integration watchers (proof, canonical, compute, detangler, one-voice, …) by clustering the open findings into review-sized batches (≤ 49 files per PR — the reviewer-bot limit), proposing each batch to the author via structured AskUserQuestion calls, running `/prepare-merge` on each, resolving review comments (auto if mechanical, structured AskUserQuestion if architectural), then merging — and repeating until the axis is exhausted or the author signals stop. Sister command to `/integration-watch`: the watcher MONITORS for new events; this skill WORKS the backlog the watcher already catalogued.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 309,
+          "instructionsPath": "sdlc/skills/sdlc-core/integration-backlog.md",
+          "name": "integration-backlog",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/141a433046c0977a0554f91cabb51dd27ef38feff0a692c5f26624842a1aa631",
+            "bytes": 13720,
+            "sha256": "141a433046c0977a0554f91cabb51dd27ef38feff0a692c5f26624842a1aa631"
+          },
+          "title": "/integration-backlog — drive the backlog to zero, one PR at a time"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-watch",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Dispatcher for the `/integration-watch` slash command. Routes to one or more of the concrete integration watchers / audits (canonical, one-voice, consolidation, bibliography, devils-advocate, and those a content type's layer adds, …). With no argument, lists the available watchers and asks the user which to invoke. With arguments, dispatches the named watchers in parallel (each gets its own Monitor, queue, ledger, and PR-subscription set).",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 164,
+          "instructionsPath": "sdlc/skills/sdlc-core/integration-watch.md",
+          "name": "integration-watch",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2f9ca2668f3793feda62ce1b6d1d460ecdabd93122c6a1e398595798d2d782ec",
+            "bytes": 8020,
+            "sha256": "2f9ca2668f3793feda62ce1b6d1d460ecdabd93122c6a1e398595798d2d782ec"
+          },
+          "title": "/integration-watch — dispatcher for the integration watchers"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-watcher",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Abstract parent skill for domain-specific **integration watchers**. Encodes the shared mechanics — Monitor on `origin/main`, PR subscriptions, per-event QA dispatch, queue + ledger, idle backlog sweep, idle author-ask dispatcher, watch-PRs-you-prepare protocol, voice-pass on PR diff, witness-drift CI recovery, billing-quick-fail flake handling — that every concrete watcher inherits. Children fill nine domain-specific slots; everything else is shared here.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 239,
+          "instructionsPath": "sdlc/skills/sdlc-core/integration-watcher.md",
+          "name": "integration-watcher",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ff143008e7046b243b238b211f5543c82e33614bdd4f154ae49e11b71fc8ee5b",
+            "bytes": 12363,
+            "sha256": "ff143008e7046b243b238b211f5543c82e33614bdd4f154ae49e11b71fc8ee5b"
+          },
+          "title": "integration-watcher (abstract parent)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/issue-working",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Working a tracked issue — announce the branch when you create it rather than when you finish, and re-check the issue for new AND edited comments while you work. Both rules are about the gap between your view of an issue and everyone else's.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 176,
+          "instructionsPath": "sdlc/skills/sdlc-core/issue-working.md",
+          "name": "issue-working",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a89a4ec920486f9487f9b1470bf3c07d4a4c8309935ca7a6f2a7892d53b017e",
+            "bytes": 8883,
+            "sha256": "1a89a4ec920486f9487f9b1470bf3c07d4a4c8309935ca7a6f2a7892d53b017e"
+          },
+          "title": "Working an issue — announce, then re-check"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-conflict-patterns",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn. Also governs what a merge steward does with a merge-train member it had to refuse: one deduplicated bean under the PR's own epic, a hand-back to the owning session with a fail condition, one dispatched agent when nobody owns it, one PR comment, and the close.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 935,
+          "instructionsPath": "sdlc/skills/sdlc-core/merge-conflict-patterns.md",
+          "name": "merge-conflict-patterns",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f2b87e664c7b67e04be0e8944b46ddd318542328b1a3d11403359f128210bb51",
+            "bytes": 51635,
+            "sha256": "f2b87e664c7b67e04be0e8944b46ddd318542328b1a3d11403359f128210bb51"
+          },
+          "title": "Merge-conflict patterns — what a merge may resolve on its own"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-manager-watcher",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The merge manager agent's watch loop: what wakes it, how often it looks, how it tells whether it is the active merge manager, what it reads each time, which process each reading sends it to (merge train, saturation meta-merge, stalled-agent takeover), and how it keeps the swarm in step with hold and done broadcasts. Use for \"be the merge manager\", \"watch the queue\", \"who merges\", \"the queue is stuck\", and when starting or handing over the merge-steward lane.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 106,
+          "instructionsPath": "sdlc/skills/sdlc-core/merge-manager-watcher.md",
+          "name": "merge-manager-watcher",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b72f18889d68c5030be356b394eda907da99bd76833c4bb2a1d0f27c7f77fd62",
+            "bytes": 5215,
+            "sha256": "b72f18889d68c5030be356b394eda907da99bd76833c4bb2a1d0f27c7f77fd62"
+          },
+          "title": "Merge manager watcher — the loop that runs the merge-steward role"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-queue",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Order the ready PRs and land them as a train: read each PR's live facts, let the reprioritisation table place it, merge the members together, run the gate set on the combination, and on red attribute and eject the culprit rather than reject the train. Every merge goes through `merge:guard`. Use for \"merge the ready PRs\", \"land this PR\", \"what lands next\", \"run a merge train\", \"why was my PR ejected\", \"move this PR up\", and when tuning the train's order or size.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 1143,
+          "instructionsPath": "sdlc/skills/sdlc-core/merge-queue.md",
+          "name": "merge-queue",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3997893acd8c07d899c6d668a72f0635d8db86554bad9b9640a4181720c45456",
+            "bytes": 64922,
+            "sha256": "3997893acd8c07d899c6d668a72f0635d8db86554bad9b9640a4181720c45456"
+          },
+          "title": "Merge queue — what lands next, and as what"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-to-main",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Merging to `main` is its own step with its own gate: the `merge-to-main` sub-process, which every process that lands work CALLS rather than inlines. Covers the evidence read live on the head (CI per owed job, mergeability, review state, Claude Approvals where the repository runs it), why a repository with no CI is never green, who may authorise a merge and what does NOT count as authorisation (\"fix all issues until green\" does not), how the authorisation is recorded, and the post-merge steps: base green, site republished, downstream re-pins, bean and issue. Use for \"merge it\", \"land this PR\", \"merge the green PRs\", and before any write to a default branch in any repository.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 295,
+          "instructionsPath": "sdlc/skills/sdlc-core/merge-to-main.md",
+          "name": "merge-to-main",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/876661795c805ffc9edd1b64e7d5e4ed22e8f55ebc955f7c8b68d1746695f44b",
+            "bytes": 16613,
+            "sha256": "876661795c805ffc9edd1b64e7d5e4ed22e8f55ebc955f7c8b68d1746695f44b"
+          },
+          "title": "Merge to `main` — a sub-process with its own gate"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/minimal-change",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Three rules for any edit to a repository: make the smallest change that does the job and keep the diff minimal; read the repository's code-style files before writing code; and write Markdown without HTML tags. Use before writing a change and again when reviewing its diff.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 50,
+          "instructionsPath": "sdlc/skills/sdlc-core/minimal-change.md",
+          "name": "minimal-change",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a127c796cd042b3ee3db85eaf8f4be903987228728fa059edc1c164f956c90a5",
+            "bytes": 2067,
+            "sha256": "a127c796cd042b3ee3db85eaf8f4be903987228728fa059edc1c164f956c90a5"
+          },
+          "title": "Minimal change"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/narrative-asserts-code",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Judge whether the prose side of a declared prose ↔ code pair still says what the code does, when the machine could not settle it. Reads the two mechanical signals first — staleness and resolvable claims — and settles what is left in one of three ways, sending a disagreement with a checker to adjudication. General: the Lean case is a specialisation with its own skill.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 86,
+          "instructionsPath": "sdlc/skills/sdlc-core/narrative-asserts-code.md",
+          "name": "narrative-asserts-code",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3cc79ec953bad165383cce6a7b4d344283cdf24b2008aa72711bebde64963432",
+            "bytes": 4554,
+            "sha256": "3cc79ec953bad165383cce6a7b4d344283cdf24b2008aa72711bebde64963432"
+          },
+          "title": "Does the prose say what the code does?"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/opening-brief",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Brief a bean or a topic BEFORE touching anything: what you are doing and why it is worth doing, what you already know and with what provenance, how you plan to do it and what would falsify the approach. Scales with irreversibility, not line count.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 236,
+          "instructionsPath": "sdlc/skills/sdlc-core/opening-brief.md",
+          "name": "opening-brief",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ab6981b113051f208b1f70420daae62d7618e1be472282e5a68016f0f892c76d",
+            "bytes": 12255,
+            "sha256": "ab6981b113051f208b1f70420daae62d7618e1be472282e5a68016f0f892c76d"
+          },
+          "title": "Opening brief — brief the topic before you touch anything"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Cut a release of a repository's packages: decide the next version, write the release notes, tag, and create the release — for any repository, the platform or a folio. Publishing the built artefact to a registry is a separate, later step that a person starts.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 105,
+          "instructionsPath": "sdlc/skills/sdlc-core/package-release.md",
+          "name": "package-release",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d9882306fb6bbcec537d2ae67d2ec7b2bbbf97d0ea8636f2d1a38469d8c889d3",
+            "bytes": 5511,
+            "sha256": "d9882306fb6bbcec537d2ae67d2ec7b2bbbf97d0ea8636f2d1a38469d8c889d3"
+          },
+          "title": "Cutting a package release"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pending-show",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Show the current session's pending work — beans list + ledger intent. Read-only.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 55,
+          "instructionsPath": "sdlc/skills/sdlc-core/pending-show.md",
+          "name": "pending-show",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4231732b2a9b727911b49a0234a05d7ccf91bfb282d5a0f178c8e06746121aac",
+            "bytes": 1747,
+            "sha256": "4231732b2a9b727911b49a0234a05d7ccf91bfb282d5a0f178c8e06746121aac"
+          },
+          "title": "/pending-show — what is this session working on?"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Pick up / continue work on one or more existing open PRs efficiently. Resolves each PR's REAL branch + title + checklist + reviews + CI in one batched pass, classifies CI as billing-vs-real, then dispatches one worktree sub-agent per PR with a filled-in brief, and applies the safe class of review-nit fixes (eval→ast.literal_eval, dead-code/unused-var removal, etc.). Use when the user says \"pick up PR N\", \"continue 1543/1576/1571\", \"work these PRs\", \"address the review on PR N\", or \"take over PR N\".",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 192,
+          "instructionsPath": "sdlc/skills/sdlc-core/pickup.md",
+          "name": "pickup",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7c35dfc5368d38dd8bc9c92d924d16a628af61ad11a121fd4e1f1525e46b968d",
+            "bytes": 9856,
+            "sha256": "7c35dfc5368d38dd8bc9c92d924d16a628af61ad11a121fd4e1f1525e46b968d"
+          },
+          "title": "Pickup Skill"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "`bun test` passing is not the gates passing. What to run before you push, why the list is derived from the CI workflow rather than written down, and what a `*:check` failure is actually telling you to do.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 375,
+          "instructionsPath": "sdlc/skills/sdlc-core/platform-gates.md",
+          "name": "platform-gates",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c751ab68daca2f5fb3d51cee1eafc9e99ef956dd5d45f386ea598dca24ea252b",
+            "bytes": 17459,
+            "sha256": "c751ab68daca2f5fb3d51cee1eafc9e99ef956dd5d45f386ea598dca24ea252b"
+          },
+          "title": "The platform's own gates — run what CI will run"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pr-description",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Write or update a pull request's description so that someone who has never seen the work can follow it: the problem, why it matters, how it was approached, what constrained it, the solution, how to use it, and what is not done. Read before opening a PR, before rewriting its body, and whenever the PR's scope changes.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 163,
+          "instructionsPath": "sdlc/skills/sdlc-core/pr-description.md",
+          "name": "pr-description",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e095be105df9be734cf17d07ac1d7440b55f2a7f4c7c09e14ca8158be50eb9f3",
+            "bytes": 8426,
+            "sha256": "e095be105df9be734cf17d07ac1d7440b55f2a7f4c7c09e14ca8158be50eb9f3"
+          },
+          "title": "pr-description — a PR body a first-time reader can follow"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-for-handover",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Prepare for a handover: commit and push everything you hold, then write a handover report that cites the commits. Use it when told a stall, timeout or container loss is coming (\"you may stall in N minutes\"), before a long or risky step, or whenever a steward or the owner says \"prepare for handover\". It is the producing half; `handover-report` is the format and `stalled-agent-triage` is the reader.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 113,
+          "instructionsPath": "sdlc/skills/sdlc-core/prepare-for-handover.md",
+          "name": "prepare-for-handover",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eed057d86ebe94c10cb5e47167549ca2008190c6d96ab013abb5d3cd90640e0e",
+            "bytes": 4754,
+            "sha256": "eed057d86ebe94c10cb5e47167549ca2008190c6d96ab013abb5d3cd90640e0e"
+          },
+          "title": "Prepare for a handover"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\".",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 629,
+          "instructionsPath": "sdlc/skills/sdlc-core/prepare-merge.md",
+          "name": "prepare-merge",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/181d31a7ffe98cd0fc2b5370b3847ce516af23cf4111ca25354a5c537c4825a8",
+            "bytes": 37118,
+            "sha256": "181d31a7ffe98cd0fc2b5370b3847ce516af23cf4111ca25354a5c537c4825a8"
+          },
+          "title": "Prepare-merge — get a feature branch ready to land"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Full prepare-merge → resolve → merge pipeline. Coordinates with sibling PRs, resolves review comments, asks structured questions only when blocked, then hands the merge to the merge-to-main sub-process, which merges only on the owner's authorisation.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 185,
+          "instructionsPath": "sdlc/skills/sdlc-core/prepare-merge-auto.md",
+          "name": "prepare-merge-auto",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a1a81d579871c93c56bc442b0581dc559c4c023eb3266e2431c0ae57d1d4e35d",
+            "bytes": 8355,
+            "sha256": "a1a81d579871c93c56bc442b0581dc559c4c023eb3266e2431c0ae57d1d4e35d"
+          },
+          "title": "/prepare-merge-auto — Autonomous merge pipeline"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-verification",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Verify what a publish produced BEFORE it is deployed, and alert the publication manager whenever any step after the publish button fails — the verifier set, how to add a verifier, what is in scope, and how the publication manager triages the one alert.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 89,
+          "instructionsPath": "sdlc/skills/sdlc-core/publish-verification.md",
+          "name": "publish-verification",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9952fcbab28a7783caeeef767bd5dbda0bfd62a55ae77500deb916bd100e4b03",
+            "bytes": 4394,
+            "sha256": "9952fcbab28a7783caeeef767bd5dbda0bfd62a55ae77500deb916bd100e4b03"
+          },
+          "title": "Publish verification, and the one alert"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/qa-report-signing",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 142,
+          "instructionsPath": "sdlc/skills/sdlc-core/qa-report-signing.md",
+          "name": "qa-report-signing",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e03d63226f400b2508a3ae758d699503975250ec85536a93aafb373873d54de7",
+            "bytes": 7234,
+            "sha256": "e03d63226f400b2508a3ae758d699503975250ec85536a93aafb373873d54de7"
+          },
+          "title": "QA report signing — two routes, chosen by the performer's reach"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/qa-reports",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Where a QA result lives now. Derived verdicts go to the orphan `qa-reports` branch, keyed by commit, written by the CI job `qa-publish`. Judgements stay on main in the `attestations` graph. Gates compute and judge against a stored baseline, and a missing one is unknown. Read before you regenerate, commit, resolve, cite or delete anything under `test/results/` or `test/attestations/`.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 178,
+          "instructionsPath": "sdlc/skills/sdlc-core/qa-reports.md",
+          "name": "qa-reports",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/33c1740787a81bbbc465f5a42c83ee411f32151426e0a6ed15c6d98ae15889f4",
+            "bytes": 10338,
+            "sha256": "33c1740787a81bbbc465f5a42c83ee411f32151426e0a6ed15c6d98ae15889f4"
+          },
+          "title": "QA reports — derived results on a branch, judgements on `main`"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/qa-witness",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The QA projections written to `test/results/witnesses/` and stored on the `qa-reports` branch — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 135,
+          "instructionsPath": "sdlc/skills/sdlc-core/qa-witness.md",
+          "name": "qa-witness",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2d10520d090fc3a2035cf5d061252afdac0835ec3e0290254eb5bb9a139a6fcd",
+            "bytes": 7170,
+            "sha256": "2d10520d090fc3a2035cf5d061252afdac0835ec3e0290254eb5bb9a139a6fcd"
+          },
+          "title": "QA witnesses — the published projection of every verdict"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ref-stewardship",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Steward a WATCHED REF — a long-lived branch many processes write and one consumer serialises. Covers what makes a ref need a steward at all, why a coalescing window is a different object from a hold, the four durable fields a window needs so a handover cannot double-push, and the rule that a steward stores decisions and reads facts live. Use for \"gh-pages is cancelling its own deployments\", \"two sessions pushed the same store branch\", \"who owns writes to this branch\", \"coalesce these pushes\", and before giving any ref a concurrency policy.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 195,
+          "instructionsPath": "sdlc/skills/sdlc-core/ref-stewardship.md",
+          "name": "ref-stewardship",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6972732c22ffa711c07a42563c3f7cf696c7c9eefd6f54250aaa80570a03b743",
+            "bytes": 10472,
+            "sha256": "6972732c22ffa711c07a42563c3f7cf696c7c9eefd6f54250aaa80570a03b743"
+          },
+          "title": "Ref stewardship — one ref, many writers, one steward"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/related-work-coordination",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: sdlc/processes/related-work.bpmn.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 58,
+          "instructionsPath": "sdlc/skills/sdlc-core/related-work-coordination.md",
+          "name": "related-work-coordination",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/233f74d807bc55da7f95d882521fc922c8d74106e616b9a96055f556c9b90f40",
+            "bytes": 2897,
+            "sha256": "233f74d807bc55da7f95d882521fc922c8d74106e616b9a96055f556c9b90f40"
+          },
+          "title": "Related work: find it, sort it, ask"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/release-epic-planning",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 147,
+          "instructionsPath": "sdlc/skills/sdlc-core/release-epic-planning.md",
+          "name": "release-epic-planning",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d0c8ec54d3dbda508a0bfd9ee16f991ffe903fe3877de799947c12b43c3bb4f4",
+            "bytes": 5007,
+            "sha256": "d0c8ec54d3dbda508a0bfd9ee16f991ffe903fe3877de799947c12b43c3bb4f4"
+          },
+          "title": "Release epic planning"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/release-lifecycle",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 115,
+          "instructionsPath": "sdlc/skills/sdlc-core/release-lifecycle.md",
+          "name": "release-lifecycle",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/69bb094f1817477df0f450a13897e54bc3db27b5da5464db62be9bc32dd87783",
+            "bytes": 4111,
+            "sha256": "69bb094f1817477df0f450a13897e54bc3db27b5da5464db62be9bc32dd87783"
+          },
+          "title": "Release lifecycle — process and policy"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-impact",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The list of rendered files a Change Set alters, and how a reviewer approves against it. Each renderer maps the input files a change touched to the rendered files of its site through its dependency cone, before any build; a build diff then confirms the prediction. Use when opening or reviewing a Change Set PR, when asked \"which pages does this change\", when a prediction and a build disagree, or when adding a renderer.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 153,
+          "instructionsPath": "sdlc/skills/sdlc-core/rendered-impact.md",
+          "name": "rendered-impact",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5e257194c49575012a924f3515dd2c459474c8d9e029e28e1d662492432aeeed",
+            "bytes": 11159,
+            "sha256": "5e257194c49575012a924f3515dd2c459474c8d9e029e28e1d662492432aeeed"
+          },
+          "title": "Rendered impact — which rendered files a Change Set changes"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-verification",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Confirm a UI change by LOOKING at it in a browser and sending the screenshots to the author, rather than describing it. Use whenever a change touches CSS, a Liquid/HTML template, a generated page, the navbar, a board, a sticky or any rendered surface — before claiming it works, and before asking the author to review it. Covers building the site locally, taking the REAL CI build off `gh-pages` when the question is theme chrome or layout, driving it with Playwright in this environment, measuring computed style rather than reading the stylesheet, hit-testing a control's centre because visible is not usable, asserting the conditions so a check cannot pass over an unstyled page, and the defect classes that are invisible to a green gate set.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 352,
+          "instructionsPath": "sdlc/skills/sdlc-core/rendered-verification.md",
+          "name": "rendered-verification",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c2103e02a4eeffb5826cd17d2c347af16e92835fb5c1ef159d30c5f9e19ab45f",
+            "bytes": 17822,
+            "sha256": "c2103e02a4eeffb5826cd17d2c347af16e92835fb5c1ef159d30c5f9e19ab45f"
+          },
+          "title": "/rendered-verification — look at it, then send the picture"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/saturation-meta-merge",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "When the CI runners have been full for a long time, drain a repository's ready PRs in one step: hold the swarm, cancel the queued PR runs, stack every admitted PR onto one meta-merge branch with merge commits, and land that branch on `main` without waiting for CI, on the owner's card that names each PR. Then re-run main's checks and report. Use for \"runners are full\", \"cancel everything and merge what's ready\", \"meta-merge\", \"consolidate the queue\", and when the queue has not moved for an hour or more.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 142,
+          "instructionsPath": "sdlc/skills/sdlc-core/saturation-meta-merge.md",
+          "name": "saturation-meta-merge",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b648b0c0ba44039af1fd8f143a598174ca5aa680b54ea84fd1a928bf45b55abd",
+            "bytes": 7178,
+            "sha256": "b648b0c0ba44039af1fd8f143a598174ca5aa680b54ea84fd1a928bf45b55abd"
+          },
+          "title": "Saturation meta-merge — drain the queue when the runners are full"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/secrets",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Adding, rotating and revoking the credentials the harness's automation needs, one mechanism at a time, with the exact GitHub UI path for each step. Every step that touches a value is a person's; an agent drafts the steps, checks names and expiry dates, and records what was done. Leads with the GitHub App on a personal account, the recommended mechanism (owner ruling D1=A).",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 206,
+          "instructionsPath": "sdlc/skills/sdlc-core/secrets.md",
+          "name": "secrets",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e312e72be5e1973f41e6dd423435fb7827e354ff4f4109233146906eb5c010a0",
+            "bytes": 10218,
+            "sha256": "e312e72be5e1973f41e6dd423435fb7827e354ff4f4109233146906eb5c010a0"
+          },
+          "title": "Secrets — the person handles the value, the agent handles everything else"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/session-intent",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Session-start intent declaration + session-end results recording, against the goal-scoped master ledger and queue file. Enforces the durable-handoff discipline so any agent can pick up another's thread.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 273,
+          "instructionsPath": "sdlc/skills/sdlc-core/session-intent.md",
+          "name": "session-intent",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1b1bde9373217502acfea4b38b74f136ffdc63407385f4ba27aa83782f60cde6",
+            "bytes": 12515,
+            "sha256": "1b1bde9373217502acfea4b38b74f136ffdc63407385f4ba27aa83782f60cde6"
+          },
+          "title": "/session-intent — durable session intent + results"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/signing",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "What any signature in the harness must answer, whatever it covers: who signs, what bytes are signed, which signature suites are accepted and who decides that, where the key is kept, which route signs (API or person, by reach), and what a verifier must check and record. Suites are named by the identifiers the standards already define. Signing is done by the parties' own systems; the harness verifies. Read before you add a signature slot, a trust anchor, a verifier, or a process that signs anything.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 227,
+          "instructionsPath": "sdlc/skills/sdlc-core/signing.md",
+          "name": "signing",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/99bf4c0490c2a5c9efd416d549acb2aced23b9ac8b45119b2d57bfc3d362e286",
+            "bytes": 11769,
+            "sha256": "99bf4c0490c2a5c9efd416d549acb2aced23b9ac8b45119b2d57bfc3d362e286"
+          },
+          "title": "Signing — the process, not the code"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/specification-management",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Governs the lifecycle, syntax, and traceability of specifications and requirements across the harness. Connects spec-kit and CRDM tracks to the 6-part bootstrap Requirement definition, enforces EARS and ISO 29148 statement quality, and defines how requirements project to open standards (ReqIF, OSLC-RM) while keeping bootstrap strictly decoupled.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 119,
+          "instructionsPath": "sdlc/skills/sdlc-core/specification-management.md",
+          "name": "specification-management",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5a347e7d56451caf1e8230197b30423376e8fd7a28fcf491180c6856e6737554",
+            "bytes": 6077,
+            "sha256": "5a347e7d56451caf1e8230197b30423376e8fd7a28fcf491180c6856e6737554"
+          },
+          "title": "Specification and requirements management"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (STAGING) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it.",
+          "hasIOContract": true,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/staging-review/input.schema.json",
+          "instructionLines": 786,
+          "instructionsPath": "sdlc/skills/sdlc-core/staging-review.md",
+          "name": "staging-review",
+          "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/staging-review/output.schema.json",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d922734ab9cc6f549df2f9f5557c7dd0645807cb90952549a421b8c8099c46e8",
+            "bytes": 40325,
+            "sha256": "d922734ab9cc6f549df2f9f5557c7dd0645807cb90952549a421b8c8099c46e8"
+          },
+          "title": "Staging review — before/after comparison"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/stalled-agent-triage",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, beans, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\".",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 116,
+          "instructionsPath": "sdlc/skills/sdlc-core/stalled-agent-triage.md",
+          "name": "stalled-agent-triage",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a3eb3adb01f361ce99ffb969685cabc1bc543b0d1358b1d1902eecbbda88efee",
+            "bytes": 5585,
+            "sha256": "a3eb3adb01f361ce99ffb969685cabc1bc543b0d1358b1d1902eecbbda88efee"
+          },
+          "title": "Stalled-agent triage"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-management",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Decide whether to run parallel agents at all, and if so how many, at which model level, against which decomposition. Read BEFORE dispatching more than one background agent — a swarm spends the author's tokens and the decision is theirs.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 224,
+          "instructionsPath": "sdlc/skills/sdlc-core/swarm-management.md",
+          "name": "swarm-management",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/df8057e22c21551455345b1dcac0d10c8327eb3b7e6d9b986e18694c5189d722",
+            "bytes": 14035,
+            "sha256": "df8057e22c21551455345b1dcac0d10c8327eb3b7e6d9b986e18694c5189d722"
+          },
+          "title": "Swarm management"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Curating fixed (committed, cited, SME-reviewed) and generated (template + params + seed recipe, never stored materialised) test data sets in separately declared graph directories, with per-content-type specialisation as a called subprocess and attributable SME review of decision support and indicator definitions.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 87,
+          "instructionsPath": "sdlc/skills/sdlc-core/test-data-sets.md",
+          "name": "test-data-sets",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f22cd57931444f50ae7b4c10ff358e76a42ec375160c564ddc791ebe4a71c606",
+            "bytes": 7892,
+            "sha256": "f22cd57931444f50ae7b4c10ff358e76a42ec375160c564ddc791ebe4a71c606"
+          },
+          "title": "Test Data Sets & SME Case/Verdict Review"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-engineer",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 172,
+          "instructionsPath": "sdlc/skills/sdlc-core/test-engineer.md",
+          "name": "test-engineer",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a5c8175683897dfdab577160c02c5e8e3ae988752e60cc6adb1f753f46528bf8",
+            "bytes": 6866,
+            "sha256": "a5c8175683897dfdab577160c02c5e8e3ae988752e60cc6adb1f753f46528bf8"
+          },
+          "title": "Test Engineer Skill"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-plan-execution",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Run a `test-plan/v1` against a system under test and take it to a certification decision — the five lanes of `test-plan-execution.bpmn` (requester, tester, untainted checker, certifier, attestation service), how the test data is bound, what the run and the report must record, the facts the certification table reads, and the four kg-audit criteria that judge a run afterwards. Read before executing a plan, re-executing a sample, or certifying a result.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 156,
+          "instructionsPath": "sdlc/skills/sdlc-core/test-plan-execution.md",
+          "name": "test-plan-execution",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f076864da70a8d863550759e69c14d798f3326882328e0357f4e7a1ed8238966",
+            "bytes": 8099,
+            "sha256": "f076864da70a8d863550759e69c14d798f3326882328e0357f4e7a1ed8238966"
+          },
+          "title": "Running a test plan — from a request to a signed certification"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/turn-reporting",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Say which bean you are on, every turn — the opening and closing report formats, the rules that make a report worth reading (two sentences and a link per bean, every mention), and the STRICT rule that the \"next\" line is a question and must carry its own context.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 264,
+          "instructionsPath": "sdlc/skills/sdlc-core/turn-reporting.md",
+          "name": "turn-reporting",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f8a13e370deb8a432b182c8012b1dc8b915fd9047e92f53f9101506b32ae2bc3",
+            "bytes": 14895,
+            "sha256": "f8a13e370deb8a432b182c8012b1dc8b915fd9047e92f53f9101506b32ae2bc3"
+          },
+          "title": "Turn reporting — say which bean you are on, every turn"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The party that produced an artefact does not write the verdict on it. How a checker and an adjudicator are dispatched with controlled context, the three rules that make it a measurement rather than a ritual, and the third state that lets it gate at all.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 177,
+          "instructionsPath": "sdlc/skills/sdlc-core/untainted-verification.md",
+          "name": "untainted-verification",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7700fc14d911bed24d5e2ce7f8f2e13fe60ec6507f246e65efde1224c1b3bec4",
+            "bytes": 9238,
+            "sha256": "7700fc14d911bed24d5e2ce7f8f2e13fe60ec6507f246e65efde1224c1b3bec4"
+          },
+          "title": "Untainted verification — the producer never writes the verdict"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/upstream-version-adoption",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Watch a pinned upstream dependency for a new release, and take a candidate version through impact analysis, an MVP build, review and a person's adopt/hold/decline decision. Reusable per pin — the theme is the first tenant, not the only one.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 200,
+          "instructionsPath": "sdlc/skills/sdlc-core/upstream-version-adoption.md",
+          "name": "upstream-version-adoption",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5ca3811348101231c16f1e42d889634cc35676518a636ab3d199c6baee528679",
+            "bytes": 10053,
+            "sha256": "5ca3811348101231c16f1e42d889634cc35676518a636ab3d199c6baee528679"
+          },
+          "title": "Adopting an upstream version bump"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Pictures of a changed figure, diagram or table, before and after, and how much of it changed. Says when to use it, what the percentage means and must NOT be read as, what a missing picture means, and how the staging job and the review process call it. Use when a reviewer asks \"what does this figure look like now\", when a table's markup diff is unreadable, or when a staging preview's pictures are missing.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 133,
+          "instructionsPath": "sdlc/skills/sdlc-core/visual-diff.md",
+          "name": "visual-diff",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c13c0d26fb38c03055adc4bb73fa493ef6b984a8138edd5284ef4d02f512c95d",
+            "bytes": 6384,
+            "sha256": "c13c0d26fb38c03055adc4bb73fa493ef6b984a8138edd5284ef4d02f512c95d"
+          },
+          "title": "Visual diff — see a figure change"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Background-watch a branch (default origin/main) or a GitHub PR for new activity while you work, and on every event report whether to integrate / whether it conflicts with the current branch / whether it lets you simplify exposition / proofs / computations",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 322,
+          "instructionsPath": "sdlc/skills/sdlc-core/watch.md",
+          "name": "watch",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0e6dd8e4933347fc0689dd3fb4c854c992554e096a8e5c658473e1805d464554",
+            "bytes": 13592,
+            "sha256": "0e6dd8e4933347fc0689dd3fb4c854c992554e096a8e5c658473e1805d464554"
+          },
+          "title": "/watch — background watcher with integration check"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/where-a-proposal-goes",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 84,
+          "instructionsPath": "sdlc/skills/sdlc-core/where-a-proposal-goes.md",
+          "name": "where-a-proposal-goes",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/34e78bc3d2adf0a1f982fba3079a64f3a1649281234e934467a8b783e0e6fbe7",
+            "bytes": 3680,
+            "sha256": "34e78bc3d2adf0a1f982fba3079a64f3a1649281234e934467a8b783e0e6fbe7"
+          },
+          "title": "Where a proposal goes — the issue, not the documentation"
+        }
+      ],
+      "hasSubgraph": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/sdlc-core/coordinate/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "sdlc/skills/sdlc-core/coordinate",
+          "path": "sdlc/skills/sdlc-core/coordinate/"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/sdlc-core/integration-watcher/",
+          "@type": "bootstrap:Subgraph",
+          "holdsGraph": [
+            "bootstrap:graphTypology/skills"
+          ],
+          "name": "sdlc/skills/sdlc-core/integration-watcher",
+          "path": "sdlc/skills/sdlc-core/integration-watcher/"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "sdlc/skills/sdlc-core",
+      "path": "sdlc/skills/sdlc-core/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/spec-kit/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+          "@type": "cat-harness:SkillPackage",
+          "hasManifest": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "name": "spec-kit",
+          "path": "sdlc/skills/spec-kit"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/change-size",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The change-size rule: keeps review increments adjudicable by establishing a line-count threshold (~400 effective lines), recording its empirical basis, weighting prose/KG lower than code, and distinguishing size from complexity.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 93,
+          "instructionsPath": "sdlc/skills/spec-kit/change-size.md",
+          "name": "change-size",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b232c5bbb144fa685936d633911a8efe80b33f08763f8c0d38a3cf01e4d62f40",
+            "bytes": 5195,
+            "sha256": "b232c5bbb144fa685936d633911a8efe80b33f08763f8c0d38a3cf01e4d62f40"
+          },
+          "title": "Change Size Rule — Threshold, Basis, and Complexity Weighting"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-kit",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists. Carries what this platform adopts and — separately, with reasons — what it refuses.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 323,
+          "instructionsPath": "sdlc/skills/spec-kit/spec-kit.md",
+          "name": "spec-kit",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/44b6d3984c4b31e3075762c580e40c7a93d6cdbb2390a3222f1c133cba87442b",
+            "bytes": 16753,
+            "sha256": "44b6d3984c4b31e3075762c580e40c7a93d6cdbb2390a3222f1c133cba87442b"
+          },
+          "title": "Spec Kit — spec-driven development"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-template",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The single declared template artefact for platform feature specifications, adopted from github/spec-kit. Mandatory sections and required fields are machine-readable here for automated validation.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+          "instructionLines": 112,
+          "instructionsPath": "sdlc/skills/spec-kit/spec-template.md",
+          "name": "spec-template",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5b7a89b5d713720973d332004121acc83e5a35066d106df97f396d89f9790d28",
+            "bytes": 3783,
+            "sha256": "5b7a89b5d713720973d332004121acc83e5a35066d106df97f396d89f9790d28"
+          },
+          "title": "Feature Specification: [Feature Name]"
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/skills"
+      ],
+      "name": "sdlc/skills/spec-kit",
+      "path": "sdlc/skills/spec-kit/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "sdlc/skills",
+  "path": "sdlc/skills/"
+}

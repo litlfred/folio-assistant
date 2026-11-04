@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/schema/url-space.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-0825",
+    "sha": "a5f23f9ef1cf751ce4d256b179e1da70edaeccc7",
+    "pr": "repin-train/20261104-0825",
+    "run": "41799498971"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/schema/url-space",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "url-space",
+      "title": "url-space",
+      "summary": "Where a published thing is served: one resolver for the site's URL space",
+      "module": "schemas/kg/url-space.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/url-space"
+    }
+  ]
+}

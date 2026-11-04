@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/skill/github-state-inspection.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-0825",
+    "sha": "a5f23f9ef1cf751ce4d256b179e1da70edaeccc7",
+    "pr": "repin-train/20261104-0825",
+    "run": "41799498971"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/skill/github-state-inspection",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "github-state-inspection",
+      "title": "Reading GitHub state — resolve the ref, do not compose the URL",
+      "description": "Answer questions about GitHub-hosted state — is a page published, where does it live, did CI pass, does a branch exist — by reading the ref or the API, never by composing a URL or fetching one. The first check for any deployment or 404 question is `git ls-tree` of the publish ref.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/github-state-inspection.md",
+      "instructionLines": 276,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/github-state-inspection"
+    }
+  ]
+}

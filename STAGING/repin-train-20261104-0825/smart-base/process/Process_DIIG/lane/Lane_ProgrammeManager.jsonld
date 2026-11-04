@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0825/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-0825",
+    "sha": "a5f23f9ef1cf751ce4d256b179e1da70edaeccc7",
+    "pr": "repin-train/20261104-0825",
+    "run": "41799498971"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Programme manager",
+      "partOf": "http://smart.who.int/base/process/Process_DIIG",
+      "bindsRole": "http://smart.who.int/base/role/programme-manager",
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    }
+  ]
+}
