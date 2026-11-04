@@ -118,7 +118,7 @@
   {
     &quot;id&quot;: &quot;smart-trust-ast&quot;,
     &quot;path&quot;: &quot;fhir-ast/&quot;,
-    &quot;description&quot;: &quot;WHO SMART Trust&#39;s IG Publisher AST, INGESTED here although the IG&#39;s source is not (owner, 2026-10-04: an IG&#39;s semi-static KG may stay remote, and its AST is still ingested into the folio). Read from the branch family cat/fhir-harness/fhir-ast/ on the IG&#39;s own repository (litlfred/smart-trust; it could instead be materialised onto a local branch here, by dropping `repository`), one branch per IG package id; this IG&#39;s member is cat/fhir-harness/fhir-ast/smart.who.int.trust. Restored by fhir-harness/scripts/ig-cache.sh; absent from the checkout by design. Bean lehh.&quot;,
+    &quot;description&quot;: &quot;WHO SMART Trust&#39;s IG Publisher AST, ingested although the IG&#39;s source is not. Read from the branch family `cat/fhir-harness/fhir-ast/` on `litlfred/smart-trust`, one branch per IG package id; this IG&#39;s is `cat/fhir-harness/fhir-ast/smart.who.int.trust`. Restored by `fhir-harness/scripts/ig-cache.sh`; never in the checkout.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;ig-ast&quot;
     ],
@@ -133,18 +133,18 @@
   {
     &quot;id&quot;: &quot;smart-trust-artifact-index&quot;,
     &quot;path&quot;: &quot;fhir-artifact-index/&quot;,
-    &quot;description&quot;: &quot;The IG&#39;s artefact index. `index.json`, `menu.json`, `releases.json`, `package.tgz` and `sidecars/` are NOT COMMITTED: fhir-harness&#39;s `ig-index:build` writes them at publish from the IG&#39;s AST (`builtAtPublish`, fhir-harness#124; `sidecars/` via smart-base&#39;s `ig-site:sidecars` step, bean `4u5d`), replacing the reconstructed index and its committed `dak/` sidecars (retired in bean `4u5d`). `ig-identity.json` and `README.md` stay committed. `index.json` carries a `provenance` block naming the AST or config file every field came out of.&quot;,
+    &quot;description&quot;: &quot;The IG&#39;s artefact index. `index.json`, `menu.json`, `releases.json`, `package.tgz` and `sidecars/` are not committed: fhir-harness&#39;s `ig-index:build` writes them at publish from the IG&#39;s AST (`sidecars/` through smart-base&#39;s `ig-site:sidecars` step). `ig-identity.json` and `README.md` are committed. `index.json` carries a `provenance` block naming the AST or config file each field came from.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;fhir-artifact-index&quot;
     ],
     &quot;readOnly&quot;: true,
-    &quot;readOnlyBasis&quot;: &quot;Built from the IG&#39;s own AST, and GENERATED -- fhir-harness&#39;s `ig-index:build` writes this index at publish, a person does not edit or commit it (fhir-harness#124). Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened.&quot;,
+    &quot;readOnlyBasis&quot;: &quot;Generated at publish by fhir-harness&#39;s `ig-index:build` from the IG&#39;s AST; never edited or committed. A hand edit would change what this repository claims upstream published; `check:materialized-fixity` catches one.&quot;,
     &quot;served&quot;: true
   },
   {
     &quot;id&quot;: &quot;smart-trust-document-kinds&quot;,
     &quot;path&quot;: &quot;document-kinds/&quot;,
-    &quot;description&quot;: &quot;How this IG realises the document kinds of the layers it needs: today `dak.coverage.smart-trust.json`, the DAK view of `fhir-artifact-index/`, which places each artefact in one of the ten DAK components by its FHIR resource type and lists what no rule places. GENERATED at publish by the DAK layer&#39;s `gen-document-kinds.ts` (`bun run cat smart-base:document-kinds`; declared `builtAtPublish`, because the index it reads is built at publish too, fhir-harness#124) into this directory, and not committed, because the report is about this IG: it lived beside the DAK kind in the layer below until wrong-direction move M13 (folio-assistant#2598), where it was a lower layer holding a file about a higher one. Declared with its file in one commit, per bean `dh4f`.&quot;,
+    &quot;description&quot;: &quot;How this IG realises the document kinds of the layers it needs: `dak.coverage.smart-trust.json`, the DAK view of `fhir-artifact-index/`, which places each artefact in one of the ten DAK components by its FHIR resource type and lists what no rule places. Generated at publish, after the index it reads, by the DAK layer&#39;s `gen-document-kinds.ts` (`bun run cat smart-base:document-kinds`); not committed.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;document-kinds&quot;
     ]
@@ -152,19 +152,19 @@
   {
     &quot;id&quot;: &quot;smart-trust-openapi&quot;,
     &quot;path&quot;: &quot;openapi/&quot;,
-    &quot;description&quot;: &quot;The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway&#39;s API, which the IG&#39;s published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG&#39;s own API. Each document is held VERBATIM beside a `&lt;id&gt;.source.json` recording the repository, path and commit it was read from; every operation in it is a node of this graph, with a page and an IRI here (`gateway/&lt;operationId&gt;/`, `gateway/&lt;operationId&gt;.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages fetch the document beside them, and are complete HTML, so `served` publishes all of it verbatim.&quot;,
+    &quot;description&quot;: &quot;The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names: the trust network gateway&#39;s API, which the published IG carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` does not treat as the IG&#39;s own API. Each document is held verbatim beside a `&lt;id&gt;.source.json` recording the repository, path and commit it was read from. Each operation is a node with a page and an IRI (`gateway/&lt;operationId&gt;/`, `gateway/&lt;operationId&gt;.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages are complete HTML that fetch the document beside them, so `served` publishes them as they are.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;openapi&quot;
     ],
     &quot;readOnly&quot;: true,
-    &quot;readOnlyBasis&quot;: &quot;Copies of an upstream API description (each a materialized node, `&lt;id&gt;.source.json`) and pages generated from it; `ingest-openapi.ts` and `gen-openapi-pages.ts` rewrite them, a person does not. A hand edit would silently change what this repository claims the API&#39;s authors published — the two scripts&#39; `--check` is what catches one.&quot;,
+    &quot;readOnlyBasis&quot;: &quot;Copies of an upstream API description, each with its `&lt;id&gt;.source.json`, and pages generated from them; `ingest-openapi.ts` and `gen-openapi-pages.ts` rewrite them, a person does not. A hand edit would change what this repository claims the API&#39;s authors published; the two scripts&#39; `--check` catches one.&quot;,
     &quot;served&quot;: true
   },
   {
     &quot;id&quot;: &quot;smart-trust-docs&quot;,
     &quot;path&quot;: &quot;docs/&quot;,
     &quot;instanceRoot&quot;: true,
-    &quot;description&quot;: &quot;The reader-facing pages, generated from `fhir-artifact-index/index.json` by `smart-trust:pages` (`fhir-harness/scripts/gen-ig-pages.ts`). SINCE 2026-10-05 THESE ARE THE ARTEFACT PAGES OF ONE SITE (`igSite`, bean `mftp`): they build into smart-trust&#39;s own IG site at `/smart-trust/` under the IG&#39;s menu, and the index, menu-section and category pages this description goes on to mention are no longer written -- the IG&#39;s own index, toc and artifacts pages replace them. What follows is the history of how the directory got here. THE REASON THIS EXISTS: `fhir-artifact-index` is registered `renderable: false`, and until 2026-09-21 this instance declared only that kind — so 674 ingested artefacts were reachable at no URL, which is how the owner found it, by asking where `/smart-trust` was. Only `docs` and `folio` are renderable, and `mount-instance-docs.ts` copies any declared `docs` directory as FINISHED HTML (Jekyll&#39;s source is hardcoded to `cat-harness/docs`, so an instance&#39;s own pages are built by nothing). `instanceRoot: true` is what makes THIS kind answer at `/smart-trust/` rather than the choice falling to sort order — the defect `withRoutes` documents. It is the only renderable kind here today, so nothing is ambiguous yet; declaring it now means adding a second one later cannot silently move the root. Generated, never authored: `smart-trust:pages:check` is the gate. The viewer for this instance&#39;s docs, BUILT BY cat-harness — the owner&#39;s rule that a harness which instantiates a directory makes a visualiser for it. Declared HERE, in this instance&#39;s own file, rather than in the root&#39;s: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a COMPOSITION LAYER, so declaring this directory there would overlay this instance&#39;s `index.md` onto the site&#39;s own. Measured — `compose-docs.test.ts` failed exactly that way when tried. The ref resolves because `injectRails` measures against the BUILT instance&#39;s docs prefix (cat-harness&#39;s), not the declaring instance&#39;s, which is the same reason `who-iris-library`&#39;s cat-harness-built ref resolves today. This directory is NOT mounted: `mount-instance-docs` skips a docs directory with no `index.html`, and this one has none. The viewer is real regardless — `auto-docs` indexes the 20 pages it holds and publishes that page. \&quot;No verbatim mount\&quot; and \&quot;no viewer\&quot; are different facts, and declaring this is what stops the second being inferred from the first.&quot;,
+    &quot;description&quot;: &quot;The artefact pages of smart-trust&#39;s IG site, generated from `fhir-artifact-index/index.json` by `smart-trust:pages` (`fhir-harness/scripts/gen-ig-pages.ts`) with smart-base&#39;s themes, built at publish and never committed. They build into the IG&#39;s own site at `/smart-trust/`, under the IG&#39;s menu; the IG&#39;s own index, toc and artifacts pages are the site&#39;s landing pages. `instanceRoot: true` makes this directory answer at `/smart-trust/`. It is declared here, not in `cat-harness.json`, because `compose-docs` treats every docs entry there as a composition layer and would overlay this instance&#39;s `index.md` onto the main site&#39;s.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;docs&quot;,
       &quot;ig-pages&quot;
@@ -186,7 +186,7 @@
   {
     &quot;id&quot;: &quot;library&quot;,
     &quot;path&quot;: &quot;library/&quot;,
-    &quot;description&quot;: &quot;L1 source documents materialized for smart-trust: the GDHCN Administrative and Operational Framework 1.2 (9 October 2026), the legal source document for GDHCN definitions and Trust Domains (owner, 2026-11-01: \&quot;admin framework is the legal source document for GDHCN\&quot;). Every knowledge-graph reference to the Framework resolves through here, and `check:materialized-fixity` verifies its SHA-256 digest against `catalogue/`.&quot;,
+    &quot;description&quot;: &quot;L1 source documents materialized for smart-trust: the GDHCN Administrative and Operational Framework 1.2 (9 October 2026), the legal source for GDHCN definitions and Trust Domains. Every knowledge-graph reference to the Framework resolves through here, and `check:materialized-fixity` verifies its SHA-256 digest against `catalogue/`.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;library&quot;
     ]
@@ -194,17 +194,17 @@
   {
     &quot;id&quot;: &quot;smart-trust-catalogue&quot;,
     &quot;path&quot;: &quot;catalogue/&quot;,
-    &quot;description&quot;: &quot;Qualified Dublin Core (`folio-dublin-core/v1`) and catalogue node (`folio-catalogue-node/v1`) records. Two kinds of item: the document materialized in `library/` (the GDHCN Administrative and Operational Framework 1.2), and, since bean folio-assistant-djj5 (owner, 2026-11-03: references/ retired, \&quot;Library + catalogue only\&quot;), every work the IG cites that is not ingested, as a `referenced` item whose record is the IG&#39;s bibliography entry for it (the key is the citation&#39;s: `#ref-&lt;slug&gt;`) (a capture of it, when one exists, is kept in the repository&#39;s `uploads/` data store, which is not part of the KG). `bun run cat check:catalogue` and `bun run cat check:materialized-fixity` verify every node, metadataRef, libraryId, localPath and SHA-256 digest.&quot;,
+    &quot;description&quot;: &quot;Qualified Dublin Core (`folio-dublin-core/v1`) and catalogue node (`folio-catalogue-node/v1`) records for two kinds of item: the document materialized in `library/` (the GDHCN Administrative and Operational Framework 1.2), and every work the IG cites that is not ingested, as a `referenced` item whose record is the IG&#39;s bibliography entry for it, keyed by the citation (`#ref-&lt;slug&gt;`). A capture of a cited work, when one exists, is kept in the repository&#39;s `uploads/` data store, which is not part of the KG. `bun run cat check:catalogue` and `bun run cat check:materialized-fixity` verify every node, metadataRef, libraryId, localPath and SHA-256 digest.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;catalogue&quot;
     ],
     &quot;readOnly&quot;: true,
-    &quot;readOnlyBasis&quot;: &quot;Records of a WHO document materialized in `library/`, whose SHA-256 digests `check:materialized-fixity` verifies against `library/`, and the records of the works the IG cites, converted from references/ by bean djj5 and kept as the IG&#39;s bibliography: change a citation&#39;s record here, never on a page.&quot;
+    &quot;readOnlyBasis&quot;: &quot;Records of the WHO document in `library/`, whose SHA-256 digests `check:materialized-fixity` verifies, and the IG&#39;s bibliography of cited works: change a citation&#39;s record here, never on a page.&quot;
   },
   {
     &quot;id&quot;: &quot;glossary&quot;,
     &quot;path&quot;: &quot;glossary/&quot;,
-    &quot;description&quot;: &quot;The primary GDHCN glossary (`gdhcn.glossary.json`, folio-glossary/v1): the 21 definitions in Section II of the GDHCN Administrative and Operational Framework 1.2, quoted from the L1 copy in `library/`. The Framework is the legal source (owner, 2026-11-01); IG-only terms may be added in a separate scheme and never override it. Rendered and checked by check:glossary.&quot;,
+    &quot;description&quot;: &quot;The primary GDHCN glossary (`gdhcn.glossary.json`, folio-glossary/v1): the 21 definitions in Section II of the GDHCN Administrative and Operational Framework 1.2, quoted from the L1 copy in `library/`. The Framework is the legal source; IG-only terms go in a separate scheme and never override it. Rendered and checked by `check:glossary`.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;glossary&quot;
     ]
@@ -212,7 +212,7 @@
   {
     &quot;id&quot;: &quot;smart-trust-translations&quot;,
     &quot;path&quot;: &quot;translations/&quot;,
-    &quot;description&quot;: &quot;The gettext side of smart-trust&#39;s own strings, one directory per target locale: today the `glossary/` templates of the GDHCN glossary (`glossary/gdhcn.glossary.json`). A scheme&#39;s translations sit with the instance whose terms they translate (owner, 2026-10-04, bean riit). Written by `bun run cat glossary:pot`.&quot;,
+    &quot;description&quot;: &quot;The gettext side of smart-trust&#39;s own strings, one directory per target locale: the `glossary/` templates of the GDHCN glossary (`glossary/gdhcn.glossary.json`). A scheme&#39;s translations sit with the instance whose terms they translate. Written by `bun run cat glossary:pot`.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;translation-sources&quot;
     ]
@@ -228,7 +228,7 @@
       &quot;ig-index:build&quot;
     ],
     &quot;because&quot;: &quot;checkout&quot;,
-    &quot;reason&quot;: &quot;the IG&#39;s artefact index: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance (fhir-harness#124)&quot;
+    &quot;reason&quot;: &quot;the IG&#39;s artefact index: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance&quot;
   },
   {
     &quot;path&quot;: &quot;fhir-artifact-index/menu.json&quot;,
@@ -236,7 +236,7 @@
       &quot;ig-index:build&quot;
     ],
     &quot;because&quot;: &quot;checkout&quot;,
-    &quot;reason&quot;: &quot;the IG&#39;s menu: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance (fhir-harness#124)&quot;
+    &quot;reason&quot;: &quot;the IG&#39;s menu: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance&quot;
   },
   {
     &quot;path&quot;: &quot;fhir-artifact-index/releases.json&quot;,
@@ -244,7 +244,7 @@
       &quot;ig-index:build&quot;
     ],
     &quot;because&quot;: &quot;checkout&quot;,
-    &quot;reason&quot;: &quot;the IG&#39;s release list: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance (fhir-harness#124)&quot;
+    &quot;reason&quot;: &quot;the IG&#39;s release list: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance&quot;
   },
   {
     &quot;path&quot;: &quot;fhir-artifact-index/package.tgz&quot;,
@@ -252,7 +252,7 @@
       &quot;ig-index:build&quot;
     ],
     &quot;because&quot;: &quot;checkout&quot;,
-    &quot;reason&quot;: &quot;the Publisher-shaped package the JSON view pages read each resource from: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance (fhir-harness#124)&quot;
+    &quot;reason&quot;: &quot;the Publisher-shaped package the JSON view pages read each resource from: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance&quot;
   },
   {
     &quot;path&quot;: &quot;document-kinds/dak.coverage.smart-trust.json&quot;,
@@ -261,7 +261,7 @@
     ],
     &quot;because&quot;: &quot;checkout&quot;,
     &quot;directory&quot;: &quot;smart-trust-document-kinds&quot;,
-    &quot;reason&quot;: &quot;the DAK view of this IG&#39;s artefact index, which is itself built at publish (fhir-artifact-index/index.json above), so the report moves with the index and is built after it (fhir-harness#124)&quot;
+    &quot;reason&quot;: &quot;the DAK view of this IG&#39;s artefact index, which is itself built at publish (fhir-artifact-index/index.json above), so the report moves with the index and is built after it&quot;
   },
   {
     &quot;path&quot;: &quot;ns/context/v1.jsonld&quot;,
