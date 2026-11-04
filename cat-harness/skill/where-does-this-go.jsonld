@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/where-does-this-go.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/where-does-this-go",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "where-does-this-go",
       "title": "Where does this go? — the question, then the skill that answers it",
       "description": "The router for filing decisions. This repository answers \"where does this go?\" nine separate times, each well, and nothing says WHICH question you are asking — so an agent who does not know a rule exists cannot look it up. One discriminating question per row, and the skill that owns the answer.",

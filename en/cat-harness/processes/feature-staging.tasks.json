@@ -5,7 +5,7 @@
  "tasks": {
   "Task_Build": {
    "id": "Task_Build",
-   "name": "Build the docs site Jekyll · TypeDoc · KG export",
+   "name": "Build the docs site",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Build",
    "lane": "CI/CD Pipeline",
@@ -102,7 +102,7 @@
   },
   "Task_Deploy": {
    "id": "Task_Deploy",
-   "name": "Push to the CDN at STAGING/&lt;slug&gt;/",
+   "name": "Push to the CDN under STAGING/",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Deploy",
    "lane": "CI/CD Pipeline",
@@ -495,7 +495,7 @@
   },
   "Task_Remove": {
    "id": "Task_Remove",
-   "name": "Remove the preview AND append `removed` — one commit",
+   "name": "Remove the preview and log it",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Remove",
    "lane": "CI/CD Pipeline",
@@ -790,7 +790,7 @@
   },
   "Task_Validate": {
    "id": "Task_Validate",
-   "name": "Check the slug's SHAPE and that the confirmation repeats it",
+   "name": "Check the slug and its confirmation",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Validate",
    "lane": "CI/CD Pipeline",

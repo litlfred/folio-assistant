@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-gap-audit.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-gap-audit",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "proof-gap-audit",
       "title": "Proof Gap Audit",
       "description": "Audit individual proofs and the network of proofs for gaps. Detects intra-proof gaps (unproved assertions, existence without proof, uniqueness asserted but not shown, hand-waving, missing citations) and inter-proof gaps (missing bridging lemmas, broken chains of implication, unstated propositions needed to tie results together).",

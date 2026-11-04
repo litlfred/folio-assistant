@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "CRDM Phases 2–4 — BPA and requirements",
       "summary": "Map the current workflow, then define the requirements and the impact they carry, and loop until approved.",
       "description": "Map the current workflow, then define the requirements and the impact they carry, and loop until approved. Same shape as Phase 1 and for the same reason: an unapproved requirement is a proposal.",
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/Start_Process_CRDM_Requirements",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/A_MapWorkflow",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/A_MapWorkflow",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/A_DefineReqs",
@@ -48,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/A_DefineReqs",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/GW_RenderedSurface",
@@ -56,7 +50,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_3w",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/GW_RenderedSurface",
@@ -65,7 +59,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_3x",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/Call_Wireframe",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/A_CompareOptions",
@@ -73,7 +67,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_3n",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/GW_RenderedSurface",
@@ -82,7 +76,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_3b",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/A_CompareOptions",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/BA_ReviewReqs",
@@ -90,7 +84,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/BA_ReviewReqs",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/S_ApproveReqs",
@@ -98,7 +92,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/S_ApproveReqs",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/GW_Reqs",
@@ -106,7 +100,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "revise",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/GW_Reqs",
@@ -115,7 +109,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements#flow/SF_Process_CRDM_Requirements_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements/node/GW_Reqs",

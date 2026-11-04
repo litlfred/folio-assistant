@@ -12,6 +12,7 @@
         "path": {
           "type": "string",
           "minLength": 1,
+          "pattern": "^(?![/\\\\]|[A-Za-z]:)(?!.*(?:^|[/\\\\])\\.\\.(?:[/\\\\]|$)).+$",
           "description": "The directory, relative to the declaration."
         },
         "graphTypologies": {
@@ -74,11 +75,5 @@
   },
   "$id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/zod/graph/SubgraphSchema.schema.json",
   "title": "SubgraphSchema",
-  "description": "Generated from `SubgraphSchema` in schemas/graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  }
+  "description": "Generated from `SubgraphSchema` in schemas/graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable."
 }

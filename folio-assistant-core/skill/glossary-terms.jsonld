@@ -2,21 +2,15 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/glossary-terms.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/glossary-terms",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "glossary-terms",
       "title": "Glossary terms",
       "description": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
       "instructionsPath": "skills/library/cataloguing/glossary-terms.md",
-      "instructionLines": 368,
+      "instructionLines": 475,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

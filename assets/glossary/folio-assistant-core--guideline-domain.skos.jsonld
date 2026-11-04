@@ -7,7 +7,7 @@
   "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run cat glossary:page`",
   "@graph": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/guideline-domain",
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/guideline-domain",
       "@type": "skos:ConceptScheme",
       "skos:prefLabel": "Guideline domain",
       "skos:definition": "Which of three domains a WHO guideline's recommendations address: clinical care, public health, or health-system strengthening (bean folio-assistant-398x). Owner, 2026-10-10: \"these will all need to be a part of a SMART Guideline at some point and are one of clinical health, public health, or health system strengthening guidlines ... In any case these all will be be in the Glossary and can be sorted out later.\" Applied to a guideline through an intake classification that names its source, and to each recommendation-scenario candidate. To be promoted to a CodeSystem in the clinical-guidance content layer once the process catalogues exist. Each term is linked by closeMatch to its closest MeSH descriptors, looked up and verified against https://id.nlm.nih.gov/mesh/ on 2026-10-23.",
@@ -16,10 +16,10 @@
       "dcterms:license": "CC-BY-4.0"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/guideline-domain/clinical",
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/guideline-domain/clinical",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/guideline-domain"
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/guideline-domain"
       },
       "skos:prefLabel": [
         {
@@ -47,10 +47,10 @@
       "dcterms:source": "beans/defs/folio-assistant-398x (owner, 2026-10-10)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/guideline-domain/public-health",
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/guideline-domain/public-health",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/guideline-domain"
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/guideline-domain"
       },
       "skos:prefLabel": [
         {
@@ -77,10 +77,10 @@
       "dcterms:source": "beans/defs/folio-assistant-398x (owner, 2026-10-10)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/guideline-domain/health-system-strengthening",
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/guideline-domain/health-system-strengthening",
       "@type": "skos:Concept",
       "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns#glossary/guideline-domain"
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/guideline-domain"
       },
       "skos:prefLabel": [
         {

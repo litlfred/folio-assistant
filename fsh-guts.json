@@ -1,48 +1,48 @@
 {
   "@context": {
-    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns#",
-    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns#",
-    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns#",
+    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/",
     "name": "http://www.w3.org/2000/01/rdf-schema#label",
     "description": "http://purl.org/dc/terms/description",
-    "Subgraph": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+    "Subgraph": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
     "hasPart": {
       "@id": "dcterms:hasPart",
       "@type": "@id"
     },
     "inSubgraph": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#inSubgraph",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/inSubgraph",
       "@type": "@id"
     },
     "contentSource": {
       "@id": "http://purl.org/dc/terms/source",
       "@context": {
-        "kind": "https://litlfred.github.io/cat-harness/v0/ns#contentSourceKind",
+        "kind": "https://litlfred.github.io/cat-harness/v0/ns/contentSourceKind",
         "branch": "http://purl.org/dc/terms/identifier",
-        "keyedBy": "https://litlfred.github.io/cat-harness/v0/ns#keyedBy",
-        "keyFrom": "https://litlfred.github.io/cat-harness/v0/ns#keyFrom",
-        "familyRepository": "https://litlfred.github.io/cat-harness/v0/ns#familyRepository",
-        "declaredIn": "https://litlfred.github.io/cat-harness/v0/ns#sourceDeclaredIn"
+        "keyedBy": "https://litlfred.github.io/cat-harness/v0/ns/keyedBy",
+        "keyFrom": "https://litlfred.github.io/cat-harness/v0/ns/keyFrom",
+        "familyRepository": "https://litlfred.github.io/cat-harness/v0/ns/familyRepository",
+        "declaredIn": "https://litlfred.github.io/cat-harness/v0/ns/sourceDeclaredIn"
       }
     },
     "dcterms": "http://purl.org/dc/terms/",
-    "nodeKind": "https://litlfred.github.io/cat-harness/v0/ns#nodeKind",
-    "sourcePath": "https://litlfred.github.io/cat-harness/v0/ns#sourcePath",
-    "movedOn": "https://litlfred.github.io/cat-harness/v0/ns#movedOn",
-    "movedFrom": "https://litlfred.github.io/cat-harness/v0/ns#movedFrom",
-    "issue": "https://litlfred.github.io/cat-harness/v0/ns#issue",
-    "bean": "https://litlfred.github.io/cat-harness/v0/ns#bean",
+    "nodeKind": "https://litlfred.github.io/cat-harness/v0/ns/nodeKind",
+    "sourcePath": "https://litlfred.github.io/cat-harness/v0/ns/sourcePath",
+    "movedOn": "https://litlfred.github.io/cat-harness/v0/ns/movedOn",
+    "movedFrom": "https://litlfred.github.io/cat-harness/v0/ns/movedFrom",
+    "issue": "https://litlfred.github.io/cat-harness/v0/ns/issue",
+    "bean": "https://litlfred.github.io/cat-harness/v0/ns/bean",
     "data": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#data",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/data",
       "@type": "@json"
     },
     "body": "schema:text",
-    "nodeCount": "https://litlfred.github.io/cat-harness/v0/ns#nodeCount",
-    "scans": "https://litlfred.github.io/cat-harness/v0/ns#scans",
+    "nodeCount": "https://litlfred.github.io/cat-harness/v0/ns/nodeCount",
+    "scans": "https://litlfred.github.io/cat-harness/v0/ns/scans",
     "skipped": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#skipped",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/skipped",
       "@context": {
-        "path": "https://litlfred.github.io/cat-harness/v0/ns#sourcePath",
+        "path": "https://litlfred.github.io/cat-harness/v0/ns/sourcePath",
         "reason": "rdfs:comment"
       }
     }
@@ -88,6 +88,7 @@
     "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/smart-base-smart-kg-pin.md",
     "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/translations-fr-agent-onboarding.md",
     "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/witness-pipeline.md",
+    "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/workflows/qou-shaped-workflows-2026-11-02.md",
     "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/samples/xlg2-wpro-trial-original.md",
     "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/computations-refactor-fixers.md",
     "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/extract-lean-blocks.md",
@@ -170,11 +171,11 @@
   ],
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 110,
+  "nodeCount": 111,
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bean-blocks-2026-10-16.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Eleven dead bean blocks removed from the bean store on 2026-10-16",
       "nodeKind": "retired-edges",
       "sourcePath": "fsh-guts/retired/bean-blocks-2026-10-16.md",
@@ -186,7 +187,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "bootstrap and bootstrap-tools as staged here — superseded by their own repositories",
       "nodeKind": "staged-copies",
       "sourcePath": "fsh-guts/retired/bootstrap-split.md",
@@ -199,7 +200,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/cat-harness-orphan-ig-tool-sidecars.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "kg-qa sidecars for three IG tools, orphaned in cat-harness when the tools moved to fhir-harness",
       "nodeKind": "orphaned-sidecar",
       "sourcePath": "fsh-guts/retired/cat-harness-orphan-ig-tool-sidecars.md",
@@ -212,7 +213,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/cat-harness-orphan-skill-instruction-pages.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "106 skill-instruction pages left in cat-harness for skills that moved to other instances",
       "nodeKind": "orphaned-generated-page",
       "sourcePath": "fsh-guts/retired/cat-harness-orphan-skill-instruction-pages.md",
@@ -224,7 +225,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/core-schema-duplicates.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Duplicates of folio-assistant-core's adjudication and materialization, left below it",
       "nodeKind": "duplicate-copies",
       "sourcePath": "fsh-guts/retired/core-schema-duplicates.md",
@@ -237,7 +238,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/detangle-schema-viewer.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "detangle's own schema viewer page — retired",
       "nodeKind": "retired",
       "sourcePath": "fsh-guts/retired/detangle-schema-viewer.md",
@@ -250,7 +251,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/external-schema-w3c-dcat-3.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "The w3c-dcat-3 external-schema record: cited ahead of use, retired when records began to need a user",
       "nodeKind": "retired-external-schema",
       "sourcePath": "fsh-guts/retired/external-schema-w3c-dcat-3.md",
@@ -263,7 +264,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/kg-export-folio-assistant-orphan-sidecar.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "kg-export sidecar for @litlfred/folio-assistant — an orphan no producer writes",
       "nodeKind": "orphaned-sidecar",
       "sourcePath": "fsh-guts/retired/kg-export-folio-assistant-orphan-sidecar.md",
@@ -276,7 +277,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/kg-qa-tools-tabular-sidecars.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Dead kg-qa sidecars for tabular-csv and tabular-xlsx",
       "nodeKind": "retired-sidecars",
       "sourcePath": "fsh-guts/retired/kg-qa-tools-tabular-sidecars.md",
@@ -288,7 +289,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/legacy-root-configs.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "The five root <name>.config.json files, retired when index.config.json became the checkout's one index",
       "nodeKind": "retired-configs",
       "sourcePath": "fsh-guts/retired/legacy-root-configs.md",
@@ -301,7 +302,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/library-orphaned-figure-blocks.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "182 library figure blocks that no section references any more",
       "nodeKind": "orphaned-generator-output",
       "sourcePath": "fsh-guts/retired/library-orphaned-figure-blocks.md",
@@ -315,7 +316,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/regen-orphans-2026-10-10.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Generated orphans dropped by the regeneration at folio-assistant#2529's pins",
       "nodeKind": "generated-orphans",
       "sourcePath": "fsh-guts/retired/regen-orphans-2026-10-10.md",
@@ -328,7 +329,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/regen-orphans-2026-10-11.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Generated orphans dropped by the regeneration at folio-assistant#2529's 2026-10-11 pins",
       "nodeKind": "generated-orphans",
       "sourcePath": "fsh-guts/retired/regen-orphans-2026-10-11.md",
@@ -341,7 +342,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/regen-orphans-2026-10-12.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Generated orphans dropped by the regeneration at folio-assistant#2529's 2026-10-12 pins",
       "nodeKind": "generated-orphans",
       "sourcePath": "fsh-guts/retired/regen-orphans-2026-10-12.md",
@@ -353,7 +354,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/remote-stubs-package.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "The `remote-stubs` package — five placeholder skill bodies, retired when the real ones arrived",
       "nodeKind": "retired-package",
       "sourcePath": "fsh-guts/retired/remote-stubs-package.md",
@@ -367,7 +368,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-capability-front-matter.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "The `capability:` field in SKILL front matter — 19 topic tags, read by nothing, naming no Capability",
       "nodeKind": "retired-field",
       "sourcePath": "fsh-guts/retired/skill-capability-front-matter.md",
@@ -381,7 +382,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-definition-roles.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "`SkillDefinition.roles` — retired",
       "nodeKind": "retired",
       "sourcePath": "fsh-guts/retired/skill-definition-roles.md",
@@ -393,7 +394,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-AGENTS.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skill-instructions page \"AGENTS\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-AGENTS.md",
@@ -406,7 +407,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-bootstrap-graph-emission.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skill-instructions page \"bootstrap-graph-emission\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-bootstrap-graph-emission.md",
@@ -419,7 +420,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-bootstrap-graph-publication.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skill-instructions page \"bootstrap-graph-publication\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-bootstrap-graph-publication.md",
@@ -432,7 +433,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-bootstrap-kg-navigation.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skill-instructions page \"bootstrap-kg-navigation\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-bootstrap-kg-navigation.md",
@@ -445,7 +446,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-confirm-harness.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skill-instructions page \"confirm-harness\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-confirm-harness.md",
@@ -458,7 +459,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-discussion.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skill-instructions page \"discussion\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-discussion.md",
@@ -471,7 +472,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-log-message.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skill-instructions page \"log-message\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-log-message.md",
@@ -484,7 +485,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-instructions-root-readme.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skill-instructions page \"root-readme\" — a generated page nothing regenerates any more",
       "nodeKind": "generated-page",
       "sourcePath": "fsh-guts/retired/skill-instructions-root-readme.md",
@@ -497,7 +498,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-package-front-matter.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "The `package:` field in SKILL front matter — 18 annotations, each restating its own directory",
       "nodeKind": "retired-field",
       "sourcePath": "fsh-guts/retired/skill-package-front-matter.md",
@@ -511,7 +512,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/skill-roles-front-matter.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "The `roles:` field in SKILL front matter — 288 annotations, no reader, born dangling",
       "nodeKind": "retired-field",
       "sourcePath": "fsh-guts/retired/skill-roles-front-matter.md",
@@ -525,7 +526,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/smart-base-legacy-agent-notes.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "smart-base's legacy agent notes and its Python-only Copilot instructions",
       "nodeKind": "retired-docs",
       "sourcePath": "fsh-guts/retired/smart-base-legacy-agent-notes.md",
@@ -537,7 +538,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/smart-base-smart-kg-pin.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "smart-base's pin of smart-kg: the external-schema record, its terms snapshot and the script that derived it",
       "nodeKind": "retired-code",
       "sourcePath": "fsh-guts/retired/smart-base-smart-kg-pin.md",
@@ -549,7 +550,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/translations-fr-agent-onboarding.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Agent onboarding — an English page in the French gettext directory",
       "nodeKind": "page",
       "sourcePath": "fsh-guts/retired/translations-fr-agent-onboarding.md",
@@ -562,7 +563,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/witness-pipeline.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "witness-pipeline.yml, retired: it could only run inside a folio checkout",
       "nodeKind": "retired-workflow",
       "sourcePath": "fsh-guts/retired/witness-pipeline.md",
@@ -573,8 +574,21 @@
       "body": "# witness-pipeline.yml — retired\n\n## What was retired\n\n`.github/workflows/witness-pipeline.yml`, kept verbatim at\n`retired/workflows/witness-pipeline.yml` on this branch.\n\n## Why\n\n- Measured 2026-10-05 (bean `1l13`): every step runs\n  `python3 folio-assistant/computations/<script>`; on platform `main` there are\n  0 files under that path, and both scripts it names live only in qou's\n  `computations/`. Dispatched here it would fail at the first script.\n- qou has an executable replacement for the refresh half: litlfred/qou#7514\n  (`processes/content/witness-refresh.bpmn` and the `witness-refresh-plan` Tool).\n- Owner, 2026-10-20, choosing among keep / move to folio_init templates / retire:\n  **\"Retire to fsh-guts\"**.\n\n## Left behind, on purpose\n\n`.github/workflows/build-clarabel-mpfr.yml` existed to publish a prebuilt\nbinary for this pipeline's \"Provision clarabel-MPFR binary\" step. It stays —\nits fate is its own decision, recorded on bean `1l13` — and its header now says\nits consumer was retired. Comments in cat-harness-tools\n(`trivial-skeleton-audit.ts`, `conditional-class-banner-audit.ts`,\n`audit-empty-corpus.test.ts`) still name this workflow as a caller."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/workflows/qou-shaped-workflows-2026-11-02.md",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
+      "name": "Three qou-shaped workflows, retired from folio-assistant: they build material only qou holds",
+      "nodeKind": "retired-workflow",
+      "sourcePath": "fsh-guts/retired/workflows/qou-shaped-workflows-2026-11-02.md",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/fsh-guts",
+      "movedOn": "2026-11-02",
+      "movedFrom": ".github/workflows/{snappea_wasm,hecke-engine-wasm,witness-refresh}.yml in litlfred/folio-assistant",
+      "issue": "2909",
+      "description": "snappea_wasm, hecke-engine-wasm and witness-refresh named folio-assistant/computations and folio-assistant/snappea-wasm, paths of the old monorepo checkout that separation:cutover:check flags. All three ran only by hand. Retired on the owner's choice Q-SEP-5 A (2026-11-02 10:05Z); kept verbatim beside this note. PENDING: the originals are still in fa. Removing them leaves stale exemptions in cat-harness-tools check-workflow-paths, so the removal waits for one post-MVP change with the tools list and fa's pin together (fa#2909 was narrowed to the lake-cache fix). publish.yml was archived too at first, then kept: cat-harness-tools tests treat it as the platform's reusable folio pipeline.",
+      "body": "# Three qou-shaped workflows retired from folio-assistant (2026-11-02)\n\nCopied verbatim from folio-assistant main at `41bbb14ed0`. **Pending:** the\noriginals are still in fa's `.github/workflows/`; their removal waits for a\npost-MVP change that also drops their exemptions from cat-harness-tools\n`check-workflow-paths` (FOLIO_PATHS, FOLIO_WORKDIRS). Part of fa#2894 Phase 2c.\n\n| file | why it cannot run in folio-assistant |\n|---|---|\n| `snappea_wasm.yml` | builds `folio-assistant/snappea-wasm`, absent since the split |\n| `hecke-engine-wasm.yml` | builds in `folio-assistant/computations`; that code lives in litlfred/qou |\n| `witness-refresh.yml` | regenerates witnesses in `folio-assistant/computations` (qou) |\n\nAll three were `workflow_dispatch` only. `publish.yml` stays in\nfolio-assistant: qou's `build.yml` calls it at a pinned sha, and\ncat-harness-tools tests treat it as the platform's reusable folio pipeline.\nSame treatment as `witness-pipeline.yml` (bean 52dz: dead workflows go here, never `rm`)."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/samples/xlg2-wpro-trial-original.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Sample-import trial: Publication and information products style guide",
       "nodeKind": "sample-import-trial",
       "sourcePath": "fsh-guts/samples/xlg2-wpro-trial-original.md",
@@ -585,7 +599,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/computations-refactor-fixers.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "The six computations-refactor fixers",
       "nodeKind": "script-group",
       "sourcePath": "fsh-guts/scripts/computations-refactor-fixers.md",
@@ -598,7 +612,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/extract-lean-blocks.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "extract-lean-blocks.py",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/extract-lean-blocks.md",
@@ -611,7 +625,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/fix-env-injection.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "fix_env_injection.py",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/fix-env-injection.md",
@@ -623,7 +637,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/generate-docs.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "generate-docs.ts",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/generate-docs.md",
@@ -637,7 +651,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/migrate-cluster-phase.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "migrate-cluster-phase.py",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/migrate-cluster-phase.md",
@@ -650,7 +664,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/special-branches.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "special-branches.json",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/special-branches.md",
@@ -664,7 +678,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/special-branches.test.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "special-branches.test.ts",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/special-branches.test.md",
@@ -678,7 +692,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/scripts/split-docs-page.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "split-docs-page.py",
       "nodeKind": "script",
       "sourcePath": "fsh-guts/scripts/split-docs-page.md",
@@ -691,7 +705,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/cat-harness-tools.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "cat-harness-tools/ (cat-harness-tools), as it left folio-assistant for https://github.com/litlfred/cat-harness-tools",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/cat-harness-tools.md",
@@ -718,7 +732,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/cat-harness.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "cat-harness/ (cat-harness), as it left folio-assistant for https://github.com/litlfred/cat-harness",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/cat-harness.md",
@@ -745,7 +759,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/fhir-harness.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "fhir-harness/ (fhir-harness), as it left folio-assistant for https://github.com/litlfred/fhir-harness",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/fhir-harness.md",
@@ -773,7 +787,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/folio-assistant-core.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "folio-assistant-core/ (folio-assistant-core), as it left folio-assistant for https://github.com/litlfred/folio-assistant-core",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/folio-assistant-core.md",
@@ -799,7 +813,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/folio-assistant-sci.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "folio-assistant-sci/ (folio-assistant-sci), as it left folio-assistant for https://github.com/litlfred/folio-assistant-sci",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/folio-assistant-sci.md",
@@ -827,7 +841,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/issue-marks.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "issue-marks/, as it left folio-assistant for branch cat/cat-harness/state",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/issue-marks.md",
@@ -846,7 +860,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/root-AGENTS.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "The root AGENTS.md of litlfred/folio-assistant, as it stood before it became a rendered file",
       "nodeKind": "retired-root-file",
       "sourcePath": "fsh-guts/separated/root-AGENTS.md",
@@ -863,7 +877,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/root-README.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "The root README.md of litlfred/folio-assistant, as it stood before it became a rendered file",
       "nodeKind": "retired-root-file",
       "sourcePath": "fsh-guts/separated/root-README.md",
@@ -880,7 +894,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-base.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "smart-base/ (smart-base), as it left folio-assistant for https://github.com/litlfred/smart-base",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/smart-base.md",
@@ -908,7 +922,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-ig.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "smart-ig/ (smart-ig), as it left folio-assistant for https://github.com/litlfred/smart-ig",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/smart-ig.md",
@@ -935,7 +949,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-immunizations.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "smart-immunizations/ (smart-immunizations), as it left folio-assistant for https://github.com/litlfred/smart-immunizations",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/smart-immunizations.md",
@@ -962,7 +976,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/smart-trust.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "smart-trust/ (smart-trust), as it left folio-assistant for https://github.com/litlfred/smart-trust",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/smart-trust.md",
@@ -990,7 +1004,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/todos.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "todos/, as it left folio-assistant for branch cat/cat-harness/todos and cat/cat-harness/state",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/todos.md",
@@ -1009,7 +1023,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/separated/who-iris.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "who-iris/ (who-iris), as it left folio-assistant for https://github.com/litlfred/who-iris",
       "nodeKind": "separated-instance",
       "sourcePath": "fsh-guts/separated/who-iris.md",
@@ -1037,7 +1051,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.07199v3.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2504.07199v3.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2504.07199v3.md",
@@ -1050,7 +1064,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.19675v2.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2504.19675v2.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2504.19675v2.md",
@@ -1063,7 +1077,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.21474v1.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2504.21474v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2504.21474v1.md",
@@ -1076,7 +1090,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2508.21620v2.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2508.21620v2.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2508.21620v2.md",
@@ -1089,7 +1103,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2602.12670v4.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2602.12670v4.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2602.12670v4.md",
@@ -1102,7 +1116,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2602.12670v4.pdf.extraction.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2602.12670v4.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/2602.12670v4.pdf.extraction.md",
@@ -1115,7 +1129,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2605.03537v1.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2605.03537v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2605.03537v1.md",
@@ -1128,7 +1142,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2606.04382v1.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2606.04382v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2606.04382v1.md",
@@ -1141,7 +1155,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.14456v1.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2607.14456v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2607.14456v1.md",
@@ -1154,7 +1168,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.20636v1.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2607.20636v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2607.20636v1.md",
@@ -1167,7 +1181,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.25032v1.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2607.25032v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2607.25032v1.md",
@@ -1180,7 +1194,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.25032v1.pdf.extraction.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2607.25032v1.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/2607.25032v1.pdf.extraction.md",
@@ -1193,7 +1207,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2608.08453v1.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2608.08453v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/2608.08453v1.md",
@@ -1206,7 +1220,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2608.08453v1.pdf.extraction.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "2608.08453v1.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/2608.08453v1.pdf.extraction.md",
@@ -1219,7 +1233,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240010567-eng.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "9789240010567-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789240010567-eng.md",
@@ -1232,7 +1246,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240081949-eng.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "9789240081949-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789240081949-eng.md",
@@ -1245,7 +1259,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240093362-eng.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "9789240093362-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789240093362-eng.md",
@@ -1258,7 +1272,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240120747-eng.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "9789240120747-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789240120747-eng.md",
@@ -1271,7 +1285,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789241509510_eng.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "9789241509510_eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789241509510_eng.md",
@@ -1284,7 +1298,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789241511766-eng.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "9789241511766-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789241511766-eng.md",
@@ -1297,7 +1311,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789241549912-eng.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "9789241549912-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789241549912-eng.md",
@@ -1310,7 +1324,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789241549912-webannexes-eng.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "9789241549912-webannexes-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789241549912-webannexes-eng.md",
@@ -1323,7 +1337,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789241549912-websupplement-eng.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "9789241549912-websupplement-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/9789241549912-websupplement-eng.md",
@@ -1336,7 +1350,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Agent Skill best practices - Gemini CLI.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.md",
@@ -1349,7 +1363,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.pdf.extraction.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Agent Skill best practices - Gemini CLI.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.pdf.extraction.md",
@@ -1362,7 +1376,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Agent-Skills-Google-Antigravity-Docs.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Agent Skills - Google Antigravity Docs.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Agent-Skills-Google-Antigravity-Docs.md",
@@ -1375,7 +1389,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/arxiv-0909.4061v2.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "arxiv-0909.4061v2.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/arxiv-0909.4061v2.md",
@@ -1388,7 +1402,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/arxiv-2202.02427v1.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "arxiv-2202.02427v1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/arxiv-2202.02427v1.md",
@@ -1401,7 +1415,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Best-Practices-Google-Antigravity-Docs.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Best Practices - Google Antigravity Docs.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Best-Practices-Google-Antigravity-Docs.md",
@@ -1414,7 +1428,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/deerwester-1990-indexing-by-lsa.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "deerwester-1990-indexing-by-lsa.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/deerwester-1990-indexing-by-lsa.md",
@@ -1427,7 +1441,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/dong-2025-doc-researcher.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "dong-2025-doc-researcher.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/dong-2025-doc-researcher.md",
@@ -1440,7 +1454,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/dusengumuremyi-2026-ai-mediated-raci.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "dusengumuremyi-2026-ai-mediated-raci.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/dusengumuremyi-2026-ai-mediated-raci.md",
@@ -1453,7 +1467,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Equipping agents for the real world with Agent Skills _ Anthropic.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.md",
@@ -1466,7 +1480,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.md",
@@ -1479,7 +1493,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/feng-2023-designing-with-language.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "feng-2023-designing-with-language.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/feng-2023-designing-with-language.md",
@@ -1492,7 +1506,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/gurel-tat-2017-swot-analysis.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "gurel-tat-2017-swot-analysis.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/gurel-tat-2017-swot-analysis.md",
@@ -1505,7 +1519,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Home-_-folio-assistant.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Home-_-folio-assistant.pdf",
       "nodeKind": "stray-upload",
       "sourcePath": "fsh-guts/uploads/Home-_-folio-assistant.md",
@@ -1519,7 +1533,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "landauer-foltz-laham-1998-intro-lsa.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.md",
@@ -1532,7 +1546,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/milnorlink.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "milnorlink.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/milnorlink.md",
@@ -1545,7 +1559,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "neubauer-2025-ai-assisted-schema-creation.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.md",
@@ -1558,7 +1572,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/omg-2024-spdx-3-0.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "omg-2024-spdx-3-0.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/omg-2024-spdx-3-0.md",
@@ -1571,7 +1585,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/PIIS2589750021000388-2.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "PIIS2589750021000388-2.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/PIIS2589750021000388-2.md",
@@ -1584,7 +1598,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.md",
@@ -1597,7 +1611,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/rfc2119-key-words-requirement-levels.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "rfc2119-key-words-requirement-levels.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/rfc2119-key-words-requirement-levels.md",
@@ -1610,7 +1624,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.md",
@@ -1623,7 +1637,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "sammut-bonnici-galea-2015-swot-analysis.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.md",
@@ -1636,7 +1650,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skill authoring best practices - Claude Platform Docs.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.md",
@@ -1649,7 +1663,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.pdf.extraction.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skill authoring best practices - Claude Platform Docs.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.pdf.extraction.md",
@@ -1662,7 +1676,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skills-in-OpenAI-API.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skills in OpenAI API.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/Skills-in-OpenAI-API.md",
@@ -1675,7 +1689,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skills-in-OpenAI-API.pdf.extraction.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "Skills in OpenAI API.pdf.extraction.json",
       "nodeKind": "extraction",
       "sourcePath": "fsh-guts/uploads/Skills-in-OpenAI-API.pdf.extraction.md",
@@ -1688,7 +1702,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/strauch-carbno-2025-spdx-3-1-supply-chain.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "strauch-carbno-2025-spdx-3-1-supply-chain.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/strauch-carbno-2025-spdx-3-1-supply-chain.md",
@@ -1701,7 +1715,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/w3c-2013-prov-o.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "w3c-2013-prov-o.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/w3c-2013-prov-o.md",
@@ -1714,7 +1728,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/w3c-2018-odrl-model-2-2.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "w3c-2018-odrl-model-2-2.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/w3c-2018-odrl-model-2-2.md",
@@ -1727,7 +1741,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/w3c-2020-json-ld-1-1.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "w3c-2020-json-ld-1-1.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/w3c-2020-json-ld-1-1.md",
@@ -1740,7 +1754,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "wang-rangaiah-2026-mcdm-aggregation.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.md",
@@ -1753,7 +1767,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/WHO-RHR-18.06-eng.md",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#FshGutsNode",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/FshGutsNode",
       "name": "WHO-RHR-18.06-eng.pdf",
       "nodeKind": "source",
       "sourcePath": "fsh-guts/uploads/WHO-RHR-18.06-eng.md",
@@ -1843,7 +1857,19 @@
       "reason": "not a node carrier (.gz): a node is markdown or JSON"
     },
     {
+      "path": "fsh-guts/retired/workflows/hecke-engine-wasm.yml",
+      "reason": "not a node carrier (.yml): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/retired/workflows/snappea_wasm.yml",
+      "reason": "not a node carrier (.yml): a node is markdown or JSON"
+    },
+    {
       "path": "fsh-guts/retired/workflows/witness-pipeline.yml",
+      "reason": "not a node carrier (.yml): a node is markdown or JSON"
+    },
+    {
+      "path": "fsh-guts/retired/workflows/witness-refresh.yml",
       "reason": "not a node carrier (.yml): a node is markdown or JSON"
     },
     {

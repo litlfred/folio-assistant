@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-style-guide.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/one-voice-style-guide",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "one-voice-style-guide",
       "title": "One-Voice Style Guide — Author Voice Profile",
       "description": "Author voice profile and narrative style guide. Reference when authoring or editing prose. Pairs with `one-voice-audit` (mechanical sweep for status leaks, emoji, and Unicode crashes).",

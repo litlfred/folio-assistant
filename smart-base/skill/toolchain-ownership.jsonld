@@ -3,16 +3,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/skill/toolchain-ownership.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
   "sameAs": "http://smart.who.int/base/skill/toolchain-ownership.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/skill/toolchain-ownership",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "toolchain-ownership",
       "title": "toolchain-ownership",
       "description": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",

@@ -38,7 +38,7 @@
   },
   "Task_Sushi": {
    "id": "Task_Sushi",
-   "name": "SUSHI compile → FHIR JSON",
+   "name": "Compile FSH to FHIR JSON",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Sushi",
    "lane": "Build pipeline — SUSHI · validator · IG Publisher",
@@ -318,8 +318,8 @@
    "name": "File QC findings as beans",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_QcBeans",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_WorkPlan",
+   "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Modeller",
    "skills": [
     {
      "name": "todo-manager",
@@ -327,17 +327,21 @@
     }
    ],
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../reference/skill-instructions/fhir-questionnaire-wireframe.html"
      },
      {
-      "name": "todo-manager",
-      "href": "../../../reference/skill-instructions/todo-manager.html"
+      "name": "l3-fhir-authoring",
+      "href": "../../../reference/skill-instructions/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../reference/skill-instructions/pcf-consent.html"
      }
     ]
    }

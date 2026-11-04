@@ -2,17 +2,11 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Scaffold.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Scaffold",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "3 · Scaffold the folio repo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Scaffold the folio repo",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
@@ -24,10 +18,10 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A03"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A06"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A04"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A07"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
     }

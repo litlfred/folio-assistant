@@ -22,7 +22,7 @@
   }
   // pdf.js dispatches this on PARENT.document when the frame is same-origin
   // with its host page, and on its own document otherwise — measured at
-  // v6.4.299, `webViewerLoad`. An embed on this site is exactly the
+  // v6.4.299 and v6.5.438, `webViewerLoad`. An embed on this site is exactly the
   // same-origin case, so listening on `document` alone never fires.
   var done = false;
   function onLoaded(e) {

@@ -2,17 +2,11 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/A_RecordKg.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/A_RecordKg",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Run placement, and raise a bean for the authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Run placement, file a bean",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff",
@@ -21,8 +15,7 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/placement"
       ],
-      "touchesWorkPlan": true,
-      "workPlanOp": "note",
+      "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff#flow/SF_Kg_3"

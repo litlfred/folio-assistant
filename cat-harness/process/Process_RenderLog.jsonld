@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Render log — the publish branch keeps its own history",
       "summary": "Every change to the publish branch appends an entry to `_render-log/<day>.jsonl`.",
       "description": "Every change to the publish branch appends an entry to `_render-log/<day>.jsonl`. A removal is a NEW entry, never the erasure of the `rendered` one before it — the pair is the history. The lane is the build pipeline because every writer is a workflow job; no agent decides what goes in this log. A system lane runs a fixed program and exercises no judgement, which is exactly what an append-only log wants.\n\nThe question it exists to answer: what happened to STAGING/<slug>, and why. Bean `plj1` is why it is needed — a full-replace deploy silently deleted every open PR's preview, for months, and the publish branch kept no record of its own changes. The publish branch has several publishers and one of them replaces the whole branch, which is why a removed preview needs a record of its own.",
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/Start_Process_RenderLog",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/GW_What",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "deploy",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/GW_What",
@@ -49,7 +43,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "takedown",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/GW_What",
@@ -58,7 +52,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "full-replace deploy",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/GW_What",
@@ -67,7 +61,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/A_Preflight",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/GW_Live",
@@ -75,7 +69,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes — refuse",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/GW_Live",
@@ -84,7 +78,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/GW_Live",
@@ -93,7 +87,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/A_LogRemoved",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/A_Remove",
@@ -101,7 +95,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/A_LogRendered",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/End_Process_RenderLog",
@@ -109,7 +103,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/A_LogRetained",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/End_Process_RenderLog",
@@ -117,7 +111,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/A_Remove",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/End_Process_RenderLog",
@@ -125,7 +119,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog#flow/SF_Process_RenderLog_12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/A_LogRestored",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog/node/End_Process_RenderLog",

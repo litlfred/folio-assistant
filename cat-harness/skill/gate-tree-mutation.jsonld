@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/gate-tree-mutation.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/gate-tree-mutation",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "gate-tree-mutation",
       "title": "\"NOT clean\" is a verdict about the RUN, not about your diff",
       "description": "Reading `bun run cat gates`' \"NOT clean\" verdict. Why every gate can pass and the run still exit 1, the two causes and how to tell them apart in one command, and the question that settles whether a churning field is a defect in the writer: does it describe the SUBJECT or the RUN?",

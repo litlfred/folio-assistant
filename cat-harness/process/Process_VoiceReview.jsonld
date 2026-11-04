@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Voice overlay review",
       "summary": "The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated exception.",
       "description": "The voice axis: load whichever editorial voices are active, run each rule's mechanical half, and decide — for each finding — whether the prose is wrong, the rule does not apply to this content, or this block is a stated exception.\n\nYou are in this process after the base voice has been adjudicated, and only if a voice is active at all: the first gateway ends the process honestly when none is, rather than reporting a clean review of nothing.\n\nThree outcomes, all legitimate, and the third is the one that needs recording: an exception without a reviewer entry is indistinguishable from a rule nobody ran. There is also a fourth path the diagram draws deliberately — if the rule's own citation does not support it, the RULE is the defect, and that becomes a bean rather than a finding against the prose.",
@@ -22,8 +16,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Start_BaseVoiceDone"
       ],
-      "nodeCount": 12,
-      "flowCount": 13,
+      "nodeCount": 13,
+      "flowCount": 14,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Start_BaseVoiceDone",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_AnyActive",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "none",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_AnyActive",
@@ -49,7 +43,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "one or more",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_AnyActive",
@@ -58,7 +52,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_LoadActive",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_MechanicalHalf",
@@ -66,7 +60,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_MechanicalHalf",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_OpenCitation",
@@ -74,7 +68,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_OpenCitation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_QuoteSupports",
@@ -82,7 +76,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_QuoteSupports",
@@ -91,7 +85,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_QuoteSupports",
@@ -100,23 +94,31 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_RuleIsWrong",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices_Join",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_Adjudicate",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/Flow_GW_MoreVoices_Join",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices_Join",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices",
@@ -125,7 +127,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices",
@@ -134,7 +136,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/F_V13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/Task_RecordOnSidecar",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/End_VoiceReviewed",

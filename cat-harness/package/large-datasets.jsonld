@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/large-datasets.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/large-datasets",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/SkillPackage",
       "name": "large-datasets",
       "version": "0.1.0",
       "description": "Taking a usable subset of a corpus this instance will never hold, and refreshing it. Named here rather than inferred from the directory: every instance's skills live in a directory called `skills`, so a package id taken from the basename collides with every other one. See bean `nlvl` for the measurement and `bootstrap/skills` for the precedent this follows.",

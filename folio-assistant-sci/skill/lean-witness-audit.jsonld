@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-witness-audit.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-witness-audit",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "lean-witness-audit",
       "title": "Lean Witness Audit Skill",
       "description": "Audit computation scripts (typically Python) that produce witness statements for Lean formalization. Verify witnesses are complete, self-documenting, use paper notation, link to a content block, and emit Lean-compatible declarations. Detects staleness via script content hash and git commit SHA.",

@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adopt-methodology-from-source.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adopt-methodology-from-source",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "adopt-methodology-from-source",
       "title": "Adopt a methodology from a source document",
       "description": "The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/library/methodology-from-source.bpmn.",

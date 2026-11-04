@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/library/decisions/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/decision/materialization-gate/Decision_MaterializationGate",
+      "@type": "cat-harness:Decision",
+      "conformsTo": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dmn-1.3",
+      "hitPolicy": "FIRST",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "name": "All five answered, none refused?",
+      "sourcePath": "processes/library/decisions/materialization-gate.dmn"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/processes"
+  ],
+  "name": "processes/library/decisions",
+  "path": "processes/library/decisions/"
+}

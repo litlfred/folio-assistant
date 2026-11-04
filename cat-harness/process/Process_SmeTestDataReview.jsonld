@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "SME Review of Decision Support and Indicator Test Data",
       "summary": "SME review of fixed test data for clinical or scientific decision support and indicator definitions.",
       "description": "SME review of fixed test data for clinical or scientific decision support and indicator definitions. It runs on its caller's bean (Process_TestDataCuration calls it), so it opens and closes none: every step that touches the plan notes on it.\n\nTWO UNITS OF REVIEW (`SmeCaseVerdictKind`, `$schema: \"sme-case-verdict/1.0.0\"` in `schemas/sdlc/test-data.ts`):\n- `decision-support`: the unit of review is a **worked case** (`case`: input state, `decisionLogicRef`, `systemOutput`, optional `expectedGuidance`).\n- `indicator-definition`: the unit of review is a **cohort plus an expected value** (`cohort`: `indicatorRef`, `populationSize`, `inputs`, `expectedValue`, `computedValue`, optional `period`, `numerator`, `denominator`).\n\nJUDGEMENT-ONLY SME LANE. `Lane_SME` binds `clinical-sme`, which is declared `judgementOnly: true` in `scenarios/roles.json`. `Task_SmeJudge` carries no skill reference because no mechanical procedure yields the clinical or scientific answer — that is the whole reason a person is in the lane.\n\nATTRIBUTABLE REVIEWER AND DATE. `Task_RecordCaseVerdict` writes the `sme-case-verdict/1.0.0` node with the SME's attributable human identity (`reviewer: { kind: \"human\", provider, handle, role }`) and ISO-8601 review date (`reviewedAt`), because an audited review without an attributable reviewer and date is not audited.",
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Start_SmeReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/GW_SubjectKind",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_DecisionSupport",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "decision-support",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/GW_SubjectKind",
@@ -49,7 +43,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_Indicator",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "indicator-definition",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/GW_SubjectKind",
@@ -58,7 +52,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_PrepareWorkedCase",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/GW_ReadyForSme",
@@ -66,7 +60,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_PrepareCohort",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/GW_ReadyForSme",
@@ -74,7 +68,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/GW_ReadyForSme",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge",
@@ -82,7 +76,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_RecordCaseVerdict",
@@ -90,7 +84,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_RecordCaseVerdict",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/GW_VerdictOutcome",
@@ -98,7 +92,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_Pass",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "pass",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/GW_VerdictOutcome",
@@ -107,7 +101,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview#flow/Flow_Revise",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "fail or needs-revision",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/GW_VerdictOutcome",

@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/folio.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/folio",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "folio",
       "path": "folio/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/folio"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/folio"
       ],
       "description": "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop.",
       "readmePath": "folio/README.md",

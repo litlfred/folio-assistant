@@ -4,9 +4,9 @@
     "dcterms": "http://purl.org/dc/terms/",
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns#",
-    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns#",
-    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns#",
+    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/",
     "label": "rdfs:label",
     "prefLabel": "skos:prefLabel",
     "altLabel": "skos:altLabel",
@@ -31,18 +31,18 @@
       "@type": "@id"
     },
     "usage": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#hasLaneUsage",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/hasLaneUsage",
       "@type": "@id"
     },
     "ofConcept": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#ofConcept",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/ofConcept",
       "@type": "@id"
     },
     "inProcess": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#inProcess",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/inProcess",
       "@type": "@id"
     },
-    "performerVaries": "https://litlfred.github.io/cat-harness/v0/ns#performerVaries"
+    "performerVaries": "https://litlfred.github.io/cat-harness/v0/ns/performerVaries"
   },
   "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld",
   "@type": "skos:ConceptScheme",
@@ -69,7 +69,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_CompleteInitialization/Lane_BootstrappingAgent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/role/bootstrapping-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization",
       "label": "Bootstrapping Agent",
@@ -78,7 +78,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_Discussion/Lane_BootstrappingAgent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/role/bootstrapping-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_Discussion",
       "label": "Bootstrapping Agent",
@@ -87,7 +87,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_InitializeHarness/Lane_BootstrappingAgent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/role/bootstrapping-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_InitializeHarness",
       "label": "Bootstrapping Agent",
@@ -101,29 +101,7 @@
       "title": "Knowledge Graph Data Store",
       "notation": "knowledge-graph-data-store",
       "definition": "A git repository, reached either through the git CLI or through a forge's API. It is where a declaration and its graph are READ from and where a new instance's declaration is WRITTEN to. It holds and serves, and takes no part in deciding what should happen. Its skill is its contract, `knowledge-graph-data-store`: what it must serve and keep, which a test can check (owner, 2026-10-16).",
-      "inScheme": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld",
-      "usage": [
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_CompleteInitialization/Lane_DataStore",
-        "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_InitializeHarness/Lane_DataStore"
-      ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_CompleteInitialization/Lane_DataStore",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/role/knowledge-graph-data-store",
-      "inProcess": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization",
-      "label": "Knowledge Graph Data Store",
-      "scopeNote": "The Knowledge Graph Data Store: the repository and its siblings, played by a mechanical Actor whose contract is to serve what is committed (skill knowledge-graph-data-store). The declarations are read here once, at the start, and the steps come from what they say rather than from anybody's memory of what a harness needs.",
-      "source": "bootstrap/processes/complete-initialization.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_InitializeHarness/Lane_DataStore",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/role/knowledge-graph-data-store",
-      "inProcess": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_InitializeHarness",
-      "label": "Knowledge Graph Data Store",
-      "scopeNote": "The Knowledge Graph Data Store: the location itself, played by a mechanical Actor whose contract is to serve what is committed (skill knowledge-graph-data-store). Whether it already carries a declaration at its root — already an instance — and, if not, where its chosen harness's own instructions live at the predetermined path, are both read here before the Bootstrapping Agent writes anything.",
-      "source": "bootstrap/processes/initialize-harness.bpmn"
+      "inScheme": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/role/requestor",
@@ -139,7 +117,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_HumanAgentDiscussion/Lane_Requestor",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/role/requestor",
       "inProcess": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_HumanAgentDiscussion",
       "label": "Requestor",
@@ -160,7 +138,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_LogMessage/Lane_Logger",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/role/logger",
       "inProcess": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_LogMessage",
       "label": "Logger",
@@ -180,7 +158,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_HumanAgentDiscussion/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_HumanAgentDiscussion/lane/Lane_Agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_HumanAgentDiscussion",
       "label": "Agent",
@@ -200,7 +178,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap-glossary.jsonld#glossary-usage/Process_LogMessage/Lane_Actor",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_LogMessage/lane/Lane_Actor",
       "inProcess": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_LogMessage",
       "label": "Actor",

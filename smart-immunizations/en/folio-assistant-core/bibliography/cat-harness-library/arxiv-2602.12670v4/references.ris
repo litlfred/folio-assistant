@@ -1,0 +1,19 @@
+TY  - JOUR
+ID  - arxiv-2602.12670v4
+AU  - Li1, Xiangyi
+AU  - *
+AU  - Liu1, Yimin
+AU  - 2
+AU  - *
+AU  - Chen3, Wenbo
+AU  - *
+AU  - †
+AU  - You1, Bingran
+AU  - 4
+AU  - *
+AU  - Di5, Zonglin
+AU  - ‡
+TI  - SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks
+UR  - https://arxiv.org/abs/2602.12670
+AB  - Agent Skills are structured packages of procedural knowledge that augment large language model (LLM) agents at inference time. Despite rapid adoption, there is no standard way to measure whether they actually help. We present SKILLSBENCH, a benchmark whose current inventory contains 87 tasks across 8 domains paired with curated Skills and deterministic verifiers. Our latest aggregate evaluation runs the 87-task benchmark under matched no-Skills and curated-Skills conditions for 18 model–harness configurations. Curated Skills raise the average pass rate from 33.9% to 50.5% (+16.6 percentage points; 25.5% normalized gain), with configuration-level gains ranging from +4.1 to +25.7 pp. Focused Skills with at most three modules outperform larger or exhaustive bundles, and smaller models with Skills can match larger models without them. SKILLSBENCH establishes paired evaluation as the foundation for rigorous measurement of Skill efficacy on agentic, expertise-heavy work. Skills applications Agent Harness Operating Systems Models CPUs Gemini 3.1 Flash Lite (OH) MiniMax M2.7 (OH) GPT-5.4 Mini (OH) Grok 4.3 (OH) DeepSeek V4 Flash (OH) Claude Sonnet 4.6 (OH) Gemini 3.5 Flash (OH) DeepSeek V4 Pro (OH) Gemini 3.1 Pro (OH) MiniMax M3 (OH) Claude Opus 4.7 (OH) Kimi K2.6 (OH) Claude Opus 4.8 (OH) GLM 5.1 (OH) Gemini 3.1 Pro (GCLI) Claude Opus 4.7 (CC) GPT-5.5 (Codex) GPT-5.5 (OH) 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 Resolution Rate No Skills Skill Lift OpenAI Anthropic Google DeepSeek Moonshot Zhipu MiniMax xAI Skills applications Agent Harness Operating Systems Models CPUs Figure 1: Agent architecture stack and resolution rates across 18 model–harness configurations on 87 SkillsBench tasks. Each bar stacks the no-Skills baseline and curated-Skills lift; open/filled interval markers denote 95% CIs for the baseline/total. Bars are ordered by Curated-Skills pass rate and colored by model family. Harness abbreviations: OH = OpenHands, CC = Claude Code, GCLI = Gemini CLI. 1BenchFlow, 2OSU,
+ER  - 

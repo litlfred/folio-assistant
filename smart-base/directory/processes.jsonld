@@ -3,16 +3,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/directory/processes.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
   "sameAs": "http://smart.who.int/base/directory/processes.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/directory/processes",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "processes",
       "path": "methodologies/processes/",
       "contentSource": {
@@ -20,7 +14,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/processes"
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes"
       ],
       "description": "The executable half of this layer's methodologies -- `diig-investment-path.bpmn` renders DIIG's own nine chapters as a process with its two progress checks as gateways. A SEPARATE declaration from `methodologies/` even though it nests inside it, because `processes` and `methodology` are different graph typologies and a directory entry names one graph: the prose node says what the method IS, the diagram says how it RUNS. Bean `x4v4` raised whether `methodologies/` is a graph or a folder; this follows the shape already on main, where `methodology-crdm-processes` is declared beside `methodologies/` rather than inferred from it. Issue #877, bean `qnvy`.",
       "readmePath": "methodologies/processes/README.md",

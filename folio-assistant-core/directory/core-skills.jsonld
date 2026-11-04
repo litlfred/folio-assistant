@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "core-skills",
       "path": "skills/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/skills"
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/skills"
       ],
       "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
       "readmePath": "skills/README.md",

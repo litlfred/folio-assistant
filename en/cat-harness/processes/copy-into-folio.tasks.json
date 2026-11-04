@@ -70,7 +70,7 @@
   },
   "Task_ProbeWriteCapability": {
    "id": "Task_ProbeWriteCapability",
-   "name": "Probe write capability (git-push, github-api, github-connector)",
+   "name": "Probe write capability",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_ProbeWriteCapability",
    "lane": "Authoring agent",
@@ -307,7 +307,7 @@
   },
   "Task_InspectReadOnly": {
    "id": "Task_InspectReadOnly",
-   "name": "Browse in place and emit KgAsset snippet (read-only)",
+   "name": "Browse in place, emit a KgAsset snippet",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_InspectReadOnly",
    "lane": "Folio author",
@@ -372,7 +372,7 @@
   },
   "Task_ReadUpstreamAsset": {
    "id": "Task_ReadUpstreamAsset",
-   "name": "Read upstream asset and origin — write nothing",
+   "name": "Read the upstream asset (no writes)",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_ReadUpstreamAsset",
    "lane": "Source knowledge graph — read-only",
@@ -646,7 +646,7 @@
   },
   "Task_StampAssetSource": {
    "id": "Task_StampAssetSource",
-   "name": "Stamp KgAsset.source { instance, path, ref }",
+   "name": "Stamp the asset's source",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_StampAssetSource",
    "lane": "Authoring agent",
@@ -887,7 +887,7 @@
   },
   "Task_ValidateDeclaredAsset": {
    "id": "Task_ValidateDeclaredAsset",
-   "name": "Validate declared asset and provenance (check:declared-assets)",
+   "name": "Validate the asset and provenance",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_ValidateDeclaredAsset",
    "lane": "Validation pipeline",

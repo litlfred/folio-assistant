@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-detangle.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-detangle",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "bpmn-detangle",
       "title": "bpmn-detangle",
       "description": "Make a BPMN diagram readable at 100% without zooming, and untangle it: keep it inside the size budget, give every label a place clear of other labels, flows and boxes, remove crossings, and swap lanes when another order makes the flows between lanes shorter. Run before and after every diagram edit.",
@@ -19,7 +13,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/package/workflow"
       ],
       "instructionsPath": "skills/process/workflow/bpmn-detangle.md",
-      "instructionLines": 120,
+      "instructionLines": 125,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

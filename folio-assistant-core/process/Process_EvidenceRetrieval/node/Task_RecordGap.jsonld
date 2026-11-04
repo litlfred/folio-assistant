@@ -2,22 +2,16 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordGap.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordGap",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Record the evidence gap",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
-      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_WorkPlan",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
       "requires": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager"
       ],

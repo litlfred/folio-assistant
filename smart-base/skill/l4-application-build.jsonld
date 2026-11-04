@@ -3,16 +3,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/skill/l4-application-build.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
   "sameAs": "http://smart.who.int/base/skill/l4-application-build.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/skill/l4-application-build",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "l4-application-build",
       "title": "l4-application-build",
       "description": "Stage 8b of smart-guideline-end-to-end: build the consuming application against the stage-6 IG build (a clean build, not a publication), from the brief and the chosen stage-8a wireframes, with conformance tests from the IG's examples and test cases and a walk through each L2 user scenario it serves. Read before building an L4 application on a guideline.",

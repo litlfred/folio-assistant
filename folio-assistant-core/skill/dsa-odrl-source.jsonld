@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "dsa-odrl-source",
       "title": "`dsa-odrl-source` — Make the ODRL Agreement cite the legal text distribution (P2.3)",
       "description": "Bind a computable Data Sharing Agreement's W3C ODRL 2.2 `Agreement` to its signed legal text distribution using DCMI Metadata Terms `dcterms:source`, naming the exact `dcat:Distribution` whose `spdx:checksum` is checked (DSA building block B3, process step P2.3 `Task_OdrlCitesText`).",

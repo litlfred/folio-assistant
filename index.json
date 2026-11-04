@@ -1,21 +1,21 @@
 {
   "@context": {
-    "name": "https://litlfred.github.io/cat-harness/v0/ns#name",
-    "stub": "https://litlfred.github.io/cat-harness/v0/ns#stub",
-    "title": "https://litlfred.github.io/cat-harness/v0/ns#title",
-    "description": "https://litlfred.github.io/cat-harness/v0/ns#description",
-    "version": "https://litlfred.github.io/cat-harness/v0/ns#version",
-    "path": "https://litlfred.github.io/cat-harness/v0/ns#path",
-    "nodes": "https://litlfred.github.io/cat-harness/v0/ns#nodes",
-    "bytes": "https://litlfred.github.io/cat-harness/v0/ns#bytes",
-    "sha256": "https://litlfred.github.io/cat-harness/v0/ns#sha256",
+    "name": "https://litlfred.github.io/cat-harness/v0/ns/name",
+    "stub": "https://litlfred.github.io/cat-harness/v0/ns/stub",
+    "title": "https://litlfred.github.io/cat-harness/v0/ns/title",
+    "description": "https://litlfred.github.io/cat-harness/v0/ns/description",
+    "version": "https://litlfred.github.io/cat-harness/v0/ns/version",
+    "path": "https://litlfred.github.io/cat-harness/v0/ns/path",
+    "nodes": "https://litlfred.github.io/cat-harness/v0/ns/nodes",
+    "bytes": "https://litlfred.github.io/cat-harness/v0/ns/bytes",
+    "sha256": "https://litlfred.github.io/cat-harness/v0/ns/sha256",
     "dependsOn": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#dependsOn",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/dependsOn",
       "@type": "@id",
       "@container": "@set"
     },
     "directory": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#directory",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/directory",
       "@container": "@set"
     },
     "graphTypologies": {
@@ -23,24 +23,24 @@
       "@container": "@set"
     },
     "subgraph": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#hasSubgraph",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/hasSubgraph",
       "@type": "@id"
     },
     "url": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#contentUrl",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/contentUrl",
       "@type": "@id"
     },
     "hasHarness": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#hasMember",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/hasMember",
       "@container": "@set"
     }
   },
   "@id": "https://litlfred.github.io/folio-assistant/index.jsonld",
-  "@type": "https://litlfred.github.io/bootstrap/v0/ns#KnowledgeGraph",
+  "@type": "https://litlfred.github.io/bootstrap/v0/ns/KnowledgeGraph",
   "hasHarness": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "bootstrap",
       "stub": "bootstrap",
       "url": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld",
@@ -85,13 +85,13 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/bootstrap/subgraph/",
-      "nodes": 336,
-      "bytes": 176336,
-      "sha256": "3660b9c47c9aaadd2f4d01605ed8347739c4b388481dab3450e9c5a4ecf85230"
+      "nodes": 170,
+      "bytes": 107204,
+      "sha256": "6a0897bbf31544ed2e62cc6ccd89b361be9308af7186093fec3399861a74f3fb"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "bootstrap-tools",
       "stub": "bootstrap-tools",
       "url": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld",
@@ -139,13 +139,13 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/bootstrap-tools/subgraph/",
-      "nodes": 83,
-      "bytes": 71981,
-      "sha256": "2ff4568253e8ecc3ee648c29135d1a578cb080a4b3d2bd16ca597f8fc9c7fc2f"
+      "nodes": 44,
+      "bytes": 54684,
+      "sha256": "ef655afba2cf9be3f7919056c49a7951bab9beda99e17e3d65c9d0e44fc37adf"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "cat-harness",
       "stub": "cat-harness",
       "url": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
@@ -442,13 +442,13 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/",
-      "nodes": 8070,
-      "bytes": 5136598,
-      "sha256": "79df992a2b0d361494c176cd94fd9214c1e45c63558348fa47c5ddd77950ad51"
+      "nodes": 3194,
+      "bytes": 3215434,
+      "sha256": "fb1319c76a16a0d50957bba0ec7bbb629820b32432fab68d141bcce8b5309243"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "cat-harness-tools",
       "stub": "cat-harness-tools",
       "url": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
@@ -627,13 +627,13 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness-tools/",
-      "nodes": 64,
-      "bytes": 61299,
-      "sha256": "64fbe5338367ad40afe83e4ae7ca803df12a63f56909bffc87491de5845434c6"
+      "nodes": 38,
+      "bytes": 50386,
+      "sha256": "1d756d53315b4866cf1e89d0fe4ae48d6c4206e2328c3cc40df46395772666a1"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "fhir-harness",
       "stub": "fhir-harness",
       "url": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
@@ -751,13 +751,13 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/",
-      "nodes": 473,
-      "bytes": 396756,
-      "sha256": "b9a0ffa9df358cba7d203a1080bedbac8d053695b418f8a0cfeca3972a8dfd60"
+      "nodes": 257,
+      "bytes": 306328,
+      "sha256": "5e665b5428c61d3740c63cd8f61a45b6835fe5a1d2c699031eafd519767648a4"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "folio-assistant-core",
       "stub": "folio-assistant-core",
       "url": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
@@ -968,13 +968,13 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/",
-      "nodes": 1961,
-      "bytes": 1467370,
-      "sha256": "cd7b5a2a83129de380b5da2c9477e35a762f341d00eddcb7010c12f955af1006"
+      "nodes": 1082,
+      "bytes": 1117879,
+      "sha256": "92775c3d162d8562398b3b7df6e149185fc1c80c3c841c739de53ef4f3c06a6f"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "folio-assistant-sci",
       "stub": "folio-assistant-sci",
       "url": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
@@ -1161,13 +1161,13 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-sci/",
-      "nodes": 398,
-      "bytes": 338807,
-      "sha256": "14f9d3302e51c1843b4cbcdcef3139685d1368f9e9342b35e4078d685428c408"
+      "nodes": 217,
+      "bytes": 258752,
+      "sha256": "0c9c1f9e22a101262b0bc6d4201f98f851f78fc82818b6ec6a53f24323f7273c"
     },
     {
       "@id": "http://smart.who.int/base/smart-base.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "smart-base",
       "stub": "smart-base",
       "url": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
@@ -1343,6 +1343,13 @@
           ]
         },
         {
+          "name": "smart-base-templates",
+          "path": "templates/",
+          "graphTypologies": [
+            "code"
+          ]
+        },
+        {
           "name": "smart-base-kg",
           "path": "kg/",
           "graphTypologies": [
@@ -1379,13 +1386,13 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/",
-      "nodes": 672,
-      "bytes": 420858,
-      "sha256": "2e2d559b8faaad2f1050020bb3f1d498016e4f9ef781c53d8142dc80b1b1d02e"
+      "nodes": 465,
+      "bytes": 402026,
+      "sha256": "f93797dd38fc5769da1a74d872a4aa557fc07e02e669c76594bebd2fedc0a4f2"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "smart-immunizations",
       "stub": "smart-immunizations",
       "url": "https://litlfred.github.io/folio-assistant/smart-immunizations/smart-immunizations.jsonld",
@@ -1437,15 +1444,22 @@
           "graphTypologies": [
             "qa"
           ]
+        },
+        {
+          "name": "smart-immunizations-catalogue",
+          "path": "catalogue/",
+          "graphTypologies": [
+            "catalogue"
+          ]
         }
       ],
-      "nodes": 22,
-      "bytes": 33548,
-      "sha256": "2a4b494f10c22e69b838caf118e64a1b1309a20fb29e2793bb20120f7575792b"
+      "nodes": 16,
+      "bytes": 31734,
+      "sha256": "e155a56b57f8914b2a9b34b48c7056bbe37fdf3ad8495f106a09711d13f4eda7"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "smart-trust",
       "stub": "smart-trust",
       "url": "https://litlfred.github.io/folio-assistant/smart-trust/smart-trust.jsonld",
@@ -1491,15 +1505,43 @@
             "docs",
             "ig-pages"
           ]
+        },
+        {
+          "name": "library",
+          "path": "library/",
+          "graphTypologies": [
+            "library"
+          ]
+        },
+        {
+          "name": "smart-trust-catalogue",
+          "path": "catalogue/",
+          "graphTypologies": [
+            "catalogue"
+          ]
+        },
+        {
+          "name": "glossary",
+          "path": "glossary/",
+          "graphTypologies": [
+            "glossary"
+          ]
+        },
+        {
+          "name": "smart-trust-translations",
+          "path": "translations/",
+          "graphTypologies": [
+            "translation-sources"
+          ]
         }
       ],
-      "nodes": 20,
-      "bytes": 30602,
-      "sha256": "5dfe04796268cf974d476bd9e27c1eb7f378a16bdd5bdcbf12ea814f2ecbef53"
+      "nodes": 21,
+      "bytes": 33878,
+      "sha256": "12f0343f52398350e431066afdc07cf1a143def2e71634b5056d238fd017a890"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/smart-trust-phw.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "smart-trust-phw",
       "stub": "smart-trust-phw",
       "url": "https://litlfred.github.io/folio-assistant/smart-trust-phw/smart-trust-phw.jsonld",
@@ -1554,13 +1596,13 @@
           ]
         }
       ],
-      "nodes": 23,
-      "bytes": 29957,
-      "sha256": "3d7fe31529279a63417bc8c1dc66774e57a240c97fb2f479205e96b8e10868e2"
+      "nodes": 15,
+      "bytes": 26455,
+      "sha256": "c0c465f24a1540bc364c4ef3bc6a47251a2bf9a0b0f9249a8a82a8f9bcbfc9e1"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Harness",
       "name": "who-iris",
       "stub": "who-iris",
       "url": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
@@ -1706,9 +1748,9 @@
         }
       ],
       "subgraph": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/",
-      "nodes": 325,
-      "bytes": 226280,
-      "sha256": "6f045fcb6bdadaf18cdbed290063d56bec81751808a4642054292ea16988798e"
+      "nodes": 169,
+      "bytes": 164215,
+      "sha256": "116ecafd9348777f43896ca4d444bc5ca4930c67e6f8ab13165b306d881e6349"
     }
   ]
 }

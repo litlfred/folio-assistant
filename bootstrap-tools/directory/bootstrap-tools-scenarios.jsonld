@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-scenarios.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-scenarios",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "bootstrap-tools-scenarios",
       "path": "scenarios/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/scenarios"
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios"
       ],
       "title": "The toolset's Roles",
       "description": "`roles.json`: the Roles the toolset's Processes bind their lanes to. The Site Publisher, who renders, deploys, checks and reports; and GitHub Pages, the host, acted upon.",

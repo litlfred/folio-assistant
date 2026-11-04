@@ -2,19 +2,13 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Evidence for a recommendation",
-      "summary": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap.",
-      "description": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap. The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here.",
+      "summary": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap; a change that states or alters no recommendation ends at its own event before any search.",
+      "description": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap; a change that states or alters no recommendation ends at its own event before any search. The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here.",
       "enforcement": "strict",
       "sourcePath": "processes/content/evidence-retrieval.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/evidence-retrieval.bpmn",
@@ -22,21 +16,39 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/StartEvent_Recommendation"
       ],
-      "nodeCount": 17,
-      "flowCount": 19,
+      "nodeCount": 19,
+      "flowCount": 21,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_01",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/StartEvent_Recommendation",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RecommendationInPlay",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_RecYes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RecommendationInPlay",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_ReviewExisting",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_RecNo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RecommendationInPlay",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_NoRecommendation",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_02",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_ReviewExisting",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_FramePico",
@@ -44,7 +56,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_03",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_FramePico",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RetrievalFork",
@@ -52,7 +64,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_04",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RetrievalFork",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L1Sources",
@@ -60,7 +72,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_05",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RetrievalFork",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L2L3Content",
@@ -68,7 +80,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_06",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RetrievalFork",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_DataRepos",
@@ -76,7 +88,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_07",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L1Sources",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RetrievalJoin",
@@ -84,7 +96,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_08",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L2L3Content",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RetrievalJoin",
@@ -92,7 +104,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_09",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_DataRepos",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RetrievalJoin",
@@ -100,7 +112,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RetrievalJoin",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_VerifyAuthority",
@@ -108,7 +120,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_VerifyAuthority",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_Authoritative",
@@ -116,7 +128,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_Authoritative",
@@ -125,7 +137,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_Authoritative",
@@ -134,7 +146,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_14",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordUnverified",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AppraiseGrade",
@@ -142,7 +154,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_15",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AppraiseGrade",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_Sufficient",
@@ -150,7 +162,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_16",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_Sufficient",
@@ -159,7 +171,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_17",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_Sufficient",
@@ -168,7 +180,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_18",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordGap",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_GapRecorded",
@@ -176,7 +188,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_19",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AttachEvidence",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_EvidenceAttached",

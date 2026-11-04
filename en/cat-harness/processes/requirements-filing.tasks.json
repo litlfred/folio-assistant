@@ -716,7 +716,7 @@
   },
   "A_UpdateLifecycle": {
    "id": "A_UpdateLifecycle",
-   "name": "Mark superseded or retired record in place and update RequirementSet",
+   "name": "Mark the record superseded or retired",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_UpdateLifecycle",
    "lane": "Authoring Agent",
@@ -1190,7 +1190,7 @@
   },
   "A_RunCheck": {
    "id": "A_RunCheck",
-   "name": "Run check:requirements schema, collision, and lineage gate",
+   "name": "Run the requirements check",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_RunCheck",
    "lane": "Authoring Agent",
@@ -1427,7 +1427,7 @@
   },
   "BA_ReviewFiling": {
    "id": "BA_ReviewFiling",
-   "name": "Review filed requirement, organisation, and sign off",
+   "name": "Review the filed requirement, sign off",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/BA_ReviewFiling",
    "lane": "BA / Feature Requestor",
@@ -1513,7 +1513,7 @@
   },
   "A_RecordFilingSignoff": {
    "id": "A_RecordFilingSignoff",
-   "name": "Record requirement-signoff attestation and set stage",
+   "name": "Record the sign-off and set the stage",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_RecordFilingSignoff",
    "lane": "Authoring Agent",

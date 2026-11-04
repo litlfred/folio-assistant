@@ -118,6 +118,11 @@
             "description": "One of claimed, would-claim, skip-recent-commit, skip-claim-note, skip-open-pr, skip-closed or unknown, with the evidence per copy and the open PRs found. Exit 0 for claimed or would-claim, 1 for a skip, 2 for unknown. Unknown is never reported as free. With --json, `definitions.claimCheck` of schemas/skills/bean-drain/output.schema.json.",
             "name": "check",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "description": "With --json, the check as one `BeanClaimCheck` record: the state, the evidence per copy and the open PRs found. Programs and BPMN gateways read this; people read `check`.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanClaimCheck"
           }
         ]
       },

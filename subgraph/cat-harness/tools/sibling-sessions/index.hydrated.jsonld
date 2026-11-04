@@ -43,6 +43,11 @@
             "description": "One entry per session, most recently active first, plus the number of commits examined and how many carried no trailer. A window with NO commits exits non-zero rather than reporting 'no siblings' — a sweep over nothing has not found anything.",
             "name": "report",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "description": "With --json, the sweep as one `SessionSweep` record: the sessions, the commits examined and how many carried no trailer. Programs read this; people read `report`.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/SessionSweep"
           }
         ]
       },

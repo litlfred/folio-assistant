@@ -68,8 +68,8 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ClaimBean",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_WorkPlan",
+   "lane": "Authoring agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [
     {
      "name": "bean-coordination",
@@ -82,17 +82,225 @@
     "diagram": "bean-open.html"
    },
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+    "title": "Authoring agent",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "adopt-methodology-from-source",
+      "href": "../../../reference/skill-instructions/adopt-methodology-from-source.html"
+     },
+     {
+      "name": "agent-permissions",
+      "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
+     },
+     {
+      "name": "bean-coordination",
+      "href": "../../../reference/skill-instructions/bean-coordination.html"
+     },
+     {
+      "name": "before-after-preview",
+      "href": "../../../reference/skill-instructions/before-after-preview.html"
+     },
+     {
+      "name": "blocked-build-dependencies",
+      "href": "../../../reference/skill-instructions/blocked-build-dependencies.html"
+     },
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "branch-archaeology",
+      "href": "../../../reference/skill-instructions/branch-archaeology.html"
+     },
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "confirmation-waiver",
+      "href": "../../../reference/skill-instructions/confirmation-waiver.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-graph",
+      "href": "../../../reference/skill-instructions/content-graph.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "continual-progress",
+      "href": "../../../reference/skill-instructions/continual-progress.html"
+     },
+     {
+      "name": "coordinate",
+      "href": "../../../reference/skill-instructions/coordinate.html"
+     },
+     {
+      "name": "crdm-detect",
+      "href": "../../../reference/skill-instructions/crdm-detect.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../reference/skill-instructions/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
+      "name": "deletion-requires-confirmation",
+      "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
+     },
+     {
+      "name": "delivery-summary",
+      "href": "../../../reference/skill-instructions/delivery-summary.html"
+     },
+     {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
+      "name": "gate-tree-mutation",
+      "href": "../../../reference/skill-instructions/gate-tree-mutation.html"
+     },
+     {
+      "name": "generalise-the-fix",
+      "href": "../../../reference/skill-instructions/generalise-the-fix.html"
+     },
+     {
+      "name": "github-state-inspection",
+      "href": "../../../reference/skill-instructions/github-state-inspection.html"
+     },
+     {
+      "name": "graph-detanglement",
+      "href": "../../../reference/skill-instructions/graph-detanglement.html"
+     },
+     {
+      "name": "issue-working",
+      "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../reference/skill-instructions/merge-to-main.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../reference/skill-instructions/opening-brief.html"
+     },
+     {
+      "name": "placement",
+      "href": "../../../reference/skill-instructions/placement.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "pr-description",
+      "href": "../../../reference/skill-instructions/pr-description.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "prepare-merge-auto",
+      "href": "../../../reference/skill-instructions/prepare-merge-auto.html"
+     },
+     {
+      "name": "related-work-coordination",
+      "href": "../../../reference/skill-instructions/related-work-coordination.html"
+     },
+     {
+      "name": "session-context",
+      "href": "../../../reference/skill-instructions/session-context.html"
+     },
+     {
+      "name": "session-state-machine",
+      "href": "../../../reference/skill-instructions/session-state-machine.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../reference/skill-instructions/wireframe-design-review.html"
+     },
+     {
+      "name": "workflow-state",
+      "href": "../../../reference/skill-instructions/workflow-state.html"
      }
     ]
    }
@@ -686,8 +894,8 @@
    "name": "Log findings on the bean",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_LogFindings",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_WorkPlan",
+   "lane": "Authoring agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [
     {
      "name": "todo-manager",
@@ -695,17 +903,225 @@
     }
    ],
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+    "title": "Authoring agent",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "adopt-methodology-from-source",
+      "href": "../../../reference/skill-instructions/adopt-methodology-from-source.html"
+     },
+     {
+      "name": "agent-permissions",
+      "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
+     },
+     {
+      "name": "bean-coordination",
+      "href": "../../../reference/skill-instructions/bean-coordination.html"
+     },
+     {
+      "name": "before-after-preview",
+      "href": "../../../reference/skill-instructions/before-after-preview.html"
+     },
+     {
+      "name": "blocked-build-dependencies",
+      "href": "../../../reference/skill-instructions/blocked-build-dependencies.html"
+     },
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "branch-archaeology",
+      "href": "../../../reference/skill-instructions/branch-archaeology.html"
+     },
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "confirmation-waiver",
+      "href": "../../../reference/skill-instructions/confirmation-waiver.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-graph",
+      "href": "../../../reference/skill-instructions/content-graph.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "continual-progress",
+      "href": "../../../reference/skill-instructions/continual-progress.html"
+     },
+     {
+      "name": "coordinate",
+      "href": "../../../reference/skill-instructions/coordinate.html"
+     },
+     {
+      "name": "crdm-detect",
+      "href": "../../../reference/skill-instructions/crdm-detect.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../reference/skill-instructions/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
+      "name": "deletion-requires-confirmation",
+      "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
+     },
+     {
+      "name": "delivery-summary",
+      "href": "../../../reference/skill-instructions/delivery-summary.html"
+     },
+     {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
+      "name": "gate-tree-mutation",
+      "href": "../../../reference/skill-instructions/gate-tree-mutation.html"
+     },
+     {
+      "name": "generalise-the-fix",
+      "href": "../../../reference/skill-instructions/generalise-the-fix.html"
+     },
+     {
+      "name": "github-state-inspection",
+      "href": "../../../reference/skill-instructions/github-state-inspection.html"
+     },
+     {
+      "name": "graph-detanglement",
+      "href": "../../../reference/skill-instructions/graph-detanglement.html"
+     },
+     {
+      "name": "issue-working",
+      "href": "../../../reference/skill-instructions/issue-working.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../reference/skill-instructions/merge-to-main.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../reference/skill-instructions/opening-brief.html"
+     },
+     {
+      "name": "placement",
+      "href": "../../../reference/skill-instructions/placement.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "pr-description",
+      "href": "../../../reference/skill-instructions/pr-description.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "prepare-merge-auto",
+      "href": "../../../reference/skill-instructions/prepare-merge-auto.html"
+     },
+     {
+      "name": "related-work-coordination",
+      "href": "../../../reference/skill-instructions/related-work-coordination.html"
+     },
+     {
+      "name": "session-context",
+      "href": "../../../reference/skill-instructions/session-context.html"
+     },
+     {
+      "name": "session-state-machine",
+      "href": "../../../reference/skill-instructions/session-state-machine.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../reference/skill-instructions/wireframe-design-review.html"
+     },
+     {
+      "name": "workflow-state",
+      "href": "../../../reference/skill-instructions/workflow-state.html"
      }
     ]
    }
@@ -1022,7 +1438,7 @@
   },
   "Task_RecordDecision": {
    "id": "Task_RecordDecision",
-   "name": "Record the decision and its audit note",
+   "name": "Record the decision and audit note",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_RecordDecision",
    "lane": "Editor / author (person)",
@@ -1331,8 +1747,8 @@
    "name": "Commit into the corpus",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_Commit",
-   "lane": "Corpus (versioned store)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Corpus",
+   "lane": "Authoring agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [
     {
      "name": "corpus-commit-contract",
@@ -1340,21 +1756,225 @@
     }
    ],
    "role": {
-    "name": "corpus",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
-    "title": "Corpus",
+    "name": "authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+    "title": "Authoring agent",
     "skills": [
+     {
+      "name": "adopt-methodology-from-source",
+      "href": "../../../reference/skill-instructions/adopt-methodology-from-source.html"
+     },
+     {
+      "name": "agent-permissions",
+      "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
+     },
+     {
+      "name": "bean-coordination",
+      "href": "../../../reference/skill-instructions/bean-coordination.html"
+     },
+     {
+      "name": "before-after-preview",
+      "href": "../../../reference/skill-instructions/before-after-preview.html"
+     },
+     {
+      "name": "blocked-build-dependencies",
+      "href": "../../../reference/skill-instructions/blocked-build-dependencies.html"
+     },
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "branch-archaeology",
+      "href": "../../../reference/skill-instructions/branch-archaeology.html"
+     },
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "confirmation-waiver",
+      "href": "../../../reference/skill-instructions/confirmation-waiver.html"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html"
+     },
+     {
+      "name": "content-graph",
+      "href": "../../../reference/skill-instructions/content-graph.html"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html"
+     },
+     {
+      "name": "continual-progress",
+      "href": "../../../reference/skill-instructions/continual-progress.html"
+     },
+     {
+      "name": "coordinate",
+      "href": "../../../reference/skill-instructions/coordinate.html"
+     },
+     {
+      "name": "crdm-detect",
+      "href": "../../../reference/skill-instructions/crdm-detect.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../reference/skill-instructions/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
+     },
+     {
+      "name": "deletion-requires-confirmation",
+      "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
+     },
+     {
+      "name": "delivery-summary",
+      "href": "../../../reference/skill-instructions/delivery-summary.html"
+     },
+     {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
+      "name": "gate-tree-mutation",
+      "href": "../../../reference/skill-instructions/gate-tree-mutation.html"
+     },
+     {
+      "name": "generalise-the-fix",
+      "href": "../../../reference/skill-instructions/generalise-the-fix.html"
+     },
+     {
+      "name": "github-state-inspection",
+      "href": "../../../reference/skill-instructions/github-state-inspection.html"
+     },
+     {
+      "name": "graph-detanglement",
+      "href": "../../../reference/skill-instructions/graph-detanglement.html"
+     },
+     {
+      "name": "issue-working",
+      "href": "../../../reference/skill-instructions/issue-working.html"
+     },
      {
       "name": "kg-affordances",
       "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
-      "name": "kg-subscription",
-      "href": "../../../reference/skill-instructions/kg-subscription.html"
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
      },
      {
-      "name": "materialize-remote",
-      "href": "../../../reference/skill-instructions/materialize-remote.html"
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../reference/skill-instructions/merge-to-main.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../reference/skill-instructions/opening-brief.html"
+     },
+     {
+      "name": "placement",
+      "href": "../../../reference/skill-instructions/placement.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "pr-description",
+      "href": "../../../reference/skill-instructions/pr-description.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "prepare-merge-auto",
+      "href": "../../../reference/skill-instructions/prepare-merge-auto.html"
+     },
+     {
+      "name": "related-work-coordination",
+      "href": "../../../reference/skill-instructions/related-work-coordination.html"
+     },
+     {
+      "name": "session-context",
+      "href": "../../../reference/skill-instructions/session-context.html"
+     },
+     {
+      "name": "session-state-machine",
+      "href": "../../../reference/skill-instructions/session-state-machine.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../reference/skill-instructions/wireframe-design-review.html"
+     },
+     {
+      "name": "workflow-state",
+      "href": "../../../reference/skill-instructions/workflow-state.html"
      }
     ]
    }
@@ -1364,8 +1984,8 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ResolveBean",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_WorkPlan",
+   "lane": "Authoring agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [
     {
      "name": "todo-manager",
@@ -1378,87 +1998,225 @@
     "diagram": "bean-close.html"
    },
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "authoring-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+    "title": "Authoring agent",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "adopt-methodology-from-source",
+      "href": "../../../reference/skill-instructions/adopt-methodology-from-source.html"
      },
      {
-      "name": "todo-manager",
-      "href": "../../../reference/skill-instructions/todo-manager.html"
-     }
-    ]
-   }
-  },
-  "Call_BeanClose": {
-   "id": "Call_BeanClose",
-   "name": "Close the bean",
-   "type": "bpmn:CallActivity",
-   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Call_BeanClose",
-   "lane": "Editor / author (person)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Editor",
-   "skills": [
-    {
-     "name": "todo-manager",
-     "href": "../../../reference/skill-instructions/todo-manager.html"
-    }
-   ],
-   "calls": {
-    "name": "Close the bean",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
-    "diagram": "bean-close.html"
-   },
-   "role": {
-    "name": "author",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
-    "title": "Author",
-    "skills": [
+      "name": "agent-permissions",
+      "href": "../../../reference/skill-instructions/agent-permissions.html"
+     },
+     {
+      "name": "ask-the-person",
+      "href": "../../../reference/skill-instructions/ask-the-person.html"
+     },
+     {
+      "name": "bean-coordination",
+      "href": "../../../reference/skill-instructions/bean-coordination.html"
+     },
+     {
+      "name": "before-after-preview",
+      "href": "../../../reference/skill-instructions/before-after-preview.html"
+     },
+     {
+      "name": "blocked-build-dependencies",
+      "href": "../../../reference/skill-instructions/blocked-build-dependencies.html"
+     },
      {
       "name": "bpmn-authoring",
       "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "branch-archaeology",
+      "href": "../../../reference/skill-instructions/branch-archaeology.html"
+     },
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "confirmation-waiver",
+      "href": "../../../reference/skill-instructions/confirmation-waiver.html"
      },
      {
       "name": "content-author",
       "href": "../../../reference/skill-instructions/content-author.html"
      },
      {
+      "name": "content-graph",
+      "href": "../../../reference/skill-instructions/content-graph.html"
+     },
+     {
       "name": "content-plan",
       "href": "../../../reference/skill-instructions/content-plan.html"
      },
      {
-      "name": "content-review",
-      "href": "../../../reference/skill-instructions/content-review.html"
+      "name": "continual-progress",
+      "href": "../../../reference/skill-instructions/continual-progress.html"
+     },
+     {
+      "name": "coordinate",
+      "href": "../../../reference/skill-instructions/coordinate.html"
+     },
+     {
+      "name": "crdm-detect",
+      "href": "../../../reference/skill-instructions/crdm-detect.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../reference/skill-instructions/crdm-requirements-workflow.html"
      },
      {
       "name": "decision-audit",
       "href": "../../../reference/skill-instructions/decision-audit.html"
      },
      {
-      "name": "dmn-authoring",
-      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+      "name": "decision-comparison",
+      "href": "../../../reference/skill-instructions/decision-comparison.html"
      },
      {
-      "name": "evidence-appraisal",
-      "href": "../../../reference/skill-instructions/evidence-appraisal.html"
+      "name": "deletion-requires-confirmation",
+      "href": "../../../reference/skill-instructions/deletion-requires-confirmation.html"
+     },
+     {
+      "name": "delivery-summary",
+      "href": "../../../reference/skill-instructions/delivery-summary.html"
+     },
+     {
+      "name": "directory-conventions",
+      "href": "../../../reference/skill-instructions/directory-conventions.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../reference/skill-instructions/folio-init.html"
+     },
+     {
+      "name": "gate-tree-mutation",
+      "href": "../../../reference/skill-instructions/gate-tree-mutation.html"
+     },
+     {
+      "name": "generalise-the-fix",
+      "href": "../../../reference/skill-instructions/generalise-the-fix.html"
+     },
+     {
+      "name": "github-state-inspection",
+      "href": "../../../reference/skill-instructions/github-state-inspection.html"
+     },
+     {
+      "name": "graph-detanglement",
+      "href": "../../../reference/skill-instructions/graph-detanglement.html"
+     },
+     {
+      "name": "issue-working",
+      "href": "../../../reference/skill-instructions/issue-working.html"
      },
      {
       "name": "kg-affordances",
       "href": "../../../reference/skill-instructions/kg-affordances.html"
      },
      {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../reference/skill-instructions/merge-to-main.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../reference/skill-instructions/opening-brief.html"
+     },
+     {
+      "name": "placement",
+      "href": "../../../reference/skill-instructions/placement.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "pr-description",
+      "href": "../../../reference/skill-instructions/pr-description.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "prepare-merge-auto",
+      "href": "../../../reference/skill-instructions/prepare-merge-auto.html"
+     },
+     {
+      "name": "related-work-coordination",
+      "href": "../../../reference/skill-instructions/related-work-coordination.html"
+     },
+     {
+      "name": "session-context",
+      "href": "../../../reference/skill-instructions/session-context.html"
+     },
+     {
+      "name": "session-state-machine",
+      "href": "../../../reference/skill-instructions/session-state-machine.html"
+     },
+     {
       "name": "staging-review",
       "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "symbiotic-interaction",
+      "href": "../../../reference/skill-instructions/symbiotic-interaction.html"
+     },
+     {
+      "name": "test-data-sets",
+      "href": "../../../reference/skill-instructions/test-data-sets.html"
      },
      {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
      },
      {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
       "name": "voice-authoring-guidance",
       "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../reference/skill-instructions/wireframe-design-review.html"
+     },
+     {
+      "name": "workflow-state",
+      "href": "../../../reference/skill-instructions/workflow-state.html"
      }
     ]
    }

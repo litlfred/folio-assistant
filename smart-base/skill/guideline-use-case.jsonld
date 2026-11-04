@@ -3,16 +3,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/skill/guideline-use-case.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
   "sameAs": "http://smart.who.int/base/skill/guideline-use-case.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/skill/guideline-use-case",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "guideline-use-case",
       "title": "guideline-use-case",
       "description": "Stage 0 of smart-guideline-end-to-end: turn a request for a SMART Guideline into a use case — population, setting, jurisdiction and interventions in scope, new or an adaptation — in the requester's own words. The agent asks numbered questions for what the request did not say, and never invents the answer. Read when a guideline request arrives, before any L1 source is looked for.",

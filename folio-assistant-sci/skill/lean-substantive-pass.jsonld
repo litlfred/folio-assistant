@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-substantive-pass.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/lean-substantive-pass",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "lean-substantive-pass",
       "title": "/lean-substantive-pass",
       "description": "Convert abstract `holds : Prop` / `claim : Prop` placeholder Lean stubs into typed sub-claim contexts with manuscript-semantic field names. Three escalation levels: hand-craft per-block (highest fidelity), bulk-script split on numbered sub-claims, and docstring enrichment (extract first-sentence summaries from .md). Use this skill after `local/lean-generation` has created the placeholder stubs and the backlog is structurally closed.",

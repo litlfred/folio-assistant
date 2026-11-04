@@ -27,6 +27,12 @@
     "skills/guideline-use-case/output": {
       "$ref": "http://smart.who.int/base/schema/skills/guideline-use-case/output.schema.json"
     },
+    "skills/indicator-extraction/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/indicator-extraction/input.schema.json"
+    },
+    "skills/indicator-extraction/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/indicator-extraction/output.schema.json"
+    },
     "skills/l2-dak-authoring/input": {
       "$ref": "http://smart.who.int/base/schema/skills/l2-dak-authoring/input.schema.json"
     },
@@ -107,13 +113,37 @@
     },
     "zod/dak/DakDeclarationSchema": {
       "$ref": "http://smart.who.int/base/schema/zod/dak/DakDeclarationSchema.schema.json"
+    },
+    "zod/dth-step-table/DthDakOutputKindSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthDakOutputKindSchema.schema.json"
+    },
+    "zod/dth-step-table/DthRiskMitigationRowSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthRiskMitigationRowSchema.schema.json"
+    },
+    "zod/dth-step-table/DthRoleIdSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthRoleIdSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepEntrySchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepEntrySchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepGroupSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepGroupSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepInputSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepInputSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepOutputSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepOutputSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepResourceSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepResourceSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepTableSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepTableSchema.schema.json"
+    },
+    "zod/dth-step-table/DthStepTableSourceSchema": {
+      "$ref": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepTableSourceSchema.schema.json"
     }
   },
-  "$comment": "Instance graph: http://smart.who.int/base/smart-base.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  }
+  "$comment": "Instance graph: http://smart.who.int/base/smart-base.jsonld"
 }

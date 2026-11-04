@@ -67,6 +67,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose#flow/Flow_GW_Act_Join",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose/lane/Lane_Reader",
       "@type": "cat-harness:Lane",
       "name": "Reader"
@@ -120,6 +124,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose/node/GW_Act",
       "@type": "bootstrap:ProcessNode",
       "name": "What did the reader do?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose/node/GW_Act_Join",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_Act_Join"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose/node/Start_Board",

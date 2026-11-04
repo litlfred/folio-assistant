@@ -30,6 +30,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5b",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k6",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -37,11 +41,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
       "@type": "cat-harness:Lane",
       "name": "Ingestion Engine (agent, runs unattended)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_1",
-      "@type": "cat-harness:Lane",
-      "name": "Corpus — L1 source knowledge graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/EndEvent_KgBuilt",
@@ -61,12 +60,17 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Bind",
       "@type": "bootstrap:ProcessNode",
-      "name": "Bind the folder name to the bibliography slug"
+      "name": "Bind the folder to its bibliography slug"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Dublin",
       "@type": "bootstrap:ProcessNode",
       "name": "Write dublin-core.jsonld (the record of truth)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Glossary",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Read glossary and abbreviations into candidate terms"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Link",
@@ -372,7 +376,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Structure",
       "@type": "bootstrap:ProcessNode",
-      "name": "Write structure.json (TOC, page ranges, metadata)"
+      "name": "Write structure.json"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
@@ -475,16 +479,6 @@
       "name": "Ingestion Engine (agent, runs unattended)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_2",
-      "@type": "cat-harness:Lane",
-      "name": "Work plan — beans (shared by humans and agents)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_3",
-      "@type": "cat-harness:Lane",
-      "name": "Corpus — L1 source knowledge graph"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_Basic",
       "@type": "bootstrap:ProcessNode",
       "name": "Basic ingestion (harness)"
@@ -562,12 +556,12 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Detect",
       "@type": "bootstrap:ProcessNode",
-      "name": "Detect media type and mint a doc id"
+      "name": "Detect media type, mint a doc id"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Licence",
       "@type": "bootstrap:ProcessNode",
-      "name": "Establish the licence from the upload alone"
+      "name": "Establish the licence from the upload"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_OpenBean",
@@ -582,7 +576,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
       "@type": "bootstrap:ProcessNode",
-      "name": "Prose blocks enter the summary queue"
+      "name": "Queue prose blocks for summary"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",

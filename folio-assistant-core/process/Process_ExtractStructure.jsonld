@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — extract structure",
       "summary": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates.",
       "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates. folio-assistant — Ingestion subprocess — extract structure.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
@@ -28,7 +22,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/StartEvent_Binary",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Gateway_HasText",
@@ -36,7 +30,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Gateway_HasText",
@@ -45,7 +39,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no — scanned",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Gateway_HasText",
@@ -54,7 +48,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_ExtractText",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Sections",
@@ -62,7 +56,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Ocr",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Sections",
@@ -70,7 +64,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Sections",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Structure",
@@ -78,7 +72,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Structure",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Candidates",
@@ -86,7 +80,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure#flow/Flow_e8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Candidates",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/EndEvent_Structured",

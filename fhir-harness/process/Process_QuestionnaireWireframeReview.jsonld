@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Questionnaire wireframe review",
       "summary": "A built FHIR Questionnaire shown the way a person will meet it — a mid-fidelity wireframe at web and mobile width, and a live LHC-Forms form view — checked field for field against the L2 wireframe it was derived from, reviewed as a design, staged with deep li…",
       "description": "A built FHIR Questionnaire shown the way a person will meet it — a mid-fidelity wireframe at web and mobile width, and a live LHC-Forms form view — checked field for field against the L2 wireframe it was derived from, reviewed as a design, staged with deep links, and changed through requests that say which side was edited. Operating skill: fhir-questionnaire-wireframe. Owner decisions, 2026-10-14: LHC-Forms, vendored; the checker lives in this layer; either the Questionnaire or the wireframe may be the source of a change, and the request says which.\n\nWHERE IT SITS. After SUSHI has compiled the Questionnaire to JSON (l3-fhir-pipeline, Task_Sushi), and wherever a layer above reviews a Questionnaire's fidelity to its wireframe. It reads JSON only, so it can run on any IG that produces a Questionnaire.\n\nWHAT IT DOES NOT CLAIM. A faithful Questionnaire is not therefore a good form, and an accepted form is not therefore conformant: wireframe-design-review judges the first and fhir-validation the second.",
@@ -28,7 +22,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Start_Built",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Read",
@@ -36,7 +30,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Read",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Render",
@@ -44,7 +38,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Render",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Screens",
@@ -52,7 +46,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Screens",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/GW_L2",
@@ -60,7 +54,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/GW_L2",
@@ -69,7 +63,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/GW_L2",
@@ -78,7 +72,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Fidelity",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Call_Review",
@@ -86,7 +80,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Call_Review",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Stage",
@@ -94,7 +88,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Stage",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_AskReview",
@@ -102,7 +96,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_AskReview",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_ReviewStaged",
@@ -110,7 +104,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_ReviewStaged",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/GW_Change",
@@ -118,7 +112,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/GW_Change",
@@ -127,7 +121,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/GW_Change",
@@ -136,7 +130,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_14",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Triage",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Apply",
@@ -144,7 +138,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_15",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Apply",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Read",

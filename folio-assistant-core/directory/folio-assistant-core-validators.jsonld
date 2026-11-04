@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/folio-assistant-core-validators.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/folio-assistant-core-validators",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "folio-assistant-core-validators",
       "path": "validators/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/validators"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/validators"
       ],
       "description": "The validators folio-assistant-core's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit).",
       "readmePath": "validators/README.md",

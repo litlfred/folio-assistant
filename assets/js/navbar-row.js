@@ -573,6 +573,7 @@
     }
 
     if (typeof hooks.after === "function") hooks.after(host, bar);
+    else if (!full && liteSchemeWanted()) host.appendChild(liteSchemeButton());
     // ENGLISH ON EACH ICON, NOT ON THE ROW — bean `giiw`. Every name, count
     // phrase and `data-fa-tip` tooltip here is English on every locale, so
     // on an Arabic page each icon is marked English, which is what lays its
@@ -586,6 +587,72 @@
     });
     holdStripForTips(bar);
     return host;
+  }
+
+  /* LIGHT / DARK ON A LITE ROW — owner, 2026-10-31, on a knowledge-graph
+   * entity page: *"where iis light/dark mode? looks bad"*. The switch lived
+   * only in `docs-ui.js`'s FULL row, so a page railed without that script had
+   * none, and its content followed the OS while the rail followed the site.
+   *
+   * Drawn only where the page's own sheet follows `data-fa-scheme`: a page
+   * that links `page-layout.css` (`data-fa-page-layout`, written with the
+   * site bar) or says so with `<meta name="fa-scheme-switch">`. Anywhere else
+   * the button would press and change nothing.
+   *
+   * The same state as the full switch — `fa-color-scheme` in localStorage
+   * and `data-fa-scheme` on `<html>`, the first-paint snippet's two inputs —
+   * and the same glyphs, copied from `docs-ui.js` (`BULB_ON`, `BULB_OFF`).
+   * No theme-sheet swap: a lite page's first sheet is never the theme's. When
+   * `docs-ui.js` arrives, its FULL row replaces this one, switch and all. */
+  var BULB_ON =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zm-2 12.1A5 5 0 1 1 14 14.1l-.5.33V16h-3v-1.57l-.5-.33z"/>' +
+    '<path d="M9 19h6v1.2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V19z"/>' +
+    "</svg>";
+  var BULB_OFF =
+    '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+    '<path d="M12 2a7 7 0 0 0-4 12.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26A7 7 0 0 0 12 2zm-2 12.1A5 5 0 1 1 14 14.1l-.5.33V16h-3v-1.57l-.5-.33z" opacity="0.45"/>' +
+    '<path d="M9 19h6v1.2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V19z" opacity="0.45"/>' +
+    '<path d="M4.2 3.3 20.7 19.8l-1.4 1.4L2.8 4.7z"/>' +
+    "</svg>";
+
+  function liteSchemeWanted() {
+    return !!document.querySelector('link[data-fa-page-layout], meta[name="fa-scheme-switch"]');
+  }
+
+  function liteScheme() {
+    var stored = null;
+    try { stored = window.localStorage.getItem("fa-color-scheme"); } catch (_e) { /* private mode */ }
+    if (stored === "light" || stored === "dark") return stored;
+    var painted = document.documentElement.getAttribute("data-fa-scheme");
+    if (painted === "light" || painted === "dark") return painted;
+    try {
+      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    } catch (_e) {
+      return "light";
+    }
+  }
+
+  function liteSchemeButton() {
+    var btn = el("button", { type: "button", class: "fa-nav-icon fa-nav-scheme" });
+    function paint(name) {
+      btn.innerHTML = name === "light" ? BULB_ON : BULB_OFF;
+      var said = name === "light" ? "Light mode is on — switch to dark" : "Dark mode is on — switch to light";
+      btn.setAttribute("aria-label", said);
+      btn.setAttribute("data-fa-tip", said);
+      btn.title = said;
+      btn.setAttribute("aria-pressed", name === "dark" ? "true" : "false");
+    }
+    var now = liteScheme();
+    document.documentElement.setAttribute("data-fa-scheme", now);
+    paint(now);
+    btn.addEventListener("click", function () {
+      var next = liteScheme() === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-fa-scheme", next);
+      try { window.localStorage.setItem("fa-color-scheme", next); } catch (_e) { /* private mode */ }
+      paint(next);
+    });
+    return btn;
   }
 
   window.FaNavbarRow = { mount: mount };

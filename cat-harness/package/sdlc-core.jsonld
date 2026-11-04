@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/SkillPackage",
       "name": "sdlc-core",
       "version": "0.1.0",
       "description": "Software-delivery practice for agents and people working in the harness: the work plan (beans, claiming, blocking, briefs, turn reports), issues and PRs, continual progress, review and merge (prepare-merge, staging review, visual diff, rendered verification), CI health and platform gates, release and deployment, and coordinating sessions and swarms. Moved out of folio-core into the sdlc topic (bean 9umr, owner ruling 2026-09-30); crdm and spec-kit are its siblings in the same topic.",
@@ -52,6 +46,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-watcher",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/issue-working",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-conflict-patterns",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-manager-watcher",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-queue",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-to-main",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/minimal-change",
@@ -75,6 +70,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/release-lifecycle",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-impact",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-verification",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/saturation-meta-merge",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/secrets",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/session-intent",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/signing",
@@ -92,7 +88,9 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/where-a-proposal-goes",
-        "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-restructure"
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-restructure",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store-git-branch"
       ],
       "providesCapability": [],
       "requiresCapability": [],

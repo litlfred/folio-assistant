@@ -18,7 +18,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduces the Gherkin reference (Cucumber syntax: Given, When, Then): Gherkin uses keywords, translated into many spoken languages, to structure executable specifications, and most lines begin with one. Comments start a line with optional spaces and #, block comments are not supported, and indentation may be spaces or tabs, two spaces recommended. A 'Guess the word' feature shows two scenarios; the text after each step keyword is matched to a step definition, and a colon after a keyword that takes none causes the tests to be ignored.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -37,7 +45,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "States that every non-blank line must start with a keyword, except free-form descriptions under Example/Scenario, Background, Scenario Outline and Rule. It lists the primary keywords (Feature, Rule from Gherkin 6, Example or Scenario, the step keywords Given, When, Then, And, But or *, Background, Scenario Outline or Scenario Template, and Examples or Scenarios) and the secondary ones (\"\"\" for Doc Strings, | for Data Tables, @ for tags, # for comments), noting each spoken language has its own equivalents.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -56,7 +72,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains Feature: it describes a software feature at a high level and groups related scenarios, and must be the first primary keyword, followed by a colon and a short name. Free-form description lines beneath it are ignored at runtime but available to reporting, and serve to document things such as business rules; the description ends at the first Background, Rule, Example or Scenario Outline. Tags above Feature group related features, and a .feature file holds only one Feature.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -75,7 +99,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Says free-form descriptions may also sit under Example/Scenario, Background, Scenario Outline and Rule, may contain anything as long as no line starts with a keyword, and may be written in Markdown, which formatters such as the official HTML formatter support.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -94,7 +126,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains the optional Rule keyword, part of Gherkin since v6 and not yet supported by every Cucumber implementation: a Rule represents one business rule to implement and groups the scenarios that illustrate it, as a 'Highlander' feature with two rules shows.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -113,7 +153,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Defines Example (synonym Scenario) as a concrete example illustrating a business rule, made of steps; 3–5 steps are recommended since too many weaken it as specification and documentation. Taken together, examples are an executable specification, each describing an initial context (Given), an event (When) and an expected outcome (Then).",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -132,7 +180,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains that each step starts with Given, When, Then, And or But and that Cucumber runs a scenario's steps in order, matching each to a step definition. Keywords are ignored in that matching, so two steps with the same text but different keywords count as duplicates, which pushes authors towards a less ambiguous domain language, as the account-balance example shows.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -151,7 +207,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains Given steps: they describe the initial context, typically something in the past, and put the system in a known state (creating objects or test data) before any interaction, like preconditions in a use case. User interaction belongs elsewhere, several Givens may be chained with And or But, and examples such as 'I am logged in' are given.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -170,7 +234,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains When steps: they describe an event or action, by a person or by another system, such as guessing a word or withdrawing money. A note advises imagining it is 1922 and writing examples free of assumptions about technology or user interface, leaving implementation details to step definitions.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -189,7 +261,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains Then steps: they describe an expected outcome, and their step definitions should assert the actual outcome against it. The outcome should be observable output from the system, such as a report, user interface or message, not internal state such as a database record, which Then steps should resist checking.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -208,7 +288,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Shows that successive Given or Then steps can be written with And and But to read more fluidly, and that an asterisk may replace any step keyword, which suits steps that are effectively a list, as a shopping-list scenario illustrates.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -227,7 +315,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains Background: Given steps repeated in every scenario of a Feature are incidental and can be moved into a Background, whose steps run before each scenario but after any Before hooks; it is placed before the first scenario at the same indentation. Examples show it at Feature level (a multi-blog posting feature) and at Rule level (overdue-task notifications). There can be only one Background per Feature or Rule; differing needs call for more Rules or Features, and conditional hooks are a less explicit alternative.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -246,7 +342,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Gives tips for Background: avoid setting up complicated state the client does not need to know, using higher-level steps instead; keep it short, around four lines at most; make it vivid with colourful names that tell a story; and keep scenarios short and few, so the Background stays in view, using higher-level steps or splitting the file otherwise.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -265,7 +369,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains Scenario Outline (synonym Scenario Template), which runs the same scenario several times with different values: rather than copying near-identical scenarios, such as eating 5 cucumbers out of 12 and out of 20, the steps become a template with <>-delimited parameters filled from an Examples table.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -284,7 +396,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains Examples (or Scenarios): a Scenario Outline must have at least one such section, its steps form a template that is never run directly, and the outline runs once per table row after the header. Parameters in <> name the table's headers and are substituted before step matching, and may also appear in outline descriptions and multiline step arguments.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -303,7 +423,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Introduces step arguments: when a step needs more data than fits on one line, Gherkin offers Doc Strings and Data Tables.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -322,7 +450,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains Doc Strings, which pass a larger text to a step definition as its last argument: the text sits between lines of three double quotes or three backticks; the opening delimiter's indentation does not matter, but lines are dedented relative to it so further indentation is kept. A content type such as markdown may follow the opening delimiter. Notes say that all current Cucumber versions support backticks and content types but many text editors do not yet.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -341,7 +477,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Explains Data Tables, which pass a list of values to a step definition as its last argument, illustrated with a table of users' names, emails and Twitter handles.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -360,7 +504,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Gives the escapes for Data Table cells: \\n for a newline, \\| for a pipe and \\\\ for a backslash.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -379,7 +531,15 @@
       "truncated": false,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Notes that Cucumber offers a rich API for manipulating tables in step definitions and points to the Data Table API reference in the cucumber-jvm repository.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     },
     {
@@ -398,7 +558,15 @@
       "truncated": true,
       "provenance": "ingested",
       "summary": {
-        "status": "not-summarised"
+        "status": "draft",
+        "text": "Advises writing Gherkin in the language users and domain experts use, to avoid translating, which is why Gherkin exists in over 70 languages; a Norwegian scenario is shown. A '# language:' header on a file's first line selects the language (e.g. fr), English is the default without it, and some implementations allow setting the default in configuration.",
+        "state": "draft",
+        "draftedBy": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "claude-opus-5-5"
+        },
+        "draftedAt": "2026-10-31"
       }
     }
   ]

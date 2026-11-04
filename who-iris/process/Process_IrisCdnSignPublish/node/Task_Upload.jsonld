@@ -2,22 +2,16 @@
   "@context": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Store new objects (never overwrite)",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
       "requires": [
         "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
       ],

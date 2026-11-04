@@ -248,6 +248,17 @@
             "artefacts-only",
             "may-hold-credentials"
           ]
+        },
+        "stores": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          }
         }
       },
       "required": [
@@ -262,11 +273,5 @@
   },
   "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/deployment-description/DeploymentDescriptionSchema.schema.json",
   "title": "DeploymentDescriptionSchema",
-  "description": "Generated from `DeploymentDescriptionSchema` in schemas/process/deployment-description.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  }
+  "description": "Generated from `DeploymentDescriptionSchema` in schemas/process/deployment-description.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable."
 }

@@ -5,7 +5,7 @@
  "tasks": {
   "Task_Validity": {
    "id": "Task_Validity",
-   "name": "Check the base AST against the IG's inputs",
+   "name": "Check the base AST against the inputs",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/node/Task_Validity",
    "lane": "Incremental build (system)",
@@ -102,7 +102,7 @@
   },
   "Task_Diff": {
    "id": "Task_Diff",
-   "name": "Diff base → head and render the delta pages",
+   "name": "Diff the two ASTs",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/node/Task_Diff",
    "lane": "Incremental build (system)",
@@ -199,7 +199,7 @@
   },
   "Task_Review": {
    "id": "Task_Review",
-   "name": "Read the rendered delta",
+   "name": "Read the delta",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/node/Task_Review",
    "lane": "QC reviewer",
@@ -285,8 +285,8 @@
    "name": "Note the missed coupling on the bean",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/node/Task_FileCoupling",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_WorkPlan",
+   "lane": "QC reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_Review",
    "skills": [
     {
      "name": "todo-manager",
@@ -294,17 +294,71 @@
     }
    ],
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "qc-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
+    "title": "QC reviewer",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html",
+      "via": "reviewer"
      },
      {
-      "name": "todo-manager",
-      "href": "../../../reference/skill-instructions/todo-manager.html"
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "evidence-review",
+      "href": "../../../reference/skill-instructions/evidence-review.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "untainted-verification",
+      "href": "../../../reference/skill-instructions/untainted-verification.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html",
+      "via": "reviewer"
      }
     ]
    }

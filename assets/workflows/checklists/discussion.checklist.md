@@ -34,9 +34,9 @@ A SUB-PROCESS of initialize-harness, never an entry point.
 - Skill: `confirm-harness`.
 - What: Zero or more.
 - Record it: `workflow_complete` with `node: "A_ListLocations"`.
-- next: → `A_AskRequestor` (Ask the Requestor: which harness, and where?)
+- next: → `A_AskRequestor` (Ask which harness, and where)
 
-### 4. Ask the Requestor: which harness, and where? (`A_AskRequestor`)
+### 4. Ask which harness, and where (`A_AskRequestor`)
 
 - Who: the `Bootstrapping Agent` lane (role `bootstrapping-agent`).
 - Skill: `confirm-harness`, `human-agent-discussion`.

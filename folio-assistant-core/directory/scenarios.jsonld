@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/scenarios.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/scenarios",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "scenarios",
       "path": "scenarios/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/scenarios"
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios"
       ],
       "description": "Scenarios: the roles an actor takes on, in `roles.json`, the user stories told as them, in `stories.json`, and the actors in `actors/`. The deep-researcher, evidence-agent and onboarding-agent roles moved here from cat-harness in M4 (cat-harness#443), and this layer's `address-*` voices point at them. The files arrived without this declaration, so `check:voices` found no role graph here.",
       "fileCount": 0,

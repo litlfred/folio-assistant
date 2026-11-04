@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Actor and role administration",
       "summary": "Changing who can do what: adding an actor, opening or closing a role to one, granting or revoking a permission — and auditing the graph afterwards, because the declaration and the graph are two things that can disagree.",
       "description": "Changing who can do what: adding an actor, opening or closing a role to one, granting or revoking a permission — and auditing the graph afterwards, because the declaration and the graph are two things that can disagree.\n\nYou are in this process when the substrate every other diagram's lanes bind to is what is changing. That is why it is drawn rather than left as a filesystem edit: a role added without an audit is a lane binding that resolves today and may not tomorrow, and nothing else in the corpus would notice.\n\nRetirement, never deletion. An actor id is referenced from commits, sidecars and other declarations, so removing one makes an old record unreadable while retiring one leaves it legible and says the actor has stopped.",
@@ -22,8 +16,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Start_AdminRequest"
       ],
-      "nodeCount": 11,
-      "flowCount": 14,
+      "nodeCount": 12,
+      "flowCount": 15,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
@@ -32,15 +26,15 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A01",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Start_AdminRequest",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_WhichChange_Join",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A02",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "add actor",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
@@ -49,7 +43,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A03",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "assign roles",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
@@ -58,7 +52,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A04",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "permission",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
@@ -67,7 +61,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A05",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "retire",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
@@ -76,7 +70,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A06",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_AddActor",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_Changed",
@@ -84,7 +78,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A07",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_AssignRoles",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_Changed",
@@ -92,7 +86,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A08",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_GrantOrRevoke",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_Changed",
@@ -100,7 +94,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A09",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_RetireActor",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_Changed",
@@ -108,7 +102,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_Changed",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
@@ -116,7 +110,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/CallActivity_CodeChangeReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_RunKgAudit",
@@ -124,7 +118,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Task_RunKgAudit",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_AuditClean",
@@ -132,16 +126,24 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_AuditClean",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_WhichChange_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/Flow_Gateway_WhichChange_Join",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_WhichChange_Join",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_WhichChange",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration#flow/A14",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration/node/Gateway_AuditClean",

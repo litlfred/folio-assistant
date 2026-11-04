@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/instance-kinds.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/instance-kinds",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "instance-kinds",
       "title": "Instance kinds — naming one, and what a new kind must declare",
       "description": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH typology must declare. Read before naming a new instance, before adding a value to the graph-typology registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",

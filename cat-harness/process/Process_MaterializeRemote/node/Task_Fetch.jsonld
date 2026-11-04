@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Fetch.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Fetch",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Fetch, and record fixity",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
@@ -24,10 +18,10 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_8"
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_Yes"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_10"
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_6"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     }

@@ -3,11 +3,11 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
                   id="Definitions_Process_CompleteInitialization"
                   targetNamespace="https://litlfred.github.io/bootstrap/v0/workflows"
                   exporter="bootstrap" exporterVersion="1">
-  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns#" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns/" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
   <bpmn:resource id="bootstrapping-agent" name="Bootstrapping Agent"/>
   <bpmn:resource id="knowledge-graph-data-store" name="Knowledge Graph Data Store"/>
   <bpmn:collaboration id="Collaboration_Process_CompleteInitialization">
@@ -33,6 +33,7 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
         <bpmn:flowNodeRef>Start_CompleteInitialization</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_CheckDocuments</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_ListSteps</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_NextStep_Join</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_NextStep</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>A_CheckStep</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>GW_StepState</bpmn:flowNodeRef>
@@ -44,9 +45,6 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
         <bpmn:flowNodeRef>GW_AllDone</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Complete</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_OpenStepsRecorded</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="Lane_DataStore" name="Knowledge Graph Data Store" partitionElementRef="knowledge-graph-data-store">
-        <bpmn:documentation>The Knowledge Graph Data Store: the repository and its siblings, played by a mechanical Actor whose contract is to serve what is committed (skill knowledge-graph-data-store). The declarations are read here once, at the start, and the steps come from what they say rather than from anybody's memory of what a harness needs.</bpmn:documentation>
         <bpmn:flowNodeRef>A_ReadDeclarations</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -56,6 +54,11 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
     <bpmn:task id="A_ReadDeclarations" name="Read the declaration, and each one it needs">
       <bpmn:documentation>`&lt;name&gt;.json` at the root, then each name in its `needs`, from a sibling checkout `../&lt;name&gt;/&lt;name&gt;.json`. A dependency that is not beside it is itself a step, not done — never skipped.</bpmn:documentation>
       <bpmn:extensionElements><bootstrap.processes:skill ref="bootstrap-kg-navigation"/></bpmn:extensionElements>
+      <bpmn:property id="Property_A_ReadDeclarations_DSR_knowledge_graph" name="__targetRef_placeholder"/>
+      <bpmn:dataInputAssociation id="DIA_A_ReadDeclarations">
+        <bpmn:sourceRef>DSR_knowledge_graph</bpmn:sourceRef>
+        <bpmn:targetRef>Property_A_ReadDeclarations_DSR_knowledge_graph</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
     </bpmn:task>
 
     <bpmn:task id="A_CheckDocuments" name="Check the JSON Schemas and JSON-LD are at their IRIs">
@@ -71,6 +74,9 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
       <bpmn:extensionElements><bootstrap.processes:skill ref="initialization-steps"/></bpmn:extensionElements>
     </bpmn:task>
 
+    <bpmn:exclusiveGateway id="GW_NextStep_Join">
+      <bpmn:documentation>Brings the paths together before the decision after it, so that decision only splits.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
     <bpmn:exclusiveGateway id="GW_NextStep" name="A step not yet checked?"/>
 
     <bpmn:task id="A_CheckStep" name="Check it">
@@ -93,7 +99,7 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
       <bpmn:extensionElements><bootstrap.processes:skill ref="initialization-steps"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:callActivity id="A_AskPerson" name="Ask the person to do what only they can" calledElement="Process_HumanAgentDiscussion">
+    <bpmn:callActivity id="A_AskPerson" name="Ask the person" calledElement="Process_HumanAgentDiscussion">
       <bpmn:documentation>A step the agent cannot do or cannot check from here — switching Pages on without a signed-in `gh`, granting a permission, choosing between two ways of fixing a declaration. Asked through the one reusable discussion, with the exact step written out so it can be followed without opening anything else. A person saying "done" is recorded as their word, not as a check; the next run checks it.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="human-agent-discussion"/>
@@ -121,7 +127,7 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
     <bpmn:sequenceFlow id="SF_CI_1" sourceRef="Start_CompleteInitialization" targetRef="A_ReadDeclarations"/>
     <bpmn:sequenceFlow id="SF_CI_2" sourceRef="A_ReadDeclarations" targetRef="A_CheckDocuments"/>
     <bpmn:sequenceFlow id="SF_CI_18" sourceRef="A_CheckDocuments" targetRef="A_ListSteps"/>
-    <bpmn:sequenceFlow id="SF_CI_3" sourceRef="A_ListSteps" targetRef="GW_NextStep"/>
+    <bpmn:sequenceFlow id="SF_CI_3" sourceRef="A_ListSteps" targetRef="GW_NextStep_Join"/>
     <bpmn:sequenceFlow id="SF_CI_4" name="yes" sourceRef="GW_NextStep" targetRef="A_CheckStep"/>
     <bpmn:sequenceFlow id="SF_CI_5" sourceRef="A_CheckStep" targetRef="GW_StepState"/>
     <bpmn:sequenceFlow id="SF_CI_6" name="done" sourceRef="GW_StepState" targetRef="A_RecordStep"/>
@@ -131,67 +137,77 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
     <bpmn:sequenceFlow id="SF_CI_10" sourceRef="A_FollowStated" targetRef="A_RecordStep"/>
     <bpmn:sequenceFlow id="SF_CI_11" name="needs a person, or could not determine" sourceRef="GW_StepState" targetRef="A_AskPerson"/>
     <bpmn:sequenceFlow id="SF_CI_12" sourceRef="A_AskPerson" targetRef="A_RecordStep"/>
-    <bpmn:sequenceFlow id="SF_CI_13" sourceRef="A_RecordStep" targetRef="GW_NextStep"/>
+    <bpmn:sequenceFlow id="SF_CI_13" sourceRef="A_RecordStep" targetRef="GW_NextStep_Join"/>
+    <bpmn:sequenceFlow id="Flow_GW_NextStep_Join" sourceRef="GW_NextStep_Join" targetRef="GW_NextStep"/>
     <bpmn:sequenceFlow id="SF_CI_14" name="no, all checked" sourceRef="GW_NextStep" targetRef="A_Report"/>
     <bpmn:sequenceFlow id="SF_CI_15" sourceRef="A_Report" targetRef="GW_AllDone"/>
     <bpmn:sequenceFlow id="SF_CI_16" name="yes" sourceRef="GW_AllDone" targetRef="End_Complete"/>
     <bpmn:sequenceFlow id="SF_CI_17" name="no" sourceRef="GW_AllDone" targetRef="End_OpenStepsRecorded"/>
+    <bpmn:dataStoreReference id="DSR_knowledge_graph" name="Knowledge graph" dataStoreRef="knowledge-graph-data-store"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Process_CompleteInitialization">
     <bpmndi:BPMNPlane id="Plane_Process_CompleteInitialization" bpmnElement="Collaboration_Process_CompleteInitialization">
       <bpmndi:BPMNShape id="Shape_Participant_Process_CompleteInitialization" bpmnElement="Participant_Process_CompleteInitialization" isHorizontal="true">
-        <dc:Bounds x="140" y="80" width="2360" height="600"/>
+        <dc:Bounds x="140" y="80" width="2450" height="600" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_BootstrappingAgent" bpmnElement="Lane_BootstrappingAgent" isHorizontal="true">
-        <dc:Bounds x="170" y="80" width="2330" height="400"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Shape_Lane_DataStore" bpmnElement="Lane_DataStore" isHorizontal="true">
-        <dc:Bounds x="170" y="480" width="2330" height="200"/>
+        <dc:Bounds x="170" y="80" width="2420" height="600" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_CompleteInitialization" bpmnElement="Start_CompleteInitialization">
-        <dc:Bounds x="232" y="262" width="36" height="36"/>
-      </bpmndi:BPMNShape>
+        <dc:Bounds x="232" y="262" width="36" height="36" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="205" y="223" width="90" height="35" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_ReadDeclarations" bpmnElement="A_ReadDeclarations">
-        <dc:Bounds x="365" y="540" width="150" height="80"/>
+        <dc:Bounds x="365" y="540" width="150" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_CheckDocuments" bpmnElement="A_CheckDocuments">
-        <dc:Bounds x="555" y="240" width="150" height="80"/>
+        <dc:Bounds x="570" y="220" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_ListSteps" bpmnElement="A_ListSteps">
-        <dc:Bounds x="745" y="240" width="150" height="80"/>
+        <dc:Bounds x="760" y="220" width="120" height="120" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_NextStep_Join" bpmnElement="GW_NextStep_Join" isMarkerVisible="true">
+        <dc:Bounds x="985" y="255" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_GW_NextStep_Join" bpmnElement="Flow_GW_NextStep_Join">
+        <di:waypoint x="1035" y="280"/>
+        <di:waypoint x="1075" y="280"/>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Shape_GW_NextStep" bpmnElement="GW_NextStep" isMarkerVisible="true">
-        <dc:Bounds x="985" y="255" width="50" height="50"/>
-      </bpmndi:BPMNShape>
+        <dc:Bounds x="1075" y="255" width="50" height="50" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="1055" y="215" width="90" height="36" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_CheckStep" bpmnElement="A_CheckStep">
-        <dc:Bounds x="1125" y="240" width="150" height="80"/>
+        <dc:Bounds x="1230" y="220" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_StepState" bpmnElement="GW_StepState" isMarkerVisible="true">
-        <dc:Bounds x="1365" y="255" width="50" height="50"/>
-      </bpmndi:BPMNShape>
+        <dc:Bounds x="1455" y="255" width="50" height="50" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="1387.5" y="304.5" width="90" height="35" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_PerformStep" bpmnElement="A_PerformStep">
-        <dc:Bounds x="1505" y="120" width="150" height="80"/>
+        <dc:Bounds x="1610" y="100" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_FollowStated" bpmnElement="A_FollowStated">
-        <dc:Bounds x="1505" y="240" width="150" height="80"/>
+        <dc:Bounds x="1595" y="240" width="150" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_AskPerson" bpmnElement="A_AskPerson">
-        <dc:Bounds x="1505" y="360" width="150" height="80"/>
+        <dc:Bounds x="1595" y="360" width="150" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_RecordStep" bpmnElement="A_RecordStep">
-        <dc:Bounds x="1695" y="240" width="150" height="80"/>
+        <dc:Bounds x="1800" y="220" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Report" bpmnElement="A_Report">
-        <dc:Bounds x="1885" y="240" width="150" height="80"/>
+        <dc:Bounds x="1990" y="220" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_AllDone" bpmnElement="GW_AllDone" isMarkerVisible="true">
-        <dc:Bounds x="2125" y="255" width="50" height="50"/>
-      </bpmndi:BPMNShape>
+        <dc:Bounds x="2215" y="255" width="50" height="50" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="2269" y="253" width="90" height="54" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Complete" bpmnElement="End_Complete">
-        <dc:Bounds x="2322" y="192" width="36" height="36"/>
+        <dc:Bounds x="2412" y="192" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_OpenStepsRecorded" bpmnElement="End_OpenStepsRecorded">
-        <dc:Bounds x="2322" y="332" width="36" height="36"/>
+        <dc:Bounds x="2412" y="332" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_SF_CI_1" bpmnElement="SF_CI_1">
         <di:waypoint x="250" y="298"/>
@@ -199,87 +215,98 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
         <di:waypoint x="365" y="580"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_2" bpmnElement="SF_CI_2">
-        <di:waypoint x="440" y="540"/>
-        <di:waypoint x="440" y="280"/>
-        <di:waypoint x="555" y="280"/>
+        <di:waypoint x="515" y="580" />
+        <di:waypoint x="542.5" y="580" />
+        <di:waypoint x="542.5" y="280" />
+        <di:waypoint x="570" y="280" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_18" bpmnElement="SF_CI_18">
-        <di:waypoint x="705" y="280"/>
-        <di:waypoint x="745" y="280"/>
+        <di:waypoint x="690" y="280" />
+        <di:waypoint x="760" y="280" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_3" bpmnElement="SF_CI_3">
-        <di:waypoint x="895" y="280"/>
-        <di:waypoint x="985" y="280"/>
+        <di:waypoint x="880" y="280" />
+        <di:waypoint x="985" y="280" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_4" bpmnElement="SF_CI_4">
-        <di:waypoint x="1035" y="280"/>
-        <di:waypoint x="1125" y="280"/>
+        <di:waypoint x="1125" y="280" />
+        <di:waypoint x="1230" y="280" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_5" bpmnElement="SF_CI_5">
-        <di:waypoint x="1275" y="280"/>
-        <di:waypoint x="1365" y="280"/>
+        <di:waypoint x="1350" y="280" />
+        <di:waypoint x="1455" y="280" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_6" bpmnElement="SF_CI_6">
-        <di:waypoint x="1390" y="305"/>
-        <di:waypoint x="1390" y="335"/>
-        <di:waypoint x="1770" y="335"/>
-        <di:waypoint x="1770" y="320"/>
+        <di:waypoint x="1480" y="305" />
+        <di:waypoint x="1480" y="335" />
+        <di:waypoint x="1860" y="335" />
+        <di:waypoint x="1860" y="320" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1484" y="311.5" width="90" height="17" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_7" bpmnElement="SF_CI_7">
-        <di:waypoint x="1390" y="255"/>
-        <di:waypoint x="1390" y="160"/>
-        <di:waypoint x="1505" y="160"/>
+        <di:waypoint x="1505" y="280" />
+        <di:waypoint x="1557.5" y="280" />
+        <di:waypoint x="1557.5" y="160" />
+        <di:waypoint x="1610" y="160" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1463.5" y="193.5" width="90" height="53" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_8" bpmnElement="SF_CI_8">
-        <di:waypoint x="1580" y="120"/>
-        <di:waypoint x="1580" y="105"/>
-        <di:waypoint x="1200" y="105"/>
-        <di:waypoint x="1200" y="240"/>
+        <di:waypoint x="1670" y="120" />
+        <di:waypoint x="1670" y="105" />
+        <di:waypoint x="1290" y="105" />
+        <di:waypoint x="1290" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_9" bpmnElement="SF_CI_9">
-        <di:waypoint x="1415" y="280"/>
         <di:waypoint x="1505" y="280"/>
+        <di:waypoint x="1595" y="280"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="1505" y="283" width="90" height="17" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_10" bpmnElement="SF_CI_10">
-        <di:waypoint x="1655" y="280"/>
-        <di:waypoint x="1695" y="280"/>
+        <di:waypoint x="1745" y="280" />
+        <di:waypoint x="1800" y="280" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_11" bpmnElement="SF_CI_11">
-        <di:waypoint x="1390" y="305"/>
-        <di:waypoint x="1390" y="400"/>
-        <di:waypoint x="1505" y="400"/>
+        <di:waypoint x="1480" y="305"/>
+        <di:waypoint x="1480" y="400"/>
+        <di:waypoint x="1595" y="400"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="1386" y="340.75" width="90" height="71" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_12" bpmnElement="SF_CI_12">
-        <di:waypoint x="1655" y="400"/>
-        <di:waypoint x="1770" y="400"/>
-        <di:waypoint x="1770" y="320"/>
+        <di:waypoint x="1745" y="400" />
+        <di:waypoint x="1860" y="400" />
+        <di:waypoint x="1860" y="320" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_13" bpmnElement="SF_CI_13">
-        <di:waypoint x="1770" y="240"/>
-        <di:waypoint x="1770" y="90"/>
-        <di:waypoint x="1010" y="90"/>
-        <di:waypoint x="1010" y="255"/>
+        <di:waypoint x="1860" y="240" />
+        <di:waypoint x="1860" y="90" />
+        <di:waypoint x="1010" y="90" />
+        <di:waypoint x="1010" y="255" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_14" bpmnElement="SF_CI_14">
-        <di:waypoint x="1010" y="305"/>
-        <di:waypoint x="1010" y="455"/>
-        <di:waypoint x="1960" y="455"/>
-        <di:waypoint x="1960" y="320"/>
+        <di:waypoint x="1100" y="305" />
+        <di:waypoint x="1100" y="455" />
+        <di:waypoint x="2050" y="455" />
+        <di:waypoint x="2050" y="320" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1104" y="362.5" width="90" height="35" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_15" bpmnElement="SF_CI_15">
-        <di:waypoint x="2035" y="280"/>
-        <di:waypoint x="2125" y="280"/>
+        <di:waypoint x="2110" y="280" />
+        <di:waypoint x="2215" y="280" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_16" bpmnElement="SF_CI_16">
-        <di:waypoint x="2150" y="255"/>
-        <di:waypoint x="2150" y="210"/>
-        <di:waypoint x="2322" y="210"/>
+        <di:waypoint x="2240" y="255"/>
+        <di:waypoint x="2240" y="210"/>
+        <di:waypoint x="2412" y="210"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_CI_17" bpmnElement="SF_CI_17">
-        <di:waypoint x="2150" y="305"/>
-        <di:waypoint x="2150" y="350"/>
-        <di:waypoint x="2322" y="350"/>
+        <di:waypoint x="2240" y="305"/>
+        <di:waypoint x="2240" y="350"/>
+        <di:waypoint x="2412" y="350"/>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_DSR_knowledge_graph" bpmnElement="DSR_knowledge_graph"><dc:Bounds x="415" y="720" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="469" y="727" width="90" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_DIA_A_ReadDeclarations" bpmnElement="DIA_A_ReadDeclarations"><di:waypoint x="440" y="720"/><di:waypoint x="440" y="620"/></bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

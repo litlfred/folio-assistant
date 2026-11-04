@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/lsi-indexing.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/lsi-indexing",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "lsi-indexing",
       "title": "LSI indexing — the platform's application of `methodologies/lsi.md`",
       "description": "Build, read and audit a Latent Semantic Indexing index over a declared prose graph — a library, the skills, the beans, docs — to find units that discuss the same thing in different words, near-duplicates, outlier clusters, and a proposed home for unfiled work. Every output is a proposal; LSI never writes a relation.",

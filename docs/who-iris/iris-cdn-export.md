@@ -128,6 +128,11 @@ distribute and verify pattern).
 
 - **CDN and DID domain.** The proposal is a stable domain the owner adds to
   Cloudflare.
-- **Live endpoint shapes.** iris.who.int could not be reached from the sandbox
-  where this was written. The first run must confirm the DSpace REST shapes
-  that `rest-feed.ts` assumes.
+- **Live endpoint shapes (confirmed 2026-10-31, #104).** Probed against live
+  `https://iris.who.int/server/api`: `sort=lastModified,DESC` returns HTTP 422
+  because IRIS's default Discovery configuration exposes only `score`,
+  `dc.title`, `dc.date.issued`, `dc.date.accessioned` and `dc.date.available`.
+  `rest-feed.ts` therefore queries
+  `query=lastModified:[<UTC-ISO-Z> TO *]&sort=dc.date.accessioned,DESC` (with
+  `+00:00` normalised to `Z`), `scope=<collectionUuid>` for initial-load
+  batches, and `embed=bundles/bitstreams&embed=owningCollection` for items.

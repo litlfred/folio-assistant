@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "QA report signing",
       "summary": "Attesting a QA report: build the test run, work out what the performer can actually reach, and sign — over the API where that is available, or as release authority where it is not.",
       "description": "Attesting a QA report: build the test run, work out what the performer can actually reach, and sign — over the API where that is available, or as release authority where it is not.\n\nYou are in this process when a report needs to become evidence somebody else can rely on. The reach resolution before the gateway is the point: the route is CHOSEN from what the signer can do, not assumed, and the process records which route signed it so a reader of the attestation can tell.\n\nA signature whose route is unrecorded is a signature whose weight cannot be judged later, which is why that step is drawn rather than left implicit.",
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning#flow/S01",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Start_ReportReady",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_BuildRun",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning#flow/S02",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_BuildRun",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_ResolveReach",
@@ -48,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning#flow/S03",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_ResolveReach",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Gateway_SigningRoute",
@@ -56,7 +50,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning#flow/S04",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "api",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Gateway_SigningRoute",
@@ -65,7 +59,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning#flow/S05",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "human",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Gateway_SigningRoute",
@@ -74,7 +68,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning#flow/S06",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_ApiSign",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Gateway_Signed",
@@ -82,7 +76,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning#flow/S07",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_HumanSign",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Gateway_Signed",
@@ -90,7 +84,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning#flow/S08",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Gateway_Signed",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_RecordAttestation",
@@ -98,7 +92,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning#flow/S09",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_RecordAttestation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_StoreSigned",
@@ -106,7 +100,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning#flow/S10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_StoreSigned",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/End_Signed",

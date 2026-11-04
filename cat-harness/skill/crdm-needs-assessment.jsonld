@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-needs-assessment.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-needs-assessment",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "crdm-needs-assessment",
       "title": "Phase 1 — Needs assessment (detail)",
       "description": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.",

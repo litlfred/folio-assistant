@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-pdf.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-pdf",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "build-pdf",
       "title": "/build-pdf",
       "description": "Builds a paper folio's PDF locally in the workspace — the monolithic PDF plus split per-chapter PDFs.",

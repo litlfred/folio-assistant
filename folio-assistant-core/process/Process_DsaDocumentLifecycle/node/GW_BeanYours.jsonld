@@ -2,22 +2,16 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYours.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYours",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Bean claimed?",
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
-      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_WorkPlan",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,

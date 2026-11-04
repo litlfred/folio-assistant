@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-drain.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-drain",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "bean-drain",
       "title": "Bean drain",
       "description": "Drain open beans (stories, bugs, features) with several agents at once, as part of the SDLC: build the queue, group it by owner, check and claim each bean on every bean copy before any work, open the PR at the first commit, ask the owner through ask-the-person, close, and refill. Use when a thread or agent is asked to drain beans, when a coordinator spawns drain threads, or when an idle agent pulls from a shared queue next to other agents.",

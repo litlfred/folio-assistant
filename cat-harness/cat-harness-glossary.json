@@ -4,9 +4,9 @@
     "dcterms": "http://purl.org/dc/terms/",
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns#",
-    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns#",
-    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns#",
+    "bootstrap": "https://litlfred.github.io/bootstrap/v0/ns/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/",
     "label": "rdfs:label",
     "prefLabel": "skos:prefLabel",
     "altLabel": "skos:altLabel",
@@ -31,18 +31,18 @@
       "@type": "@id"
     },
     "usage": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#hasLaneUsage",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/hasLaneUsage",
       "@type": "@id"
     },
     "ofConcept": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#ofConcept",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/ofConcept",
       "@type": "@id"
     },
     "inProcess": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#inProcess",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/inProcess",
       "@type": "@id"
     },
-    "performerVaries": "https://litlfred.github.io/cat-harness/v0/ns#performerVaries"
+    "performerVaries": "https://litlfred.github.io/cat-harness/v0/ns/performerVaries"
   },
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
   "@type": "skos:ConceptScheme",
@@ -64,7 +64,6 @@
         "Human actor",
         "Log operator (human)",
         "Owner",
-        "Person",
         "Reader (any actor)",
         "Subscriber (the folio's owner)"
       ],
@@ -78,7 +77,6 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_0",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_0",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_AskThePerson/Lane_Person",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
@@ -86,12 +84,13 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User"
       ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Person",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ContentAcquisition",
       "label": "Contributor",
@@ -100,7 +99,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Reader",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Reader (any actor)",
@@ -109,7 +108,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Ingestion/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion",
       "label": "Contributor (human or agent)",
@@ -118,7 +117,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote",
       "label": "Contributor (human or agent)",
@@ -127,7 +126,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MethodologyFromSource",
       "label": "Owner",
@@ -136,7 +135,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized",
       "label": "Contributor (human or agent)",
@@ -145,7 +144,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "label": "Contributor (human or agent)",
@@ -154,7 +153,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
       "label": "Subscriber (the folio's owner)",
@@ -162,17 +161,8 @@
       "source": "cat-harness/processes/library/subscribe-kg.bpmn"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_AskThePerson/Lane_Person",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson",
-      "label": "Person",
-      "scopeNote": "Answers with one tap. Typing is never required: the person this was written for has very limited hand function.",
-      "source": "cat-harness/processes/process/ask-the-person.bpmn"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions",
       "label": "Owner",
@@ -181,7 +171,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine",
       "label": "Human actor",
@@ -190,7 +180,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "label": "Log operator (human)",
@@ -199,7 +189,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging",
       "label": "Human actor",
@@ -208,7 +198,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
       "label": "Owner",
@@ -217,7 +207,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
       "label": "Owner",
@@ -226,7 +216,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
       "label": "User",
@@ -234,8 +224,17 @@
       "source": "cat-harness/processes/sdlc/related-work.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
+      "label": "Owner",
+      "scopeNote": "The repository owner, the only lane that decides. A meta-merge lands PRs on main without their own CI, so the choice between the offered options is a person's, made on a card that names each PR; a PR the card does not name gets no merge.",
+      "source": "cat-harness/processes/sdlc/saturation-meta-merge.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
       "label": "User",
@@ -265,7 +264,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio",
       "label": "Folio author",
@@ -274,7 +273,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountDependency/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency",
       "label": "Downstream author",
@@ -283,7 +282,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Folio",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Copier's own folio/",
@@ -292,7 +291,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
       "label": "Model author",
@@ -318,7 +317,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Review/Lane_EditorDecides",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
       "label": "Editors + authoring agents",
@@ -327,7 +326,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Editorial",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "label": "Editorial",
@@ -351,12 +350,13 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Reviewer",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Reviewer",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer"
       ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Review",
       "label": "Reviewer / SME",
@@ -365,7 +365,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "label": "Subject-Matter Expert / Reviewer",
@@ -374,7 +374,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeCodeReview",
       "label": "Reviewer",
@@ -383,7 +383,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
       "label": "Reviewer / SME",
@@ -391,8 +391,17 @@
       "source": "cat-harness/processes/sdlc/upstream-version-adoption.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Reviewer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering",
+      "label": "Reviewer",
+      "scopeNote": "The person reading the harness. Reading needs nothing; writing needs a write tool and the permission to use it.",
+      "source": "cat-harness/processes/ui/harness-default-rendering.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview",
       "label": "Reviewer",
@@ -423,7 +432,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeReview/Lane_NarrativeReviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeReview",
       "label": "Narrative reviewer",
@@ -432,7 +441,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_VoiceReview/Lane_NarrativeReviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/narrative-reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
       "label": "Narrative reviewer",
@@ -454,7 +463,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeReview/Lane_CodeReviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/code-reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeReview",
       "label": "Code reviewer",
@@ -463,7 +472,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/code-reviewer",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "label": "Code reviewer",
@@ -493,7 +502,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_SME",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "label": "Clinical / scientific SME",
@@ -520,7 +529,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Admin",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement",
       "label": "Administrator",
@@ -529,7 +538,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Admin",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation",
       "label": "Administrator",
@@ -538,7 +547,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Admin",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
       "label": "Administrator (owner)",
@@ -547,7 +556,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Administrator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "label": "Administrator",
@@ -585,7 +594,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Publication",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation",
       "label": "Publication manager",
@@ -594,7 +603,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Deployment",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "label": "Deployment owner",
@@ -603,7 +612,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
       "label": "Publication manager",
@@ -612,7 +621,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "label": "Human signer",
@@ -621,7 +630,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Publication",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
       "label": "Publication manager",
@@ -654,7 +663,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close",
       "label": "BA / Feature Requestor",
@@ -663,7 +672,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel",
       "label": "BA / Feature Requestor",
@@ -672,7 +681,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver",
       "label": "BA / Feature Requestor",
@@ -681,7 +690,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Needs",
       "label": "BA / Feature Requestor",
@@ -690,7 +699,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "label": "BA / Feature Requestor",
@@ -699,7 +708,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "label": "BA / Feature Requestor",
@@ -708,7 +717,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff",
       "label": "BA / Feature Requestor",
@@ -717,7 +726,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwotAnalysis/Lane_BusinessAnalyst",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis",
       "label": "Business analyst",
@@ -726,7 +735,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_OptionsAnalysis/Lane_BusinessAnalyst",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
       "label": "Business analyst",
@@ -735,7 +744,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_BA",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling",
       "label": "BA / Feature Requestor",
@@ -768,7 +777,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Coordinator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "label": "Translation Coordinator",
@@ -792,7 +801,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Translator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/translator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "label": "Human Translator",
@@ -816,7 +825,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Translation/Lane_Reviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-adjudicator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
       "label": "Human reviewer / adjudicator",
@@ -839,7 +848,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
       "label": "Adjudicator",
@@ -848,7 +857,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
       "label": "Adjudicator",
@@ -857,7 +866,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",
       "label": "Adjudicator",
@@ -882,7 +891,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
       "label": "Feedback provider",
@@ -891,7 +900,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Reviewers",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",
       "label": "Feedback providers",
@@ -920,7 +929,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_Stakeholders",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close",
       "label": "Stakeholders",
@@ -929,7 +938,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Stakeholders",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel",
       "label": "Stakeholders",
@@ -938,7 +947,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Stakeholders",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver",
       "label": "Stakeholders",
@@ -947,7 +956,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Stakeholders",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Needs",
       "label": "Stakeholders",
@@ -956,7 +965,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Stakeholders",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "label": "Stakeholders",
@@ -965,7 +974,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SwotAnalysis/Lane_Stakeholder",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis",
       "label": "Stakeholder",
@@ -1031,7 +1040,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio",
       "label": "Authoring agent",
@@ -1040,7 +1049,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement",
       "label": "Authoring agent",
@@ -1049,7 +1058,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation",
       "label": "Authoring agent",
@@ -1058,7 +1067,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Caller",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
       "label": "Query Caller (CLI / MCP / Web)",
@@ -1067,7 +1076,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
       "label": "Authoring agent",
@@ -1076,7 +1085,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MethodologyFromSource",
       "label": "Agent",
@@ -1085,7 +1094,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Translation/Lane_Platform",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
       "label": "Agent / platform (automated)",
@@ -1094,16 +1103,16 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_AskThePerson/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson",
       "label": "Agent",
-      "scopeNote": "Composes, writes and offers the question, then acts on the answer or the default. Never treats a dismissed card as a choice.",
+      "scopeNote": "Composes, writes and offers the question, then acts on the answer or the default. Never treats a dismissed card as a choice. The person's answer step is drawn in bootstrap's discussion, in its Requestor lane: Answers with one tap. Typing is never required: the person this was written for has very limited hand function.",
       "source": "cat-harness/processes/process/ask-the-person.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Close/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close",
       "label": "Agent",
@@ -1112,7 +1121,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_DataModel/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel",
       "label": "Agent",
@@ -1121,7 +1130,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Deliver/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver",
       "label": "Agent",
@@ -1130,7 +1139,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Issue/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Issue",
       "label": "Agent",
@@ -1139,7 +1148,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Needs/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Needs",
       "label": "Agent",
@@ -1148,7 +1157,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Requirements/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Requirements",
       "label": "Agent",
@@ -1157,7 +1166,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "label": "Agent",
@@ -1166,7 +1175,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff",
       "label": "Agent",
@@ -1175,7 +1184,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions",
       "label": "Agent",
@@ -1184,7 +1193,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine",
       "label": "Agent (playing the machine)",
@@ -1193,7 +1202,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "label": "Agent (this session)",
@@ -1202,7 +1211,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanClose/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
       "label": "Agent (this session)",
@@ -1211,7 +1220,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_Drainer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "label": "Drainer",
@@ -1220,7 +1229,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle",
       "label": "Agent (this session)",
@@ -1229,7 +1238,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "label": "Agent (this session)",
@@ -1238,7 +1247,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "label": "Authoring agent",
@@ -1247,7 +1256,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase",
       "label": "Authoring agent",
@@ -1256,7 +1265,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
       "label": "Dispatched agent",
@@ -1265,7 +1274,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
       "label": "Agent",
@@ -1274,7 +1283,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling",
       "label": "Authoring Agent",
@@ -1283,7 +1292,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "label": "Authoring agent",
@@ -1292,7 +1301,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
       "label": "Triage agent",
@@ -1301,7 +1310,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
       "label": "Authoring agent",
@@ -1310,7 +1319,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "label": "Agent",
@@ -1319,7 +1328,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
       "label": "Agent",
@@ -1328,7 +1337,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",
       "label": "Designer",
@@ -1344,7 +1353,8 @@
       "definition": "Runs unattended over a source corpus. No user is in the room, so every gate it reaches must be decidable from the material.",
       "altLabel": [
         "Agent",
-        "Ingestion Engine (agent, runs unattended)"
+        "Ingestion Engine (agent, runs unattended)",
+        "Ingestion engine (agent, runs unattended)"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
@@ -1360,7 +1370,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ContentAcquisition",
       "label": "Agent",
@@ -1369,7 +1379,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Ingestion/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion",
       "label": "Ingestion Engine (agent, runs unattended)",
@@ -1378,16 +1388,16 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote",
-      "label": "Ingestion Engine (agent, runs unattended)",
+      "label": "Ingestion engine (agent, runs unattended)",
       "scopeNote": "Runs the five gates in a fixed order and reaches Task_Fetch only after Gateway_Gates finds none of them refused. Before the first gate it resolves the request against the source DESCRIPTOR (Task_Enumerate), because the size being gated is the closure's, not the request's — size, restrictions, copyright, retention, source loss — so this lane's job is not one decision but five independent ones, each of which can send the process to Task_StayRef on its own. It does not get to average them: `unknown` on any single gate is enough to keep the node `referenced` rather than `materialized`.",
       "source": "cat-harness/processes/library/materialize-remote.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized",
       "label": "Ingestion Engine (agent, runs unattended)",
@@ -1396,7 +1406,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "label": "Ingestion Engine (agent, runs unattended)",
@@ -1405,7 +1415,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_1",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
       "label": "Ingestion Engine (agent, runs unattended)",
@@ -1414,7 +1424,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_IngestTheme/Lane_0",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_IngestTheme",
       "label": "Ingestion Engine (agent, runs unattended)",
@@ -1423,7 +1433,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Agent",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview",
       "label": "Agent",
@@ -1456,12 +1466,13 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Sibling"
       ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Sibling",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion",
       "label": "Sibling",
@@ -1470,7 +1481,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "label": "Sibling session or human (not yours to close)",
@@ -1479,7 +1490,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
       "label": "Owning session",
@@ -1488,12 +1499,21 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
       "label": "Sibling session",
       "scopeNote": "The session that owns a handed-back PR. Fixes it on its own branch and re-signals ready; never merged on its behalf.",
       "source": "cat-harness/processes/sdlc/merge-train.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Sibling",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
+      "label": "Sibling session",
+      "scopeNote": "Every other session with a PR in the queue. It acts once: it stops pushing when the hold arrives and names the head it wants merged, so the steward stacks a branch nobody is still moving. It does not choose what lands; the owner does.",
+      "source": "cat-harness/processes/sdlc/saturation-meta-merge.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
@@ -1507,13 +1527,24 @@
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeManagerWatch/Lane_Steward",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Merger",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Steward"
       ]
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeManagerWatch/Lane_Steward",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
+      "label": "Merge steward",
+      "scopeNote": "The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle.",
+      "source": "cat-harness/processes/sdlc/merge-manager-watch.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Merger",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
       "label": "Merging session",
@@ -1522,12 +1553,21 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
       "label": "Merge steward",
       "scopeNote": "Composes the train from the queue, decides nothing the placement table or the owner has not, attributes and ejects on red, and lands at the tested SHA.",
       "source": "cat-harness/processes/sdlc/merge-train.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Steward",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
+      "label": "Merge steward",
+      "scopeNote": "The merge manager, acting as merge steward for the duration of the drain. It notices the runners are saturated, holds the swarm, dry-runs the meta-merge and asks the owner with every PR named; on a yes it cancels the queued PR runs, builds and lands the meta-merge branch, releases the hold and reports. It never lands anything the owner's card did not name.",
+      "source": "cat-harness/processes/sdlc/saturation-meta-merge.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -1563,6 +1603,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeQualityGates/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_DocsSite/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GeneratedFileDrift/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Command",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Pipeline",
@@ -1572,15 +1613,18 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Pipeline",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TrackedWatch/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline"
       ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation",
       "label": "Build pipeline",
@@ -1589,7 +1633,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "label": "Build pipeline",
@@ -1598,7 +1642,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountDependency/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency",
       "label": "Build pipeline",
@@ -1607,7 +1651,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MountSubgraph/Lane_MountPipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph",
       "label": "Build pipeline",
@@ -1616,7 +1660,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NamedQueryExecution/Lane_Engine",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
       "label": "Universal Query Engine Runtime",
@@ -1625,7 +1669,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NQuadsDistribution/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "label": "CI/CD Pipeline",
@@ -1634,7 +1678,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish",
       "label": "CI/CD Pipeline",
@@ -1643,7 +1687,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
       "label": "Build pipeline",
@@ -1652,7 +1696,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "label": "Automated Pipeline",
@@ -1661,7 +1705,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Audit",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActorRoleAdministration",
       "label": "Graph audit (system)",
@@ -1670,7 +1714,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn",
       "label": "Build pipeline",
@@ -1679,7 +1723,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CiHealth/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth",
       "label": "Scheduled log sweep",
@@ -1688,7 +1732,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "label": "CI/CD pipeline",
@@ -1697,7 +1741,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeQualityGates/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates",
       "label": "CI/CD Pipeline",
@@ -1706,7 +1750,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_DocsSite/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
       "label": "CI/CD Pipeline",
@@ -1715,7 +1759,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging",
       "label": "CI/CD Pipeline",
@@ -1723,17 +1767,26 @@
       "source": "cat-harness/processes/sdlc/feature-staging.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GeneratedFileDrift/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GeneratedFileDrift",
+      "label": "Build pipeline",
+      "scopeNote": "The only lane: one mechanical step whose diff the gateway reads directly. There is no reviewer to hand off to; the check either matches or it does not.",
+      "source": "cat-harness/processes/sdlc/generated-file-drift.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift",
-      "label": "CI/CD Pipeline",
-      "scopeNote": "The only lane, running the one task this diagram draws deliberately as a single box rather than five: the five checks it performs are independent of each other and only sequential because one job runs them, so five boxes would assert an ordering that does not exist. Its declared job is also the reason this diagram exists at all — without it, check:workflow-coverage would have nothing here to compare a real job against.",
+      "label": "Build pipeline",
+      "scopeNote": "The only lane: the job runs one shared check.",
       "source": "cat-harness/processes/sdlc/jsonld-drift-check.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Command",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase",
       "label": "merge:main command",
@@ -1742,7 +1795,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
       "label": "Build pipeline",
@@ -1751,7 +1804,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
       "label": "Build pipeline",
@@ -1760,7 +1813,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent",
       "label": "Scheduled log sweep",
@@ -1769,7 +1822,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
       "label": "CI/CD Pipeline",
@@ -1778,7 +1831,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification",
       "label": "CI/CD Pipeline",
@@ -1787,7 +1840,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish",
       "label": "CI/CD Pipeline",
@@ -1796,7 +1849,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth",
       "label": "Scheduled log sweep",
@@ -1804,8 +1857,26 @@
       "source": "cat-harness/processes/sdlc/repository-health-watch.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
+      "label": "Build pipeline",
+      "scopeNote": "The CI system, which runs main's checks once on the merged result. Its verdict is what the steward reports; it is drawn as its own lane because it is a system acting on a fixed program, not a choice anybody makes.",
+      "source": "cat-harness/processes/sdlc/saturation-meta-merge.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TrackedWatch/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch",
+      "label": "Scheduled log sweep",
+      "scopeNote": "Every path through it writes something: the tracking label, and the issue itself (opened, edited or closed). Keeping all of it in one lane is what makes 'one tracking issue, edited in place' enforceable.",
+      "source": "cat-harness/processes/sdlc/tracked-watch.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "label": "CI/CD Pipeline",
@@ -1814,7 +1885,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
       "label": "CI/CD Pipeline",
@@ -1823,7 +1894,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ArchimatePublish",
       "label": "CI/CD Pipeline",
@@ -1831,8 +1902,17 @@
       "source": "cat-harness/processes/ui/archimate-publish.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering",
+      "label": "Build pipeline",
+      "scopeNote": "Runs at site build. It composes what each instance declares and decides nothing about content.",
+      "source": "cat-harness/processes/ui/harness-default-rendering.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
       "label": "CI/CD Pipeline",
@@ -1846,7 +1926,19 @@
       "title": "Board renderer",
       "notation": "board-renderer",
       "definition": "Draws a board and performs what the reader has already decided: reads each kind's declared zoom threshold and the layout layer, swaps a card for its avatar, projects an open window onto the canvas, and carries out a confirmed relocation. A system lane — it runs a fixed program and exercises no judgement, which is exactly why every decision in board-open-close.bpmn and board-relocate.bpmn sits in the reader's lane instead. It is NOT the build pipeline: it runs where the reader is, once per request, and publishes nothing.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Board"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Board",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering",
+      "label": "Board renderer",
+      "scopeNote": "Runs where the reader is, once per page. It draws and performs what the reader decided; every choice sits in the reviewer's lane.",
+      "source": "cat-harness/processes/ui/harness-default-rendering.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
@@ -1868,7 +1960,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Validate",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio",
       "label": "Validation pipeline",
@@ -1877,7 +1969,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Verify",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Verification",
@@ -1886,7 +1978,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Qa",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "label": "Validation and QA (mechanical + agents)",
@@ -1907,7 +1999,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Target",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "label": "Publish target",
@@ -1934,7 +2026,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Attestation",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/attestation-service",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "label": "Attestation (GDHCN / WHO SMART Trust)",
@@ -1943,7 +2035,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Api",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/attestation-service",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "label": "Attestation service (API)",
@@ -1952,7 +2044,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Attestation",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/attestation-service",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "label": "Attestation service",
@@ -1976,24 +2068,18 @@
       "notation": "corpus",
       "definition": "The versioned content store and the L1 source knowledge graph. Like the work plan, a MECHANICAL role: written to, deciding nothing, and held to the contract its skills state.",
       "altLabel": [
-        "Corpus — L1 source knowledge graph",
-        "Corpus — the subscriber's declaration",
         "Source graph — read-only",
         "Source knowledge graph — read-only"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Source",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_2",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_2"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source"
       ]
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyIntoFolio/Lane_Source",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio",
       "label": "Source knowledge graph — read-only",
@@ -2002,48 +2088,12 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Source",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized",
       "label": "Source graph — read-only",
       "scopeNote": "This lane holds exactly one task and it WRITES NOTHING, which is the point of drawing it at all. A lane that is only ever read from is the visible form of the rule: the arrow runs out of here and never back. Task_ReadSource is where the process would go wrong if anybody added a step, so its emptiness is load-bearing rather than incidental.",
       "source": "cat-harness/processes/library/copy-out-materialized.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_2",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote",
-      "label": "Corpus — L1 source knowledge graph",
-      "scopeNote": "Whichever branch Gateway_Gates takes, this lane is where the outcome lands, and it is never silence: Task_Declare and Task_StayRef are the process's only two ends, both bean-noted, because a node with no recorded state is invalid rather than defaulted. A refusal is written down with the same weight as a success — the graph still knows the node exists either way.",
-      "source": "cat-harness/processes/library/materialize-remote.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_2",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized",
-      "label": "Corpus — L1 source knowledge graph",
-      "scopeNote": "Where the refreshed content actually lands, and the one place the five import gates are re-asked rather than inherited — a licence can change since the original import, and a collection can grow past a size somebody already agreed to, so passing the gates once is never treated as passing them for good.",
-      "source": "cat-harness/processes/library/refresh-materialized.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_2",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
-      "label": "Corpus — L1 source knowledge graph",
-      "scopeNote": "Every path ends here with something written down. A refused sample stays referenced with the refusing gate's reason, a failed import records what failed, and a passed one records where it landed. None ends in silence, because an import nobody can tell was tried is the one somebody tries again.",
-      "source": "cat-harness/processes/library/sample-import.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_2",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg",
-      "label": "Corpus — the subscriber's declaration",
-      "scopeNote": "Where the subscription is written down: the entry in the subscriber's instance declaration (choice and pin only, never state), the cached copy of the substrate's declaration the visualizer reads offline, and the record of how the walk ended. A refusal lands here with the same weight as a success, so the next caller does not re-litigate it.",
-      "source": "cat-harness/processes/library/subscribe-kg.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry",
@@ -2062,7 +2112,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Portal",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "label": "Portal (external consumer)",
@@ -2125,7 +2175,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation",
       "label": "Platform authoring agent",
@@ -2134,7 +2184,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NQuadsDistribution/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
       "label": "Knowledge Graph Engineer",
@@ -2143,7 +2193,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SliceSqlitePublish/Lane_Author",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish",
       "label": "Platform authoring agent",
@@ -2152,7 +2202,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubKgLifecycle/Lane_Platform",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/platform-authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
       "label": "Platform authoring agent",
@@ -2181,7 +2231,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Discussion",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion",
       "label": "Discussion agent",
@@ -2190,7 +2240,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_QueueKeeper",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "label": "Queue keeper",
@@ -2199,7 +2249,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
       "label": "Merge steward",
@@ -2208,7 +2258,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
       "label": "Merge steward",
@@ -2241,7 +2291,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Requester",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/test-requester",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "label": "Requester / system under test",
@@ -2264,7 +2314,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Record",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/tester",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "label": "Tester",
@@ -2273,7 +2323,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Tester",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/tester",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
       "label": "Tester",
@@ -2282,7 +2332,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Tester",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/tester",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "label": "Tester",
@@ -2303,7 +2353,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Checker",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/untainted-checker",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "label": "Untainted checker",
@@ -2324,7 +2374,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Certifier",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/certifier",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "label": "Certifier",

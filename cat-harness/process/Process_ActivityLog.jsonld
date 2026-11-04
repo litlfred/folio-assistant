@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Agent activity log",
       "summary": "What an agent writes down about its own run, and what a person can do with it afterwards: task starts and ends, messages and errors, persisted where somebody can read them.",
       "description": "What an agent writes down about its own run, and what a person can do with it afterwards: task starts and ends, messages and errors, persisted where somebody can read them.\n\nYou are in this process on every task, whether or not capture is on — the first gateway is what decides, and an agent that does not check it logs into nothing. The log operator's lane is the other half: a person discards one entry or a whole session, and the scheduled sweep does neither on its own.\n\nThis is not the work plan. `beans` records WHAT is being worked on and survives the session; this records what happened during it. The two answer different questions and a reader reaching for one is badly served by the other.",
@@ -24,8 +18,8 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Start_Sweep",
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Start_Empty"
       ],
-      "nodeCount": 15,
-      "flowCount": 16,
+      "nodeCount": 16,
+      "flowCount": 17,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
@@ -34,7 +28,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Start_Task",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_LogStart",
@@ -42,23 +36,32 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_LogStart",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_DoWork",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/Flow_GW_DoWork",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_DoWork",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/GW_DoWork",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/GW_DoWork",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_LogMessage",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_3b",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "more work",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_LogMessage",
@@ -67,16 +70,16 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "task complete",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_DoWork",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/GW_DoWork",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_LogEnd",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_LogEnd",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Gateway_Capture",
@@ -84,7 +87,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_On",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "on",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Gateway_Capture",
@@ -93,7 +96,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_OffOrUnknown",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "off or unknown",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Gateway_Capture",
@@ -102,7 +105,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_PersistLog",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/End_Task",
@@ -110,7 +113,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_ReportCaptureState",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/End_Task",
@@ -118,7 +121,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_E1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Start_Empty",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Gateway_EmptyScope",
@@ -126,7 +129,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_E_One",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "one",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Gateway_EmptyScope",
@@ -135,7 +138,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_E_All",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "all / periodic",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Gateway_EmptyScope",
@@ -144,7 +147,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_E2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_EmptyOne",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/End_Emptied",
@@ -152,7 +155,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_E3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_EmptyAll",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/End_Emptied",
@@ -160,7 +163,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog#flow/F_S1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/Start_Sweep",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_EmptyAll",

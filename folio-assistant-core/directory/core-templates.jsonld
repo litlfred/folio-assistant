@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-templates.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-templates",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "core-templates",
       "path": "templates/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
       "description": "Files this layer's tools WRITE INTO a folio that opts in, kept as real files rather than strings inside a script. `public-comment/github/` holds the issue forms and the two workflows that `scripts/public-comment-changesets.ts install` copies into a folio's `.github/` (`TEMPLATE_DIR`). They moved up here from the tools layer's `templates/public-comment/` (move M10, folio-assistant#2598), because this layer is the only one that installs them.",
       "readmePath": "templates/README.md",

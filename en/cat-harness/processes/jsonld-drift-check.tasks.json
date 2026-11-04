@@ -3,14 +3,19 @@
  "process": "Process_JsonLdDrift",
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift",
  "tasks": {
-  "Task_Check": {
-   "id": "Task_Check",
-   "name": "Regenerate the context, block, library and site graphs — and diff",
-   "type": "bpmn:Task",
-   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift/node/Task_Check",
-   "lane": "CI/CD Pipeline",
+  "Call_Drift": {
+   "id": "Call_Drift",
+   "name": "Check the .jsonld siblings are in sync",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift/node/Call_Drift",
+   "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift/lane/Lane_Ci",
    "skills": [],
+   "calls": {
+    "name": "Check a generated file still matches its source",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GeneratedFileDrift",
+    "diagram": "generated-file-drift.html"
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",

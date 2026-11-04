@@ -61,8 +61,8 @@
    "name": "Seed the work plan",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Task_SeedBeans",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_WorkPlan",
+   "lane": "Editors + authoring agents",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_Editors",
    "skills": [
     {
      "name": "todo-manager",
@@ -74,17 +74,67 @@
     "type": "bpmn:GlobalTask"
    },
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+    "title": "Editor",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html",
+      "via": "author"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "author"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html",
+      "via": "author"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "author"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "author"
      },
      {
       "name": "todo-manager",
-      "href": "../../../reference/skill-instructions/todo-manager.html"
+      "href": "../../../reference/skill-instructions/todo-manager.html",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
      }
     ]
    }
@@ -350,8 +400,8 @@
    "name": "File feedback as beans",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Task_FeedbackBeans",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_WorkPlan",
+   "lane": "Editors + authoring agents",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_Editors",
    "skills": [
     {
      "name": "todo-manager",
@@ -363,17 +413,67 @@
     }
    ],
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+    "title": "Editor",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html",
+      "via": "author"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "author"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html",
+      "via": "author"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "author"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "author"
      },
      {
       "name": "todo-manager",
-      "href": "../../../reference/skill-instructions/todo-manager.html"
+      "href": "../../../reference/skill-instructions/todo-manager.html",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
      }
     ]
    }
@@ -436,8 +536,8 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanOpen",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_WorkPlan",
+   "lane": "Editors + authoring agents",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_Editors",
    "skills": [
     {
      "name": "bean-coordination",
@@ -450,17 +550,67 @@
     "diagram": "bean-open.html"
    },
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+    "title": "Editor",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "content-author",
+      "href": "../../../reference/skill-instructions/content-author.html",
+      "via": "author"
+     },
+     {
+      "name": "content-plan",
+      "href": "../../../reference/skill-instructions/content-plan.html",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html",
+      "via": "author"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../reference/skill-instructions/evidence-appraisal.html",
+      "via": "author"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../reference/skill-instructions/kg-affordances.html",
+      "via": "author"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html",
+      "via": "author"
      },
      {
       "name": "todo-manager",
-      "href": "../../../reference/skill-instructions/todo-manager.html"
+      "href": "../../../reference/skill-instructions/todo-manager.html",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../reference/skill-instructions/voice-authoring-guidance.html"
      }
     ]
    }

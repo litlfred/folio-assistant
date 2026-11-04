@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/signing.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/signing",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "signing",
       "title": "Signing — the process, not the code",
       "description": "What any signature in the harness must answer, whatever it covers: who signs, what bytes are signed, which signature suites are accepted and who decides that, where the key is kept, which route signs (API or person, by reach), and what a verifier must check and record. Suites are named by the identifiers the standards already define. Signing is done by the parties' own systems; the harness verifies. Read before you add a signature slot, a trust anchor, a verifier, or a process that signs anything.",

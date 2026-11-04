@@ -26,10 +26,10 @@
       "@type": "bootstrap:Process",
       "description": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs. Run in batches with a checkpoint, so a run that stops resumes where it stopped and never re-fetches what it already holds. Ends in one signed, verified release.",
       "enforcement": "strict",
-      "flowCount": 15,
+      "flowCount": 16,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
       "name": "IRIS CDN initial load",
-      "nodeCount": 14,
+      "nodeCount": 15,
       "sourcePath": "processes/iris-cdn-initial-load.bpmn",
       "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-initial-load.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved",
@@ -149,7 +149,7 @@
       "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
-      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More"
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F9",
@@ -157,23 +157,15 @@
       "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
+      "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfGit",
-      "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
-      "name": "Cloudflare git (Artifacts)",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfStore",
-      "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
-      "name": "Cloudflare R2 + CDN",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
@@ -273,16 +265,31 @@
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F8",
-        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F9"
-      ],
+      "incoming": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join",
       "name": "More batches?",
       "nodeKind": "exclusive",
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F10",
         "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F11"
       ],
+      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F8",
+        "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F9"
+      ],
+      "name": "GW_More_Join",
+      "nodeKind": "exclusive",
+      "outgoing": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
@@ -306,14 +313,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfGit",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b",
       "name": "Commit the batch checkpoint",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F8",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
@@ -427,14 +434,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfStore",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6",
       "name": "Store bytes under SHA-256 (skip if held)",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/F6b",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false
@@ -552,14 +559,6 @@
       "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_CfGit",
-      "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
-      "name": "Cloudflare git (Artifacts)",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
@@ -675,14 +674,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_CfGit",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N10",
       "name": "Commit the advanced cursor",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N11",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "touchesWorkPlan": false
@@ -1197,22 +1196,6 @@
       "to": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/GW_Verified"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
-      "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
-      "name": "Cloudflare git (Artifacts)",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
-      "@type": "cat-harness:Lane",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
-      "name": "Cloudflare R2 + CDN",
-      "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
       "@type": "cat-harness:Lane",
       "bindsRole": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
@@ -1364,14 +1347,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P7",
       "name": "Commit tag files and signature, last",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P8",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing",
       "touchesWorkPlan": false
@@ -1428,14 +1411,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P5",
       "name": "Store new objects (never overwrite)",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P6",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter",
       "touchesWorkPlan": false

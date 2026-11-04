@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "KG to public portal",
       "summary": "How a knowledge graph reaches a public portal this repository does not run: select, serialize, package, sign, distribute, and verify on the portal's side.",
       "description": "How a knowledge graph reaches a public portal this repository does not run: select, serialize, package, sign, distribute, and verify on the portal's side. folio-assistant — KG to public portal.\n\nSix stages: select, serialize, package, sign, distribute, verify. Three\ndecisions belong to the DEPLOYMENT and are drawn as gateways rather than\nas steps — the ingestion transport, the versioned store, and the signing\nscheme. A pipeline that picks one of those is asserting a decision nobody\nmade.\n\nA CDN is a LAYER, not a publication host. PUBLICATION_HOSTS answers \"what\nserves the rendering\"; a cache answers \"what stands between the server and\nthe reader\", and the canonical URL stays the origin's either way.",
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/Start_Graph",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/D_Constraints",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/D_Constraints",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/E_Scope",
@@ -48,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/E_Scope",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Select",
@@ -56,7 +50,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Select",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Serialize",
@@ -64,7 +58,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Serialize",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Package",
@@ -72,7 +66,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Package",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/GW_Budget",
@@ -80,7 +74,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "within budget",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/GW_Budget",
@@ -89,7 +83,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "over budget",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/GW_Budget",
@@ -98,7 +92,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/S_Sign",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/E_HumanEyes",
@@ -106,7 +100,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/E_HumanEyes",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/GW_Transport",
@@ -114,7 +108,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "a transport was chosen",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/GW_Transport",
@@ -123,7 +117,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "still undetermined",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/GW_Transport",
@@ -132,7 +126,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/D_Undetermined",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/End_Blocked",
@@ -140,7 +134,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F14",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Distribute",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/P_Verify",
@@ -148,7 +142,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F15",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/P_Verify",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/GW_Verified",
@@ -156,7 +150,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F16",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "signature and digests match",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/GW_Verified",
@@ -165,7 +159,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal#flow/F17",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "mismatch",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/GW_Verified",

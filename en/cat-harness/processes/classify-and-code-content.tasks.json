@@ -5,7 +5,7 @@
  "tasks": {
   "Task_IdentifySlots": {
    "id": "Task_IdentifySlots",
-   "name": "Identify slots and proposed exclusions [classify-and-code-content · recommendation-extraction]",
+   "name": "Identify slots and proposed exclusions",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
    "lane": "Authoring agent",
@@ -258,7 +258,7 @@
   },
   "Task_LookupAndCode": {
    "id": "Task_LookupAndCode",
-   "name": "Run reuse-first lookup and record candidates [classify-and-code-content · recommendation-scenarios · glossary-terms]",
+   "name": "Run reuse-first lookup and record candidates",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
    "lane": "Authoring agent",
@@ -515,7 +515,7 @@
   },
   "Task_StageForReview": {
    "id": "Task_StageForReview",
-   "name": "Stage codings, warnings and exclusions for review [staging-review · interaction-modality]",
+   "name": "Stage codings, warnings and exclusions for review",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
    "lane": "Authoring agent",
@@ -756,7 +756,7 @@
   },
   "Task_ReviewExclusions": {
    "id": "Task_ReviewExclusions",
-   "name": "Read proposed exclusions against page and sign [classify-and-code-content · recommendation-extraction · content-review]",
+   "name": "Check exclusions against page and sign",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
    "lane": "L1 extraction reviewer (person)",
@@ -854,7 +854,7 @@
   },
   "Task_ReviewCodings": {
    "id": "Task_ReviewCodings",
-   "name": "Adjudicate slot codings and glossary candidates [classify-and-code-content · ontologist · glossary-terms · terminology-management · content-review]",
+   "name": "Adjudicate slot codings and glossary candidates",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
    "lane": "Terminologist / ontologist reviewer (person)",

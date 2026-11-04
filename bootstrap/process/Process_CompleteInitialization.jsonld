@@ -18,6 +18,13 @@
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization#flow/Flow_GW_NextStep_Join",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization/node/GW_NextStep_Join",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization/node/GW_NextStep",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization#flow/SF_CI_1",
       "@type": "bootstrap:SequenceFlow",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization/node/Start_CompleteInitialization",
@@ -50,7 +57,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization#flow/SF_CI_13",
       "@type": "bootstrap:SequenceFlow",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization/node/A_RecordStep",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization/node/GW_NextStep",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization/node/GW_NextStep_Join",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization"
     },
     {
@@ -102,7 +109,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization#flow/SF_CI_3",
       "@type": "bootstrap:SequenceFlow",
       "sourceRef": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization/node/A_ListSteps",
-      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization/node/GW_NextStep",
+      "targetRef": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization/node/GW_NextStep_Join",
       "isPartOf": "https://litlfred.github.io/folio-assistant/bootstrap/process/Process_CompleteInitialization"
     },
     {

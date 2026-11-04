@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/critical-path-analysis.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/critical-path-analysis",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "critical-path-analysis",
       "title": "Critical Path Analysis & Context Review",
       "description": "Analyse the critical path of the paper's argument chain, audit statement and proof contexts (e.g. general vs specialised assumptions), identify blocks that need rewriting, and propose cleanups.  Also covers \"statement and proof context review\" — classifying each result by whether its statement, proof, or both require specialisation assumptions.",

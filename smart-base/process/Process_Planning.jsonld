@@ -3,16 +3,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
   "sameAs": "http://smart.who.int/base/process/Process_Planning.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/process/Process_Planning",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Phase 1: Planning",
       "summary": "Plans a DAK: scope, team, method, sources, roadmap and consultations, then starts the sprint cycle.",
       "description": "Plans a DAK: scope, team, method, sources, roadmap and consultations, then starts the sprint cycle.",
@@ -29,7 +23,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Start_Planning",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_Scoping",
@@ -37,7 +31,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_Scoping",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_FormTeam",
@@ -45,7 +39,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_FormTeam",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_EstablishProcess",
@@ -53,7 +47,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_EstablishProcess",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_GatherDocs",
@@ -61,7 +55,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_GatherDocs",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanTimeline",
@@ -69,7 +63,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanTimeline",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanConsultations",
@@ -77,7 +71,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_PlanConsultations",
       "to": "http://smart.who.int/base/process/Process_Planning/node/Task_AssignWork",
@@ -85,7 +79,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_Planning#flow/Flow_P8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_Planning",
       "from": "http://smart.who.int/base/process/Process_Planning/node/Task_AssignWork",
       "to": "http://smart.who.int/base/process/Process_Planning/node/End_Planning",

@@ -314,11 +314,12 @@
   flex-wrap: wrap; /* eight controls since the export group (#1270); a phone wraps them */
   align-items: center;
   gap: 0.3rem;
-  margin: 0.6em 0 0.2em;
+  margin: 0.3em 0 0.15em;
   font-size: 0.75rem;
 }
 
-.fa-figure-tools button {
+.fa-figure-tools button,
+.fa-figure-tools .fa-figure-open {
   white-space: nowrap;
   min-width: 1.9rem;
   padding: 0.15rem 0.45rem;
@@ -332,7 +333,9 @@
 }
 
 .fa-figure-tools button:hover,
-.fa-figure-tools button:focus-visible {
+.fa-figure-tools button:focus-visible,
+.fa-figure-tools .fa-figure-open:hover,
+.fa-figure-tools .fa-figure-open:focus-visible {
   border-color: var(--link-color, #7253ed);
   outline: none;
 }
@@ -346,6 +349,13 @@
    controls: one acts on the page, the other on a file. */
 .fa-figure-tools .fa-figure-export-start {
   margin-left: 0.6rem;
+}
+
+/* "Open ↗" is a link (#915) drawn like its neighbours, so middle-click and
+   "Open link in new tab" work on it as on any link. */
+.fa-figure-tools .fa-figure-open {
+  display: inline-block;
+  text-decoration: none;
 }
 
 .fa-figure-tools .fa-figure-status {
@@ -396,6 +406,18 @@
   width: calc(var(--fa-zoom, 1) * min(100%, var(--fa-natural, 100%))) !important;
 }
 
+/* A BPMN figure whose labels were measured (`fitTextToBody` in docs-ui.js):
+ * `--fa-natural` is the width at which those labels are 80% of the body text, so
+ * 100% is that width exactly, NOT capped at the column. Owner, 2026-11-02:
+ * "bpmn diagrams should be scaled so the text size matches narrative text
+ * size". A wider drawing scrolls and pans inside its card. */
+.fa-figure-scope.fa-textfit img,
+.fa-figure-scope.fa-textfit svg,
+.fa-figure-scope.fa-textfit object {
+  min-width: 0;
+  width: calc(var(--fa-zoom, 1) * var(--fa-natural)) !important;
+}
+
 /* The figure takes keyboard focus so it can be panned without a drag
  * (bean `n7f8`, `board-windows` §"The floor"); focus has to be seen. */
 .fa-figure-scope:focus-visible {
@@ -430,7 +452,7 @@
   overflow-x: auto;
   border: 1px solid rgba(128, 128, 128, 0.35);
   border-radius: 6px;
-  margin: 1em 0 0.4em;
+  margin: 0.4em 0 0.25em;
 }
 
 /* THE WHITE IS ON `.fa-figure-scope`, WHICH IS THE ONE CLASS BOTH KINDS GET.
@@ -453,7 +475,11 @@
  * with an extra click in front of it. */
 .fa-figure-scope {
   background: #fff !important;
-  padding: 0.5rem;
+  padding: 0.25rem;
+  /* Figures are centred (owner, 2026-11-01). An <img> or <svg> is inline, so
+     this centres the drawing in its card; SVG text uses text-anchor and is
+     not moved by it. */
+  text-align: center;
 }
 
 /* THE SAME WHITE, WITHOUT JAVASCRIPT — belt and braces for the rule above.
@@ -605,6 +631,46 @@
  * that does nothing, and then the cursor is the only thing that was wrong. */
 .fa-figure-scope.is-pannable {
   cursor: grab;
+}
+
+/* Owner, 2026-11-01: "still not working". A press on a label must start a
+ * pan, not a text selection, in every browser. Safari and Firefox can start
+ * the selection before the JS cancels the press, so the drawing's text is
+ * never selectable; the Copy button copies the whole diagram. */
+.fa-figure-scope svg,
+.fa-figure-scope svg * {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* The bottom-edge handle that makes a figure longer (owner, 2026-11-01).
+ * A full-width bar, tall enough to hit without aiming, with a short grip in
+ * the middle so it reads as something to pull. */
+.fa-figure-grip {
+  height: 12px;
+  margin: 0 0 0.4em;
+  cursor: ns-resize;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 6px 6px;
+}
+.fa-figure-grip::before {
+  content: "";
+  width: 48px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(128, 128, 128, 0.45);
+}
+.fa-figure-grip:hover::before,
+.fa-figure-grip:focus-visible::before,
+.fa-figure-grip.is-sizing::before {
+  background: rgba(128, 128, 128, 0.85);
+}
+.fa-figure-grip:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
 }
 
 .fa-figure-scope.is-panning {
@@ -2682,6 +2748,20 @@ button.fa-qa-badge[aria-busy="true"] { opacity: 0.6; }
   vertical-align: -0.32em;
 }
 
+/* THE HOME MARK — the default when an instance declares no art (owner,
+ * 2026-11-02: home icon as the default avatar beside the title). The same
+ * frame column as the initial it replaced, with no border: the house is the
+ * whole mark. */
+.fa-site-mark--home {
+  border: 0;
+}
+.fa-site-mark--home svg {
+  width: 100%;
+  height: 100%;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
 /* ── Action tiles ─────────────────────────────────────────────────────── */
 
 /* ONE PANEL, THE SIZE OF THE QR CODE, HOLDING EVERY HEADER ACTION.
@@ -4003,6 +4083,25 @@ a.fa-tile[data-fa-readonly]:focus-visible {
   background: rgba(var(--fa-glass-tint), 0.35);
 }
 .fa-glass-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* A BOOKMARK wears a ribbon and a PINNED BLOCK a pin, on the card's top right
+ * corner above the title strip (#982); the title leaves room for it. */
+.fa-glass-asset > .fa-glass-badge {
+  position: absolute; top: 0.3rem; right: 0.4rem; z-index: 3;
+  font-size: 1.35rem; line-height: 1;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+}
+.fa-glass-asset[data-fa-badged] .fa-glass-asset-name { padding-right: 2.2rem; }
+/* The pin control any block may carry ([data-fa-pin-control]): faint until
+ * its block is hovered, full colour while the block is on the glass. */
+[data-fa-pin-control] {
+  font: inherit; font-size: 0.85rem; line-height: 1;
+  padding: 0.1rem 0.2rem; border: 0; background: none; color: inherit;
+  cursor: pointer; opacity: 0.35; filter: grayscale(1);
+}
+[data-fa-pin]:hover [data-fa-pin-control],
+[data-fa-pin-control]:focus-visible,
+[data-fa-pin-control][aria-pressed="true"] { opacity: 1; filter: none; }
 .fa-glass-kind-avatar { --fa-avatar-size: 2rem; color: var(--fa-glass-accent); }
 .fa-glass-asset-name {
   flex: 1 1 auto;
@@ -8209,6 +8308,8 @@ a.fa-harness-tab__body:focus-visible {
    the same as every other card is its avatar alone. */
 .fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-sticky-body { display: none; }
 .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-name { margin: -0.5rem -0.5rem 0; width: calc(100% + 1rem); box-sizing: border-box; }
+/* Room for a bookmark or pin badge on the title strip (#982). */
+.fa-glass-asset[data-fa-badged]:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-name { padding-right: 2.2rem; }
 /* Zoomed out to its avatar, the cover is the whole card: no strip over it. */
 .fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-tools { background: transparent; }
 /* On a phone the column gives a card no height of its own, so a covered card
@@ -8877,4 +8978,238 @@ table[data-fa-filtered] tr[hidden] { display: none !important; }
     font-weight: 600;
     opacity: 0.75;
   }
+}
+
+/* ── Figure controls on hover, and one look for figures and tables ────────
+ *
+ * Owner, 2026-11-01: "on laptop, controls should only appear for any diagram
+ * like thing on mouse hover", "tighten up so take up vertical space/padding",
+ * "titles on diagrams and such should be centered and max take up 66% of
+ * width", "consistent style across all document like things", "figures
+ * should be centered", "above also applies to tables".
+ *
+ * Hover and a fine pointer means a laptop or desktop: there the controls
+ * float over the figure's top-right corner, take no row of their own, and
+ * show while the pointer is over the figure or focus is inside it (so the
+ * keyboard still reaches them). A touch screen has no hover, so it keeps the
+ * row above the figure. */
+.fa-figure-host {
+  position: relative;
+}
+@media (hover: hover) and (pointer: fine) {
+  .fa-figure-host > .fa-figure-tools {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    z-index: 3;
+    margin: 0;
+    padding: 0.2rem;
+    border-radius: 5px;
+    /* On the figure's white card in light and dark mode alike. */
+    background: #fff;
+    color: #1f2933;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.12s ease-in-out;
+  }
+  .fa-figure-host:hover > .fa-figure-tools,
+  .fa-figure-host:focus-within > .fa-figure-tools {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Every figure, diagram and table block of a document sits in one frame
+ * (render-markdown.ts, `.fa-numbered`), so all document sites share this
+ * look: the drawing centred, and its title and caption lines centred at no
+ * more than two thirds of the column. Tables are the exception (below). */
+.fa-numbered {
+  margin: 0.75em 0;
+}
+.fa-numbered > p {
+  max-width: 66%;
+  margin: 0.2em auto;
+  text-align: center;
+}
+.fa-numbered > p:has(> img),
+.fa-numbered > p:has(> svg),
+.fa-numbered > p:has(> object) {
+  max-width: none;
+}
+/* Tables sit at the start of the column, not centred (owner, 2026-11-02:
+ * "tables should be left aligned"). `start` is right in a right-to-left
+ * language. A table's title and caption go with it, to the same edge. */
+.fa-numbered > .table-wrapper,
+.fa-numbered > table,
+.fa-numbered table {
+  width: auto;
+  margin-inline: 0 auto;
+}
+.fa-numbered-table > p {
+  max-width: none;
+  margin-inline: 0;
+  text-align: start;
+}
+.fa-numbered pre,
+.fa-numbered td,
+.fa-numbered th {
+  text-align: start;
+}
+.fa-numbered td,
+.fa-numbered th {
+  vertical-align: top;
+}
+@media (max-width: 49.99rem) {
+  .fa-numbered > p { max-width: none; }
+}
+
+/* ── Structured blocks: a light card ──────────────────────────────────────
+ * Owner, 2026-11-01: "structured content in the narrative doesnt really
+ * appear so. needs _light_ styling", "make more condensed", "look at all the
+ * structured assets". render-markdown.ts frames every headed block that is
+ * not a figure, diagram or table (requirements, personas, scenarios, data
+ * elements, remarks…) as `.fa-block`, with a small kind label, an id chip and
+ * a `.fa-block-meta` row for trailing "*Priority:* …" lines. Tints are
+ * currentColor mixes, so the card reads the same in light and dark. */
+.fa-block {
+  margin: 0.9em 0;
+  padding: 0.45em 0.8em 0.45em 0.85em;
+  border-left: 3px solid color-mix(in srgb, currentColor 22%, transparent);
+  border-radius: 0 4px 4px 0;
+  background: color-mix(in srgb, currentColor 3.5%, transparent);
+}
+.fa-block > :first-child { margin-top: 0; }
+.fa-block > :last-child { margin-bottom: 0; }
+.fa-block p { margin: 0.35em 0; }
+.fa-block-kind {
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.68;
+  margin-right: 0.35em;
+  white-space: nowrap;
+}
+.fa-block-id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8em;
+  font-weight: 600;
+  padding: 0.05em 0.4em;
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-radius: 3px;
+  margin-right: 0.35em;
+  white-space: nowrap;
+}
+.fa-block-meta {
+  font-size: 0.85em;
+  opacity: 0.78;
+  margin-top: 0.3em;
+}
+.fa-block-meta p { margin: 0.15em 0; }
+.fa-block table { margin-top: 0.4em; }
+/* The kind label links to the document's structured-assets page: it keeps
+ * the label's look, and underlines only under the pointer or focus. */
+a.fa-block-kind { color: inherit; text-decoration: none; }
+a.fa-block-kind:hover, a.fa-block-kind:focus-visible { text-decoration: underline; opacity: 1; }
+/* A data element's details table, folded (owner, Q-DE-1 A): a quiet toggle. */
+.fa-block-details { margin-top: 0.25em; }
+.fa-block-details > summary { cursor: pointer; font-size: 0.8em; opacity: 0.7; width: max-content; }
+.fa-block-details > summary:hover, .fa-block-details[open] > summary { opacity: 1; }
+.fa-block-details > summary ~ * { margin-top: 0.4em; }
+
+/* An indicator's calculation, numerator over denominator (render-markdown.ts
+ * `indicatorParts`; owner 2026-11-02, card Q-IND-1 = A). A fraction bar in
+ * currentColor, so it reads in light and dark alike. */
+.fa-block-ratio {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin: 0.5em 0;
+  font-size: 0.95em;
+}
+.fa-block-ratio-frac {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.fa-block-ratio-num,
+.fa-block-ratio-den {
+  padding: 0.15em 0.2em;
+}
+.fa-block-ratio-num {
+  border-bottom: 1.5px solid color-mix(in srgb, currentColor 55%, transparent);
+}
+.fa-block-ratio-label {
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-right: 0.4em;
+}
+.fa-block-ratio-unit {
+  white-space: nowrap;
+  opacity: 0.8;
+}
+@media print {
+  .fa-block { background: none; }
+}
+
+/* A drawing moved inside a card it fits (drag pans, never rescales: owner,
+ * 2026-11-01 "i want it to pan") is clipped by the card rather than giving
+ * the card scroll room. */
+.fa-figure-scope.is-shifted {
+  overflow: hidden !important;
+}
+/* Every figure can be dragged now, so every figure shows the grab cursor. */
+.fa-figure-scope {
+  cursor: grab;
+}
+
+/* ── Section headings that stand out ──────────────────────────────────────
+ * Owner, 2026-11-01: "section headers are small and not apparent" (the
+ * theme draws h4 to h6 as small, spaced capitals, so "3.4.2 Governance
+ * principles" read like a caption). Every level below h3 is now bold,
+ * normal case and a step larger than body text, smallest last, on every
+ * site that uses this chrome. h3 grows a little so it stays above h4.
+ */
+.main-content h4,
+.main-content h5,
+.main-content h6 {
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 1.4em;
+  margin-bottom: 0.4em;
+}
+.main-content h3 { font-size: 1.3rem; }
+.main-content h4 { font-size: 1.125rem; }
+.main-content h5 { font-size: 1rem; }
+.main-content h6 { font-size: 0.95rem; font-style: italic; }
+
+/* External glossaries a document cites, noted above its own glossary
+ * (folio-assistant-core external-glossaries.ts; owner, 2026-11-02: "link to
+ * it in the DTH-HRH glossary ... a feature of any ingested external library
+ * reference with a glossary"). A light card like the structured blocks. */
+.fa-ext-glossaries {
+  display: block;
+  margin: 0.6em 0 1em;
+  padding: 0.4em 0.8em;
+  border-left: 3px solid color-mix(in srgb, currentColor 22%, transparent);
+  border-radius: 0 4px 4px 0;
+  background: color-mix(in srgb, currentColor 3.5%, transparent);
+  font-size: 0.92em;
+}
+.fa-ext-glossaries .fa-block-kind {
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.68;
+  margin-right: 0.35em;
+}
+.fa-ext-glossaries-note {
+  opacity: 0.75;
 }

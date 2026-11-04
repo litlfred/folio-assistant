@@ -3,16 +3,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
   "sameAs": "http://smart.who.int/base/process/Process_L2Dak.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "L2 DAK authoring",
       "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager.",
       "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. folio-assistant — authoring a WHO SMART Guidelines L2 Digital Adaptation Kit.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\nEach of the six authoring tracks is a call into l2-component-edit-review.bpmn\n(Process_L2ComponentEditReview): the agent edits the component, checks, renders and stages it, and hands it on, while a\nperson in the component's reviewing role reviews it alongside, never as a gate. The track's renderer, checker and reviewer\nare tabled in the skill l2-component-edit-review.",
@@ -29,7 +23,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B01",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/StartEvent_Guideline",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_ScopeDak",
@@ -37,7 +31,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B02",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_ScopeDak",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_L1Library",
@@ -45,7 +39,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_L1Library",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
@@ -53,7 +47,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B03",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SeedBeans",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorMerge",
@@ -61,7 +55,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B04",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorMerge",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
@@ -69,7 +63,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B05",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Personas",
@@ -77,7 +71,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B06",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Bpmn",
@@ -85,7 +79,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B08",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_DataDict",
@@ -93,7 +87,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B09",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Indicators",
@@ -101,7 +95,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Terminology",
@@ -109,7 +103,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B07",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Dmn",
@@ -117,7 +111,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Personas",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
@@ -125,7 +119,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Bpmn",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
@@ -133,7 +127,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B14",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_DataDict",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
@@ -141,7 +135,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B15",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Indicators",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
@@ -149,7 +143,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B16",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Terminology",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
@@ -157,7 +151,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_Dmn",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
@@ -165,7 +159,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B17",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_AuthorJoin",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_ReviewFork",
@@ -173,7 +167,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B23",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_ReviewFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SmeValidate",
@@ -181,7 +175,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B24",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_ReviewFork",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Task_AssembleDak",
@@ -189,7 +183,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B18",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_SmeValidate",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_Accurate",
@@ -197,7 +191,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B19",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "changes needed",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_Accurate",
@@ -206,7 +200,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B20",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "validated",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Gateway_Accurate",
@@ -215,7 +209,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B21",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_AssembleDak",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
@@ -223,7 +217,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "claimed",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
@@ -232,7 +226,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
@@ -240,7 +234,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "not yours",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/GW_BeanYours",
@@ -249,7 +243,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_L2Ready",
@@ -257,7 +251,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/SF_Bean_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanClose_2",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_Validated",

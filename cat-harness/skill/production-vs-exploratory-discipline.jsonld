@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/production-vs-exploratory-discipline.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/production-vs-exploratory-discipline",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "production-vs-exploratory-discipline",
       "title": "Production vs exploratory vs numerology — the bright-line guide",
       "description": "Distinguish PRODUCTION (derived-only, no fits) from EXPLORATORY (empirical-fit probes OK as shape-hints) from NUMEROLOGY (post-hoc fits to known constants). The hidden-extra-input / empirical-fit antipattern is a common review-churn source: agents promote empirical fits into production scripts, \"closed\" status, dashboards, and named constants without a derivation. This skill is the bright-line guide for which output goes where, the derivation-menu check, and the escalation path for off-menu coefficients.",

@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_NoRecommendation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_NoRecommendation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "No recommendation in this change",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_RecNo"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"
+    }
+  ]
+}

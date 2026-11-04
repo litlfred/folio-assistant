@@ -14,8 +14,41 @@
     "@id": "http://smart.who.int/trust"
   },
   "dcterms:title": "WHO SMART Trust",
-  "schema:numberOfItems": 690,
+  "schema:numberOfItems": 701,
   "schema:hasPart": [
+    {
+      "@id": "ActorDefinition-BusinessOwnerRepresentative.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/BusinessOwnerRepresentative",
+      "dcterms:title": "Business Owner Representative",
+      "dcterms:description": "The Business Owner Representative of a GDHCN Participant, named in the Letter of Application (Framework IX). Sends the Statement of Interest and the Letter of Application, and may meet WHO in person to convey the Letter.",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/BusinessOwnerRepresentative"
+      }
+    },
+    {
+      "@id": "ActorDefinition-GDHCNSecretariat.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/GDHCNSecretariat",
+      "dcterms:title": "GDHCN Secretariat",
+      "dcterms:description": "Authorized WHO staff working in the GDHCN Secretariat, which administers the GDHCN and oversees the Onboarding Process (Framework V, VI).",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/GDHCNSecretariat"
+      }
+    },
+    {
+      "@id": "ActorDefinition-GitHubBot.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/GitHubBot",
+      "dcterms:title": "GitHub Bot",
+      "dcterms:description": "The GitHub bot user of the Trust Network Gateway (one per environment), which is invited to a Participant's private repository, pulls its public key material and opens the onboarding pull request (onboarding steps [11]-[13], [34]-[38]).",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/GitHubBot"
+      }
+    },
     {
       "@id": "ActorDefinition-Holder.jsonld",
       "@type": "fhir:ActorDefinition",
@@ -39,6 +72,61 @@
       }
     },
     {
+      "@id": "ActorDefinition-KeyMasterRepresentative.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/KeyMasterRepresentative",
+      "dcterms:title": "Key Master Representative",
+      "dcterms:description": "The individual responsible for a GDHCN Participant's Public Key Infrastructure, including generating key pairs and managing the connections to the Trust Network Gateway (Letter of Application; Framework IX). Holds the GPG key named in the Letter.",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/KeyMasterRepresentative"
+      }
+    },
+    {
+      "@id": "ActorDefinition-LegalRepresentative.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/LegalRepresentative",
+      "dcterms:title": "Legal Representative",
+      "dcterms:description": "The Legal Representative of a GDHCN Participant, named in the Letter of Application (Framework IX). May meet WHO in person to convey the Letter, and receives notice of amendments (Framework XI.2).",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/LegalRepresentative"
+      }
+    },
+    {
+      "@id": "ActorDefinition-OfficialDelegate.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/OfficialDelegate",
+      "dcterms:title": "Official Delegate",
+      "dcterms:description": "An official delegate of a GDHCN Participant at the World Health Assembly or another meeting of WHO's governing bodies, who may convey the Letter of Application in a face-to-face meeting (Framework IX).",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/OfficialDelegate"
+      }
+    },
+    {
+      "@id": "ActorDefinition-OnboardingTeam.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/OnboardingTeam",
+      "dcterms:title": "Onboarding Team",
+      "dcterms:description": "The onboarding team of the Trust Network Gateway's service provider, which checks a Participant's test results and confirms production readiness (onboarding steps [64]-[77]).",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/OnboardingTeam"
+      }
+    },
+    {
+      "@id": "ActorDefinition-OperationsTeam.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/OperationsTeam",
+      "dcterms:title": "Operations Team",
+      "dcterms:description": "The operations team of the Trust Network Gateway's service provider, which registers a Participant's key material and verifies its pull requests (onboarding steps [30]-[50]).",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/OperationsTeam"
+      }
+    },
+    {
       "@id": "ActorDefinition-Receiver.jsonld",
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/Receiver",
@@ -47,6 +135,17 @@
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/trust/ActorDefinition/Receiver"
+      }
+    },
+    {
+      "@id": "ActorDefinition-TechnicalRepresentative.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/TechnicalRepresentative",
+      "dcterms:title": "Technical Representative",
+      "dcterms:description": "The Technical Representative of a GDHCN Participant, named in the Letter of Application (Framework IX). Connects the Participant's systems to the Trust Network Gateway and runs the onboarding tests.",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/TechnicalRepresentative"
       }
     },
     {
@@ -61,6 +160,17 @@
       }
     },
     {
+      "@id": "ActorDefinition-TrustNetworkGateway.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/TrustNetworkGateway",
+      "dcterms:title": "Trust Network Gateway",
+      "dcterms:description": "The Trust Network Gateway through which the GDHCN is operationalized (Framework V.1). It whitelists a Participant's certificates and accepts its connections.",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/TrustNetworkGateway"
+      }
+    },
+    {
       "@id": "ActorDefinition-TrustNetworkParticipant.jsonld",
       "@type": "fhir:ActorDefinition",
       "dcterms:identifier": "ActorDefinition/TrustNetworkParticipant",
@@ -69,6 +179,17 @@
       "dcterms:type": "Requirements: Actor Definitions",
       "schema:sameAs": {
         "@id": "http://smart.who.int/trust/ActorDefinition/TrustNetworkParticipant"
+      }
+    },
+    {
+      "@id": "ActorDefinition-WHOCountryRepresentative.jsonld",
+      "@type": "fhir:ActorDefinition",
+      "dcterms:identifier": "ActorDefinition/WHOCountryRepresentative",
+      "dcterms:title": "WHO Country Representative",
+      "dcterms:description": "The WHO Country Representative, or the WHO Country Office, who may meet a GDHCN Participant's representative in person and send the Letter of Application by diplomatic pouch to WHO Headquarters (Framework IX).",
+      "dcterms:type": "Requirements: Actor Definitions",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/ActorDefinition/WHOCountryRepresentative"
       }
     },
     {

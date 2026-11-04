@@ -39,20 +39,36 @@
           "const": "ingested"
         },
         "@type": {
-          "type": "array",
-          "prefixItems": [
+          "anyOf": [
             {
-              "type": "string",
-              "pattern": "^[\\w.-]+:\\w+$"
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "pattern": "^[\\w.-]+:\\w+$"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^doco:\\w+$"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
             },
             {
-              "type": "string",
-              "pattern": "^doco:\\w+$"
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string",
+                  "pattern": "^[\\w.-]+:\\w+$"
+                }
+              ],
+              "items": false,
+              "minItems": 1,
+              "maxItems": 1
             }
-          ],
-          "items": false,
-          "minItems": 2,
-          "maxItems": 2
+          ]
         },
         "kind": {
           "type": "string",
@@ -86,6 +102,15 @@
           "items": {
             "type": "string"
           }
+        },
+        "meta": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       },
       "required": [
@@ -102,11 +127,5 @@
   },
   "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/library-nodes/LibraryBlockSchema.schema.json",
   "title": "LibraryBlockSchema",
-  "description": "Generated from `LibraryBlockSchema` in schemas/library/library-nodes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  }
+  "description": "Generated from `LibraryBlockSchema` in schemas/library/library-nodes.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable."
 }

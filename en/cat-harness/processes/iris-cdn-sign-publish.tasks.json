@@ -202,8 +202,8 @@
    "name": "Store new objects (never overwrite)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
-   "lane": "Cloudflare R2 + CDN",
-   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
+   "lane": "Release signer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
    "skills": [
     {
      "name": "iris-cdn-exporter",
@@ -211,18 +211,23 @@
     }
    ],
    "role": {
-    "name": "cloudflare-r2-cdn",
-    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
-    "title": "Cloudflare R2 and CDN",
+    "name": "release-signer",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+    "title": "Release signer",
     "skills": [
      {
-      "name": "getting-started",
-      "href": "../../../reference/skill-instructions/getting-started.html",
-      "via": "publish-target"
+      "name": "iris-cdn-signing",
+      "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
      },
      {
-      "name": "iris-cdn-exporter",
-      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html",
+      "via": "attestation-service"
+     },
+     {
+      "name": "test-plan-execution",
+      "href": "../../../reference/skill-instructions/test-plan-execution.html",
+      "via": "attestation-service"
      }
     ]
    }
@@ -302,8 +307,8 @@
    "name": "Commit tag files and signature, last",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
-   "lane": "Cloudflare git (Artifacts)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
+   "lane": "Release signer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
    "skills": [
     {
      "name": "iris-cdn-signing",
@@ -311,32 +316,23 @@
     }
    ],
    "role": {
-    "name": "cloudflare-git",
-    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git",
-    "title": "Cloudflare git (Artifacts)",
+    "name": "release-signer",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+    "title": "Release signer",
     "skills": [
      {
-      "name": "iris-cdn-exporter",
-      "href": "../../../reference/skill-instructions/iris-cdn-exporter.html"
+      "name": "iris-cdn-signing",
+      "href": "../../../reference/skill-instructions/iris-cdn-signing.html"
      },
      {
-      "name": "iris-rest-feed",
-      "href": "../../../reference/skill-instructions/iris-rest-feed.html"
+      "name": "qa-report-signing",
+      "href": "../../../reference/skill-instructions/qa-report-signing.html",
+      "via": "attestation-service"
      },
      {
-      "name": "kg-affordances",
-      "href": "../../../reference/skill-instructions/kg-affordances.html",
-      "via": "corpus"
-     },
-     {
-      "name": "kg-subscription",
-      "href": "../../../reference/skill-instructions/kg-subscription.html",
-      "via": "corpus"
-     },
-     {
-      "name": "materialize-remote",
-      "href": "../../../reference/skill-instructions/materialize-remote.html",
-      "via": "corpus"
+      "name": "test-plan-execution",
+      "href": "../../../reference/skill-instructions/test-plan-execution.html",
+      "via": "attestation-service"
      }
     ]
    }

@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/related-work-coordination.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/related-work-coordination",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "related-work-coordination",
       "title": "Related work: find it, sort it, ask",
       "description": "Before new work takes shape, find the work it touches. Search beans, issues and open PRs for relevance; categorize and summarize every hit; then ask the user whether and how to coordinate. Judgement decides the categories and the recommendation, and the user decides the coordination. Called by CRDM when a requirement is initiated or updated in chat, and by methodology adoption. Process: processes/sdlc/related-work.bpmn.",

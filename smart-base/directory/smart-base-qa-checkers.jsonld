@@ -3,16 +3,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/directory/smart-base-qa-checkers.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
   "sameAs": "http://smart.who.int/base/directory/smart-base-qa-checkers.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/directory/smart-base-qa-checkers",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "smart-base-qa-checkers",
       "path": "qa-checkers/",
       "contentSource": {
@@ -20,7 +14,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/qa-checkers"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/qa-checkers"
       ],
       "description": "The dak adapter's automated QA checkers, one folio-qa-checker/v1 node per criterion, naming DAK_AUTOMATED_CHECKERS in pipeline/qa-checkers-dak.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the qaCheckers array contributions.ts returned.",
       "readmePath": "qa-checkers/README.md",

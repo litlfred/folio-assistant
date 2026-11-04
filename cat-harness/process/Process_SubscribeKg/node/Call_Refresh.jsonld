@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_Refresh.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_Refresh",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Refresh the held part",
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
@@ -21,7 +15,7 @@
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/materialize-remote"
       ],
-      "touchesWorkPlan": true,
+      "touchesWorkPlan": false,
       "relaxable": true,
       "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized",
       "incoming": [

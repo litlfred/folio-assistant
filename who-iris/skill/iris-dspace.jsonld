@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "iris-dspace",
       "title": "IRIS, DSpace and Dublin Core",
       "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.",

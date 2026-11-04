@@ -71,6 +71,11 @@
             "description": "One line per hit: repository, default branch or PR number, head, author, when, and what matched. Then what could not be read. Exactly one of path, prefix or bean must be given. With --json, `definitions.lookup` of schemas/skills/bean-drain/output.schema.json.",
             "name": "lookup",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "description": "With --json, the hits as one `OpenWorkLookup` record, with what could not be read. Programs read this; people read `lookup`.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/OpenWorkLookup"
           }
         ]
       },

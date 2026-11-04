@@ -5,7 +5,7 @@
  "tasks": {
   "Task_SecurityGate": {
    "id": "Task_SecurityGate",
-   "name": "Run the release security gate [security:gate]",
+   "name": "Run the release security gate",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_SecurityGate",
    "lane": "CI/CD Pipeline",
@@ -577,7 +577,7 @@
   },
   "Task_Publish": {
    "id": "Task_Publish",
-   "name": "Push to the CDN [render-kg-to-cdn] gh-pages, FULL REPLACE",
+   "name": "Push to the CDN (full replace)",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Publish",
    "lane": "CI/CD Pipeline",

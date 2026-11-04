@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Make the content change",
       "summary": "Making one requested change to a folio's content on a feature branch: work out its scope, branch, edit the narrative and any deterministic logic, assess what else it touches and how to absorb that, and push.",
       "description": "Making one requested change to a folio's content on a feature branch: work out its scope, branch, edit the narrative and any deterministic logic, assess what else it touches and how to absorb that, and push.\n\nCalled from content-change-review once the bean is claimed; it runs on its caller's bean. Revisions after the first push are Task_Iterate in the caller, not a second run of this phase.",
@@ -28,7 +22,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake#flow/a1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Start_Agent",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_DetectScope",
@@ -36,7 +30,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake#flow/a2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_DetectScope",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_CreateBranch",
@@ -44,7 +38,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake#flow/a3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_CreateBranch",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_EditContent",
@@ -52,7 +46,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake#flow/a4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_EditContent",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_EditLogic",
@@ -60,7 +54,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake#flow/a5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_EditLogic",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_AssessImpact",
@@ -68,7 +62,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake#flow/a6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_AssessImpact",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Call_OptionsAnalysis",
@@ -76,7 +70,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake#flow/a6b",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Call_OptionsAnalysis",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_CommitPush",
@@ -84,7 +78,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake#flow/a7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/Task_CommitPush",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/node/End_Agent",

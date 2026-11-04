@@ -245,9 +245,9 @@
       "@type": "bootstrap:Skill",
       "name": "feature-staging",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/839e4636b8162ab4690a0af908fc98ece42aa3939ac077a74e9fe19ee2351dca",
-        "bytes": 29288,
-        "sha256": "839e4636b8162ab4690a0af908fc98ece42aa3939ac077a74e9fe19ee2351dca"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/098ffaec456e0b196d0587a11faa34beafb15be09dcc7f4bee954f26cb5e88a1",
+        "bytes": 32300,
+        "sha256": "098ffaec456e0b196d0587a11faa34beafb15be09dcc7f4bee954f26cb5e88a1"
       },
       "title": "Feature-branch staging"
     },
@@ -377,11 +377,22 @@
       "@type": "bootstrap:Skill",
       "name": "merge-conflict-patterns",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2befb122c3a3fda8b72acc22d84ccaf825c9f0fa765944150660b3625ee9bfa4",
-        "bytes": 51632,
-        "sha256": "2befb122c3a3fda8b72acc22d84ccaf825c9f0fa765944150660b3625ee9bfa4"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ea0d82dcacd7742f88e9e97010e18d494d9ae6b452f6a459f0dd1774bf052cdc",
+        "bytes": 51615,
+        "sha256": "ea0d82dcacd7742f88e9e97010e18d494d9ae6b452f6a459f0dd1774bf052cdc"
       },
       "title": "Merge-conflict patterns — what a merge may resolve on its own"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-manager-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "merge-manager-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e6ba468ccc518d8687a90e3ba8ed681a14c39a1975a6835ddb203b1d0e68e446",
+        "bytes": 5223,
+        "sha256": "e6ba468ccc518d8687a90e3ba8ed681a14c39a1975a6835ddb203b1d0e68e446"
+      },
+      "title": "Merge manager watcher — the loop that runs the merge-steward role"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-queue",
@@ -509,9 +520,9 @@
       "@type": "bootstrap:Skill",
       "name": "prepare-merge",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/052ca21d6fd0af5811204ad46523a595e8cc091cbe65d99ae97fff2375603a2a",
-        "bytes": 38351,
-        "sha256": "052ca21d6fd0af5811204ad46523a595e8cc091cbe65d99ae97fff2375603a2a"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/78581b984f05d34705c9851065aa9e7114653abbe8c193da2e28bb413f084e1c",
+        "bytes": 37108,
+        "sha256": "78581b984f05d34705c9851065aa9e7114653abbe8c193da2e28bb413f084e1c"
       },
       "title": "Prepare-merge — get a feature branch ready to land"
     },
@@ -553,9 +564,9 @@
       "@type": "bootstrap:Skill",
       "name": "qa-reports",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4d8241cc6acd19a51e0abe6a1ff746d9fd4f29533d4e1d2b0195c295280290d6",
-        "bytes": 8789,
-        "sha256": "4d8241cc6acd19a51e0abe6a1ff746d9fd4f29533d4e1d2b0195c295280290d6"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fe8968dd2628d708bfe609da677f0e55727b07ac8ea3d1dc8bf104d98418977c",
+        "bytes": 10298,
+        "sha256": "fe8968dd2628d708bfe609da677f0e55727b07ac8ea3d1dc8bf104d98418977c"
       },
       "title": "QA reports — derived results on a branch, judgements on `main`"
     },
@@ -637,6 +648,17 @@
       "title": "/rendered-verification — look at it, then send the picture"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/saturation-meta-merge",
+      "@type": "bootstrap:Skill",
+      "name": "saturation-meta-merge",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/dc4a0f414c19c9ef861cad6ebedeffbed2c0090cd852065d4d4f6a923a4de87e",
+        "bytes": 7176,
+        "sha256": "dc4a0f414c19c9ef861cad6ebedeffbed2c0090cd852065d4d4f6a923a4de87e"
+      },
+      "title": "Saturation meta-merge — drain the queue when the runners are full"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/secrets",
       "@type": "bootstrap:Skill",
       "name": "secrets",
@@ -685,9 +707,9 @@
       "@type": "bootstrap:Skill",
       "name": "staging-review",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/543f54a1a1c7bfa3d17e609bd68c148877358dca7de1b810cc257b10ac39897c",
-        "bytes": 39226,
-        "sha256": "543f54a1a1c7bfa3d17e609bd68c148877358dca7de1b810cc257b10ac39897c"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b763ab86d8f7f5f6d4a11d3fa56da0347cefe7211de4df3db6990a115cd17af",
+        "bytes": 40295,
+        "sha256": "3b763ab86d8f7f5f6d4a11d3fa56da0347cefe7211de4df3db6990a115cd17af"
       },
       "title": "Staging review — before/after comparison"
     },
@@ -707,9 +729,9 @@
       "@type": "bootstrap:Skill",
       "name": "swarm-management",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9d8c1c925d11f02eca9d4187498d61ac077c1c81559a84f5f8f9f87d3e332720",
-        "bytes": 14020,
-        "sha256": "9d8c1c925d11f02eca9d4187498d61ac077c1c81559a84f5f8f9f87d3e332720"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c92b4e16aa2e58885e167e6e4a3d2331c91b6b142ac215b9f64f07c79db5dbb1",
+        "bytes": 14025,
+        "sha256": "c92b4e16aa2e58885e167e6e4a3d2331c91b6b142ac215b9f64f07c79db5dbb1"
       },
       "title": "Swarm management"
     },
@@ -751,9 +773,9 @@
       "@type": "bootstrap:Skill",
       "name": "todo-manager",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3d23616ee49423e98eafb2a77cc72b929c16efcf839bbd5d4a13913b3728967a",
-        "bytes": 41469,
-        "sha256": "3d23616ee49423e98eafb2a77cc72b929c16efcf839bbd5d4a13913b3728967a"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/803884dc4e47287d062446835b6774ae68cf973a213fc189be40ebbe5ca070c0",
+        "bytes": 41213,
+        "sha256": "803884dc4e47287d062446835b6774ae68cf973a213fc189be40ebbe5ca070c0"
       },
       "title": "Session Task Manager (`beans`)"
     },
@@ -762,9 +784,9 @@
       "@type": "bootstrap:Skill",
       "name": "turn-reporting",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ae63a074d9b76d541753abd851b26d5db9e06a840dbf121c316f9e889b7ef77c",
-        "bytes": 14812,
-        "sha256": "ae63a074d9b76d541753abd851b26d5db9e06a840dbf121c316f9e889b7ef77c"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/40b80370ca99201823afc40bbe6cfa06038b5d58d67c787ee60dd7afc3f413d9",
+        "bytes": 14819,
+        "sha256": "40b80370ca99201823afc40bbe6cfa06038b5d58d67c787ee60dd7afc3f413d9"
       },
       "title": "Turn reporting — say which bean you are on, every turn"
     },
@@ -833,6 +855,28 @@
         "sha256": "1ab974fe1761a1c7893d74e1da106c70a4311fc0bb0b006920c09d61c0cc76d8"
       },
       "title": "Restructuring a work plan — a reviewed plan, not a bulk edit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store",
+      "@type": "bootstrap:Skill",
+      "name": "work-plan-store",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/83f6026fea716777e4090cba86951d341c1dd0f3a6d369c68a7e565e167a3e50",
+        "bytes": 5948,
+        "sha256": "83f6026fea716777e4090cba86951d341c1dd0f3a6d369c68a7e565e167a3e50"
+      },
+      "title": "The work plan's contract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store-git-branch",
+      "@type": "bootstrap:Skill",
+      "name": "work-plan-store-git-branch",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2c033396283518c079d45b91b58b2907319b94c101d5b1a09bbdf556bd65977b",
+        "bytes": 3678,
+        "sha256": "2c033396283518c079d45b91b58b2907319b94c101d5b1a09bbdf556bd65977b"
+      },
+      "title": "The work plan on a git state branch"
     }
   ],
   "hasSubgraph": [

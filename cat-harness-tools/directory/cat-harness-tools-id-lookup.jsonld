@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-id-lookup.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-id-lookup",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "cat-harness-tools-id-lookup",
       "path": "id-lookup/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
       "description": "The identifier-lookup CLIENT a reader's browser runs: `lookup.js` (plain ES module, no dependencies) with its hand-written `lookup.d.ts`, and a one-form `index.html` told which index to open by `?index=<directory>`. The indexes themselves are generated output hosted by the instance each is about (its own `id-lookup/`), never here. JavaScript, so it never sits under the plain docs pipeline. Moved from large-datasets (bean `j7ql`).",
       "readmePath": "id-lookup/README.md",

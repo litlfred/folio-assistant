@@ -731,6 +731,235 @@
   });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => addSuggest());
   else addSuggest();
+  // ── The block panel: icons on each block, one slide-out pane per icon ──
+  //
+  // Owner, 2026-11-01 (Q-STY-2): only icons show beside a block; each opens
+  // its own pane from the right edge. ✎ "Help improve this section" holds the
+  // block's own links (moved in while open, so their facts and handlers stay
+  // theirs) with a line on what each does. Another layer adds a pane with
+  // window.faBlockPanel.pane(id, { icon, title, render(label, body) }) and
+  // its icon with .icon(box, id, count).
+  // Owner, 2026-11-02: one small icon per block, "use the feedback icon",
+  // in the left gutter: a faint 📣 opens one panel with the block's link, its suggest, feedback
+  // and edit, and its public comments. The other icons stay in the box, so
+  // a layer can still add a pane, but only the trigger shows on the page.
+  const panes = { edit: { icon: "📣", title: "Help improve this section" } };
+  // Owner, 2026-11-02 (18:16Z): "already anchor in lhs gutter ... needs to
+  // be greyed out. we only need one. put feedback in left gutter. no right
+  // gutter", and (18:17Z) "anchor hover should appear when over title AND
+  // content". So the theme's own heading anchor stays, always shown but grey,
+  // and coloured while the pointer is over its heading or that heading's
+  // section (.fa-hot, set below); each block's 📣 sits in the same left
+  // gutter, coloured while its block is hovered; the block's 🔗 lives only in
+  // the panel, as its copy-link button.
+  const ON = "{opacity:1;filter:none}";
+  const LINK_CSS = "html.fa-bp .ba-moved{display:none!important}" +
+    // A lazy page fills a block after its box: its own 🔗 is hidden by place.
+    "html.fa-bp .ba-has+.fa-blk a.block-anchor{display:none}" +
+    ".ba-ic.ba-copied{border-color:#2e7d32;background:#2e7d32;color:#fff}" +
+    ".ba-ic{position:relative;width:28px;height:28px;padding:0;border:1px solid #8885;border-radius:7px;background:color-mix(in srgb,currentColor 5%,transparent);color:inherit;font-size:14px;line-height:1;cursor:pointer}" +
+    "html.fa-bp .block-actions{opacity:1}" +
+    "html.fa-bp .block-actions>.ba-ic:not(.ba-trigger){display:none}" +
+    // Owner, 2026-11-02 (dth-pc): "need a bit of padding between content and
+    // grill": the left gutter is inside the document's own box, so the icons
+    // never sit on the theme's backdrop.
+    "@media (min-width:50rem){html.fa-bp .main-content .fa-doc{padding-left:1.75rem}html.fa-bp .main-content .block-actions{float:left;clear:left;width:1.5rem;margin:0 0 6px -1.5rem;text-align:center}}" +
+    "html.fa-bp .block-actions>.ba-trigger{width:20px;height:20px;border:0;background:none;font-size:13px;opacity:.35;filter:grayscale(1)}" +
+    "html.fa-bp .block-actions>.ba-trigger .ba-n{top:-4px;right:-6px;font-size:9px;padding:0 3px}" +
+    "html.fa-bp .block-actions:hover>.ba-trigger,html.fa-bp .ba-trigger:focus-visible,html.fa-bp .ba-trigger[aria-expanded=true],html.fa-bp :hover>.block-actions>.ba-trigger,html.fa-bp p:has(+.fa-blk:hover)>.block-actions>.ba-trigger" + ON +
+    "html.fa-bp .main-content .anchor-heading svg{visibility:visible;opacity:.35;filter:grayscale(1)}" +
+    "html.fa-bp .main-content .fa-hot>.anchor-heading svg,html.fa-bp .main-content :hover>.anchor-heading svg,html.fa-bp .main-content .anchor-heading:focus svg" + ON +
+    ".fa-block-panel .bp-copy{font:inherit;font-size:.82rem;margin:.1rem 0 .3rem;padding:.3rem .6rem;border:1px solid #8886;border-radius:6px;background:none;color:inherit;cursor:pointer}" +
+    ".fa-block-panel .bp-copy.ba-copied{border-color:#2e7d32;background:#2e7d32;color:#fff}" +
+    ".fa-block-panel .bp-pane{margin-top:1rem}.fa-block-panel .bp-pane>h4{margin:0 0 .3rem;font-size:.9rem}";
+  const EXPLAIN = {
+    suggest: ["✍ Suggest a change", "Propose new wording in an editor. It is sent as a GitHub issue with your change, and the editors decide on it."],
+    feedback: ["📣 Give feedback", "Raise a question, concern or error without proposing text. Opens a GitHub issue that names this section."],
+    edit: ["✎ Edit the source", "For editors: change the text yourself on GitHub. The edit becomes a pull request, reviewed before it is published."],
+  };
+  const ORDER = ["suggest", "feedback", "edit"];
+  let panel = null, home = null, moved = null, state = null;
+  const titleOf = (box) => {
+    if (box.dataset.sec) return box.dataset.sec;
+    for (let n = box; n && n !== document.body; n = n.previousElementSibling || n.parentElement)
+      if (/^H[1-6]$/.test(n.tagName)) return n.textContent.trim();
+    return box.dataset.block || "";
+  };
+  const restore = () => { if (moved && home) home.parentNode.insertBefore(moved, home); if (home) home.remove(); moved = home = null; };
+  const close = () => {
+    if (!panel) return;
+    restore();
+    panel.classList.remove("open");
+    document.querySelectorAll('.ba-ic[aria-expanded="true"]').forEach((b) => b.setAttribute("aria-expanded", "false"));
+    if (state && state.from && state.from.isConnected) state.from.focus();
+    state = null;
+  };
+  const open = (box, id, from) => {
+    if (!panel) {
+      panel = el("aside", { className: "fa-block-panel", tabIndex: -1 });
+      panel.setAttribute("aria-label", "Section panel");
+      document.body.append(panel);
+    }
+    restore();
+    const label = box.dataset.block || "";
+    state = { box: box, id: id, from: from };
+    document.querySelectorAll('.ba-ic[aria-expanded="true"]').forEach((b) => b.setAttribute("aria-expanded", "false"));
+    const trigger = box.querySelector(":scope > .ba-trigger");
+    if (trigger) trigger.setAttribute("aria-expanded", "true");
+    // One panel for the block: its link, its own links, then every other
+    // pane a layer added (public comments), in that order.
+    const hasLinks = !!box.querySelector(":scope > a[data-fa-link]");
+    const others = Array.from(box.querySelectorAll(":scope > .ba-ic:not(.ba-link)")).map((b) => b.dataset.pane).filter((k) => k !== "edit" && panes[k] && panes[k].render);
+    const x = el("button", { className: "bp-x", type: "button", textContent: "✕", title: "Close (Esc)" });
+    x.onclick = close;
+    const p = hasLinks ? panes.edit : panes[others[0]] || { title: id };
+    const body = el("div", { className: "bp-body" });
+    const head = [x, el("h3", { textContent: p.title }), el("div", { className: "bp-sub", textContent: titleOf(box) })];
+    const lk = box.querySelector(':scope > .ba-link');
+    if (lk) {
+      const c = el("button", { className: "bp-copy", type: "button", textContent: "🔗 " + lk.title });
+      c.dataset.anchor = lk.dataset.anchor;
+      c.onclick = (e) => { e.stopPropagation(); copyLink(c); };
+      head.push(c);
+    }
+    panel.replaceChildren(...head, body);
+    if (hasLinks) {
+      fill(box);
+      ready(box);
+      for (const a of box.querySelectorAll(":scope > a[data-fa-link]")) {
+        const e = EXPLAIN[a.dataset.faLink];
+        if (!e || a.dataset.bpDone) continue;
+        a.dataset.bpDone = "1";
+        a.replaceChildren(el("b", { textContent: e[0] }), el("small", { textContent: e[1] }));
+      }
+      const links = Array.from(box.querySelectorAll(":scope > a[data-fa-link]"));
+      links.sort((a, b) => ORDER.indexOf(a.dataset.faLink) - ORDER.indexOf(b.dataset.faLink)).forEach((a) => box.append(a));
+      box.querySelectorAll(":scope > .ba-existing").forEach((s) => box.append(s));
+      home = el("span", { hidden: true });
+      box.parentNode.insertBefore(home, box);
+      moved = box;
+      body.append(box);
+    }
+    for (const k of others) {
+      const sec = el("div", { className: "bp-pane" });
+      if (hasLinks || others.length > 1) sec.append(el("h4", { textContent: (panes[k].icon ? panes[k].icon + " " : "") + panes[k].title }));
+      const inner = el("div");
+      sec.append(inner);
+      body.append(sec);
+      panes[k].render(label, inner);
+    }
+    panel.classList.add("open");
+    panel.focus({ preventScroll: true });
+  };
+  const icon = (box, id, count) => {
+    if (box.querySelector('.ba-ic[data-pane="' + id + '"]')) return;
+    const p = panes[id] || {};
+    const b = el("button", { className: "ba-ic", type: "button", title: (p.title || id) + (count ? " (" + count + ")" : "") });
+    b.dataset.pane = id;
+    b.setAttribute("aria-expanded", "false");
+    b.append(el("span", { textContent: p.icon || "•" }));
+    if (count) b.append(el("b", { className: "ba-n", textContent: String(count) }));
+    // 🔗 first, ✎ last; every other pane's icon between them.
+    if (id === "edit") box.append(b);
+    else box.insertBefore(b, box.querySelector('.ba-ic[data-pane="edit"]') || null);
+    retrigger(box);
+  };
+  // The one icon a block shows: 📣 when it has links, else the first pane's
+  // own icon. The 📣 carries the count of the other panes (public comments).
+  const retrigger = (box) => {
+    const ics = Array.from(box.querySelectorAll(":scope > .ba-ic:not(.ba-link)"));
+    if (!ics.length) return;
+    const t = box.querySelector(':scope > .ba-ic[data-pane="edit"]') || ics[0];
+    for (const b of ics) b.classList.toggle("ba-trigger", b === t);
+    if (t.dataset.pane !== "edit") return;
+    let n = 0;
+    for (const b of ics) { const c = b !== t && b.querySelector(".ba-n"); if (c) n += Number(c.textContent) || 0; }
+    let bn = t.querySelector(".ba-n");
+    if (n) {
+      if (!bn) { bn = el("b", { className: "ba-n" }); t.append(bn); }
+      bn.textContent = String(n);
+      t.title = panes.edit.title + " (" + n + " comment" + (n === 1 ? "" : "s") + ")";
+    } else if (bn) bn.remove();
+  };
+  // 🔗 Link (owner, 2026-11-02: "should be an anchor link (on right icon
+  // for the content block that has feedback edit etc)", and the heading
+  // anchors move there too). First in every group; it copies the block's or
+  // heading's address and puts it in the address bar instead of opening a pane.
+  const linkIcon = (box, id, what) => {
+    if (!id || box.querySelector('.ba-ic[data-pane="link"]')) return;
+    const b = el("button", { className: "ba-ic ba-link", type: "button", title: "Copy link to this " + what });
+    b.dataset.pane = "link";
+    b.dataset.anchor = id;
+    b.setAttribute("aria-label", "Copy link to this " + what);
+    b.append(el("span", { textContent: "🔗" }));
+    box.insertBefore(b, box.firstChild);
+  };
+  const copyLink = (b) => {
+    const url = location.href.replace(/#.*$/, "") + "#" + encodeURIComponent(b.dataset.anchor).replace(/%3A/g, ":").replace(/%2F/g, "/");
+    try { history.replaceState(null, "", url); } catch { /* the copy still works */ }
+    const done = (t) => { b.title = t; b.classList.add("ba-copied"); setTimeout(() => { b.classList.remove("ba-copied"); b.title = "Copy link"; }, 2000); };
+    try { navigator.clipboard.writeText(url).then(() => done("Link copied"), () => done(url)); } catch { done(url); }
+  };
+  const icons = (root) => {
+    const r = root || document;
+    if (!r || typeof r.querySelectorAll !== "function") return;
+    for (const box of r.querySelectorAll(".block-actions")) {
+      if (box.querySelector("a[data-fa-link]")) icon(box, "edit");
+      if (box.closest(".fa-block-panel")) continue;
+      const label = box.dataset.block || "";
+      if (label && document.getElementById(label)) {
+        linkIcon(box, label, "block");
+        // Marks the block's place, which stays when the panel borrows the box.
+        (box.parentElement && box.parentElement.tagName === "P" ? box.parentElement : box).classList.add("ba-has");
+        // The block's own anchor link, if the build drew one, now lives in the group.
+        for (const a of document.querySelectorAll("a.block-anchor")) if (a.getAttribute("href") === "#" + label) a.classList.add("ba-moved");
+      }
+    }
+  };
+  // The heading whose section the pointer is in: walk up to the document's
+  // top level, then back to the nearest heading before it.
+  let hot = null;
+  document.addEventListener("mouseover", (e) => {
+    let n = e.target && e.target.closest ? e.target.closest(".main-content *") : null;
+    let h = null;
+    if (n && !n.closest(".fa-block-panel, nav, .side-bar")) {
+      while (n.parentElement && !n.parentElement.matches(".fa-doc, .main-content, main")) n = n.parentElement;
+      for (let x = n; x && !h; x = x.previousElementSibling) if (/^H[1-6]$/.test(x.tagName) && x.querySelector(":scope > .anchor-heading")) h = x;
+    }
+    if (h === hot) return;
+    if (hot) hot.classList.remove("fa-hot");
+    hot = h;
+    if (hot) hot.classList.add("fa-hot");
+  });
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest && e.target.closest(".ba-ic");
+    if (b && b.dataset.pane === "link") { e.preventDefault(); e.stopPropagation(); copyLink(b); return; }
+    if (b && !(panel && panel.contains(b))) {
+      e.preventDefault();
+      const box = b.closest(".block-actions");
+      if (state && state.box === box) close();
+      else if (box) open(box, b.dataset.pane, b);
+      return;
+    }
+    if (panel && panel.classList.contains("open") && !panel.contains(e.target) && !e.target.closest(".fa-suggest, dialog")) close();
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && panel && panel.classList.contains("open") && !document.querySelector("dialog[open]")) close(); });
+  if (typeof document.documentElement === "object" && document.documentElement && document.documentElement.classList) {
+    document.documentElement.classList.add("fa-bp");
+    if (!document.getElementById("fa-bp-link-css")) {
+      const st = el("style", { id: "fa-bp-link-css", textContent: LINK_CSS });
+      (document.head || document.documentElement).append(st);
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => icons());
+    else icons();
+  }
+  window.faBlockPanel = {
+    pane: (id, p) => { panes[id] = p; },
+    icon: icon,
+    icons: icons,
+    open: (label, id) => { const box = document.querySelector('.block-actions[data-block="' + CSS.escape(label) + '"]'); if (box) open(box, id || "edit"); },
+    close: close,
+  };
   window.faEditLinks = { urls: faBlockUrls, fill: fill, configure: configure };
   // Both the link reached and the host it sits in: a pointer that lands
   // straight on a compact host's link (no gap crossed) or keyboard focus on it

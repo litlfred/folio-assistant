@@ -6,7 +6,7 @@
   "Task_PotExtract": {
    "id": "Task_PotExtract",
    "name": "Extract translatable strings (POT generation)",
-   "type": "bpmn:ServiceTask",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_PotExtract",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
@@ -16,6 +16,10 @@
      "href": "../../../reference/skill-instructions/translation-manager.html"
     }
    ],
+   "shared": {
+    "id": "GT_ExtractPot",
+    "type": "bpmn:GlobalTask"
+   },
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -480,7 +484,7 @@
   "Task_PoInject": {
    "id": "Task_PoInject",
    "name": "Inject translations (PO → Markdown)",
-   "type": "bpmn:ServiceTask",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_PoInject",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
@@ -490,6 +494,10 @@
      "href": "../../../reference/skill-instructions/translation-manager.html"
     }
    ],
+   "shared": {
+    "id": "GT_InjectPo",
+    "type": "bpmn:GlobalTask"
+   },
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -717,7 +725,7 @@
   "Task_RoundTripQA": {
    "id": "Task_RoundTripQA",
    "name": "Round-trip translation QA (back-translate)",
-   "type": "bpmn:ServiceTask",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_RoundTripQA",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
@@ -727,6 +735,10 @@
      "href": "../../../reference/skill-instructions/translation-manager.html"
     }
    ],
+   "shared": {
+    "id": "GT_RoundTripQa",
+    "type": "bpmn:GlobalTask"
+   },
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -1113,7 +1125,7 @@
   "Task_WriteUnofficial": {
    "id": "Task_WriteUnofficial",
    "name": "Write status.json (unofficial)",
-   "type": "bpmn:ServiceTask",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_WriteUnofficial",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
@@ -1123,6 +1135,13 @@
      "href": "../../../reference/skill-instructions/translation-manager.html"
     }
    ],
+   "shared": {
+    "id": "GT_WriteTranslationStatus",
+    "type": "bpmn:GlobalTask",
+    "inputs": {
+     "official": "false"
+    }
+   },
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
@@ -1425,7 +1444,7 @@
   "Task_WriteOfficial": {
    "id": "Task_WriteOfficial",
    "name": "Write status.json (official)",
-   "type": "bpmn:ServiceTask",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_WriteOfficial",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
@@ -1435,6 +1454,13 @@
      "href": "../../../reference/skill-instructions/translation-manager.html"
     }
    ],
+   "shared": {
+    "id": "GT_WriteTranslationStatus",
+    "type": "bpmn:GlobalTask",
+    "inputs": {
+     "official": "true"
+    }
+   },
    "role": {
     "name": "authoring-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",

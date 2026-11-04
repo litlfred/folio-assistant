@@ -123,6 +123,15 @@
     "zod/figure-data/SmartGuidelinesApproachFigureSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/figure-data/SmartGuidelinesApproachFigureSchema.schema.json"
     },
+    "zod/glossary-tables/GlossaryTablesSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/glossary-tables/GlossaryTablesSchema.schema.json"
+    },
+    "zod/glossary/ArchimateFocusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/glossary/ArchimateFocusSchema.schema.json"
+    },
+    "zod/glossary/ArchimateRelationshipSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/glossary/ArchimateRelationshipSchema.schema.json"
+    },
     "zod/glossary/FocusSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/glossary/FocusSchema.schema.json"
     },
@@ -131,6 +140,9 @@
     },
     "zod/glossary/LangTextSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/glossary/LangTextSchema.schema.json"
+    },
+    "zod/glossary/OrgFocusSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/glossary/OrgFocusSchema.schema.json"
     },
     "zod/glossary/TermSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/glossary/TermSchema.schema.json"
@@ -235,11 +247,5 @@
       "$ref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/zod/review-verdict/ReviewVerdictSchema.schema.json"
     }
   },
-  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  }
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld"
 }

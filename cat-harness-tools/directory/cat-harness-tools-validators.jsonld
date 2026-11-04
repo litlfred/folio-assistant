@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-validators.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-validators",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "cat-harness-tools-validators",
       "path": "validators/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/validators"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/validators"
       ],
       "description": "The validators this layer's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit), as cat-harness and the layers above it declare theirs. The first is `dynamic-state.json`, for the `cat-harness-dynamic-state/v1` document `writeDynamicState` writes: its family is listed in the docs typology here, so its node is here too and both land in one change.",
       "fileCount": 0,

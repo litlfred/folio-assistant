@@ -3,17 +3,11 @@
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
   "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Read proposed exclusions against page and sign [classify-and-code-content · recommendation-extraction · content-review]",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Check exclusions against page and sign",
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",

@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/hl7-2023-fhir-r5-testplan",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "FHIR R5 (5.0.0) — TestPlan resource",
+      "dcterms:issued": "2023",
+      "dcterms:source": "fhir-harness/library/hl7-2023-fhir-r5-testplan/manifest.jsonld",
+      "dcterms:hasVersion": "fhir-harness/library/hl7-2023-fhir-r5-testplan"
+    }
+  ]
+}

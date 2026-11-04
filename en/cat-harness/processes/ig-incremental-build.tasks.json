@@ -105,8 +105,8 @@
    "name": "Log the environment error on the bean",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_LogEnvError",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_WorkPlan",
+   "lane": "FHIR modeller / PR author (person + authoring agent)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Author",
    "skills": [
     {
      "name": "todo-manager",
@@ -114,17 +114,21 @@
     }
    ],
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../reference/skill-instructions/fhir-questionnaire-wireframe.html"
      },
      {
-      "name": "todo-manager",
-      "href": "../../../reference/skill-instructions/todo-manager.html"
+      "name": "l3-fhir-authoring",
+      "href": "../../../reference/skill-instructions/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../reference/skill-instructions/pcf-consent.html"
      }
     ]
    }
@@ -164,7 +168,7 @@
   },
   "Task_Cone": {
    "id": "Task_Cone",
-   "name": "Compute the cone of the change (fsh-cone --changed)",
+   "name": "Compute the cone of the change",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Cone",
    "lane": "Incremental build (system)",
@@ -562,7 +566,7 @@
   },
   "Task_ContextLoad": {
    "id": "Task_ContextLoad",
-   "name": "Load or reuse the warm context (fhir_context_load)",
+   "name": "Load or reuse the warm context",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ContextLoad",
    "lane": "Publisher + validator services (JVM)",
@@ -639,8 +643,8 @@
    "name": "Log findings on the bean",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_LogFindings",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_WorkPlan",
+   "lane": "FHIR modeller / PR author (person + authoring agent)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Author",
    "skills": [
     {
      "name": "todo-manager",
@@ -648,17 +652,21 @@
     }
    ],
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../reference/skill-instructions/fhir-questionnaire-wireframe.html"
      },
      {
-      "name": "todo-manager",
-      "href": "../../../reference/skill-instructions/todo-manager.html"
+      "name": "l3-fhir-authoring",
+      "href": "../../../reference/skill-instructions/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../reference/skill-instructions/pcf-consent.html"
      }
     ]
    }
@@ -972,7 +980,7 @@
   },
   "Task_Site": {
    "id": "Task_Site",
-   "name": "Assemble the site (template · Jekyll)",
+   "name": "Assemble the site",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Site",
    "lane": "Incremental build (system)",
@@ -1069,7 +1077,7 @@
   },
   "Task_Qa": {
    "id": "Task_Qa",
-   "name": "QC gates on the aggregate QA",
+   "name": "Run QC gates on the aggregate QA",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Qa",
    "lane": "PR reviewer / QC reviewer",
@@ -1155,8 +1163,8 @@
    "name": "File QC findings as beans",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_QcBeans",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_WorkPlan",
+   "lane": "FHIR modeller / PR author (person + authoring agent)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Author",
    "skills": [
     {
      "name": "todo-manager",
@@ -1164,17 +1172,21 @@
     }
    ],
    "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
     "skills": [
      {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../reference/skill-instructions/fhir-questionnaire-wireframe.html"
      },
      {
-      "name": "todo-manager",
-      "href": "../../../reference/skill-instructions/todo-manager.html"
+      "name": "l3-fhir-authoring",
+      "href": "../../../reference/skill-instructions/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../reference/skill-instructions/pcf-consent.html"
      }
     ]
    }
@@ -1264,7 +1276,7 @@
   },
   "Task_Deploy": {
    "id": "Task_Deploy",
-   "name": "Deploy the site [content-publish]",
+   "name": "Deploy the site",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Deploy",
    "lane": "Publication manager — deploy and seed",
@@ -1325,7 +1337,7 @@
   },
   "Task_Seed": {
    "id": "Task_Seed",
-   "name": "Seed the cache from the green build (ig-cache seed · verify · promote)",
+   "name": "Seed the cache from the green build",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Seed",
    "lane": "Publication manager — deploy and seed",

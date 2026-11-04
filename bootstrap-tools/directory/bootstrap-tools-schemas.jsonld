@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-schemas.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-schemas",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "bootstrap-tools-schemas",
       "path": "schemas/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/schemas"
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas"
       ],
       "title": "Bootstrap's shapes, in Zod",
       "description": "The Zod source of every schema bootstrap publishes, bootstrap's defined terms and graph typologies, and the small readers the tools share: a declaration reader over bootstrap's own shape, release addresses, and the declared-order check.",

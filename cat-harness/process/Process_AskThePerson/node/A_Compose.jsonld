@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_Compose.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson/node/A_Compose",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Compose the full question",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
@@ -25,10 +19,10 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_1"
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/f1"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/SF_Ask_2"
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson#flow/f2"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     }

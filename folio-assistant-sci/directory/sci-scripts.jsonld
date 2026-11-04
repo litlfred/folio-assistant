@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-scripts.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-scripts",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "sci-scripts",
       "path": "scripts/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/code"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
       "description": "Tests that hold the harness's code against what this instance owns or contributes: its paper processes and decision tables, its pipeline plugins and contributed checkers. The code under test is imported down from cat-harness. Also the Lean cache service and its tests: `lake-cache.sh` (the `lean-cache` tool), `reseed-lean-cache.sh`, `lake-cache-fetch.sh`, `lake-cache-produce.py`, `lake-cache-fetch-multi.py` and their `.bat` entry points, moved here from cat-harness-tools `scripts/` (folio-assistant#2598; owner 2026-10-23, \"C ok\"): only a Lean folio runs them, and the `lake-cache` kind is this layer's. The cache branch family they read and write keeps its name, `cat/folio-assistant-sci/lake-cache/<pkg>` (owner, 2026-10-02).",
       "readmePath": "scripts/README.md",

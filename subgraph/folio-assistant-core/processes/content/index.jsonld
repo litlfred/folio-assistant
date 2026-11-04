@@ -198,6 +198,14 @@
       "name": "Committee review of a content change"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/Flow_GW_Covered_Join",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/Flow_GW_Disputed_Join",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c1",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -322,9 +330,19 @@
       "name": "Every changed block and page reviewed?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/GW_Covered_Join",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_Covered_Join"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/GW_Disputed",
       "@type": "bootstrap:ProcessNode",
       "name": "A finding disputed?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/GW_Disputed_Join",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_Disputed_Join"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/GW_Withdraw",
@@ -732,7 +750,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_QaGate",
       "@type": "bootstrap:ProcessNode",
-      "name": "QA gate: review dispositions against the people and the pull request"
+      "name": "QA-review the dispositions"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForAgent",
@@ -747,7 +765,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_StartRow",
       "@type": "bootstrap:ProcessNode",
-      "name": "Start a change-set row: title, sections, feedback"
+      "name": "Start a change-set row"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
@@ -755,91 +773,78 @@
       "name": "Authoring a document"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D01",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A01",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D02",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A02",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D03",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A03",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D04",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D05",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D06",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D07",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "violations"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D08",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "clean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D09",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D10",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D11",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D12",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "iterate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D13",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "approved"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D14",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D15",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "Authoring Committee feedback"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/D16",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/SF_Bean_1",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A04",
       "@type": "bootstrap:SequenceFlow",
       "name": "claimed"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/SF_Bean_2",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/SF_Bean_3",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A05",
       "@type": "bootstrap:SequenceFlow",
       "name": "not yours"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/SF_Bean_4",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A06",
       "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A07",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A08",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A10",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "violations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A11",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "clean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A13",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A14",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A15",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A16",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A17",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Agent",
@@ -854,22 +859,12 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
       "@type": "cat-harness:Lane",
-      "name": "Build pipeline — validate · render · publish"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Committee",
-      "@type": "cat-harness:Lane",
-      "name": "Authoring Committee"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Reviewer",
-      "@type": "cat-harness:Lane",
-      "name": "Reviewer / subject-matter expert"
+      "name": "Build pipeline"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_WorkPlan",
       "@type": "cat-harness:Lane",
-      "name": "Work plan — beans (shared by humans and agents)"
+      "name": "Work plan (beans)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_BeanClose",
@@ -882,9 +877,9 @@
       "name": "Open the bean"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_ContributorFeedback",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_ReviewPublish",
       "@type": "bootstrap:ProcessNode",
-      "name": "Contributor feedback"
+      "name": "Review and publish"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/EndEvent_Published",
@@ -894,7 +889,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/End_BeanNotYours",
       "@type": "bootstrap:ProcessNode",
-      "name": "Not yours — left alone"
+      "name": "Not yours: left alone"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/GW_BeanYours",
@@ -902,14 +897,14 @@
       "name": "Bean claimed?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/GW_Published",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Published?"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Gateway_ProfileClean",
       "@type": "bootstrap:ProcessNode",
       "name": "Within the declared profile?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Gateway_ReviewOutcome",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Ready to publish?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/StartEvent_NewDocument",
@@ -919,47 +914,37 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_AuthorBlocks",
       "@type": "bootstrap:ProcessNode",
-      "name": "4 · Author blocks"
+      "name": "Author blocks"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Plan",
       "@type": "bootstrap:ProcessNode",
-      "name": "1 · Plan the document"
+      "name": "Plan the document"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_ProfileCheck",
       "@type": "bootstrap:ProcessNode",
-      "name": "5 · Check the profile"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Publish",
-      "@type": "bootstrap:ProcessNode",
-      "name": "9 · Publish"
+      "name": "Check the profile"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Render",
       "@type": "bootstrap:ProcessNode",
-      "name": "7 · Render MD / HTML / PDF"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Review",
-      "@type": "bootstrap:ProcessNode",
-      "name": "8 · Review and feedback"
+      "name": "Render MD, HTML and PDF"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Scaffold",
       "@type": "bootstrap:ProcessNode",
-      "name": "3 · Scaffold the folio [folio_init]"
+      "name": "Scaffold the folio"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_SeedPlan",
       "@type": "bootstrap:ProcessNode",
-      "name": "2 · Seed the work plan"
+      "name": "Seed the work plan"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Validate",
       "@type": "bootstrap:ProcessNode",
-      "name": "6 · Validate"
+      "name": "Validate"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
@@ -1098,7 +1083,8 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F31",
-      "@type": "bootstrap:SequenceFlow"
+      "@type": "bootstrap:SequenceFlow",
+      "name": "published"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F40",
@@ -1151,7 +1137,8 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F51",
-      "@type": "bootstrap:SequenceFlow"
+      "@type": "bootstrap:SequenceFlow",
+      "name": "ended"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F60",
@@ -1221,6 +1208,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/Flow_GW_BeanClosedHow",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
       "@type": "cat-harness:Lane",
       "name": "Author and policy author"
@@ -1251,17 +1242,7 @@
       "name": "Reviewer (legal, policy)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_WorkPlan",
-      "@type": "cat-harness:Lane",
-      "name": "Work plan — beans (shared by humans and agents)"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanClosePublished",
       "@type": "bootstrap:ProcessNode",
       "name": "Close the bean"
     },
@@ -1304,6 +1285,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/End_RenewedByGrant",
       "@type": "bootstrap:ProcessNode",
       "name": "Renewed by a new grant"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanClosedHow",
+      "@type": "bootstrap:ProcessNode",
+      "name": "How did it end?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanYours",
@@ -1403,17 +1389,17 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AgreeTerms",
       "@type": "bootstrap:ProcessNode",
-      "name": "P1.1 · Agree purpose, datasets, period, duties and trust anchors"
+      "name": "P1.1 · Agree the terms"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AssignVersion",
       "@type": "bootstrap:ProcessNode",
-      "name": "P2.1 · Assign the version and its immutable URL"
+      "name": "P2.1 · Assign version and fixed URL"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Catalogue",
       "@type": "bootstrap:ProcessNode",
-      "name": "P2.4–5 · Write the DCAT 3 record and link versions"
+      "name": "P2.4–5 · Write the DCAT 3 record"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_CheckOdrl",
@@ -1423,7 +1409,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation",
       "@type": "bootstrap:ProcessNode",
-      "name": "P2.2b · State the fixed-version URL and hash a Consent cites"
+      "name": "P2.2b · State the URL and hash to cite"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideChange",
@@ -1448,27 +1434,27 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Hash",
       "@type": "bootstrap:ProcessNode",
-      "name": "P2.2 · Record the SHA-256 of each file"
+      "name": "P2.2 · Record each file's SHA-256"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_HashSummary",
       "@type": "bootstrap:ProcessNode",
-      "name": "P2.2a · Hash the plain-language summary with the agreement"
+      "name": "P2.2a · Hash the plain summary"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_NewConsentNeeded",
       "@type": "bootstrap:ProcessNode",
-      "name": "P14.3 · Record that new consent is needed"
+      "name": "P14.3 · New consent needed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_OdrlCitesText",
       "@type": "bootstrap:ProcessNode",
-      "name": "P2.3 · Make the ODRL cite the text by URL and hash"
+      "name": "P2.3 · Make the ODRL cite the text"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_PlainSummary",
       "@type": "bootstrap:ProcessNode",
-      "name": "P1.2b · Draft the plain-language summary"
+      "name": "P1.2b · Draft the plain summary"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Publish",
@@ -1483,7 +1469,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Render",
       "@type": "bootstrap:ProcessNode",
-      "name": "Render the text to HTML / PDF"
+      "name": "Render the text to HTML and PDF"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Review",
@@ -1493,7 +1479,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SetStatus",
       "@type": "bootstrap:ProcessNode",
-      "name": "P14.5 · Set the catalogue status to ended"
+      "name": "P14.5 · Set the status to ended"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Sign",
@@ -1638,10 +1624,15 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/Flow_27",
-      "@type": "bootstrap:SequenceFlow"
+      "@type": "bootstrap:SequenceFlow",
+      "name": "in the corpus"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/Flow_Evidence",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/Flow_GW_BeanClosedHow",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -1655,17 +1646,13 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing#flow/SF_Bean_3",
-      "@type": "bootstrap:SequenceFlow"
+      "@type": "bootstrap:SequenceFlow",
+      "name": "discarded"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "name": "Authoring agent (system)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Corpus",
-      "@type": "cat-harness:Lane",
-      "name": "Corpus (versioned store)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Editor",
@@ -1688,19 +1675,9 @@
       "name": "HCI validation pipeline (system)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_WorkPlan",
-      "@type": "cat-harness:Lane",
-      "name": "Work plan — beans (shared by humans and agents)"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/CallActivity_Evidence",
       "@type": "bootstrap:ProcessNode",
       "name": "Gather and verify the evidence"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Call_BeanClose",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Call_OptionsAnalysis",
@@ -1721,6 +1698,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/End_BeanNotYours",
       "@type": "bootstrap:ProcessNode",
       "name": "Not yours — left alone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/GW_BeanClosedHow",
+      "@type": "bootstrap:ProcessNode",
+      "name": "How did it end?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/GW_BeanYours",
@@ -1805,7 +1787,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_RecordDecision",
       "@type": "bootstrap:ProcessNode",
-      "name": "Record the decision and its audit note"
+      "name": "Record the decision and audit note"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ResolveBean",
@@ -1923,6 +1905,16 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_RecNo",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_RecYes",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "name": "Evidence agent (system)"
@@ -1938,11 +1930,6 @@
       "name": "Trusted registries and observatories (external)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_WorkPlan",
-      "@type": "cat-harness:Lane",
-      "name": "Work plan — beans (shared)"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_EvidenceAttached",
       "@type": "bootstrap:ProcessNode",
       "name": "Recommendation is evidence-backed"
@@ -1953,9 +1940,19 @@
       "name": "Gap recorded, no recommendation"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_NoRecommendation",
+      "@type": "bootstrap:ProcessNode",
+      "name": "No recommendation in this change"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_Authoritative",
       "@type": "bootstrap:ProcessNode",
       "name": "Authority confirmed?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RecommendationInPlay",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Does the change state or alter a recommendation?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Gateway_RetrievalFork",
@@ -1975,7 +1972,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/StartEvent_Recommendation",
       "@type": "bootstrap:ProcessNode",
-      "name": "A recommendation is in play"
+      "name": "An edit is about to be drafted"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AppraiseGrade",
@@ -1985,7 +1982,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AttachEvidence",
       "@type": "bootstrap:ProcessNode",
-      "name": "Attach the evidence to the recommendation"
+      "name": "Attach the evidence"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_DataRepos",
@@ -2000,12 +1997,12 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L1Sources",
       "@type": "bootstrap:ProcessNode",
-      "name": "Search trusted SOURCES — L1"
+      "name": "Search trusted L1 sources"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L2L3Content",
       "@type": "bootstrap:ProcessNode",
-      "name": "Search trusted CONTENT — L2 DAKs, L3 IGs"
+      "name": "Search trusted L2 and L3 content"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordGap",
@@ -2020,12 +2017,268 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_ReviewExisting",
       "@type": "bootstrap:ProcessNode",
-      "name": "Review the guidance already in this content"
+      "name": "Review the existing guidance"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_VerifyAuthority",
       "@type": "bootstrap:ProcessNode",
-      "name": "Verify authority against the observatory / registry API"
+      "name": "Verify authority against the registry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish",
+      "@type": "bootstrap:Process",
+      "name": "Review and publish a folio"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "iterate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F4",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "approved"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F6",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Authoring Committee feedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish#flow/F7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Build",
+      "@type": "cat-harness:Lane",
+      "name": "Build pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Committee",
+      "@type": "cat-harness:Lane",
+      "name": "Authoring Committee"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Reviewer",
+      "@type": "cat-harness:Lane",
+      "name": "Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Call_ContributorFeedback",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Contributor feedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/End_ChangesAsked",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Changes asked"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/End_FeedbackIn",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Feedback in: changes asked"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/End_Published",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Gateway_ReviewOutcome",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Ready to publish?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Start_Rendered",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Rendered, ready for review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Publish",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Review",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Review and record feedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates",
+      "@type": "bootstrap:Process",
+      "name": "Guideline Updates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_11",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_12",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_13",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_15",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_16",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_17",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_7",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_8",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates#flow/Flow_9",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation",
+      "@type": "cat-harness:Lane",
+      "name": "Adaptation team (human or agentic)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee",
+      "@type": "cat-harness:Lane",
+      "name": "Adaptation committee (policy, clinical, programme)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Publisher",
+      "@type": "cat-harness:Lane",
+      "name": "Guideline publisher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
+      "@type": "cat-harness:Lane",
+      "name": "Re-pin steward and build pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/End_Current",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Every layer current with the new version"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_More",
+      "@type": "bootstrap:ProcessNode",
+      "name": "More layers left to re-pin?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Revise",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Any adaptation to revise?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Gw_Touches",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Does the change touch an adaptation or policy?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_LayerChanged",
+      "@type": "bootstrap:ProcessNode",
+      "name": "A harness or base layer changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Start_NewVersion",
+      "@type": "bootstrap:ProcessNode",
+      "name": "A new guideline version is published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish the version with its change notes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Decide each adaptation: keep, revise or retire"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Compare old, new and our adaptations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Map the affected layers in order"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Merge the re-pin with its decided revisions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Open the re-pin for the next ready layer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Review the impact with stakeholders"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Revise the adaptations as decided"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
@@ -2120,11 +2373,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_Review",
       "@type": "cat-harness:Lane",
       "name": "Review team and SMEs"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/lane/Lane_WorkPlan",
-      "@type": "cat-harness:Lane",
-      "name": "Work plan — beans (shared by humans and agents)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/CallActivity_Editing",
@@ -2391,7 +2639,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_RerouteChangeSet",
       "@type": "bootstrap:ProcessNode",
-      "name": "Re-route a change-set to another committee, with a reason"
+      "name": "Re-route to another committee"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Triage",
@@ -2699,7 +2947,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
       "@type": "cat-harness:Lane",
-      "name": "Corpus + build pipeline (system)"
+      "name": "Build pipeline (system)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Editors",
@@ -2730,11 +2978,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Sme",
       "@type": "cat-harness:Lane",
       "name": "Clinical / scientific SMEs"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_WorkPlan",
-      "@type": "cat-harness:Lane",
-      "name": "Work plan — beans (shared by humans and agents)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/CallActivity_Editing",
@@ -2844,7 +3087,96 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_SmeSignoff",
       "@type": "bootstrap:ProcessNode",
-      "name": "Clinical / scientific sign-off"
+      "name": "Clinical or scientific sign-off"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
+      "@type": "bootstrap:Process",
+      "name": "Review-log watch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF05",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "unchanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF06",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "@type": "cat-harness:Lane",
+      "name": "Log watcher (authoring agent)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Changes handled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_NoWork",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Nothing changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Sheet or issues changed?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Every 3 minutes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Accept the new state"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Agent pass on the changed rows"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AppendRows",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Append rows for new issues; hide closed ones"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_ReadSheet",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Read the Contributor Feedback tab"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Run the review-log-watch check"
     }
   ],
   "hasSubgraph": [

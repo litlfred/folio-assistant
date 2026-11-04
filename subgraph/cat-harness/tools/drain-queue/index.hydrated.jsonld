@@ -71,6 +71,11 @@
             "description": "The queue: sources with the tip each was read at, one section per owner in priority order, the spare pool, the excluded beans with reasons, and the copies that disagree. With --json, the same as `definitions.queue` of schemas/skills/bean-drain/output.schema.json. A copy that cannot be fetched is an error, never an empty queue.",
             "name": "queue",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "description": "With --json, the queue as one `DrainQueue` record: sources, owner sections in priority order, the spare pool, exclusions and disagreeing copies. Programs read this; people read `queue`.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DrainQueue"
           }
         ]
       },

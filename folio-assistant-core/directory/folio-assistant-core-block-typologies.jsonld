@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/folio-assistant-core-block-typologies.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/folio-assistant-core-block-typologies",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "folio-assistant-core-block-typologies",
       "path": "block-kinds/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/block-kinds"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/block-kinds"
       ],
       "description": "The document profile's block kinds (prose, example, remark, algorithm, simulator, equation, diagram, table, figure), one folio-block-kind/v1 node per file (bean riit, step 2). Owner, 2026-10-04: kinds are discoverable and not centrally managed; cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph, and the seven parallel tables they replace are gone.",
       "readmePath": "block-kinds/README.md",

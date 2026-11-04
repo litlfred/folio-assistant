@@ -3,11 +3,11 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
                   id="Definitions_Process_LogMessage"
                   targetNamespace="https://litlfred.github.io/bootstrap/v0/workflows"
                   exporter="bootstrap" exporterVersion="1">
-  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns#" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns/" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
   <bpmn:resource id="logger" name="Logger"/>
   <bpmn:collaboration id="Collaboration_Process_LogMessage">
     <bpmn:participant id="Participant_Process_LogMessage" name="Log a message" processRef="Process_LogMessage"/>
@@ -73,45 +73,45 @@ person can read it">
   <bpmndi:BPMNDiagram id="BPMNDiagram_Process_LogMessage">
     <bpmndi:BPMNPlane id="BPMNPlane_Process_LogMessage" bpmnElement="Collaboration_Process_LogMessage">
       <bpmndi:BPMNShape id="Shape_Participant" bpmnElement="Participant_Process_LogMessage" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="760" height="320"/>
+        <dc:Bounds x="160" y="80" width="760" height="344" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Actor" bpmnElement="Lane_Actor" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="730" height="200"/>
+        <dc:Bounds x="190" y="80" width="730" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Logger" bpmnElement="Lane_Logger" isHorizontal="true">
-        <dc:Bounds x="190" y="280" width="730" height="120"/>
+        <dc:Bounds x="190" y="280" width="730" height="144" />
       </bpmndi:BPMNShape>
 
       <bpmndi:BPMNShape id="Shape_Start_LogMessage" bpmnElement="Start_LogMessage">
-        <dc:Bounds x="232" y="147" width="36" height="36"/>
-        <bpmndi:BPMNLabel><dc:Bounds x="212" y="190" width="80" height="40"/></bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
+        <dc:Bounds x="232" y="147" width="36" height="36" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="225.06" y="189.5" width="85.89" height="53" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Compose" bpmnElement="A_Compose">
-        <dc:Bounds x="320" y="125" width="100" height="80"/>
+        <dc:Bounds x="310" y="105" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_GW_Complete" bpmnElement="GW_Complete" isMarkerVisible="true">
-        <dc:Bounds x="480" y="140" width="50" height="50"/>
-        <bpmndi:BPMNLabel><dc:Bounds x="466" y="103" width="78" height="27"/></bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
+        <dc:Bounds x="480" y="140" width="50" height="50" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="466" y="103" width="78" height="27"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_NotLogged" bpmnElement="End_NotLogged">
-        <dc:Bounds x="600" y="147" width="36" height="36"/>
-        <bpmndi:BPMNLabel><dc:Bounds x="578" y="190" width="82" height="40"/></bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
+        <dc:Bounds x="600" y="147" width="36" height="36" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="578" y="190" width="82" height="40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Logged" bpmnElement="End_Logged">
-        <dc:Bounds x="800" y="147" width="36" height="36"/>
-        <bpmndi:BPMNLabel><dc:Bounds x="790" y="190" width="60" height="20"/></bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
+        <dc:Bounds x="800" y="147" width="36" height="36" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="785.48" y="126" width="65.05" height="17" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_Record" bpmnElement="A_Record">
-        <dc:Bounds x="455" y="295" width="100" height="80"/>
+        <dc:Bounds x="445" y="292" width="120" height="120" />
       </bpmndi:BPMNShape>
 
       <bpmndi:BPMNEdge id="Edge_SF_LM_1" bpmnElement="SF_LM_1">
-        <di:waypoint x="268" y="165"/>
-        <di:waypoint x="320" y="165"/>
+        <di:waypoint x="268" y="165" />
+        <di:waypoint x="320" y="165" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_LM_2" bpmnElement="SF_LM_2">
-        <di:waypoint x="420" y="165"/>
-        <di:waypoint x="480" y="165"/>
+        <di:waypoint x="420" y="165" />
+        <di:waypoint x="480" y="165" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_LM_3" bpmnElement="SF_LM_3">
         <di:waypoint x="530" y="165"/>
@@ -119,14 +119,13 @@ person can read it">
         <bpmndi:BPMNLabel><dc:Bounds x="555" y="140" width="22" height="20"/></bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_LM_4" bpmnElement="SF_LM_4">
-        <di:waypoint x="505" y="190"/>
-        <di:waypoint x="505" y="295"/>
-        <bpmndi:BPMNLabel><dc:Bounds x="513" y="228" width="24" height="20"/></bpmndi:BPMNLabel>
+        <di:waypoint x="505" y="190" />
+        <di:waypoint x="505" y="295" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_SF_LM_5" bpmnElement="SF_LM_5">
-        <di:waypoint x="555" y="335"/>
-        <di:waypoint x="818" y="335"/>
-        <di:waypoint x="818" y="183"/>
+        <di:waypoint x="555" y="335" />
+        <di:waypoint x="818" y="335" />
+        <di:waypoint x="818" y="183" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Human Translation Workflow",
       "summary": "The human half of translation: a coordinator assigns a locale to a qualified translator, the translator works in their own tool, a subject-matter expert judges accuracy, and only then is the result official.",
       "description": "The human half of translation: a coordinator assigns a locale to a qualified translator, the translator works in their own tool, a subject-matter expert judges accuracy, and only then is the result official.\n\nYou are in this process when a person is doing the translating. `translation-workflow` is the machine half — extraction, injection, staleness — and it hands off to this one at exactly the point a judgement is needed. The two are separate because completeness is mechanical and accuracy is not: the coordinator's gate asks whether enough strings are filled, the reviewer's asks whether they are right, and no amount of the first substitutes for the second.\n\nWhat makes a translation OFFICIAL is the reviewer's sign-off, never the file being complete.",
@@ -26,13 +20,14 @@
       "flowCount": 21,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
-        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F01",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Start_TranslationNeeded",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_IdentifyContent",
@@ -40,7 +35,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F02",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_IdentifyContent",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ExtractPOT",
@@ -48,7 +43,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F03",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ExtractPOT",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_PrepareGlossary",
@@ -56,7 +51,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F04",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_PrepareGlossary",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_AssignTranslator",
@@ -64,7 +59,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F05",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_AssignTranslator",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ReceiveAssignment",
@@ -72,7 +67,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F06",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ReceiveAssignment",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_TranslateInTool",
@@ -80,7 +75,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F07",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_TranslateInTool",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_SubmitPO",
@@ -88,7 +83,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F08",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_SubmitPO",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_CheckCompleteness",
@@ -96,7 +91,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F09",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_CheckCompleteness",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Gateway_Complete",
@@ -104,7 +99,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "Incomplete",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Gateway_Complete",
@@ -113,7 +108,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_RequestMoreWork",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_TranslateInTool",
@@ -121,7 +116,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "Complete",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Gateway_Complete",
@@ -130,7 +125,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_InjectPO",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_RoundTripQA",
@@ -138,7 +133,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F14",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "findings attached",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_RoundTripQA",
@@ -147,7 +142,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F17",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_SMEReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Gateway_Accurate",
@@ -155,7 +150,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F18",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "Needs correction",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Gateway_Accurate",
@@ -164,7 +159,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F19",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ReturnForCorrection",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_TranslateInTool",
@@ -172,7 +167,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F20",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "Accurate",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Gateway_Accurate",
@@ -181,7 +176,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F21",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_AppendDisclaimer",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_Signoff",
@@ -189,7 +184,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F22",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_Signoff",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_WriteStatus",
@@ -197,7 +192,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation#flow/F23",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_WriteStatus",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/End_OfficialTranslation",

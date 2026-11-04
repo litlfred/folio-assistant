@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "CRDM requirements",
       "summary": "A feature request turned into agreed, signed-off requirements and delivered, with one call activity per CRDM phase from issue linking to close-out.",
       "description": "A feature request turned into agreed, signed-off requirements and delivered, with one call activity per CRDM phase from issue linking to close-out. The CRDM requirements process, decomposed. Each phase is a real subprocess in its own file: `workflow_next` reports the step you are on and the phase it sits inside, and `workflow_complete` takes the step's own id. Detection stays here rather than in a child because its \"not a feature\" branch ends the whole process — inside a subprocess the parent would have to re-ask the same question to route on the answer.",
@@ -22,8 +16,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Start_BA"
       ],
-      "nodeCount": 17,
-      "flowCount": 16,
+      "nodeCount": 13,
+      "flowCount": 12,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Start_BA",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/BA_Submit",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/BA_Submit",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/A_Detect",
@@ -48,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/A_Detect",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/GW_Feature",
@@ -56,7 +50,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/GW_Feature",
@@ -65,16 +59,16 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/GW_Feature",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_BeanOpen",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Issue",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Issue",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Needs",
@@ -82,7 +76,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Needs",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Requirements",
@@ -90,7 +84,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Requirements",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_DataModel",
@@ -98,7 +92,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_DataModel",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Signoff",
@@ -106,7 +100,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Signoff",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Deliver",
@@ -114,7 +108,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Deliver",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Close",
@@ -122,43 +116,9 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Process_CRDM_11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Close",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_BeanClose",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Bean_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "claimed",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/GW_BeanYours",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_Issue",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Bean_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_BeanOpen",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/GW_BeanYours",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Bean_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "name": "not yours",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/GW_BeanYours",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/End_BeanNotYours",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM#flow/SF_Bean_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/Call_BeanClose",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM/node/End_CRDM",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     }

@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/types.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/types",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "types",
       "title": "types",
       "summary": "ALL types are inferred from Zod schemas in constraints.ts, which is the",

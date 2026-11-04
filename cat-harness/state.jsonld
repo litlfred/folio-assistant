@@ -1,7 +1,7 @@
 {
   "@context": {
     "@version": 1.1,
-    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns#",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/",
     "prov": "http://www.w3.org/ns/prov#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "id": "@id",
@@ -15,49 +15,49 @@
       "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
     },
     "harness": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#harness"
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/harness"
     },
     "store": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#beanStore"
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/beanStore"
     },
     "process": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#process"
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/process"
     },
     "status": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#instanceStatus"
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/instanceStatus"
     },
     "tokens": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#token",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/token",
       "@container": "@set"
     },
     "lastMoved": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#lastMoved",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/lastMoved",
       "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
     },
     "beans": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#namesBean",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/namesBean",
       "@container": "@set"
     },
     "children": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#runningChild",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/runningChild",
       "@container": "@set"
     },
     "stuck": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#stuckState",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/stuckState",
       "@container": "@set"
     },
     "kind": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#stuckKind"
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/stuckKind"
     },
     "detail": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#stuckDetail"
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/stuckDetail"
     },
     "page": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#instancePage",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/instancePage",
       "@type": "@id"
     },
     "unreadStores": {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns#unreadBeanStore",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/unreadBeanStore",
       "@container": "@set"
     },
     "@base": "https://litlfred.github.io/folio-assistant/cat-harness/state.jsonld"
@@ -66,7 +66,7 @@
   "id": "https://litlfred.github.io/folio-assistant/cat-harness/state.jsonld",
   "type": "cat-harness:DynamicState",
   "harness": "cat-harness",
-  "generatedAt": "2026-11-01T15:40:06.371Z",
+  "generatedAt": "2026-11-04T00:00:00.000Z",
   "unreadStores": [],
   "graph": [
     {
@@ -86,7 +86,7 @@
       "stuck": [
         {
           "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-10-03T13:33:00.000Z — 29 day(s), past the 7-day threshold"
+          "detail": "the token has not moved since 2026-10-03T13:33:00.000Z — 31 day(s), past the 7-day threshold"
         }
       ],
       "page": "en/cat-harness/beans/cat-harness/workflows/code-change-review--bean-1j3q-route-keyed-storage/"
@@ -112,7 +112,7 @@
         },
         {
           "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-09-22T20:35:00.000Z — 39 day(s), past the 7-day threshold"
+          "detail": "the token has not moved since 2026-09-22T20:35:00.000Z — 42 day(s), past the 7-day threshold"
         }
       ],
       "page": "en/cat-harness/beans/cat-harness/workflows/code-change-review--consolidation-956/"
@@ -180,7 +180,7 @@
       "stuck": [
         {
           "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-09-30T00:36:58.209Z — 32 day(s), past the 7-day threshold"
+          "detail": "the token has not moved since 2026-09-30T00:36:58.209Z — 34 day(s), past the 7-day threshold"
         }
       ],
       "page": "en/cat-harness/beans/cat-harness/workflows/code-change-review--issue-1531-upload-step/"
@@ -230,7 +230,7 @@
       "stuck": [
         {
           "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-09-20T21:48:45.270Z — 41 day(s), past the 7-day threshold"
+          "detail": "the token has not moved since 2026-09-20T21:48:45.270Z — 44 day(s), past the 7-day threshold"
         }
       ],
       "page": "en/cat-harness/beans/cat-harness/workflows/crdm--folio-assistant-6lb8/"
@@ -252,7 +252,7 @@
       "stuck": [
         {
           "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-09-21T16:16:02.000Z — 40 day(s), past the 7-day threshold"
+          "detail": "the token has not moved since 2026-09-21T16:16:02.000Z — 43 day(s), past the 7-day threshold"
         }
       ],
       "page": "en/cat-harness/beans/cat-harness/workflows/crdm--folio-assistant-b94c/"
@@ -287,7 +287,7 @@
       "stuck": [
         {
           "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-09-21T06:14:27.079Z — 41 day(s), past the 7-day threshold"
+          "detail": "the token has not moved since 2026-09-21T06:14:27.079Z — 43 day(s), past the 7-day threshold"
         }
       ],
       "page": "en/cat-harness/beans/cat-harness/workflows/crdm--issue-607-kg-to-cdn-portal/"
@@ -344,7 +344,7 @@
       "stuck": [
         {
           "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-10-04T16:44:25.893Z — 27 day(s), past the 7-day threshold"
+          "detail": "the token has not moved since 2026-10-04T16:44:25.893Z — 30 day(s), past the 7-day threshold"
         }
       ],
       "page": "en/cat-harness/beans/cat-harness/workflows/mergetrain--merge-train-2026-10-04a/"
@@ -416,7 +416,7 @@
       "stuck": [
         {
           "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-10-11T07:02:09.501Z — 21 day(s), past the 7-day threshold"
+          "detail": "the token has not moved since 2026-10-11T07:02:09.501Z — 23 day(s), past the 7-day threshold"
         },
         {
           "kind": "bean-closed",

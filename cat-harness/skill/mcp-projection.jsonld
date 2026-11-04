@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/mcp-projection.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/mcp-projection",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "mcp-projection",
       "title": "consulted: reference material nobody performs — EXPLAINS a mapping — Tool node to MCP service — and instructs nobody. Classified the same way in the y1w9 sample of 15, by reading it, before this pass.",
       "description": "Generate an MCP server from Tool nodes — the mapping from this harness's skill/Tool vocabulary onto the current MCP standard. Read before exposing a CLI tool over MCP, or when asked how an agent stands a service up.",

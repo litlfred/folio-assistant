@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/smart-trust-phw/smart-trust-phw.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/library.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/smart-trust-phw.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/library",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "library",
       "path": "library/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/library"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library"
       ],
       "description": "L1 normative specification snapshots materialized for smart-trust-phw: IHE ITI Privacy Consent on FHIR (PCF) 1.1.0 (`ihe-iti-pcf-1-1-0`, CC BY 4.0) and IHE ITI Verifiable Health Links (VHL) 1.0.0-comment (`ihe-iti-vhl-1-0-0-comment`, CC BY 4.0). Every knowledge-graph reference to these upstream IHE specifications resolves through here, and `check:materialized-fixity` verifies their SHA-256 digests against `catalogue/`. Bean sl5v.",
       "readmePath": "library/README.md",

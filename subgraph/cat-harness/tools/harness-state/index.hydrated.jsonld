@@ -45,6 +45,11 @@
             "description": "One line per harness: its position, the next step, and its badges.",
             "name": "report",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          },
+          {
+            "description": "With --json, or with no --out, every harness's state as one `HarnessStates` record, in name order. Programs read this; people read `report`.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/HarnessStates"
           }
         ]
       },

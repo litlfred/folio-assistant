@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-methodologies.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-methodologies",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "sci-methodologies",
       "path": "methodologies/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/methodology"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/methodology"
       ],
       "description": "The methodologies this layer adopts from its own library: external, named methods for formalising mathematics in Lean. Separate from `cat-harness/methodologies/` for the reason `core-methodologies` is separate from both -- a method belongs to the layer whose job it describes, so this directory lifts out with this instance and nothing else moves (`methodology-adoption` §4). Each node renders the METHOD and states where the rendering stops; the paper's tools and numbers are not adopted. Bean h3rw.",
       "readmePath": "methodologies/README.md",

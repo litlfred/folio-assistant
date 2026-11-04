@@ -2,27 +2,21 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/End_BeanNotYours.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/End_BeanNotYours",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Not yours — left alone",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Not yours: left alone",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
-      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
-      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_WorkPlan",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Author",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/SF_Bean_3"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A05"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes"

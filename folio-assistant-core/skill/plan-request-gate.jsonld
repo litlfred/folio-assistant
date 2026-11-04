@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/plan-request-gate.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/plan-request-gate",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "plan-request-gate",
       "title": "A plan request stops at a signed-off plan",
       "description": "When somebody asks for a PLAN — \"plan\", \"approach\", \"proposal\", \"how would you\", \"come up with\" — produce a requirements document and a work plan, post or commit them where the governing methodology says, hand over both as absolute GitHub permalinks, and STOP until sign-off is recorded on the issue. Applies to content requests as much as to feature requests. The operation both requirements methodologies (crdm, spec-kit) point at; neither is replaced by it.",

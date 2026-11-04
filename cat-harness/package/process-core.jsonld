@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/process-core",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/SkillPackage",
       "name": "process-core",
       "version": "0.1.0",
       "description": "The process model's supporting knowledge: the role model and task authorization, the swimlane glossary, and how a methodology is chosen and adopted (decision-methodology-selector, methodology-adoption, swot-analysis). Moved out of folio-core into the process topic (bean 9umr, owner ruling 2026-09-30); workflow (BPMN/DMN authoring and the engine's state) and raci are its siblings in the same topic.",

@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Agent bean lifecycle",
       "summary": "The whole life of a work-plan item, drawn the way every bean-touching process now runs it: OPEN the bean (check before you create, find out whose it is, claim it or leave it alone), do the work keeping the body current, then CLOSE it in a state that says why…",
       "description": "The whole life of a work-plan item, drawn the way every bean-touching process now runs it: OPEN the bean (check before you create, find out whose it is, claim it or leave it alone), do the work keeping the body current, then CLOSE it in a state that says why (complete and archive, scrap with reasons and archive, or record the blocker and hand back).\n\nYou are in this process the moment durable work is identified — which is before the first tool call, not after the work is done. The two halves are called processes, Process_BeanOpen and Process_BeanClose, so the rules live in one place: a process that works on a bean calls the first where the bean becomes its own and the second before each end it reaches from there.\n\nThe one irreversible thing is refused outright. Unwanted work is SCRAPPED with its reasons, never deleted, because a scrapped bean stops the next agent re-entering a dead end while a deleted one leaves a sibling unable to tell abandonment from accident.",
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle#flow/BF_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/node/Start_DurableWork",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/node/Call_BeanOpen",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle#flow/BF_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/node/Call_BeanOpen",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/node/GW_Yours",
@@ -48,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle#flow/BF_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "not yours",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/node/GW_Yours",
@@ -57,7 +51,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle#flow/BF_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "claimed",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/node/GW_Yours",
@@ -66,7 +60,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle#flow/BF_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/node/Task_Work",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/node/Call_BeanClose",
@@ -74,7 +68,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle#flow/BF_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/node/Call_BeanClose",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/node/End_Recorded",

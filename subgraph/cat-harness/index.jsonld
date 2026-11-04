@@ -355,6 +355,11 @@
       "title": "Local sweep"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/merge-manager",
+      "@type": "bootstrap:Actor",
+      "title": "Merge manager"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/actor/owner",
       "@type": "bootstrap:Actor",
       "title": "Owner (gateway session)"
@@ -429,9 +434,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/93abb3a75a18078c2f5ac215ce8f2c55b956f40a53b209d584268bc94a9df8eb",
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c30566d445ea23ba468576e1d6568a6fcf59b9437edc399ff0cc9cd93169ae91",
         "bytes": 19882,
-        "sha256": "93abb3a75a18078c2f5ac215ce8f2c55b956f40a53b209d584268bc94a9df8eb"
+        "sha256": "c30566d445ea23ba468576e1d6568a6fcf59b9437edc399ff0cc9cd93169ae91"
       },
       "title": "AGENTS.md — cat-harness"
     },
@@ -440,9 +445,9 @@
       "@type": "bootstrap:Asset",
       "name": "bootstrap-initialization",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f41cbc41817a3eca583c6248a2cb22319af18aabeae977149675f43897c3507b",
-        "bytes": 5692,
-        "sha256": "f41cbc41817a3eca583c6248a2cb22319af18aabeae977149675f43897c3507b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2e284e486d4df4872f70caef550c248bf5b39450c38473286c45c93e4edd5af3",
+        "bytes": 6373,
+        "sha256": "2e284e486d4df4872f70caef550c248bf5b39450c38473286c45c93e4edd5af3"
       },
       "title": "Initializing into folio-assistant"
     },
@@ -473,9 +478,9 @@
       "@type": "bootstrap:Asset",
       "name": "unkinded-baseline",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/28e4c9f89051439fda83ed20abfa0bbd95ae294763f1bfcb99ef5b20f47d391b",
-        "bytes": 8083,
-        "sha256": "28e4c9f89051439fda83ed20abfa0bbd95ae294763f1bfcb99ef5b20f47d391b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fdf2f2f257bdbb4575055ad18917f2b7504a5548f0613a752843f8a2ba2c88c6",
+        "bytes": 8245,
+        "sha256": "fdf2f2f257bdbb4575055ad18917f2b7504a5548f0613a752843f8a2ba2c88c6"
       },
       "title": "Unkinded families — cat-harness"
     },
@@ -1422,6 +1427,12 @@
       "title": "front-matter"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/gates-report",
+      "@type": "cat-harness:Schema",
+      "name": "gates-report",
+      "title": "gates-report"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/glossary-ledger",
       "@type": "cat-harness:Schema",
       "name": "glossary-ledger",
@@ -1446,6 +1457,12 @@
       "title": "harness-config"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/harness-state",
+      "@type": "cat-harness:Schema",
+      "name": "harness-state",
+      "title": "harness-state"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/health-report",
       "@type": "cat-harness:Schema",
       "name": "health-report",
@@ -1462,6 +1479,12 @@
       "@type": "cat-harness:Schema",
       "name": "index-config",
       "title": "index-config"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ingest-candidates",
+      "@type": "cat-harness:Schema",
+      "name": "ingest-candidates",
+      "title": "ingest-candidates"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/inline-code",
@@ -1908,6 +1931,12 @@
       "title": "sticky-contribution"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/store-tool-results",
+      "@type": "cat-harness:Schema",
+      "name": "store-tool-results",
+      "title": "store-tool-results"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/subgraph-manifest",
       "@type": "cat-harness:Schema",
       "name": "subgraph-manifest",
@@ -2170,6 +2199,12 @@
       "@type": "cat-harness:Schema",
       "name": "withheld",
       "title": "withheld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/workflow-tool-results",
+      "@type": "cat-harness:Schema",
+      "name": "workflow-tool-results",
+      "title": "workflow-tool-results"
     }
   ],
   "hasSubgraph": [

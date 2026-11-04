@@ -2,20 +2,14 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-publishing.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-publishing",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "document-publishing",
       "title": "document-publishing",
       "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
-      "instructionLines": 119,
+      "instructionLines": 192,
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
       "hasInstructions": true,

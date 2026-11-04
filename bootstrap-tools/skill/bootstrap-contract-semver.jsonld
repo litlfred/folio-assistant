@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/bootstrap-contract-semver.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/bootstrap-contract-semver",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "bootstrap-contract-semver",
       "title": "Bootstrap contract semver",
       "description": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one.",

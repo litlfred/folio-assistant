@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-importer.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/paper-importer",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "paper-importer",
       "title": "Paper Importer",
       "description": "Import external papers from PDF, LaTeX, or arXiv into the content object system. Scans for theorems, definitions, propositions, lemmas, and other formal environments. Generates .ts manifests and .md content files, optionally creates .lean stubs with sorry-bridged proofs citing the original source. Integrates with proof-writer skills so imported theorems can inform and accelerate formalization of the main paper.",

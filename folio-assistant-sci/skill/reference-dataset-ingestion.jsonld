@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/reference-dataset-ingestion.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/reference-dataset-ingestion",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "reference-dataset-ingestion",
       "title": "Reference dataset ingestion",
       "description": "Ingest a published REFERENCE dataset — a constants table such as CODATA, AME or PDG — into a library entry whose values are addressable in prose as {{ <instance>.library.<entry>.<slug> }}, with edition, source, sha256 and licence recorded. Use when a paper quotes a physical constant, when a value is hard-coded in a script or registry, or before adding a \"vendored snapshot\" of someone else's numbers.",

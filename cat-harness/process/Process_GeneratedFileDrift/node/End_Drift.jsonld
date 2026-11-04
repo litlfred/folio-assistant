@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GeneratedFileDrift/node/End_Drift.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GeneratedFileDrift/node/End_Drift",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Stale: job red",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GeneratedFileDrift",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GeneratedFileDrift/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GeneratedFileDrift#flow/Flow_GD_4"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    }
+  ]
+}

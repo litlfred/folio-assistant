@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — the L1 completeness gate",
       "summary": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so.",
       "description": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so. folio-assistant — Ingestion subprocess — the L1 completeness gate.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
@@ -28,7 +22,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/StartEvent_KgBuilt",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_CheckDerived",
@@ -36,7 +30,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_CheckDerived",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_RoundTrip",
@@ -44,7 +38,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_RoundTrip",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Gateway_Drift",
@@ -52,7 +46,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "drift",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Gateway_Drift",
@@ -61,7 +55,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_FlagDrift",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/GW_DriftOutcome",
@@ -69,7 +63,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_DriftReal",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "the drift is real",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/GW_DriftOutcome",
@@ -78,7 +72,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_DriftSpurious",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "false positive",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/GW_DriftOutcome",
@@ -87,7 +81,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_SourceWrong",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "the SOURCE is wrong",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/GW_DriftOutcome",
@@ -96,7 +90,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "clean",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Gateway_Drift",
@@ -105,7 +99,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate#flow/Flow_g7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_Verdict",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/EndEvent_Verdict",

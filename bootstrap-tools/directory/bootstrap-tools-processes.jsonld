@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-processes.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/bootstrap-tools.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-processes",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "bootstrap-tools-processes",
       "path": "processes/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/processes"
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes"
       ],
       "title": "The toolset's Processes",
       "description": "The toolset's own Processes, in bootstrap's diagram vocabulary: `render-kg-to-github-pages.bpmn`, rendering a Knowledge Graph (or a list of its Subgraphs) to GitHub Pages at a publication root URL, with each step one of these tools and the push's status and message as its output. The same process for a staging preview and a release; only the root URL differs.",

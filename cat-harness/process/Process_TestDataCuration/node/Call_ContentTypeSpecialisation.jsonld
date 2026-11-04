@@ -2,17 +2,11 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_ContentTypeSpecialisation.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_ContentTypeSpecialisation",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Synthesise recipe via content-type specialisation [its own subprocess]",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Synthesise the recipe with that specialisation",
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
@@ -25,7 +19,7 @@
       "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_Generated"
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_Specialisation"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration#flow/Flow_6"

@@ -65,12 +65,12 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ContentAcquisition/node/A_Ask",
       "@type": "bootstrap:ProcessNode",
-      "name": "Say what is needed, and ask for a link OR a description"
+      "name": "Ask for a link or a description"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ContentAcquisition/node/A_PointToUpload",
       "@type": "bootstrap:ProcessNode",
-      "name": "Point at the upload target [scripts/upload-url.ts]"
+      "name": "Point at the upload target"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ContentAcquisition/node/A_Route",
@@ -199,7 +199,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
       "@type": "bootstrap:ProcessNode",
-      "name": "Record provenance.local — what this is a copy OF"
+      "name": "Record what this is a copy of"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
@@ -358,7 +358,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ExtractPOT",
       "@type": "bootstrap:ProcessNode",
-      "name": "Extract POT (translatable strings)"
+      "name": "Extract the POT"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_IdentifyContent",
@@ -368,7 +368,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_InjectPO",
       "@type": "bootstrap:ProcessNode",
-      "name": "Inject PO → translated Markdown"
+      "name": "Inject the PO"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_PrepareGlossary",
@@ -503,30 +503,14 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote",
       "@type": "bootstrap:Process",
-      "name": "Materialize remote content — the shared subprocess"
+      "name": "Materialize remote content: the shared subprocess"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_1",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_10",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_11",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_12",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_2",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_2b",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -551,13 +535,17 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_8",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "yes"
+      "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_9",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_No",
       "@type": "bootstrap:SequenceFlow",
       "name": "no, or unknown"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote#flow/Flow_Yes",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_0",
@@ -567,12 +555,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
       "@type": "cat-harness:Lane",
-      "name": "Ingestion Engine (agent, runs unattended)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_2",
-      "@type": "cat-harness:Lane",
-      "name": "Corpus — L1 source knowledge graph"
+      "name": "Ingestion engine (agent, runs unattended)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/EndEvent_Done",
@@ -592,22 +575,22 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/StartEvent_Asked",
       "@type": "bootstrap:ProcessNode",
-      "name": "Remote content is wanted locally"
+      "name": "Remote content wanted"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Copyright",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_AnswerGates",
       "@type": "bootstrap:ProcessNode",
-      "name": "COPYRIGHT per bitstream, and for the derived work"
+      "name": "Answer the other four gates"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Declare",
       "@type": "bootstrap:ProcessNode",
-      "name": "Declare the node `materialized`"
+      "name": "Declare the node materialized"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Enumerate",
       "@type": "bootstrap:ProcessNode",
-      "name": "ENUMERATE + SUBSET against the source descriptor"
+      "name": "Enumerate the source descriptor"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Fetch",
@@ -620,29 +603,14 @@
       "name": "Declare the purpose: working or archival"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Restrictions",
-      "@type": "bootstrap:ProcessNode",
-      "name": "RESTRICTIONS unknown is an answer, not a green light"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Retention",
-      "@type": "bootstrap:ProcessNode",
-      "name": "RETENTION what expires this copy"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Size",
       "@type": "bootstrap:ProcessNode",
-      "name": "SIZE what fraction, and what the whole would cost"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_SourceLoss",
-      "@type": "bootstrap:ProcessNode",
-      "name": "SOURCE LOSS what survives if the origin goes"
+      "name": "Size the take and the whole"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_StayRef",
       "@type": "bootstrap:ProcessNode",
-      "name": "Leave it `referenced`, record why"
+      "name": "Leave it referenced, record why"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MethodologyFromSource",
@@ -862,11 +830,6 @@
       "name": "Ingestion Engine (agent, runs unattended)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/lane/Lane_2",
-      "@type": "cat-harness:Lane",
-      "name": "Corpus — L1 source knowledge graph"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/EndEvent_Diverged",
       "@type": "bootstrap:ProcessNode",
       "name": "Diverged on purpose, and the record says why"
@@ -904,7 +867,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_Apply",
       "@type": "bootstrap:ProcessNode",
-      "name": "Re-materialize, re-asking the five gates — and record the new fixity"
+      "name": "Re-materialize and record new fixity"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_Fixity",
@@ -914,7 +877,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_KeepLocal",
       "@type": "bootstrap:ProcessNode",
-      "name": "Keep the local edit, and re-pin so it stops being asked"
+      "name": "Keep the edit, re-pin"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_Local",
@@ -1018,11 +981,6 @@
       "name": "Ingestion Engine (agent, runs unattended)"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_2",
-      "@type": "cat-harness:Lane",
-      "name": "Corpus — L1 source knowledge graph"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Call_Materialize",
       "@type": "bootstrap:ProcessNode",
       "name": "Materialize remote content (the five gates)"
@@ -1095,7 +1053,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Scope",
       "@type": "bootstrap:ProcessNode",
-      "name": "Scope the sample: which items, which store, and is it PERMANENT?"
+      "name": "Scope the sample: items, store, permanence"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Trial",
@@ -1216,25 +1174,15 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_1",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "claimed"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_2",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_Gateway_NextHarness_Join",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_3",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "not yours"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_4",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_Gateway_NextHeld_Join",
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/SF_Bean_5",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg#flow/Flow_Gateway_NextPart_Join",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -1246,26 +1194,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
       "@type": "cat-harness:Lane",
       "name": "Ingestion Engine (agent, runs unattended)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_2",
-      "@type": "cat-harness:Lane",
-      "name": "Corpus — the subscriber's declaration"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanClose_2",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Close the bean"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_BeanOpen",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Open the bean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_Materialize",
@@ -1288,16 +1216,6 @@
       "name": "Not subscribed, and the record says why"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/End_BeanNotYours",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Not yours — left alone"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/GW_BeanYours",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Bean claimed?"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Gateway_Kind",
       "@type": "bootstrap:ProcessNode",
       "name": "New subscription, or moving a held pin?"
@@ -1313,14 +1231,29 @@
       "name": "Another chosen harness not yet instantiated?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Gateway_NextHarness_Join",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_NextHarness_Join"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Gateway_NextHeld",
       "@type": "bootstrap:ProcessNode",
       "name": "Another held part not yet refreshed?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Gateway_NextHeld_Join",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_NextHeld_Join"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Gateway_NextPart",
       "@type": "bootstrap:ProcessNode",
       "name": "Another chosen subgraph or asset not yet walked?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Gateway_NextPart_Join",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_NextPart_Join"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Gateway_Substrate",
@@ -1370,12 +1303,12 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Summarise",
       "@type": "bootstrap:ProcessNode",
-      "name": "Record how the walk ended, part by part"
+      "name": "Record how each part of the walk ended"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Validate",
       "@type": "bootstrap:ProcessNode",
-      "name": "Fetch the root declaration at the pin, and validate it"
+      "name": "Fetch and validate the pinned declaration"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
@@ -1556,6 +1489,9 @@
       "@type": "bootstrap:ProcessNode",
       "name": "Write status.json (unofficial)"
     }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/processes/library/decisions/"
   ],
   "holdsGraph": [
     "bootstrap:graphTypology/processes"

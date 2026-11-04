@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-schemas.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-schemas",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "core-schemas",
       "path": "schemas/",
       "contentSource": {
@@ -19,8 +13,8 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/schemas",
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/cat-harness"
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas",
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
       ],
       "description": "The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.",
       "readmePath": "schemas/README.md",

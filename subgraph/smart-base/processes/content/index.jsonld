@@ -115,27 +115,27 @@
     {
       "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
       "@type": "bootstrap:ProcessNode",
-      "name": "Identify slots and proposed exclusions [classify-and-code-content · recommendation-extraction]"
+      "name": "Identify slots and proposed exclusions"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
       "@type": "bootstrap:ProcessNode",
-      "name": "Run reuse-first lookup and record candidates [classify-and-code-content · recommendation-scenarios · glossary-terms]"
+      "name": "Run reuse-first lookup and record candidates"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
       "@type": "bootstrap:ProcessNode",
-      "name": "Adjudicate slot codings and glossary candidates [classify-and-code-content · ontologist · glossary-terms · terminology-management · content-review]"
+      "name": "Adjudicate slot codings and glossary candidates"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
       "@type": "bootstrap:ProcessNode",
-      "name": "Read proposed exclusions against page and sign [classify-and-code-content · recommendation-extraction · content-review]"
+      "name": "Check exclusions against page and sign"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
       "@type": "bootstrap:ProcessNode",
-      "name": "Stage codings, warnings and exclusions for review [staging-review · interaction-modality]"
+      "name": "Stage codings, warnings and exclusions for review"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DakL3Ig",
@@ -178,6 +178,486 @@
       "@id": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2",
       "@type": "bootstrap:ProcessNode",
       "name": "Map L2 → L3"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "@type": "bootstrap:Process",
+      "name": "DTH authoring"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F04",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F06",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F07",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F08",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F13",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F14",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F15",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F16",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F17",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F18",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F19",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F20",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F21",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F22",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F23",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F24",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F25",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F26",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F27",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F28",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F29",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F30",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F31",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F32",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F33",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F34",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F35",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F36",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F37",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F38",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F39",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F40",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F41",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F42",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F43",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F44",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no: revise"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F45",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F46",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F47",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F48",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F49",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F50",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F51",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F52",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
+      "@type": "cat-harness:Lane",
+      "name": "Business analyst"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Contributors",
+      "@type": "cat-harness:Lane",
+      "name": "TWG and contributors"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Editor",
+      "@type": "cat-harness:Lane",
+      "name": "Editor"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Lead",
+      "@type": "cat-harness:Lane",
+      "name": "DTH lead (programme manager)"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Librarian",
+      "@type": "cat-harness:Lane",
+      "name": "Librarian"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Publisher",
+      "@type": "cat-harness:Lane",
+      "name": "Publication manager"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Reviewers",
+      "@type": "cat-harness:Lane",
+      "name": "Architect group and handbook owners"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Terminologist",
+      "@type": "cat-harness:Lane",
+      "name": "Terminologist"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_WorkPlan",
+      "@type": "cat-harness:Lane",
+      "name": "Work plan (beans)"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Archimate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Link to smart-ra ArchiMate"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Bpmn",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Business processes · BPMN"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Data",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Data elements, indicators, requirements"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Dmn",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Decision tables · DMN"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Glossary",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Link glossary to smart-ra SKOS"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Personas",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Personas and roles"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Scenarios",
+      "@type": "bootstrap:ProcessNode",
+      "name": "User scenarios"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Steps",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Planning steps per chapter"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/End_Published",
+      "@type": "bootstrap:ProcessNode",
+      "name": "M7 · Final published"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftFork",
+      "@type": "bootstrap:ProcessNode",
+      "name": "3 · Structured drafting"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_DraftJoin"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftMerge",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_DraftMerge"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewFork",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_ReviewFork"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewJoin",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_ReviewJoin"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_WgDone",
+      "@type": "bootstrap:ProcessNode",
+      "name": "All working-group comments dispositioned?"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/M0",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record milestone M0 · Charter recorded"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/M1",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record milestone M1 · Library frozen"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/M2",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record milestone M2 · Outline agreed"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/M3",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record milestone M3 · Zero draft"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/M4",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record milestone M4 · Working-group draft"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/M5",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record milestone M5 · Public draft released"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/M6",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record milestone M6 · Comments dispositioned"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Start_Requested",
+      "@type": "bootstrap:ProcessNode",
+      "name": "DTH requested"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_ArchReview",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Architect group and handbook owners review"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Comments",
+      "@type": "bootstrap:ProcessNode",
+      "name": "4 · Comment via contributor log sheet or GitHub pc:"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Coverage",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Account for every normative sentence"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Disposition",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Disposition comments and apply change sets"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_GlossaryCandidates",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Build glossary candidates from the TWG workbook"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Import",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Import into review/wg-comment and form change sets"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Ingest",
+      "@type": "bootstrap:ProcessNode",
+      "name": "1 · Ingest sources into library/"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Intro",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Draft introduction, audience and DIIG alignment"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Inventory",
+      "@type": "bootstrap:ProcessNode",
+      "name": "List processes, roles, decisions and indicators to model"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_L1",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Extract L1 from WHO publications"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_OpenPublic",
+      "@type": "bootstrap:ProcessNode",
+      "name": "5 · Open public comment"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Outline",
+      "@type": "bootstrap:ProcessNode",
+      "name": "2 · Outline chapters against the dth kind"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_OutlineReview",
+      "@type": "bootstrap:ProcessNode",
+      "name": "TWG reviews the outline"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_PublicComments",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Public comments"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Publish",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish the handbook"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Qa",
+      "@type": "bootstrap:ProcessNode",
+      "name": "6 · Editorial, voice and translation QA"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Scaffold",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Create the DTH repository from the DTH layout"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Scope",
+      "@type": "bootstrap:ProcessNode",
+      "name": "0 · Scope the DTH and place it in the DIIG"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_SeedBeans",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Seed the work plan"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Team",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Form the TWG; record roles and RACI"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Validate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Validate the draft"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
@@ -292,7 +772,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Task_Check",
       "@type": "bootstrap:ProcessNode",
-      "name": "Run the component's checker [content-validate · content-test]"
+      "name": "Run the component's checker"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Task_Edit",
@@ -302,7 +782,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Task_RenderStage",
       "@type": "bootstrap:ProcessNode",
-      "name": "Render, stage, before/after [before-after-preview · feature-staging]"
+      "name": "Render, stage, before/after"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Task_ReopenUpstream",

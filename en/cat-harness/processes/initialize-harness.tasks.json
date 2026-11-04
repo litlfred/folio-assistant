@@ -56,19 +56,43 @@
    "id": "A_ReadLocation",
    "name": "Read what each location already is",
    "type": "bpmn:Task",
-   "lane": "Knowledge Graph Data Store",
+   "lane": "Bootstrapping Agent",
    "skills": [
     {
      "name": "bootstrap-kg-navigation"
     }
    ],
    "role": {
-    "name": "knowledge-graph-data-store",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-knowledge-graph-data-store",
-    "title": "Knowledge Graph Data Store",
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "knowledge-graph-data-store"
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
      }
     ]
    }
@@ -77,19 +101,43 @@
    "id": "A_ReadDeclaration",
    "name": "Read the harness's declaration and instructions",
    "type": "bpmn:Task",
-   "lane": "Knowledge Graph Data Store",
+   "lane": "Bootstrapping Agent",
    "skills": [
     {
      "name": "bootstrap-kg-navigation"
     }
    ],
    "role": {
-    "name": "knowledge-graph-data-store",
-    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-knowledge-graph-data-store",
-    "title": "Knowledge Graph Data Store",
+    "name": "bootstrapping-agent",
+    "href": "../../../cat-harness/auto-docs/index/roles/index.html#a-bootstrap-scenarios-roles-json-bootstrapping-agent",
+    "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "knowledge-graph-data-store"
+      "name": "bootstrap-kg-navigation"
+     },
+     {
+      "name": "confirm-harness"
+     },
+     {
+      "name": "discussion"
+     },
+     {
+      "name": "human-agent-discussion"
+     },
+     {
+      "name": "initialization-steps"
+     },
+     {
+      "name": "log-message"
+     },
+     {
+      "name": "publish-documents"
+     },
+     {
+      "name": "publish-site"
+     },
+     {
+      "name": "root-readme"
      }
     ]
    }

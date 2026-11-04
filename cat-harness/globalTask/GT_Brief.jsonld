@@ -2,19 +2,13 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_Brief.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_Brief",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Task",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Task",
       "name": "Brief the work",
       "summary": "What the work is and why, what is already measured with its provenance, how it will be done, and what would falsify the approach.",
-      "description": "What the work is and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. The bean is already claimed by the Process_BeanOpen call before this step (bean m8gz), so a sibling session sees the work before the brief is written.",
+      "description": "What the work is and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. The work item is already taken up when the process starts, so a sibling session sees the work before the brief is written.",
       "bpmnType": "bpmn:GlobalTask",
       "requires": [
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/opening-brief"

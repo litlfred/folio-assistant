@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/kg-export.ts",
-    "script_hash": "40b153cd5d7b"
+    "script_hash": "879b32780fea"
   },
   "subject": {
     "kind": "graph",
@@ -21,7 +21,7 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 12,
+      "count": 6,
       "entries": [
         {
           "module": "../bootstrap-tools/schemas/declaration.ts",
@@ -40,35 +40,11 @@
           "why": "no-tag"
         },
         {
-          "module": "../cat-harness-tools/schemas/harness-root.ts",
+          "module": "../cat-harness-tools/schemas/kg/memory-record.ts",
           "why": "no-tag"
         },
         {
-          "module": "../cat-harness-tools/schemas/tools/harness-tools.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness-tools/schemas/tools/tool-helpers.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness-tools/archimate/schemas/metamodel.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../cat-harness-tools/archimate/schemas/slugs.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../folio-assistant-core/schemas/acronyms.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../folio-assistant-core/schemas/figure-data.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "../smart-base/schemas/dak-annexes.ts",
+          "module": "../cat-harness-tools/schemas/kg/opt-in-subgraphs.ts",
           "why": "no-tag"
         }
       ]
@@ -79,5 +55,5 @@
       "entries": []
     }
   },
-  "total": 12
+  "total": 6
 }

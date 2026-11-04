@@ -85,6 +85,123 @@
       "name": "Model committed from Archi"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering",
+      "@type": "bootstrap:Process",
+      "name": "A harness's default rendering"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_7",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_8",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering#flow/SF_HR_9",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/lane/Lane_Board",
+      "@type": "cat-harness:Lane",
+      "name": "Board renderer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/lane/Lane_Pipeline",
+      "@type": "cat-harness:Lane",
+      "name": "Build pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/lane/Lane_Reviewer",
+      "@type": "cat-harness:Lane",
+      "name": "Reviewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_Board",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Draw the board of todos and beans"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_Ground",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Resolve each harness's page ground"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_Propose",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Propose the change"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_Publish",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish docs on their theme's art"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_Read",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Read a page or a card"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_Tiles",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Compose each harness's nav and tile"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_Todo",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Leave it as feedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/End_Noted",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Feedback recorded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/End_Proposed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Change in the content review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/GW_Write",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Write tool available?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/Start_Process_HarnessRendering",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Site build starts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_IngestTheme",
       "@type": "bootstrap:Process",
       "name": "Ingestion subprocess — ingest a theme"
@@ -171,7 +288,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_IngestTheme/node/Task_MapRoles",
       "@type": "bootstrap:ProcessNode",
-      "name": "Map values onto the shared palette ROLES"
+      "name": "Map values onto palette roles"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_IngestTheme/node/Task_ReadGuide",

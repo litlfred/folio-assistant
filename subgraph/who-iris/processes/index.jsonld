@@ -79,14 +79,8 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfGit",
-      "@type": "cat-harness:Lane",
-      "name": "Cloudflare git (Artifacts)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfStore",
-      "@type": "cat-harness:Lane",
-      "name": "Cloudflare R2 + CDN"
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad#flow/Flow_GW_More_Join",
+      "@type": "bootstrap:SequenceFlow"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
@@ -127,6 +121,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More",
       "@type": "bootstrap:ProcessNode",
       "name": "More batches?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/GW_More_Join",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_More_Join"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Start_LoadApproved",
@@ -227,11 +226,6 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N9",
       "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_CfGit",
-      "@type": "cat-harness:Lane",
-      "name": "Cloudflare git (Artifacts)"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
@@ -480,16 +474,6 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish#flow/P9",
       "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfGit",
-      "@type": "cat-harness:Lane",
-      "name": "Cloudflare git (Artifacts)"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_CfStore",
-      "@type": "cat-harness:Lane",
-      "name": "Cloudflare R2 + CDN"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",

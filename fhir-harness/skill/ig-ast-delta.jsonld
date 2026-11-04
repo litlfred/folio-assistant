@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-ast-delta",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "ig-ast-delta",
       "title": "ig-ast-delta",
       "description": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache.",

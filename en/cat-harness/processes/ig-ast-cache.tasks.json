@@ -5,7 +5,7 @@
  "tasks": {
   "Task_Restore": {
    "id": "Task_Restore",
-   "name": "Restore the AST from its cache branch and judge it",
+   "name": "Restore and judge the cached AST",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_Restore",
    "lane": "Site build (agent, stage-local)",
@@ -207,7 +207,7 @@
   },
   "Task_Dispatch": {
    "id": "Task_Dispatch",
-   "name": "Dispatch the IG's ig-ast-refresh.yml",
+   "name": "Dispatch AST refresh",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_Dispatch",
    "lane": "Publication manager (owner, or the agent the owner delegates to)",
@@ -264,7 +264,7 @@
   },
   "Task_Export": {
    "id": "Task_Export",
-   "name": "Build the IG with the Publisher AST exporter",
+   "name": "Build the IG with the AST exporter",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_Export",
    "lane": "AST refresh (GitHub runner: IG Publisher with the AST exporter)",
@@ -297,7 +297,7 @@
   },
   "Task_Seed": {
    "id": "Task_Seed",
-   "name": "Seed the cache branch (ig-cache seed --push)",
+   "name": "Seed the cache branch",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache/node/Task_Seed",
    "lane": "AST refresh (GitHub runner: IG Publisher with the AST exporter)",

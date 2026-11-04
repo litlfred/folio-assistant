@@ -2815,7 +2815,9 @@
     if (window.innerWidth < AUTO_MIN_VIEWPORT_PX) return false;
     var column = scope.clientWidth;
     if (!column) return false;
-    var natural = intrinsicWidth(scope);
+    // The width the drawing will be drawn at: its text-fitted width when it
+    // has one, else its own coordinate width.
+    var natural = parseFloat(scope.style.getPropertyValue("--fa-natural")) || intrinsicWidth(scope);
     if (!natural) return false;
     return natural / column >= AUTO_MIN_RATIO;
   }
@@ -5465,9 +5467,20 @@
       // `avatars.css` already declares — so the glass can draw the kind avatar
       // when there is no picture, or when the reader chose kind avatars.
       kind: (meta && meta.kind) || (all[key] && all[key].kind) || "library",
+      // A PINNED BLOCK's graph kind (`glossary`, `bpmn`, `fhir-instance`, ...)
+      // and the page or document it came from (#982). Only a kind-shaped word
+      // is kept: it reaches a `data-` attribute and picks a kind avatar.
+      nodeKind: kindWord((meta && meta.nodeKind) || (all[key] && all[key].nodeKind)),
+      source: String((meta && meta.source) || (all[key] && all[key].source) || "").replace(/\s+/g, " ").trim(),
     };
     setFolioAssets(all);
     announceFolio(key, "glass");
+  }
+
+  /** A graph kind as a safe word, or "" (it reaches an attribute and a CSS selector). */
+  function kindWord(v) {
+    var w = String(v || "").trim().toLowerCase();
+    return /^[a-z0-9][a-z0-9:_-]{0,63}$/.test(w) ? w : "";
   }
 
   /**
@@ -5832,7 +5845,10 @@
       });
       box.appendChild(img);
     } else {
-      box.appendChild(fallbackAvatar(a.kind));
+      // A pinned block with no picture draws ITS GRAPH KIND's avatar.
+      // A bookmark with no cover draws the `docs` kind: it marks a place in a document.
+      box.appendChild(fallbackAvatar(a.kind === "pin" && kindWord(a.nodeKind) ? kindWord(a.nodeKind)
+        : a.kind === "bookmark" ? "docs" : a.kind));
     }
     return box;
   }
@@ -6210,7 +6226,9 @@
       // square sticky avatar"*. A todo is a sticky note everywhere else on
       // this site, and a sticky note is square; the wide 152px strip it used
       // to pop out as read as a list row, not as the note.
-      var h = zoomKindOf(a) === "library" && prefs.avatars !== "text"
+      // A BOOKMARK with its document's cover is portrait like the book it marks.
+      var portrait = zoomKindOf(a) === "library" || (a.kind === "bookmark" && a.avatar);
+      var h = portrait && prefs.avatars !== "text"
         ? Math.round(w * 4 / 3) : zoomKindOf(a) === "todo" ? w : GLASS_CARD_H;
       return { width: w, height: h };
     }
@@ -6895,6 +6913,12 @@
         return { kind: "library", name: libName, href: safeHref(lib.library), entry: safeHref(lib.entry),
                  heading: "Back to the library?", tip: "Back in " + libName };
       }
+      if (a && PIN_KINDS[a.kind]) {
+        var from = String(a.source || "").replace(/\s+/g, " ").trim();
+        var fromName = from ? "its page, " + from : "the page it came from";
+        return { kind: "sticky", name: fromName, href: safeHref(a.href) || safeHref(withBase("/")),
+                 heading: "Back on its page?", tip: "Back on " + fromName };
+      }
       if (a && a.kind === "sticky") {
         var page = String(a.label || "").replace(/\s+/g, " ").trim();
         var pageName = page ? "its page, " + page : "the page it came from";
@@ -6970,12 +6994,15 @@
       var href = place ? place.entry : safeHref(a.href);
       // WHERE A PRESS GOES: the entry page until the index names a visualizer,
       // or the external URL for a linked document (R28).
-      var opens = place ? place.entry : (isLibrary ? href || "" : "");
+      var isPin = !!PIN_KINDS[a.kind];
+      var opens = place ? place.entry : (isLibrary || isPin ? href || "" : "");
       var card = el("article", {
         class: "fa-glass-asset",
         "data-fa-asset": key,
         "data-fa-asset-kind": a.kind || "library",
         "data-fa-zoom-kind": zoomKindOf(a),
+        "data-fa-node-kind": isPin ? kindWord(a.nodeKind) : "",
+        "data-fa-source": isPin ? String(a.source || "") : "",
         "aria-label": label,
         // A library card OPENS (issue #1900), so it is a stop in the tab
         // order: zoomed to its cover the title link is not drawn, and Enter on
@@ -6991,6 +7018,15 @@
         ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
         : el("span", { class: "fa-glass-asset-name" }, a.title));
       card.appendChild(face);
+      // A BOOKMARK wears a ribbon and a PINNED BLOCK a pin, on the CARD's top
+      // corner rather than inside the avatar: the avatar fills the card under
+      // the title strip, which would cover a badge drawn in it. Decorative:
+      // the card's name says what it is.
+      if (isPin) {
+        card.setAttribute("data-fa-badged", "");
+        card.appendChild(el("span", { class: "fa-glass-badge", "data-fa-badge": a.kind, "aria-hidden": "true" },
+          a.kind === "bookmark" ? "\uD83D\uDD16" : "\uD83D\uDCCC"));
+      }
       // What the card shows once it is its avatar (`gistOf`). Drawn only in
       // that state — the CSS hides it at full size, where the title and the
       // body already say it — and a <p>, so it is read as text when shown.
@@ -8094,19 +8130,21 @@
         // read here with the rest — there is no second, floating list.
         var todo = kind === "todos";
         var sticky = kind === "sticky";
+        var pinned = kind === "bookmark" || kind === "pin";
         out.push({
           el: c,
           key: key,
           title: c.getAttribute("aria-label") || key,
-          kind: todo ? "todo" : sticky ? "sticky" : "book",
+          kind: todo ? "todo" : sticky ? "sticky" : pinned ? kind : "book",
           from: todo ? "Todo board" : sticky ? (c.getAttribute("data-fa-home-label") || "Home page")
+            : pinned ? (c.getAttribute("data-fa-source") || c.getAttribute("data-fa-node-kind") || "Pinned")
             : key.split("/")[0] + " library",
         });
       });
       return out;
     }
 
-    var KIND_LABELS = { book: "Books", todo: "Todos", sticky: "Stickies" };
+    var KIND_LABELS = { book: "Books", todo: "Todos", sticky: "Stickies", bookmark: "Bookmarks", pin: "Pinned blocks" };
 
     /** Show or hide each item; say so when a filter hides everything. */
     function applyGlassFilter() {
@@ -10341,6 +10379,11 @@
         return r.text();
       });
     }
+    return Promise.resolve(inlineSvgText(art));
+  }
+
+  /** An inline <svg> serialised as a standalone file, at its own size. */
+  function inlineSvgText(art) {
     var clone = art.cloneNode(true);
     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     clone.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
@@ -10349,7 +10392,7 @@
     var size = svgSize(art);
     clone.setAttribute("width", String(size.w));
     clone.setAttribute("height", String(size.h));
-    return Promise.resolve('<?xml version="1.0" encoding="UTF-8"?>\n' + new window.XMLSerializer().serializeToString(clone));
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' + new window.XMLSerializer().serializeToString(clone);
   }
 
   /** The drawing's own size: its viewBox, else its width/height, else its box. */
@@ -10405,6 +10448,49 @@
     });
   }
 
+  /**
+   * The address of a figure's source .svg file, absolute, or "" when the
+   * drawing has no file of its own (#915). The file is the committed
+   * artefact, so its address can be bookmarked and shared.
+   */
+  function figureFileUrl(scope) {
+    var art = figureArt(scope);
+    if (!art) return "";
+    var isImg = String(art.nodeName).toLowerCase() === "img";
+    var src = art.getAttribute("data-fa-src") || (isImg ? art.getAttribute("src") : "") || "";
+    if (!src) return "";
+    try { return new URL(src, document.baseURI).href; } catch (_e) { return ""; }
+  }
+
+  /**
+   * Set up a figure's "Open" link (#915). With a source file it is a plain
+   * link to it, so a click, a middle-click and "Open link in new tab" all
+   * work. A drawing with no file has nothing to link to, so the link acts as
+   * a button instead and opens the serialised drawing as a blob: in a new tab.
+   */
+  function figureOpenTarget(scope, link) {
+    var url = figureFileUrl(scope);
+    if (url && safeHref(url)) {
+      link.href = safeHref(url);
+      link.removeAttribute("role");
+      link.removeAttribute("tabindex");
+      return;
+    }
+    link.removeAttribute("href");
+    link.setAttribute("role", "button");
+    link.setAttribute("tabindex", "0");
+  }
+
+  /** Open a figure with no file of its own as a blob: in a new tab. */
+  function openFigureBlob(scope) {
+    var art = figureArt(scope);
+    if (!art || String(art.nodeName).toLowerCase() !== "svg") return false;
+    var url = URL.createObjectURL(new Blob([inlineSvgText(art)], { type: "image/svg+xml" }));
+    window.open(url, "_blank", "noopener");
+    setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+    return true;
+  }
+
   /** Save a blob under a filename, through a transient link. */
   function saveBlob(blob, name) {
     var url = URL.createObjectURL(blob);
@@ -10438,6 +10524,58 @@
     return attempt.catch(function (e) { return "Could not copy: " + e.message; });
   }
 
+  /* A BPMN FIGURE'S LABELS READ AT THE SIZE OF THE TEXT AROUND IT (owner,
+     2026-11-02: "bpmn diagrams should be scaled so the text size matches
+     narrative text size"). The drawing used to fill the column with a 1200px
+     floor, so a small process came out with labels bigger than the prose and
+     a wide one with labels a third of its size. Now 100% means: the label
+     size the drawing's task names use, scaled to 80% of the body text's size. A
+     drawing wider than its card scrolls (and pans) inside it, and zoom still
+     multiplies from there. The label size is read from the inlined SVG, so a
+     figure that stayed an <img> keeps the old sizing. */
+  // The size the task names use. bpmn-js draws a task name a step larger
+  // than the "yes"/"no" and event labels beside it, and those labels can
+  // carry more characters between them, so the most common size would be the
+  // wrong one. So: the LARGEST size that carries at least a quarter of the
+  // drawing's characters, which skips a lone title and keeps the task names.
+  function labelFontPx(svg) {
+    var chars = {}, total = 0;
+    [].forEach.call(svg.querySelectorAll("text"), function (t) {
+      var n = (t.textContent || "").replace(/\s+/g, "").length;
+      if (!n) return;
+      var px = Math.round(parseFloat(getComputedStyle(t).fontSize) * 10) / 10;
+      if (!(px > 0)) return;
+      chars[px] = (chars[px] || 0) + n;
+      total += n;
+    });
+    var best = 0;
+    Object.keys(chars).forEach(function (k) {
+      var px = parseFloat(k);
+      if (chars[k] >= total / 4 && px > best) best = px;
+    });
+    return best;
+  }
+
+  function bodyFontPx(scope) {
+    var main = (scope.closest && scope.closest(".main-content")) || document.body;
+    var p = main.querySelector("p");
+    return parseFloat(getComputedStyle(p || main).fontSize) || 16;
+  }
+
+  // Owner, 2026-11-02 (follow-up): "make it 80% same size" -- the task names
+  // are drawn at 80% of the body text size, a little quieter than the prose.
+  var FIGURE_TEXT_RATIO = 0.8;
+
+  function fitTextToBody(scope) {
+    var svg = scope.querySelector("svg");
+    var width = intrinsicWidth(scope);
+    if (!svg || !width) return;
+    var label = labelFontPx(svg);
+    if (!label) return;
+    scope.classList.add("fa-textfit");
+    scope.style.setProperty("--fa-natural", (width * FIGURE_TEXT_RATIO * bodyFontPx(scope) / label).toFixed(1) + "px");
+  }
+
   function mountFigure(scope, isPlain) {
     if (scope.dataset.faTools === "1") return;
     scope.dataset.faTools = "1";
@@ -10454,6 +10592,8 @@
         (art0 && art0.tagName.toLowerCase() === "img" ? art0.naturalWidth : 0) ||
         (art0 ? parseFloat(art0.getAttribute("width") || "") || 0 : 0);
       if (natural > 0) scope.style.setProperty("--fa-natural", natural + "px");
+    } else {
+      fitTextToBody(scope);
     }
 
     var step = DEFAULT_STEP;
@@ -10477,8 +10617,28 @@
       });
     }
 
+    // Owner, 2026-11-01, after the drag grew the figure ("dragging now
+    // rescales", "i want it to pan"): a drag never changes the size. On an
+    // axis with scroll room it scrolls the figure; on an axis where the
+    // drawing fits its card, it moves the drawing inside the card, by
+    // `translate`, up to PAN_KEEP of the card from where it was drawn so it
+    // cannot be lost. Zoom and Reset put the drawing back.
+    var PAN_KEEP = 0.75;
+    var shift = { x: 0, y: 0 };
+    function art() { return scope.querySelector("svg, img, object"); }
+    function setShift(x, y) {
+      shift.x = x; shift.y = y;
+      var a = art();
+      if (a) a.style.translate = (x || y) ? x + "px " + y + "px" : "";
+      // A moved drawing must not grow the card's scroll room, or the next
+      // drag would scroll where it should move.
+      scope.classList.toggle("is-shifted", !!(x || y));
+    }
+    function clampShift(v, room) { return Math.max(-room * PAN_KEEP, Math.min(room * PAN_KEEP, v)); }
+
     function apply() {
       var z = ZOOM_STEPS[step];
+      setShift(0, 0);
       scope.style.setProperty("--fa-zoom", String(z));
       level.textContent = Math.round(z * 100) + "%";
       out.disabled = step === 0;
@@ -10629,12 +10789,21 @@
     // events rather than mouse events, so a touch drag works the same way.
     var drag = null;
     var panned = false;
-
     scope.addEventListener("pointerdown", function (e) {
       if (e.button !== 0) return;
       // A control or a link owns its own press.
       if (e.target.closest && e.target.closest("a, button, input, select, textarea")) return;
-      drag = { x: e.clientX, y: e.clientY, sl: scope.scrollLeft, st: scope.scrollTop, py: e.clientY, moved: false };
+      // Which axes scroll and which move the drawing is fixed for the drag,
+      // measured without the drawing's own move, which adds scroll room.
+      var a = art(), was = a ? a.style.translate : "";
+      if (a) a.style.translate = "";
+      var canX = scope.scrollWidth > scope.clientWidth + 1;
+      var canY = scope.scrollHeight > scope.clientHeight + 1;
+      if (a) a.style.translate = was;
+      drag = {
+        x: e.clientX, y: e.clientY, sl: scope.scrollLeft, st: scope.scrollTop, py: e.clientY, moved: false,
+        canX: canX, canY: canY, tx: shift.x, ty: shift.y, touch: e.pointerType === "touch",
+      };
       try { scope.setPointerCapture(e.pointerId); } catch (_e) { /* not captureable */ }
       // Owner, 2026-10-31, with a screenshot: *"i cant drag Figure"*. A mouse
       // press on an inline SVG's text started a text selection before the 4px
@@ -10649,6 +10818,15 @@
       }
     });
 
+    // Safari and Firefox fire `selectstart` from the compatibility mousedown
+    // even when the pointerdown was cancelled. A selection never starts
+    // inside a figure, except in a form control.
+    scope.addEventListener("selectstart", function (e) {
+      var t = e.target && e.target.nodeType === 3 ? e.target.parentNode : e.target;
+      if (t && t.closest && t.closest("input, textarea")) return;
+      e.preventDefault();
+    });
+
     scope.addEventListener("pointermove", function (e) {
       if (!drag) return;
       var dx = e.clientX - drag.x;
@@ -10656,19 +10834,18 @@
       if (!drag.moved && Math.abs(dx) + Math.abs(dy) < 4) return;
       drag.moved = true;
       scope.classList.add("is-panning");
-      scope.scrollLeft = drag.sl - dx;
-      var top = scope.scrollTop;
-      scope.scrollTop = drag.st - dy;
-      // A figure that fits its card, or one already scrolled to its edge,
-      // cannot take the vertical part of the drag, and a drag that moves
-      // nothing reads as broken. That part moves the page instead, the way
-      // the wheel over the margin already does.
-      var step = e.clientY - drag.py;
-      drag.py = e.clientY;
-      if (scope.scrollTop === top && step !== 0) {
-        window.scrollBy(0, -step);
-        drag.y += step;
-        drag.st = scope.scrollTop;
+      if (drag.canX) scope.scrollLeft = drag.sl - dx;
+      if (drag.canY) scope.scrollTop = drag.st - dy;
+      if (!drag.canX || (!drag.canY && !drag.touch)) {
+        setShift(drag.canX ? 0 : clampShift(drag.tx + dx, scope.clientWidth),
+          drag.canY || drag.touch ? 0 : clampShift(drag.ty + dy, scope.clientHeight));
+      }
+      // A finger on a figure that cannot scroll down still scrolls the page,
+      // so a phone reader is never stuck on a figure.
+      if (drag.touch && !drag.canY) {
+        var dyStep = e.clientY - drag.py;
+        drag.py = e.clientY;
+        if (dyStep !== 0) window.scrollBy(0, -dyStep);
       }
       e.preventDefault();
     });
@@ -10716,8 +10893,82 @@
     });
     copyBtn.addEventListener("click", function () { copyFigure(scope).then(say); });
 
-    [out, level, into, reset, wide, svgBtn, pngBtn, copyBtn, said].forEach(function (n) { tools.appendChild(n); });
-    scope.parentNode.insertBefore(tools, scope);
+    // Open in a new tab (#915, owner: "with SVGs and such there is no 'view in
+    // new tab' option"). Inlining an <img> as <svg> takes away the browser's
+    // own "Open image in new tab", so this puts it back. It is a LINK, not a
+    // button, so a click, a middle-click and the right-click "Open link in new
+    // tab" all work.
+    var openLink = el("a", { class: "fa-figure-open", target: "_blank", rel: "noopener", "aria-label": "Open this diagram in a new tab" }, "Open ↗");
+    figureOpenTarget(scope, openLink);
+    function openNoFile(e) {
+      if (openLink.hasAttribute("href")) return;
+      e.preventDefault();
+      if (!openFigureBlob(scope)) say("Could not open this diagram");
+    }
+    openLink.addEventListener("click", openNoFile);
+    openLink.addEventListener("keydown", function (e) {
+      if (!openLink.hasAttribute("href") && (e.key === "Enter" || e.key === " ")) openNoFile(e);
+    });
+
+    [out, level, into, reset, wide, svgBtn, pngBtn, copyBtn, openLink, said].forEach(function (n) { tools.appendChild(n); });
+    // One host holds the controls and the figure, so on a laptop the
+    // controls can float over the figure and show only on hover (owner,
+    // 2026-11-01: "controls should only appear ... on mouse hover", "tighten
+    // up ... vertical space"). A touch screen keeps them in a row above.
+    var host = el("div", { class: "fa-figure-host" });
+    scope.parentNode.insertBefore(host, scope);
+    host.appendChild(tools);
+    host.appendChild(scope);
+
+    // Drag the bottom edge down to make the figure longer (owner,
+    // 2026-11-01: "you should also be able to drag bottom of figure down to
+    // make longer"). The card is as tall as its drawing, so a longer card is
+    // a bigger drawing: the handle sets the zoom so the drawing's height
+    // follows the pointer, and up makes it shorter again. A full-width bar,
+    // not the browser's corner grip, so it is easy to hit; focusable, so the
+    // arrow keys do the same in zoom steps.
+    var grip = el("div", {
+      class: "fa-figure-grip", role: "separator", tabindex: "0",
+      "aria-orientation": "horizontal", "aria-label": "Drag down to make the figure longer, up to make it shorter",
+      title: "Drag down to make the figure longer",
+    });
+    host.appendChild(grip);
+    var sizing = null;
+    function setZoom(z) {
+      z = Math.max(ZOOM_STEPS[0], Math.min(ZOOM_STEPS[ZOOM_STEPS.length - 1], z));
+      scope.style.setProperty("--fa-zoom", String(z));
+      level.textContent = Math.round(z * 100) + "%";
+      step = 0;
+      while (step < ZOOM_STEPS.length - 1 && ZOOM_STEPS[step + 1] <= z + 1e-9) step++;
+      out.disabled = z <= ZOOM_STEPS[0];
+      into.disabled = z >= ZOOM_STEPS[ZOOM_STEPS.length - 1];
+      markPannable();
+    }
+    grip.addEventListener("pointerdown", function (e) {
+      if (e.button !== 0) return;
+      var art = scope.querySelector("svg, img, object");
+      var h = art ? art.getBoundingClientRect().height : scope.clientHeight;
+      if (!(h > 0)) return;
+      var cur = parseFloat(scope.style.getPropertyValue("--fa-zoom")) || ZOOM_STEPS[step];
+      sizing = { y: e.clientY, h: h, z: cur };
+      try { grip.setPointerCapture(e.pointerId); } catch (_e) { /* not captureable */ }
+      grip.classList.add("is-sizing");
+      e.preventDefault();
+    });
+    grip.addEventListener("pointermove", function (e) {
+      if (!sizing) return;
+      setZoom(sizing.z * Math.max(0.1, sizing.h + (e.clientY - sizing.y)) / sizing.h);
+      e.preventDefault();
+    });
+    function endSizing() { sizing = null; grip.classList.remove("is-sizing"); }
+    grip.addEventListener("pointerup", endSizing);
+    grip.addEventListener("pointercancel", endSizing);
+    grip.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" && step < ZOOM_STEPS.length - 1) { step++; apply(); }
+      else if (e.key === "ArrowUp" && step > 0) { step--; apply(); }
+      else return;
+      e.preventDefault();
+    });
     apply();
 
     // After insertion, so `clientWidth` is the real column width rather than 0.
@@ -10757,7 +11008,12 @@
     // image the column has SHRUNK qualifies: one shown at its own size is
     // already readable and gains nothing but chrome.
     var rasterOk = !!document.querySelector("[data-fa-figure-images]");
-    var sel = ".main-content img[src$='.svg'], .main-content svg, .main-content object[data$='.svg']" +
+    // A rendered DOCUMENT (`.fa-doc`, a handbook or guideline page) says the
+    // same thing by being one: its images are the publication's figures, never
+    // card faces, so every large one gets the controls, shrunk or not. A
+    // reader still wants to zoom, pan and copy a figure shown at its own size.
+    var docFigures = ".fa-doc img";
+    var sel = ".main-content img[src$='.svg'], .main-content svg, .main-content object[data$='.svg'], " + docFigures +
       (rasterOk ? ", .main-content img" : "");
 
     document.querySelectorAll(sel).forEach(function (node) {
@@ -10779,7 +11035,8 @@
         }
         var shown = node.getBoundingClientRect().width;
         var column = node.parentElement ? node.parentElement.clientWidth : 0;
-        if (shown < MIN_FIGURE_PX || node.naturalWidth <= shown + 1 || shown < 0.9 * column) return;
+        if (shown < MIN_FIGURE_PX) return;
+        if (!node.closest(".fa-doc") && (node.naturalWidth <= shown + 1 || shown < 0.9 * column)) return;
       }
       var box = node.getBoundingClientRect();
       if (box.width < MIN_FIGURE_PX && box.height < MIN_FIGURE_PX) return;
@@ -12737,6 +12994,17 @@
         applyNavPref(null);
         label();
       });
+      /* A PIN LIFTS WHEN THE MOUSE LEAVES -- owner, 2026-11-02 (Q-FMR-11 A).
+       * Since an open bar's avatar goes home, nothing on the bar closes a
+       * pin, so a bar pinned open stayed open until the reader left the page.
+       * Now the mouse leaving the bar unpins it, and the bar goes back to the
+       * hover peek. Only a MOUSE: a finger's pointerleave fires as it lifts,
+       * which would undo the tap that pinned the bar. Nothing is stored. */
+      bar.addEventListener("pointerleave", function (e) {
+        if (e.pointerType !== "mouse" || !box.checked) return;
+        box.checked = false;
+        label();
+      });
     }
   }
 
@@ -12844,6 +13112,116 @@
       .catch(function () { p.setAttribute("title", "build details unavailable"); });
   }
 
+  /*
+   * PIN ANY BLOCK, OF ANY GRAPH KIND, TO THE FOLIO — issue #982. Owner,
+   * 2026-11-02: a bookmark icon in the block gutter puts *"a bookmark kind
+   * [item] to the folio which is a link to the document at that point"*, and
+   * *"user should also be able to add content blocks in general to folio so
+   * they can return to them (e.g. glossary of a harness or ingested library,
+   * a BPMN diagram, a FHIR resource instance, etc.)"* — *"any graph kind
+   * really"*, *"core infra of the viewer/graph kind"*.
+   *
+   * So there is ONE contract, the same shape a library row uses, and no
+   * per-kind code. Any rendered block declares itself:
+   *
+   *     <div data-fa-pin="<node IRI or page URL#anchor>"
+   *          data-fa-pin-title="Health worker"
+   *          data-fa-pin-href="<where opening it goes>"
+   *          data-fa-pin-kind="bookmark | pin"          (default pin)
+   *          data-fa-pin-node-kind="glossary"           (its graph kind)
+   *          data-fa-pin-avatar="<the document's cover>"
+   *          data-fa-pin-source="DTH-HRH">
+   *       ... <button data-fa-pin-control>🔖</button> ...
+   *
+   * and a press on any `[data-fa-pin-control]` inside it toggles it on the
+   * glass. A viewer that builds its controls in script (the block panel)
+   * calls `window.faFolio.pin(key, meta)` instead of growing a second store.
+   *
+   * ON THE GLASS IT IS A LINK CARD (Q-BMK-1 = C): the avatar, the title and
+   * where it came from, opening to `href`. Nothing of the block's own viewer
+   * is loaded for it, so a glass holding many items of many kinds costs one
+   * small card each (owner, 2026-11-02: *"lazy load all visualizers ... can
+   * be a lot if lots of different item types"*).
+   */
+  var PIN_KINDS = { bookmark: 1, pin: 1 };
+
+  function pinMetaOf(host) {
+    var kind = host.getAttribute("data-fa-pin-kind");
+    var key = host.getAttribute("data-fa-pin") || "";
+    return {
+      key: key,
+      title: host.getAttribute("data-fa-pin-title") || key,
+      href: safeHref(host.getAttribute("data-fa-pin-href") || undefined) || "",
+      avatar: safeHref(host.getAttribute("data-fa-pin-avatar") || undefined) || "",
+      kind: PIN_KINDS[kind] ? kind : "pin",
+      nodeKind: host.getAttribute("data-fa-pin-node-kind") || "",
+      source: host.getAttribute("data-fa-pin-source") || "",
+    };
+  }
+
+  /** The store key of a pinned item: kind-prefixed, so it can never be read as a library `<instance>/<id>`. */
+  function pinKeyOf(kind, key) {
+    var k = String(key || "");
+    return /^(bookmark|pin):/.test(k) ? k : (PIN_KINDS[kind] ? kind : "pin") + ":" + k;
+  }
+
+  /** Put it on the glass, or take it off when it is already there. Returns the new state. */
+  function togglePin(key, meta) {
+    var m = meta || {};
+    if (!key) return "library";
+    var k = pinKeyOf(m.kind, key);
+    if (folioStateOf(k) === "glass") { shelveFromGlass(k); return "folio"; }
+    displayInFolio(k, {
+      title: m.title || key,
+      href: safeHref(m.href || undefined) || "",
+      avatar: safeHref(m.avatar || undefined) || "",
+      kind: PIN_KINDS[m.kind] ? m.kind : "pin",
+      nodeKind: m.nodeKind,
+      source: m.source,
+    });
+    return "glass";
+  }
+
+  /** Every pin control shows its block's state, read from the store. */
+  function paintBlockPins(root) {
+    var r = root && root.querySelectorAll ? root : document;
+    Array.prototype.forEach.call(r.querySelectorAll("[data-fa-pin-control]"), function (btn) {
+      var host = btn.closest("[data-fa-pin]");
+      var m = host ? pinMetaOf(host) : null;
+      if (!m || !m.key) return;
+      var on = folioStateOf(pinKeyOf(m.kind, m.key)) === "glass";
+      var what = m.kind === "bookmark" ? "bookmark" : "pin";
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      btn.setAttribute("aria-label", (on ? "Remove the " + what + " of " : (what === "bookmark" ? "Bookmark " : "Pin ")) +
+        m.title + (on ? " from your folio glass" : " to your folio glass"));
+      btn.title = on ? "On your folio glass (press to take it off)" : (what === "bookmark" ? "Bookmark on your folio" : "Pin to your folio");
+    });
+  }
+
+  function mountBlockPins() {
+    if (document.__faPinsMounted) return;
+    document.__faPinsMounted = true;
+    // ONE delegated listener, for the same reason as the pull-outs (`ebvl`):
+    // lazy pages and viewers fill their blocks after this runs.
+    document.addEventListener("click", function (ev) {
+      var btn = ev.target && ev.target.closest && ev.target.closest("[data-fa-pin-control]");
+      if (!btn) return;
+      var host = btn.closest("[data-fa-pin]");
+      if (!host) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      var m = pinMetaOf(host);
+      togglePin(m.key, m);
+    });
+    document.addEventListener("fa:folio-changed", function () { paintBlockPins(); });
+    paintBlockPins();
+    window.faFolio = {
+      pin: togglePin,
+      stateOf: function (kind, key) { return folioStateOf(pinKeyOf(kind, key)); },
+      paint: paintBlockPins,
+    };
+  }
+
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
@@ -12897,6 +13275,7 @@
     mountGlass();
     mountLandingHomes();
     mountLibraryPullouts();
+    mountBlockPins();
     mountTodoStickies();
     mountPageLanguageBar();
     mountTableFilters();

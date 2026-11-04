@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/folio-assistant-core-content-adapters.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/folio-assistant-core-content-adapters",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "folio-assistant-core-content-adapters",
       "path": "content-adapters/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/content-adapters"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/content-adapters"
       ],
       "description": "The `document` block VOCABULARY's node, folio-content-adapter/v1: its name, its companion roles (md, ts) and that cat-harness's code types it. Every kind in block-kinds/ names it. Owner, 2026-10-12 (bean bzwk, option B): each layer declares its own adapter and a folio may mix them, so the paper profile is core's `document` kinds plus the science layer's `mathpaper` kinds.",
       "fileCount": 0,

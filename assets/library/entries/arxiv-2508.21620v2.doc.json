@@ -287,11 +287,11 @@
           "heading": false
         },
         {
-          "term": "bayesian",
+          "term": "drug",
           "heading": false
         },
         {
-          "term": "drug",
+          "term": "theories",
           "heading": false
         }
       ],
@@ -651,12 +651,12 @@
           "heading": false
         },
         {
-          "term": "𝜇𝑡",
-          "heading": false
-        },
-        {
           "term": "bound",
           "heading": true
+        },
+        {
+          "term": "𝜇𝑡",
+          "heading": false
         }
       ],
       "extract": "Let us now consider the following decision rule (Auer, 2002): At each time 𝑡= 1, . . . ,𝑇, we pick an action that maximizes the function UCB𝑡(𝑎) = 𝜇𝑡(𝑎) + √︁ (2 log𝑇)/𝑁𝑡(𝑎), (3.3) where 𝜇𝑡(𝑎) = 1/𝑁𝑡(𝑎) P𝑡 𝑖=1 𝑟𝑖(𝑎𝑖)I(𝑎𝑖= 𝑎) is the empirical mean estimate of 𝜇(𝑎) after 𝑡 rounds, and 𝑁𝑡(𝑎) = P𝑡 𝑖=1 I(𝑎𝑡= 𝑎) is the number of times the action 𝑎has been selected. The algorithm is",
@@ -940,15 +940,15 @@
           "heading": false
         },
         {
+          "term": "union bound",
+          "heading": false
+        },
+        {
           "term": "gp-ucb",
           "heading": true
         },
         {
           "term": "𝛽𝑡𝜎𝑡",
-          "heading": false
-        },
-        {
-          "term": "union bound",
           "heading": false
         },
         {
@@ -1054,11 +1054,11 @@
           "heading": false
         },
         {
-          "term": "𝜇𝑡",
+          "term": "union bound",
           "heading": false
         },
         {
-          "term": "union bound",
+          "term": "𝜇𝑡",
           "heading": false
         }
       ],
@@ -1145,6 +1145,10 @@
       "heading": false
     },
     {
+      "term": "decision function",
+      "heading": false
+    },
+    {
       "term": "function space",
       "heading": false
     },
@@ -1153,17 +1157,13 @@
       "heading": false
     },
     {
-      "term": "argmax𝑎 𝜇𝑡",
-      "heading": false
-    },
-    {
-      "term": "decision function",
+      "term": "union bound",
       "heading": false
     }
   ],
   "links": {
     "repo": "litlfred/cat-harness",
     "branch": "main",
-    "dir": "library/arxiv-2508.21620v2"
+    "dir": "library/content/arxiv-2508.21620v2"
   }
 }

@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Contributor feedback on a working draft",
       "summary": "A document is still being written, and the Authoring Committee gives feedback on it in a shared Contributor Feedback sheet.",
       "description": "A document is still being written, and the Authoring Committee gives\nfeedback on it in a shared Contributor Feedback sheet. This is what\nhappens to ONE change set, one row of that sheet: a member starts it\nwith a title, the sections it is about and their feedback; the agent\nproposes a direction; an Editor lets the agent edit; the agent makes the\nedit in the row's one pull request, whose staging preview shows what\nchanged; the committee answers on the row; and an Editor lets the agent\nmerge. If the row's feedback changes after the agent wrote its\nproposal, the proposal is marked stale and the row's Ready for agent\ngoes back to No, so the agent proposes again and an Editor decides\nagain. The sheet's colours follow the lanes: Blue for the committee,\nGreen for the agent, Orange for the Editor. Skill: review-sheet-script.",
@@ -28,7 +22,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF01",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/StartEvent_Feedback",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_StartRow",
@@ -36,7 +30,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF02",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_StartRow",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Propose",
@@ -44,7 +38,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF03",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Propose",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForAgent",
@@ -52,7 +46,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF04",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForAgent",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_EditInPullRequest",
@@ -60,7 +54,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF05",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_EditInPullRequest",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_AnswerPreview",
@@ -68,7 +62,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF06",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_AnswerPreview",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_FeedbackChanged",
@@ -76,7 +70,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF07",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "changed",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_FeedbackChanged",
@@ -85,7 +79,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF08",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "agreed",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_FeedbackChanged",
@@ -94,7 +88,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_QaGate",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_QaPassed",
@@ -102,7 +96,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "failed",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_QaPassed",
@@ -111,7 +105,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "passed",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_QaPassed",
@@ -120,7 +114,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF09",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForMerge",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge",
@@ -128,7 +122,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",

@@ -2,17 +2,11 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_ReviewExisting.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/folio-assistant-core.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_ReviewExisting",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
-      "name": "Review the guidance already in this content",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Review the existing guidance",
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
@@ -24,7 +18,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_01"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_RecYes"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_02"

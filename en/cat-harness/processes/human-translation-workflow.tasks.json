@@ -387,8 +387,8 @@
   },
   "Task_ExtractPOT": {
    "id": "Task_ExtractPOT",
-   "name": "Extract POT (translatable strings)",
-   "type": "bpmn:ServiceTask",
+   "name": "Extract the POT",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_ExtractPOT",
    "lane": "Automated Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
@@ -398,6 +398,10 @@
      "href": "../../../reference/skill-instructions/translation-manager.html"
     }
    ],
+   "shared": {
+    "id": "GT_ExtractPot",
+    "type": "bpmn:GlobalTask"
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -581,8 +585,8 @@
   },
   "Task_InjectPO": {
    "id": "Task_InjectPO",
-   "name": "Inject PO → translated Markdown",
-   "type": "bpmn:ServiceTask",
+   "name": "Inject the PO",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_InjectPO",
    "lane": "Automated Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
@@ -592,6 +596,10 @@
      "href": "../../../reference/skill-instructions/translation-manager.html"
     }
    ],
+   "shared": {
+    "id": "GT_InjectPo",
+    "type": "bpmn:GlobalTask"
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -679,7 +687,7 @@
   "Task_RoundTripQA": {
    "id": "Task_RoundTripQA",
    "name": "Round-trip translation QA",
-   "type": "bpmn:ServiceTask",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_RoundTripQA",
    "lane": "Automated Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
@@ -689,6 +697,10 @@
      "href": "../../../reference/skill-instructions/translation-manager.html"
     }
    ],
+   "shared": {
+    "id": "GT_RoundTripQa",
+    "type": "bpmn:GlobalTask"
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -873,7 +885,7 @@
   "Task_WriteStatus": {
    "id": "Task_WriteStatus",
    "name": "Write status.json (official)",
-   "type": "bpmn:ServiceTask",
+   "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/node/Task_WriteStatus",
    "lane": "Automated Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation/lane/Lane_Pipeline",
@@ -883,6 +895,13 @@
      "href": "../../../reference/skill-instructions/translation-manager.html"
     }
    ],
+   "shared": {
+    "id": "GT_WriteTranslationStatus",
+    "type": "bpmn:GlobalTask",
+    "inputs": {
+     "official": "true"
+    }
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",

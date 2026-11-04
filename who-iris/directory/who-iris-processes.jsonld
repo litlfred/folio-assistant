@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-processes",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "who-iris-processes",
       "path": "processes/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/v0/ns#graphTypology/processes"
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes"
       ],
       "description": "The IRIS CDN Exporter's BPMN processes (issue #100): initial load, nightly change ingest over DSpace REST, weekly reconciliation, and sign-and-publish. Cloudflare git (Artifacts) and Cloudflare R2 + CDN are lanes, because the owner ruled 2026-10-30 that exports live on Cloudflare and GitHub Pages only previews. Each activity names the skill that carries it out; the platform's nquads-distribution process is called, not copied. Rendered drawings: docs/assets/img/processes/.",
       "readmePath": "processes/README.md",

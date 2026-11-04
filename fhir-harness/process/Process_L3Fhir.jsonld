@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "L3 FHIR IG pipeline",
       "summary": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready.",
       "description": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready. Generic: what produces the source model is the layer above's own process, which maps its model and then calls Process_L3Fhir. This one names no such model. folio-assistant — the generic L3 FHIR IG pipeline.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
@@ -28,7 +22,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C01",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/StartEvent_ModelReady",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_AuthorFsh",
@@ -36,7 +30,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C03",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_AuthorFsh",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Sushi",
@@ -44,7 +38,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C04",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Sushi",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Validate",
@@ -52,7 +46,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C05",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Validate",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Gateway_Valid",
@@ -60,7 +54,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C06",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Gateway_Valid",
@@ -69,7 +63,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C07",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Gateway_Valid",
@@ -78,7 +72,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C08",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_QcGates",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Gateway_QcPass",
@@ -86,7 +80,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C09",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Gateway_QcPass",
@@ -95,7 +89,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_QcBeans",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_AuthorFsh",
@@ -103,7 +97,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Gateway_QcPass",
@@ -112,7 +106,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_IgPublisher",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_PublishIg",
@@ -120,7 +114,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_PublishIg",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/EndEvent_IgPublished",

@@ -42,9 +42,14 @@
         ],
         "outputs": [
           {
-            "description": "Query results formatted as table, JSON, or IDs.",
-            "name": "result",
+            "description": "Query results formatted as a table, JSON or IDs, for people to read.",
+            "name": "report",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "description": "The rows as one `BeanQueryRows` record, each variable to its value with bean IRIs shortened to ids: `structuredContent.rows` over MCP in every format, and the text itself with format json. Programs and BPMN gateways read this; people read `report`.",
+            "name": "result",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/BeanQueryRows"
           }
         ]
       },

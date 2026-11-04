@@ -273,6 +273,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview#flow/Flow_GW_MoreVoices_Join",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/lane/Lane_NarrativeReviewer",
       "@type": "cat-harness:Lane",
       "name": "Narrative reviewer"
@@ -296,6 +300,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices",
       "@type": "bootstrap:ProcessNode",
       "name": "Another active voice?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_MoreVoices_Join",
+      "@type": "bootstrap:ProcessNode",
+      "name": "GW_MoreVoices_Join"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview/node/GW_QuoteSupports",

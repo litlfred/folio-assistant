@@ -3,7 +3,7 @@
     "https://openprovenance.org/prov-jsonld/context.jsonld",
     {
       "@base": "https://litlfred.github.io/folio/",
-      "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns#",
+      "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/",
       "cat-harness:agentSubject": {
         "@type": "@id"
       },
@@ -35,8 +35,8 @@
       "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/authoring-agent",
       "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_ReadLive",
       "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
-      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train#Task_ReadLive",
-      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#merge-steward"
+      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train/Task_ReadLive",
+      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles/merge-steward"
     },
     {
       "@id": "merge-train--train-6#2",
@@ -54,8 +54,8 @@
       "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/authoring-agent",
       "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_TakeNext",
       "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
-      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train#Task_TakeNext",
-      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#merge-steward"
+      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train/Task_TakeNext",
+      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles/merge-steward"
     },
     {
       "@id": "merge-train--train-6#3",
@@ -73,8 +73,8 @@
       "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/authoring-agent",
       "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/GW_Placement",
       "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
-      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train#GW_Placement",
-      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#merge-steward"
+      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train/GW_Placement",
+      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles/merge-steward"
     },
     {
       "@id": "merge-train--train-6#4",
@@ -92,8 +92,8 @@
       "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/authoring-agent",
       "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Admit",
       "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
-      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train#Task_Admit",
-      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#merge-steward"
+      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train/Task_Admit",
+      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles/merge-steward"
     },
     {
       "@id": "merge-train--train-6#5",
@@ -111,8 +111,8 @@
       "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ci-pipeline",
       "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_MergeMembers",
       "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train#Call_MergeMembers",
-      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#build-pipeline"
+      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train/Call_MergeMembers",
+      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles/build-pipeline"
     },
     {
       "@id": "merge-train--train-6#6",
@@ -130,8 +130,8 @@
       "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ci-pipeline",
       "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/GW_AllMerged",
       "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train#GW_AllMerged",
-      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#build-pipeline"
+      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train/GW_AllMerged",
+      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles/build-pipeline"
     },
     {
       "@id": "merge-train--train-6#7",
@@ -149,8 +149,8 @@
       "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ci-pipeline",
       "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_Gates",
       "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train#Call_Gates",
-      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#build-pipeline"
+      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train/Call_Gates",
+      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles/build-pipeline"
     },
     {
       "@id": "merge-train--train-6#8",
@@ -168,8 +168,8 @@
       "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/authoring-agent",
       "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Attribute",
       "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
-      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train#Task_Attribute",
-      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#merge-steward"
+      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train/Task_Attribute",
+      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles/merge-steward"
     },
     {
       "@id": "merge-train--train-6#9",
@@ -187,8 +187,8 @@
       "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ci-pipeline",
       "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_ChecksPresent",
       "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train#Call_ChecksPresent",
-      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#build-pipeline"
+      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train/Call_ChecksPresent",
+      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles/build-pipeline"
     },
     {
       "@id": "merge-train--train-6#10",
@@ -206,8 +206,8 @@
       "cat-harness:agentSubject": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ci-pipeline",
       "cat-harness:planSubject": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/GW_Green",
       "cat-harness:roleSubject": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train#GW_Green",
-      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles#build-pipeline"
+      "plan": "https://litlfred.github.io/cat-harness/v0/processes/sdlc/merge-train/GW_Green",
+      "role": "https://litlfred.github.io/cat-harness/v0/scenarios/roles/build-pipeline"
     }
   ],
   "@id": "merge-train--train-6"

@@ -3,16 +3,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/skill/classify-and-code-content.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
   "sameAs": "http://smart.who.int/base/skill/classify-and-code-content.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/skill/classify-and-code-content",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "classify-and-code-content",
       "title": "classify-and-code-content",
       "description": "Classify and code L1 narrative content (recommendations, implementation practices, remarks, and proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, and GRADE ratings) using the `terminology-coding` methodology and the `terminology-lookup` Tool. Covers the authoring-agent's four-rung reuse-first lookup, the `l1-extraction-reviewer` lane for reading and signing proposed L1 coverage exclusions against the printed page (owner ruling 3b, 2026-10-12), and the `terminologist` / ontologist reviewer lane for adjudicating candidate codings and local glossary candidates.",

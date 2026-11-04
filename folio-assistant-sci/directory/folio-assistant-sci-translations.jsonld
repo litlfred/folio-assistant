@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/folio-assistant-sci-translations.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/folio-assistant-sci.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/folio-assistant-sci-translations",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Subgraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "folio-assistant-sci-translations",
       "path": "translations/",
       "contentSource": {
@@ -19,7 +13,7 @@
         "declaredIn": "default"
       },
       "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/v0/ns#graphTypology/translation-sources"
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/translation-sources"
       ],
       "description": "The gettext side of folio-assistant-sci's own strings, one directory per target locale. Today: `block-kinds.pot`/`.po`, the headings of the block kinds this instance declares in block-kinds/, keyed `msgctxt \"block-kind:<kind>\"` with the node's English `heading` as msgid (bean riit, step 2b). Owner, 2026-10-04: locale headings live in the translation graph (option 1 of 2), and kinds are not centrally managed, so the catalogue sits with the kinds rather than in cat-harness/translations/.",
       "readmePath": "translations/README.md",

@@ -5,7 +5,7 @@
  "tasks": {
   "Task_Plan": {
    "id": "Task_Plan",
-   "name": "1 · Plan the document",
+   "name": "Plan the document",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Plan",
    "lane": "Author (person)",
@@ -68,12 +68,50 @@
     ]
    }
   },
+  "Call_BeanOpen": {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_BeanOpen",
+   "lane": "Work plan (beans)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_WorkPlan",
+   "skills": [
+    {
+     "name": "bean-coordination",
+     "href": "../../../reference/skill-instructions/bean-coordination.html"
+    }
+   ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "role": {
+    "name": "work-plan",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
+    "title": "Work plan (beans)",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "work-plan-store",
+      "href": "../../../reference/skill-instructions/work-plan-store.html"
+     }
+    ]
+   }
+  },
   "Task_SeedPlan": {
    "id": "Task_SeedPlan",
-   "name": "2 · Seed the work plan",
+   "name": "Seed the work plan",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_SeedPlan",
-   "lane": "Work plan — beans (shared by humans and agents)",
+   "lane": "Work plan (beans)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_WorkPlan",
    "skills": [
     {
@@ -97,13 +135,17 @@
      {
       "name": "todo-manager",
       "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "work-plan-store",
+      "href": "../../../reference/skill-instructions/work-plan-store.html"
      }
     ]
    }
   },
   "Task_Scaffold": {
    "id": "Task_Scaffold",
-   "name": "3 · Scaffold the folio [folio_init]",
+   "name": "Scaffold the folio",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Scaffold",
    "lane": "Authoring agent (system)",
@@ -340,7 +382,7 @@
   },
   "Task_AuthorBlocks": {
    "id": "Task_AuthorBlocks",
-   "name": "4 · Author blocks",
+   "name": "Author blocks",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_AuthorBlocks",
    "lane": "Authoring agent (system)",
@@ -581,10 +623,10 @@
   },
   "Task_ProfileCheck": {
    "id": "Task_ProfileCheck",
-   "name": "5 · Check the profile",
+   "name": "Check the profile",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_ProfileCheck",
-   "lane": "Build pipeline — validate · render · publish",
+   "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
    "skills": [
     {
@@ -678,10 +720,10 @@
   },
   "Task_Validate": {
    "id": "Task_Validate",
-   "name": "6 · Validate",
+   "name": "Validate",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Validate",
-   "lane": "Build pipeline — validate · render · publish",
+   "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
    "skills": [
     {
@@ -775,10 +817,10 @@
   },
   "Task_Render": {
    "id": "Task_Render",
-   "name": "7 · Render MD / HTML / PDF",
+   "name": "Render MD, HTML and PDF",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Render",
-   "lane": "Build pipeline — validate · render · publish",
+   "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
    "skills": [
     {
@@ -870,84 +912,24 @@
     ]
    }
   },
-  "Task_Review": {
-   "id": "Task_Review",
-   "name": "8 · Review and feedback",
-   "type": "bpmn:UserTask",
-   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Review",
-   "lane": "Reviewer / subject-matter expert",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Reviewer",
+  "Call_ReviewPublish": {
+   "id": "Call_ReviewPublish",
+   "name": "Review and publish",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_ReviewPublish",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
    "skills": [
     {
      "name": "content-review",
      "href": "../../../reference/skill-instructions/content-review.html"
-    },
-    {
-     "name": "staging-review",
-     "href": "../../../reference/skill-instructions/staging-review.html"
     }
    ],
-   "role": {
-    "name": "reviewer",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
-    "title": "Reviewer / SME",
-    "skills": [
-     {
-      "name": "adjudication",
-      "href": "../../../reference/skill-instructions/adjudication.html"
-     },
-     {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
-     },
-     {
-      "name": "content-review",
-      "href": "../../../reference/skill-instructions/content-review.html"
-     },
-     {
-      "name": "decision-audit",
-      "href": "../../../reference/skill-instructions/decision-audit.html"
-     },
-     {
-      "name": "narrative-asserts-code",
-      "href": "../../../reference/skill-instructions/narrative-asserts-code.html"
-     },
-     {
-      "name": "rendered-impact",
-      "href": "../../../reference/skill-instructions/rendered-impact.html"
-     },
-     {
-      "name": "staging-review",
-      "href": "../../../reference/skill-instructions/staging-review.html"
-     },
-     {
-      "name": "translation-manager",
-      "href": "../../../reference/skill-instructions/translation-manager.html"
-     },
-     {
-      "name": "visual-diff",
-      "href": "../../../reference/skill-instructions/visual-diff.html"
-     },
-     {
-      "name": "voice-overlay-review",
-      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
-     }
-    ]
-   }
-  },
-  "Task_Publish": {
-   "id": "Task_Publish",
-   "name": "9 · Publish",
-   "type": "bpmn:ServiceTask",
-   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Publish",
-   "lane": "Build pipeline — validate · render · publish",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
-   "skills": [
-    {
-     "name": "content-publish",
-     "href": "../../../reference/skill-instructions/content-publish.html"
-    }
-   ],
+   "calls": {
+    "name": "Review and publish a folio",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish",
+    "diagram": "folio-review-publish.html"
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -1032,46 +1014,12 @@
     ]
    }
   },
-  "Call_BeanOpen": {
-   "id": "Call_BeanOpen",
-   "name": "Open the bean",
-   "type": "bpmn:CallActivity",
-   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_BeanOpen",
-   "lane": "Work plan — beans (shared by humans and agents)",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_WorkPlan",
-   "skills": [
-    {
-     "name": "bean-coordination",
-     "href": "../../../reference/skill-instructions/bean-coordination.html"
-    }
-   ],
-   "calls": {
-    "name": "Open the bean",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
-    "diagram": "bean-open.html"
-   },
-   "role": {
-    "name": "work-plan",
-    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
-    "title": "Work plan (beans)",
-    "skills": [
-     {
-      "name": "content-feedback",
-      "href": "../../../reference/skill-instructions/content-feedback.html"
-     },
-     {
-      "name": "todo-manager",
-      "href": "../../../reference/skill-instructions/todo-manager.html"
-     }
-    ]
-   }
-  },
   "Call_BeanClose": {
    "id": "Call_BeanClose",
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_BeanClose",
-   "lane": "Build pipeline — validate · render · publish",
+   "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
    "skills": [
     {
@@ -1164,36 +1112,6 @@
      {
       "name": "watch",
       "href": "../../../reference/skill-instructions/watch.html"
-     }
-    ]
-   }
-  },
-  "Call_ContributorFeedback": {
-   "id": "Call_ContributorFeedback",
-   "name": "Contributor feedback",
-   "type": "bpmn:CallActivity",
-   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_ContributorFeedback",
-   "lane": "Authoring Committee",
-   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Committee",
-   "skills": [
-    {
-     "name": "review-sheet-script",
-     "href": "../../../reference/skill-instructions/review-sheet-script.html"
-    }
-   ],
-   "calls": {
-    "name": "Contributor feedback on a working draft",
-    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
-    "diagram": "contributor-feedback.html"
-   },
-   "role": {
-    "name": "authoring-committee",
-    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-committee",
-    "title": "Authoring Committee",
-    "skills": [
-     {
-      "name": "review-sheet-script",
-      "href": "../../../reference/skill-instructions/review-sheet-script.html"
      }
     ]
    }

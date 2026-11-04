@@ -96,6 +96,12 @@
     "zod/ig-artifact-jsonld/IgSubjectSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-artifact-jsonld/IgSubjectSchema.schema.json"
     },
+    "zod/ig-ast-lock/IgAstLockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-ast-lock/IgAstLockSchema.schema.json"
+    },
+    "zod/ig-ast-lock/IgAstPinSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-ast-lock/IgAstPinSchema.schema.json"
+    },
     "zod/ig-ast/AstDependenciesSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-ast/AstDependenciesSchema.schema.json"
     },
@@ -271,11 +277,5 @@
       "$ref": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/pcf-consent/FhirStrictConsentSchema.schema.json"
     }
   },
-  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  }
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld"
 }

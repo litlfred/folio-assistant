@@ -3,11 +3,11 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
                   id="Definitions_Process_Discussion"
                   targetNamespace="https://litlfred.github.io/bootstrap/v0/workflows"
                   exporter="bootstrap" exporterVersion="1">
-  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns#" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns/" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
   <bpmn:resource id="bootstrapping-agent" name="Bootstrapping Agent"/>
   <bpmn:collaboration id="Collaboration_Process_Discussion">
     <bpmn:participant id="Participant_Process_Discussion" name="Determine the harness and repositories" processRef="Process_Discussion"/>
@@ -66,7 +66,7 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
       <bpmn:extensionElements><bootstrap.processes:skill ref="confirm-harness"/></bpmn:extensionElements>
     </bpmn:task>
 
-    <bpmn:callActivity id="A_AskRequestor" name="Ask the Requestor: which harness, and where?" calledElement="Process_HumanAgentDiscussion">
+    <bpmn:callActivity id="A_AskRequestor" name="Ask which harness, and where" calledElement="Process_HumanAgentDiscussion">
       <bpmn:documentation>The candidates go in as the options; the recommendation may name one; the default is NONE. What A_DetermineWhere established goes in too — the process, the two roles, the context — so the called discussion checks it rather than re-deriving it; and anything it could not establish goes in as undetermined, to be asked first. The Requestor's answer comes back as answered, or the question as still open.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="confirm-harness"/>
@@ -104,79 +104,82 @@ NO work-plan element on any activity, and isExecutable is false, for the reasons
   <bpmndi:BPMNDiagram id="Diagram_Process_Discussion">
     <bpmndi:BPMNPlane id="Plane_Process_Discussion" bpmnElement="Collaboration_Process_Discussion">
       <bpmndi:BPMNShape id="Shape_Participant_Process_Discussion" bpmnElement="Participant_Process_Discussion" isHorizontal="true">
-        <dc:Bounds x="140" y="80" width="1600" height="300"/>
+        <dc:Bounds x="140" y="80" width="1600" height="300" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_BootstrappingAgent" bpmnElement="Lane_BootstrappingAgent" isHorizontal="true">
-        <dc:Bounds x="170" y="80" width="1570" height="300"/>
+        <dc:Bounds x="170" y="80" width="1570" height="300" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Start_Discussion" bpmnElement="Start_Discussion">
-        <dc:Bounds x="232" y="212" width="36" height="36"/>
+        <dc:Bounds x="232" y="212" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_ListHarnesses" bpmnElement="A_ListHarnesses">
-        <dc:Bounds x="555" y="190" width="150" height="80"/>
+        <dc:Bounds x="570" y="170" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_ListLocations" bpmnElement="A_ListLocations">
-        <dc:Bounds x="745" y="190" width="150" height="80"/>
+        <dc:Bounds x="760" y="170" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_AskRequestor" bpmnElement="A_AskRequestor">
-        <dc:Bounds x="935" y="190" width="150" height="80"/>
+        <dc:Bounds x="950" y="170" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_G_Settled" bpmnElement="G_Settled" isMarkerVisible="true">
-        <dc:Bounds x="1175" y="205" width="50" height="50"/>
-        <bpmndi:BPMNLabel><dc:Bounds x="1070" y="140" width="110" height="40"/></bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
+        <dc:Bounds x="1175" y="205" width="50" height="50" />
+        
+      <bpmndi:BPMNLabel><dc:Bounds x="1070" y="140" width="110" height="40"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_RecordDetermination" bpmnElement="A_RecordDetermination">
-        <dc:Bounds x="1315" y="120" width="150" height="80"/>
+        <dc:Bounds x="1330" y="100" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_RecordUnsettled" bpmnElement="A_RecordUnsettled">
-        <dc:Bounds x="1315" y="260" width="150" height="80"/>
+        <dc:Bounds x="1330" y="240" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Settled" bpmnElement="End_Settled">
-        <dc:Bounds x="1562" y="142" width="36" height="36"/>
+        <dc:Bounds x="1562" y="142" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Unsettled" bpmnElement="End_Unsettled">
-        <dc:Bounds x="1562" y="282" width="36" height="36"/>
+        <dc:Bounds x="1562" y="282" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_A_DetermineWhere" bpmnElement="A_DetermineWhere">
-        <dc:Bounds x="320" y="190" width="150" height="80"/>
+        <dc:Bounds x="335" y="170" width="120" height="120" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_Flow_Start_Where" bpmnElement="Flow_Start_Where">
-        <di:waypoint x="268" y="230"/>
-        <di:waypoint x="320" y="230"/>
+        <di:waypoint x="268" y="230" />
+        <di:waypoint x="335" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_Where_Harnesses" bpmnElement="Flow_Where_Harnesses">
-        <di:waypoint x="470" y="230"/>
-        <di:waypoint x="555" y="230"/>
+        <di:waypoint x="455" y="230" />
+        <di:waypoint x="570" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_Harnesses_Locations" bpmnElement="Flow_Harnesses_Locations">
-        <di:waypoint x="705" y="230"/>
-        <di:waypoint x="745" y="230"/>
+        <di:waypoint x="690" y="230" />
+        <di:waypoint x="760" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_Locations_Ask" bpmnElement="Flow_Locations_Ask">
-        <di:waypoint x="895" y="230"/>
-        <di:waypoint x="935" y="230"/>
+        <di:waypoint x="880" y="230" />
+        <di:waypoint x="950" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_Ask_Gate" bpmnElement="Flow_Ask_Gate">
-        <di:waypoint x="1085" y="230"/>
-        <di:waypoint x="1175" y="230"/>
+        <di:waypoint x="1070" y="230" />
+        <di:waypoint x="1175" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_Settled_Yes" bpmnElement="Flow_Settled_Yes">
-        <di:waypoint x="1200" y="205"/>
-        <di:waypoint x="1200" y="160"/>
-        <di:waypoint x="1315" y="160"/>
+        <di:waypoint x="1225" y="230" />
+        <di:waypoint x="1277.5" y="230" />
+        <di:waypoint x="1277.5" y="160" />
+        <di:waypoint x="1330" y="160" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_Settled_No" bpmnElement="Flow_Settled_No">
-        <di:waypoint x="1200" y="255"/>
-        <di:waypoint x="1200" y="300"/>
-        <di:waypoint x="1315" y="300"/>
+        <di:waypoint x="1225" y="230" />
+        <di:waypoint x="1277.5" y="230" />
+        <di:waypoint x="1277.5" y="300" />
+        <di:waypoint x="1330" y="300" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1183.5" y="264.5" width="90" height="36" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_Record_End" bpmnElement="Flow_Record_End">
-        <di:waypoint x="1465" y="160"/>
-        <di:waypoint x="1562" y="160"/>
+        <di:waypoint x="1450" y="160" />
+        <di:waypoint x="1562" y="160" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_Flow_Unsettled_End" bpmnElement="Flow_Unsettled_End">
-        <di:waypoint x="1465" y="300"/>
-        <di:waypoint x="1562" y="300"/>
+        <di:waypoint x="1450" y="300" />
+        <di:waypoint x="1562" y="300" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

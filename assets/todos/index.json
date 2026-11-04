@@ -213,14 +213,10 @@
     ],
     "Process_CopyIntoFolio": [],
     "Process_GraphDetanglement": [
-      "Process_AskThePerson",
-      "Process_BeanClose",
-      "Process_BeanOpen"
+      "Process_AskThePerson"
     ],
     "Process_KgSeparation": [
       "Process_AskThePerson",
-      "Process_BeanClose",
-      "Process_BeanOpen",
       "Process_PublishVerification",
       "Process_UpstreamAdoption"
     ],
@@ -230,14 +226,9 @@
     "Process_NamedQueryExecution": [],
     "Process_NQuadsDistribution": [],
     "Process_CodeReview": [],
-    "Process_SliceSqlitePublish": [
-      "Process_BeanClose",
-      "Process_BeanOpen"
-    ],
+    "Process_SliceSqlitePublish": [],
     "Process_SubKgLifecycle": [
-      "Process_AskThePerson",
-      "Process_BeanClose",
-      "Process_BeanOpen"
+      "Process_AskThePerson"
     ],
     "Process_ContentAcquisition": [
       "Process_AskThePerson"
@@ -258,8 +249,6 @@
       "Process_RefreshMaterialized"
     ],
     "Process_SubscribeKg": [
-      "Process_BeanClose",
-      "Process_BeanOpen",
       "Process_MaterializeRemote",
       "Process_RefreshMaterialized"
     ],
@@ -269,7 +258,9 @@
     "Process_ActorRoleAdministration": [
       "Process_CodeChangeReview"
     ],
-    "Process_AskThePerson": [],
+    "Process_AskThePerson": [
+      "Process_HumanAgentDiscussion"
+    ],
     "Process_CRDM_Close": [
       "Process_Adjudication",
       "Process_MergeToMain"
@@ -289,8 +280,6 @@
       "Process_WireframeDesignReview"
     ],
     "Process_CRDM": [
-      "Process_BeanClose",
-      "Process_BeanOpen",
       "Process_CRDM_Close",
       "Process_CRDM_DataModel",
       "Process_CRDM_Deliver",
@@ -325,7 +314,9 @@
       "Process_BeanOpen"
     ],
     "Process_BeanOpen": [],
-    "Process_CiHealth": [],
+    "Process_CiHealth": [
+      "Process_TrackedWatch"
+    ],
     "Process_CodeChangeReview": [
       "Process_BeanClose",
       "Process_BeanOpen",
@@ -345,8 +336,16 @@
     "Process_FeatureStaging": [
       "Process_RenderKgToCdn"
     ],
-    "Process_JsonLdDrift": [],
+    "Process_GeneratedFileDrift": [],
+    "Process_JsonLdDrift": [
+      "Process_GeneratedFileDrift"
+    ],
     "Process_MergeBase": [],
+    "Process_MergeManagerWatch": [
+      "Process_MergeTrain",
+      "Process_SaturationMetaMerge",
+      "Process_StalledAgentTriage"
+    ],
     "Process_MergeRefusal": [
       "Process_BeanClose",
       "Process_BeanOpen"
@@ -366,7 +365,9 @@
       "Process_CriterionAdjudication"
     ],
     "Process_OptionsAnalysis": [],
-    "Process_PrChecksPresent": [],
+    "Process_PrChecksPresent": [
+      "Process_TrackedWatch"
+    ],
     "Process_PublishAlert": [
       "Process_AskThePerson"
     ],
@@ -376,10 +377,13 @@
     "Process_RelatedWork": [
       "Process_AskThePerson"
     ],
-    "Process_RepoHealth": [],
+    "Process_RepoHealth": [
+      "Process_TrackedWatch"
+    ],
     "Process_RequirementsFiling": [
       "Process_Adjudication"
     ],
+    "Process_SaturationMetaMerge": [],
     "Process_SmeTestDataReview": [],
     "Process_StalledAgentTriage": [
       "Process_AskThePerson"
@@ -394,6 +398,7 @@
       "Process_BeanOpen",
       "Process_QaReportSigning"
     ],
+    "Process_TrackedWatch": [],
     "Process_UpstreamPinWatch": [
       "Process_BeanClose",
       "Process_BeanOpen",
@@ -406,6 +411,7 @@
       "Process_OptionsAnalysis"
     ],
     "Process_ArchimatePublish": [],
+    "Process_HarnessRendering": [],
     "Process_IngestTheme": [
       "Process_ThemeUIReview"
     ],
@@ -430,7 +436,7 @@
     "Process_DocumentAuthoring": [
       "Process_BeanClose",
       "Process_BeanOpen",
-      "Process_ContributorFeedback"
+      "Process_FolioReviewPublish"
     ],
     "Process_ContentChangeReviewCommittee": [
       "Process_Adjudication",
@@ -474,6 +480,12 @@
       "Process_OptionsAnalysis"
     ],
     "Process_EvidenceRetrieval": [],
+    "Process_FolioReviewPublish": [
+      "Process_ContributorFeedback"
+    ],
+    "Process_GuidelineUpdates": [
+      "Process_ContentChangeReview"
+    ],
     "Process_PublicCommentChange": [
       "Process_ContentChangeReview"
     ],
@@ -482,6 +494,9 @@
     ],
     "Process_PublicComment": [
       "Process_PublicCommentChange"
+    ],
+    "Process_ReviewLogWatch": [
+      "Process_ContributorFeedback"
     ],
     "Process_DeepDocumentResearch": [],
     "Process_BuildL1Kg": [],
@@ -503,10 +518,13 @@
     "Process_BoardOpenClose": [],
     "Process_BoardPlaceNote": [],
     "Process_BoardRelocate": [],
-    "Process_AtomicMassDrift": [],
+    "Process_AtomicMassDrift": [
+      "Process_GeneratedFileDrift"
+    ],
     "Process_PaperAuthoring": [
       "Process_BeanClose",
-      "Process_BeanOpen"
+      "Process_BeanOpen",
+      "Process_FolioReviewPublish"
     ],
     "Process_LeanDocsPublish": [],
     "Process_DIIG": [
@@ -517,6 +535,9 @@
     "Process_ClassifyAndCodeContent": [],
     "Process_DakL3Ig": [
       "Process_L3Fhir"
+    ],
+    "Process_DthAuthoring": [
+      "Process_L2ComponentEditReview"
     ],
     "Process_L2ComponentEditReview": [
       "Process_Review"

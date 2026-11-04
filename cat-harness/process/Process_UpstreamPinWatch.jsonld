@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Watching a pinned upstream dependency",
       "summary": "Has a pinned upstream dependency fallen behind a release: check each pin, keep one tracking issue, and enter the adoption subprocess for each dependency that is behind.",
       "description": "Has a pinned upstream dependency fallen behind a release: check each pin, keep one tracking issue, and enter the adoption subprocess for each dependency that is behind. THE WATCHER'S DISPATCH POINT, drawn rather than described. Bean `29ij` records the rule this follows: a watcher fires on specific events, and those events are process events — they belong in a diagram, not in prose that no tool reads.\n\nEverything up to the tracking issue is MECHANICAL and sits in a system lane: read the registry, list upstream's releases, compare, and maintain ONE issue. No step here exercises judgement, which is what makes `build-pipeline` the correct lane rather than a convenient one.\n\nThree outcomes and the middle one is the point. Current closes the issue; behind opens or edits it; COULD NOT TELL leaves the issue exactly as it is and fails the job, because a watchdog that has gone blind must not read as good news — `check-ci-health.ts`'s rule, and the reason this repository has a watchdog at all.\n\nThe adoption itself is a call activity, so the judgement half lives in its own reusable process and this one stays free of it.",
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Start_Sweep",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Task_ReadPins",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Task_ReadPins",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Task_QueryUpstream",
@@ -48,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Task_QueryUpstream",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/GW_Determined",
@@ -56,7 +50,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/GW_Determined",
@@ -65,7 +59,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/GW_Determined",
@@ -74,7 +68,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/GW_Stale",
@@ -83,7 +77,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Task_CloseIssue",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/End_Current",
@@ -91,7 +85,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/GW_Stale",
@@ -100,7 +94,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Task_TrackIssue",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Call_BeanOpen",
@@ -108,7 +102,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/A_PickUp",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Call_Adopt",
@@ -116,7 +110,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Call_Adopt",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Call_BeanClose",
@@ -124,7 +118,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_Bean_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "claimed",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/GW_BeanYours",
@@ -133,7 +127,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_Bean_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Call_BeanOpen",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/GW_BeanYours",
@@ -141,7 +135,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_Bean_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "not yours",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/GW_BeanYours",
@@ -150,7 +144,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch#flow/SF_Bean_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Call_BeanClose",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/End_Handled",

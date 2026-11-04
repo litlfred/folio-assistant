@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/folio-core.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/folio-core",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#SkillPackage",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/SkillPackage",
       "name": "folio-core",
       "version": "0.1.0",
       "description": "The tool surface: MCP assembly, contract and projection, skills-and-tools, tool authoring and tool coverage. It sits in the `tools` topic and keeps the package name folio-core, which is what skill_fetch takes and what `package_name` defaults to (bean pzwb). Synced into a content repo as a folio-core bundle. The knowledge-graph, library, UI, conduct, process, authoring and SDLC skills moved into their topics (bean 9umr).",

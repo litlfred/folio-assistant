@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Open the bean",
       "summary": "The opening half of every bean's life: check before you create, find out whose it is, and claim it before any work starts — or leave it alone when it is someone else's.",
       "description": "The opening half of every bean's life: check before you create, find out whose it is, and claim it before any work starts — or leave it alone when it is someone else's. Called, never run on its own: the caller is the process about to do the work, and it calls this where the bean becomes its own.\n\nThe caller's own gateway reads which end this reached. `Claimed` means the bean is in progress and the caller works it; `not yours` means a sibling holds it, nothing was written, and the caller stops. Process_BeanClose is the other half, called before each end the caller reaches after a claim.",
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen#flow/BO_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Start",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_CheckExists",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen#flow/BO_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_CheckExists",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Exists",
@@ -48,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen#flow/BO_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Exists",
@@ -57,7 +51,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen#flow/BO_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Exists",
@@ -66,7 +60,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen#flow/BO_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "someone else's",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Owner",
@@ -75,7 +69,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen#flow/BO_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_LeaveAlone",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_NotYours",
@@ -83,7 +77,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen#flow/BO_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "mine / unclaimed",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Owner",
@@ -92,7 +86,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen#flow/BO_8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Create",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Claim",
@@ -100,7 +94,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen#flow/BO_9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Claim",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Claimed",

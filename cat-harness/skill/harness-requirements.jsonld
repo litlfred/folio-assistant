@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-requirements.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-requirements",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Skill",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "harness-requirements",
       "title": "Harness requirements — what an instance owes for what it declares",
       "description": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph typology, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",

@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Alert the publication manager",
       "summary": "One alert for every failure after the publish button — an incomplete export, a failed verification, a failed deploy, a lost preview — kept as a single tracking issue for the publication manager and closed by the next clean publish.",
       "description": "One alert for every failure after the publish button — an incomplete export, a failed verification, a failed deploy, a lost preview — kept as a single tracking issue for the publication manager and closed by the next clean publish. Owner, 2026-09-23: \"there is another alert needed for deployment failure. every step post 'push the publish button' should be same\". So this is ONE alert, called from every failure edge after the publish button — an incomplete export, a verification failure, a failed deploy, a lost preview — and it reaches the role that already owns the release: the publication manager.",
@@ -32,7 +26,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert#flow/F_1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/Start_Failed",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/A_Label",
@@ -40,7 +34,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert#flow/F_2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/A_Label",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/GW_Open",
@@ -48,7 +42,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert#flow/F_3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/GW_Open",
@@ -57,7 +51,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert#flow/F_4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/GW_Open",
@@ -66,7 +60,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert#flow/F_5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/A_Open",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/U_Triage",
@@ -74,7 +68,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert#flow/F_6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/A_Comment",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/U_Triage",
@@ -82,7 +76,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert#flow/F_7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/U_Triage",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert/node/End_Triaged",

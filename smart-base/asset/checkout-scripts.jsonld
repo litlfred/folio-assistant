@@ -3,16 +3,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/smart-base/asset/checkout-scripts.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
   "sameAs": "http://smart.who.int/base/asset/checkout-scripts.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/asset/checkout-scripts",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Asset",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Asset",
       "name": "checkout-scripts",
       "path": "package.json",
       "assetRole": "checkout-scripts",

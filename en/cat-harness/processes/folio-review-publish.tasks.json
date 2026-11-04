@@ -1,0 +1,199 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_FolioReviewPublish",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish",
+ "tasks": {
+  "Task_Review": {
+   "id": "Task_Review",
+   "name": "Review and record feedback",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Review",
+   "lane": "Reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Reviewer",
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../reference/skill-instructions/content-review.html"
+    },
+    {
+     "name": "staging-review",
+     "href": "../../../reference/skill-instructions/staging-review.html"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../reference/skill-instructions/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../reference/skill-instructions/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../reference/skill-instructions/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../reference/skill-instructions/narrative-asserts-code.html"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../reference/skill-instructions/rendered-impact.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../reference/skill-instructions/visual-diff.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../reference/skill-instructions/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_Publish": {
+   "id": "Task_Publish",
+   "name": "Publish",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Publish",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../reference/skill-instructions/content-publish.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Call_ContributorFeedback": {
+   "id": "Call_ContributorFeedback",
+   "name": "Contributor feedback",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Call_ContributorFeedback",
+   "lane": "Authoring Committee",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Committee",
+   "skills": [
+    {
+     "name": "review-sheet-script",
+     "href": "../../../reference/skill-instructions/review-sheet-script.html"
+    }
+   ],
+   "calls": {
+    "name": "Contributor feedback on a working draft",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
+    "diagram": "contributor-feedback.html"
+   },
+   "role": {
+    "name": "authoring-committee",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-committee",
+    "title": "Authoring Committee",
+    "skills": [
+     {
+      "name": "review-sheet-script",
+      "href": "../../../reference/skill-instructions/review-sheet-script.html"
+     }
+    ]
+   }
+  }
+ }
+}

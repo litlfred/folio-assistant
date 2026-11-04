@@ -2,22 +2,16 @@
   "@context": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/who-iris/who-iris.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#ProcessNode",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Store bytes under SHA-256 (skip if held)",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
-      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-r2-cdn",
-      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_CfStore",
+      "performedBy": "https://litlfred.github.io/folio-assistant/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
       "requires": [
         "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
       ],

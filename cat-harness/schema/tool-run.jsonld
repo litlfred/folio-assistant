@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-run.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-run",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns#Schema",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "tool-run",
       "title": "tool-run",
       "summary": "A TOOL RUN RECORD — did the downstream tool run, did it succeed, and over",

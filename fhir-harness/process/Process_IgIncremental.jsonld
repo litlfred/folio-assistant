@@ -2,16 +2,10 @@
   "@context": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.context.jsonld",
   "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
-  "staging": {
-    "branch": "main",
-    "sha": "aff8bfa0c89bee023e19cc129f430ed51ab8ea8d",
-    "pr": "main",
-    "run": "41321010741"
-  },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#Process",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Incremental IG build",
       "summary": "A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy.",
       "description": "A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy. One change — a PR push or a push to main — through the incremental IG build\nproposed in issue #199: restore the derived state, compute\nthe change's dependency cone, compile and validate only the cone against the\nwarm validator, re-render the cone's records, rebuild the meta-index, assemble\nthe site, gate on QA, then deploy — and, on main or a release only, seed the\ncache from the green build. A cache miss or a moved toolchain falls back to\ntoday's full build; an environment error stops the run and logs why. Advisory, like the other content-type pipelines: the\npackage that owns the content owns what adequate means.",
@@ -28,7 +22,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F01",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/StartEvent_SourceChanged",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Restore",
@@ -36,7 +30,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F02",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Restore",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_Restore",
@@ -44,7 +38,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F03",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_Restore",
@@ -53,7 +47,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F04",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_Restore",
@@ -62,7 +56,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F04E",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "environment error",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_Restore",
@@ -71,7 +65,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F04F",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_LogEnvError",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/EndEvent_EnvError",
@@ -79,7 +73,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F05",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Cone",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ConeReport",
@@ -87,7 +81,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F06",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ConeReport",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Checkout",
@@ -95,7 +89,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F07",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Checkout",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Sushi",
@@ -103,7 +97,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F08",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Sushi",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ContextLoad",
@@ -111,7 +105,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F09",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_ContextLoad",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Validate",
@@ -119,7 +113,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Validate",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_Valid",
@@ -127,7 +121,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_Valid",
@@ -136,7 +130,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_LogFindings",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/EndEvent_Findings",
@@ -144,7 +138,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_Valid",
@@ -153,7 +147,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F14",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Render",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Merge",
@@ -161,7 +155,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F15",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Merge",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Index",
@@ -169,7 +163,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F16",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Index",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Site",
@@ -177,7 +171,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F17",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Site",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Qa",
@@ -185,7 +179,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F18",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_FullBuild",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Qa",
@@ -193,7 +187,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F19",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Qa",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_QcPass",
@@ -201,7 +195,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F20",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "no",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_QcPass",
@@ -210,7 +204,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F21",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_QcBeans",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/EndEvent_FindingsQc",
@@ -218,7 +212,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F22",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_QcPass",
@@ -227,7 +221,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F23",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "PR branch",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_Path",
@@ -236,7 +230,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F24",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_DeployPreview",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/EndEvent_Preview",
@@ -244,7 +238,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F25",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "main / release",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Gateway_Path",
@@ -253,7 +247,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F26",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Deploy",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Seed",
@@ -261,7 +255,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F27",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns#SequenceFlow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Seed",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/EndEvent_Published",
