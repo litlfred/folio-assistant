@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/schema/ref-window.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-who-iris-uploads",
+    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
+    "pr": "claude/repin-tools-who-iris-uploads",
+    "run": "41911737609"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/schema/ref-window",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "ref-window",
+      "title": "ref-window",
+      "summary": "A COALESCING WINDOW over a watched ref — the writes a steward batched into",
+      "module": "schemas/sdlc/ref-window.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ref-window"
+    }
+  ]
+}

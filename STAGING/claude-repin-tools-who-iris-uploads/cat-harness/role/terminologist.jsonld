@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/role/terminologist.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-who-iris-uploads",
+    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
+    "pr": "claude/repin-tools-who-iris-uploads",
+    "run": "41911737609"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/role/terminologist",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Terminologist",
+      "title": "Terminologist",
+      "notation": "terminologist",
+      "description": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/skill/code-lists",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/skill/vocabulary-authority"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist"
+    }
+  ]
+}

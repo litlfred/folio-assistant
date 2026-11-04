@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/decision/subgraph-declared-gate/Decision_SubgraphDeclaredGate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-who-iris-uploads",
+    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
+    "pr": "claude/repin-tools-who-iris-uploads",
+    "run": "41911737609"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/decision/subgraph-declared-gate/Decision_SubgraphDeclaredGate",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Decision",
+      "name": "Declared in place?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/kg/decisions/subgraph-declared-gate.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/subgraph-declared-gate/Decision_SubgraphDeclaredGate"
+    }
+  ]
+}

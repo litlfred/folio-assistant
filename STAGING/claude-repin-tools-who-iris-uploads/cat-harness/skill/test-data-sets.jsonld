@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/skill/test-data-sets.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-who-iris-uploads",
+    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
+    "pr": "claude/repin-tools-who-iris-uploads",
+    "run": "41911737609"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/skill/test-data-sets",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "test-data-sets",
+      "title": "Test Data Sets & SME Case/Verdict Review",
+      "description": "Curating fixed (committed, cited, SME-reviewed) and generated (template + params + seed recipe, never stored materialised) test data sets in separately declared graph directories, with per-content-type specialisation as a called subprocess and attributable SME review of decision support and indicator definitions.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/test-data-sets.md",
+      "instructionLines": 87,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets"
+    }
+  ]
+}

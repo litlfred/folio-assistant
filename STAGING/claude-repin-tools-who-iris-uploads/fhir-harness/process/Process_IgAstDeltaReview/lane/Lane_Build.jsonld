@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_Build.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_Build.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-who-iris-uploads",
+    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
+    "pr": "claude/repin-tools-who-iris-uploads",
+    "run": "41911737609"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_Build",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Incremental build (system)",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    }
+  ]
+}

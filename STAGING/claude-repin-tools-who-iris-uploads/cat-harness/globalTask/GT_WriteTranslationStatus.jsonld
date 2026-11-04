@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/globalTask/GT_WriteTranslationStatus.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-who-iris-uploads",
+    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
+    "pr": "claude/repin-tools-who-iris-uploads",
+    "run": "41911737609"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/globalTask/GT_WriteTranslationStatus",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Task",
+      "name": "Write status.json",
+      "summary": "Record the translation's standing in translations/<locale>/status.json.",
+      "description": "Record the translation's standing in translations/<locale>/status.json. The `official` input says which: `false` records it as unofficial ({ official: false, generatedBy, generatedAt }), usable but shown with a warning badge; `true` records the human sign-off with the SHA-256 of the source .md, so a later change to the source marks it stale.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/skill/translation-manager"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_WriteTranslationStatus"
+    }
+  ]
+}

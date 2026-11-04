@@ -1,0 +1,42 @@
+{
+  "$ref": "#/definitions/GraphExportTombstone",
+  "definitions": {
+    "GraphExportTombstone": {
+      "type": "object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "deprecated": {
+          "type": "boolean",
+          "const": true
+        },
+        "isReplacedBy": {
+          "type": "string",
+          "format": "uri"
+        },
+        "sameAs": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "@id",
+        "deprecated",
+        "isReplacedBy",
+        "sameAs"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/bootstrap-tools/schema/zod/graph-export/GraphExportTombstoneSchema.schema.json",
+  "title": "GraphExportTombstoneSchema",
+  "description": "Generated from `GraphExportTombstoneSchema` in schemas/graph-export.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-who-iris-uploads",
+    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
+    "pr": "claude/repin-tools-who-iris-uploads",
+    "run": "41911737609"
+  }
+}

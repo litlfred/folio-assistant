@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-who-iris-uploads",
+    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
+    "pr": "claude/repin-tools-who-iris-uploads",
+    "run": "41911737609"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Site Publisher",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/bootstrap-tools/role/site-publisher",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/bootstrap-tools/directory/bootstrap-tools-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher"
+    }
+  ]
+}
