@@ -400,6 +400,8 @@ export interface PullInfo {
   head: { sha: string; ref: string; repo: { full_name: string } | null };
   labels: Array<{ name: string }>;
   mergeable?: boolean | null;
+  // Read only to word a refusal: it can go stale (bean fx5r), and `unknown`
+  // means not computed yet (h2s9). The merge itself relies on the PUT's sha.
   mergeable_state?: string;
 }
 
@@ -430,6 +432,8 @@ export async function mergeTrain(
   if (pr.state !== "open") return { merged: false, why: `the PR is ${pr.state}` };
   if (!isOwnTrain(pr, repo)) return { merged: false, why: "not a train branch of this repository" };
   if (pr.head.sha !== sha) return { merged: false, why: `its head moved to ${pr.head.sha.slice(0, 10)} after ${sha.slice(0, 10)} was judged` };
+  // `mergeable_state` only labels the refusal; it can be stale (fx5r), and
+  // the PUT below re-checks the head sha itself.
   if (pr.mergeable !== true) return { merged: false, why: `GitHub does not call it mergeable (${pr.mergeable_state ?? "unknown"})` };
   try {
     await api.send("PUT", `/repos/${repo}/pulls/${number}/merge`, {

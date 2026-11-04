@@ -177,6 +177,7 @@ const pull = (over: Partial<PullInfo> = {}): PullInfo => ({
   head: { sha: SHA, ref: "repin-train/20261103-1017", repo: { full_name: REPO } },
   labels: [{ name: "repin-train" }],
   mergeable: true,
+  // A fixture value; the live field can be stale (bean fx5r).
   mergeable_state: "clean",
   ...over,
 });
@@ -219,6 +220,7 @@ describe("a green train merges itself", () => {
       pull({ head: { sha: SHA, ref: "repin-train/x", repo: { full_name: "someone/fork" } } }),
       pull({ head: { sha: SHA, ref: "feature/x", repo: { full_name: REPO } } }),
       pull({ labels: [] }),
+      // only `dirty` is trusted as a refusal (yv4z):
       pull({ mergeable: false, mergeable_state: "dirty" }),
       pull({ mergeable: null }),
     ]) {
