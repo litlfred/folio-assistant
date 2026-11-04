@@ -474,7 +474,7 @@ jobs:
         # here (511 s of this step's 817 s on job 124708101507). Its
         # `skill:register` step re-ran nine checks, 233 s of the same build on
         # main's deploy (job 124653530529). The
-        # PR's own `Repository gates` run `skill:register:check`, which asks
+        # PR's own `Skill-registration chain` job runs `skill:register:check`, which asks
         # every one of them over the same tree, so the preview leaves them to it
         # (CAT_SKILL_REGISTER_VERIFIED_BY_GATES, as layer-pr-checks does since
         # 2026-10-23). The preview's skill-register record lists them as not
