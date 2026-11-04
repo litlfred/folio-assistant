@@ -293,6 +293,20 @@
     ]
   },
   {
+    &quot;id&quot;: &quot;attestations&quot;,
+    &quot;path&quot;: &quot;test/attestations/&quot;,
+    &quot;_source_comment&quot;: &quot;MOUNTED, owner 2026-11-03 (\&quot;1. Convert to attestations\&quot;, bean folio-assistant-7mwa). The attestations kind holds state, so its content is kept on its own per-graph branch (check:state-on-main) and mounted at this path by `bun run cat state:mount`; main never tracks it, because `mountTip` refuses a path the checkout still tracks.&quot;,
+    &quot;source&quot;: {
+      &quot;kind&quot;: &quot;branch&quot;,
+      &quot;branch&quot;: &quot;cat/who-iris/attestations&quot;,
+      &quot;keyedBy&quot;: &quot;tip&quot;
+    },
+    &quot;description&quot;: &quot;The JUDGEMENT half of this instance&#39;s QA, on main (the qa-reports skill: derived verdicts go to the qa-reports branch, judgements stay here). Today: the untainted round-trip translation rulings of who-iris&#39;s own catalogues, one qa-attestations/v1 file per catalogue and locale under translation-qa/ (criterion translation-semantic-roundtrip), each string&#39;s ruling pinned by the hashes of the msgid and msgstr it judged. Converted losslessly on 2026-11-03 from the agents&#39; TSVs that sat under test/results/ (owner: \&quot;1. Convert to attestations\&quot;; bean folio-assistant-7mwa), so that untracking the derived results could not lose them. scripts/translation-roundtrip-report.ts derives its qa-results/v1 report from them.&quot;,
+    &quot;graphTypologies&quot;: [
+      &quot;attestations&quot;
+    ]
+  },
+  {
     &quot;id&quot;: &quot;folio&quot;,
     &quot;path&quot;: &quot;folio/&quot;,
     &quot;graphTypologies&quot;: [

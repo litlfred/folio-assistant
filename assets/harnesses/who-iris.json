@@ -5,7 +5,7 @@
     "position": "complete",
     "next": null,
     "counts": {
-      "done": 25,
+      "done": 26,
       "not-done": 0,
       "could-not-determine": 3,
       "stated": 0
@@ -131,6 +131,13 @@
         "detail": "holds qa"
       },
       {
+        "id": "directory:attestations",
+        "namedBy": "who-iris",
+        "what": "declared directory test/attestations/ exists",
+        "state": "done",
+        "detail": "holds attestations"
+      },
+      {
         "id": "directory:folio",
         "namedBy": "who-iris",
         "what": "declared directory folio/ exists",
@@ -221,8 +228,8 @@
       },
       {
         "id": "repository",
-        "state": "finding",
-        "label": "repository health: findings"
+        "state": "unknown",
+        "label": "repository health: unknown"
       }
     ]
   }

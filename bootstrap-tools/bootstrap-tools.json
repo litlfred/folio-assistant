@@ -362,10 +362,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-04T13:40:57.481Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/61ea19720b798370ae3db9438281f399b761c614",
-  "sourceCommitSha": "61ea19720b798370ae3db9438281f399b761c614",
-  "sourceCommitAt": "2026-11-04T14:25:12+01:00",
+  "generatedAt": "2026-11-04T21:13:06.933Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7bfe2cc1d3f298b9628ea2cb327b081e2471eb71",
+  "sourceCommitSha": "7bfe2cc1d3f298b9628ea2cb327b081e2471eb71",
+  "sourceCommitAt": "2026-11-04T21:58:08+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -380,19 +380,6 @@
     "Asset": 2
   },
   "@graph": [
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/render-kg-to-github-pages",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
-      "name": "render-kg-to-github-pages",
-      "title": "Render a Knowledge Graph to GitHub Pages",
-      "description": "Render a Knowledge Graph, or a list of its Subgraphs, to GitHub Pages at a publication root URL, and report the push: a status (pushed, not pushed, could not determine) and one message carrying the deployed commit and the QA result. The same steps for a staging preview and for a release; only the root URL differs.",
-      "instructionsPath": "skills/render-kg-to-github-pages.md",
-      "instructionLines": 97,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-skills"
-    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/github-pages",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
@@ -414,6 +401,19 @@
       "description": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one.",
       "instructionsPath": "skills/bootstrap-contract-semver.md",
       "instructionLines": 108,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/render-kg-to-github-pages",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "render-kg-to-github-pages",
+      "title": "Render a Knowledge Graph to GitHub Pages",
+      "description": "Render a Knowledge Graph, or a list of its Subgraphs, to GitHub Pages at a publication root URL, and report the push: a status (pushed, not pushed, could not determine) and one message carrying the deployed commit and the QA result. The same steps for a staging preview and for a release; only the root URL differs.",
+      "instructionsPath": "skills/render-kg-to-github-pages.md",
+      "instructionLines": 97,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
