@@ -11,14 +11,15 @@
         "declaredIn": "default",
         "kind": "directory"
       },
-      "description": "The authoring-who-smart-guidelines skill package, its skill definitions and the two WHO voices; `skills/skills.json` declares the subgroups. Declared at the cutover (bean hupw), under the id the skill docs already used for it, so a remote mount brings it.",
+      "description": "The authoring-who-smart-guidelines skill package, its skill definitions and the two WHO voices; `skills/skills.json` declares the subgroups.",
       "fileCount": 0,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
       ],
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
       "name": "smart-base-skills",
-      "path": "skills/"
+      "path": "skills/",
+      "readmePath": "skills/README.md"
     }
   ],
   "hasSubgraph": [
@@ -34,19 +35,19 @@
               "@id": "http://smart.who.int/base/skill/classify-and-code-content",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Classify and code L1 narrative content (recommendations, implementation practices, remarks, and proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, and GRADE ratings) using the `terminology-coding` methodology and the `terminology-lookup` Tool. Covers the authoring-agent's four-rung reuse-first lookup, the `l1-extraction-reviewer` lane for reading and signing proposed L1 coverage exclusions against the printed page (owner ruling 3b, 2026-10-12), and the `terminologist` / ontologist reviewer lane for adjudicating candidate codings and local glossary candidates.",
+              "description": "Classify and code L1 narrative content (recommendations, implementation practices, remarks, and proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, and GRADE ratings) using the `terminology-coding` methodology and the `terminology-lookup` Tool. Covers the authoring-agent's four-rung reuse-first lookup, the `l1-extraction-reviewer` lane that reads and signs proposed L1 coverage exclusions against the printed page, and the `terminologist` / ontologist lane that adjudicates candidate codings and local glossary candidates.",
               "hasIOContract": true,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
               "inputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/input.schema.json",
-              "instructionLines": 159,
+              "instructionLines": 137,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/classify-and-code-content.md",
               "name": "classify-and-code-content",
               "outputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/12dd69b259ae16a772068b03285983ebe00d8253a89e5fae746fe6fba6aff18d",
-                "bytes": 8690,
-                "sha256": "12dd69b259ae16a772068b03285983ebe00d8253a89e5fae746fe6fba6aff18d"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/039d91d9c32e6143dd71ecb0c2ccff3cda81d747292e78edcbc674072e88e26a",
+                "bytes": 7099,
+                "sha256": "039d91d9c32e6143dd71ecb0c2ccff3cda81d747292e78edcbc674072e88e26a"
               },
               "title": "classify-and-code-content"
             },
@@ -59,14 +60,14 @@
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
               "inputSchema": "http://smart.who.int/base/schema/skills/dak-l1-library/input.schema.json",
-              "instructionLines": 185,
+              "instructionLines": 177,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-l1-library.md",
               "name": "dak-l1-library",
               "outputSchema": "http://smart.who.int/base/schema/skills/dak-l1-library/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ff04dea66a9d7f9601f08979b1597fa8cc5a5a8219d82033ed091d96e2f6deff",
-                "bytes": 10933,
-                "sha256": "ff04dea66a9d7f9601f08979b1597fa8cc5a5a8219d82033ed091d96e2f6deff"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/de6f071f4ce144bac86178485ea96022ac405c53d21027a0ffe231045fea1ae6",
+                "bytes": 10341,
+                "sha256": "de6f071f4ce144bac86178485ea96022ac405c53d21027a0ffe231045fea1ae6"
               },
               "title": "dak-l1-library"
             },
@@ -74,17 +75,17 @@
               "@id": "http://smart.who.int/base/skill/dak-postprocessing",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "What the DAK post-processing phase accomplishes after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge that is the seam the just-the-docs transition cuts at. Read before changing a post-processing step, and before assuming the Publisher produced something it did not.",
+              "description": "What the DAK post-processing phase produces after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge — and how an IG repository's own site gets the same sidecars from the cached AST (`ig-site:sidecars`). Read before changing a post-processing step, and before assuming the Publisher produced something it did not.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 241,
+              "instructionLines": 189,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
               "name": "dak-postprocessing",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4e1794819e693e3eeee2ea7e098b3805a83337f2ed6565618ff8dfbf1f96a2cf",
-                "bytes": 13015,
-                "sha256": "4e1794819e693e3eeee2ea7e098b3805a83337f2ed6565618ff8dfbf1f96a2cf"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e136e72c4eafb468830d32f6a8d53315bd49391025e4b9ce8ed6206c442dbfb8",
+                "bytes": 9841,
+                "sha256": "e136e72c4eafb468830d32f6a8d53315bd49391025e4b9ce8ed6206c442dbfb8"
               },
               "title": "dak-postprocessing"
             },
@@ -92,17 +93,17 @@
               "@id": "http://smart.who.int/base/skill/dak-preprocessing",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index — and how it runs as the overlay on fhir-harness's AST cache refresh (`dak-pre-export.sh`). Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer.",
+              "description": "What each DAK pre-processing step does before the IG Publisher runs, which steps exist only to feed the Publisher's page index, and how the phase runs as the overlay on fhir-harness's AST cache refresh (`dak-pre-export.sh`). Also which files in a DAK repository are authored and which are generated, and the SEMVER rule for DAK and IG versions. Read before changing, assuming or moving a pre-processing step.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 267,
+              "instructionLines": 224,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-preprocessing.md",
               "name": "dak-preprocessing",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d3e1dc439f7455b48c201efa513a4c66017b0f32ebbfe1b057b6fb59feb62c50",
-                "bytes": 19373,
-                "sha256": "d3e1dc439f7455b48c201efa513a4c66017b0f32ebbfe1b057b6fb59feb62c50"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c179e9e252aaa90e2db021f00555372acde6e01b8ea15e1f41f4c95f9168c7b2",
+                "bytes": 15925,
+                "sha256": "c179e9e252aaa90e2db021f00555372acde6e01b8ea15e1f41f4c95f9168c7b2"
               },
               "title": "dak-preprocessing"
             },
@@ -114,13 +115,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 94,
+              "instructionLines": 87,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/dth-authoring.md",
               "name": "dth-authoring",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9a8b8fe560459b405140299867d7456beb7c8f13acfbffade182c8fcb7555f71",
-                "bytes": 5128,
-                "sha256": "9a8b8fe560459b405140299867d7456beb7c8f13acfbffade182c8fcb7555f71"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5196673750ebd0f591c289eb9f12e34aa4aa391e978114a8be50a5131d0c4484",
+                "bytes": 4535,
+                "sha256": "5196673750ebd0f591c289eb9f12e34aa4aa391e978114a8be50a5131d0c4484"
               },
               "title": "dth-authoring"
             },
@@ -132,13 +133,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 142,
+              "instructionLines": 136,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/dth-l1-to-l2-ingest.md",
               "name": "dth-l1-to-l2-ingest",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/94edbd49b808052b4ce8304394123c3a9d01f8e64f1deffedc860e202c674fe0",
-                "bytes": 8039,
-                "sha256": "94edbd49b808052b4ce8304394123c3a9d01f8e64f1deffedc860e202c674fe0"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f695237bd9025d647173305d14e6d38930c8b69082891077ebe2c9b135941fcd",
+                "bytes": 7446,
+                "sha256": "f695237bd9025d647173305d14e6d38930c8b69082891077ebe2c9b135941fcd"
               },
               "title": "dth-l1-to-l2-ingest"
             },
@@ -150,13 +151,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 109,
+              "instructionLines": 94,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/grade.md",
               "name": "grade",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3cadbb7825a8c58bd18c095434846840646e8b2e29f7e3e25abe0b4dc7b007e2",
-                "bytes": 5762,
-                "sha256": "3cadbb7825a8c58bd18c095434846840646e8b2e29f7e3e25abe0b4dc7b007e2"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0563cb0710e4fb8954e9a26cc0f296d450b70b628dcb9c05d1a7dba0df0d853f",
+                "bytes": 4790,
+                "sha256": "0563cb0710e4fb8954e9a26cc0f296d450b70b628dcb9c05d1a7dba0df0d853f"
               },
               "title": "grade"
             },
@@ -169,14 +170,14 @@
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
               "inputSchema": "http://smart.who.int/base/schema/skills/guideline-use-case/input.schema.json",
-              "instructionLines": 56,
+              "instructionLines": 55,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/guideline-use-case.md",
               "name": "guideline-use-case",
               "outputSchema": "http://smart.who.int/base/schema/skills/guideline-use-case/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eb75b436c787440c4b118d19b99154c82c17b194a39222154fb6650ae032a089",
-                "bytes": 2796,
-                "sha256": "eb75b436c787440c4b118d19b99154c82c17b194a39222154fb6650ae032a089"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/77f465d8179fdf48bf64c30ced0ee17c12f8d6607ae248f4d022fd8548cdeaf2",
+                "bytes": 2691,
+                "sha256": "77f465d8179fdf48bf64c30ced0ee17c12f8d6607ae248f4d022fd8548cdeaf2"
               },
               "title": "guideline-use-case"
             },
@@ -187,13 +188,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 267,
+              "instructionLines": 176,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
               "name": "ig-artifact-ingestion",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/05a3ef18b25b423fa38acd5fa941e3375e50b0dec3bd0e30db20ceb05e21764b",
-                "bytes": 13665,
-                "sha256": "05a3ef18b25b423fa38acd5fa941e3375e50b0dec3bd0e30db20ceb05e21764b"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/36d7b624059066eed4e6ddef4f2717bb466c537744560c76a9013198923f9938",
+                "bytes": 8672,
+                "sha256": "36d7b624059066eed4e6ddef4f2717bb466c537744560c76a9013198923f9938"
               },
               "title": "ig-artifact-ingestion"
             },
@@ -206,14 +207,14 @@
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
               "inputSchema": "http://smart.who.int/base/schema/skills/indicator-extraction/input.schema.json",
-              "instructionLines": 112,
+              "instructionLines": 107,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/indicator-extraction.md",
               "name": "indicator-extraction",
               "outputSchema": "http://smart.who.int/base/schema/skills/indicator-extraction/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3329ae948aff3701f8c3b2fd6063b55454daa80b3f6870a037e4e1fcb5135939",
-                "bytes": 5965,
-                "sha256": "3329ae948aff3701f8c3b2fd6063b55454daa80b3f6870a037e4e1fcb5135939"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d06bbd07d39f2669dab633fb24c24c0f2a605e2d02370fe574592473cf1f9a02",
+                "bytes": 5548,
+                "sha256": "d06bbd07d39f2669dab633fb24c24c0f2a605e2d02370fe574592473cf1f9a02"
               },
               "title": "indicator-extraction"
             },
@@ -225,13 +226,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 116,
+              "instructionLines": 108,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-component-edit-review.md",
               "name": "l2-component-edit-review",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/78350cc727b6b43279ad6a9c4fa4d9fe9d679d77a79a90cf8f548761b7012ea7",
-                "bytes": 8633,
-                "sha256": "78350cc727b6b43279ad6a9c4fa4d9fe9d679d77a79a90cf8f548761b7012ea7"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8f363f9ff59d78075bb0c6f5ffda3d2d096ab53e98992c4bb199a8becf9e81ff",
+                "bytes": 8170,
+                "sha256": "8f363f9ff59d78075bb0c6f5ffda3d2d096ab53e98992c4bb199a8becf9e81ff"
               },
               "title": "l2-component-edit-review"
             },
@@ -244,14 +245,14 @@
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
               "inputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/input.schema.json",
-              "instructionLines": 110,
+              "instructionLines": 98,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-dak-authoring.md",
               "name": "l2-dak-authoring",
               "outputSchema": "http://smart.who.int/base/schema/skills/l2-dak-authoring/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/26e5cc63e2ec62792bce6d60dff17b679ea4a5ea1fce3b4e17d45280a08b76b6",
-                "bytes": 6291,
-                "sha256": "26e5cc63e2ec62792bce6d60dff17b679ea4a5ea1fce3b4e17d45280a08b76b6"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e6da89419ffa4625a6e7d24790ba1209f6729394933f9d5309f2a43c71833319",
+                "bytes": 5374,
+                "sha256": "e6da89419ffa4625a6e7d24790ba1209f6729394933f9d5309f2a43c71833319"
               },
               "title": "l2-dak-authoring"
             },
@@ -264,14 +265,14 @@
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
               "inputSchema": "http://smart.who.int/base/schema/skills/l2-dependency-choice/input.schema.json",
-              "instructionLines": 72,
+              "instructionLines": 69,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/l2-dependency-choice.md",
               "name": "l2-dependency-choice",
               "outputSchema": "http://smart.who.int/base/schema/skills/l2-dependency-choice/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8fbd99de839659cea58670f09dda66b865aa40195cd2d8468385200792267396",
-                "bytes": 4940,
-                "sha256": "8fbd99de839659cea58670f09dda66b865aa40195cd2d8468385200792267396"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1021acfa5fe8e56a2e6e4ee2131345039c5472a6041d2703734a42907f163ed9",
+                "bytes": 4760,
+                "sha256": "1021acfa5fe8e56a2e6e4ee2131345039c5472a6041d2703734a42907f163ed9"
               },
               "title": "l2-dependency-choice"
             },
@@ -289,9 +290,9 @@
               "name": "l3-dependency-choice",
               "outputSchema": "http://smart.who.int/base/schema/skills/l3-dependency-choice/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/18fa21d4720c75dd9dda58ed1d8b2076e5390b14083fcbe46b3b8ec30697892e",
-                "bytes": 2884,
-                "sha256": "18fa21d4720c75dd9dda58ed1d8b2076e5390b14083fcbe46b3b8ec30697892e"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ca9d992daa1251b72aaf6db7a5749088045742d04c2a58c0fa2106e978d2e19b",
+                "bytes": 2881,
+                "sha256": "ca9d992daa1251b72aaf6db7a5749088045742d04c2a58c0fa2106e978d2e19b"
               },
               "title": "l3-dependency-choice"
             },
@@ -304,14 +305,14 @@
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
               "inputSchema": "http://smart.who.int/base/schema/skills/l3-readiness/input.schema.json",
-              "instructionLines": 60,
+              "instructionLines": 58,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/l3-readiness.md",
               "name": "l3-readiness",
               "outputSchema": "http://smart.who.int/base/schema/skills/l3-readiness/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/44d6527b0bac34beb4e8e4c50f05507ab716bbc909f627fce510f3adf19fcb11",
-                "bytes": 3345,
-                "sha256": "44d6527b0bac34beb4e8e4c50f05507ab716bbc909f627fce510f3adf19fcb11"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb41ad62a8cc221666c0da559fada9e061fa5c1ab2e00a92bb9278e590d5b6cf",
+                "bytes": 3124,
+                "sha256": "fb41ad62a8cc221666c0da559fada9e061fa5c1ab2e00a92bb9278e590d5b6cf"
               },
               "title": "l3-readiness"
             },
@@ -329,9 +330,9 @@
               "name": "l4-application-brief",
               "outputSchema": "http://smart.who.int/base/schema/skills/l4-application-brief/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c1764a263a2b250fa8655070f7b773e1a6eb94b2cf4fefdc62ec00545285c932",
-                "bytes": 2999,
-                "sha256": "c1764a263a2b250fa8655070f7b773e1a6eb94b2cf4fefdc62ec00545285c932"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2b4aa940900b2d7b2502bc774ec96687451be9603ba4d488c64515b796b91848",
+                "bytes": 3001,
+                "sha256": "2b4aa940900b2d7b2502bc774ec96687451be9603ba4d488c64515b796b91848"
               },
               "title": "l4-application-brief"
             },
@@ -349,9 +350,9 @@
               "name": "l4-application-build",
               "outputSchema": "http://smart.who.int/base/schema/skills/l4-application-build/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/238dd093fd003d80cb5b9ac29ad2c2c4ee0458b63d3e5fe2300f31bdcb255035",
-                "bytes": 2627,
-                "sha256": "238dd093fd003d80cb5b9ac29ad2c2c4ee0458b63d3e5fe2300f31bdcb255035"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a1107fb8902a7d8758ebd3fe9680debb781f091d770d6601a5cd9e2202f9e6f",
+                "bytes": 2562,
+                "sha256": "1a1107fb8902a7d8758ebd3fe9680debb781f091d770d6601a5cd9e2202f9e6f"
               },
               "title": "l4-application-build"
             },
@@ -363,13 +364,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 41,
+              "instructionLines": 37,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/l4-application-run-local.md",
               "name": "l4-application-run-local",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/628d4ef487ad097ddeff1429b0d46fadeed15eb67ec05da0258a3db7c10d0b49",
-                "bytes": 1755,
-                "sha256": "628d4ef487ad097ddeff1429b0d46fadeed15eb67ec05da0258a3db7c10d0b49"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/edc1ce2b9b7c71c819603327bc91350950b512cfd08a7c38838f822a36299458",
+                "bytes": 1545,
+                "sha256": "edc1ce2b9b7c71c819603327bc91350950b512cfd08a7c38838f822a36299458"
               },
               "title": "l4-application-run-local"
             },
@@ -387,9 +388,9 @@
               "name": "recommendation-candidates",
               "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-candidates/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8a5f4e5f58a4aa1b16b656e7f84a38df9d29fa75d93e5038fc897a2d111894aa",
-                "bytes": 2087,
-                "sha256": "8a5f4e5f58a4aa1b16b656e7f84a38df9d29fa75d93e5038fc897a2d111894aa"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b8b142b95bef8e49c670f9b6267edba3d0488f5ed8a2174f3b5686d02c715ddb",
+                "bytes": 2040,
+                "sha256": "b8b142b95bef8e49c670f9b6267edba3d0488f5ed8a2174f3b5686d02c715ddb"
               },
               "title": "recommendation-candidates"
             },
@@ -402,14 +403,14 @@
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
               "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/input.schema.json",
-              "instructionLines": 414,
+              "instructionLines": 387,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-extraction.md",
               "name": "recommendation-extraction",
               "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-extraction/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/057808d5c709c1329554a5b19365de40c921b680890f61ef3d871b2996960d66",
-                "bytes": 23579,
-                "sha256": "057808d5c709c1329554a5b19365de40c921b680890f61ef3d871b2996960d66"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/04d8e0e16f653cdf087d4fcc1dc8ece5c802f1cb45feace276d6d1e5a614fb8a",
+                "bytes": 20718,
+                "sha256": "04d8e0e16f653cdf087d4fcc1dc8ece5c802f1cb45feace276d6d1e5a614fb8a"
               },
               "title": "recommendation-extraction"
             },
@@ -422,14 +423,14 @@
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
               "inputSchema": "http://smart.who.int/base/schema/skills/recommendation-scenarios/input.schema.json",
-              "instructionLines": 44,
+              "instructionLines": 43,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/recommendation-scenarios.md",
               "name": "recommendation-scenarios",
               "outputSchema": "http://smart.who.int/base/schema/skills/recommendation-scenarios/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f4acb7acf84203be22c92ee090e0c67553c6b00720efd3341cfbe20e2c4714b",
-                "bytes": 1994,
-                "sha256": "1f4acb7acf84203be22c92ee090e0c67553c6b00720efd3341cfbe20e2c4714b"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1d5b3b7c14dbb7836a01534a4f5de7100b897260f28a5cfeaa826d4c517acb51",
+                "bytes": 1935,
+                "sha256": "1d5b3b7c14dbb7836a01534a4f5de7100b897260f28a5cfeaa826d4c517acb51"
               },
               "title": "recommendation-scenarios"
             },
@@ -440,13 +441,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 157,
+              "instructionLines": 134,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
               "name": "smart-base-tools",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9eef80562cddbda718019e54e621b0a7bc9da3b92251312bf62f39b93a972c08",
-                "bytes": 8801,
-                "sha256": "9eef80562cddbda718019e54e621b0a7bc9da3b92251312bf62f39b93a972c08"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4f691f5e6faf7b4f656ab24594de3d19480eb657f9748696bf2659d1a3b6ed86",
+                "bytes": 7251,
+                "sha256": "4f691f5e6faf7b4f656ab24594de3d19480eb657f9748696bf2659d1a3b6ed86"
               },
               "title": "smart-base Toolchain"
             },
@@ -454,17 +455,17 @@
               "@id": "http://smart.who.int/base/skill/smart-guideline-create",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus what the owner ruled for SMART guidelines during the 2026-10 separation: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK.",
+              "description": "Somebody asked for a new WHO SMART Guideline (an IG built on smart-base, or a DAK that will feed one). Specialises fhir-ig-create: the same three facts, the same numbered question with the same default (stage it inside this repository first), and the same routes, plus the SMART rules: every guideline repository instantiates smart-base identically, forks under litlfred come before any WHO repository, the identity comes from the declaration and never from the directory, and the WHO template's theme and chrome come from smart-base by `needs`, never copied. Use whenever a user asks to create, start or set up a SMART Guideline, a SMART IG, a WHO IG or a DAK.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 144,
+              "instructionLines": 133,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-create.md",
               "name": "smart-guideline-create",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a4ec78132e57afaffbafc0ffe5d8de7d3b446cf78f74b85623abb5518822173f",
-                "bytes": 8726,
-                "sha256": "a4ec78132e57afaffbafc0ffe5d8de7d3b446cf78f74b85623abb5518822173f"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a8def93732f06338cdd557da0e95f151fed706cf5b789711d522c0a46654d428",
+                "bytes": 7839,
+                "sha256": "a8def93732f06338cdd557da0e95f151fed706cf5b789711d522c0a46654d428"
               },
               "title": "smart-guideline-create"
             },
@@ -472,19 +473,19 @@
               "@id": "http://smart.who.int/base/skill/smart-guideline-end-to-end",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation, as an orchestrator of ten named stage skills, each with its own input and output contract: guideline-use-case, dak-l1-library, recommendation-extraction, l2-dependency-choice, l2-dak-authoring, l3-dependency-choice, l3-fhir-authoring, l4-application-brief, wireframe-design-review and l4-application-build. Each stage's output is the next stage's input. Human adjudication follows every stage, as QA and never as a gate: the agent goes on to the next stage while the last one is reviewed. The ORDER of the stages is a rule, though: no L3 asset before the L1 extraction and the L2 assets it derives from exist and their review has been requested. Read before starting any end-to-end authoring or adaptation, and to find which skill runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task.",
+              "description": "The whole road from a use case to a running application on WHO SMART Guidelines, for a new guideline or a jurisdiction's adaptation, as an orchestrator of ten named stage skills, each with its own input and output contract: guideline-use-case, dak-l1-library, recommendation-extraction, l2-dependency-choice, l2-dak-authoring, l3-dependency-choice, l3-fhir-authoring, l4-application-brief, wireframe-design-review and l4-application-build. Each stage's output is the next stage's input. Human adjudication follows every stage as QA, not as a gate, but the order of the stages is a rule: no L3 asset before the L1 extraction and L2 assets it derives from exist with their review requested. Read before starting any end-to-end authoring or adaptation, and to find which skill runs each stage. A request to adapt a WHO guideline, DAK or IG to a country or programme (\"adapt the immunization guidelines to Uganda using these schedules\") is this process, even when it reads like an IG or coding task.",
               "hasIOContract": true,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
               "inputSchema": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/input.schema.json",
-              "instructionLines": 304,
+              "instructionLines": 257,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-guideline-end-to-end.md",
               "name": "smart-guideline-end-to-end",
               "outputSchema": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b38c6e8fadff51bae0370354103d888253f04a29e542056d8173ec886a6e2141",
-                "bytes": 22013,
-                "sha256": "b38c6e8fadff51bae0370354103d888253f04a29e542056d8173ec886a6e2141"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f219c9d75df932af5c50a1ac59998f574466c5294db2ec13857a91cdd45f3ca",
+                "bytes": 18346,
+                "sha256": "1f219c9d75df932af5c50a1ac59998f574466c5294db2ec13857a91cdd45f3ca"
               },
               "title": "smart-guideline-end-to-end"
             },
@@ -496,13 +497,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 184,
+              "instructionLines": 137,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
               "name": "smart-stack-layering",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4759d71ba82ac4fb795bff2a00797a3df1588b8d5923a183678193c767495c8c",
-                "bytes": 9837,
-                "sha256": "4759d71ba82ac4fb795bff2a00797a3df1588b8d5923a183678193c767495c8c"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/07d70427898b0311d0f2322a315d7d4a5b9fe3d71700119cb3a8013d4a1c216b",
+                "bytes": 6774,
+                "sha256": "07d70427898b0311d0f2322a315d7d4a5b9fe3d71700119cb3a8013d4a1c216b"
               },
               "title": "smart-stack-layering"
             },
@@ -510,17 +511,17 @@
               "@id": "http://smart.who.int/base/skill/toolchain-ownership",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
+              "description": "Taking ownership of the WHO smart-base scripts in litlfred, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
-              "instructionLines": 137,
+              "instructionLines": 94,
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/toolchain-ownership.md",
               "name": "toolchain-ownership",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b6fe4a2a184db0334422582492ffa1064158ef7c890aad366d834d169e2716bd",
-                "bytes": 6565,
-                "sha256": "b6fe4a2a184db0334422582492ffa1064158ef7c890aad366d834d169e2716bd"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d3777e635bc58c8145af04c759fa51d2b38cb3eae509844bcd5ef03c991764b4",
+                "bytes": 4156,
+                "sha256": "d3777e635bc58c8145af04c759fa51d2b38cb3eae509844bcd5ef03c991764b4"
               },
               "title": "toolchain-ownership"
             },
@@ -538,9 +539,9 @@
               "name": "transcription-verbatim",
               "outputSchema": "http://smart.who.int/base/schema/skills/transcription-verbatim/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e6e681a6c8475551f1570f28d9ad3a9e84e390708ca001d7275936a97628aaf9",
-                "bytes": 2581,
-                "sha256": "e6e681a6c8475551f1570f28d9ad3a9e84e390708ca001d7275936a97628aaf9"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7abfe3c2e5d2323d83e28176e969e7db0f153fc8828e2b531e0bee8ed60c8e7e",
+                "bytes": 2541,
+                "sha256": "7abfe3c2e5d2323d83e28176e969e7db0f153fc8828e2b531e0bee8ed60c8e7e"
               },
               "title": "transcription-verbatim"
             }

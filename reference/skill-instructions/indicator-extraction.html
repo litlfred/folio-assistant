@@ -110,17 +110,14 @@
 </h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">indicator-extraction</code> · Package: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> ·
 Follows <a href="../../reference/skill-instructions/dak-l1-library.html"><code class="language-plaintext highlighter-rouge">dak-l1-library</code></a>, which ingests the source.
 Sibling of <a href="../../reference/skill-instructions/recommendation-extraction.html"><code class="language-plaintext highlighter-rouge">recommendation-extraction</code></a>: that
-one takes a source’s recommendations, this one its indicators.</p></blockquote><p>Owner, 2026-11-02, on the NHWA handbook: <em>“recreate NHWA 2nd edition and
-extract indicators into L2 style. this is a process added as part of L1 -&gt; L2
-extraction for DAK or DTH”</em>. It is a step of the L2 authoring processes, bound
-to <code class="language-plaintext highlighter-rouge">Task_Indicators</code> in <a href="../../en/cat-harness/processes/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a>
+one takes a source’s recommendations, this one its indicators.</p></blockquote><p>It is a step of L1 → L2 extraction for a DAK or DTH, bound to
+<code class="language-plaintext highlighter-rouge">Task_Indicators</code> in <a href="../../en/cat-harness/processes/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a>
 and <code class="language-plaintext highlighter-rouge">Call_Data</code> in <a href="../../en/cat-harness/processes/dth-authoring.html"><code class="language-plaintext highlighter-rouge">dth-authoring</code></a>.</p><h2 id="two-layers-kept-apart"><a href="#two-layers-kept-apart" class="anchor-heading" aria-labelledby="two-layers-kept-apart"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two layers, kept apart
   
   
-</h2><div class="table-wrapper"><table><thead><tr><th>layer</th><th>what</th><th>kind / model</th><th>written by</th></tr></thead><tbody><tr><td>L1</td><td>the indicator <strong>as the source prints it</strong>, verbatim</td><td><code class="language-plaintext highlighter-rouge">indicator</code> block (folio type <code class="language-plaintext highlighter-rouge">smart-base:Indicator</code>; KG L1 <code class="language-plaintext highlighter-rouge">indicator</code>, <code class="language-plaintext highlighter-rouge">kg/src/l1.ts</code>)</td><td><code class="language-plaintext highlighter-rouge">scripts/l1-indicator-sheets.py</code> → <code class="language-plaintext highlighter-rouge">candidates.json</code> → <code class="language-plaintext highlighter-rouge">gen-library-jsonld</code></td></tr><tr><td>L2</td><td>the DAK’s or DTH’s <strong>own</strong> operational measure, a draft that points back</td><td><code class="language-plaintext highlighter-rouge">program-indicator</code> (sgkg-l2), logical model <code class="language-plaintext highlighter-rouge">ProgramIndicator</code></td><td><code class="language-plaintext highlighter-rouge">scripts/l2-program-indicators.py</code></td></tr></tbody></table></div><p>sgkg-l2 keeps <code class="language-plaintext highlighter-rouge">program-indicator</code> apart from L1 <code class="language-plaintext highlighter-rouge">indicator</code> on purpose:
-collapsing them “would silently merge a WHO definition with a country’s
-implementation of it”. So the L2 record is a draft with <code class="language-plaintext highlighter-rouge">derivedFrom</code> its L1
-node, and the L2 author adopts, edits or drops it.</p><h2 id="rules"><a href="#rules" class="anchor-heading" aria-labelledby="rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rules
+</h2><div class="table-wrapper"><table><thead><tr><th>layer</th><th>what</th><th>kind / model</th><th>written by</th></tr></thead><tbody><tr><td>L1</td><td>the indicator <strong>as the source prints it</strong>, verbatim</td><td><code class="language-plaintext highlighter-rouge">indicator</code> block (folio type <code class="language-plaintext highlighter-rouge">smart-base:Indicator</code>; KG L1 <code class="language-plaintext highlighter-rouge">indicator</code>, <code class="language-plaintext highlighter-rouge">kg/src/l1.ts</code>)</td><td><code class="language-plaintext highlighter-rouge">scripts/l1-indicator-sheets.py</code> → <code class="language-plaintext highlighter-rouge">candidates.json</code> → <code class="language-plaintext highlighter-rouge">gen-library-jsonld</code></td></tr><tr><td>L2</td><td>the DAK’s or DTH’s <strong>own</strong> operational measure, a draft that points back</td><td><code class="language-plaintext highlighter-rouge">program-indicator</code> (sgkg-l2), logical model <code class="language-plaintext highlighter-rouge">ProgramIndicator</code></td><td><code class="language-plaintext highlighter-rouge">scripts/l2-program-indicators.py</code></td></tr></tbody></table></div><p>sgkg-l2 keeps them apart: merging them would merge a WHO definition with a
+country’s implementation of it. The L2 record is a draft with <code class="language-plaintext highlighter-rouge">derivedFrom</code>
+its L1 node, and the L2 author adopts, edits or drops it.</p><h2 id="rules"><a href="#rules" class="anchor-heading" aria-labelledby="rules"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rules
   
   
 </h2><ul><li><strong>Ids come from the source.</strong> <code class="language-plaintext highlighter-rouge">number</code> / <code class="language-plaintext highlighter-rouge">indicatorId</code> is the printed
@@ -140,9 +137,8 @@ composite or self-assessed indicator), the L2 draft lists it in <code class="lan
 the L2 author decides. Nothing is copied from another source to fill it.</li><li><strong>A composite indicator</strong> keeps its sub-indicators as their own L1 nodes;
 in L2 they are the parent’s <code class="language-plaintext highlighter-rouge">components</code>, not program indicators of their
 own.</li><li><strong>Read the page layout, not the section text,</strong> when the source prints
-sheets as a label column and a value column. Stage A’s text reads side bars
-and columns out of order (NHWA: numbers on the wrong sheet, a lost name, no
-section for 4-04).</li></ul><h2 id="steps"><a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
+sheets as a label column and a value column: Stage A’s text reads side bars
+and columns out of order.</li></ul><h2 id="steps"><a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
   
   
 </h2><ol><li>The source is in the library (<code class="language-plaintext highlighter-rouge">dak-l1-library</code>), with its PDF in
@@ -150,9 +146,9 @@ section for 4-04).</li></ul><h2 id="steps"><a href="#steps" class="anchor-headin
   <span class="nt">--pdf</span> uploads/&lt;doc-id&gt;/&lt;doc-id&gt;.pdf <span class="nt">--pages</span> &lt;first&gt;-&lt;last&gt; <span class="nt">--json</span>   <span class="c"># look first</span>
 python3 smart-base/scripts/l1-indicator-sheets.py <span class="nt">--entry</span> library/&lt;doc-id&gt; <span class="se">\</span>
   <span class="nt">--pdf</span> uploads/&lt;doc-id&gt;/&lt;doc-id&gt;.pdf <span class="nt">--pages</span> &lt;first&gt;-&lt;last&gt; <span class="nt">--write</span>
-</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">--write</code> merges into <code class="language-plaintext highlighter-rouge">candidates.json</code> as the <code class="language-plaintext highlighter-rouge">indicators</code> aspect, and
-replaces an older <code class="language-plaintext highlighter-rouge">indicator</code> candidate with the same number, so a re-run
-is idempotent. Check the count against the source’s own list of
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">--write</code> merges into <code class="language-plaintext highlighter-rouge">candidates.json</code> as the <code class="language-plaintext highlighter-rouge">indicators</code> aspect,
+replacing an <code class="language-plaintext highlighter-rouge">indicator</code> candidate with the same number (re-runs are
+idempotent). Check the count against the source’s own list of
 indicators (NHWA: the synthesis table, 29 indicators).</p></li><li><strong>L1 nodes.</strong> <code class="language-plaintext highlighter-rouge">bun cat-harness-tools/pipeline/gen-library-jsonld.ts --entry library/&lt;doc-id&gt;</code>
 writes <code class="language-plaintext highlighter-rouge">blocks/indicator-&lt;section&gt;-NN.{jsonld,md}</code>, each <code class="language-plaintext highlighter-rouge">derivedFrom</code> its
 section, <code class="language-plaintext highlighter-rouge">provenance: ingested</code>, with the fields in <code class="language-plaintext highlighter-rouge">meta</code>. Existing
@@ -160,14 +156,13 @@ indicator IRIs do not change when the first candidate of a section stays
 the same indicator.</li><li><p><strong>L2 drafts.</strong></p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 smart-base/scripts/l2-program-indicators.py <span class="nt">--entry</span> library/&lt;doc-id&gt; <span class="se">\</span>
   <span class="nt">--prefix</span> &lt;PREFIX&gt; <span class="nt">--out</span> &lt;where the L2 author will review them&gt;
 </code></pre></div></div></li><li><strong>Into the DAK or DTH.</strong> The L2 author takes the drafts into the guide’s
-indicators component (DAK component 7; a DTH’s data elements, indicators
-and requirements). That is content: it goes through the guide’s own review
+indicators component (DAK component 8; a DTH’s data elements, indicators
+and requirements), through the guide’s own review
 (<code class="language-plaintext highlighter-rouge">l2-component-edit-review</code>) and, for a DTH, a change set.</li></ol><h2 id="validated-against"><a href="#validated-against" class="anchor-heading" aria-labelledby="validated-against"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Validated against
   
   
 </h2><ul><li>NHWA handbook, 2nd edition (who-iris <code class="language-plaintext highlighter-rouge">9789240081291-eng</code>): 29 indicators,
-33 sub-indicators, PDF pages 51-91. The 12 indicators taken by hand earlier
-(who-iris#165) match word for word.</li></ul><p>Not yet run on a guideline whose indicator sheets use a different layout
+33 sub-indicators, PDF pages 51-91.</li></ul><p>Not yet run on a guideline whose indicator sheets use a different layout
 (HIV SI 2022’s reference sheets: “What it measures”, “Rationale”, “Method of
 measurement”). Those labels are in the script’s label list, but the header
 number pattern may need a per-source <code class="language-plaintext highlighter-rouge">ID_PATTERN</code>.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill

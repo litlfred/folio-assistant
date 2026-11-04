@@ -7,7 +7,7 @@
     {
       "@id": "http://smart.who.int/base/tools/l1-recommendation-candidates.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), hint where a reading is uncertain, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph, checked with `kg/src/validate.ts`, with coverage and the proposed (unsigned) exclusions.",
+      "description": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `kg/src/validate.ts`) with coverage and proposed, unsigned exclusions.",
       "install": {
         "none": true
       },

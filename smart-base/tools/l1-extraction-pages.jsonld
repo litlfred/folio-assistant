@@ -361,8 +361,8 @@
       "@id": "http://smart.who.int/base/tools/l1-extraction-pages.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "l1-extraction-pages",
-      "title": "Write the L1 extraction viewer: a page per instance holding `l1-extraction` directories, and a hub",
-      "description": "For every visualiser an instance declares `renderedBy: l1-extraction-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `l1-extraction` directory. Each shows what was extracted, read from the files by what they declare: the L1 statements (graph nodes carrying a `statement`, and an authored L1 source's `recommendations`), the candidate work list's counts, coverage and decisions, each graph document's nodes by type and edges by predicate (the L2 scenario candidates among them), the curation, mapping, vocabulary, exclusions and run context counted, and every file linked to its published copy (cat-harness's `library:viz`) when the site holds it and to its source at the pinned commit. A declared directory not on disk is reported UNKNOWN, never as zero.",
+      "title": "L1 extraction viewer: a hub and a page per instance with `l1-extraction` directories",
+      "description": "For every visualiser an instance declares with `renderedBy: l1-extraction-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `l1-extraction` directory. Each page shows, from what the files declare: the L1 statements (graph nodes with a `statement`, and an authored L1 source's `recommendations`); the candidate work list's counts, coverage and decisions; each graph document's nodes by type and edges by predicate (L2 scenario candidates included); counts of curation, mapping, vocabulary, exclusions and run context; and a link from every file to its published copy (cat-harness's `library:viz`), when the site has it, and to its source at the pinned commit. A declared directory not on disk is reported UNKNOWN, never zero.",
       "install": {
         "none": true
       },
@@ -374,7 +374,7 @@
           {
             "name": "site",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "A site being built: the pages go under it (`visualiser-writers.ts` in cat-harness-tools passes it). Absent, they go under the checkout's site directory.",
+            "description": "The site being built; pages go under it (cat-harness-tools' `visualiser-writers.ts` passes it). Default: the checkout's site directory.",
             "required": false,
             "arg": {
               "flag": "--site"

@@ -112,18 +112,17 @@ The check before <code class="language-plaintext highlighter-rouge">Gateway_L3Re
 <a href="../../reference/skill-instructions/smart-guideline-end-to-end.html"><code class="language-plaintext highlighter-rouge">smart-guideline-end-to-end</code></a>, task
 <code class="language-plaintext highlighter-rouge">Task_L3Ready</code> of
 <a href="../../en/cat-harness/processes/smart-guideline-end-to-end.html"><code class="language-plaintext highlighter-rouge">smart-guideline-end-to-end.bpmn</code></a>.
-Run by the authoring agent; it records no verdict on any asset.</p></blockquote><p>This is the <a href="../../reference/skill-instructions/smart-guideline-end-to-end.html#the-order-is-a-rule-l1-then-l2-then-l3-owner-2026-10-15">order rule</a>
-(owner, 2026-10-15: <em>“order strict, sign-off QA”</em>) as a check with its own
-contract. It is not a stage: it produces no asset, only the answer the
-gateway takes. The owner gave it a skill of its own on 2026-10-16, so that
-the check has named inputs and outputs like every stage around it.</p><h2 id="input-and-output"><a href="#input-and-output" class="anchor-heading" aria-labelledby="input-and-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input and output
+Run by the authoring agent; it records no verdict on any asset.</p></blockquote><p>The <a href="../../reference/skill-instructions/smart-guideline-end-to-end.html#the-order-is-a-rule-l1-then-l2-then-l3">order rule</a>
+as a check with its own contract. It is not a stage: it produces no asset,
+only the answer the gateway takes.</p><h2 id="input-and-output"><a href="#input-and-output" class="anchor-heading" aria-labelledby="input-and-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input and output
   
   
 </h2><p>The contract is <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/skills/l3-readiness/input.schema.json"><code class="language-plaintext highlighter-rouge">input.schema.json</code></a> and <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/skills/l3-readiness/output.schema.json"><code class="language-plaintext highlighter-rouge">output.schema.json</code></a>.</p><ul><li><strong>In:</strong> the <code class="language-plaintext highlighter-rouge">l1Kg</code> (stage 2), the <code class="language-plaintext highlighter-rouge">l2Assets</code> (every stage-4 <a href="../../reference/skill-instructions/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a> pass’s <code class="language-plaintext highlighter-rouge">artifacts</code>), the <code class="language-plaintext highlighter-rouge">reviews</code> requested so far, one per extraction or L2 asset, and <code class="language-plaintext highlighter-rouge">l3Planned</code>, the L3 artefacts stage 6 is about to write, each with its <code class="language-plaintext highlighter-rouge">sourceModel</code>.</li><li><strong>Out:</strong> <code class="language-plaintext highlighter-rouge">ready</code>, which is the gateway’s outcome; <code class="language-plaintext highlighter-rouge">findings</code>, each naming the asset, the problem and the stage that fixes it; <code class="language-plaintext highlighter-rouge">checked</code>, every asset looked at, so that no findings is a determined empty and not a skipped check.</li></ul><h2 id="steps"><a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
   
   
 </h2><ol><li><strong>L1.</strong> Every source the use case includes has an <code class="language-plaintext highlighter-rouge">l1Kg</code> extraction, at
-<code class="language-plaintext highlighter-rouge">library/&lt;bib&gt;/l1-extraction/</code>. A source without one is
+<code class="language-plaintext highlighter-rouge">library/&lt;bib&gt;/l1-extraction/</code> (or <code class="language-plaintext highlighter-rouge">l1-extractions/&lt;bib&gt;/</code> when the entry
+lives in another instance’s library). A source without one is
 <code class="language-plaintext highlighter-rouge">no-l1-extraction</code>, fixed by stage 2.</li><li><strong>L2 on L1.</strong> Every L2 asset names at least one L1 node in
 <code class="language-plaintext highlighter-rouge">wasDerivedFrom</code>. One that names none is <code class="language-plaintext highlighter-rouge">no-l1-upstream</code>, fixed by
 stage 4.</li><li><strong>L3 on L2.</strong> Every <code class="language-plaintext highlighter-rouge">l3Planned</code> entry’s <code class="language-plaintext highlighter-rouge">sourceModel</code> is an <code class="language-plaintext highlighter-rouge">l2Assets</code>
@@ -132,10 +131,9 @@ documents (a schedule poster, a slide deck) are stage-2 input, never a
 <code class="language-plaintext highlighter-rouge">sourceModel</code>.</li><li><strong>Review requested.</strong> Every extraction and every L2 asset has a
 <code class="language-plaintext highlighter-rouge">reviews</code> entry: its review item opened and staged. One without is
 <code class="language-plaintext highlighter-rouge">review-not-requested</code>, fixed by the stage that made it. The verdict is
-not awaited: adjudication is QA, not a gate.</li><li><strong>Answer.</strong> <code class="language-plaintext highlighter-rouge">ready</code> is true exactly when <code class="language-plaintext highlighter-rouge">findings</code> is empty. The
+not awaited.</li><li><strong>Answer.</strong> <code class="language-plaintext highlighter-rouge">ready</code> is true exactly when <code class="language-plaintext highlighter-rouge">findings</code> is empty. The
 gateway then takes «yes» to stage 6, or «no» back to stage 4 (which
-fills a missing extraction from stage 2).</li></ol><p>A green build and passing tests do not make a finding go away. An L3
-asset with no L2 upstream is a finding, not a shortcut.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+fills a missing extraction from stage 2).</li></ol><p>A green build and passing tests do not clear a finding.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/smart-guideline-end-to-end.html">SMART Guideline end to end</a></td><td>Check L3 readiness</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">

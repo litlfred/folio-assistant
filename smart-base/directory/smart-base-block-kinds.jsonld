@@ -16,7 +16,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/block-kinds"
       ],
-      "description": "The `dak` adapter's 21 block kinds, one folio-block-kind/v1 node per file (bean riit, step 3): kind, builder, label prefix and RDF types. Read off these nodes by smart-base/schemas/dak-kinds.ts and dak-jsonld.ts, and registered for a folio by loadContributions only when the folio's dependency tree includes smart-base (owner, 2026-10-04: a folio sees the nodes of the instances it depends on, option 1 of 3). They replace the blockKinds array contributions.ts returned.",
+      "description": "The `dak` adapter's block kinds, one folio-block-kind/v1 node per file: kind, builder, label prefix and RDF types. Read by schemas/dak-kinds.ts and dak-jsonld.ts; loadContributions registers them for a folio only when its dependency tree includes smart-base.",
       "readmePath": "block-kinds/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-block-kinds"

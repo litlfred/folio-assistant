@@ -362,12 +362,12 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "bpmn-to-fsh",
       "title": "BPMN → FHIR Shorthand",
-      "description": "Derive FSH from a DAK's BPMN business processes — the render direction, of which the extractors are the inverse.",
+      "description": "Derive FSH from a DAK's BPMN business processes (the inverse of the extractors).",
       "install": {
         "none": true
       },
       "invoke": {
-        "shell": "python3 scripts/smart-base-transform.py"
+        "shell": "python3 smart-base/scripts/smart-base-transform.py bpmn2fsh <file.bpmn|dir> [-o OUTDIR]"
       },
       "io": {
         "inputs": [

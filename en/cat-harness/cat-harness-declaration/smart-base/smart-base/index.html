@@ -104,18 +104,18 @@
 </h1><p class="m">A <a href="../../">cat-harness-declaration</a> node held by <a href="../">smart-base</a>, at <code>smart-base/smart-base.json</code>.</p><h2 id="fields"><a href="#fields" class="anchor-heading" aria-labelledby="fields"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fields
   
   
-</h2><dl><dt>$schema</dt><dd>cat-harness-declaration/1.0.0</dd><dt>_comment</dt><dd>The WHO SMART Base layer, staged as a top-level directory ahead of becoming its own repository — the same path the IRIS catalogue and the WHO SMART Trust and Immunizations IGs are already on. The owner settled the location 2026-09-22: &quot;same as other smart-* now in corpus... we are migrating. want KG assets here, can break apart later. OK to reference smart-* github sources (e.g markdown) per the smart-* harnessing insutrctiots. needs smart-base harness&quot;. Bean `nsbb` had already called for this harness from the other direction — it rules that a per-IG harness should not exist because it adds no new functionality, and that the DAK/IG pipeline belongs in an IG base under a NEW `smart-base` harness. This is that harness. It holds KG ASSETS first — the ingested WHO digital-health corpus, the methodologies read out of it, and the voices derived from it — and takes no position on the pipeline layering, which is `nsbb`&#39;s to settle. THE UPSTREAM TOOLCHAIN IS NOT VENDORED HERE: `WorldHealthOrganization/smart-base` stays the authoritative home of the ~54 Python scripts, and `smart-base-tools` states why — a copy here would be a second, drifting toolchain.</dd><dt>name</dt><dd>smart-base</dd><dt>repository</dt><dd>litlfred/smart-base</dd><dt>livesAt</dt><dd><pre>{
+</h2><dl><dt>$schema</dt><dd>cat-harness-declaration/1.0.0</dd><dt>_comment</dt><dd>The WHO SMART Base layer: the knowledge-graph assets of the WHO SMART Guidelines base — the ingested WHO digital-health corpus, the methodologies read out of it, and the voices derived from it. It takes no position on the DAK/IG pipeline layering. The upstream toolchain is not vendored here: `WorldHealthOrganization/smart-base` stays the home of its ~54 Python scripts, and `smart-base-tools` wraps them.</dd><dt>name</dt><dd>smart-base</dd><dt>repository</dt><dd>litlfred/smart-base</dd><dt>livesAt</dt><dd><pre>{
   &quot;repository&quot;: &quot;litlfred/smart-base&quot;,
   &quot;path&quot;: &quot;smart-base&quot;
 }</pre></dd><dt>version</dt><dd>0.1.0</dd><dt>iriBase</dt><dd>https://litlfred.github.io/smart-base/</dd><dt>_title_comment</dt><dd>The HUMAN display name, for the LHS navbar&#39;s harness tabs. `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against it. Bean `t3n8`.</dd><dt>title</dt><dd>SMART Base</dd><dt>description</dt><dd>The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.</dd><dt>avatar</dt><dd><pre>{
   &quot;glyph&quot;: &quot;M3 18h18M6 14h12M9 10h6M11 6h2&quot;,
   &quot;tone&quot;: 199,
   &quot;reads&quot;: &quot;a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue&quot;
-}</pre></dd><dt>_avatar_comment</dt><dd>SMART-BASE — THE SAME WHO BLUE, AND FOR THE SAME REASON. Owner, 2026-09-23: *&quot;smart-base avatar: use who-iris route, WHO blue no logo&quot;*, taking the route this instance&#39;s exemption had named as open and preferable rather than leaving it exempt. TONE 199 IS SHARED WITH `who-iris` ON PURPOSE, not by oversight. It is measured from the same #0093D5 — the organisation&#39;s own blue — and these are two instances of the SAME organisation&#39;s material. A reader scanning the navbar should see them as a family; giving smart-base a near-miss hue would assert a distinction that does not exist. The registry requires distinct GLYPHS, not distinct tones, and that is the right constraint: the glyph says which instance, the tone says whose. And no emblem, which is the whole of &quot;the who-iris route&quot;: an organisation&#39;s published colour with a neutral glyph is not inventing its identity, where cropping its logo would be. A broad base with three narrowing courses above it — the layer the rest of the stack rests on. smart-base is exactly that: `fhir-harness` sits under it, and `smart-ig` (and the IGs that need it) is built on top, so the glyph reads the instance&#39;s position rather than its subject. Moved here from cat-harness/schemas/avatars.ts, 2026-10-05 (bean sod4 #4): an instance declares its own mark.</dd><dt>directories</dt><dd><pre>[
+}</pre></dd><dt>_avatar_comment</dt><dd>WHO blue (tone 199, measured from #0093D5), shared with `who-iris` on purpose: both are the same organisation&#39;s material, so the navbar shows them as a family. The registry requires distinct glyphs, not distinct tones: the glyph says which instance, the tone says whose. No emblem: an organisation&#39;s published colour with a neutral glyph does not invent its identity. The glyph is a broad base with three narrowing courses above it, the layer the stack rests on: `fhir-harness` sits under smart-base and `smart-ig` and the IGs that need it are built on top.</dd><dt>directories</dt><dd><pre>[
   {
     &quot;id&quot;: &quot;smart-base-site-docs&quot;,
     &quot;path&quot;: &quot;site-docs/&quot;,
-    &quot;description&quot;: &quot;This instance&#39;s pages for the platform&#39;s docs site: the WHO SMART DAK and IG authoring guides and the WHO SMART content types, which document this instance&#39;s processes and the DAK/IG work it carries. Moved here from the harness below on 2026-10-23 (wrong-direction move M8, and the WHO sections of the content-types page). A SEPARATE directory from `docs/`, which is this instance&#39;s IG pages, wholly generated by `smart-base:pages` (its check reports any other file there as an orphan), and from `findings/`, which is mounted rather than composed. Composed THROUGH just-the-docs (`composed: true`, as the content core&#39;s own docs directory is), so its pages land in the platform&#39;s site under this instance&#39;s name with the sidebar, search and layout. `docs.json` here declares the `docs-source` the platform&#39;s one docs-page run reads (owner ruling A1, 2026-10-23): each `source/&lt;group&gt;-&lt;slug&gt;/` renders into `&lt;group&gt;/&lt;slug&gt;.md` beside it, and `compose-docs` leaves `source/` itself out.&quot;,
+    &quot;description&quot;: &quot;This instance&#39;s pages for the platform&#39;s docs site: the WHO SMART DAK and IG authoring guides and the WHO SMART content types. Composed through just-the-docs (`composed: true`), so its pages land in the platform&#39;s site under this instance&#39;s name. `docs.json` declares `source/`, which the platform&#39;s docs-page run renders, one `source/&lt;group&gt;-&lt;slug&gt;/` into `&lt;group&gt;/&lt;slug&gt;.md`; `compose-docs` leaves `source/` out. Separate from `docs/` (this instance&#39;s IG pages, wholly generated by `smart-base:pages`) and `findings/`.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;docs&quot;
     ],
@@ -124,7 +124,7 @@
   {
     &quot;id&quot;: &quot;smart-base-qa-checkers&quot;,
     &quot;path&quot;: &quot;qa-checkers/&quot;,
-    &quot;description&quot;: &quot;The dak adapter&#39;s automated QA checkers, one folio-qa-checker/v1 node per criterion, naming DAK_AUTOMATED_CHECKERS in pipeline/qa-checkers-dak.ts (bean riit, step 3b). Registered for a folio by loadContributions through its dependency tree; they replace the qaCheckers array contributions.ts returned.&quot;,
+    &quot;description&quot;: &quot;The dak adapter&#39;s automated QA checkers, one folio-qa-checker/v1 node per criterion, naming DAK_AUTOMATED_CHECKERS in pipeline/qa-checkers-dak.ts. loadContributions registers them for a folio through its dependency tree.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;qa-checkers&quot;
     ]
@@ -132,7 +132,7 @@
   {
     &quot;id&quot;: &quot;smart-base-block-kinds&quot;,
     &quot;path&quot;: &quot;block-kinds/&quot;,
-    &quot;description&quot;: &quot;The `dak` adapter&#39;s 21 block kinds, one folio-block-kind/v1 node per file (bean riit, step 3): kind, builder, label prefix and RDF types. Read off these nodes by smart-base/schemas/dak-kinds.ts and dak-jsonld.ts, and registered for a folio by loadContributions only when the folio&#39;s dependency tree includes smart-base (owner, 2026-10-04: a folio sees the nodes of the instances it depends on, option 1 of 3). They replace the blockKinds array contributions.ts returned.&quot;,
+    &quot;description&quot;: &quot;The `dak` adapter&#39;s block kinds, one folio-block-kind/v1 node per file: kind, builder, label prefix and RDF types. Read by schemas/dak-kinds.ts and dak-jsonld.ts; loadContributions registers them for a folio only when its dependency tree includes smart-base.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;block-kinds&quot;
     ]
@@ -140,7 +140,7 @@
   {
     &quot;id&quot;: &quot;smart-base-content-adapters&quot;,
     &quot;path&quot;: &quot;content-adapters/&quot;,
-    &quot;description&quot;: &quot;The dak block VOCABULARY&#39;s node, folio-content-adapter/v1 (bean riit, step 5): its name, its companion roles, and its vocabulary module schemas/dak-blocks.ts. It is untyped by cat-harness, so loadContributions registers it for a folio only through that folio&#39;s dependency tree. It replaces the adapter contributions.ts returned in code.&quot;,
+    &quot;description&quot;: &quot;The dak block vocabulary&#39;s node, folio-content-adapter/v1: its name, its companion roles, and its vocabulary module schemas/dak-blocks.ts. cat-harness does not type it, so loadContributions registers it for a folio only through that folio&#39;s dependency tree.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;content-adapters&quot;
     ]
@@ -148,7 +148,7 @@
   {
     &quot;id&quot;: &quot;smart-base-translations&quot;,
     &quot;path&quot;: &quot;translations/&quot;,
-    &quot;description&quot;: &quot;The gettext side of smart-base&#39;s own strings, one directory per target locale: today the `processes/` templates of the BPMN diagrams this instance draws. Moved here from cat-harness/translations/ on the owner&#39;s ruling of 2026-10-04, \&quot;move things to semantically appropriate place\&quot; (bean riit): a diagram&#39;s templates sit with the instance that draws it.&quot;,
+    &quot;description&quot;: &quot;The gettext side of smart-base&#39;s own strings, one directory per target locale: the `processes/` templates of the BPMN diagrams this instance draws.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;translation-sources&quot;
     ]
@@ -156,7 +156,7 @@
   {
     &quot;id&quot;: &quot;library&quot;,
     &quot;path&quot;: &quot;library/&quot;,
-    &quot;description&quot;: &quot;L1 source content: one `&lt;bib-slug&gt;/` per ingested WHO publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path or a bare URL — which is the whole reason the bytes could not stay in `uploads/`. The corpus-grep checklist searches `library/` ONLY, so a publication left in the incoming queue does not merely go unread: it makes a clean grep mean \&quot;nobody has done this\&quot; while the source sits right there. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it — overrides match on id and never on path, and a distinct id at the same path yields two entries for one directory that every fan-out consumer then scans twice. IRIS PUBLICATIONS LIVE IN WHO-IRIS. On 2026-10-30 the twelve WHO IRIS publications ingested here moved to litlfred/who-iris (who-iris#107, the owner&#39;s \&quot;pre-CDN preview\&quot;): cite them as `{instance: \&quot;litlfred/who-iris\&quot;}`, and `library/&lt;slug&gt;` evidence resolves through the who-iris mount. This library keeps the sources that are not IRIS items. smart-base&#39;s own L1 extraction of an IRIS handbook is not a library entry and lives in `l1-extractions/`.&quot;,
+    &quot;description&quot;: &quot;L1 source content: one `&lt;bib-slug&gt;/` per ingested publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path, a bare URL or `uploads/`: the corpus-grep checklist searches `library/` only. The id is the conventional `library`, so this entry overrides the default; overrides match on id, never on path. WHO IRIS publications live in who-iris: cite them as `{instance: \&quot;litlfred/who-iris\&quot;}`. smart-base&#39;s own L1 extraction of an IRIS handbook lives in `l1-extractions/`.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;library&quot;
     ]
@@ -164,7 +164,7 @@
   {
     &quot;id&quot;: &quot;l1-extraction-9789240116191-eng&quot;,
     &quot;path&quot;: &quot;l1-extractions/9789240116191-eng/&quot;,
-    &quot;description&quot;: &quot;What the recommendation-extraction skill read out of library entry `9789240116191-eng` (Digital transformation handbook for health product catalogue), which lives in who-iris since 2026-10-30 (who-iris#107): the L1 A-Box graph `l1.json`, the L2 scenario candidates `scenarios/scenario-candidates.l2.json`, and the curation, vocabulary and run context behind them. smart-base&#39;s own analysis (owner, 2026-10-16: \&quot;l1-extraction is part of smart-base\&quot;), so it stays here, at `l1-extractions/&lt;entry&gt;/`, and cites its source entry wherever that entry is held. Declared so it is part of the knowledge graph and published (owner, 2026-10-12, bean 8pzh item 1). It sat inside `library/&lt;entry&gt;/` until the entry moved; a library folder holding only the extraction then read as a second copy of the entry, and folio-assistant&#39;s library ingest refused the duplicate slug. One entry per extracted library entry, never a wildcard: `scripts/l1-extraction-declared.test.ts` fails when an `l1-extractions/&lt;entry&gt;/` on disk is undeclared, or a declaration names one that is not there.&quot;,
+    &quot;description&quot;: &quot;What the recommendation-extraction skill read out of who-iris library entry `9789240116191-eng` (Digital transformation handbook for health product catalogue): the L1 A-Box graph `l1.json`, the L2 scenario candidates `scenarios/scenario-candidates.l2.json`, and the curation, vocabulary and run context behind them. One declaration per extracted entry at `l1-extractions/&lt;entry&gt;/`, never a wildcard: `scripts/l1-extraction-declared.test.ts` fails on an undeclared directory or a declaration with none.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;l1-extraction&quot;
     ]
@@ -172,7 +172,7 @@
   {
     &quot;id&quot;: &quot;methodologies&quot;,
     &quot;path&quot;: &quot;methodologies/&quot;,
-    &quot;description&quot;: &quot;Methodologies adopted from the WHO digital-health corpus in `library/` -- somebody else&#39;s work, adopted whole, never a house process with a citation bolted on. `diig.md` is the first. Declared in the commit that created its content rather than ahead of it: a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it. `skip` rather than `reproduce` because a downstream instance inherits the METHOD by depending on this layer, not by copying the directory.&quot;,
+    &quot;description&quot;: &quot;Methodologies adopted whole from the WHO digital-health corpus, each rendered from its source, never a house process with a citation added. `diig.md` is the first. `skip`: a downstream instance inherits the method by depending on this layer, not by copying the directory.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;methodology&quot;
     ]
@@ -180,7 +180,7 @@
   {
     &quot;id&quot;: &quot;processes&quot;,
     &quot;path&quot;: &quot;methodologies/processes/&quot;,
-    &quot;description&quot;: &quot;The executable half of this layer&#39;s methodologies -- `diig-investment-path.bpmn` renders DIIG&#39;s own nine chapters as a process with its two progress checks as gateways. A SEPARATE declaration from `methodologies/` even though it nests inside it, because `processes` and `methodology` are different graph typologies and a directory entry names one graph: the prose node says what the method IS, the diagram says how it RUNS. Bean `x4v4` raised whether `methodologies/` is a graph or a folder; this follows the shape already on main, where `methodology-crdm-processes` is declared beside `methodologies/` rather than inferred from it. Issue #877, bean `qnvy`.&quot;,
+    &quot;description&quot;: &quot;The executable half of this layer&#39;s methodologies: `diig-investment-path.bpmn` renders DIIG&#39;s nine chapters as a process with its two progress checks as gateways. Declared separately from `methodologies/` because a directory entry names one graph typology: the prose says what the method is, the diagram how it runs.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;processes&quot;
     ]
@@ -189,7 +189,7 @@
     &quot;id&quot;: &quot;smart-base-house-processes&quot;,
     &quot;path&quot;: &quot;processes/&quot;,
     &quot;dependents&quot;: &quot;skip&quot;,
-    &quot;description&quot;: &quot;The BPMN this layer OWNS as a house process, as against `methodologies/processes/`, which holds the executable half of a methodology adopted whole from the corpus. `l2-dak-authoring.bpmn` is the first: moved here from cat-harness/processes/ on 2026-10-01 by owner ruling (issue #1772 item 3), because placement PR1 had moved its `l2-dak-authoring` skill into `skills/content/authoring-who-smart-guidelines/` and the three activities naming it no longer resolved from cat-harness, which cannot reach this layer. Here the skill sits beside the diagram; the remaining refs (`content-plan`, `todo-manager`, `bpmn-authoring`, `dmn-authoring`, `content-review`, `content-validate`, `terminology-management`) point down, through `fhir-harness`. A TOP-LEVEL directory rather than a second file in `methodologies/processes/`, for the reason `folio-assistant-core-processes` gives: that nested shape is a baselined `check:layout-norms` exception, and a house process is not a methodology read out of `library/`. Declared WITH its file in one commit, per bean `dh4f`. `smart-guideline-end-to-end.bpmn` (2026-10-14) is the second: use case to consuming application through the L1 KG, L2 and L3, with adjudication as QA rather than a gate; it names `l2-dak-authoring.bpmn` and `dak-l3-ig.bpmn` for its L2 and L3 stages rather than copying them. `SGAuthoring.DAKLifecycle.bpmn` (2026-10-14) moved here from the IG&#39;s `input/bpmn/`, merged with its graphviz `.layout.bpmn` into one file with diagram interchange, so every authoring process has one home; `l2-component-edit-review.bpmn` (2026-10-14) is the subprocess every `l2-dak-authoring.bpmn` track calls: the agent edits one component, checks, renders and stages it, and hands it on, while a person in the component&#39;s reviewing role reviews it alongside, never as a gate; its per-component renderer, checker and reviewer are the skill `l2-component-edit-review`&#39;s table. `dth-authoring.bpmn` (2026-10-31, smart-base#243) is the DTH counterpart of `l2-dak-authoring.bpmn`: a Digital Transformation Handbook from sources to publication in seven stages, each ending in a milestone recorded on the work plan rather than enforced, with its structured-drafting tracks calling `l2-component-edit-review.bpmn` and the steps that have no platform subprocess yet marked as placeholders. `scripts/render-processes.ts` draws each beside its source; the site that shows them is folio-assistant&#39;s just-the-docs build, which mounts this directory.&quot;,
+    &quot;description&quot;: &quot;The BPMN this layer owns as house processes, under `content/` (as against `methodologies/processes/`, which holds methodologies adopted from the corpus): `l2-dak-authoring.bpmn`, whose tracks each call `l2-component-edit-review.bpmn` (the agent edits, checks, renders and stages one component while a person in its reviewing role reviews it alongside, never as a gate); `smart-guideline-end-to-end.bpmn`, use case to consuming application through the L1 KG, L2 and L3, with adjudication as QA rather than a gate, calling `l2-dak-authoring.bpmn` and `dak-l3-ig.bpmn` for its L2 and L3 stages; `dth-authoring.bpmn`, a Digital Transformation Handbook from sources to publication in seven stages, each ending in a milestone recorded on the work plan; `SGAuthoring.DAKLifecycle.bpmn`; and `classify-and-code-content.bpmn`. Skill refs this layer does not own resolve down through `fhir-harness`. `scripts/render-processes.ts` draws each beside its source; folio-assistant&#39;s just-the-docs site, which mounts this directory, shows them.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;processes&quot;
     ]
@@ -197,18 +197,18 @@
   {
     &quot;id&quot;: &quot;smart-base-artifact-index&quot;,
     &quot;path&quot;: &quot;fhir-artifact-index/&quot;,
-    &quot;description&quot;: &quot;The IG&#39;s artefact index. `index.json`, `menu.json`, `releases.json`, `package.tgz` and `sidecars/` are NOT COMMITTED: fhir-harness&#39;s `ig-index:build` writes them at publish from the IG&#39;s AST (`builtAtPublish`, fhir-harness#124; `sidecars/` via this layer&#39;s `ig-site:sidecars` step, bean `4u5d`), as smart-immunizations&#39; are. Until then they were reconstructed by the retired `ingest:ig` from smart.who.int.base v0.3.0 (FHIR 4.0.1), with the DAK API surface committed under `dak/` (retired in bean `4u5d`). What stays committed here is `upstream-report-CDHIv1toCDHIv2.md` and `README.md`. The four CDHI/CDSC ConceptMaps -- the v1-to-v2 crosswalks and the two hierarchy maps -- are indexed `referenced`: the index says where they are and holds none of their rows. Materializing one is `materialize-remote.bpmn`, not a flag. Issue #877, bean `cpmo`. UNTIL plan Q4 (bean `rbz3`, 2026-10-02) IT ALSO HELD `chrome.json`; the chrome is the TEMPLATE&#39;s styling, so it now lives in `themes/` beside the template&#39;s theme, and ships with the harness. When it was here, it was a THIRD provenance in one directory rather than a second copy of an existing one: `index.json` is harvested from an IG&#39;s published output, `menu.json` (smart-trust&#39;s) is read from its `sushi-config.yaml`, and `chrome.json` is resolved from the `fhir.template` packages its `ig.ini` names -- `fhir.base.template` and `who.template.root`, separate repositories the IG merely depends on. An IG declares its appearance in NO file it owns, which is why the chrome could not be folded into either of the other two. It lives at smart-base so every WHO SMART IG (through `smart-ig`) inherits one answer instead of each re-copying it; `schemas/ig-chrome.ts` carries why the consumer NAMES this instance rather than walking `needs` to it, and the layering gap that forces it, which is `nsbb`&#39;s.&quot;,
+    &quot;description&quot;: &quot;The IG&#39;s artefact index. `index.json`, `menu.json`, `releases.json`, `package.tgz` and `sidecars/` are not committed: fhir-harness&#39;s `ig-index:build` writes them at publish from the IG&#39;s AST (`builtAtPublish`; `sidecars/` via this layer&#39;s `ig-site:sidecars` step). Committed here: `upstream-report-CDHIv1toCDHIv2.md` and `README.md`. The four CDHI/CDSC ConceptMaps (the v1-to-v2 crosswalks and the two hierarchy maps) are indexed `referenced`: the index says where they are and holds none of their rows; materializing one is `materialize-remote.bpmn`. The IG template&#39;s chrome (`chrome.json`) lives in `themes/`.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;fhir-artifact-index&quot;
     ],
     &quot;readOnly&quot;: true,
-    &quot;readOnlyBasis&quot;: &quot;Built from the IG&#39;s own AST, and GENERATED -- fhir-harness&#39;s `ig-index:build` writes this index at publish, a person does not edit or commit it (fhir-harness#124). Read-only is about the second: a hand edit here silently changes what this repository claims upstream published, and `check:materialized-fixity` is what catches one that happened. Answered rather than left silent, because absent is NOT a declaration of writability -- a directory that has not answered has asserted nothing, which is why the verdict for silence is `undeclared` and never `false`.&quot;,
+    &quot;readOnlyBasis&quot;: &quot;Generated: fhir-harness&#39;s `ig-index:build` writes this index from the IG&#39;s own AST at publish; a person does not edit or commit it. A hand edit here would silently change what this repository claims upstream published, and `check:materialized-fixity` catches one. Declared rather than left silent, because silence is read as `undeclared`, never as writable.&quot;,
     &quot;served&quot;: true
   },
   {
     &quot;id&quot;: &quot;tools&quot;,
     &quot;path&quot;: &quot;tools/&quot;,
-    &quot;description&quot;: &quot;smart-base&#39;s Tool nodes. The owner, 2026-09-22: \&quot;things like dmn -&gt; fhir questionnaire should be a tool. the skill/tools under smart-base should consolidate under the smart-base/tools/ directory under this repo\&quot;, serving \&quot;want to slowly get smart-base back to a more conventional IG state w/o tooling\&quot;. THIS REVERSES NOTHING THIS FILE&#39;S HEADER SAYS: the header refuses to VENDOR the upstream Python, and a Tool node is a declaration -- what the capability consumes, what it produces, which skill it satisfies -- not a copy of a line of it. Declare here, execute upstream, until the execution moves too. The two Library strippers are deliberately NOT here: they are not DAK-shaped and belong to `fhir-harness` by the placement question in `smart-stack-layering`, and filing them here to tidy the list would be a step&#39;s own name overruling the layering rule.&quot;,
+    &quot;description&quot;: &quot;smart-base&#39;s Tool nodes: DAK-shaped capabilities such as DMN to FHIR Questionnaire. A Tool node is a declaration (what it consumes, what it produces, which skill it satisfies), not a copy of upstream Python; execution stays upstream until it moves too. Capabilities that are not DAK-shaped, such as the two Library strippers, belong to `fhir-harness` by `smart-stack-layering`.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;tools&quot;
     ]
@@ -220,16 +220,16 @@
       &quot;branch&quot;: &quot;cat/cat-harness/qa-reports&quot;,
       &quot;keyedBy&quot;: &quot;commit&quot;
     },
-    &quot;description&quot;: &quot;What auditing THIS instance produced, committed so a consumer can tell \&quot;never audited\&quot; from \&quot;audited clean\&quot; — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 12 files across methodologies (1), scenarios (1), skills (1), tools (9). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.&quot;,
+    &quot;description&quot;: &quot;What auditing this instance produced, committed so a consumer can tell \&quot;never audited\&quot; from \&quot;audited clean\&quot;. Two kinds, each file naming its own via $schema: kg-qa/v1, one per audited subject in a tree mirroring the subject&#39;s path, and one kg-qa-manifest/v1 recording the auditor&#39;s identity for all of them (written by kg-audit.ts). No qa-results/v1 and no witnesses: this instance runs no document build or witness-producing computation. `reproduce`: a dependent audits its own graph, and inheriting these verdicts would attribute one instance&#39;s findings to another.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;qa&quot;
     ]
   },
   {
-    &quot;_comment&quot;: &quot;The WHO SMART IG template&#39;s web theme, DERIVED from the stylesheet the IG actually builds with. Bean `7h3u`, issue #1682, on the owner&#39;s 2026-09-30 ruling: theme it, keep the just-the-docs machinery, WHO&#39;s styling, and the nav on the LEFT rather than their top bar. THE SOURCE IS NOT THIS IG. The WHO SMART Trust IG&#39;s own repository carries no branding CSS at all; its `ig.ini` selects `#local-template`, whose package.json declares `base: who.template.root` -- and that is `WorldHealthOrganization/smart-ig-template`, whose `content/assets/css/who.css` is the branding. It is vendored under `upstream/` so the test reads a COMMITTED artefact rather than the network, and because `local-template` depends on `who.template.root#current`, which can re-skin under us at any time. CC0-1.0, stated by that package&#39;s own package.json, is what makes vendoring permitted. Moved from the WHO SMART Trust IG&#39;s `themes/` in stage D of the smart-* separation (#1767, bean `kg83`): the theme is the TEMPLATE&#39;s, and smart-base is the harness every smart-* IG instantiates. Declared rather than left implicit because an undeclared directory is the `dh4f` defect: every declaration-driven consumer scans nothing and reports a clean run over it.&quot;,
+    &quot;_comment&quot;: &quot;The WHO SMART IG template&#39;s web theme, derived from the stylesheet the IG builds with. The source is not this IG: an IG&#39;s `ig.ini` selects `#local-template`, whose package.json declares `base: who.template.root`, which is `WorldHealthOrganization/smart-ig-template`; its `content/assets/css/who.css` is the branding. It is vendored under `upstream/` so the test reads a committed artefact rather than the network, because `who.template.root#current` can re-skin at any time; its CC0-1.0 licence permits vendoring. The theme is the template&#39;s, so it lives in smart-base, which every smart-* IG instantiates. Keeps just-the-docs&#39; machinery, with WHO&#39;s styling and the nav on the left.&quot;,
     &quot;id&quot;: &quot;smart-base-themes&quot;,
     &quot;path&quot;: &quot;themes/&quot;,
-    &quot;description&quot;: &quot;The WHO SMART IG template&#39;s web theme, measured from `who.template.root`&#39;s own `who.css` and pinned by commit. Colour and geometry only: the IG&#39;s top navbar is deliberately not reproduced, because the owner asked for the nav to stay on the LEFT (2026-09-30). `upstream/who.css` is the vendored source the tests re-read, CC0-1.0.&quot;,
+    &quot;description&quot;: &quot;The WHO SMART IG template&#39;s web theme, measured from `who.template.root`&#39;s own `who.css` and pinned by commit. Colour and geometry only: the IG&#39;s top navbar is not reproduced, because the nav stays on the left. `upstream/who.css` is the vendored source the tests re-read, CC0-1.0.&quot;,
     &quot;_dependents_comment&quot;: &quot;skip, not reproduce -- the same reasoning `who-iris-themes` carries. This entry says where THIS instance&#39;s theme lives; a dependent with no theme of its own needs no themes/ directory, and reproduce would ship an empty one downstream, which is the `dh4f` shape arriving by inheritance.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;themes&quot;
@@ -239,7 +239,7 @@
     &quot;id&quot;: &quot;smart-base-docs&quot;,
     &quot;path&quot;: &quot;docs/&quot;,
     &quot;instanceRoot&quot;: true,
-    &quot;description&quot;: &quot;The reader-facing pages, and the landing page `/smart-base/` serves. Generated by `smart-base:pages` (`fhir-harness/scripts/gen-ig-pages.ts --summary`) from `fhir-artifact-index/index.json` plus this declaration: the index page opens with this instance&#39;s own description and every declared graph with its viewer (the `harness_details.html` include over `site.data.harness`), then the artefact index. WHY IT EXISTS: before it, smart-base declared no renderable graph, so `/smart-base/` published nothing and the navbar tile fell back to the library viewer -- `harness-tiles.ts` reported that as a finding. Owner, 2026-10-01 (#1767): \&quot;smart-base/ needs a landing page\&quot;. NOTHING HERE IS AUTHORED, and nothing here is committed: the pages are built at publish (`builtAtPublish`, because: checkout), as smart-trust&#39;s are. The banner names THIS IG (`smart.who.int.base`) from the index, not the IG the chrome was ingested from, and draws no status watermark because the chrome&#39;s status is smart-trust&#39;s (bean `bamf`).&quot;,
+    &quot;description&quot;: &quot;The reader-facing pages, and the landing page `/smart-base/` serves. Generated by `smart-base:pages` (`fhir-harness/scripts/gen-ig-pages.ts --summary`) from `fhir-artifact-index/index.json` plus this declaration: the index page opens with this instance&#39;s description and every declared graph with its viewer, then the artefact index. Nothing here is authored or committed: the pages are built at publish (`builtAtPublish`). The banner names this IG (`smart.who.int.base`) from the index and draws no status watermark, because the chrome&#39;s status is smart-trust&#39;s.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;docs&quot;,
       &quot;ig-pages&quot;
@@ -253,16 +253,16 @@
       &quot;fhir-harness/scripts/templates/ig-pages/&quot;
     ],
     &quot;igSite&quot;: true,
-    &quot;_comment_igSite&quot;: &quot;Built INTO smart-base&#39;s own IG site at /smart-base/, as the WHO SMART Trust IG&#39;s are -- the same reasoning, recorded on that IG&#39;s docs directory (bean mftp). Owner, 2026-10-05 (paraphrased): changes made for the WHO SMART Trust IG are to be reflected in smart-base and so in every IG built on it, with no drift. The IG&#39;s own home page is the root; the harness is reached through the navbar.&quot;,
+    &quot;_comment_igSite&quot;: &quot;Built into smart-base&#39;s own IG site at /smart-base/, as the WHO SMART Trust IG&#39;s docs are, so a change reaches every IG built on smart-base without drift. The IG&#39;s own home page is the root; the harness is reached through the navbar.&quot;,
     &quot;tile&quot;: {
       &quot;icon&quot;: &quot;docs&quot;
     }
   },
   {
-    &quot;_comment&quot;: &quot;Document KINDS this harness contributes (stage D5 of the smart-* separation, #1767, bean qvxh): named structures of sections a document authored with smart-base follows. The owner&#39;s reframe: L1 and DAK are document kinds inside smart-base, not harness layers. dak.json is GENERATED from DAK_COMPONENTS by smart-base/scripts/gen-document-kinds.ts (gated by smart-base:document-kinds:check); l1.json and dth.json are authored from their sources once those are ingested (beans tyo0, 5blc).&quot;,
+    &quot;_comment&quot;: &quot;Document kinds this harness contributes: named structures of sections a document authored with smart-base follows. L1 and DAK are document kinds inside smart-base, not harness layers. dak.json is generated from DAK_COMPONENTS by smart-base/scripts/gen-document-kinds.ts (gated by smart-base:document-kinds:check); the others are authored from their sources.&quot;,
     &quot;id&quot;: &quot;smart-base-document-kinds&quot;,
     &quot;path&quot;: &quot;document-kinds/&quot;,
-    &quot;description&quot;: &quot;WHO SMART document kinds: the DAK (a fixed structure, the ten components) and, to follow, L1 (semi-fixed) and the Digital Transformation Handbook (an L1 subtype).&quot;,
+    &quot;description&quot;: &quot;WHO SMART document kinds: the DAK (a fixed structure, the ten components), L1 and L1 guideline, the Digital Transformation Handbook (an L1 subtype) and the L2 DTH.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;document-kinds&quot;
     ]
@@ -271,7 +271,7 @@
     &quot;id&quot;: &quot;smart-base-findings&quot;,
     &quot;path&quot;: &quot;findings/&quot;,
     &quot;dependents&quot;: &quot;skip&quot;,
-    &quot;description&quot;: &quot;Findings about the WHO digital-health corpus in `library/` that are recorded for the owner rather than adopted: where sources disagree, each version kept as an alternative with its citation. `dth-term-alternatives.json` is authored (the one DIIG phase figure and its reproductions, approaches recorded as alternatives, and what \&quot;actor\&quot; means in the RA, SMART Guidelines and folio-assistant, with one proposal per layer); `dth-terms.md` is GENERATED from it and the DTH candidate list by `smart-base:dth-terms` (`smart-base/scripts/gen-dth-term-findings.ts`), and `smart-base:dth-terms:check` fails on a stale page or on a quote that no longer matches its source. A SEPARATE directory from `docs/` because `docs/` is wholly generated by `smart-base:pages`, whose check reports any other file there as an orphan. Owner, 2026-10-03 (#1984, bean `5blc`): \&quot;make a docs page under smart-base showing the glossary/terms differences findings\&quot;. `wireframes/` holds the as-is wireframes of the visualisers this instance declares, with what their review found (`check:wireframes` reads the `wireframes/` of every declared `docs` directory): moved here from the platform&#39;s docs on 2026-10-20 (wrong-direction move M3), for the same reason the findings are here and not in `docs/`.&quot;,
+    &quot;description&quot;: &quot;Findings about the WHO digital-health corpus recorded for the owner rather than adopted: where sources disagree, each version is kept as an alternative with its citation. `dth-term-alternatives.json` is authored (the DIIG phase figure and its reproductions, and what \&quot;actor\&quot; means in the RA, SMART Guidelines and folio-assistant, with one proposal per layer); `dth-terms.md` is generated from it and the DTH candidate list by `smart-base:dth-terms` (`smart-base/scripts/gen-dth-term-findings.ts`), and `smart-base:dth-terms:check` fails on a stale page or a quote that no longer matches its source. `wireframes/` holds the as-is wireframes of this instance&#39;s visualisers with their review findings (`check:wireframes` reads the `wireframes/` of every declared `docs` directory). Separate from `docs/`, which `smart-base:pages` wholly generates.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;docs&quot;
     ]
@@ -282,12 +282,12 @@
     &quot;graphTypologies&quot;: [
       &quot;code&quot;
     ],
-    &quot;description&quot;: &quot;The import seam: `platform/index.ts` re-exports every platform symbol this instance uses, so re-pointing the platform is a one-file edit. It sat at `platform.ts` beside the declaration until the cutover (folio-assistant#2320, bean hupw, owner 2026-10-07: &#39;Forks declare it&#39;): a remote mount brings declared directories only, so a root file the mounted code imports never arrived. Declared, it travels with the code that needs it.&quot;
+    &quot;description&quot;: &quot;The import seam: `platform/index.ts` re-exports every platform symbol this instance uses, so re-pointing the platform is a one-file edit. Declared because a remote mount brings declared directories only.&quot;
   },
   {
     &quot;id&quot;: &quot;smart-base-typologies&quot;,
     &quot;path&quot;: &quot;typologies/&quot;,
-    &quot;description&quot;: &quot;The graph typologies smart-base owns, one folio-graph-typology/v1 node per file (bean dmx1), as fhir-harness&#39;s typologies/ are. Among them `web-annex` (formerly `dak-annex`): a WHO publication&#39;s web annexes, L1 or L2, held as data, a kind of smart-base&#39;s own because a web annex is a WHO concept fhir-harness may not name.&quot;,
+    &quot;description&quot;: &quot;The graph typologies smart-base owns, one folio-graph-typology/v1 node per file, as fhir-harness&#39;s typologies/ are: `l1-extraction`, and `web-annex` (a WHO publication&#39;s web annexes, L1 or L2, held as data; smart-base&#39;s because a web annex is a WHO concept fhir-harness may not name).&quot;,
     &quot;graphTypologies&quot;: [
       &quot;typologies&quot;
     ]
@@ -295,7 +295,7 @@
   {
     &quot;id&quot;: &quot;smart-base-validators&quot;,
     &quot;path&quot;: &quot;validators/&quot;,
-    &quot;description&quot;: &quot;The validators smart-base&#39;s code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks, as fhir-harness&#39;s validators/ do (bean riit). Today the two families of the `web-annex` kind (typologies/web-annex.json; `dak-annex` until 2026-10-24): dak-data-dictionary/v1 and dak-swimlanes/v1 (schemas/dak-annexes.ts), unmapped until 2026-10-11 (check:kind-validators:require-all).&quot;,
+    &quot;description&quot;: &quot;The validators smart-base&#39;s code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks, as fhir-harness&#39;s validators/ do: the two families of the `web-annex` kind, dak-data-dictionary/v1 and dak-swimlanes/v1 (schemas/dak-annexes.ts), checked by check:kind-validators:require-all.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;validators&quot;
     ]
@@ -307,7 +307,7 @@
       &quot;code&quot;,
       &quot;schemas&quot;
     ],
-    &quot;description&quot;: &quot;The dak vocabulary in code: `dak-blocks.ts` (the block builders `content-adapters/dak.json` names), `dak-kinds.ts` and `dak-jsonld.ts` (read off `block-kinds/`), `dak-content-type.ts`, `dak.ts`, and the l2-dak-authoring skill&#39;s input/output JSON Schemas. Declared at the cutover (bean hupw) so a remote mount brings it: the mounted adapter and QA checkers name these modules. It also holds the `schemas` graph, declared on 2026-10-26: until then it was found only by the schema reader&#39;s conventional fallback to `&lt;instance&gt;/schemas/`, which applies only while NO directory of the `schemas` kind exists among the instances stacked on smart-base. cat-harness&#39;s `ns/` (`cat-harness-ns`, kind `schemas`) is reproduced into every dependent, so the moment `jsonld:contexts` writes `ns/context/v1.jsonld` into an instance stacked on this one the fallback stopped and smart-base&#39;s schema fields left the extracted glossary, making `check:glossary` pass or fail on the order earlier writers ran in.&quot;
+    &quot;description&quot;: &quot;The dak vocabulary in code: `dak-blocks.ts` (the block builders `content-adapters/dak.json` names), `dak-kinds.ts` and `dak-jsonld.ts` (read off `block-kinds/`), `dak-content-type.ts`, `dak.ts`, and the l2-dak-authoring skill&#39;s input/output JSON Schemas. The mounted adapter and QA checkers name these modules. Also the `schemas` graph, declared so the schema reader never falls back to `&lt;instance&gt;/schemas/` by convention, which stops once any instance stacked on smart-base has a `schemas` directory.&quot;
   },
   {
     &quot;id&quot;: &quot;smart-base-pipeline&quot;,
@@ -315,7 +315,7 @@
     &quot;graphTypologies&quot;: [
       &quot;code&quot;
     ],
-    &quot;description&quot;: &quot;`pipeline/qa-checkers-dak.ts`, the automated DAK checkers `qa-checkers/` names (`DAK_AUTOMATED_CHECKERS`). Declared at the cutover (bean hupw) so a remote mount brings it; it was `content/pipeline/` until every layer&#39;s pipeline moved to `pipeline/` (owner, 2026-10-14, the rnfl move cat-harness-tools made on 2026-10-12).&quot;
+    &quot;description&quot;: &quot;`pipeline/qa-checkers-dak.ts`, the automated DAK checkers `qa-checkers/` names (`DAK_AUTOMATED_CHECKERS`). Declared so a remote mount brings it.&quot;
   },
   {
     &quot;id&quot;: &quot;smart-base-scripts&quot;,
@@ -323,7 +323,7 @@
     &quot;graphTypologies&quot;: [
       &quot;code&quot;
     ],
-    &quot;description&quot;: &quot;This layer&#39;s own scripts and their tests: document-kinds, the DAK components figure, the DTH term findings, the smart-kg L1 extraction and pin, and the fhir-harness exclusions check, and the L1 recommendation scenario candidates with the vocabulary reader they resolve against (bean kvd2), whose test fixtures and measles run sit under `scripts/fixtures/`. It also holds `dth-init.ts`, which writes a new DTH repository&#39;s wiring and moved here from folio-assistant-core on 2026-11-01. Declared at the cutover (bean hupw) so a remote mount brings them.&quot;
+    &quot;description&quot;: &quot;This layer&#39;s own scripts and their tests: document kinds, the DAK components figure, the DTH term findings, the smart-kg L1 extraction, the fhir-harness exclusions check, the L1 recommendation scenario candidates with the vocabulary reader they resolve against (fixtures and the measles run under `scripts/fixtures/`), the process renderer, and `dth-init.ts`, which writes a new DTH repository&#39;s wiring. Declared so a remote mount brings them.&quot;
   },
   {
     &quot;id&quot;: &quot;smart-base-templates&quot;,
@@ -331,7 +331,7 @@
     &quot;graphTypologies&quot;: [
       &quot;code&quot;
     ],
-    &quot;description&quot;: &quot;Files this layer&#39;s tools WRITE INTO a repository they set up, kept as real files rather than strings inside a script. `dth/` holds the AGENTS.md, session-start hook, PR checks workflow and other wiring that `scripts/dth-init.ts` copies into a new DTH repository (`TEMPLATE_DIR`). They moved here from folio-assistant-core&#39;s `templates/dth/` on 2026-11-01, because they name smart-base and who-iris, which sit above core.&quot;
+    &quot;description&quot;: &quot;Files this layer&#39;s tools write into a repository they set up, kept as real files rather than strings inside a script. `dth/` holds the AGENTS.md, session-start hook, PR checks workflow and other wiring that `scripts/dth-init.ts` copies into a new DTH repository (`TEMPLATE_DIR`).&quot;
   },
   {
     &quot;id&quot;: &quot;smart-base-kg&quot;,
@@ -339,7 +339,7 @@
     &quot;graphTypologies&quot;: [
       &quot;code&quot;
     ],
-    &quot;description&quot;: &quot;The SMART Guidelines knowledge-graph schema, L1 3.0, as Zod: `src/` (the L1 layer and its `l1-library` extension, the graph-document shape, `validate.ts`, `kgid.ts`, the offline JSON-LD loader and the emitters), `test/`, and `generated/l1/` (the ontology JSON, the document JSON Schema and the JSON-LD contexts, written by `src/emit.ts`), with its own `package.json` for `kg.yml`. The emitter also writes the IG&#39;s FSH (`input/fsh/models/KGL1*.fsh`, `input/fsh/codesystems/KG*.fsh`, `input/fsh/valuesets/KG*VS.fsh`), which stays at the repository root with the rest of the IG. Moved here from the repository root `kg/` on the owner&#39;s ruling F1 (2026-10-15): `scripts/l1-recommendation-candidates.ts` imports `kg/src/`, and a remote mount brings declared directories only, so a root `kg/` never arrived in an index.&quot;
+    &quot;description&quot;: &quot;The SMART Guidelines knowledge-graph schema, L1 3.0, as Zod: `src/` (the L1 layer and its `l1-library` extension, the graph-document shape, `validate.ts`, `kgid.ts`, the offline JSON-LD loader and the emitters), `test/`, and `generated/l1/` (the ontology JSON, the document JSON Schema and the JSON-LD contexts, written by `src/emit.ts`), with its own `package.json` for `kg.yml`. The emitter also writes the IG&#39;s FSH (`input/fsh/models/KGL1*.fsh`, `input/fsh/codesystems/KG*.fsh`, `input/fsh/valuesets/KG*VS.fsh`) at the repository root. `scripts/l1-recommendation-candidates.ts` imports `kg/src/`.&quot;
   },
   {
     &quot;id&quot;: &quot;smart-base-skills&quot;,
@@ -347,7 +347,7 @@
     &quot;graphTypologies&quot;: [
       &quot;skills&quot;
     ],
-    &quot;description&quot;: &quot;The authoring-who-smart-guidelines skill package, its skill definitions and the two WHO voices; `skills/skills.json` declares the subgroups. Declared at the cutover (bean hupw), under the id the skill docs already used for it, so a remote mount brings it.&quot;
+    &quot;description&quot;: &quot;The authoring-who-smart-guidelines skill package, its skill definitions and the two WHO voices; `skills/skills.json` declares the subgroups.&quot;
   },
   {
     &quot;id&quot;: &quot;smart-base-scenarios&quot;,
@@ -355,12 +355,12 @@
     &quot;graphTypologies&quot;: [
       &quot;scenarios&quot;
     ],
-    &quot;description&quot;: &quot;`scenarios/roles.json`: the roles this layer&#39;s processes bind. Declared at the cutover (bean hupw) so a remote mount brings it.&quot;
+    &quot;description&quot;: &quot;`scenarios/roles.json`: the roles this layer&#39;s processes bind. Declared so a remote mount brings it.&quot;
   },
   {
     &quot;id&quot;: &quot;smart-base-code-lists&quot;,
     &quot;path&quot;: &quot;code-lists/&quot;,
-    &quot;description&quot;: &quot;The GRADE code lists — certainty of evidence, reasons to rate certainty down and up, the Evidence-to-Decision criteria, and recommendation direction and strength — one `\&quot;$schema\&quot;: \&quot;folio-code-list/v1\&quot;` file per list, read with the `grade` skill; and the SMART Guidelines KG class lists `sgkg-l1-classes.json` and `sgkg-l2-classes.json`, the class ids document kinds name in `modelledBy` (read by `smart-base/scripts/kg-classes.ts`; taken from the deprecated smart-kg on 2026-10-23, which retired the pin and the `external-schemas/` directory, bean pebe). Moved down from cat-harness/code-lists/ on 2026-10-10 (placement audit, bean lthi; owner: &#39;merge and go&#39;): GRADE is the WHO guideline method this layer authors with, not a harness concept. The harness&#39;s generic lists stay there and reach this instance through the dependency overlay; this directory holds only lists of its own, as the harness entry says a dependent should.&quot;,
+    &quot;description&quot;: &quot;The GRADE code lists (certainty of evidence, reasons to rate certainty down and up, the Evidence-to-Decision criteria, and recommendation direction and strength), one `\&quot;$schema\&quot;: \&quot;folio-code-list/v1\&quot;` file per list, read with the `grade` skill; and the SMART Guidelines KG class lists `sgkg-l1-classes.json` and `sgkg-l2-classes.json`, the class ids document kinds name in `modelledBy` (read by `smart-base/scripts/kg-classes.ts`). Only this layer&#39;s own lists; the harness&#39;s generic lists reach it through the dependency overlay.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;code-list&quot;
     ]
@@ -368,12 +368,12 @@
   {
     &quot;id&quot;: &quot;glossary&quot;,
     &quot;path&quot;: &quot;glossary/&quot;,
-    &quot;description&quot;: &quot;SMART Base&#39;s generated glossary (`glossary/generated/smart-base/`): candidate `folio-glossary/v1` schemes extracted from this layer&#39;s tools, skills, BPMN activities and schema fields by `glossary:page`. Moved here from `folio-assistant-core/glossary/generated/smart-base/` on the owner&#39;s 2026-10-20 ruling (bean rfev: \&quot;Move to smart-base\&quot;) so core holds no base vocabulary.&quot;,
+    &quot;description&quot;: &quot;SMART Base&#39;s generated glossary (`glossary/generated/smart-base/`): candidate `folio-glossary/v1` schemes extracted from this layer&#39;s tools, skills, BPMN activities and schema fields by `glossary:page`.&quot;,
     &quot;graphTypologies&quot;: [
       &quot;glossary&quot;
     ]
   }
-]</pre></dd><dt>_directories_comment</dt><dd>The list above is the count; this comment said FIVE entries while there were six, and gives none now. `scenarios/` is declared now that it holds `roles.json` (bean hupw); a declared-but-absent directory would be the `dh4f` defect, where every consumer scans nothing and reports a clean run over it.</dd><dt>assets</dt><dd><pre>[
+]</pre></dd><dt>_directories_comment</dt><dd>Every directory declared here exists and holds content; a declared-but-absent directory would make every consumer scan nothing and report a clean run.</dd><dt>assets</dt><dd><pre>[
   {
     &quot;id&quot;: &quot;agent-instructions&quot;,
     &quot;src&quot;: &quot;AGENTS.md&quot;,
@@ -386,16 +386,16 @@
     &quot;src&quot;: &quot;README.md&quot;,
     &quot;role&quot;: &quot;instance-readme&quot;,
     &quot;title&quot;: &quot;smart-base&quot;,
-    &quot;description&quot;: &quot;What this layer holds, where each document came from, and how to re-derive an entry.&quot;
+    &quot;description&quot;: &quot;What this layer holds and how to re-derive an entry.&quot;
   },
   {
     &quot;id&quot;: &quot;checkout-scripts&quot;,
     &quot;src&quot;: &quot;package.json&quot;,
     &quot;role&quot;: &quot;checkout-scripts&quot;,
     &quot;title&quot;: &quot;package.json — smart-base&quot;,
-    &quot;description&quot;: &quot;The checkout scripts this instance&#39;s code runs, under `checkoutScripts`. Each command is relative to the downstream checkout root. A downstream that mounts this instance reads them with `bun run cat` and `check:script-placement` only while this file&#39;s sha256 matches the mount lock (owner, 2026-10-07: Option A, by reference). folio-assistant#2448 moved them here from its root manifest.&quot;
+    &quot;description&quot;: &quot;The checkout scripts this instance&#39;s code runs, under `checkoutScripts`, each relative to the downstream checkout root. A downstream that mounts this instance reads them with `bun run cat` and `check:script-placement` only while this file&#39;s sha256 matches the mount lock.&quot;
   }
-]</pre></dd><dt>_visualisers_comment</dt><dd>THE VISUALISERS THIS HARNESS DECLARES, at its own level (owner, 2026-10-09: &quot;I still want the harness to be where specific visualizers/pages are declared for the harness at the level … Need harness to declare visualizer is renderedBy&quot;). `artifact-index` is the artefact index of the SMART IGs, drawn by fhir-harness&#39;s `ig-pages` Tool, by KIND and per instance: &lt;base&gt;/smart-base/artifact-index/ opens this IG&#39;s own artifacts page, and &lt;base&gt;/smart-base/artifact-index/&lt;instance&gt;/ each covered IG&#39;s (smart-trust, smart-immunizations), whose own repositories declare no visualiser yet. `l1-extraction` is this layer&#39;s own kind (owner, 2026-10-16: &quot;l1-extraction is part of smart-base&quot;), drawn by smart-base&#39;s `l1-extraction-pages` Tool per instance: &lt;base&gt;/smart-base/l1-extraction/&lt;instance&gt;/ shows what each declared extraction holds (smart-base&#39;s handbook extraction, smart-immunizations&#39; measles example), unknown where the directory is not in the build. Routes computed by visualiserRoute. Not `artifacts`: the IG already publishes artifacts.html beside it, and check:visualiser-routes refuses a route a harness&#39;s own served directory also answers. Until then the IG&#39;s front-matter page said `renders: [smart-base/fhir-artifact-index]`, which is the page claiming the directory.</dd><dt>visualisers</dt><dd><pre>[
+]</pre></dd><dt>_visualisers_comment</dt><dd>The visualisers this harness declares. `artifact-index` is the artefact index of the SMART IGs, drawn by fhir-harness&#39;s `ig-pages` Tool per instance: &lt;base&gt;/smart-base/artifact-index/ opens this IG&#39;s own artifacts page, and &lt;base&gt;/smart-base/artifact-index/&lt;instance&gt;/ each covered IG&#39;s (smart-trust, smart-immunizations). `l1-extraction` is this layer&#39;s own kind, drawn by smart-base&#39;s `l1-extraction-pages` Tool per instance: &lt;base&gt;/smart-base/l1-extraction/&lt;instance&gt;/ shows what each declared extraction holds, or unknown where the directory is not in the build. Routes are computed by visualiserRoute. Not `artifacts`: the IG already publishes artifacts.html beside it, and check:visualiser-routes refuses a route a harness&#39;s own served directory also answers.</dd><dt>visualisers</dt><dd><pre>[
   {
     &quot;id&quot;: &quot;artifact-index&quot;,
     &quot;renderedBy&quot;: &quot;ig-pages&quot;,
@@ -417,24 +417,24 @@
 ]</pre></dd><dt>needs</dt><dd><pre>[
   &quot;fhir-harness&quot;,
   &quot;who-iris&quot;
-]</pre></dd><dt>_canonicalUrl_comment</dt><dd>smart-base&#39;s published base, as `sushi-config.yaml` declares it (`canonical: http://smart.who.int/base`). Added 2026-09-22 with `tools/`, because a Tool node&#39;s I/O type IRIs are minted against this at load and Zod refuses a relative one. It is READ from upstream rather than chosen here, so it is a fact about smart-base and not a decision about where this staging directory publishes.</dd><dt>canonicalUrl</dt><dd>http://smart.who.int/base</dd><dt>_needs_comment</dt><dd>ADDED who-iris 2026-10-30 (who-iris#107): the WHO IRIS publications smart-base cites (DIIG, the classifications, the digital transformation handbooks) moved there, so smart-base&#39;s voices, methodologies and l1-extraction read that corpus. REPOINTED 2026-09-22 (issue #975) from `folio-assistant-core` to `fhir-harness`, per the owner&#39;s stack ruling. It read `folio-assistant-core` because it was staged (PR #881) BEFORE `fhir-harness` existed, and taking no position on the pipeline layering was that PR&#39;s explicit scope. `needs` governs the LAYER ORDER: `dependency-order.ts` topologically sorts on it and `harness-tiles.ts` builds the LHS navbar spine from it. It does NOT compose the skill or content overlay -- that is `dependencies.folioAssistant` in `&lt;name&gt;.config.json`, walked recursively by `resolveSkillDirs`, and the two are different mechanisms with different files. MEASURED 2026-09-22 rather than assumed, after this comment first claimed otherwise: with `needs` set correctly, `resolveSkillDirs` still returns each instance&#39;s OWN skills and nothing from the layer below. No `smart-*` instance declares config dependencies at all, so no overlay composes anywhere in this stack -- bean recorded, not fixed here.</dd><dt>taskIo</dt><dd><pre>{
+]</pre></dd><dt>_canonicalUrl_comment</dt><dd>smart-base&#39;s published base, read from `sushi-config.yaml` (`canonical: http://smart.who.int/base`). A Tool node&#39;s I/O type IRIs are minted against it at load, and Zod refuses a relative one.</dd><dt>canonicalUrl</dt><dd>http://smart.who.int/base</dd><dt>_needs_comment</dt><dd>`needs` governs the layer order: `dependency-order.ts` sorts on it and `harness-tiles.ts` builds the navbar spine from it. smart-base needs `fhir-harness` (the layer below) and `who-iris`, which holds the WHO IRIS publications its voices, methodologies and l1-extraction cite. `needs` does not compose the skill or content overlay: that is `dependencies.folioAssistant` in `&lt;name&gt;.config.json`, walked by `resolveSkillDirs`. No `smart-*` instance declares config dependencies, so `resolveSkillDirs` returns each instance&#39;s own skills only.</dd><dt>taskIo</dt><dd><pre>{
   &quot;smart-base:diig-figure:check&quot;: {
     &quot;outputs&quot;: [],
-    &quot;because&quot;: &quot;python; `write_text` only without `--check` — measured 2026-10-01 (bean xpcu); moved out of cat-harness/scripts/task-io.ts 2026-10-06 (bean 0r7u)&quot;
+    &quot;because&quot;: &quot;python; `write_text` only without `--check`&quot;
   },
   &quot;smart-base:pages:check&quot;: {
     &quot;inputs&quot;: [
       &quot;{tracked}&quot;
     ],
     &quot;outputs&quot;: [],
-    &quot;because&quot;: &quot;measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)&quot;
+    &quot;because&quot;: &quot;writes nothing under `--check`&quot;
   },
   &quot;smart-base:document-kinds:check&quot;: {
     &quot;inputs&quot;: [
       &quot;{tracked}&quot;
     ],
     &quot;outputs&quot;: [],
-    &quot;because&quot;: &quot;measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)&quot;
+    &quot;because&quot;: &quot;writes nothing under `--check`&quot;
   },
   &quot;smart-base:l1-scenarios:check&quot;: {
     &quot;inputs&quot;: [
@@ -442,20 +442,20 @@
     ],
     &quot;outputs&quot;: [],
     &quot;writer&quot;: &quot;smart-base:l1-scenarios&quot;,
-    &quot;because&quot;: &quot;exits before either writeFileSync under `--check` -- measured 2026-10-10 for the measles run of the same script (bean kvd2), which moved to the WHO SMART Immunizations IG with its data; this is the handbook example&#39;s run (9789240116191-eng), the one smart-base keeps&quot;
+    &quot;because&quot;: &quot;exits before either writeFileSync under `--check`; this is the handbook example&#39;s run (9789240116191-eng)&quot;
   },
   &quot;smart-base:dth-terms:check&quot;: {
     &quot;inputs&quot;: [
       &quot;{tracked}&quot;
     ],
     &quot;outputs&quot;: [],
-    &quot;because&quot;: &quot;measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u)&quot;
+    &quot;because&quot;: &quot;writes nothing under `--check`&quot;
   },
   &quot;smart-base:smart-kg-l1:check&quot;: {
     &quot;outputs&quot;: [],
     &quot;writer&quot;: &quot;smart-base:smart-kg-l1:all&quot;,
     &quot;afterMerge&quot;: true,
-    &quot;because&quot;: &quot;`continue`s before `writeFileSync` under `check` — measured 2026-10-01 (bean xpcu); moved from cat-harness/scripts/task-io.ts to its owning instance 2026-10-06 (bean 0r7u). Writer: `--all` rewrites every entry `--check` examines (bean wczm); afterMerge replaces merge-train&#39;s hard-coded per-entry re-extract (bean 0r7u)&quot;
+    &quot;because&quot;: &quot;`continue`s before `writeFileSync` under `check`. Writer: `--all` rewrites every entry `--check` examines; afterMerge re-extracts per entry&quot;
   }
 }</pre></dd><dt>contentTranslations</dt><dd><pre>[
   {
@@ -534,22 +534,22 @@
     {
       &quot;script&quot;: &quot;smart-base:pages:check&quot;,
       &quot;kind&quot;: &quot;covered-by&quot;,
-      &quot;reason&quot;: &quot;covered-by `smart:pages`, which every reader job in the index checkout runs straight after the mount (cutover 1ad43df727, bean hupw). This `:check` compared a committed copy of the generated pages; since the cutover the pages are built from the mount and never committed, so there is no copy to compare and the build itself is the gate. folio-assistant#2518.&quot;
+      &quot;reason&quot;: &quot;covered-by `smart:pages`, which every reader job in the index checkout runs straight after the mount. The pages are built from the mount and never committed, so there is no copy for this `:check` to compare; the build itself is the gate.&quot;
     },
     {
       &quot;script&quot;: &quot;check:dak-annexes&quot;,
       &quot;kind&quot;: &quot;covered-by&quot;,
-      &quot;reason&quot;: &quot;covered-by `check:web-annexes`, which `code-quality-gates.yml` runs: this is the same script under its name before the `web-annex` widening (2026-10-24), kept as an alias for callers that still use it. Running both would judge the same annexes twice. folio-assistant#2681.&quot;
+      &quot;reason&quot;: &quot;covered-by `check:web-annexes`, which `code-quality-gates.yml` runs: this is the same script under an older name, kept as an alias for callers that still use it. Running both would judge the same annexes twice.&quot;
     }
   ]
-}</pre></dd><dt>_builtAtPublish_comment</dt><dd>Owner, 2026-10-14 (B1; schemas/built-at-publish.ts in cat-harness). This instance&#39;s JSON-LD @context is generated by `jsonld:contexts` (cat-harness-tools scripts/gen-instance-contexts.ts) from the prefixes and content-context terms its documents use, flattened with the prefix tables of every instance it needs. Those tables are read at the CHECKOUT&#39;s pins, not at pins this instance&#39;s commit names, so no commit of it can hold the file current: it is built at publish and never committed (bean folio-assistant-63q4).</dd><dt>builtAtPublish</dt><dd><pre>[
+}</pre></dd><dt>_builtAtPublish_comment</dt><dd>This instance&#39;s JSON-LD @context is generated by `jsonld:contexts` (cat-harness-tools scripts/gen-instance-contexts.ts) from the prefixes and content-context terms its documents use, flattened with the prefix tables of every instance it needs. Those tables are read at the checkout&#39;s pins, so no commit can hold the file current: it is built at publish and never committed (schema: cat-harness&#39;s built-at-publish.ts).</dd><dt>builtAtPublish</dt><dd><pre>[
   {
     &quot;path&quot;: &quot;fhir-artifact-index/index.json&quot;,
     &quot;writer&quot;: [
       &quot;ig-index:build&quot;
     ],
     &quot;because&quot;: &quot;checkout&quot;,
-    &quot;reason&quot;: &quot;the IG&#39;s artefact index: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance (fhir-harness#124)&quot;
+    &quot;reason&quot;: &quot;the IG&#39;s artefact index: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance&quot;
   },
   {
     &quot;path&quot;: &quot;fhir-artifact-index/menu.json&quot;,
@@ -557,7 +557,7 @@
       &quot;ig-index:build&quot;
     ],
     &quot;because&quot;: &quot;checkout&quot;,
-    &quot;reason&quot;: &quot;the IG&#39;s menu: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance (fhir-harness#124)&quot;
+    &quot;reason&quot;: &quot;the IG&#39;s menu: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance&quot;
   },
   {
     &quot;path&quot;: &quot;fhir-artifact-index/releases.json&quot;,
@@ -565,7 +565,7 @@
       &quot;ig-index:build&quot;
     ],
     &quot;because&quot;: &quot;checkout&quot;,
-    &quot;reason&quot;: &quot;the IG&#39;s release list: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance (fhir-harness#124)&quot;
+    &quot;reason&quot;: &quot;the IG&#39;s release list: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance&quot;
   },
   {
     &quot;path&quot;: &quot;fhir-artifact-index/package.tgz&quot;,
@@ -573,7 +573,7 @@
       &quot;ig-index:build&quot;
     ],
     &quot;because&quot;: &quot;checkout&quot;,
-    &quot;reason&quot;: &quot;the Publisher-shaped package the JSON view pages read each resource from: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance (fhir-harness#124)&quot;
+    &quot;reason&quot;: &quot;the Publisher-shaped package the JSON view pages read each resource from: built by fhir-harness&#39;s ig-index:build from the IG&#39;s AST (restored from the IG repository&#39;s AST cache) and its own sushi-config.yaml, so it moves when the IG&#39;s default branch or its AST cache moves, not with a commit of this instance&quot;
   },
   {
     &quot;path&quot;: &quot;document-kinds/dak.coverage.smart-base.json&quot;,
@@ -582,7 +582,7 @@
     ],
     &quot;because&quot;: &quot;checkout&quot;,
     &quot;directory&quot;: &quot;smart-base-document-kinds&quot;,
-    &quot;reason&quot;: &quot;the DAK view of this IG&#39;s artefact index, which is itself built at publish (fhir-artifact-index/index.json above), so the report moves with the index and is built after it (fhir-harness#124)&quot;
+    &quot;reason&quot;: &quot;the DAK view of this IG&#39;s artefact index, which is itself built at publish (fhir-artifact-index/index.json above), so the report moves with the index and is built after it&quot;
   },
   {
     &quot;path&quot;: &quot;ns/context/v1.jsonld&quot;,

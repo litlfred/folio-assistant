@@ -18,7 +18,7 @@
         "required": [
           "packageId",
           "path",
-          "dakApi"
+          "sidecarApi"
         ],
         "properties": {
           "packageId": {
@@ -28,7 +28,7 @@
             "type": "string",
             "description": "The fhir-artifact-index graph ig-artifact-ingestion wrote."
           },
-          "dakApi": {
+          "sidecarApi": {
             "type": "string",
             "enum": [
               "present",

@@ -16,7 +16,8 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "The import seam: `platform/index.ts` re-exports every platform symbol this instance uses, so re-pointing the platform is a one-file edit. It sat at `platform.ts` beside the declaration until the cutover (folio-assistant#2320, bean hupw, owner 2026-10-07: 'Forks declare it'): a remote mount brings declared directories only, so a root file the mounted code imports never arrived. Declared, it travels with the code that needs it.",
+      "description": "The import seam: `platform/index.ts` re-exports every platform symbol this instance uses, so re-pointing the platform is a one-file edit. Declared because a remote mount brings declared directories only.",
+      "readmePath": "platform/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-platform"
     }

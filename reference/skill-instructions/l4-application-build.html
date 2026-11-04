@@ -122,9 +122,9 @@ the L2 says?) and the FHIR modeller (does it conform to L3?).</p></blockquote><h
 <code class="language-plaintext highlighter-rouge">chosen</code>; while the choice is pending, the agent’s recommended one. A
 later choice of another candidate marks the screens built from the first
 <code class="language-plaintext highlighter-rouge">rejected-upstream</code>, as any derived asset.</li><li><strong>Build against the IG build, not its publication.</strong> The stage-6 IG need
-not be published: publication runs on in <code class="language-plaintext highlighter-rouge">dak-l3-ig.bpmn</code> and is not on
-this path. Use the IG’s canonicals and resources; the application adds no
-profile or value set of its own (one it needs is a stage-6 finding).</li><li><strong>Test.</strong> One <code class="language-plaintext highlighter-rouge">conformance</code> test per IG example and test case the
+not be published. Use the IG’s canonicals and resources; the application
+adds no profile or value set of its own (one it needs is a stage-6
+finding).</li><li><strong>Test.</strong> One <code class="language-plaintext highlighter-rouge">conformance</code> test per IG example and test case the
 application touches, and one <code class="language-plaintext highlighter-rouge">scenario</code> walk per L2 user scenario in the
 brief’s <code class="language-plaintext highlighter-rouge">l2Processes</code>. Failing tests are reported, not hidden.</li><li><strong>Stage it.</strong> The application is reviewed running, on the staged preview,
 beside the chosen wireframe of each screen.</li></ol><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill

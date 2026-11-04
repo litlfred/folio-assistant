@@ -7,12 +7,12 @@
     {
       "@id": "http://smart.who.int/base/tools/bpmn-to-fsh.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Derive FSH from a DAK's BPMN business processes — the render direction, of which the extractors are the inverse.",
+      "description": "Derive FSH from a DAK's BPMN business processes (the inverse of the extractors).",
       "install": {
         "none": true
       },
       "invoke": {
-        "shell": "python3 scripts/smart-base-transform.py"
+        "shell": "python3 smart-base/scripts/smart-base-transform.py bpmn2fsh <file.bpmn|dir> [-o OUTDIR]"
       },
       "io": {
         "inputs": [

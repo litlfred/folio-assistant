@@ -7,7 +7,7 @@
     {
       "@id": "http://smart.who.int/base/tools/l1-recommendation-scenarios.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "One smart-kg L2 `user-scenario` candidate per L1 recommendation, joined to a `persona` and a `business-process` by the edges smart-kg L2 already licenses, from an agent's `l1-scenario-mapping/v1`. Reuses the guide's own personas and processes, then smart-base's generic `DAK.Persona.*`; otherwise a glossary candidate or `could-not-determine`, each with a WARNING. Never invents a process.",
+      "description": "From an agent's `l1-scenario-mapping/v1`, write one smart-kg L2 `user-scenario` candidate per L1 recommendation, joined to a `persona` and a `business-process` by smart-kg L2's existing edges. Reuses the guide's own personas and processes, then smart-base's generic `DAK.Persona.*`; otherwise a glossary candidate or `could-not-determine`, each with a WARNING. Never invents a process.",
       "install": {
         "none": true
       },
@@ -17,7 +17,7 @@
       "io": {
         "inputs": [
           {
-            "description": "The recommendations: the first tool's L1 3.0 graph, or an authored L1 YAML.",
+            "description": "The recommendations: `l1-recommendation-candidates`' L1 3.0 graph, or an authored L1 YAML.",
             "name": "l1",
             "required": true,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -29,7 +29,7 @@
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
           },
           {
-            "description": "smart-base's generic personas, the second rung.",
+            "description": "smart-base's generic personas (second rung).",
             "name": "generic",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"

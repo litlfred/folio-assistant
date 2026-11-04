@@ -112,25 +112,18 @@ SYSTEM that <a href="../../reference/skill-instructions/evidence-appraisal.html"
 applies when a folio declares GRADE. Origin: the GRADE Working Group
 (gradeworkinggroup.org); Evidence-to-Decision frameworks per Alonso-Coello et
 al., <em>BMJ</em> 2016; WHO applies it through the <em>WHO Handbook for Guideline
-Development</em>.</p></blockquote><p><code class="language-plaintext highlighter-rouge">evidence-appraisal</code> is the procedure and deliberately names no system — which
-one applies is the folio’s commitment. This is one system a WHO folio can
-declare. It applies to certainty of evidence for a <strong>health recommendation</strong>,
-over a body of evidence answering one PICO question — not to platform or
-architecture decisions, which are <code class="language-plaintext highlighter-rouge">kepner-tregoe</code>, recorded per <code class="language-plaintext highlighter-rouge">madr</code>.</p><p><strong>Every value below is a code, and the codes are nodes.</strong> Each vocabulary is a
-<code class="language-plaintext highlighter-rouge">folio-code-list/v1</code> in this instance’s <code class="language-plaintext highlighter-rouge">code-lists/</code>, with a definition and a
-source per code, published as SKOS beside the glossary. Record a code, never a
-paraphrase of one:</p><div class="table-wrapper"><table><thead><tr><th>list</th><th>codes</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">grade-certainty</code></td><td><code class="language-plaintext highlighter-rouge">high</code> · <code class="language-plaintext highlighter-rouge">moderate</code> · <code class="language-plaintext highlighter-rouge">low</code> · <code class="language-plaintext highlighter-rouge">very-low</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">grade-rating-down</code></td><td><code class="language-plaintext highlighter-rouge">risk-of-bias</code> · <code class="language-plaintext highlighter-rouge">inconsistency</code> · <code class="language-plaintext highlighter-rouge">indirectness</code> · <code class="language-plaintext highlighter-rouge">imprecision</code> · <code class="language-plaintext highlighter-rouge">publication-bias</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">grade-rating-up</code></td><td><code class="language-plaintext highlighter-rouge">large-effect</code> · <code class="language-plaintext highlighter-rouge">dose-response</code> · <code class="language-plaintext highlighter-rouge">plausible-confounding</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">grade-etd-criterion</code></td><td>the twelve Evidence-to-Decision criteria</td></tr><tr><td><code class="language-plaintext highlighter-rouge">grade-recommendation-direction</code></td><td><code class="language-plaintext highlighter-rouge">for</code> · <code class="language-plaintext highlighter-rouge">against</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">grade-recommendation-strength</code></td><td><code class="language-plaintext highlighter-rouge">strong</code> · <code class="language-plaintext highlighter-rouge">conditional</code></td></tr></tbody></table></div><p><em>Moved 2026-09-24 (bean <code class="language-plaintext highlighter-rouge">wg7r</code>) from <code class="language-plaintext highlighter-rouge">smart-kg/methodologies/grade.md</code>. The
-owner: “needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that
-is its own repo already”. The method is unchanged; its enumerations became code
-lists, so a recorded grade is a code with a definition rather than a string.</em></p><h2 id="it-has-a-slot-waiting"><a href="#it-has-a-slot-waiting" class="anchor-heading" aria-labelledby="it-has-a-slot-waiting"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> It has a slot waiting
+Development</em>.</p></blockquote><p><code class="language-plaintext highlighter-rouge">evidence-appraisal</code> is the procedure and names no system; the folio declares
+one. GRADE applies to certainty of evidence for a <strong>health recommendation</strong>,
+over the body of evidence answering one PICO question — not to platform or
+architecture decisions, which are <code class="language-plaintext highlighter-rouge">kepner-tregoe</code>, recorded per <code class="language-plaintext highlighter-rouge">madr</code>.</p><p><strong>Every value below is a code.</strong> Each vocabulary is a <code class="language-plaintext highlighter-rouge">folio-code-list/v1</code> in
+this instance’s <code class="language-plaintext highlighter-rouge">code-lists/</code>, with a definition and source per code,
+published as SKOS beside the glossary. Record a code, never a paraphrase:</p><div class="table-wrapper"><table><thead><tr><th>list</th><th>codes</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">grade-certainty</code></td><td><code class="language-plaintext highlighter-rouge">high</code> · <code class="language-plaintext highlighter-rouge">moderate</code> · <code class="language-plaintext highlighter-rouge">low</code> · <code class="language-plaintext highlighter-rouge">very-low</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">grade-rating-down</code></td><td><code class="language-plaintext highlighter-rouge">risk-of-bias</code> · <code class="language-plaintext highlighter-rouge">inconsistency</code> · <code class="language-plaintext highlighter-rouge">indirectness</code> · <code class="language-plaintext highlighter-rouge">imprecision</code> · <code class="language-plaintext highlighter-rouge">publication-bias</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">grade-rating-up</code></td><td><code class="language-plaintext highlighter-rouge">large-effect</code> · <code class="language-plaintext highlighter-rouge">dose-response</code> · <code class="language-plaintext highlighter-rouge">plausible-confounding</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">grade-etd-criterion</code></td><td>the twelve Evidence-to-Decision criteria</td></tr><tr><td><code class="language-plaintext highlighter-rouge">grade-recommendation-direction</code></td><td><code class="language-plaintext highlighter-rouge">for</code> · <code class="language-plaintext highlighter-rouge">against</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">grade-recommendation-strength</code></td><td><code class="language-plaintext highlighter-rouge">strong</code> · <code class="language-plaintext highlighter-rouge">conditional</code></td></tr></tbody></table></div><h2 id="it-has-a-slot-waiting"><a href="#it-has-a-slot-waiting" class="anchor-heading" aria-labelledby="it-has-a-slot-waiting"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> It has a slot waiting
   
   
-</h2><p><code class="language-plaintext highlighter-rouge">processes/evidence-retrieval.bpmn</code> frames the question as PICO, retrieves
-candidates across three classes, and runs <code class="language-plaintext highlighter-rouge">Task_AppraiseGrade</code> — <em>“Certainty of
-evidence per the grading system the folio declares. The grade attaches to the
-BODY of evidence for one PICO question, not to an individual citation.”</em> The
-slot stays pluggable, and that is the point: GRADE fills it when declared, and
-nothing in the diagram names it.</p><h2 id="certainty-in-four-levels"><a href="#certainty-in-four-levels" class="anchor-heading" aria-labelledby="certainty-in-four-levels"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Certainty, in four levels
+</h2><p>folio-assistant-core’s <code class="language-plaintext highlighter-rouge">processes/content/evidence-retrieval.bpmn</code> frames the
+question as PICO, retrieves candidates across three classes, and runs
+<code class="language-plaintext highlighter-rouge">Task_AppraiseGrade</code> — <em>“Certainty of evidence per the grading system the folio
+declares.”</em> GRADE fills that slot when declared; the diagram does not name it.</p><h2 id="certainty-in-four-levels"><a href="#certainty-in-four-levels" class="anchor-heading" aria-labelledby="certainty-in-four-levels"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Certainty, in four levels
   
   
 </h2><p><strong>High · Moderate · Low · Very low</strong> — the certainty that the true effect lies
@@ -138,9 +131,8 @@ close to the estimate. Randomised trials start High and observational evidence
 starts Low; then:</p><ul><li><strong>rated down</strong> for risk of bias, inconsistency, indirectness, imprecision,
 publication bias;</li><li><strong>rated up</strong> for a large effect, a dose-response gradient, or where plausible
 confounding would have reduced an observed effect.</li></ul><p><strong>The grade attaches to the body of evidence per outcome, never to a citation.</strong>
-A single paper does not have a GRADE. The BPMN task already encodes this by
-sitting after the join rather than inside the fan-out, and it is the distinction
-most often got wrong. Record every rating-down and rating-up with the code that
+A single paper does not have a GRADE; the BPMN task sits after the join, not
+inside the fan-out. Record every rating-down and rating-up with the code that
 moved it — a certainty with no reasons cannot be re-examined.</p><h2 id="evidence-to-decision-certainty-is-one-criterion-of-several"><a href="#evidence-to-decision-certainty-is-one-criterion-of-several" class="anchor-heading" aria-labelledby="evidence-to-decision-certainty-is-one-criterion-of-several"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Evidence-to-Decision: certainty is one criterion of several
   
   
@@ -149,23 +141,18 @@ clinical and public-health recommendations judges each criterion explicitly:
 problem priority · desirable effects · undesirable effects · certainty of
 evidence · values · balance of effects · resources required · certainty of the
 evidence of required resources · cost-effectiveness · equity · acceptability ·
-feasibility. (The file this replaced listed ten, omitting the two resource
-criteria; the code list follows Alonso-Coello et al. 2016.)</p><p>Then a recommendation carries a <strong>direction</strong> (for / against) and a <strong>strength</strong>
+feasibility (twelve, per Alonso-Coello et al. 2016).</p><p>Then a recommendation carries a <strong>direction</strong> (for / against) and a <strong>strength</strong>
 (strong / conditional). <strong>Strength is not certainty.</strong> A strong recommendation
 can rest on low-certainty evidence when the balance of effects is decisive, and
 a conditional one can rest on high certainty when values differ across
-populations. Conflating the two is the most common misreading of GRADE, and the
-reason they are two code lists rather than one score.</p><h2 id="what-this-platform-must-not-do-with-it"><a href="#what-this-platform-must-not-do-with-it" class="anchor-heading" aria-labelledby="what-this-platform-must-not-do-with-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this platform must not do with it
+populations; hence two code lists, not one score.</p><h2 id="what-this-platform-must-not-do-with-it"><a href="#what-this-platform-must-not-do-with-it" class="anchor-heading" aria-labelledby="what-this-platform-must-not-do-with-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this platform must not do with it
   
   
 </h2><ul><li><strong>No numeric aggregation of EtD criteria.</strong> The framework judges each
-criterion and argues the recommendation; it does not sum them. A weighted
-total would be the MCDA failure this platform refuses elsewhere — a judgement
-laundered into a measurement.</li><li><strong><code class="language-plaintext highlighter-rouge">could not determine</code> is not <code class="language-plaintext highlighter-rouge">very-low</code>.</strong> Absent evidence and
+criterion and argues the recommendation; it does not sum them.</li><li><strong><code class="language-plaintext highlighter-rouge">could not determine</code> is not <code class="language-plaintext highlighter-rouge">very-low</code>.</strong> Absent evidence and
 low-certainty evidence are different findings with different actions.
-<code class="language-plaintext highlighter-rouge">evidence-retrieval</code> models this with <code class="language-plaintext highlighter-rouge">EndEvent_GapRecorded</code> — <em>“Gap
-recorded, no recommendation”</em> — a distinct terminal from an evidence-backed
-one, and <code class="language-plaintext highlighter-rouge">evidence-appraisal</code> names it a third state.</li><li><strong>No empirical claim enters a formal proof.</strong> A graded body of evidence
+<code class="language-plaintext highlighter-rouge">evidence-retrieval</code> ends such a case at <code class="language-plaintext highlighter-rouge">EndEvent_GapRecorded</code> (<em>“Gap
+recorded, no recommendation”</em>); <code class="language-plaintext highlighter-rouge">evidence-appraisal</code> names it a third state.</li><li><strong>No empirical claim enters a formal proof.</strong> A graded body of evidence
 supports a recommendation, never a theorem. In a paper folio the two live in
 different block kinds and must not be joined.</li></ul><h2 id="refusals"><a href="#refusals" class="anchor-heading" aria-labelledby="refusals"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Refusals
   

@@ -26,7 +26,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Derive FSH from a DAK's BPMN business processes — the render direction, of which the extractors are the inverse."
+          "@value": "Derive FSH from a DAK's BPMN business processes (the inverse of the extractors)."
         }
       ],
       "skos:notation": "bpmn-to-fsh",
@@ -46,7 +46,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Generate `dak-api.html` and the per-artefact `.openapi.json` / `.displays.json` sidecars — the hub a reader enters the DAK API through."
+          "@value": "Generate `dak-api.html`, the DAK API's entry page, and the per-artefact `.openapi.json` / `.displays.json` sidecars."
         }
       ],
       "skos:notation": "dak-api-hub",
@@ -86,7 +86,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Render each DMN decision table to HTML for inclusion in a page, via `dmn2html.xslt` and `dmn.css`. The only human-readable rendering of a decision table an IG has."
+          "@value": "Render each DMN decision table to an HTML fragment for a page, via `dmn2html.xslt` and `dmn.css`."
         }
       ],
       "skos:notation": "dmn-to-html",
@@ -106,7 +106,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Generate FHIR `Questionnaire` resources from a DAK's DMN decision tables. Authoring, not rendering: its output is validated and indexed by the IG Publisher like any other resource."
+          "@value": "Generate FHIR `Questionnaire` resources from a DAK's DMN decision tables. Authoring, not rendering: the IG Publisher validates and indexes them like any other resource."
         }
       ],
       "skos:notation": "dmn-to-questionnaire",
@@ -126,7 +126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Run WHO's `extract_dak.py` in a DAK or IG repository: it reads the DAK template spreadsheets (`input/decision-logic/*.xlsx` via `dt_extractor`, `input/system-requirements/*.xlsx` via `req_extractor`, `input/dictionary/*.xlsx` via `dd_extractor`) and the BPMN, and writes the DMN decision tables, the CPG recommendation PlanDefinitions with their citations, CQL library skeletons, Requirements and logical-model FSH. The authoring path the WHO IG Starter Kit (`l3_decisiontables`, `l3_cql`) prescribes: an adapted decision or scheduling table is an edited copy of the upstream DAK's spreadsheet, never a parallel format."
+          "@value": "Run WHO's `extract_dak.py` in a DAK or IG repository. It reads the DAK template spreadsheets (`input/decision-logic/*.xlsx` via `dt_extractor`, `input/system-requirements/*.xlsx` via `req_extractor`, `input/dictionary/*.xlsx` via `dd_extractor`) and the BPMN, and writes DMN decision tables, CPG recommendation PlanDefinitions with citations, CQL library skeletons, Requirements and logical-model FSH. Per the WHO IG Starter Kit (`l3_decisiontables`, `l3_cql`), an adapted decision or scheduling table is an edited copy of the upstream DAK's spreadsheet, never a parallel format."
         }
       ],
       "skos:notation": "extract-dak",
@@ -141,12 +141,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Run the immunization schedule-check app locally, on a WHO or country adaptation IG"
+          "@value": "Run the immunization schedule-check app locally on a WHO or country IG"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Start the schedule-check web form from litlfred/awho-mcp on this machine: a HAPI FHIR server in Docker on 127.0.0.1, the WHO SMART Immunizations IG loaded, then a country adaptation IG after it (its decision-logic tables replace WHO's, and its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. Re-running reuses a server already loaded from the same commits; `--down` stops both."
+          "@value": "Start litlfred/awho-mcp's schedule-check web form on this machine: a HAPI FHIR server in Docker, the WHO SMART Immunizations IG loaded, then optionally a country adaptation IG (its decision-logic tables replace WHO's; its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served. Both listen on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. A re-run reuses a server loaded from the same commits; `--down` stops both."
         }
       ],
       "skos:notation": "immz-schedule-app-local",
@@ -161,12 +161,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Write the L1 extraction viewer: a page per instance holding `l1-extraction` directories, and a hub"
+          "@value": "L1 extraction viewer: a hub and a page per instance with `l1-extraction` directories"
         }
       ],
       "skos:definition": [
         {
-          "@value": "For every visualiser an instance declares `renderedBy: l1-extraction-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `l1-extraction` directory. Each shows what was extracted, read from the files by what they declare: the L1 statements (graph nodes carrying a `statement`, and an authored L1 source's `recommendations`), the candidate work list's counts, coverage and decisions, each graph document's nodes by type and edges by predicate (the L2 scenario candidates among them), the curation, mapping, vocabulary, exclusions and run context counted, and every file linked to its published copy (cat-harness's `library:viz`) when the site holds it and to its source at the pinned commit. A declared directory not on disk is reported UNKNOWN, never as zero."
+          "@value": "For every visualiser an instance declares with `renderedBy: l1-extraction-pages`, write the hub at `<locale>/<harness>/<id>/` and, with `subgraphs: \"instance\"`, one page per instance that declares an `l1-extraction` directory. Each page shows, from what the files declare: the L1 statements (graph nodes with a `statement`, and an authored L1 source's `recommendations`); the candidate work list's counts, coverage and decisions; each graph document's nodes by type and edges by predicate (L2 scenario candidates included); counts of curation, mapping, vocabulary, exclusions and run context; and a link from every file to its published copy (cat-harness's `library:viz`), when the site has it, and to its source at the pinned commit. A declared directory not on disk is reported UNKNOWN, never zero."
         }
       ],
       "skos:notation": "l1-extraction-pages",
@@ -186,7 +186,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), hint where a reading is uncertain, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph, checked with `kg/src/validate.ts`, with coverage and the proposed (unsigned) exclusions."
+          "@value": "Find every normative sentence of an ingested `library/` entry (folio-assistant-core's `l1-coverage` markers), flag uncertain readings, and propose the publication's identity. Given an agent's `l1-recommendation-curation/v1`, refuse a non-verbatim statement or an unknown location, and write the recommendations and remarks as an L1 3.0 graph (checked with `kg/src/validate.ts`) with coverage and proposed, unsigned exclusions."
         }
       ],
       "skos:notation": "l1-recommendation-candidates",
@@ -206,7 +206,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "One smart-kg L2 `user-scenario` candidate per L1 recommendation, joined to a `persona` and a `business-process` by the edges smart-kg L2 already licenses, from an agent's `l1-scenario-mapping/v1`. Reuses the guide's own personas and processes, then smart-base's generic `DAK.Persona.*`; otherwise a glossary candidate or `could-not-determine`, each with a WARNING. Never invents a process."
+          "@value": "From an agent's `l1-scenario-mapping/v1`, write one smart-kg L2 `user-scenario` candidate per L1 recommendation, joined to a `persona` and a `business-process` by smart-kg L2's existing edges. Reuses the guide's own personas and processes, then smart-base's generic `DAK.Persona.*`; otherwise a glossary candidate or `could-not-determine`, each with a WARNING. Never invents a process."
         }
       ],
       "skos:notation": "l1-recommendation-scenarios",
@@ -226,7 +226,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Check authored L1 (`*.l1.yaml`, the measles pattern) for a source with no usable text layer: each statement must be verbatim in the image narrative (`images.json`) or the `transcription` block it names, every transcription word (digits aside) must be corroborated by the entry's text layer unless listed under `inspectionOnly`, and keys must be unique."
+          "@value": "Check authored L1 (`*.l1.yaml`, the measles pattern) for a source with no usable text layer: each statement must be verbatim in the image narrative (`images.json`) or the `transcription` block it names; every transcription word (digits aside) must be corroborated by the entry's text layer unless listed under `inspectionOnly`; keys must be unique."
         }
       ],
       "skos:notation": "l1-transcription-verbatim",
@@ -246,7 +246,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Run fhir-harness's `fhir-cache-seed-npm` with smart-base's publisher-site rules (`SMART_PUBLISHER_SITE_REPOS`): `smart.who.int.*` packages are also read from WHO's published-site repository, each fetch verified against the tarball's own package.json. Every other source and check is the seeder's own."
+          "@value": "Run fhir-harness's `fhir-cache-seed-npm` with smart-base's publisher-site rules (`SMART_PUBLISHER_SITE_REPOS`), so `smart.who.int.*` packages can also be read from WHO's published-site repository, each fetch verified against the tarball's own package.json. All other sources and checks are the seeder's."
         }
       ],
       "skos:notation": "smart-fhir-cache-seed",
@@ -286,7 +286,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Look up a concept or code token for a semantic slot (`condition`, `intervention`, `persona`, `medicine`, `domain`, `business-process`, `recommendation-strength`, `recommendation-direction`, `evidence-certainty`) across the four reuse-first precedence rungs of the `terminology-coding` methodology: (1) target guide's `l1-scenario-vocabulary/v1`, (2) `smart-base` generic personas (`DAK.Persona.*`), GRADE `code-lists/*.json` and `guideline-domain` SKOS glossary, (3) local WHO/ILO FSH CodeSystems (`ISCO08`, `CDHIv2`, `CDHIv1`, `CDSCv2`, `KGTerminologySystem`), and (4) a proposed `glossary-terms` candidate (`status: \"candidate\"`) or `could-not-determine` for `business-process`."
+          "@value": "Look up a concept or code token for a semantic slot across the four reuse-first rungs of the `terminology-coding` methodology: (1) the target guide's `l1-scenario-vocabulary/v1`; (2) smart-base's generic personas (`DAK.Persona.*`), GRADE `code-lists/*.json` and the `guideline-domain` SKOS glossary; (3) local WHO/ILO FSH CodeSystems (`ISCO08`, `CDHIv2`, `CDHIv1`, `CDSCv2`, `KGTerminologySystem`); (4) a proposed `glossary-terms` candidate (`status: \"candidate\"`), or `could-not-determine` for `business-process`."
         }
       ],
       "skos:notation": "terminology-lookup",

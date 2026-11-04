@@ -7,7 +7,7 @@
     {
       "@id": "http://smart.who.int/base/tools/immz-schedule-app-local.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Start the schedule-check web form from litlfred/awho-mcp on this machine: a HAPI FHIR server in Docker on 127.0.0.1, the WHO SMART Immunizations IG loaded, then a country adaptation IG after it (its decision-logic tables replace WHO's, and its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. Re-running reuses a server already loaded from the same commits; `--down` stops both.",
+      "description": "Start litlfred/awho-mcp's schedule-check web form on this machine: a HAPI FHIR server in Docker, the WHO SMART Immunizations IG loaded, then optionally a country adaptation IG (its decision-logic tables replace WHO's; its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served. Both listen on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. A re-run reuses a server loaded from the same commits; `--down` stops both.",
       "install": {
         "cli": "git clone https://github.com/litlfred/awho-mcp && cd awho-mcp && python3 -m pip install -e ."
       },
@@ -20,7 +20,7 @@
             "arg": {
               "flag": "--who-ig"
             },
-            "description": "A checkout of the WHO SMART Immunizations IG, relative to the working directory (the folder holding the checkouts, e.g. `~/space_cats`).",
+            "description": "A WHO SMART Immunizations IG checkout, relative to the working directory (the folder holding the checkouts, e.g. `~/space_cats`).",
             "name": "who-ig",
             "required": true,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -64,7 +64,7 @@
         ],
         "outputs": [
           {
-            "description": "The form, on 127.0.0.1. It stores nothing; each check is one inline `$apply` round.",
+            "description": "The form on 127.0.0.1. It stores nothing; each check is one inline `$apply` round.",
             "name": "url",
             "render": {
               "as": "url",
@@ -84,7 +84,7 @@
         ]
       },
       "satisfies": "http://smart.who.int/base/skill/l4-application-run-local",
-      "title": "Run the immunization schedule-check app locally, on a WHO or country adaptation IG"
+      "title": "Run the immunization schedule-check app locally on a WHO or country IG"
     }
   ],
   "holdsGraph": [

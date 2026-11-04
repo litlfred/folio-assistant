@@ -110,48 +110,33 @@
 </h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">classify-and-code-content</code> · Package: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> ·
 Methodology: <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/terminology-coding.md"><code class="language-plaintext highlighter-rouge">terminology-coding</code></a> ·
 Process: <a href="../../en/cat-harness/processes/classify-and-code-content.html"><code class="language-plaintext highlighter-rouge">classify-and-code-content.bpmn</code></a> (<code class="language-plaintext highlighter-rouge">Process_ClassifyAndCodeContent</code>) ·
-Tool: <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/tools/terminology-lookup/terminology-lookup.ts"><code class="language-plaintext highlighter-rouge">terminology-lookup</code></a> ·
-Bean: <code class="language-plaintext highlighter-rouge">folio-assistant-4nfs</code></p></blockquote><p><strong>An agent proposes classifications, codes, and coverage exclusions; a person in
-the named reviewer lane judges and signs them.</strong> This skill governs all three
-lanes of <a href="../../en/cat-harness/processes/classify-and-code-content.html"><code class="language-plaintext highlighter-rouge">classify-and-code-content.bpmn</code></a>:</p><ol><li><strong><code class="language-plaintext highlighter-rouge">authoring-agent</code> lane</strong> — identifies classifiable slots in L1/L2 content,
-runs <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/tools/terminology-lookup/terminology-lookup.ts"><code class="language-plaintext highlighter-rouge">terminology-lookup</code></a>
-down the four-rung reuse-first ladder of
-<a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/terminology-coding.md"><code class="language-plaintext highlighter-rouge">terminology-coding</code></a>, records
+Tool: <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/tools/terminology-lookup/terminology-lookup.ts"><code class="language-plaintext highlighter-rouge">terminology-lookup</code></a></p></blockquote><p><strong>An agent proposes classifications, codes and coverage exclusions; a person in
+the named reviewer lane judges and signs them.</strong> The process has three lanes:</p><ol><li><strong><code class="language-plaintext highlighter-rouge">authoring-agent</code></strong> codes slots and stages candidates (Step 1).</li><li><strong><code class="language-plaintext highlighter-rouge">l1-extraction-reviewer</code></strong> (a person) signs or rejects proposed L1
+exclusions against the printed page (Step 2).</li><li><strong><code class="language-plaintext highlighter-rouge">terminologist</code></strong> (a person, the terminologist / ontologist reviewer)
+judges candidate codings, SKOS mapping predicates and glossary candidates
+(Step 3).</li></ol><h2 id="input-and-output"><a href="#input-and-output" class="anchor-heading" aria-labelledby="input-and-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input and output
+  
+  
+</h2><ul><li>Input contract: <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/skills/classify-and-code-content/input.schema.json"><code class="language-plaintext highlighter-rouge">input.schema.json</code></a></li><li>Output contract: <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/skills/classify-and-code-content/output.schema.json"><code class="language-plaintext highlighter-rouge">output.schema.json</code></a></li></ul><h2 id="step-1--agent-classify-and-code-slots-with-terminology-lookup"><a href="#step-1--agent-classify-and-code-slots-with-terminology-lookup" class="anchor-heading" aria-labelledby="step-1--agent-classify-and-code-slots-with-terminology-lookup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 1 — Agent: classify and code slots with <code class="language-plaintext highlighter-rouge">terminology-lookup</code></h2><p>For each slot in an L1 extraction or L2 component, run the Tool, record
 provenance (<code class="language-plaintext highlighter-rouge">declared</code>, <code class="language-plaintext highlighter-rouge">context</code>, <code class="language-plaintext highlighter-rouge">inferred</code>) and <code class="language-plaintext highlighter-rouge">status: "candidate"</code>, and
-stages the candidate codings and any proposed L1 coverage exclusions for
-human review.</li><li><strong><code class="language-plaintext highlighter-rouge">l1-extraction-reviewer</code> lane</strong> — a person acting as
-<code class="language-plaintext highlighter-rouge">l1-extraction-reviewer</code> (owner ruling 3b, 2026-10-12) reads each proposed
-exclusion in <code class="language-plaintext highlighter-rouge">exclusions.proposed.json</code> against the printed page in
-<code class="language-plaintext highlighter-rouge">sections/page-NNN.md</code> and either signs it (<code class="language-plaintext highlighter-rouge">signedOffBy</code>) or rejects it back
-to extraction curation.</li><li><strong><code class="language-plaintext highlighter-rouge">terminologist</code> (terminologist / ontologist reviewer) lane</strong> — a person
-acting as <code class="language-plaintext highlighter-rouge">terminologist</code> reviews the candidate concept codings, SKOS
-mapping predicates (<code class="language-plaintext highlighter-rouge">exactMatch</code> vs <code class="language-plaintext highlighter-rouge">closeMatch</code> per
-<a href="../../reference/skill-instructions/ontologist.html"><code class="language-plaintext highlighter-rouge">ontologist</code></a>),
-and proposed local glossary terms (<code class="language-plaintext highlighter-rouge">status: "candidate"</code> per
-<a href="../../reference/skill-instructions/glossary-terms.html"><code class="language-plaintext highlighter-rouge">glossary-terms</code></a>),
-and records the review verdict.</li></ol><h2 id="input-and-output"><a href="#input-and-output" class="anchor-heading" aria-labelledby="input-and-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input and output
-  
-  
-</h2><ul><li>Input contract: <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/skills/classify-and-code-content/input.schema.json"><code class="language-plaintext highlighter-rouge">input.schema.json</code></a></li><li>Output contract: <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/skills/classify-and-code-content/output.schema.json"><code class="language-plaintext highlighter-rouge">output.schema.json</code></a></li></ul><h2 id="step-1--agent-classify-and-code-slots-with-terminology-lookup"><a href="#step-1--agent-classify-and-code-slots-with-terminology-lookup" class="anchor-heading" aria-labelledby="step-1--agent-classify-and-code-slots-with-terminology-lookup"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 1 — Agent: classify and code slots with <code class="language-plaintext highlighter-rouge">terminology-lookup</code></h2><p>For each slot in an L1 extraction or L2 component, run the <code class="language-plaintext highlighter-rouge">terminology-lookup</code>
-Tool:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run smart-base/scripts/terminology-lookup.ts <span class="se">\</span>
+stage the codings and any proposed exclusions for review:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run smart-base/scripts/terminology-lookup.ts <span class="se">\</span>
   <span class="nt">--slot</span> &lt;condition|intervention|persona|medicine|domain|business-process|recommendation-strength|recommendation-direction|evidence-certainty&gt; <span class="se">\</span>
   <span class="nt">--query</span> &lt;term-or-code&gt; <span class="se">\</span>
   <span class="o">[</span><span class="nt">--vocabulary</span> &lt;guide-vocabulary.json&gt;] <span class="se">\</span>
   <span class="o">[</span><span class="nt">--generic</span> &lt;smart-base-generic-personas.json&gt;] <span class="se">\</span>
   <span class="o">[</span><span class="nt">--scheme</span> &lt;scheme-id&gt;] <span class="se">\</span>
   <span class="o">[</span><span class="nt">--out</span> &lt;result.json&gt;]
-</code></pre></div></div><p>Follow the reuse-first precedence of
-<a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/terminology-coding.md"><code class="language-plaintext highlighter-rouge">terminology-coding</code></a> §2:</p><ol><li><strong>Rung 1 (<code class="language-plaintext highlighter-rouge">rung-1-target-guide</code>):</strong> reuse the target guide’s own persona or
-business process from <code class="language-plaintext highlighter-rouge">l1-scenario-vocabulary/v1</code> whenever its scope covers
-the statement.</li><li><strong>Rung 2 (<code class="language-plaintext highlighter-rouge">rung-2-smart-base</code>):</strong> fall back to <code class="language-plaintext highlighter-rouge">smart-base</code> generic personas
+</code></pre></div></div><p>Stop at the first rung that matches
+(<a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/terminology-coding.md"><code class="language-plaintext highlighter-rouge">terminology-coding</code></a> §2):</p><ol><li><strong>Rung 1 (<code class="language-plaintext highlighter-rouge">rung-1-target-guide</code>):</strong> the target guide’s own persona or
+business process from <code class="language-plaintext highlighter-rouge">l1-scenario-vocabulary/v1</code>, when its scope covers
+the statement.</li><li><strong>Rung 2 (<code class="language-plaintext highlighter-rouge">rung-2-smart-base</code>):</strong> <code class="language-plaintext highlighter-rouge">smart-base</code> generic personas
 (<code class="language-plaintext highlighter-rouge">DAK.Persona.*</code>), GRADE <code class="language-plaintext highlighter-rouge">code-lists/*.json</code>, or the <code class="language-plaintext highlighter-rouge">guideline-domain</code> SKOS
-scheme (<code class="language-plaintext highlighter-rouge">clinical</code>, <code class="language-plaintext highlighter-rouge">public-health</code>, <code class="language-plaintext highlighter-rouge">health-system-strengthening</code>).</li><li><strong>Rung 3 (<code class="language-plaintext highlighter-rouge">rung-3-external-standard</code>):</strong> resolve against the slot’s
-authoritative external standard (<code class="language-plaintext highlighter-rouge">ICD-11</code>, <code class="language-plaintext highlighter-rouge">ICHI</code> / <code class="language-plaintext highlighter-rouge">CDHIv2</code>, <code class="language-plaintext highlighter-rouge">ISCO-08</code>,
+scheme (<code class="language-plaintext highlighter-rouge">clinical</code>, <code class="language-plaintext highlighter-rouge">public-health</code>, <code class="language-plaintext highlighter-rouge">health-system-strengthening</code>).</li><li><strong>Rung 3 (<code class="language-plaintext highlighter-rouge">rung-3-external-standard</code>):</strong> the slot’s external standard (<code class="language-plaintext highlighter-rouge">ICD-11</code>, <code class="language-plaintext highlighter-rouge">ICHI</code> / <code class="language-plaintext highlighter-rouge">CDHIv2</code>, <code class="language-plaintext highlighter-rouge">ISCO-08</code>,
 <code class="language-plaintext highlighter-rouge">ATC</code>), distinguishing <code class="language-plaintext highlighter-rouge">skos:exactMatch</code> from <code class="language-plaintext highlighter-rouge">skos:closeMatch</code> per
-<a href="../../reference/skill-instructions/ontologist.html"><code class="language-plaintext highlighter-rouge">ontologist</code></a>.</li><li><strong>Rung 4 (<code class="language-plaintext highlighter-rouge">rung-4-local-candidate</code>):</strong><ul><li>For an unmatched persona or domain concept, record a local glossary
+<a href="../../reference/skill-instructions/ontologist.html"><code class="language-plaintext highlighter-rouge">ontologist</code></a>.</li><li><strong>Rung 4 (<code class="language-plaintext highlighter-rouge">rung-4-local-candidate</code>):</strong><ul><li>Unmatched persona or domain concept: record a local glossary
 candidate (<code class="language-plaintext highlighter-rouge">status: "candidate"</code>, <code class="language-plaintext highlighter-rouge">source: "extracted"</code>) per
 <a href="../../reference/skill-instructions/glossary-terms.html"><code class="language-plaintext highlighter-rouge">glossary-terms</code></a>
-and emit <code class="language-plaintext highlighter-rouge">WARNING &lt;slot&gt;-glossary-candidate</code>.</li><li>For an unmatched business process, <strong>never invent a process</strong>: record
+and emit <code class="language-plaintext highlighter-rouge">WARNING &lt;slot&gt;-glossary-candidate</code>.</li><li>Unmatched business process: <strong>never invent a process</strong>; record
 <code class="language-plaintext highlighter-rouge">could-not-determine</code> and emit <code class="language-plaintext highlighter-rouge">WARNING process-not-determined</code>.</li></ul></li></ol><h2 id="step-2--l1-extraction-reviewer-read-proposed-exclusions-against-the-page-and-sign"><a href="#step-2--l1-extraction-reviewer-read-proposed-exclusions-against-the-page-and-sign" class="anchor-heading" aria-labelledby="step-2--l1-extraction-reviewer-read-proposed-exclusions-against-the-page-and-sign"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 2 — <code class="language-plaintext highlighter-rouge">l1-extraction-reviewer</code>: read proposed exclusions against the page and sign
   
   
@@ -159,40 +144,35 @@ and emit <code class="language-plaintext highlighter-rouge">WARNING &lt;slot&gt;
 <code class="language-plaintext highlighter-rouge">exclusions.proposed.json</code>, every entry carries:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"signerRole"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"l1-extraction-reviewer"</span><span class="w"> </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div></div><p>and no <code class="language-plaintext highlighter-rouge">signedOffBy</code> field. Until a person in the <code class="language-plaintext highlighter-rouge">l1-extraction-reviewer</code> lane
-signs the entry, <code class="language-plaintext highlighter-rouge">l1-coverage</code> counts the sentence as <strong>unaccounted</strong> and
-coverage remains below 100 %.</p><p>To review a proposed exclusion in <code class="language-plaintext highlighter-rouge">Lane_ExtractionReviewer</code> of
-<a href="../../en/cat-harness/processes/classify-and-code-content.html"><code class="language-plaintext highlighter-rouge">classify-and-code-content.bpmn</code></a>:</p><ol><li><strong>Open the printed page beside the work list.</strong> Locate <code class="language-plaintext highlighter-rouge">location</code>
+</span></code></pre></div></div><p>and no <code class="language-plaintext highlighter-rouge">signedOffBy</code>. Until a reviewer signs it, <code class="language-plaintext highlighter-rouge">l1-coverage</code> counts the
+sentence as <strong>unaccounted</strong> and coverage stays below 100 %. In
+<code class="language-plaintext highlighter-rouge">Lane_ExtractionReviewer</code>:</p><ol><li><strong>Open the printed page beside the work list.</strong> Locate <code class="language-plaintext highlighter-rouge">location</code>
 (<code class="language-plaintext highlighter-rouge">p&lt;page&gt;:s&lt;n&gt;</code>) in <code class="language-plaintext highlighter-rouge">library/&lt;doc_id&gt;/sections/page-&lt;NNN&gt;.md</code> (and the
-corresponding rendered page image when layout is ambiguous).</li><li><strong>Read the sentence in place.</strong> Verify the surrounding paragraph, heading,
-and table context — never judge an exclusion from the isolated sentence
-string alone.</li><li><strong>Check the proposed <code class="language-plaintext highlighter-rouge">reason</code> against the five closed reasons:</strong><ul><li><code class="language-plaintext highlighter-rouge">background-fact</code> — epidemiology, disease burden, history, or biological
+rendered page image when layout is ambiguous).</li><li><strong>Read the sentence in place,</strong> with its paragraph, heading and table
+context — never judge an exclusion from the isolated sentence.</li><li><strong>Check the proposed <code class="language-plaintext highlighter-rouge">reason</code> against the five closed reasons:</strong><ul><li><code class="language-plaintext highlighter-rouge">background-fact</code> — epidemiology, disease burden, history, or biological
 fact with no normative action for a guideline user;</li><li><code class="language-plaintext highlighter-rouge">manufacturer-statement</code> — a product insert or manufacturer specification
 quoted as context rather than a WHO recommendation;</li><li><code class="language-plaintext highlighter-rouge">editorial</code> — licence text, imprint, how-to-read-this-document prose,
 chapter navigation checkpoints, or glossary definitions;</li><li><code class="language-plaintext highlighter-rouge">research-question</code> — a gap or priority for future research, not a current
 practice or recommendation;</li><li><code class="language-plaintext highlighter-rouge">duplicate-of:&lt;id&gt;</code> — a verbatim or near-verbatim repetition of a
 statement already captured under <code class="language-plaintext highlighter-rouge">&lt;id&gt;</code>, verified against <code class="language-plaintext highlighter-rouge">&lt;id&gt;</code>’s
-statement text.</li></ul></li><li><strong>Sign or reject:</strong><ul><li><strong>Sign:</strong> if the sentence is genuinely non-normative for the stated reason,
-record <code class="language-plaintext highlighter-rouge">signedOffBy</code> (the reviewer’s handle) and timestamp in the curation
-/ exclusions file and re-run <code class="language-plaintext highlighter-rouge">l1-recommendation-candidates</code> so coverage
-updates.</li><li><strong>Reject:</strong> if the sentence states a recommendation, an implementation
-practice, or a remark that belongs in L1, reject the exclusion with a
-reason so the <code class="language-plaintext highlighter-rouge">authoring-agent</code> re-curates the location as a node.</li></ul></li></ol><h2 id="step-3--terminologist-review-candidate-codings-and-glossary-candidates"><a href="#step-3--terminologist-review-candidate-codings-and-glossary-candidates" class="anchor-heading" aria-labelledby="step-3--terminologist-review-candidate-codings-and-glossary-candidates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 3 — <code class="language-plaintext highlighter-rouge">terminologist</code>: review candidate codings and glossary candidates
+statement text.</li></ul></li><li><strong>Sign or reject:</strong><ul><li><strong>Sign</strong> if the sentence is non-normative for the stated reason: record
+<code class="language-plaintext highlighter-rouge">signedOffBy</code> (the reviewer’s handle) and timestamp in the curation /
+exclusions file, and re-run <code class="language-plaintext highlighter-rouge">l1-recommendation-candidates</code> so coverage
+updates.</li><li><strong>Reject</strong> if it states a recommendation, implementation practice or
+remark that belongs in L1, with a reason, so the <code class="language-plaintext highlighter-rouge">authoring-agent</code>
+re-curates the location as a node.</li></ul></li></ol><h2 id="step-3--terminologist-review-candidate-codings-and-glossary-candidates"><a href="#step-3--terminologist-review-candidate-codings-and-glossary-candidates" class="anchor-heading" aria-labelledby="step-3--terminologist-review-candidate-codings-and-glossary-candidates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Step 3 — <code class="language-plaintext highlighter-rouge">terminologist</code>: review candidate codings and glossary candidates
   
   
-</h2><p>In <code class="language-plaintext highlighter-rouge">Lane_Terminologist</code> of
-<a href="../../en/cat-harness/processes/classify-and-code-content.html"><code class="language-plaintext highlighter-rouge">classify-and-code-content.bpmn</code></a>,
-a person acting as <code class="language-plaintext highlighter-rouge">terminologist</code> (equipped with
+</h2><p>In <code class="language-plaintext highlighter-rouge">Lane_Terminologist</code>, the <code class="language-plaintext highlighter-rouge">terminologist</code> (equipped with
 <a href="../../reference/skill-instructions/ontologist.html"><code class="language-plaintext highlighter-rouge">ontologist</code></a>,
 <a href="../../reference/skill-instructions/glossary-terms.html"><code class="language-plaintext highlighter-rouge">glossary-terms</code></a>,
 and <a href="../../reference/skill-instructions/terminology-management.html"><code class="language-plaintext highlighter-rouge">terminology-management</code></a>)
-judges each staged coding:</p><ol><li><strong>Scheme and rung check:</strong> verify that the slot was coded against the scheme
-named in <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/terminology-coding.md"><code class="language-plaintext highlighter-rouge">terminology-coding</code></a>
-§1 and that no higher reuse rung held an applicable concept.</li><li><strong>Precision check (<code class="language-plaintext highlighter-rouge">exactMatch</code> vs <code class="language-plaintext highlighter-rouge">closeMatch</code>):</strong> confirm that a narrower
-or broader concept was not asserted as <code class="language-plaintext highlighter-rouge">exactMatch</code>.</li><li><strong>Candidate glossary adjudication:</strong> for each Rung 4 glossary candidate
-(<code class="language-plaintext highlighter-rouge">status: "candidate"</code>), either promote it to <code class="language-plaintext highlighter-rouge">status: "authored"</code> (checking
+judges each staged coding:</p><ol><li><strong>Scheme and rung:</strong> the slot was coded against the scheme named in
+<a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/terminology-coding.md"><code class="language-plaintext highlighter-rouge">terminology-coding</code></a> §1, and
+no higher rung held an applicable concept.</li><li><strong>Precision:</strong> no narrower or broader concept is asserted as <code class="language-plaintext highlighter-rouge">exactMatch</code>
+(use <code class="language-plaintext highlighter-rouge">closeMatch</code>).</li><li><strong>Glossary candidates:</strong> for each Rung 4 candidate, promote it to <code class="language-plaintext highlighter-rouge">status: "authored"</code> (checking
 definition quality and <code class="language-plaintext highlighter-rouge">skos:broader</code> / <code class="language-plaintext highlighter-rouge">skos:closeMatch</code> links), replace it
-with an existing code from Rungs 1–3, or reject it.</li><li><strong>Record verdict:</strong> record the review decision (<code class="language-plaintext highlighter-rouge">approve</code>,
+with an existing code from Rungs 1–3, or reject it.</li><li><strong>Verdict:</strong> record (<code class="language-plaintext highlighter-rouge">approve</code>,
 <code class="language-plaintext highlighter-rouge">request-changes</code>, or <code class="language-plaintext highlighter-rouge">reject</code>) in the mapping (<code class="language-plaintext highlighter-rouge">review: {by, at}</code>) or
 component <code class="language-plaintext highlighter-rouge">QaReview</code>.</li></ol><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   

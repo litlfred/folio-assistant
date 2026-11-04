@@ -109,22 +109,18 @@
   
 </h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">dth-l1-to-l2-ingest</code> · Package: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code> ·
 Stages 0-2 of <a href="../../reference/skill-instructions/dth-authoring.html"><code class="language-plaintext highlighter-rouge">dth-authoring</code></a> for a handbook that WHO has
-already published. Worked examples (2026-10-31): <code class="language-plaintext highlighter-rouge">litlfred/dth-phc#1</code>,
-<code class="language-plaintext highlighter-rouge">dth-sc#2</code>, <code class="language-plaintext highlighter-rouge">dth-pc#2</code>, <code class="language-plaintext highlighter-rouge">dth-sfp#1</code>; pilot <code class="language-plaintext highlighter-rouge">litlfred/dth-hrh#47</code>.</p></blockquote><p><strong>An L2 DTH is a handbook whose narrative validates against the glossaries and
-links to the ArchiMate model.</strong> The owner’s definition (2026-10-31): the
-handbook can <em>“naturally utilize and validate against the glossaries”</em>, and its
-<em>“narrative content has a rendering/linkage/representation in ArchiMate”</em>.</p><h2 id="where-things-go"><a href="#where-things-go" class="anchor-heading" aria-labelledby="where-things-go"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where things go
+already published.</p></blockquote><p><strong>An L2 DTH is a handbook whose narrative validates against the glossaries and
+has a representation in, and links to, the ArchiMate model.</strong></p><h2 id="where-things-go"><a href="#where-things-go" class="anchor-heading" aria-labelledby="where-things-go"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where things go
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>what</th><th>where</th></tr></thead><tbody><tr><td>shared glossary, every ArchiMate element and view, roles every DTH has (business analyst, health informatician, …)</td><td>smart-ra</td></tr><tr><td>the handbook’s narrative, its own terms (linked to smart-ra’s), its DAK-kind blocks, links from text to ArchiMate elements</td><td>the handbook’s repo</td></tr><tr><td>the L2 DTH kind, its checks, the DAK kinds and their fields</td><td>smart-base</td></tr><tr><td>the source PDF and its L1 entry</td><td>who-iris <code class="language-plaintext highlighter-rouge">library/&lt;isbn&gt;-eng</code></td></tr></tbody></table></div><h2 id="the-workplan-comes-first"><a href="#the-workplan-comes-first" class="anchor-heading" aria-labelledby="the-workplan-comes-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The workplan comes first
   
   
 </h2><p>Write one workplan per handbook and show it to the owner before any content
-work. It lives as an issue on the handbook’s own repo. Open it with the issue
-form <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/templates/issue-forms/dth-workplan.yml"><code class="language-plaintext highlighter-rouge">dth-workplan.yml</code></a>:
-copy it to <code class="language-plaintext highlighter-rouge">.github/ISSUE_TEMPLATE/</code> in the fork, so the BPMN, roles and DMN
-sections cannot be skipped (owner, 2026-10-31, option A: skill plus issue form). Every workplan has these
-sections; the last three are required (owner, 2026-10-31):</p><ol><li><strong>Source</strong>: IRIS item, ISBN, edition, who-iris entry, and anything missing
+work. It is an issue on the handbook’s own repo, opened with the issue form
+<a href="https://github.com/litlfred/smart-base/blob/main/smart-base/templates/issue-forms/dth-workplan.yml"><code class="language-plaintext highlighter-rouge">dth-workplan.yml</code></a>
+copied to <code class="language-plaintext highlighter-rouge">.github/ISSUE_TEMPLATE/</code> in the fork. The form requires sections
+1, 2, 4 and 6 to 8, so the BPMN, roles and DMN cannot be skipped:</p><ol><li><strong>Source</strong>: IRIS item, ISBN, edition, who-iris entry, and anything missing
 from it (a missing PDF, a missed glossary).</li><li><strong>Repo vs smart-ra split</strong>, per the table above.</li><li><strong>Dependencies</strong>: other DTHs it mounts (dth-pc and dth-sfp mount dth-sc).</li><li><strong>Glossary</strong>: the source’s own glossary terms (see Terms below) and every
 conflict with smart-ra.</li><li><strong>ArchiMate</strong>: elements and views it needs, existing or new.</li><li><strong>Business processes as BPMN</strong>: one diagram per business process the
 handbook describes, each lane naming a role from section 7. Draw a process
@@ -143,11 +139,10 @@ approved work.</li></ol><p>Ids are per handbook and per kind: <code class="langu
 push to, or open a PR or issue on, a <code class="language-plaintext highlighter-rouge">WorldHealthOrganization/dth-*</code> repo
 without the owner’s explicit permission.</li><li><strong>Issues on the fork.</strong> GitHub turns Issues off on a fork. Ask the owner to
 tick Settings &gt; Features &gt; Issues, then put the workplan issue there, not on
-smart-ra.</li><li><strong>When in doubt, file an issue; do not guess</strong> (owner, 2026-10-31). An
-agent that hits a problem or is unsure during ingestion files it where the
-handbook tracks work: a GitHub issue on the fork, or a row in its review
-sheet, whichever is available. It records what it found, the page, and the
-options it sees, then carries on with work that does not depend on it.</li><li><strong>Conflicts are issues, not choices.</strong> When the handbook defines a term
+smart-ra.</li><li><strong>When in doubt, file an issue; do not guess.</strong> File it where the handbook
+tracks work (an issue on the fork, or a row in its review sheet) with what
+you found, the page and the options, then carry on with work that does not
+depend on it.</li><li><strong>Conflicts are issues, not choices.</strong> When the handbook defines a term
 differently from smart-ra, open an issue on <code class="language-plaintext highlighter-rouge">litlfred/smart-ra</code> that keeps
 both definitions, each quoted with its page. Do not pick one.</li><li><strong>Third-party material stays out.</strong> A figure or table the handbook uses by
 someone else’s permission is outside the handbook’s licence: do not copy it;
@@ -156,26 +151,25 @@ inputs, tasks, outputs, resources and risks; an annex template; a table) is
 read from the PDF by a script (for example pdfplumber) and checked by a
 person. An agent writes only what has no fixed shape.</li><li><strong>Verbatim, with the page.</strong> Definitions, tables and quoted passages are
 copied word for word, each with its page.</li><li><strong>Fetching what the sandbox cannot reach</strong> (a missing PDF, a private repo):
-file a bean and give the owner a ready-to-paste prompt for the local agent.</li><li><strong>Read the workplan issue’s comments first.</strong> The owner’s local agent may
-already have done some steps.</li><li><strong>The first merge into a bare fork needs the owner’s OK.</strong> After it, turn on
+file a bean and give the owner a ready-to-paste prompt for the local agent.</li><li><strong>Read the workplan issue’s comments first</strong>: the owner’s local agent may
+have done some steps.</li><li><strong>The first merge into a bare fork needs the owner’s OK.</strong> After it, turn on
 Pages for the fork.</li><li><strong>Check verbatim quotes by script.</strong> Text shown as a verbatim quote must be
-found in the normalised L1 text by a check, not by eye (dth-phc#3: seven
-chapter 2 role quotes were not in the L1).</li><li><strong>Agents never sign off.</strong> An agent never writes the owner’s name into
+found in the normalised L1 text by a check, not by eye.</li><li><strong>Agents never sign off.</strong> An agent never writes the owner’s name into
 <code class="language-plaintext highlighter-rouge">signedOffBy</code> in <code class="language-plaintext highlighter-rouge">l1-exclusions.json</code>. An exclusion an agent writes stays a
 proposal until the owner signs it.</li><li><strong>A table in the PDF is a table in the L1.</strong> When ingestion flattens a
 table or a figure’s cells into lines, fix the L1 entry in who-iris so the
 cells sit in a table, word for word. Flattened cells that cite another
-guideline’s figure (“Fig. 8.4 …”) read as figures this handbook declares,
-and <code class="language-plaintext highlighter-rouge">figure:coverage</code> reports them missing (who-iris#157, PHC Fig. 13).</li><li><strong>Regenerate coverage after every L1 repin.</strong> Sentence keys move when the
+guideline’s figure (“Fig. 8.4 …”) otherwise read as figures this handbook
+declares, and <code class="language-plaintext highlighter-rouge">figure:coverage</code> reports them missing.</li><li><strong>Regenerate coverage after every L1 repin.</strong> Sentence keys move when the
 L1 entry changes, so committed <code class="language-plaintext highlighter-rouge">l1-coverage*</code> outputs go stale. Rerun the
-coverage writer in the same PR as the who-iris repin (dth-phc#5).</li><li><strong>Texts name things by title or number.</strong> A handbook text cites a block,
+coverage writer in the same PR as the who-iris repin.</li><li><strong>Texts name things by title or number.</strong> A handbook text cites a block,
 figure or table by its title or number, never by a raw id.</li><li><strong>Validators live in the platform.</strong> Glossary validators and L1 coverage
-checks belong in folio-assistant-core, not in the handbook repo (core#377).</li></ul><h2 id="blocks-figures-archimate-and-dmn"><a href="#blocks-figures-archimate-and-dmn" class="anchor-heading" aria-labelledby="blocks-figures-archimate-and-dmn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Blocks, figures, ArchiMate and DMN
+checks belong in folio-assistant-core, not in the handbook repo.</li></ul><h2 id="blocks-figures-archimate-and-dmn"><a href="#blocks-figures-archimate-and-dmn" class="anchor-heading" aria-labelledby="blocks-figures-archimate-and-dmn"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Blocks, figures, ArchiMate and DMN
   
   
 </h2><ul><li><strong>Blocks link to ArchiMate through the glossary.</strong> A block’s Markdown shows a
 <code class="language-plaintext highlighter-rouge">**Concepts:**</code> line built from <code class="language-plaintext highlighter-rouge">meta.glossaryTerms</code>. Only figure blocks link
-straight to an ArchiMate view (core#407).</li><li><strong>Figures are rebuilt by type.</strong> An architecture figure becomes ArchiMate, a
+straight to an ArchiMate view.</li><li><strong>Figures are rebuilt by type.</strong> An architecture figure becomes ArchiMate, a
 process becomes BPMN, a data model becomes a class diagram, and a chart becomes
 SVG from its data. Third-party and country figures stay cited images. The
 original PNG is kept as evidence.</li><li><strong>Never edit a shipped ArchiMate draft</strong> (for example <code class="language-plaintext highlighter-rouge">0.3.0-draft.1</code>). Write

@@ -362,7 +362,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "smart-fhir-cache-seed",
       "title": "Seed the FHIR package cache, with WHO's published site as a source",
-      "description": "Run fhir-harness's `fhir-cache-seed-npm` with smart-base's publisher-site rules (`SMART_PUBLISHER_SITE_REPOS`): `smart.who.int.*` packages are also read from WHO's published-site repository, each fetch verified against the tarball's own package.json. Every other source and check is the seeder's own.",
+      "description": "Run fhir-harness's `fhir-cache-seed-npm` with smart-base's publisher-site rules (`SMART_PUBLISHER_SITE_REPOS`), so `smart.who.int.*` packages can also be read from WHO's published-site repository, each fetch verified against the tarball's own package.json. All other sources and checks are the seeder's.",
       "install": {
         "none": true
       },

@@ -7,7 +7,7 @@
     {
       "@id": "http://smart.who.int/base/tools/dmn-to-questionnaire.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Generate FHIR `Questionnaire` resources from a DAK's DMN decision tables. Authoring, not rendering: its output is validated and indexed by the IG Publisher like any other resource.",
+      "description": "Generate FHIR `Questionnaire` resources from a DAK's DMN decision tables. Authoring, not rendering: the IG Publisher validates and indexes them like any other resource.",
       "install": {
         "none": true
       },
@@ -17,7 +17,7 @@
       "io": {
         "inputs": [
           {
-            "description": "The directory of DMN sources. `input/dmn/` by convention.",
+            "description": "The DMN source directory, by convention `input/dmn/`.",
             "name": "dmnDir",
             "required": true,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -25,12 +25,12 @@
         ],
         "outputs": [
           {
-            "description": "The generated `Questionnaire` resources, written where SUSHI's output is collected from.",
+            "description": "The generated `Questionnaire` resources, written beside SUSHI's output.",
             "name": "questionnaires",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
           },
           {
-            "description": "How many were produced. Zero is a determined empty only if the DMN directory was found; absent input is a different state and is reported as such.",
+            "description": "How many were produced. Zero means none only when the DMN directory was found; a missing directory is reported as such.",
             "name": "generated",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
           }
