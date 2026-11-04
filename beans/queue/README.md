@@ -46,8 +46,8 @@ Seeding one to make this directory look used would put a **fabricated decision**
 graph that every later reader would take for a real one.
 
 The order itself is never stored here either: it is **computed**, by
-[`merge-priority.dmn`](../../cat-harness/processes/sdlc/decisions/merge-priority.dmn)
+[`merge-priority.dmn`](https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/decisions/merge-priority.dmn)
 over live facts, so a stored rank is a decision's *input*, not the queue's answer.
 
 The discipline is in the skill, not here —
-[`skills/sdlc/sdlc-core/merge-queue.md`](../../cat-harness/skills/sdlc/sdlc-core/merge-queue.md).
+[`skills/sdlc/sdlc-core/merge-queue.md`](https://github.com/litlfred/cat-harness/blob/main/sdlc/skills/sdlc-core/merge-queue.md).

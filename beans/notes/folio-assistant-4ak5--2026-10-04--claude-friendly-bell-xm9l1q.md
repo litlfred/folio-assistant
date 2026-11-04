@@ -7,7 +7,7 @@ created: "2026-10-04"
 ---
 ## status: items 1 and 5 are half-met, not done
 
-Measured 2026-10-04 ~15:10Z on `origin/main` @ `2774823e0`, read-only, against the live site built from `38ed5ad`. The owner asked for items 1 and 5 to be ticked as merged in #2067. **They are not ticked, because neither is fully met as written.** Evidence, not authorship ([`bean-coordination`](../../cat-harness/skills/sdlc/sdlc-core/bean-coordination.md) §"Closing a bean whose work has already landed").
+Measured 2026-10-04 ~15:10Z on `origin/main` @ `2774823e0`, read-only, against the live site built from `38ed5ad`. The owner asked for items 1 and 5 to be ticked as merged in #2067. **They are not ticked, because neither is fully met as written.** Evidence, not authorship ([`bean-coordination`](https://github.com/litlfred/cat-harness/blob/main/work-plan/skills/work-plan/bean-coordination.md) §"Closing a bean whose work has already landed").
 
 | item | met | not met | evidence |
 |---|---|---|---|

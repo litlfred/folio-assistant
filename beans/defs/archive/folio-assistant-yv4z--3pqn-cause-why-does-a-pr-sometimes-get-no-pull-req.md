@@ -12,7 +12,7 @@ parent: folio-assistant-1xhc
 
 Split out of `3pqn` on the owner's instruction, 2026-09-20. `3pqn` closed on
 its Done-when 2 and 3 — the **damage** is stopped, because
-[`prepare-merge`](../../../cat-harness/skills/sdlc/sdlc-core/prepare-merge.md)
+[`prepare-merge`](https://github.com/litlfred/cat-harness/blob/main/sdlc/skills/sdlc-core/prepare-merge.md)
 §Guardrails now says *"NO CHECKS IS NOT GREEN"* and gives the procedure. This
 bean carries the remaining **why**, at low priority, with the evidence
 attached so nobody re-derives it.

@@ -28,7 +28,7 @@ Owner, 2026-09-23, on the adjudication answers bean bvuk had written into diagra
 
 Found by `bun run cat beans:landed` as `done-ticked` — every box ticked, status
 still open. That is the `4d22` orphan shape, and
-[`bean-coordination.md` §"Closing a bean whose work has already landed"](../../cat-harness/skills/sdlc/sdlc-core/bean-coordination.md)
+[`bean-coordination.md` §"Closing a bean whose work has already landed"](https://github.com/litlfred/cat-harness/blob/main/work-plan/skills/work-plan/bean-coordination.md)
 says a bean closes on evidence re-run by whoever closes it, never on a note.
 So none of the ticks below were taken on trust.
 

@@ -18,7 +18,7 @@ and, on how step 6 is reached: **"Chain it: 1937, then 1957, then step 6."**
 
 This is a **goal-level sequencing decision by the author**, relayed by the Merge
 Manager. It is explicitly **not** an agent-to-agent task lock, which
-[`coordinate`](../../cat-harness/skills/sdlc/sdlc-core/coordinate.md) §12
+[`coordinate`](https://github.com/litlfred/cat-harness/blob/main/sdlc/skills/sdlc-core/coordinate.md) §12
 cautions against: *"Tasks are NOT exclusively claimed … Coordination is with the
 USER on goal-level decisions, not agent-to-agent on task-level locks."* Two
 sessions may still attack the same task by different methods. What is sequenced
