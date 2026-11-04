@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/process/Process_TrackedWatch/node/End_Found.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1230",
+    "sha": "6a0c5391e283dd010690b914ecc04b9aa6acbddd",
+    "pr": "repin-train/20261104-1230",
+    "run": "41829990883"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/process/Process_TrackedWatch/node/End_Found",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Found: recorded, job stays green",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_8"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/End_Found"
+    }
+  ]
+}

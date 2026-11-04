@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness-tools/directory/cat-harness-tools-archimate-schemas.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-archimate-schemas.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1230",
+    "sha": "6a0c5391e283dd010690b914ecc04b9aa6acbddd",
+    "pr": "repin-train/20261104-1230",
+    "run": "41829990883"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-archimate-schemas",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "cat-harness-tools-archimate-schemas",
+      "path": "archimate/schemas/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas",
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "The ArchiMate subgraph's Zod schema. The subgraph's content stays in `cat-harness/archimate/`.",
+      "readmePath": "archimate/schemas/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-archimate-schemas"
+    }
+  ]
+}

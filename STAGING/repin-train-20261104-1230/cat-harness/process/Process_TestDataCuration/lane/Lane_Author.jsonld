@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/process/Process_TestDataCuration/lane/Lane_Author.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1230",
+    "sha": "6a0c5391e283dd010690b914ecc04b9aa6acbddd",
+    "pr": "repin-train/20261104-1230",
+    "run": "41829990883"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Authoring agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/process/Process_TestDataCuration",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1230/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author"
+    }
+  ]
+}
