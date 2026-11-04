@@ -103,7 +103,7 @@
   @media print, (forced-colors: active) {
     html:root { background-image: none; }
   }
-</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/qa-report-signing.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-process-is-executable--do-not-hand-roll-the-branch","label":"The process is executable — do not hand-roll the branch"},{"href":"#reach-is-a-property-of-the-actor-and-unknown-is-a-third-state","label":"Reach is a property of the ACTOR, and unknown is a third state"},{"href":"#why-there-is-no-network-egress-capability","label":"Why there is no network-egress capability"},{"href":"#declaration-and-execution-are-different-mechanisms","label":"Declaration and execution are different mechanisms"},{"href":"#recording-the-attestation","label":"Recording the attestation"},{"href":"#where-the-signed-report-goes-the-qa-reports-branch-next-to-its-run","label":"Where the signed report goes: the qa-reports branch, next to its run"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/qa-report-signing.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#the-process-is-executable--do-not-hand-roll-the-branch","label":"The process is executable — do not hand-roll the branch"},{"href":"#reach-is-a-property-of-the-actor-and-unknown-is-a-third-state","label":"Reach is a property of the ACTOR, and unknown is a third state"},{"href":"#reach-is-declared-not-a-capability","label":"Reach is declared, not a capability"},{"href":"#declaration-and-execution-are-different-mechanisms","label":"Declaration and execution are different mechanisms"},{"href":"#recording-the-attestation","label":"Recording the attestation"},{"href":"#where-the-signed-report-goes-the-qa-reports-branch-next-to-its-run","label":"Where the signed report goes: the qa-reports branch, next to its run"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
 function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
 function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
@@ -220,55 +220,41 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 measured and who vouches for it. <code class="language-plaintext highlighter-rouge">folio-test-run/v1</code> (<code class="language-plaintext highlighter-rouge">schemas/sdlc/test-run.ts</code>)
 answers the first: a data hash and a process hash, each all-or-nothing, plus
 the <code class="language-plaintext highlighter-rouge">skill</code> it tests, whose contract its recorded <code class="language-plaintext highlighter-rouge">cases</code> are checked against
-(<code class="language-plaintext highlighter-rouge">test-run-conforms</code>, #1168). This
-skill answers the second, and it has <strong>two routes</strong> because the participant
-doing the signing may not be able to reach anything.</p><p>From the owner, 2026-09-20 on
-<a href="https://github.com/litlfred/folio-assistant/issues/363">#363</a>:</p><blockquote><p>some of the machine actors may be air-gapped, it is a property of an actor.
-depending on the propeorty, different tools might not work. in this case an
-API wouldnt wokr and a human actor is needed. so process for signing needs
-two parallel routes/processes, air gapped vs not, the first needed a human
-actor</p></blockquote><p>The subject is the <strong>QA report</strong> — owner, same day, answering what gets
-signed.</p><p><strong>This skill builds on <a href="../../reference/skill-instructions/signing.html"><code class="language-plaintext highlighter-rouge">signing</code></a></strong> (owner, option B,
-2026-10-30). That skill holds what is true of any signature: who signs, what
-is signed, which suites a trust anchor accepts, key custody, the route, and
-what a verifier must check and record. This one keeps only what is particular
-to QA reports: the run hashes, the <code class="language-plaintext highlighter-rouge">qa-reports</code> branch, and the line between
-attestation and certification. Where the two overlap, <code class="language-plaintext highlighter-rouge">signing</code> is the rule.</p><h2 id="the-process-is-executable--do-not-hand-roll-the-branch"><a href="#the-process-is-executable--do-not-hand-roll-the-branch" class="anchor-heading" aria-labelledby="the-process-is-executable--do-not-hand-roll-the-branch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The process is executable — do not hand-roll the branch
+(<code class="language-plaintext highlighter-rouge">test-run-conforms</code>). This skill answers the second, and it has <strong>two
+routes</strong> because the participant doing the signing may not be able to reach
+anything: some machine actors are air-gapped, an API cannot be called from
+one, and a human actor signs instead. The subject signed is the <strong>QA report</strong>.</p><p><strong>This skill builds on <a href="../../reference/skill-instructions/signing.html"><code class="language-plaintext highlighter-rouge">signing</code></a>.</strong> That skill holds what is
+true of any signature: who signs, what is signed, which suites a trust anchor
+accepts, key custody, the route, and what a verifier must check and record.
+This one keeps only what is particular to QA reports: the run hashes, the
+<code class="language-plaintext highlighter-rouge">qa-reports</code> branch, and the line between attestation and certification.
+Where the two overlap, <code class="language-plaintext highlighter-rouge">signing</code> is the rule.</p><h2 id="the-process-is-executable--do-not-hand-roll-the-branch"><a href="#the-process-is-executable--do-not-hand-roll-the-branch" class="anchor-heading" aria-labelledby="the-process-is-executable--do-not-hand-roll-the-branch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The process is executable — do not hand-roll the branch
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">sdlc/processes/qa-report-signing.bpmn</code>, with the branch computed by
 <code class="language-plaintext highlighter-rouge">decisions/signing-route.dmn</code>. Run it with <code class="language-plaintext highlighter-rouge">workflow_start</code> /
 <code class="language-plaintext highlighter-rouge">workflow_next</code> / <code class="language-plaintext highlighter-rouge">workflow_complete</code> like every other diagram here. The
-gateway <strong>refuses a hand-supplied outcome</strong>, which is the point: the route
-is a consequence of declared facts, not a preference.</p><h2 id="reach-is-a-property-of-the-actor-and-unknown-is-a-third-state"><a href="#reach-is-a-property-of-the-actor-and-unknown-is-a-third-state" class="anchor-heading" aria-labelledby="reach-is-a-property-of-the-actor-and-unknown-is-a-third-state"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reach is a property of the ACTOR, and <code class="language-plaintext highlighter-rouge">unknown</code> is a third state
+gateway <strong>refuses a hand-supplied outcome</strong>: the route is a consequence of
+declared facts, not a preference.</p><h2 id="reach-is-a-property-of-the-actor-and-unknown-is-a-third-state"><a href="#reach-is-a-property-of-the-actor-and-unknown-is-a-third-state" class="anchor-heading" aria-labelledby="reach-is-a-property-of-the-actor-and-unknown-is-a-third-state"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reach is a property of the ACTOR, and <code class="language-plaintext highlighter-rouge">unknown</code> is a third state
   
   
-</h2><p><code class="language-plaintext highlighter-rouge">schemas/process/actor-reach.ts</code>. Three things worth holding in mind:</p><ol><li><strong>One vocabulary, two levels.</strong> An actor’s <code class="language-plaintext highlighter-rouge">reach</code> uses the same scale as
-the deployment’s <code class="language-plaintext highlighter-rouge">network</code> (<code class="language-plaintext highlighter-rouge">folio-assistant-g7vb</code>) — <code class="language-plaintext highlighter-rouge">internet</code>,
-<code class="language-plaintext highlighter-rouge">egress-restricted</code>, <code class="language-plaintext highlighter-rouge">air-gapped</code>. There is no second scale, because two
-spellings of one fact is the failure this repository keeps paying for.</li><li><strong>Composition is asymmetric.</strong> An air-gapped deployment forces every actor
+</h2><p><code class="language-plaintext highlighter-rouge">schemas/process/actor-reach.ts</code>.</p><ol><li><strong>One vocabulary, two levels.</strong> An actor’s <code class="language-plaintext highlighter-rouge">reach</code> uses the same scale as
+the deployment’s <code class="language-plaintext highlighter-rouge">network</code> — <code class="language-plaintext highlighter-rouge">internet</code>, <code class="language-plaintext highlighter-rouge">egress-restricted</code>,
+<code class="language-plaintext highlighter-rouge">air-gapped</code>. There is no second scale.</li><li><strong>Composition is asymmetric.</strong> An air-gapped deployment forces every actor
 air-gapped. A connected one forces nothing — a connected site may hold an
-isolated signing host, which is precisely the case raised. So an actor
-that declares no reach inside a connected deployment is <strong><code class="language-plaintext highlighter-rouge">unknown</code></strong>, not
-<code class="language-plaintext highlighter-rouge">internet</code>.</li><li><strong><code class="language-plaintext highlighter-rouge">unknown</code> routes to the human.</strong> A gateway that read could-not-determine
-as “use the API” would fail <em>closed on the wire and open in the record</em>:
-the call fails and what survives is an unsigned report that nothing marks
-as unsigned. Same rule as <code class="language-plaintext highlighter-rouge">ci-health</code> — could-not-check is never green.</li></ol><h2 id="why-there-is-no-network-egress-capability"><a href="#why-there-is-no-network-egress-capability" class="anchor-heading" aria-labelledby="why-there-is-no-network-egress-capability"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why there is no <code class="language-plaintext highlighter-rouge">network-egress</code> capability
+isolated signing host. So an actor that declares no reach inside a
+connected deployment is <strong><code class="language-plaintext highlighter-rouge">unknown</code></strong>, not <code class="language-plaintext highlighter-rouge">internet</code>.</li><li><strong><code class="language-plaintext highlighter-rouge">unknown</code> routes to the human.</strong> A gateway that read could-not-determine
+as “use the API” would fail closed on the wire and open in the record: the
+call fails and what survives is an unsigned report that nothing marks as
+unsigned. Could-not-check is never green.</li></ol><h2 id="reach-is-declared-not-a-capability"><a href="#reach-is-declared-not-a-capability" class="anchor-heading" aria-labelledby="reach-is-declared-not-a-capability"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reach is declared, not a capability
   
   
-</h2><p>The bean (<code class="language-plaintext highlighter-rouge">folio-assistant-r0rq</code>) proposed one, reasoning that
-<code class="language-plaintext highlighter-rouge">CapabilityDefinition.requires</code> already propagates dependencies and an
-air-gapped actor would simply not carry it. That reasoning is sound about
-<code class="language-plaintext highlighter-rouge">requires</code>, and it was <strong>not</strong> taken, for a reason that only became clear
-once <code class="language-plaintext highlighter-rouge">reach</code> was written down:</p><blockquote><p>A capability is an <strong>environment probe</strong> — <code class="language-plaintext highlighter-rouge">detection: { method: "command",
-… }</code>, a thing you run to find out. Reach is an <strong>architectural fact</strong>,
-declared by whoever built the site.</p></blockquote><p>Making egress a probe asks the network a question the network is exactly
-unable to answer on the machine that matters: on an air-gapped host a failed
-probe is indistinguishable from an outage, and the safe reading of an outage
-(“retry later”) is the unsafe reading of an air gap. Worse, the capability
-would have carried the same fact as <code class="language-plaintext highlighter-rouge">reach</code>, in a second place, free to
-disagree — bean <code class="language-plaintext highlighter-rouge">ind9</code> is the fixed instance of putting non-probeable things
-in <code class="language-plaintext highlighter-rouge">capabilities[]</code>, and this would have reopened it.</p><p>What <em>is</em> a probe is whether an endpoint is configured: <code class="language-plaintext highlighter-rouge">signing-api</code>, an
+</h2><p>There is no <code class="language-plaintext highlighter-rouge">network-egress</code> capability. A capability is an <strong>environment
+probe</strong> — <code class="language-plaintext highlighter-rouge">detection: { method: "command", … }</code>, a thing you run to find out.
+Reach is an <strong>architectural fact</strong>, declared by whoever built the site. On an
+air-gapped host a failed probe is indistinguishable from an outage, and a
+capability would carry the same fact as <code class="language-plaintext highlighter-rouge">reach</code> in a second place, free to
+disagree.</p><p>What <em>is</em> a probe is whether an endpoint is configured: <code class="language-plaintext highlighter-rouge">signing-api</code>, an
 <code class="language-plaintext highlighter-rouge">env-var</code> detection. The DMN table reads <strong>both</strong>, because they answer
 different questions — <em>can this host call out</em> and <em>is there anything to
 call</em>. A configured endpoint on an air-gapped host is still uncallable.</p><h2 id="declaration-and-execution-are-different-mechanisms"><a href="#declaration-and-execution-are-different-mechanisms" class="anchor-heading" aria-labelledby="declaration-and-execution-are-different-mechanisms"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Declaration and execution are different mechanisms
@@ -278,42 +264,32 @@ call</em>. A configured endpoint on an air-gapped host is still uncallable.</p><
   <span class="p">{</span> <span class="na">capabilityId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">signing-api</span><span class="dl">"</span><span class="p">,</span> <span class="na">degradation</span><span class="p">:</span> <span class="dl">"</span><span class="s2">fallback</span><span class="dl">"</span><span class="p">,</span>
     <span class="na">fallbackRole</span><span class="p">:</span> <span class="dl">"</span><span class="s2">publication-manager</span><span class="dl">"</span> <span class="p">},</span>
 <span class="p">],</span>
-</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">fallbackRole</code> (bean <code class="language-plaintext highlighter-rouge">folio-assistant-85e8</code>) says <strong>which lane takes over</strong>
-when no capability can do it. It does not route anything, and the first
-measurement of that was too generous: this said the only reader was
-<code class="language-plaintext highlighter-rouge">scripts/generate-docs.ts</code>, “which renders it”. Re-measured 2026-09-20 —
-<strong>nothing invokes that script</strong>, it is in no <code class="language-plaintext highlighter-rouge">package.json</code> entry and no
-workflow, and its output directory <code class="language-plaintext highlighter-rouge">schemas/generated/</code> does not exist. So
-the degradation model has <strong>zero</strong> effective readers, not one. The gateway is
-what executes. (<code class="language-plaintext highlighter-rouge">folio-assistant-3lbz</code>, and
-<code class="language-plaintext highlighter-rouge">cat-harness/docs/proposals/zod-schemas-as-tools.md</code>.)</p><p>Both are worth having, and they must agree — the declaration is what a
-reader, a generated doc and <code class="language-plaintext highlighter-rouge">check:fallback-roles</code> can see without executing
-anything; the gateway is what happens. Where they disagree, the diagram is
-what ran, and the declaration is the bug.</p><h2 id="recording-the-attestation"><a href="#recording-the-attestation" class="anchor-heading" aria-labelledby="recording-the-attestation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Recording the attestation
+</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">fallbackRole</code> says <strong>which lane takes over</strong> when no capability can do it. It
+does not route anything, and nothing executes it; the gateway is what
+executes.</p><p>They must agree — the declaration is what a reader and <code class="language-plaintext highlighter-rouge">check:fallback-roles</code>
+can see without executing anything; the gateway is what happens. Where they
+disagree, the diagram is what ran, and the declaration is the bug.</p><h2 id="recording-the-attestation"><a href="#recording-the-attestation" class="anchor-heading" aria-labelledby="recording-the-attestation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Recording the attestation
   
   
 </h2><p>Record what <a href="../../reference/skill-instructions/signing.html"><code class="language-plaintext highlighter-rouge">signing</code></a> §6 requires (suite, key, anchor, result,
 when checked) and, above all, <strong>which route signed it</strong>, not only that it is
-signed. A reader who
-cannot tell an API signature from a human one cannot tell which trust
-assumption they are relying on — and the two are not interchangeable: one
-attests that a service with a key saw these hashes, the other that a person
-holding release authority did.</p><h2 id="where-the-signed-report-goes-the-qa-reports-branch-next-to-its-run"><a href="#where-the-signed-report-goes-the-qa-reports-branch-next-to-its-run" class="anchor-heading" aria-labelledby="where-the-signed-report-goes-the-qa-reports-branch-next-to-its-run"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the signed report goes: the <code class="language-plaintext highlighter-rouge">qa-reports</code> branch, next to its run
+signed. The two are not interchangeable: one attests that a service with a key
+saw these hashes, the other that a person holding release authority did.</p><h2 id="where-the-signed-report-goes-the-qa-reports-branch-next-to-its-run"><a href="#where-the-signed-report-goes-the-qa-reports-branch-next-to-its-run" class="anchor-heading" aria-labelledby="where-the-signed-report-goes-the-qa-reports-branch-next-to-its-run"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the signed report goes: the <code class="language-plaintext highlighter-rouge">qa-reports</code> branch, next to its run
   
   
 </h2><p>A QA report is a <strong>derived</strong> record — it can be rebuilt from the tree and the
-data it hashed — so since arc <code class="language-plaintext highlighter-rouge">3fva</code> it is kept where every derived QA result
-is kept: the orphan <strong><code class="language-plaintext highlighter-rouge">qa-reports</code></strong> branch, in the entry keyed by the commit
-it judged (<code class="language-plaintext highlighter-rouge">main/&lt;sha&gt;/</code> or <code class="language-plaintext highlighter-rouge">pr/&lt;n&gt;/&lt;sha&gt;/</code>), written through
-<code class="language-plaintext highlighter-rouge">scripts/qa-store.ts</code> and never by a hand <code class="language-plaintext highlighter-rouge">git push</code>. The signature and the
-route that produced it travel <strong>with</strong> the report, in the same entry, because
-a signature separated from the bytes it covers attests nothing a reader can
-check. <code class="language-plaintext highlighter-rouge">Task_RecordAttestation</code> in <code class="language-plaintext highlighter-rouge">qa-report-signing.bpmn</code> ends there.</p><p><strong>What does not go there.</strong> A <strong>certification</strong> — an accountable role’s
+data it hashed — so it is kept where every derived QA result is kept: the
+orphan <strong><code class="language-plaintext highlighter-rouge">qa-reports</code></strong> branch, in the entry keyed by the commit it judged
+(<code class="language-plaintext highlighter-rouge">main/&lt;sha&gt;/</code> or <code class="language-plaintext highlighter-rouge">pr/&lt;n&gt;/&lt;sha&gt;/</code>), written through <code class="language-plaintext highlighter-rouge">scripts/qa-store.ts</code> and
+never by a hand <code class="language-plaintext highlighter-rouge">git push</code>. The signature and the route that produced it
+travel <strong>with</strong> the report, in the same entry, because a signature separated
+from the bytes it covers attests nothing a reader can check.
+<code class="language-plaintext highlighter-rouge">Task_RecordAttestation</code> in <code class="language-plaintext highlighter-rouge">qa-report-signing.bpmn</code> ends there.</p><p><strong>What does not go there.</strong> A <strong>certification</strong> — an accountable role’s
 Decision taken on a test report’s rollup — is a separate node, and it stays
-on <code class="language-plaintext highlighter-rouge">main</code> beside the attestations (owner decision D5, default (a)): it is a
-judgement, the same class as <code class="language-plaintext highlighter-rouge">test/attestations/</code>, and no regeneration can
-reproduce it. That decision belongs to the test-plan process, which calls
-this one to sign; this skill only signs.</p><p>A read of a signed report follows the store’s rules: a <strong>miss is never read
+on <code class="language-plaintext highlighter-rouge">main</code> beside the attestations: it is a judgement, the same class as
+<code class="language-plaintext highlighter-rouge">test/attestations/</code>, and no regeneration can reproduce it. That decision
+belongs to the test-plan process, which calls this one to sign; this skill
+only signs.</p><p>A read of a signed report follows the store’s rules: a <strong>miss is never read
 as “unsigned and fine”</strong>, and a store that cannot answer is UNKNOWN, which
 routes like unknown reach — to a person, never to a pass.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   

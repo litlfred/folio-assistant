@@ -229,13 +229,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h3><p>Scan <code class="language-plaintext highlighter-rouge">pipeline/*.ts</code>:</p><ul><li>Validators (<code class="language-plaintext highlighter-rouge">validate.ts</code>, <code class="language-plaintext highlighter-rouge">profile-check.ts</code>)</li><li>Renderers (<code class="language-plaintext highlighter-rouge">render-markdown.ts</code>, <code class="language-plaintext highlighter-rouge">render-latex.ts</code>)</li><li>Extractors/codemods (<code class="language-plaintext highlighter-rouge">pot-extract.ts</code>, <code class="language-plaintext highlighter-rouge">po-inject.ts</code>, <code class="language-plaintext highlighter-rouge">citations.ts</code>)</li><li>Content graph (<code class="language-plaintext highlighter-rouge">content-graph.ts</code>)</li><li>QA criteria (<code class="language-plaintext highlighter-rouge">qa-criteria-registry.ts</code>)</li></ul><h3 id="3-adapter-impact"><a href="#3-adapter-impact" class="anchor-heading" aria-labelledby="3-adapter-impact"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Adapter impact
   
   
-</h3><p>Check <code class="language-plaintext highlighter-rouge">adapters/</code> routing and inheritance:</p><ul><li><code class="language-plaintext highlighter-rouge">PaperContentAdapter</code> extends <code class="language-plaintext highlighter-rouge">DocumentContentAdapter</code></li><li><code class="language-plaintext highlighter-rouge">adapterForKind</code> must stay total and unambiguous</li><li>Adding a kind: which adapter owns it?</li><li>Profile vs adapter distinction (AGENTS.md §Content types)</li></ul><h3 id="4-folio-impact"><a href="#4-folio-impact" class="anchor-heading" aria-labelledby="4-folio-impact"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Folio impact
+</h3><p>Check <code class="language-plaintext highlighter-rouge">adapters/</code> routing and inheritance:</p><ul><li><code class="language-plaintext highlighter-rouge">PaperContentAdapter</code> extends <code class="language-plaintext highlighter-rouge">DocumentContentAdapter</code></li><li><code class="language-plaintext highlighter-rouge">adapterForKind</code> must stay total and unambiguous</li><li>Adding a kind: which adapter owns it?</li><li>Profile vs adapter distinction (AGENTS.md §”Content types, and starting a folio”)</li></ul><h3 id="4-folio-impact"><a href="#4-folio-impact" class="anchor-heading" aria-labelledby="4-folio-impact"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Folio impact
   
   
 </h3><p>For each active downstream folio:</p><ul><li>Does it use the changed schema/pipeline?</li><li>Does it need a migration?</li><li>Will <code class="language-plaintext highlighter-rouge">content_validate</code> still pass?</li><li>Is <code class="language-plaintext highlighter-rouge">init-folio</code> affected?</li></ul><h3 id="5-skill-impact"><a href="#5-skill-impact" class="anchor-heading" aria-labelledby="5-skill-impact"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Skill impact
   
   
-</h3><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rg <span class="s2">"affected_file_or_concept"</span> cat-harness/skills/
+</h3><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rg <span class="s2">"affected_file_or_concept"</span> cat-harness/skills/ cat-harness/sdlc/skills/ cat-harness/work-plan/skills/
 </code></pre></div></div><p>Check <code class="language-plaintext highlighter-rouge">.claude/agent-memory/</code> for rules/traps that reference the changed area.</p><h3 id="6-migration-assessment"><a href="#6-migration-assessment" class="anchor-heading" aria-labelledby="6-migration-assessment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Migration assessment
   
   
@@ -280,7 +280,7 @@ rg <span class="s2">"CONCEPT"</span> adapters/ content/adapters/
 <span class="c"># Check folio.config.json in each active folio</span>
 
 <span class="c"># 5. Skills</span>
-rg <span class="s2">"CONCEPT"</span> cat-harness/skills/
+rg <span class="s2">"CONCEPT"</span> cat-harness/skills/ cat-harness/sdlc/skills/ cat-harness/work-plan/skills/
 
 <span class="c"># 6. Tests</span>
 bun <span class="nb">test </span>2&gt;&amp;1 | <span class="nb">tail</span> <span class="nt">-20</span>

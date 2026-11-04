@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "e7755d5a02c2b5a667efc3ac21f3f4e7a0148ae1",
+    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
     "pr": "2926/merge",
-    "run": "41828370178"
+    "run": "41833034695"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "associate-harness",
       "title": "Associate a harness",
-      "description": "Declare a harness this one knows about and does not hold (`associatedHarnesses`): a folio in another repository, published at its own site. Referenced, never loaded, never materialized. Issue #1146.",
+      "description": "Declare a harness this one knows about and does not hold (`associatedHarnesses`): a folio in another repository, published at its own site. Referenced, never loaded, never materialized.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/associate-harness.md",
-      "instructionLines": 90,
+      "instructionLines": 86,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

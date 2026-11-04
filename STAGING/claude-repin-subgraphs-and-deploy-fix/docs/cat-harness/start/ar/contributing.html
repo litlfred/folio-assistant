@@ -226,25 +226,25 @@ bun <span class="nb">install
 bun run <span class="nb">cat </span>lint      <span class="c"># eslint</span>
 bun run <span class="nb">cat test</span>:e2e      <span class="c"># e2e (test:e2e)</span>
 </code></pre></div></div><h2 id="خطة-العمل-باستخدام-beans"><a href="#خطة-العمل-باستخدام-beans" class="anchor-heading" aria-labelledby="خطة-العمل-باستخدام-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> خطة العمل باستخدام <code class="language-plaintext highlighter-rouge">beans</code></h2><p>يستخدم هذا المشروع <a href="https://github.com/hmans/beans"><code class="language-plaintext highlighter-rouge">beans</code></a> بوصفه الآلية الوحيدة
-لقوائم المهام وخطة العمل (راجع <code class="language-plaintext highlighter-rouge">AGENTS.md</code>). <strong>لا</strong> تُنشئ مخزن مهام منفصلًا.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/install-beans.sh
+لقوائم المهام وخطة العمل (مهارة <code class="language-plaintext highlighter-rouge">todo-manager</code>). <strong>لا</strong> تُنشئ مخزن مهام منفصلًا.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat-harness-tools/scripts/install-beans.sh <span class="o">&amp;&amp;</span> <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.local/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
 beans list
 beans create <span class="s2">"&lt;العنوان&gt;"</span>
-beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>   <span class="c"># احجزه قبل أن تبدأ العمل</span>
+bun run <span class="nb">cat </span>beans:claim &lt;<span class="nb">id</span><span class="o">&gt;</span>      <span class="c"># احجزه قبل أن تبدأ العمل</span>
 </code></pre></div></div><p><code class="language-plaintext highlighter-rouge">beans ≠ sidecars</code>: لا تستخدم <code class="language-plaintext highlighter-rouge">beans create</code> مطلقًا لطوابير المهام المجمعة المولدة آليًا (QA وwitness وwatcher) — فتلك تظل كملفات JSON مجمعة.</p><h2 id="إرشادات-الوكلاء"><a href="#إرشادات-الوكلاء" class="anchor-heading" aria-labelledby="إرشادات-الوكلاء"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> إرشادات الوكلاء
   
   
-</h2><p>يُعدّ <code class="language-plaintext highlighter-rouge">AGENTS.md</code> هو المصدر الموثوق العام للوكلاء (تتم قراءته تلقائيًا بواسطة Claude Code
-وGemini CLI وAntigravity وCursor وCopilot). أما <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> و<code class="language-plaintext highlighter-rouge">GEMINI.md</code> فهما مجرد ملفات
-نائبة مقتضبة تشير إليه. احرص على تحديث <code class="language-plaintext highlighter-rouge">AGENTS.md</code> بدلاً من الملفات المخصصة لأداة بعينها
-عند تغيير إرشادات الوكلاء.</p><h2 id="التوثيق"><a href="#التوثيق" class="anchor-heading" aria-labelledby="التوثيق"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> التوثيق
+</h2><p>يُعدّ <code class="language-plaintext highlighter-rouge">AGENTS.md</code> نقطة الدخول العامة للوكلاء (تتم قراءته تلقائيًا بواسطة Claude Code
+وGemini CLI وAntigravity وCursor وCopilot)، أما <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> و<code class="language-plaintext highlighter-rouge">GEMINI.md</code> فهما مجرد ملفات
+نائبة مقتضبة تشير إليه. القواعد موجودة في المهارات: لتغيير سلوك الوكلاء عدّل المهارة،
+لا <code class="language-plaintext highlighter-rouge">AGENTS.md</code>.</p><h2 id="التوثيق"><a href="#التوثيق" class="anchor-heading" aria-labelledby="التوثيق"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> التوثيق
   
   
 </h2><ul><li>توجد المستندات النثرية في <code class="language-plaintext highlighter-rouge">docs/</code> (موقع Jekyll هذا).</li><li><p><strong>مرجع مخططات المهارات</strong> مُولَّد آليًا — إياك وتعديل
 <code class="language-plaintext highlighter-rouge">docs/reference/skills/*.md</code> يدويًا. عدّل مخططات JSON Schemas الموجودة تحت
-<code class="language-plaintext highlighter-rouge">schemas/skills/&lt;skill&gt;/</code> ثم أعد التوليد:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/gen-schema-docs.ts
+<code class="language-plaintext highlighter-rouge">schemas/skills/&lt;skill&gt;/</code> ثم أعد التوليد:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat-harness-tools/scripts/gen-schema-docs.ts
 </code></pre></div></div></li><li><p><strong>تعليمات المهارات</strong> (<code class="language-plaintext highlighter-rouge">docs/reference/skill-instructions/*.md</code>) مُولَّدة
 آليًا أيضًا — إياك وتعديلها يدويًا. عدّل نصوص المهارات تحت
-<code class="language-plaintext highlighter-rouge">skills/authoring/content-lifecycle/*.md</code> أو <code class="language-plaintext highlighter-rouge">src/skills/*.md</code> ثم أعد التوليد:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/gen-skill-docs.ts
+<code class="language-plaintext highlighter-rouge">skills/</code> أو <code class="language-plaintext highlighter-rouge">sdlc/skills/</code> أو <code class="language-plaintext highlighter-rouge">work-plan/skills/</code> ثم أعد التوليد:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat-harness-tools/scripts/gen-skill-docs.ts
 </code></pre></div></div></li><li>يُولَّد <strong>مرجع واجهة برمجة تطبيقات TypeScript</strong> (<code class="language-plaintext highlighter-rouge">/api/</code>) بواسطة TypeDoc في CI.</li><li>يتم بناء الموقع ونشره على صفحات GitHub (GitHub Pages) بواسطة
 <code class="language-plaintext highlighter-rouge">.github/workflows/docs-site.yml</code> عند كل دفع (push) إلى <code class="language-plaintext highlighter-rouge">main</code> يمس التوثيق أو
 المخططات أو الشفرة المصدرية.</li></ul><p>المعاينة محليًا:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>docs
@@ -253,8 +253,9 @@ bundle <span class="nb">install
 </code></pre></div></div><h2 id="شحن-التغيير"><a href="#شحن-التغيير" class="anchor-heading" aria-labelledby="شحن-التغيير"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> شحن التغيير
   
   
-</h2><p>تحقق ← تأكد من قابلية الدمج ← ادفع (push) ← (فقط إذا طُلب منك) افتح طلب سحب (PR). راجع
-<code class="language-plaintext highlighter-rouge">sdlc/skills/sdlc-core/prepare-merge.md</code>. حافظ على <strong>فصل الصياغة الرسمية لإطار العمل
+</h2><p>افتح طلب السحب (PR) عند أول إيداع (commit) وادفع زيادات صغيرة
+(<code class="language-plaintext highlighter-rouge">sdlc/skills/sdlc-core/continual-progress.md</code>)؛ ثم أوصل الفرع إلى حالة نظيفة وخضراء
+ومدفوعة باستخدام <code class="language-plaintext highlighter-rouge">sdlc/skills/sdlc-core/prepare-merge.md</code>. حافظ على <strong>فصل الصياغة الرسمية لإطار العمل
 عن المحتوى</strong> — فالمحتوى ينتمي إلى مستودعه الخاص، وأي محتوى
 في هذه المستندات هو توضيحي فقط.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed

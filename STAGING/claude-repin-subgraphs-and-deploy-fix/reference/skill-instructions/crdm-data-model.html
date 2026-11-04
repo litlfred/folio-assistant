@@ -219,45 +219,37 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h1><p><strong>This skill says WHEN and WITH WHOM. It does not say how to model.</strong> That is
 <a href="../../reference/skill-instructions/data-modelling.html"><code class="language-plaintext highlighter-rouge">data-modelling</code></a>, and it is deliberately free of CRDM so
 a folio modelling data outside a requirements process can read it without
-inheriting a methodology it is not running.</p><p>Where the two disagree, <strong>the technique wins and this page is wrong</strong> — the
-same rule <code class="language-plaintext highlighter-rouge">AGENTS.md</code> states for a skill and its pointer.</p><h2 id="where-it-sits-and-why-there"><a href="#where-it-sits-and-why-there" class="anchor-heading" aria-labelledby="where-it-sits-and-why-there"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where it sits, and why there
+inheriting a methodology it is not running.</p><p>Where the two disagree, <strong>the technique wins and this page is wrong</strong>.</p><h2 id="where-it-sits-and-why-there"><a href="#where-it-sits-and-why-there" class="anchor-heading" aria-labelledby="where-it-sits-and-why-there"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where it sits, and why there
   
   
-</h2><p>Between <strong>requirements</strong> (phases 2–4) and <strong>sign-off</strong> (phase 5).</p><p>The reason is the direction of dependency. Requirements are statements about
-things; the model says what the things ARE. Draft the model too early and it
-is invented from nothing — the entities come from the business-process
-analysis, which is phase 2. Draft it too late and phase 5 signs off
-requirements whose nouns were never pinned, which is how two stakeholders
-approve the same sentence meaning different things.</p><p><code class="language-plaintext highlighter-rouge">Call_DataModel</code> in <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> is the fifth <code class="language-plaintext highlighter-rouge">callActivity</code>,
-after <code class="language-plaintext highlighter-rouge">Call_Requirements</code> and before <code class="language-plaintext highlighter-rouge">Call_Signoff</code>.</p><h2 id="what-it-consumes"><a href="#what-it-consumes" class="anchor-heading" aria-labelledby="what-it-consumes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What it consumes
+</h2><p>Between <strong>requirements</strong> (phases 2–4) and <strong>sign-off</strong> (phase 5).</p><p>Requirements are statements about things; the model says what the things ARE.
+The entities come from the business-process analysis (phase 2), and phase 5
+must not sign off requirements whose nouns were never pinned.</p><p><code class="language-plaintext highlighter-rouge">Call_DataModel</code> in <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code> is the <code class="language-plaintext highlighter-rouge">callActivity</code> after
+<code class="language-plaintext highlighter-rouge">Call_Requirements</code> and before <code class="language-plaintext highlighter-rouge">Call_Signoff</code>.</p><h2 id="what-it-consumes"><a href="#what-it-consumes" class="anchor-heading" aria-labelledby="what-it-consumes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What it consumes
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>from</th><th>what</th></tr></thead><tbody><tr><td>phase 1, needs</td><td>the domain vocabulary the BA actually used</td></tr><tr><td>phase 2, BPA</td><td>the activities — every verb whose object is a candidate entity</td></tr><tr><td>phases 3–4, requirements</td><td>each requirement’s nouns, which the model must be able to express</td></tr></tbody></table></div><p><strong>A requirement the model cannot express is a finding, not a modelling
 failure.</strong> It means the requirement is about something nobody has named, and
-the remedy is to name it — that is this phase’s most valuable output and the
-reason it sits after requirements rather than before.</p><h2 id="the-sign-off-and-who-gives-it"><a href="#the-sign-off-and-who-gives-it" class="anchor-heading" aria-labelledby="the-sign-off-and-who-gives-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The sign-off, and who gives it
+the remedy is to name it.</p><h2 id="the-sign-off-and-who-gives-it"><a href="#the-sign-off-and-who-gives-it" class="anchor-heading" aria-labelledby="the-sign-off-and-who-gives-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The sign-off, and who gives it
   
   
 </h2><p>The agent drafts; the <strong>BA confirms the entities are the ones they meant</strong>;
 the <strong>stakeholders confirm the cardinalities</strong>. Those are two different
 questions and are asked of two different lanes on purpose:</p><ul><li><em>Are these the things?</em> — a naming question, and the BA owns the domain
 vocabulary.</li><li><em>Is it really one per?</em> — an operational question, and the people who run
-the process know where the exceptions are.</li></ul><p>The agent asks both and decides neither. CRDM’s own rule for phase 1 —
-<em>“the BA knows the domain, the agent does not guess”</em> — applies here with
-more force, because a wrong cardinality is invisible until the data arrives.</p><h2 id="what-it-hands-on"><a href="#what-it-hands-on" class="anchor-heading" aria-labelledby="what-it-hands-on"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What it hands on
+the process know where the exceptions are.</li></ul><p>The agent asks both and decides neither: the BA knows the domain, the agent
+does not guess.</p><h2 id="what-it-hands-on"><a href="#what-it-hands-on" class="anchor-heading" aria-labelledby="what-it-hands-on"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What it hands on
   
   
 </h2><p>A declared model, readable by a tool, per step 6 of the technique. Phase 5
-signs off requirements <strong>against</strong> it, which is the whole point of ordering
-them this way: sign-off can now ask whether each requirement is expressible,
-not only whether it is wanted.</p><h2 id="the-loop-and-when-to-leave-it"><a href="#the-loop-and-when-to-leave-it" class="anchor-heading" aria-labelledby="the-loop-and-when-to-leave-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The loop, and when to leave it
+signs off requirements <strong>against</strong> it: whether each requirement is
+expressible, not only whether it is wanted.</p><h2 id="the-loop-and-when-to-leave-it"><a href="#the-loop-and-when-to-leave-it" class="anchor-heading" aria-labelledby="the-loop-and-when-to-leave-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The loop, and when to leave it
   
   
 </h2><p>Like every other CRDM phase this one loops until confirmed, and the gateway
 is the phase. <strong>Leave when the BA recognises the entities and the
 stakeholders have answered every cardinality</strong> — not when the model looks
-complete. A model with one unanswered cardinality is not 95 % done; it is a
-model with a hole exactly where the exceptions live.</p><h2 id="not-decided-by-this-skill"><a href="#not-decided-by-this-skill" class="anchor-heading" aria-labelledby="not-decided-by-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Not decided by this skill
+complete.</p><h2 id="not-decided-by-this-skill"><a href="#not-decided-by-this-skill" class="anchor-heading" aria-labelledby="not-decided-by-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Not decided by this skill
   
   
 </h2><p>Whether the model is expressed as Zod, JSON Schema, a class diagram or prose

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "e7755d5a02c2b5a667efc3ac21f3f4e7a0148ae1",
+    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
     "pr": "2926/merge",
-    "run": "41828370178"
+    "run": "41833034695"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "A harness's default rendering",
       "summary": "Renders a harness instance as its default interface: its left-hand nav and docs on its own theme's art, and a board of its todos and beans from which a reader reads, reviews and, when a write tool is available, proposes changes into the publication review.",
-      "description": "Renders a harness instance as its default interface: its left-hand nav and docs on its own theme's art, and a board of its todos and beans from which a reader reads, reviews and, when a write tool is available, proposes changes into the publication review.\n\nBean `folio-assistant-yj32`. The owner, 2026-09-20: \"LHS + docs/ = documentation pipeline rendering for ghpages/justthedocs + folio/miro like board for accessing and authoring/reviewing content, managing pipeline w/ todos/ beans/\". The page ground is the owner's card Q-DEP-2 A, 2026-11-01: the theme art goes behind every docs page.\n\nRead-only is the floor. Whether the reader may write is a question about the tools the session has (git-push, github-api, github-connector) and the reader's permissions, so the gateway reads capabilities and never assumes one write path. A change a reader proposes enters the content change review in folio-assistant-core (`content-change-review.bpmn`); this process enables that review and does not replace it.",
+      "description": "Renders a harness instance as its default interface: its left-hand nav and docs on its own theme's art, and a board of its todos and beans from which a reader reads, reviews and, when a write tool is available, proposes changes into the publication review.\n\nThe theme art goes behind every docs page.\n\nRead-only is the floor. Whether the reader may write is a question about the tools the session has (git-push, github-api, github-connector) and the reader's permissions, so the gateway reads capabilities and never assumes one write path. A change a reader proposes enters the content change review in folio-assistant-core (`content-change-review.bpmn`); this process enables that review and does not replace it.",
       "enforcement": "strict",
       "sourcePath": "processes/ui/harness-default-rendering.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/ui/harness-default-rendering.bpmn",

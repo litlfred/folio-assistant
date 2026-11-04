@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "e7755d5a02c2b5a667efc3ac21f3f4e7a0148ae1",
+    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
     "pr": "2926/merge",
-    "run": "41828370178"
+    "run": "41833034695"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "ci-health",
       "title": "Is CI passing on the default branch?",
-      "description": "Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start.",
+      "description": "Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow, so it stays inside the unauthenticated 60/hr limit.",
       "install": {
         "none": true
       },
@@ -380,7 +380,7 @@
           {
             "name": "markdown",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/Flag",
-            "description": "Emit the block the session-start sweep prints. ALWAYS exits 0, deliberately: the sweep runs it as `if ! …; then` and would otherwise print the report AND declare it unchecked every time CI is red.",
+            "description": "Emit the block the session-start sweep prints. ALWAYS exits 0: the sweep runs it as `if ! …; then`.",
             "required": false,
             "arg": {
               "flag": "--markdown"
@@ -398,7 +398,7 @@
           {
             "name": "out",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0. The notifier gets its own flag rather than one API call being spent twice.",
+            "description": "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0.",
             "required": false,
             "arg": {
               "flag": "--out"

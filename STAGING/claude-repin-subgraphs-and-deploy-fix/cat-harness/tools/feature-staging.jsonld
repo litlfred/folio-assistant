@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "e7755d5a02c2b5a667efc3ac21f3f4e7a0148ae1",
+    "sha": "5b8a97ec56d10dab4ea9bdb3eeb56ba942d3993e",
     "pr": "2926/merge",
-    "run": "41828370178"
+    "run": "41833034695"
   },
   "@graph": [
     {
@@ -389,7 +389,7 @@
           {
             "name": "cleanup_slug",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. It exists because the label path cannot reach the previews the health sweep reports — being findable as an orphan REQUIRES the pull request to be closed, so the close event has already fired with no label (bean `w2g5`).",
+            "description": "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. For an orphan preview the health sweep reports: its pull request is already closed, so the close event cannot remove it.",
             "required": false,
             "arg": {
               "flag": "--cleanup-slug"
@@ -398,7 +398,7 @@
           {
             "name": "cleanup_confirm",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "The slug again, exactly. Anything else refuses. A confirmation therefore cannot be carried over from a previous run against a DIFFERENT preview, which a boolean would have allowed.",
+            "description": "The slug again, exactly. Anything else refuses, so a confirmation cannot carry over to a DIFFERENT preview.",
             "required": false,
             "arg": {
               "flag": "--cleanup-confirm"
@@ -409,7 +409,7 @@
           {
             "name": "preview",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/Url",
-            "description": "Where the preview is served. A reviewer cannot assess a rendered artefact from a description of it, which is what this URL is for.",
+            "description": "Where the preview is served.",
             "render": {
               "as": "url",
               "reason": "a reviewer opens the preview; the scheme is checked before it reaches an href"

@@ -226,59 +226,44 @@ mathematical claim, <code class="language-plaintext highlighter-rouge">document<
 makes the classification total by construction rather than by review — a kind
 whose author did not choose does not parse.</p><p><strong>No module lists the kinds.</strong> They are DISCOVERED from the <code class="language-plaintext highlighter-rouge">block-kinds/</code>
 graphs their owning harnesses declare — the document kinds in
-the content core, the math kinds in the science layer (owner,
-2026-10-04: <em>“kinds need to be discoverable … not centrally managed”</em>; bean
-riit). Adding a kind is adding a node to the harness that owns it; the
+the content core, the math kinds in the science layer. Adding a kind is adding a node to the harness that owns it; the
 <code class="language-plaintext highlighter-rouge">BLOCK_KINDS</code>, <code class="language-plaintext highlighter-rouge">MATH_BLOCK_KINDS</code> and <code class="language-plaintext highlighter-rouge">DOCUMENT_BLOCK_KINDS</code> values in
 <code class="language-plaintext highlighter-rouge">schemas/content/block-kinds.ts</code> are computed from the nodes.</p><h2 id="two-axes-and-conflating-them-is-the-costly-mistake"><a href="#two-axes-and-conflating-them-is-the-costly-mistake" class="anchor-heading" aria-labelledby="two-axes-and-conflating-them-is-the-costly-mistake"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two axes, and conflating them is the costly mistake
   
   
-</h2><div class="table-wrapper"><table><thead><tr><th></th><th>what it does</th><th>how they relate</th></tr></thead><tbody><tr><td><strong>Adapter</strong></td><td>partitions block kinds into <strong>disjoint</strong> namespaces</td><td><code class="language-plaintext highlighter-rouge">adapterForKind</code> must stay <strong>total and unambiguous</strong> — it is what QA criterion scoping reads</td></tr><tr><td><strong>Profile</strong></td><td>says what a folio may <strong>contain</strong></td><td>profiles <strong>nest</strong>: every document kind is also a paper kind</td></tr></tbody></table></div><p><strong>They pull in opposite directions, which is why the distinction is load-bearing
-rather than tidy.</strong> Adapters must not overlap; profiles must. Making <code class="language-plaintext highlighter-rouge">document</code>
-a third <em>adapter</em> would have made <code class="language-plaintext highlighter-rouge">adapterForKind</code> <strong>ambiguous on every kind the
-two share</strong> — eight of them, measured when the question was live — and a
-scoping function that returns two answers cannot fail an audit, because nothing
-can say which answer was meant.</p><p><strong>The question to ask when you add a content type:</strong></p><blockquote><p>Does it need different <strong>code</strong>, or only different <strong>rules</strong>?</p></blockquote><p>If only rules, it is <strong>a profile plus a subclass</strong>, not an adapter. Reaching for
-a new adapter is the expensive answer and usually the wrong one.</p><p><strong>The instance that ships a content adapter declares it; the harness never
+</h2><div class="table-wrapper"><table><thead><tr><th></th><th>what it does</th><th>how they relate</th></tr></thead><tbody><tr><td><strong>Adapter</strong></td><td>partitions block kinds into <strong>disjoint</strong> namespaces</td><td><code class="language-plaintext highlighter-rouge">adapterForKind</code> must stay <strong>total and unambiguous</strong> — it is what QA criterion scoping reads</td></tr><tr><td><strong>Profile</strong></td><td>says what a folio may <strong>contain</strong></td><td>profiles <strong>nest</strong>: every document kind is also a paper kind</td></tr></tbody></table></div><p>Adapters must not overlap; profiles must. Making <code class="language-plaintext highlighter-rouge">document</code> a third <em>adapter</em>
+would make <code class="language-plaintext highlighter-rouge">adapterForKind</code> <strong>ambiguous on every kind the two share</strong>, and a
+scoping function that returns two answers cannot fail an audit.</p><p><strong>The question to ask when you add a content type:</strong></p><blockquote><p>Does it need different <strong>code</strong>, or only different <strong>rules</strong>?</p></blockquote><p>If only rules, it is <strong>a profile plus a subclass</strong>, not an adapter.</p><p><strong>The instance that ships a content adapter declares it; the harness never
 names it.</strong> <code class="language-plaintext highlighter-rouge">contentAdapters</code> in that instance’s <code class="language-plaintext highlighter-rouge">&lt;instance&gt;.json</code> —
 <code class="language-plaintext highlighter-rouge">contentType</code>, instance-relative <code class="language-plaintext highlighter-rouge">module</code>, <code class="language-plaintext highlighter-rouge">className</code>, and <code class="language-plaintext highlighter-rouge">extends</code> for the
 type it specialises — is what <code class="language-plaintext highlighter-rouge">src/builtin-adapters.ts</code> discovers. <code class="language-plaintext highlighter-rouge">extends</code>
 orders the fallback: the specialisation leads, because falling back <em>to</em> a
 superset loses nothing and falling back <em>from</em> it loses its tools. The harness
-held <code class="language-plaintext highlighter-rouge">../&lt;instance&gt;/adapters/…</code> paths until 2026-09-30, a variable import no
-static gate could see and the edge that kept it from lifting into its own
-repository; <code class="language-plaintext highlighter-rouge">check:import-direction</code> now fails on that shape (bean <code class="language-plaintext highlighter-rouge">p11x</code>).</p><h2 id="what-profile-enforcement-catches-that-schema-validation-cannot"><a href="#what-profile-enforcement-catches-that-schema-validation-cannot" class="anchor-heading" aria-labelledby="what-profile-enforcement-catches-that-schema-validation-cannot"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What profile enforcement catches that schema validation cannot
+holds no <code class="language-plaintext highlighter-rouge">../&lt;instance&gt;/adapters/…</code> path; <code class="language-plaintext highlighter-rouge">check:import-direction</code> fails on that
+shape.</p><h2 id="what-profile-enforcement-catches-that-schema-validation-cannot"><a href="#what-profile-enforcement-catches-that-schema-validation-cannot" class="anchor-heading" aria-labelledby="what-profile-enforcement-catches-that-schema-validation-cannot"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What profile enforcement catches that schema validation cannot
   
   
-</h2><p>A profile check runs on every validation, and it exists because the gap it
-covers is <strong>structural, not an oversight</strong>:</p><ul><li><strong>A block kind is valid in isolation.</strong> A <code class="language-plaintext highlighter-rouge">theorem</code> is a well-formed
+</h2><p>A profile check runs on every validation. It covers a structural gap:</p><ul><li><strong>A block kind is valid in isolation.</strong> A <code class="language-plaintext highlighter-rouge">theorem</code> is a well-formed
 <code class="language-plaintext highlighter-rouge">theorem</code> whatever folio it sits in — the type says nothing about whether
 <em>this</em> folio may contain one.</li><li><strong>The constraint layer cannot read the folio’s configuration.</strong> Which profile
 is active is an instance fact; the schema is a shared artefact. So the check
-has to live between them.</li></ul><p>Two rules follow, and the second is subtler than it looks:</p><ol><li><strong>The kind must be within the active profile.</strong></li><li><strong>In a document profile, no formal-proof field and no machine-checkable
-sibling</strong> — because several kinds <em>declare</em> that field as optional. The
-<strong>type permits what the profile forbids</strong>, which is exactly the case schema
-validation cannot express and a reviewer will not notice.</li></ol><h2 id="the-render-path-a-document-profile-actually-uses-takes-no-tex"><a href="#the-render-path-a-document-profile-actually-uses-takes-no-tex" class="anchor-heading" aria-labelledby="the-render-path-a-document-profile-actually-uses-takes-no-tex"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The render path a document profile actually uses takes no TeX
+has to live between them.</li></ul><p>Two rules follow:</p><ol><li><strong>The kind must be within the active profile.</strong></li><li><strong>In a document profile, no formal-proof field and no machine-checkable
+sibling</strong> — several kinds <em>declare</em> that field as optional, so the <strong>type
+permits what the profile forbids</strong>.</li></ol><h2 id="the-render-path-a-document-profile-actually-uses-takes-no-tex"><a href="#the-render-path-a-document-profile-actually-uses-takes-no-tex" class="anchor-heading" aria-labelledby="the-render-path-a-document-profile-actually-uses-takes-no-tex"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The render path a document profile actually uses takes no TeX
   
   
 </h2><p>A document folio assembles to one Markdown file and goes through a
-document-converter toolchain; the PDF comes from an HTML-to-PDF engine.</p><p><strong>It never falls back to the TeX pipeline, deliberately.</strong> A PDF that silently
-came out of LaTeX would misreport what the folio needs in order to build, and
-the next person on a clean machine pays for that — they install a toolchain the
-folio’s own output implied was required, or discover the reverse at the worst
-moment.</p><p>It is registered for <strong>both</strong> content types on purpose: it is the render that
-works while drafting on a machine with no TeX, which is most machines most of
-the time.</p><h2 id="a-normative-statement-is-not-a-block-kind"><a href="#a-normative-statement-is-not-a-block-kind" class="anchor-heading" aria-labelledby="a-normative-statement-is-not-a-block-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A normative statement is not a block kind
+document-converter toolchain; the PDF comes from an HTML-to-PDF engine.</p><p><strong>It never falls back to the TeX pipeline</strong>: a PDF that silently came out of
+LaTeX would misreport what the folio needs in order to build. It is registered
+for <strong>both</strong> content types, so a folio renders on a machine with no TeX.</p><h2 id="a-normative-statement-is-not-a-block-kind"><a href="#a-normative-statement-is-not-a-block-kind" class="anchor-heading" aria-labelledby="a-normative-statement-is-not-a-block-kind"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A normative statement is not a block kind
   
   
 </h2><p>There is deliberately <strong>no <code class="language-plaintext highlighter-rouge">recommendation</code> kind</strong>. A normative statement is
 carried by a labelled, titled prose block.</p><p><strong>Adding a real kind is about thirty files</strong> — a builder, a schema, a label
-prefix, viewer registration, constraint rows and QA criteria — so it is tracked
-as its own work rather than half-done. A kind that exists in the type system and
-nowhere else is worse than no kind at all: it validates, renders as nothing, and
-is invisible to every audit.</p><p><strong>Known wrong, and left visible rather than quietly patched:</strong> intake guidance
-that maps guideline recommendations onto <code class="language-plaintext highlighter-rouge">definition</code> predates the document
-profile and is wrong for a document folio, where <code class="language-plaintext highlighter-rouge">definition</code>’s formal field is
-required.</p><hr><h2 class="text-delta">Table of contents</h2><ul><li><a href="../../folio-assistant-core/concepts/content-lifecycle.html">Content lifecycle</a></li><li><a href="../../folio-assistant-core/concepts/document-content-type.html">Documents & policy guidance</a></li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+prefix, viewer registration, constraint rows and QA criteria — and is done
+whole or not at all: a kind that exists only in the type system validates,
+renders as nothing, and is invisible to every audit.</p><p><strong>Known wrong:</strong> intake guidance that maps guideline recommendations onto
+<code class="language-plaintext highlighter-rouge">definition</code> is wrong for a document folio, where <code class="language-plaintext highlighter-rouge">definition</code>’s formal field
+is required.</p><hr><h2 class="text-delta">Table of contents</h2><ul><li><a href="../../folio-assistant-core/concepts/content-lifecycle.html">Content lifecycle</a></li><li><a href="../../folio-assistant-core/concepts/document-content-type.html">Documents & policy guidance</a></li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

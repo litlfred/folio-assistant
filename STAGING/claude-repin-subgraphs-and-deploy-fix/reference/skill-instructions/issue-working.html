@@ -237,17 +237,12 @@ least likely to see.</p><p>Track what you have already read as <strong>two</stro
 cannot see an edit at all.</li></ul><p><strong>With no stored mark, everything counts as unseen.</strong> A fresh container has read
 nothing, and defaulting the other way is exactly how the comments that change
 direction get skipped — silently, because nothing distinguishes <em>read</em> from
-<em>never looked</em>.</p><p>Measured here: a session missed <strong>five</strong> owner comments across eighty-four
-minutes while working — including the one asking for this rule — and found them
-only when the author typed <em>“new comments”</em>. Every one of the five changed
-direction or added scope.</p><h2 id="when-the-new-material-is-a-large-chunk-of-work-stop"><a href="#when-the-new-material-is-a-large-chunk-of-work-stop" class="anchor-heading" aria-labelledby="when-the-new-material-is-a-large-chunk-of-work-stop"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When the new material is a large chunk of work, stop
+<em>never looked</em>.</p><h2 id="when-the-new-material-is-a-large-chunk-of-work-stop"><a href="#when-the-new-material-is-a-large-chunk-of-work-stop" class="anchor-heading" aria-labelledby="when-the-new-material-is-a-large-chunk-of-work-stop"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When the new material is a large chunk of work, stop
   
   
 </h2><p><strong>Do not fold it into the current run.</strong> Say that this is a good stopping point
-for review, link the artefact, and confirm priorities before continuing.</p><p>The instinct to absorb it is the wrong one twice over: it buries a scope change
-inside a diff nobody asked for, and it spends the author’s next review on work
-they have not agreed to. A large new ask is a decision to hand back, under the
-usual discipline — context, options with their costs, a marked recommendation,
+for review, link the artefact, and confirm priorities before continuing.</p><p>Absorbing it buries a scope change inside a diff nobody asked for. A large new
+ask is a decision to hand back, under the usual discipline — context, options with their costs, a marked recommendation,
 then the question.</p><h2 id="what-an-issue-is-for-against-its-neighbours"><a href="#what-an-issue-is-for-against-its-neighbours" class="anchor-heading" aria-labelledby="what-an-issue-is-for-against-its-neighbours"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What an issue is <em>for</em>, against its neighbours
   
   
@@ -275,13 +270,10 @@ A choice made only in the chat leaves no record where the next reader looks.</li
 stakeholder would act on.</p><p>Each update must be <strong>readable on its own</strong>, because it is read days later
 without the session: status, approach in a line, findings with their numbers
 and provenance, what landed, and next steps — and a link to the previous
-update rather than a restatement of it. Measured on issue #2302 (2026-10-06):
-the owner asked for an issue update three times in one session — after the
-method comparison, after the figures work, and again for overall status —
-each time because the last one was hours and several milestones old.</p><h2 id="a-sign-off-on-the-issue-becomes-a-record"><a href="#a-sign-off-on-the-issue-becomes-a-record" class="anchor-heading" aria-labelledby="a-sign-off-on-the-issue-becomes-a-record"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A sign-off on the issue becomes a record
+update rather than a restatement of it.</p><h2 id="a-sign-off-on-the-issue-becomes-a-record"><a href="#a-sign-off-on-the-issue-becomes-a-record" class="anchor-heading" aria-labelledby="a-sign-off-on-the-issue-becomes-a-record"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A sign-off on the issue becomes a record
   
   
-</h2><p>Issue #2405 (FR-011). When a requirements document is signed off on its issue
+</h2><p>When a requirements document is signed off on its issue
 — approved, amended, rejected, deferred or cancelled — the comment is the
 <strong>evidence</strong>, not the record. The record is a <code class="language-plaintext highlighter-rouge">requirement-signoff</code>
 attestation in the <code class="language-plaintext highlighter-rouge">attestations</code> graph
@@ -301,26 +293,19 @@ function or somebody’s cited precedent <strong>does not exist</strong>, re-rea
 remote — <code class="language-plaintext highlighter-rouge">git show origin/main:&lt;path&gt;</code> — in a command of its own, and check
 the open branches when the claim is <em>nobody has built this</em>.</p><p>Grepping your checkout answers <em>“is this in my base”</em>, not <em>“does this exist”</em>,
 and a <code class="language-plaintext highlighter-rouge">git fetch</code> earlier in the same compound command is not a barrier when
-siblings merge every few minutes. Both failures happened in one session on
-2026-09-21, one of them in a comment accusing a bean of exactly this error:
+siblings merge every few minutes.
 <a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”Re-derive from the REMOTE” has
-the measurements and the two guards. For the third case, a path that exists
+the two guards. For the third case, a path that exists
 only on an open PR’s head, ask the
 <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/open-work-lookup/open-work-lookup.json"><code class="language-plaintext highlighter-rouge">open-work-lookup</code></a> Tool.</p><h2 id="when-the-work-has-a-bean-and-no-issue-strict"><a href="#when-the-work-has-a-bean-and-no-issue-strict" class="anchor-heading" aria-labelledby="when-the-work-has-a-bean-and-no-issue-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When the work has a BEAN and no issue (STRICT)
   
   
-</h2><p><strong>Measured 2026-09-20, bean <code class="language-plaintext highlighter-rouge">oh78</code>.</strong> 54 proposals merged in one four-hour
-window and <strong>2 issues changed</strong>, both newly opened. Most of that day’s work was
-bean-driven with no issue at all, so the rule above was not broken — it was
-<em>silently inapplicable</em>, which is worse, because a rule that quietly does not
-apply reads from the outside exactly like a rule being followed.</p><blockquote><p><strong>A round summary is owed either way. With no issue, it goes on the change
+</h2><blockquote><p><strong>A round summary is owed either way. With no issue, it goes on the change
 proposal AND into the bean — the bean is the durable artefact a sibling
 reads, and a summary that exists only in a PR thread is invisible to the work
-plan on <code class="language-plaintext highlighter-rouge">main</code>.</strong></p></blockquote><p><strong>And a bean that has an issue carries the link BOTH ways.</strong> Issue #558
-(<em>“Sticky pin: unpinning loses the theme”</em>) has no bean link although bean
-<code class="language-plaintext highlighter-rouge">ivfw</code> is its subject verbatim; issue #464 is open on a completed bean
-(<code class="language-plaintext highlighter-rouge">mggs</code>). One direction is not enough: a reader arriving at either object has
-to be able to reach the other, and a check reports the ones that cannot.</p><p>When to open an issue at all is <a href="../../reference/skill-instructions/crdm-detect.html"><code class="language-plaintext highlighter-rouge">crdm-detect</code></a>
+plan on <code class="language-plaintext highlighter-rouge">main</code>.</strong></p></blockquote><p><strong>And a bean that has an issue carries the link BOTH ways</strong>: a reader arriving
+at either object has to be able to reach the other, and a check reports the
+ones that cannot.</p><p>When to open an issue at all is <a href="../../reference/skill-instructions/crdm-detect.html"><code class="language-plaintext highlighter-rouge">crdm-detect</code></a>
 §”Issue association” — <strong>scan before creating one, and never create one without
 permission</strong>. This section is about what is owed once the work exists, not
 about manufacturing an issue for every bean.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill

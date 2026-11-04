@@ -271,7 +271,8 @@ If no override within ~30 seconds, proceed with the stated plan.</p><h3 id="phas
   
 </h3><p>If any review comment requires a judgment call (ambiguous intent,
 architectural decision, multiple valid approaches), use
-<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> with:</p><ul><li><strong>Rich context</strong> per AGENTS.md user-accessibility rules:
+<code class="language-plaintext highlighter-rouge">AskUserQuestion</code> with:</p><ul><li><strong>Rich context</strong> per
+<a href="../../reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a>:
     <ul><li>Quote the exact comment + file path + line number</li><li>Show the current code vs proposed change (preview)</li><li>State trade-offs for each option</li><li>Default to <code class="language-plaintext highlighter-rouge">multiSelect: true</code> unless choices are mutually exclusive</li><li>Prefix with 🟡</li></ul></li><li><strong>Batch questions</strong> — collect ALL blocked items into a single
 <code class="language-plaintext highlighter-rouge">AskUserQuestion</code> call (up to 4 questions) rather than asking
 one at a time.</li></ul><h3 id="phase-4-merge"><a href="#phase-4-merge" class="anchor-heading" aria-labelledby="phase-4-merge"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Phase 4: Merge
@@ -306,11 +307,8 @@ unresolved items.</li></ul><h2 id="anti-patterns"><a href="#anti-patterns" class
 renders identically to one whose checks have not started. Match the PR’s
 <code class="language-plaintext highlighter-rouge">head_sha</code> against the branch’s workflow-run list before calling it green,
 and re-run the workflows by dispatch when no run exists for that sha.
-Measured six times here (bean <code class="language-plaintext highlighter-rouge">3pqn</code>), twice on one PR in eight minutes.
-Same rule, with the evidence and the procedure, in
-<a href="../../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge.md</code></a> §Guardrails; change one and change
-the other — that file records what happened the last time a rule lived in
-only one of these two.</li><li>Do NOT squash unless the user explicitly says “squash”.</li><li>Do NOT skip sibling coordination — it prevents post-merge conflicts.</li><li>Do NOT ask trivial questions in Phase 3 — only genuinely ambiguous
+Same rule, with the procedure, in <a href="../../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge.md</code></a>
+§Guardrails; change one and change the other.</li><li>Do NOT squash unless the user explicitly says “squash”.</li><li>Do NOT skip sibling coordination — it prevents post-merge conflicts.</li><li>Do NOT ask trivial questions in Phase 3 — only genuinely ambiguous
 decisions warrant user input.</li><li><strong>Do NOT delete the branch after merging</strong> — and not at any other time either,
 without explicit assent from the user or the repository owner. Same rule, same
 wording, in <a href="../../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge.md</code></a> §Guardrails; change one and

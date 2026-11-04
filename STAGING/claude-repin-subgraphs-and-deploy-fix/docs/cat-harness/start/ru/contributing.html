@@ -227,10 +227,10 @@ bun run <span class="nb">cat </span>lint      <span class="c"># eslint</span>
 bun run <span class="nb">cat test</span>:e2e      <span class="c"># e2e (test:e2e)</span>
 </code></pre></div></div><h2 id="план-работы-с-beans"><a href="#план-работы-с-beans" class="anchor-heading" aria-labelledby="план-работы-с-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> План работы с <code class="language-plaintext highlighter-rouge">beans</code></h2><p>Этот проект использует <a href="https://github.com/hmans/beans"><code class="language-plaintext highlighter-rouge">beans</code></a> в качестве единого
 механизма todo / плана работы (см. <code class="language-plaintext highlighter-rouge">AGENTS.md</code>). <strong>Не</strong> создавайте отдельное хранилище
-задач.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scripts/install-beans.sh
+задач.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat-harness-tools/scripts/install-beans.sh
 beans list
 beans create <span class="s2">"&lt;title&gt;"</span>
-beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>   <span class="c"># зарезервируйте задачу перед началом работы</span>
+bun run <span class="nb">cat </span>beans:claim &lt;<span class="nb">id</span><span class="o">&gt;</span>   <span class="c"># зарезервируйте задачу перед началом работы</span>
 </code></pre></div></div><p><code class="language-plaintext highlighter-rouge">beans ≠ sidecars</code>: никогда не выполняйте <code class="language-plaintext highlighter-rouge">beans create</code> для массовых автоматически
 сгенерированных очередей (QA, witness, watcher) — они должны оставаться в виде bulk JSON.</p><h2 id="руководство-для-агентов"><a href="#руководство-для-агентов" class="anchor-heading" aria-labelledby="руководство-для-агентов"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Руководство для агентов
   
@@ -243,10 +243,10 @@ Gemini CLI, Antigravity, Cursor, Copilot). <code class="language-plaintext highl
   
 </h2><ul><li>Текстовая документация размещена в <code class="language-plaintext highlighter-rouge">docs/</code> (этот сайт на Jekyll).</li><li><p><strong>Справочник схем навыков</strong> генерируется автоматически — никогда не редактируйте
 вручную файлы <code class="language-plaintext highlighter-rouge">docs/reference/skills/*.md</code>. Редактируйте схемы JSON Schema в
-<code class="language-plaintext highlighter-rouge">schemas/skills/&lt;skill&gt;/</code> и запускайте повторную генерацию:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/gen-schema-docs.ts
+<code class="language-plaintext highlighter-rouge">schemas/skills/&lt;skill&gt;/</code> и запускайте повторную генерацию:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat-harness-tools/scripts/gen-schema-docs.ts
 </code></pre></div></div></li><li><p><strong>Инструкции навыков</strong> (<code class="language-plaintext highlighter-rouge">docs/reference/skill-instructions/*.md</code>) также
 генерируются автоматически — никогда не редактируйте их вручную. Редактируйте тела навыков в
-<code class="language-plaintext highlighter-rouge">skills/authoring/content-lifecycle/*.md</code> или <code class="language-plaintext highlighter-rouge">src/skills/*.md</code> и запускайте повторную генерацию:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run scripts/gen-skill-docs.ts
+<code class="language-plaintext highlighter-rouge">skills/</code>, <code class="language-plaintext highlighter-rouge">sdlc/skills/</code> и <code class="language-plaintext highlighter-rouge">work-plan/skills/</code> и запускайте повторную генерацию:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat-harness-tools/scripts/gen-skill-docs.ts
 </code></pre></div></div></li><li><strong>Справочник по TypeScript API</strong> (<code class="language-plaintext highlighter-rouge">/api/</code>) генерируется с помощью TypeDoc в CI.</li><li>Сайт собирается и развертывается на GitHub Pages с помощью
 <code class="language-plaintext highlighter-rouge">.github/workflows/docs-site.yml</code> при каждом push в ветку <code class="language-plaintext highlighter-rouge">main</code>, который затрагивает документацию,
 схемы или исходный код.</li></ul><p>Локальный предпросмотр:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>docs
@@ -255,7 +255,7 @@ bundle <span class="nb">install
 </code></pre></div></div><h2 id="отправка-изменений"><a href="#отправка-изменений" class="anchor-heading" aria-labelledby="отправка-изменений"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Отправка изменений
   
   
-</h2><p>Проверка → подтверждение возможности слияния → push → (только если попросят) открытие PR. См.
+</h2><p>Откройте PR с первого коммита; перед слиянием: проверка → подтверждение возможности слияния → push. См.
 <code class="language-plaintext highlighter-rouge">sdlc/skills/sdlc-core/prepare-merge.md</code>. Держите <strong>формализм фреймворка отдельно
 от контента</strong> — контент должен находиться в собственном репозитории, а любой контент
 в этой документации носит чисто иллюстративный характер.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">

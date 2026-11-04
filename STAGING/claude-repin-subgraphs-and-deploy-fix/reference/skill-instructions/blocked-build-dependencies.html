@@ -224,7 +224,7 @@ lists <code class="language-plaintext highlighter-rouge">recentRelayFailures</co
 or unset the proxy to get past any of these.</p><h2 id="maven-central-through-a-429"><a href="#maven-central-through-a-429" class="anchor-heading" aria-labelledby="maven-central-through-a-429"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Maven Central through a 429
   
   
-</h2><p>Measured 2026-10-06, building Grobid from source for issue #2302:</p><div class="table-wrapper"><table><thead><tr><th>host</th><th>result</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">repo.maven.apache.org</code></td><td><strong>429</strong> — Gradle’s default <code class="language-plaintext highlighter-rouge">mavenCentral()</code>; the build failed in 28 s</td></tr><tr><td><code class="language-plaintext highlighter-rouge">repo1.maven.org</code></td><td>200 (intermittently 429 earlier the same hour)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">maven-central.storage-download.googleapis.com</code></td><td>200 — Google’s mirror of Maven Central</td></tr><tr><td><code class="language-plaintext highlighter-rouge">plugins.gradle.org</code>, <code class="language-plaintext highlighter-rouge">services.gradle.org</code></td><td>200</td></tr></tbody></table></div><p><strong>Gradle:</strong> pass the init script, which repoints every repository and plugin
+</h2><p>Measured 2026-10-06, building Grobid from source:</p><div class="table-wrapper"><table><thead><tr><th>host</th><th>result</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">repo.maven.apache.org</code></td><td><strong>429</strong> — Gradle’s default <code class="language-plaintext highlighter-rouge">mavenCentral()</code>; the build failed in 28 s</td></tr><tr><td><code class="language-plaintext highlighter-rouge">repo1.maven.org</code></td><td>200 (intermittently 429 earlier the same hour)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">maven-central.storage-download.googleapis.com</code></td><td>200 — Google’s mirror of Maven Central</td></tr><tr><td><code class="language-plaintext highlighter-rouge">plugins.gradle.org</code>, <code class="language-plaintext highlighter-rouge">services.gradle.org</code></td><td>200</td></tr></tbody></table></div><p><strong>Gradle:</strong> pass the init script, which repoints every repository and plugin
 lookup at the mirror without touching the project’s build files:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./gradlew build <span class="nt">--init-script</span> cat-harness-tools/scripts/gradle-maven-mirror.init.gradle
 </code></pre></div></div><p>With it the same Grobid build succeeded in 3 min 45 s. <code class="language-plaintext highlighter-rouge">-Dmaven.mirror=&lt;url&gt;</code>
 picks another mirror.</p><p><strong>Maven:</strong> the equivalent is a <code class="language-plaintext highlighter-rouge">&lt;mirror&gt;</code> in <code class="language-plaintext highlighter-rouge">~/.m2/settings.xml</code> with
@@ -244,15 +244,15 @@ is already running. When it does not, <strong>hand the step to an agent that has
 access</strong> rather than stall: open a bean whose steps run end to end without this
 session (install, run, the exact scoring command, where the result goes), and
 give the person a one-line instruction of the form <em>“do bean X on branch Y of
-repo Z”</em>. Bean <code class="language-plaintext highlighter-rouge">u9lb</code> (scoring Nougat for #2302) is the worked example, and the
-code it needs — a reader for the tool’s saved output — lands first, in this
-session, so the other agent only runs the tool.</p><h2 id="running-code-from-outside-the-repository"><a href="#running-code-from-outside-the-repository" class="anchor-heading" aria-labelledby="running-code-from-outside-the-repository"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running code from outside the repository
+repo Z”</em> (<a href="../../reference/skill-instructions/agent-handoff.html"><code class="language-plaintext highlighter-rouge">agent-handoff</code></a>). Code the step needs, such as a
+reader for the tool’s saved output, lands first, in this session, so the other
+agent only runs the tool.</p><h2 id="running-code-from-outside-the-repository"><a href="#running-code-from-outside-the-repository" class="anchor-heading" aria-labelledby="running-code-from-outside-the-repository"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Running code from outside the repository
   
   
 </h2><p>Cloning and building a third-party project is running code nobody here wrote.
 Do it only when the person has asked for that tool by name, keep it under the
 scratch directory rather than the repository, and commit only what reads its
-OUTPUT. In the #2302 session the first attempt was refused by the session’s
-permission check and went ahead once the owner said to clone it.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+OUTPUT. A session’s permission check may refuse the clone until the person
+says to go ahead.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

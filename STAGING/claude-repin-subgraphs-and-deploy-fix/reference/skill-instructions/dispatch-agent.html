@@ -224,9 +224,7 @@ consistent, machine-greppable progress block on a fixed cadence, with
 <em>live</em> evidence (log tails, exit codes, counts), never a static
 “still working on it”.</li><li><strong>Parent-side 2-minute heartbeat</strong> — the parent extracts the latest
 block from each running agent every ~120 s and posts ONE consolidated
-synthesis table to the user, so monitoring is passive and effortless.</li></ol><p>Both halves are load-bearing. An agent that doesn’t follow the contract
-can’t be synthesized; a parent that doesn’t run the heartbeat leaves the
-user blind. Do not dispatch without both.</p><hr /><h2 id="0-when-to-use"><a href="#0-when-to-use" class="anchor-heading" aria-labelledby="0-when-to-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. When to use
+synthesis table to the user.</li></ol><p>Do not dispatch without both.</p><hr /><h2 id="0-when-to-use"><a href="#0-when-to-use" class="anchor-heading" aria-labelledby="0-when-to-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. When to use
   
   
 </h2><ul><li>Launching <strong>≥ 2 background <code class="language-plaintext highlighter-rouge">Agent</code> calls</strong> on independent fronts
@@ -286,10 +284,8 @@ honesty over a pretty status.</p></blockquote><hr /><h2 id="2-dispatch-procedure
 as DISPATCH LINES — one fixed sentence per bean, per
 <a href="../../reference/skill-instructions/handover-report.html"><code class="language-plaintext highlighter-rouge">handover-report</code></a> rule 7:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Do bean folio-assistant-&lt;id&gt; on branch &lt;branch-to-create&gt; of repo &lt;owner&gt;/&lt;repo&gt;.
 </code></pre></div></div><p>Take the front from that line rather than inventing a scope: the bean carries
-its own Done-when, so an agent dispatched on a bean can be judged, while one
-dispatched on a theme cannot. If you are dispatching work that has no bean,
-bean it first — that is intake, and it is cheaper than a round spent agreeing
-what “done” was.</p><ol><li><strong>Scope each front</strong> to one independent agent (no shared files between
+its own Done-when. If you are dispatching work that has no bean, bean it
+first.</p><ol><li><strong>Scope each front</strong> to one independent agent (no shared files between
 agents — worktree isolation makes parallel file writes safe; use
 <code class="language-plaintext highlighter-rouge">isolation: "worktree"</code> whenever agents mutate the tree).</li><li><strong>Assign each a <code class="language-plaintext highlighter-rouge">&lt;LABEL&gt;</code></strong> and paste the §1 contract block into its
 prompt, plus the task-specific brief (verification recipe, discipline,
@@ -297,10 +293,8 @@ git/branch/PR rules — do not re-derive these; reuse the project’s
 standing lean-direct recipe and “push branch, parent PRs+merges”
 convention).</li><li><strong>Name the skills that govern the front</strong> in the brief, by path, and
 quote the rules they set that the work could touch — rendering, layering,
-what is forbidden. An agent cannot follow a rule it was never pointed at,
-and “fix the site” read without <code class="language-plaintext highlighter-rouge">ig-render-jekyll</code> produced a site that
-copied the IG Publisher’s HTML, which that skill forbids (owner,
-2026-10-14: <em>“I DO NOT WANT THE IG PUBLISHER HTML”</em>). If the skills are
+what is forbidden. An agent cannot follow a rule it was never pointed at.
+If the skills are
 served over MCP and the server is unreachable, read them from the mounted
 layers (<code class="language-plaintext highlighter-rouge">&lt;layer&gt;/skills/**</code>) instead: an unreachable server is never a
 reason to work without them.</li><li><strong>Launch all agents in a single message</strong> (multiple <code class="language-plaintext highlighter-rouge">Agent</code> tool calls)
@@ -354,9 +348,8 @@ heartbeat"</code>, <code class="language-plaintext highlighter-rouge">reason: "2
 dynamic-loop tick. Call <code class="language-plaintext highlighter-rouge">ScheduleWakeup({stop:true})</code> once every agent
 is <code class="language-plaintext highlighter-rouge">[DONE]</code>.</li><li>If the harness surfaces agent-completion notifications, those also wake
 you; run the extractor on each and treat it as an off-cadence heartbeat,
-then re-arm the 120 s fallback so quiet stretches still tick.</li></ul><p>The 120 s tick is a <em>fallback heartbeat</em>, not the only signal — completion
-notifications arrive on their own. Pick 120 s because the user asked for
-2-minute updates; honor that literally.</p><h3 id="3c-nudging-a-silent-agent"><a href="#3c-nudging-a-silent-agent" class="anchor-heading" aria-labelledby="3c-nudging-a-silent-agent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3c. Nudging a silent agent
+then re-arm the 120 s fallback so quiet stretches still tick.</li></ul><p>The 120 s tick is a <em>fallback heartbeat</em>; completion notifications arrive on
+their own.</p><h3 id="3c-nudging-a-silent-agent"><a href="#3c-nudging-a-silent-agent" class="anchor-heading" aria-labelledby="3c-nudging-a-silent-agent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3c. Nudging a silent agent
   
   
 </h3><p>If an agent shows <code class="language-plaintext highlighter-rouge">(no progress block yet)</code> for &gt; 3 min, or its step
@@ -377,12 +370,10 @@ line never substitutes for the parent’s own verification.</li><li>When <strong
   
   
 </h2><ul><li><strong>Going dark</strong> — dispatching background agents without arming the
-heartbeat. The user then has to ask “what’s happening?” — the exact
-friction this skill removes.</li><li><strong>Semi-static updates</strong> — “agent still running the proof” with no log
+heartbeat.</li><li><strong>Semi-static updates</strong> — “agent still running the proof” with no log
 tail, no step counter, no evidence. If a command is in flight, the
 block MUST carry its live output.</li><li><strong>Reading the full transcript</strong> — tailing/<code class="language-plaintext highlighter-rouge">cat</code>-ing the <code class="language-plaintext highlighter-rouge">*.output</code>
-JSONL into context instead of using the targeted extractor. Overflows
-context and defeats the point.</li><li><strong>A brief with no governing skills</strong> — dispatching a front without naming
+JSONL into context instead of using the targeted extractor.</li><li><strong>A brief with no governing skills</strong> — dispatching a front without naming
 the skills that rule it (§2 step 3). The agent then decides a design
 question the owner already ruled on, and the PR carries it in.</li><li><strong>Trusting the DONE line</strong> — merging on an agent’s self-reported
 “exit 0” without the parent’s own lean-direct re-verification.</li><li><strong>Wrong cadence</strong> — 5-minute or “when I remember” ticks when the user
