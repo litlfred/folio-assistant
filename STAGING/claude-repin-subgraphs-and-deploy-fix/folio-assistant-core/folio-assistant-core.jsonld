@@ -366,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-04T22:01:25.468Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/412736646b38f1f87aa904e766a1b4baac8e78fc",
-  "sourceCommitSha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
-  "sourceCommitAt": "2026-11-04T21:32:33Z",
+  "generatedAt": "2026-11-04T22:57:40.139Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/46dd432d9e2eaf3079b57d021eabcd8385f25dca",
+  "sourceCommitSha": "46dd432d9e2eaf3079b57d021eabcd8385f25dca",
+  "sourceCommitAt": "2026-11-04T22:36:42Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -394,7 +394,7 @@
       "title": "Deep document research",
       "description": "Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. The four roles, the two stopping conditions and why both are load-bearing, the granularity choice, and the three things this repository must NOT adopt along with the method.",
       "instructionsPath": "skills/deep-document-research.md",
-      "instructionLines": 102,
+      "instructionLines": 97,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -408,7 +408,7 @@
       "title": "Block Change Summary",
       "description": "Post-delivery content block change summary for a folio edit-set: extract changed block labels across `.md`, `.ts` and content-type sibling files, present a per-chapter table with `.md`-first GitHub blob links, modified sibling links, local viewer anchors, and change categories. Refines `delivery-summary` for content folios.",
       "instructionsPath": "skills/content/content-lifecycle-ext/block-change-summary.md",
-      "instructionLines": 116,
+      "instructionLines": 104,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -422,7 +422,7 @@
       "title": "Corpus — committing an accepted edit",
       "description": "The contract the `corpus` role is held to when an accepted edit is committed into it: take the write only on the editor's acceptance, as one change with its QA sidecars, under the commit-hygiene requirement and with no relaxing of that policy. The narrowest contract the editing diagram requires. A mechanical role's skill is a contract to test against, not instructions to read.",
       "instructionsPath": "skills/content/content-lifecycle-ext/corpus-commit-contract.md",
-      "instructionLines": 60,
+      "instructionLines": 56,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -436,7 +436,7 @@
       "title": "External registry — confirming a source's authority",
       "description": "The contract the `external-registry` role is held to when a candidate source is checked against the body that publishes it: resolve the identifier through its own API and return the record, so authority is a resolved fact. When the answer is uncertain or absent the verdict is not invented here; the work plan records the citation as unverified. A role played by an external party is held to a contract, not handed instructions.",
       "instructionsPath": "skills/content/content-lifecycle-ext/registry-authority-contract.md",
-      "instructionLines": 57,
+      "instructionLines": 54,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -449,7 +449,7 @@
       "name": "quality-control",
       "title": "quality-control",
       "instructionsPath": "skills/content/content-lifecycle-ext/quality-control.md",
-      "instructionLines": 70,
+      "instructionLines": 69,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/quality-control/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/quality-control/output.schema.json",
       "hasInstructions": true,
@@ -465,7 +465,7 @@
       "title": "Review comments — from a PR comment to a structured todo",
       "description": "Reviewer comments on a folio's edit-set, from a tagged pull-request comment to a structured todo on the review page. Covers the tag a reviewer types, how the comments are ingested into `review-comment/1.0.0` todos, where the published `review-comments.json` comes from and when it refreshes, how a comment follows a renamed block and survives a removed one, who may change a comment's status, and how to change this process. Use when a reviewer asks how to comment on a block, when the review page shows no comments or a wrong one, when editing the ingestion, or when a folio's staging workflow is set up.",
       "instructionsPath": "skills/content/content-lifecycle-ext/review-comments.md",
-      "instructionLines": 383,
+      "instructionLines": 376,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -478,7 +478,7 @@
       "name": "normative-statements",
       "title": "normative-statements",
       "instructionsPath": "skills/content/folio-document-adapter/normative-statements.md",
-      "instructionLines": 104,
+      "instructionLines": 96,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/normative-statements/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/normative-statements/output.schema.json",
       "hasInstructions": true,
@@ -493,7 +493,7 @@
       "name": "public-comment",
       "title": "public-comment",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment.md",
-      "instructionLines": 611,
+      "instructionLines": 593,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/public-comment/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/public-comment/output.schema.json",
       "hasInstructions": true,
@@ -523,7 +523,7 @@
       "title": "`dsa-odrl-source` — Make the ODRL Agreement cite the legal text distribution (P2.3)",
       "description": "Bind a computable Data Sharing Agreement's W3C ODRL 2.2 `Agreement` to its signed legal text distribution using DCMI Metadata Terms `dcterms:source`, naming the exact `dcat:Distribution` whose `spdx:checksum` is checked (DSA building block B3, process step P2.3 `Task_OdrlCitesText`).",
       "instructionsPath": "skills/content/folio-document-adapter/dsa-odrl-source.md",
-      "instructionLines": 92,
+      "instructionLines": 91,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -550,7 +550,7 @@
       "name": "document-publishing",
       "title": "document-publishing",
       "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
-      "instructionLines": 192,
+      "instructionLines": 186,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
       "hasInstructions": true,
@@ -580,7 +580,7 @@
       "title": "`dsa-catalogue-status` — Set the catalogue status when an agreement changes or ends (P14.5)",
       "description": "Set the life-cycle status (`adms:status`, W3C DCAT 3 §6.4.30) on a Data Sharing Agreement's DCAT 3 catalogue record when the agreement is amended, renewed, terminated, or expires, while keeping all published versions readable at their immutable URLs (DSA building block B3, process step P14.5 `Task_SetStatus`).",
       "instructionsPath": "skills/content/folio-document-adapter/dsa-catalogue-status.md",
-      "instructionLines": 55,
+      "instructionLines": 54,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -594,7 +594,7 @@
       "title": "Folio content profiles — `document` base and `paper` extension",
       "description": "The content-folio half of the harness's content-profiles skill: how a document folio is structured prose and how a paper folio extends it, block-kind discovery across block-kinds/ graphs, profile-check enforcement, and the TeX-free document render path.",
       "instructionsPath": "skills/content/folio-document-adapter/folio-content-profiles.md",
-      "instructionLines": 49,
+      "instructionLines": 48,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -607,7 +607,7 @@
       "name": "document-structure",
       "title": "document-structure",
       "instructionsPath": "skills/content/folio-document-adapter/document-structure.md",
-      "instructionLines": 73,
+      "instructionLines": 71,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/document-structure/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/document-structure/output.schema.json",
       "hasInstructions": true,
@@ -637,7 +637,7 @@
       "title": "Public comment channels and intake",
       "description": "Set up the channels a public-comment release goes out on (an offline Excel sheet, a Google Form, a GitHub issue form, and the review sheet), each limited to the release's fixed references, with the editor's instructions and the announcement, and bring every channel back in through one intake path that ends in agent triage into thematic change-sets. Use when a draft is released for public comment, when a channel is added to a running review, or when returned comments arrive from any channel.",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment-channels.md",
-      "instructionLines": 213,
+      "instructionLines": 211,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -651,7 +651,7 @@
       "title": "Review-log watch",
       "description": "Poll a drafting review log (a Contributor Feedback sheet) and its folio repository's issues mechanically, with Tool `review-log-watch`, and start agent work only when a cell people set or an open issue changed. Each issue that no row links yet becomes a Contributor Feedback row, and a closed issue's row is hidden with its text struck through. Use on every wake of a review-log watcher, and when setting up a watcher for a new log.",
       "instructionsPath": "skills/content/folio-document-adapter/review-log-watch.md",
-      "instructionLines": 277,
+      "instructionLines": 258,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -665,7 +665,7 @@
       "title": "The review sheet's Apps Script",
       "description": "Build, install and reuse the Google Apps Script that keeps a review sheet's links and joined columns current (Tool `review-sheet-sync`). Public-comment mode: comment numbers, sections, pages and lines link into the frozen review draft, and Review Change Sets joins its comments. Drafting mode: one Contributor Feedback tab where each row is a change set with its own GitHub issue, and Sections pick from the document's table of contents. Use when setting up either sheet for a document, when its links are missing or stale, or after a tab, header, anchor or draft link changes.",
       "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
-      "instructionLines": 1380,
+      "instructionLines": 1254,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -678,7 +678,7 @@
       "name": "document-authoring",
       "title": "document-authoring",
       "instructionsPath": "skills/content/folio-document-adapter/document-authoring.md",
-      "instructionLines": 93,
+      "instructionLines": 92,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/document-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/schema/skills/document-authoring/output.schema.json",
       "hasInstructions": true,
@@ -694,7 +694,7 @@
       "title": "Block actions: [edit] and [feedback] on every block",
       "description": "Every block of a rendered document links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor, and [feedback] opens a GitHub issue about that block, from the folio's own issue form when it has one, listing the change-sets that already discuss the block. Use when a reader, reviewer or agent needs to propose a change to one block, when setting up a folio's feedback issue form, or when a document site's links point nowhere.",
       "instructionsPath": "skills/content/folio-document-adapter/block-actions.md",
-      "instructionLines": 159,
+      "instructionLines": 154,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -750,7 +750,7 @@
       "title": "`dsa-dcat-record` — Write the DCAT 3 record and link versions (P2.4–5)",
       "description": "Write the W3C DCAT 3 `dcat:Resource` and `dcat:Distribution` catalogue record for a Data Sharing Agreement (`dcat:downloadURL`, `spdx:checksum`, `odrl:hasPolicy`) and link versions with `dcat:version` and `dcat:previousVersion` (DSA building block B3, process step P2.4–5 `Task_Catalogue`).",
       "instructionsPath": "skills/content/folio-document-adapter/dsa-dcat-record.md",
-      "instructionLines": 66,
+      "instructionLines": 65,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -764,7 +764,7 @@
       "title": "Keep the review sheet's Agent columns current",
       "description": "Whenever an agent works on a change set of a folio whose review sheet is kept by the Tool `review-sheet-sync`, it writes the Agent tabs' columns for that change set and its comments as it goes: status, step, what it did, the PR, the staging page and its build, what the PR changed and when it finished. Use on every change-set edit, draft, PR, push, merge or close, in a sheet sync or not.",
       "instructionsPath": "skills/content/folio-document-adapter/review-sheet-agent-columns.md",
-      "instructionLines": 121,
+      "instructionLines": 120,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -778,7 +778,7 @@
       "title": "One definition of a requirement",
       "description": "What a requirement IS, said once for both requirements methodologies: a statement, a conformance level, a source, at least one success criterion with its verification method, and a sign-off owner. How that maps onto the `req:` schema's `successCriteria`, onto CRDM's REQ-### and spec-kit's FR/SC, and why a work plan is beans whose `## Done when` is copied from the success criteria of the statements they name.",
       "instructionsPath": "skills/content/requirements-planning/requirement-definition.md",
-      "instructionLines": 141,
+      "instructionLines": 129,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -792,7 +792,7 @@
       "title": "A plan request stops at a signed-off plan",
       "description": "When somebody asks for a PLAN — \"plan\", \"approach\", \"proposal\", \"how would you\", \"come up with\" — produce a requirements document and a work plan, post or commit them where the governing methodology says, hand over both as absolute GitHub permalinks, and STOP until sign-off is recorded on the issue. Applies to content requests as much as to feature requests. The operation both requirements methodologies (crdm, spec-kit) point at; neither is replaced by it.",
       "instructionsPath": "skills/content/requirements-planning/plan-request-gate.md",
-      "instructionLines": 151,
+      "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -806,7 +806,7 @@
       "title": "Oxigraph Multi-Graph Static Search & Catalog Discovery",
       "description": "How to compile, partition, distribute via CDN, and query digital library catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly on the static edge. Establishes the 2-tier on-demand loading hierarchy, upstream skolemization for zero blank nodes, append-only streaming partition writes, and SPARQL 1.1 cross-graph query recipes.",
       "instructionsPath": "skills/library/catalogue/oxigraph-catalogue-search.md",
-      "instructionLines": 212,
+      "instructionLines": 216,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -820,7 +820,7 @@
       "title": "Dublin Core renderings",
       "description": "Render a catalogue's Dublin Core records in the two standard forms an outside reader can use: Dublin Core XML, which a harvester reads, and JSON-LD bound to DCMI Metadata Terms. Each rendering is published beside the item's page. Covers which records get one, which XML form is used and why, how every field maps from the record's own data (never composed), what cannot be expressed and how that is reported, and the gate. Read this before changing the mapping, adding a catalogue instance, or linking a rendering from a page.",
       "instructionsPath": "skills/library/catalogue/dublin-core-renderings.md",
-      "instructionLines": 170,
+      "instructionLines": 150,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -834,7 +834,7 @@
       "title": "Materializing from arXiv",
       "description": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled.",
       "instructionsPath": "skills/library/cataloguing/archiving-arxiv.md",
-      "instructionLines": 173,
+      "instructionLines": 131,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -848,7 +848,7 @@
       "title": "Bibliography QA Skill",
       "description": "Bibliography quality-assurance agent — validates every reference in content/schema/references.ts against several QA checks: URL availability, URL resolution, metadata completeness, citation coverage, and screenshot/image evidence.  Generates bib-qa.json consumed by the standalone bib-qa.html dashboard.",
       "instructionsPath": "skills/library/cataloguing/bib-qa.md",
-      "instructionLines": 354,
+      "instructionLines": 337,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -862,7 +862,7 @@
       "title": "Archiving a web page",
       "description": "Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive.",
       "instructionsPath": "skills/library/cataloguing/archiving-web-pages.md",
-      "instructionLines": 87,
+      "instructionLines": 71,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -875,7 +875,7 @@
       "name": "glossary-build",
       "title": "Glossary Build Skill",
       "instructionsPath": "skills/library/cataloguing/glossary-build.md",
-      "instructionLines": 147,
+      "instructionLines": 140,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -889,7 +889,7 @@
       "title": "Filing a source: what Dublin Core carries, and what it does not",
       "description": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion.",
       "instructionsPath": "skills/library/cataloguing/filing-dublin-core.md",
-      "instructionLines": 118,
+      "instructionLines": 99,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -903,7 +903,7 @@
       "title": "Semantic Ontologist (Ambiguity Detection & Glossary)",
       "description": "Semantic Ontologist — scans narrative text for ambiguous terms, generates a formal glossary/registry, and produces a mapping linking narrative strings to formal identifiers. Acts as the \"Gatekeeper\" ensuring every term has a unique type/identity assignment before formalization proceeds.",
       "instructionsPath": "skills/library/cataloguing/ontologist.md",
-      "instructionLines": 233,
+      "instructionLines": 224,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -917,7 +917,7 @@
       "title": "Glossary terms",
       "description": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
       "instructionsPath": "skills/library/cataloguing/glossary-terms.md",
-      "instructionLines": 475,
+      "instructionLines": 450,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -959,7 +959,7 @@
       "title": "Figure rebuild: a figure is data, not a picture",
       "description": "Turn a source publication's figures into computable diagrams when a folio is built from its L1 entry. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source. The figure-coverage check counts what is missing and what is still only a picture.",
       "instructionsPath": "skills/library/ingestion/figure-rebuild.md",
-      "instructionLines": 275,
+      "instructionLines": 263,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -973,7 +973,7 @@
       "title": "L1 coverage — nothing normative goes missing silently",
       "description": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements smart-kg's docs/COVERAGE.md contract.",
       "instructionsPath": "skills/library/ingestion/l1-coverage.md",
-      "instructionLines": 92,
+      "instructionLines": 87,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -987,7 +987,7 @@
       "title": "Audio transcription: which recogniser, when, and how to check it",
       "description": "Turn recorded speech (a meeting recording, a video with audio, an interview) into a transcript the library can cite, and choose WHICH open-source recogniser to run for the job: whisper.cpp by default, faster-whisper, WhisperX with pyannote, Vosk, NVIDIA Parakeet/Canary, or Distil-Whisper. Covers audio extraction, why two exports of one recogniser are one opinion, how to compare transcripts (WER, CER, DER), translation, and what blocks a run. Use when an upload contains audio or video, when someone asks which transcription tool to use, or before declaring a new transcription Tool.",
       "instructionsPath": "skills/library/ingestion/audio-transcription.md",
-      "instructionLines": 149,
+      "instructionLines": 145,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1001,7 +1001,7 @@
       "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read",
       "description": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph.",
       "instructionsPath": "skills/library/ingestion/tabular-metadata.md",
-      "instructionLines": 221,
+      "instructionLines": 175,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1015,7 +1015,7 @@
       "title": "Document Intake",
       "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
       "instructionsPath": "skills/library/ingestion/document-intake.md",
-      "instructionLines": 494,
+      "instructionLines": 473,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1029,7 +1029,7 @@
       "title": "L1 document ingestion",
       "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run cat ingest`.",
       "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
-      "instructionLines": 953,
+      "instructionLines": 862,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1043,7 +1043,7 @@
       "title": "Review: a pointer to the review skills",
       "description": "Where to start when a person or an agent reviews a document folio larger than one chapter, such as a DAK or an L1 digital transformation handbook. A pointer, not a method: it names the review skills that already exist, says which question each one answers, and gives the order to read them in. Use when someone asks \"how do I review this\", when a review session starts on a large folio, or before writing a new review skill, so it is not written twice.",
       "instructionsPath": "skills/review/review.md",
-      "instructionLines": 60,
+      "instructionLines": 53,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1091,7 +1091,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Task",
       "name": "Seed the work plan",
       "summary": "The plan becomes beans, so a resumed session or a sibling agent can pick it up.",
-      "description": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step (bean m8gz), so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike.",
+      "description": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step, so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike.",
       "bpmnType": "bpmn:GlobalTask",
       "requires": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/skill/todo-manager"
@@ -1401,7 +1401,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Data sharing agreement document life cycle",
       "summary": "How a data sharing agreement is drafted, negotiated, signed, published with a version, a hash and a catalogue record, and later amended, renewed or ended.",
-      "description": "How a data sharing agreement is drafted, negotiated, signed, published with a version, a hash and a catalogue record, and later amended, renewed or ended. It covers the agreement as a document folio only: processes P1, P2 and P14 of the DSA process catalogue.\nTwo entry points: a request for an agreement (P1, then P2), and a change to one in force (P14). An amendment or a renewal with a new end date runs P1 and P2 again and publishes a new version linked to the old one; the old version stays readable.\nStandards named: ODRL 2.2 (the Agreement), DCAT 3 (catalogue record, distributions, checksums, versions) and DCMI Terms (dcterms:source from the policy to the text). No field is defined here.\nSteps no skill covers yet are user tasks with a no-skill reason starting \"Gap:\". Owner's option B13-B, 2026-10-30; folio-assistant#2702.\nConsent rules (owner, 2026-10-30), which every agreement drawn here keeps. 1. Legal basis: an agreement carries the odrl:obtainConsent duty only when consent is its legal basis; treatment, public-health law and research waivers do not rest on consent (P1.2a, P1.3). 2. Version pinning: a Consent cites the agreement's fixed-version URL and hash (FHIR R4 Consent.policy.uri), and for a computable agreement the ODRL policy uid is that same URL (P2.1, P2.2b, P2.3); an amendment that widens use needs new consent, one that narrows use does not (P14.3). 3. Plain language: every agreement that needs consent publishes a plain-language summary, hashed with the agreement, and that summary is what the person consents to (P1.2b, P2.2a). How a person gives, withdraws or is asked again for consent is the trust layer's, not this diagram's.",
+      "description": "How a data sharing agreement is drafted, negotiated, signed, published with a version, a hash and a catalogue record, and later amended, renewed or ended. It covers the agreement as a document folio only: processes P1, P2 and P14 of the DSA process catalogue.\nTwo entry points: a request for an agreement (P1, then P2), and a change to one in force (P14). An amendment or a renewal with a new end date runs P1 and P2 again and publishes a new version linked to the old one; the old version stays readable.\nStandards named: ODRL 2.2 (the Agreement), DCAT 3 (catalogue record, distributions, checksums, versions) and DCMI Terms (dcterms:source from the policy to the text). No field is defined here.\nSteps no skill covers yet are user tasks with a no-skill reason starting \"Gap:\".\nConsent rules, which every agreement drawn here keeps. 1. Legal basis: an agreement carries the odrl:obtainConsent duty only when consent is its legal basis; treatment, public-health law and research waivers do not rest on consent (P1.2a, P1.3). 2. Version pinning: a Consent cites the agreement's fixed-version URL and hash (FHIR R4 Consent.policy.uri), and for a computable agreement the ODRL policy uid is that same URL (P2.1, P2.2b, P2.3); an amendment that widens use needs new consent, one that narrows use does not (P14.3). 3. Plain language: every agreement that needs consent publishes a plain-language summary, hashed with the agreement, and that summary is what the person consents to (P1.2b, P2.2a). How a person gives, withdraws or is asked again for consent is the trust layer's, not this diagram's.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/dsa-document-lifecycle.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/dsa-document-lifecycle.bpmn",
@@ -3150,7 +3150,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Content lifecycle",
       "summary": "One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities.",
-      "description": "One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities. folio-assistant — the content lifecycle end to end, one cycle of a folio.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities.",
       "enforcement": "strict",
       "sourcePath": "processes/content/content-lifecycle.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/content-lifecycle.bpmn",
@@ -3989,7 +3989,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Authoring a document",
       "summary": "How a document folio — structured prose and policy guidance, with no Lean and no required TeX — is authored, built and reviewed end to end.",
-      "description": "How a document folio — structured prose and policy guidance, with no Lean and no required TeX — is authored, built and reviewed end to end. folio-assistant — authoring a document end to end (no Lean, no required TeX).\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is generated\nfrom it by `bun run cat render:bpmn` — never hand-edit the SVG.\nThe shape is the paper process minus the Lean lane and plus one step, the profile\ncheck, which is what keeps a document folio publishable without either toolchain.\n\nReview, publish and committee feedback are core's shared Process_FolioReviewPublish, called after rendering (shared block G6 of the BPMN guidance review, owner Q-BR-7 A, 2026-11-01). Its `no` answer, changes asked, comes back to Task_AuthorBlocks.",
+      "description": "How a document folio — structured prose and policy guidance, with no Lean and no required TeX — is authored, built and reviewed end to end.\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is generated\nfrom it by `bun run cat render:bpmn` — never hand-edit the SVG.\nThe shape is the paper process minus the Lean lane and plus one step, the profile\ncheck, which is what keeps a document folio publishable without either toolchain.\n\nReview, publish and committee feedback are core's shared Process_FolioReviewPublish, called after rendering. Its `no` answer, changes asked, comes back to Task_AuthorBlocks.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/authoring-a-document.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/authoring-a-document.bpmn",
@@ -4561,7 +4561,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Draft, review and publish",
       "summary": "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision.",
-      "description": "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision. folio-assistant — corpus to draft publication to officially published.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision.",
       "enforcement": "strict",
       "sourcePath": "processes/content/draft-to-publication.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/draft-to-publication.bpmn",
@@ -5377,7 +5377,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Merge and publish a content change",
       "summary": "Merging an approved content change on the owner's explicit confirmation and publishing it: remove the staging preview, rebuild the main site and watch it.",
-      "description": "Merging an approved content change on the owner's explicit confirmation and publishing it: remove the staging preview, rebuild the main site and watch it. A change that is not merged keeps its preview.\n\nCalled from content-change-review after the committee approves. Approving is the committee's judgement and merging is a separate, confirmed act (bean en2d), which is why the merge opens this phase rather than closing the review.",
+      "description": "Merging an approved content change on the owner's explicit confirmation and publishing it: remove the staging preview, rebuild the main site and watch it. A change that is not merged keeps its preview.\n\nCalled from content-change-review after the committee approves. Approving is the committee's judgement and merging is a separate, confirmed act, which is why the merge opens this phase rather than closing the review.",
       "enforcement": "strict",
       "sourcePath": "processes/content/content-change-review-publish.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/content-change-review-publish.bpmn",
@@ -5971,7 +5971,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Content Change and Review",
       "summary": "Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline deploys.",
-      "description": "Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline deploys.\n\nYou are in this process when what is changing is a folio — a chapter, a block, a piece of deterministic logic — rather than the platform that renders it. `code-change-review` is the same shape for the other side of that line, and the distinction matters because a content change is accepted by a REVIEW COMMITTEE on editorial grounds while a platform change is accepted by a code reviewer on engineering ones.\n\nTwo things this is not. It is not the feedback workflow: `todo-review` triages what readers said about content that already exists. And the rendering the author reviews is a STAGED one, because a person cannot assess a rendered artefact from a description of it.\n\nThe diagram shows the phases and the hand-offs between them; each phase is its own process. Making the change is content-change-review-make, staging it is content-change-review-stage, the committee's review is content-change-review-committee, and merging and deploying is content-change-review-publish. The page was one diagram of 43 steps in five lanes until the owner found it \"long and hard to read\" (2026-10-31); the split follows bpmn-authoring's rule of one phase per call activity.",
+      "description": "Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline deploys.\n\nYou are in this process when what is changing is a folio — a chapter, a block, a piece of deterministic logic — rather than the platform that renders it. `code-change-review` is the same shape for the platform: a content change is accepted by a REVIEW COMMITTEE on editorial grounds, a platform change by a code reviewer on engineering ones.\n\nTwo things this is not. It is not the feedback workflow: `todo-review` triages what readers said about content that already exists. And the rendering the author reviews is a STAGED one, because a person cannot assess a rendered artefact from a description of it.\n\nThe diagram shows the phases and the hand-offs between them; each phase is its own process. Making the change is content-change-review-make, staging it is content-change-review-stage, the committee's review is content-change-review-committee, and merging and deploying is content-change-review-publish. This follows bpmn-authoring's rule of one phase per call activity.",
       "enforcement": "strict",
       "sourcePath": "processes/content/content-change-review.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/content-change-review.bpmn",
@@ -6574,7 +6574,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Committee review of a content change",
       "summary": "The review committee's review of one staged content change, ending in an approval or a request for changes: compare staged against main, slice the change and review each slice, settle withdrawn comments and disputed findings, gate on coverage, review the edit…",
-      "description": "The review committee's review of one staged content change, ending in an approval or a request for changes: compare staged against main, slice the change and review each slice, settle withdrawn comments and disputed findings, gate on coverage, review the editorial dependencies and the impact, and decide.\n\nCalled from content-change-review when the author submits. Which end it reaches is what the caller's GW_CommitteeApproved reads. Organising the review is the review coordinator's lane and deciding it is the committee's, on the owner's ruling of 2026-09-23 (bean en2d). Merging is not here: it is a separate, confirmed act in content-change-review-publish.",
+      "description": "The review committee's review of one staged content change, ending in an approval or a request for changes: compare staged against main, slice the change and review each slice, settle withdrawn comments and disputed findings, gate on coverage, review the editorial dependencies and the impact, and decide.\n\nCalled from content-change-review when the author submits. Which end it reaches is what the caller's GW_CommitteeApproved reads. Organising the review is the review coordinator's lane and deciding it is the committee's. Merging is not here: it is a separate, confirmed act in content-change-review-publish.",
       "enforcement": "strict",
       "sourcePath": "processes/content/content-change-review-committee.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/content-change-review-committee.bpmn",
@@ -8085,7 +8085,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Make a decided public comment change",
       "summary": "Called by Process_PublicComment (CallActivity_MakeChange) once the editor's decision on a comment changes the document.",
-      "description": "Called by Process_PublicComment (CallActivity_MakeChange) once the\neditor's decision on a comment changes the document. An author makes\nthe edit on a feature branch, the change set is reviewed on its staging\npreview as any content change (Process_ContentChangeReview), an\nindependent QA gate checks the dispositions against the pull request,\nand each comment the change set answers is marked incorporated when it\nmerges. Drawn on its own page so that each phase fits the screen.\nSkill: public-comment.",
+      "description": "Called by Process_PublicComment (CallActivity_MakeChange) once the\neditor's decision on a comment changes the document. An author makes\nthe edit on a feature branch, the change set is reviewed on its staging\npreview as any content change (Process_ContentChangeReview), an\nindependent QA gate checks the dispositions against the pull request,\nand each comment the change set answers is marked incorporated when it\nmerges.\nSkill: public-comment.",
       "enforcement": "strict",
       "sourcePath": "processes/content/public-comment-change.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/public-comment-change.bpmn",
@@ -8792,7 +8792,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Evidence for a recommendation",
       "summary": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap; a change that states or alters no recommendation ends at its own event before any search.",
-      "description": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap; a change that states or alters no recommendation ends at its own event before any search. The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here.",
+      "description": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap; a change that states or alters no recommendation ends at its own event before any search. Evidence comes from three classes (trusted L1 sources, trusted L2/L3 content, data repositories), and each candidate's authority is verified against the publishing body's own API. STRAWPERSON: registries, grading system and API bindings are not fixed here.",
       "enforcement": "strict",
       "sourcePath": "processes/content/evidence-retrieval.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/evidence-retrieval.bpmn",
@@ -9457,7 +9457,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Review and publish a folio",
       "summary": "Review a rendered folio and publish it, or send it back with changes.",
-      "description": "Review a rendered folio and publish it, or send it back with changes. Shared by every authoring process: authoring-a-document (this instance) and authoring-a-paper (folio-assistant-sci) call it after they validate and render, so review, publish and committee feedback are drawn once (shared block G6 of the BPMN guidance review, owner Q-BR-7 A, 2026-11-01). What differs by folio kind stays with the caller: its writing loop, its own check (the content profile for a document, the Lean build for a paper), and its renderer. It ends one of three ways. `Published`: the caller closes its bean. `Changes asked` and `Feedback in: changes asked`: the caller goes back to its writing loop.",
+      "description": "Review a rendered folio and publish it, or send it back with changes. Shared by every authoring process: authoring-a-document (this instance) and authoring-a-paper (folio-assistant-sci) call it after they validate and render, so review, publish and committee feedback are drawn once. What differs by folio kind stays with the caller: its writing loop, its own check (the content profile for a document, the Lean build for a paper), and its renderer. It ends one of three ways. `Published`: the caller closes its bean. `Changes asked` and `Feedback in: changes asked`: the caller goes back to its writing loop.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/folio-review-publish.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/folio-review-publish.bpmn",
@@ -9738,7 +9738,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Editing and HCI validation",
       "summary": "What happens to one proposed change to one content block: drafted, validated mechanically and by review, shown to the editor, and committed to the corpus only if accepted.",
-      "description": "What happens to one proposed change to one content block: drafted, validated mechanically and by review, shown to the editor, and committed to the corpus only if accepted. folio-assistant — editing a content block and its HCI validation gate.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "What happens to one proposed change to one content block: drafted, validated mechanically and by review, shown to the editor, and committed to the corpus only if accepted.",
       "enforcement": "strict",
       "sourcePath": "processes/content/editing-hci-validation.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/editing-hci-validation.bpmn",
@@ -11287,7 +11287,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — the L1 completeness gate",
       "summary": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so.",
-      "description": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so. folio-assistant — Ingestion subprocess — the L1 completeness gate.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so.",
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-l1-completeness-gate.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-l1-completeness-gate.bpmn",
@@ -11916,8 +11916,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/process/Process_L1DocumentIngestion",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "L1 document ingestion — a document to the L1 source knowledge graph",
-      "summary": "folio-assistant — L1 document ingestion — a document to the L1 source knowledge graph.",
-      "description": "folio-assistant — L1 document ingestion — a document to the L1 source knowledge graph.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\n\nCARRIES THE BODY `document-ingestion.bpmn` HAD until placement PR6 (bean `apcg`; owner ruling 3, 2026-09-30: \"only basic doc ingestion high level workflow in cat-harness … more detailed doc ingestion/cataloguing methodologies in folio-asst-core\"). Every activity id is unchanged, so a reference to `Task_Detect` or `CallActivity_Extract` means what it meant.\n\nIT REFINES THE HARNESS FLOW BY CALLING IT. CallActivity_Basic runs the harness's `Process_Ingestion` first — accept the upload, put its metadata into the KG, catalogue the asset in library/ — and this process then reads the document into a complete L1 entry. That is the inversion the harness skill `library-ingestion` describes: the call points DOWN, from core to the harness, and nothing in the harness names this process. The theme branch's call into the harness's `ingest-theme.bpmn` is downward for the same reason; the four `ingest-*` phases sit beside this file. The method is the `l1-document-ingestion` skill.",
+      "summary": "L1 document ingestion — a document to the L1 source knowledge graph.",
+      "description": "L1 document ingestion — a document to the L1 source knowledge graph.\n\nThe harness holds only the basic, high-level document-ingestion flow; the detailed ingestion and cataloguing method is here.\n\nIT REFINES THE HARNESS FLOW BY CALLING IT. CallActivity_Basic runs the harness's `Process_Ingestion` first — accept the upload, put its metadata into the KG, catalogue the asset in library/ — and this process then reads the document into a complete L1 entry. That is the inversion the harness skill `library-ingestion` describes: the call points DOWN, from core to the harness, and nothing in the harness names this process. The theme branch's call into the harness's `ingest-theme.bpmn` is downward for the same reason; the four `ingest-*` phases sit beside this file. The method is the `l1-document-ingestion` skill.",
       "enforcement": "advisory",
       "sourcePath": "processes/library/l1-document-ingestion.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/l1-document-ingestion.bpmn",
@@ -12591,7 +12591,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — build the L1 knowledge graph",
       "summary": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links.",
-      "description": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links. folio-assistant — Ingestion subprocess — build the L1 knowledge graph.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links.",
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-build-l1-kg.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-build-l1-kg.bpmn",
@@ -12857,7 +12857,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — extract structure",
       "summary": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates.",
-      "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates. folio-assistant — Ingestion subprocess — extract structure.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates.",
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-extract-structure.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-extract-structure.bpmn",
@@ -13134,7 +13134,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — derive content from the assets",
       "summary": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance.",
-      "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance. folio-assistant — Ingestion subprocess — derive content from the assets.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance.",
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-derive-content.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-derive-content.bpmn",
@@ -13503,8 +13503,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/process/Process_GettingStarted",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Getting started",
-      "summary": "Somebody said \"create a folio\": work out which request they meant, with the branch computed by a decision table that may answer \"ask\", and what has to be true before anything is written.",
-      "description": "Somebody said \"create a folio\": work out which request they meant, with the branch computed by a decision table that may answer \"ask\", and what has to be true before anything is written. folio-assistant — getting started: from \"create a folio\" to a live site.\n\n\"Create a folio\" is five different requests. Gateway_Intent computes which one\nfrom decisions/folio-intent.dmn rather than letting the agent assume, and `ask`\nis one of the outcomes the table can return. Gateway_Live applies the same\nconstruction to publication, with `unknown` kept distinct from `not-yet`.\n\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is\ngenerated from it by `bun run cat render:bpmn` — never hand-edit the SVG.",
+      "summary": "Somebody said \"create a folio\": work out which request they meant, with the branch computed by a decision table that may answer \"ask\", and what has to be true before anything is written, through to a live site.",
+      "description": "Somebody said \"create a folio\": work out which request they meant, with the branch computed by a decision table that may answer \"ask\", and what has to be true before anything is written, through to a live site.\n\n\"Create a folio\" is five different requests. Gateway_Intent computes which one\nfrom decisions/folio-intent.dmn rather than letting the agent assume, and `ask`\nis one of the outcomes the table can return. Gateway_Live applies the same\nconstruction to publication, with `unknown` kept distinct from `not-yet`.\n\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is\ngenerated from it by `bun run cat render:bpmn` — never hand-edit the SVG.",
       "enforcement": "strict",
       "sourcePath": "processes/conduct/getting-started.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/conduct/getting-started.bpmn",
@@ -14646,7 +14646,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Board: open and close content",
       "summary": "What a reader does to a board and what the renderer does back: every card rests as its avatar, a window opens onto the one the reader chose, and it closes back to where it came from.",
-      "description": "What a reader does to a board and what the renderer does back: every card rests as its avatar, a window opens onto the one the reader chose, and it closes back to where it came from.\n\nYou are in this process when the question is a READER's — which card is open, what is raised, how to get back. Semantic zoom is in here too and is deliberately not the same mechanism: the threshold is resolved from the kind and applies itself by SIZE, while opening and closing are a person's acts. Conflating them is how a board starts changing under somebody who did not touch it.\n\nThe rule the diagram exists to hold is the one about the way back: an action whose inverse is not reachable is not a toggle, and a window that cannot be closed is a navigation dead end wearing a control's clothes.",
+      "description": "What a reader does to a board and what the renderer does back: every card rests as its avatar, a window opens onto the one the reader chose, and it closes back to where it came from.\n\nYou are in this process when the question is a READER's — which card is open, what is raised, how to get back. Semantic zoom is in here too and is deliberately not the same mechanism: the threshold is resolved from the kind and applies itself by SIZE, while opening and closing are a person's acts.\n\nThe rule the diagram holds is the one about the way back: an action whose inverse is not reachable is not a toggle.",
       "enforcement": "advisory",
       "sourcePath": "processes/ui/board-open-close.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/ui/board-open-close.bpmn",
@@ -15564,7 +15564,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/docs"
       ],
-      "description": "This instance's own reader-facing pages, and the page `/folio-assistant-core/` serves. Added 2026-10-05 with `folio-assistant-core.config.json` (issue #2196, bean c5fm), when the owner asked for the instance to be staged and instantiated so the navbar's Harnesses list shows it. Without a docs directory the harness tile can only open this instance's section of the landing (`/#harness-folio-assistant-core`), and `harness-tiles.ts` reports that as a finding. Authored markdown, composed THROUGH just-the-docs like the FHIR IG layers' pages, so it gets the sidebar, search and layout. Declared HERE, in this instance's own file, rather than in the root's or cat-harness's: `compose-docs.docsLayers` treats every docs-kind entry in `cat-harness.json` as a composition layer, so declaring it there would overlay this `index.md` onto the site's own.",
+      "description": "This instance's own reader-facing pages, and the page `/folio-assistant-core/` serves. Without a docs directory the harness tile can only open this instance's section of the landing (`/#harness-folio-assistant-core`), and `harness-tiles.ts` reports that as a finding. Authored markdown, composed THROUGH just-the-docs like the FHIR IG layers' pages, so it gets the sidebar, search and layout. Declared in this instance's own file, not in `cat-harness.json`: `compose-docs.docsLayers` treats every docs-kind entry there as a composition layer, so declaring it there would overlay this `index.md` onto the site's own.",
       "readmePath": "docs/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/folio-assistant-core-docs",
@@ -15582,7 +15582,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/translation-sources"
       ],
-      "description": "The gettext side of folio-assistant-core's own strings, one directory per target locale. Today: `block-kinds.pot`/`.po`, the headings of the block kinds this instance declares in block-kinds/, keyed `msgctxt \"block-kind:<kind>\"` with the node's English `heading` as msgid (bean riit, step 2b). Owner, 2026-10-04: locale headings live in the translation graph (option 1 of 2), and kinds are not centrally managed, so the catalogue sits with the kinds rather than in cat-harness/translations/.",
+      "description": "The gettext side of folio-assistant-core's own strings, one directory per target locale: `block-kinds.pot`/`.po`, the headings of the block kinds this instance declares in block-kinds/, keyed `msgctxt \"block-kind:<kind>\"` with the node's English `heading` as msgid. Locale headings live in the translation graph, and kinds are not centrally managed, so the catalogue sits with the kinds rather than in cat-harness/translations/.",
       "readmePath": "translations/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/folio-assistant-core-translations",
@@ -15600,7 +15600,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/block-kinds"
       ],
-      "description": "The document profile's block kinds (prose, example, remark, algorithm, simulator, equation, diagram, table, figure), one folio-block-kind/v1 node per file (bean riit, step 2). Owner, 2026-10-04: kinds are discoverable and not centrally managed; cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph, and the seven parallel tables they replace are gone.",
+      "description": "The document profile's block kinds (prose, example, remark, algorithm, simulator, equation, diagram, table, figure, recommendation), one folio-block-kind/v1 node per file. Kinds are discoverable and not centrally managed: cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph.",
       "readmePath": "block-kinds/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/folio-assistant-core-block-typologies",
@@ -15618,7 +15618,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/content-adapters"
       ],
-      "description": "The `document` block VOCABULARY's node, folio-content-adapter/v1: its name, its companion roles (md, ts) and that cat-harness's code types it. Every kind in block-kinds/ names it. Owner, 2026-10-12 (bean bzwk, option B): each layer declares its own adapter and a folio may mix them, so the paper profile is core's `document` kinds plus the science layer's `mathpaper` kinds.",
+      "description": "The `document` block VOCABULARY's node, folio-content-adapter/v1: its name, its companion roles (md, ts) and that cat-harness's code types it. Every kind in block-kinds/ names it. Each layer declares its own adapter and a folio may mix them, so the paper profile is core's `document` kinds plus the science layer's `mathpaper` kinds.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/folio-assistant-core-content-adapters",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/folio-assistant-core-content-adapters"
@@ -15635,7 +15635,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/validators"
       ],
-      "description": "The validators folio-assistant-core's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks (bean riit).",
+      "description": "The validators folio-assistant-core's code provides, one folio-validator/v1 node each naming the graph typology and $schema family it checks.",
       "readmePath": "validators/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/folio-assistant-core-validators",
@@ -15653,7 +15653,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code-list"
       ],
-      "description": "Code lists this layer owns, one `folio-code-list/v1` file per list, inherited by every dependent through the dependency overlay (`codeListDirs`) and exported as SKOS with the harness's. Declared with its files, bean 55ao: a `recommendation` block's `strength` names a code here, so the check is \"resolves in the scheme\" rather than a closed enum (owner ruling 2026-09-23, Q2). Two lists: `grade-recommendation-strength` (GRADE as WHO applies it) and `rfc2119-requirement-level` (BCP 14). A folio whose issuing body grades differently declares its own list rather than editing these.",
+      "description": "Code lists this layer owns, one `folio-code-list/v1` file per list, inherited by every dependent through the dependency overlay (`codeListDirs`) and exported as SKOS with the harness's. A `recommendation` block's `strength` names a code here, so the check is \"resolves in the scheme\" rather than a closed enum. Two lists: `grade-recommendation-strength` (GRADE as WHO applies it) and `rfc2119-requirement-level` (BCP 14). A folio whose issuing body grades differently declares its own list rather than editing these.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-code-lists",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-code-lists"
@@ -15670,7 +15670,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/qa-checkers"
       ],
-      "description": "The QA checkers this layer's code provides, one `folio-qa-checker/v1` node per criterion, registered for a folio through its dependency tree by `loadContributions` (bean riit, step 3b). Two today: `recommendation-strength-resolves` (bean 55ao), naming `RECOMMENDATION_CHECKERS` in `pipeline/qa-checkers-recommendation.ts`, and `acronym-in-glossary` (owner, 2026-10-31), naming `ACRONYM_CHECKERS` in `pipeline/qa-checkers-acronyms.ts`. The criterion itself is declared in cat-harness-tools' QA registry with `checker_contributed`.",
+      "description": "The QA checkers this layer's code provides, one `folio-qa-checker/v1` node per criterion, registered for a folio through its dependency tree by `loadContributions`. Two: `recommendation-strength-resolves`, naming `RECOMMENDATION_CHECKERS` in `pipeline/qa-checkers-recommendation.ts`, and `acronym-in-glossary`, naming `ACRONYM_CHECKERS` in `pipeline/qa-checkers-acronyms.ts`. The criterion itself is declared in cat-harness-tools' QA registry with `checker_contributed`.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-qa-checkers",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-qa-checkers"
@@ -15687,7 +15687,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/pipeline-plugins"
       ],
-      "description": "The generic pipeline slots this layer fills, one `folio-pipeline-plugin/v1` node per slot, naming `PIPELINE_IMPLEMENTATIONS` in `pipeline/plugin-slots.ts`, registered for a folio through its dependency tree by `loadContributions`. One today: `tabular-csvw` (bean `urat`, owner ruling 2026-10-20), through which cat-harness-tools' `ingest-document.ts` reaches this layer's CSVW extractors (`scripts/tabular-csv.ts`, `scripts/tabular-xlsx.ts`) without naming this layer.",
+      "description": "The generic pipeline slots this layer fills, one `folio-pipeline-plugin/v1` node per slot, naming `PIPELINE_IMPLEMENTATIONS` in `pipeline/plugin-slots.ts`, registered for a folio through its dependency tree by `loadContributions`. One: `tabular-csvw`, through which cat-harness-tools' `ingest-document.ts` reaches this layer's CSVW extractors (`scripts/tabular-csv.ts`, `scripts/tabular-xlsx.ts`) without naming this layer.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-pipeline-plugins",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-pipeline-plugins"
@@ -15704,7 +15704,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "`pipeline/qa-checkers-recommendation.ts` and `pipeline/qa-checkers-acronyms.ts`, the automated checkers `qa-checkers/recommendation-strength-resolves.json` and `qa-checkers/acronym-in-glossary.json` name (`RECOMMENDATION_CHECKERS`, `ACRONYM_CHECKERS`), and `pipeline/plugin-slots.ts`, the table `pipeline-plugins/tabular-csvw.json` names (`PIPELINE_IMPLEMENTATIONS`, bean `urat`). Under `pipeline/` because that is where the harness's `imports` input-site looks for a contributed checker, as the science layer's cost checkers and the DAK layer's checkers are; it was `content/pipeline/` until every layer's pipeline moved to `pipeline/` (owner, 2026-10-14).",
+      "description": "`pipeline/qa-checkers-recommendation.ts` and `pipeline/qa-checkers-acronyms.ts`, the automated checkers `qa-checkers/recommendation-strength-resolves.json` and `qa-checkers/acronym-in-glossary.json` name (`RECOMMENDATION_CHECKERS`, `ACRONYM_CHECKERS`), and `pipeline/plugin-slots.ts`, the table `pipeline-plugins/tabular-csvw.json` names (`PIPELINE_IMPLEMENTATIONS`). Under `pipeline/` because that is where the harness's `imports` input-site looks for a contributed checker, as for every layer.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-pipeline",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-pipeline"
@@ -15721,7 +15721,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/typologies"
       ],
-      "description": "The graph typologies folio-assistant-core owns, one folio-graph-typology/v1 node per file (bean dmx1). Owner, 2026-10-04: no central registry for subgraph types; a harness declares its own in a kinds/ graph. Moved here from cat-harness/schemas/graph-typology-registry.ts, with each entry's code comments kept as its rationale.",
+      "description": "The graph typologies folio-assistant-core owns, one folio-graph-typology/v1 node per file. There is no central registry for subgraph types; a harness declares its own in a kinds/ graph, each entry carrying its rationale.",
       "readmePath": "typologies/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/folio-assistant-core-typologies",
@@ -15740,7 +15740,7 @@
         "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas",
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
       ],
-      "description": "The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.",
+      "description": "The schemas of the content layer's Node Kinds.",
       "readmePath": "schemas/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-schemas",
@@ -15758,7 +15758,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/folio"
       ],
-      "description": "What an AUTHOR creates using the graph -- a note, a visualization, a paper. Owner, 2026-09-20: 'folios/ would be a note, visualization, paper etc that user/author is creating referencing the KG... folios in f-a-core as it is about KG management workflows built on cat-harness document rendering justthedocs simple rendering.' It declares the EXISTING `folio` kind rather than a new one: `folio` is already 'authored content, rendered to a website', registered by core because only core can render it, and a second kind for the same thing would be two spellings of one concept. The contrast is with `docs` in cat-harness, whose subject is the harness itself. Worked example of the distinction: the IRIS catalogue goes in `library/` or is referenced remotely; a note ABOUT it is a folio; the page explaining how ingestion works is docs.",
+      "description": "What an AUTHOR creates using the graph -- a note, a visualization, a paper -- referencing the KG and rendered through the harness's just-the-docs document rendering. It declares the EXISTING `folio` kind rather than a new one: `folio` is 'authored content, rendered to a website', registered by core because only core can render it. The contrast is with `docs` in cat-harness, whose subject is the harness itself. Example: a catalogue goes in `library/` or is referenced remotely; a note ABOUT it is a folio; the page explaining how ingestion works is docs.",
       "readmePath": "folios/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/folios",
@@ -15776,7 +15776,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant-core/v0/ns/graphTypology/glossary"
       ],
-      "description": "Core's glossary (owner, 2026-09-23: \"put glossary into folio-assistant-core\", \"part of general pracice w/ glossary/ page\"): folio-glossary/v1 documents, each a SKOS concept scheme of local terms linked to external SKOS concepts by exactMatch/closeMatch, plus external concepts listed as members without being copied. A whole external scheme is referenced through remoteGraphs with graphTypologies [\"glossary\"]. `dependents: reproduce` so every folio built on core gets its own glossary/, which is what makes a glossary general practice rather than a harness feature. Rendered on the glossary/ page with the swimlane ledger (cat-harness's `swimlane-glossary`) as one more source; checked by `check:glossary`.",
+      "description": "Core's glossary: folio-glossary/v1 documents, each a SKOS concept scheme of local terms linked to external SKOS concepts by exactMatch/closeMatch, plus external concepts listed as members without being copied. A whole external scheme is referenced through remoteGraphs with graphTypologies [\"glossary\"]. `dependents: reproduce` so every folio built on core gets its own glossary/. Rendered on the glossary/ page with the swimlane ledger (cat-harness's `swimlane-glossary`) as one more source; checked by `check:glossary`.",
       "readmePath": "glossary/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/glossary",
@@ -15794,7 +15794,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/tools"
       ],
-      "description": "The content layer's Tool nodes. Declared 2026-09-22 with the first one, `folio-changeset` (bean jwox, epic q4jm), which exposes `schemas/changeset.ts`. Reached by the harness through tool auto-discovery (bean p0za, owner ruling 2026-09-22), never by an import: the harness may not import core, and a Tool node is a declaration loaded by path.",
+      "description": "The content layer's Tool nodes, such as `folio-changeset`, which exposes `schemas/changeset.ts`. Reached by the harness through tool auto-discovery, never by an import: the harness may not import core, and a Tool node is a declaration loaded by path.",
       "readmePath": "tools/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-tools",
@@ -15812,7 +15812,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "The content layer's own ContentAdapters. `document/` arrived 2026-09-30 as step 2 of the adapters closure (bean `ybp4`, planned in `r0tm`, ruled by the owner as option A: two PRs, paper first). It took the `cat-harness ->` sibling-import count from 2 to 0 — the last two escapes were `intake-records.ts` and its test, both importing `schemas/dublin-core.js` UP out of the harness, and both are now intra-instance. The remedy is `yj6r`'s throughout: the CONSUMER moves up and the schema stays; no schema moved down into `cat-harness/schemas/`, which that bean forbids as buying a green gate by relocating the boundary the gate protects. The directory's own imports into `cat-harness-tools/src/`, `cat-harness/schemas/` and `cat-harness-tools/pipeline/` are DOWNWARD and therefore legal — core declares `needs: [\"cat-harness\"]`. Its six consuming tests moved with it into `scripts/tests/`, because a test does not leave its subject to make a count fall. Three things shipped in the same commit because each fails SILENTLY rather than loudly: this declaration, `tsconfig.json`'s `include` entry (without it `bun run typecheck` goes green while covering twelve fewer files, and no gate reports a shrinking program), and the `BUILTIN_ADAPTERS` module path — which is resolved by VARIABLE specifier, so no static-import gate would have caught it. `paper/` is not here: it is the science layer's and lives in that layer's own `adapters/paper/` since bean `y5si`, step 1 of the same closure.",
+      "description": "The content layer's own ContentAdapters: `document/`. Its imports into `cat-harness-tools/src/`, `cat-harness/schemas/` and `cat-harness-tools/pipeline/` are DOWNWARD and therefore legal (core declares `needs: [\"cat-harness\"]`); nothing in the harness imports it. Its consuming tests live in `scripts/tests/`. It needs `tsconfig.json`'s `include` entry (without it `bun run typecheck` passes while covering fewer files) and the `BUILTIN_ADAPTERS` module path, which is resolved by variable specifier, so no static-import gate checks it. `paper/` is the science layer's, in that layer's own `adapters/paper/`.",
       "readmePath": "adapters/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-adapters",
@@ -15830,7 +15830,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "Core's own server half: the HTTP routes that act on a folio's CONTENT — `routes/feedback.ts` (its feedback items), `routes/glossary.ts` (its glossary candidates), `routes/relevance.ts` (its bibliography relevance). Moved up from `cat-harness-tools/src/routes/` when the server moved to `cat-harness-tools` (bean `70lx`, B1; owner, 2026-10-04: a content package's server half lives with its content). The server declares them by their `src/routes/*` path and finds them here through `needs`, since core needs `cat-harness-tools`; they import the server's contract (`route-groups`, `types`, `core/rbac`) DOWN from it.",
+      "description": "Core's own server half: the HTTP routes that act on a folio's CONTENT — `routes/feedback.ts` (its feedback items), `routes/glossary.ts` (its glossary candidates), `routes/relevance.ts` (its bibliography relevance). A content package's server half lives with its content. The server in `cat-harness-tools` declares them by their `src/routes/*` path and finds them here through `needs`, since core needs `cat-harness-tools`; they import the server's contract (`route-groups`, `types`, `core/rbac`) DOWN from it.",
       "readmePath": "src/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-src",
@@ -15848,7 +15848,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "Core's own executable surface, with every test beside its subject: the review-comment Tool and its move helper, the glossary extractors, the sample-import pair, and — since bean `yj6r`, 2026-09-30 — two tranches of escapes that moved UP out of `cat-harness/`. The materialisation trio (`check-materialized-fixity`, `backfill-materialized-fixity`, `cache-index`) and the FHIR IG artefact-index pair (`ingest-ig-artifacts`, `check-artifact-index`) came first, to sit beside the `schemas/materialization.ts` and `schemas/fhir-artifact-index.ts` they read. The glossary CLUSTER followed — `build-glossary.ts`, its `:refterm` codemod `codemod-refterm.ts`, and all three of their tests — because walking a paper's blocks to collect `defines[]` and emit a `folio-glossary/v1` scheme is CONTENT machinery, and the harness (`needs: [\"bootstrap\"]`) was importing upward into this instance's `schemas/glossary.ts` and `scripts/glossary-page.ts` — an import against its own declaration, and a circular dependency between repositories after the split. The partition rules already classified `content/pipeline/` as core, so the classification did not change; the DIRECTORY caught up with it. They are still addressed as pipeline scripts by id, and `resolvePipelineScript` searches the folio, then the platform, then here. The LAST FOUR clusters followed on the same day and in the same tranche, taking the `cat-harness ->` sibling-import count from 5 to 2: `extract-assets.ts` (a container a folio was given → a `folio-extraction/v1` record, reading `schemas/extraction.ts` — both moved DOWN again on 2026-10-02 by owner ruling 2 of the placement proposal, bean `tlat`: the script to `cat-harness-tools/scripts/`, the schema to `cat-harness/schemas/`, as the tool behind the harness's own `asset-extraction` skill), `check-voices.ts` (every voice rule's citation resolved through `schemas/library-ref.ts` into a folio's `library/`), and `build-document-site.ts` WITH its test, which reads `schemas/changeset.ts`. The last is the one with an invocation surface: a DOCUMENT folio's generated staging workflow names it by path, so `init-folio.ts` now writes `folio-assistant-core/scripts/build-document-site.ts` and `init-folio.test.ts` pins that string — the same instance-relative property this entry records for `review-comments.ts`, arrived at from the other direction. The partition rules had already classified all four `core` by exact entry, so again only the DIRECTORY moved; each dead entry was removed with its reasoning kept in place, because a rule naming a path its own scan can no longer see fires on nothing while reading as an adjudication. The adapters closure followed on the same day: `adapters/document/` and its SIX consuming tests are now here and in `adapters/`, taking the count 2 -> 0 (bean `ybp4`). This sentence previously read \"What did NOT move, and deliberately\" of those two files, and recorded that the closure \"needs its own ruling\" — it got one, and `r0tm`'s re-derivation also corrected the deterrent measurement: the 15 created escapes were 16, and paper-first is FREE, which is what turned an all-or-nothing three-instance move into two ordinary steps. This sentence listed only the review-comment pair until then, by which point four other tools were already here — a directory description that names its founding file rather than its contents goes stale the first time anything lands. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.",
+      "description": "Core's own executable surface, with every test beside its subject: the review-comment Tool and its move helper, the glossary extractors and builder (`build-glossary.ts`, its `:refterm` codemod `codemod-refterm.ts`), the sample-import pair, the materialisation trio (`check-materialized-fixity`, `backfill-materialized-fixity`, `cache-index`), `check-voices.ts` (every voice rule's citation resolved through `schemas/library-ref.ts` into a folio's `library/`), `build-document-site.ts` (which reads `schemas/changeset.ts`), and the document, bibliography, public-comment and tabular tools. Pipeline scripts are addressed by id, and `resolvePipelineScript` searches the folio, then the platform, then here. Two scripts are invocation surfaces, named by path and so not to be moved without updating their callers: `build-document-site.ts`, which a DOCUMENT folio's generated staging workflow names (`init-folio.ts` writes `folio-assistant-core/scripts/build-document-site.ts` and `init-folio.test.ts` pins it), and `review-comments.ts`, invoked by path from `folio-staging.yml`.",
       "readmePath": "scripts/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-scripts",
@@ -15866,7 +15866,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "Files this layer's tools WRITE INTO a folio that opts in, kept as real files rather than strings inside a script. `public-comment/github/` holds the issue forms and the two workflows that `scripts/public-comment-changesets.ts install` copies into a folio's `.github/` (`TEMPLATE_DIR`). They moved up here from the tools layer's `templates/public-comment/` (move M10, folio-assistant#2598), because this layer is the only one that installs them.",
+      "description": "Files this layer's tools WRITE INTO a folio that opts in, kept as real files rather than strings inside a script. `public-comment/github/` holds the issue forms and the two workflows that `scripts/public-comment-changesets.ts install` copies into a folio's `.github/` (`TEMPLATE_DIR`). They live here because this layer is the only one that installs them.",
       "readmePath": "templates/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-templates",
@@ -15884,7 +15884,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library"
       ],
-      "description": "L1 source content this LAYER owns — the publications core's own vocabulary is derived FROM, one `<bib-slug>/` per ingested document. Declared 2026-09-23 on the owner's ruling that Doc-Researcher (`arxiv-2510.21603v1`) is part of the f-a-c subgraph, and declared rather than borrowed for the reason `methodology-adoption` §4 gives: a method is placed by OWNERSHIP so that extraction is literal, and a paper core's methodology cites from another instance's library would not lift out with it. Holds `arxiv-2510.21603v1`, the C2PA Technical Specification 2.5 (`c2pa-2026-specification-2-5`, CC-BY-4.0) and the DSpace 7 REST Contract (`dspace-7-rest-contract`, BSD-3-Clause, bean `mwzd`, issue #1614 item 4). `ingest-document.ts` refuses to guess a destination when several are declared, which is what surfaced the absence. `dependents: skip` because these are THIS layer's sources; a downstream folio's library is its own and reproducing these would hand it somebody else's corpus.",
+      "description": "L1 source content this LAYER owns — the publications core's own vocabulary and methods are derived FROM, one `<bib-slug>/` per ingested document. Declared rather than borrowed because a method is placed by OWNERSHIP (`methodology-adoption` §4): a paper core's methodology cites from another instance's library would not lift out with it. Holds Doc-Researcher (`arxiv-2510.21603v1`), the C2PA Technical Specification 2.5 (`c2pa-2026-specification-2-5`, CC-BY-4.0) and the DSpace 7 REST Contract (`dspace-7-rest-contract`, BSD-3-Clause). `ingest-document.ts` refuses to guess a destination when several are declared. `dependents: skip` because these are THIS layer's sources; a downstream folio's library is its own.",
       "readmePath": "library/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-library",
@@ -15902,7 +15902,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/methodology"
       ],
-      "description": "The methodologies core adopts from its own corpus. Separate from `cat-harness/methodologies/` for the reason `smart-base-methodologies` is separate from both: a method belongs to the layer whose job it describes, so the directory lifts out with this instance and nothing else moves. Core's job, per this instance's AGENTS.md, is what a folio HOLDS, where it CAME FROM and how much is PRESENT — which is why a document-ingestion method is core's and not the harness's.",
+      "description": "The methodologies core adopts from its own corpus. A method belongs to the layer whose job it describes, so the directory lifts out with this instance and nothing else moves. Core's job is what a folio HOLDS, where it CAME FROM and how much is PRESENT — which is why a document-ingestion method is core's and not the harness's.",
       "readmePath": "methodologies/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-methodologies",
@@ -15920,7 +15920,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/skills"
       ],
-      "description": "The skills core owns. `skills/voices/` is declared separately above as the `voices` kind: a voice partitions how prose READS and is a different graph from an instruction body, so the nesting is two kinds in one place rather than one kind declared twice.",
+      "description": "The skills core owns, including `skills/voices/`: a voice partitions how prose READS and is a different graph from an instruction body.",
       "readmePath": "skills/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-skills",
@@ -15938,7 +15938,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes"
       ],
-      "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception.",
+      "description": "The BPMN core owns, by area: `content/` (authoring, editing and HCI validation, draft to publication, the content lifecycle, change review, evidence retrieval, contributor feedback), `library/` (L1 document ingestion and `deep-document-research`, Doc-Researcher's iterative loop), `conduct/` (getting started) and `ui/` (board interactions), with their DMN tables in each area's `decisions/`. A TOP-LEVEL directory, as the harness's diagrams are: `check:layout-norms` refuses a package subdirectory of an already-declared graph such as `methodologies/processes/`, and `workflowDirs` resolves only from a DECLARED directory.",
       "readmePath": "processes/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/core-processes",
@@ -15956,7 +15956,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios"
       ],
-      "description": "Scenarios: the roles an actor takes on, in `roles.json`, the user stories told as them, in `stories.json`, and the actors in `actors/`. The deep-researcher, evidence-agent and onboarding-agent roles moved here from cat-harness in M4 (cat-harness#443), and this layer's `address-*` voices point at them. The files arrived without this declaration, so `check:voices` found no role graph here.",
+      "description": "Scenarios: the roles an actor takes on, in `roles.json`, the user stories told as them, in `stories.json`, and the actors in `actors/` (deep-researcher, evidence-agent, onboarding-agent). This layer's `address-*` voices point at them, and `check:voices` reads this declaration to find the role graph.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/scenarios",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/scenarios"
@@ -15993,7 +15993,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/memory"
       ],
-      "description": "Agent memory about content authoring, review and publication: lessons (block kinds, the document render path, normative statements, locale directories) an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each. Read by cat-harness's `agent-memory` assembler alongside every other instance's declared `memory` directory. Split from the repository root's `memory/` on the owner's ruling of 2026-10-06 (bean `ar1s`).",
+      "description": "Agent memory about content authoring, review and publication: lessons (block kinds, the document render path, normative statements, locale directories) an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each. Read by cat-harness's `agent-memory` assembler alongside every other instance's declared `memory` directory.",
       "readmePath": "memory/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/memory",
@@ -16029,7 +16029,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/software-library"
       ],
       "title": "Software libraries",
-      "description": "The outside libraries this layer's code imports: one `software-library/1.0.0` node per dependency in `package.json`, with the version and sha512 that `bun.lock` pins, the registry tarball, the SPDX licence read from the installed package, the range, whether it is a dev dependency, the files that import it (`usedBy`) and the `types/*.d.ts` shim that types it. GENERATED, never hand-edited: `bun run cat libraries:derive` writes it and `libraries:check` fails on a stale node, an import no node names, and a shim no node names. The kind is cat-harness's (bean `jbvi`, option D: one outside-software core shared with `tool-release`); this layer keeps its own nodes because it pins its own versions.",
+      "description": "The outside libraries this layer's code imports: one `software-library/1.0.0` node per dependency in `package.json`, with the version and sha512 that `bun.lock` pins, the registry tarball, the SPDX licence read from the installed package, the range, whether it is a dev dependency, the files that import it (`usedBy`) and the `types/*.d.ts` shim that types it. GENERATED, never hand-edited: `bun run cat libraries:derive` writes it and `libraries:check` fails on a stale node, an import no node names, and a shim no node names. The kind is cat-harness's (one outside-software core shared with `tool-release`); this layer keeps its own nodes because it pins its own versions.",
       "readmePath": "libraries/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/directory/folio-assistant-core-libraries",
@@ -16249,7 +16249,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "block-actions",
       "title": "Block edit and feedback links",
-      "description": "Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on `main`, and [feedback] opens a new GitHub issue about the block, from the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the `block-actions` skill (bean `uphx`, REQ-17).",
+      "description": "Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on `main`, and [feedback] opens a new GitHub issue about the block, from the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the `block-actions` skill.",
       "install": {
         "none": true
       },
@@ -16328,7 +16328,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "catalogue-from-references",
       "title": "Catalogue a library from its bibliography",
-      "description": "Write one `folio-dublin-core/v1` record and one `folio-catalogue-node/v1` item per library entry that the source ledger joins to a CSL-JSON reference, into the folio's declared `catalogue` directory, so `gen-library-jsonld` reads the title from the catalogue's `dc.title` instead of falling to the PDF or the slug. The join is exact: a ledger row naming the entry's `structure.json` source file, one reference id, and the same sha256 where both record one. Unjoined entries are reported and left alone. Never touches a node it did not write (folio-assistant-core#72).",
+      "description": "Write one `folio-dublin-core/v1` record and one `folio-catalogue-node/v1` item per library entry that the source ledger joins to a CSL-JSON reference, into the folio's declared `catalogue` directory, so `gen-library-jsonld` reads the title from the catalogue's `dc.title` instead of falling to the PDF or the slug. The join is exact: a ledger row naming the entry's `structure.json` source file, one reference id, and the same sha256 where both record one. Unjoined entries are reported and left alone. Never touches a node it did not write.",
       "install": {
         "none": true
       },
@@ -16371,6 +16371,15 @@
             "required": false,
             "arg": {
               "flag": "--json"
+            }
+          },
+          {
+            "name": "baseUrl",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/Url",
+            "description": "Where the bibliography is published. With `--apply`, writes `catalogue.json` when the catalogue directory has none; without it such a run is refused.",
+            "required": false,
+            "arg": {
+              "flag": "--base-url"
             }
           }
         ],
@@ -16496,7 +16505,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "dublin-core-render",
       "title": "Dublin Core renderings",
-      "description": "Render every `folio-dublin-core/v1` record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (`<instanceRoot>/dublin-core/<stem>.dc.xml` and `.dc.jsonld`), so the site mount publishes them beside the item pages. Deterministic. `--check` fails on a missing, stale or orphaned rendering. Governed by the `dublin-core-renderings` skill (bean `7eak`).",
+      "description": "Render every `folio-dublin-core/v1` record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (`<instanceRoot>/dublin-core/<stem>.dc.xml` and `.dc.jsonld`), so the site mount publishes them beside the item pages. Deterministic. `--check` fails on a missing, stale or orphaned rendering. Governed by the `dublin-core-renderings` skill.",
       "install": {
         "none": true
       },
@@ -16548,7 +16557,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "figure-coverage",
       "title": "Figure coverage and computability",
-      "description": "For every figure a source publication declares, report whether the folio built from it has a block and how computable it is: missing, excluded (signed off), picture (a PNG crop), linked (a picture linked to a model view), computable (a diagram, a table or a figure rebuilt by ArchiMate, BPMN, DMN, Mermaid, a class diagram or a generator), or cited (a picture kept on purpose, signed off). Exits non-zero when any declared figure is missing; `--require-computable` also fails on pictures.",
+      "description": "For every figure a source publication declares, report whether the folio built from it has a block and how computable it is: missing, excluded (signed off), picture (a PNG crop), linked (a picture linked to a model view), computable (a diagram, a table or a figure rebuilt by ArchiMate, BPMN, DMN, Mermaid, a class diagram or a generator), or cited (a picture kept on purpose, signed off). Exits non-zero when any declared figure is missing; `--require-computable` also fails on pictures, linked or not.",
       "install": {
         "none": true
       },
@@ -16679,7 +16688,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "folio-block-screenshots",
       "title": "Folio block screenshots",
-      "description": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Adds no dependency: Playwright is already the platform's browser driver.",
+      "description": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Drives Chromium through Playwright.",
       "install": {
         "none": true
       },
@@ -16807,7 +16816,7 @@
           {
             "name": "text-out",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Also write `changeset-text.json`: the prose, source and rendered, of every block the ChangeSet lists, on each side that has it. The review page's diff renderers read it (bean `d903`).",
+            "description": "Also write `changeset-text.json`: the prose, source and rendered, of every block the ChangeSet lists, on each side that has it. The review page's diff renderers read it.",
             "required": false,
             "arg": {
               "flag": "--text-out"
@@ -16862,7 +16871,7 @@
           {
             "name": "to",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/NodeId",
-            "description": "The status to move it to: open, addressed, resolved, adjudicated or withdrawn. Checked against the closed list by the script; the list is core vocabulary, so it is not a harness Tool type.",
+            "description": "The status to move it to: open, addressed, resolved, adjudicated or withdrawn, checked by the script against that closed list.",
             "required": true,
             "arg": {
               "flag": "--to"
@@ -17432,7 +17441,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "l1-coverage",
       "title": "L1 extraction coverage",
-      "description": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for. Issue #2405 FR-009.",
+      "description": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for.",
       "install": {
         "none": true
       },
@@ -17554,7 +17563,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "review-log-watch",
       "title": "Check a review log and its repository's issues for changes",
-      "description": "The mechanical check a review-log watcher runs on every poll (owner, 2026-11-01; Q-WATCH1 B). Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened left out) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0, and the watcher does nothing more. Changed: it lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Q-WATCH2 B; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through (owner, 10:18Z): Title is the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL. It exits 10. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state, so the next poll compares against it.",
+      "description": "The mechanical check a review-log watcher runs on every poll. Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (leaving out pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0. Changed: it exits 10 and lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Title the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state for the next poll to compare against.",
       "install": {
         "none": true
       },
@@ -17566,7 +17575,7 @@
           {
             "name": "repo",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The folio repository, `owner/name`, whose open issues are read with `gh api`.",
+            "description": "The folio repository, `owner/name`, whose issues, open and closed, are read with `gh api`.",
             "required": true,
             "arg": {
               "flag": "--repo"
@@ -17611,7 +17620,7 @@
           {
             "name": "sheetHash",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The sheet script's hash of the person-set cells, Watch!G1 (Q-WATCH4 A). Given, it stands for the cells, so `--sheet` needs only the header row and the Issue column.",
+            "description": "The sheet script's hash of the person-set cells, Watch!G1. Given, it stands for the cells, so `--sheet` needs only the header row and the Issue column.",
             "required": false,
             "arg": {
               "flag": "--sheet-hash"
@@ -17651,7 +17660,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "review-sheet-sync",
       "title": "Build the review sheet's Apps Script and a document's Config tab",
-      "description": "Builds `Code.gs` (one generic script for every document, `--script`) and one document's Config tab rows (`--config`): the Google Apps Script that keeps a public-comment review sheet's links and joins current: each comment No. links to its comment page, Sections, Page and Line no(s) link to the page of the frozen review draft, Review Change Sets joins its comments, suggested revisions, feedback and dispositions with each `No. n` linking to its row, and on both tabs Agentic status lists each pull request of the change-set, linked, with its status and what it changed, from the Agent tab. The script is the same for every review (`review-sheet.gs`); this Tool fills in one folio's data from its `review/public-comment/sheet-sync.json`, its review anchors and the draft's `pdf-line-map.json`. The script reads the document's URLs, tab and column names and data from the sheet's Config tab (visible, locked to the owner), which the agent writes from these rows. A person pastes the script (one file) into the sheet once (Extensions > Apps Script) and runs `installTriggers`; from then on the sheet rebuilds itself within five minutes of an edit, with no agent. With `\"mode\": \"drafting\"` in the config it builds the simpler drafting sheet instead: one Contributor Feedback tab where each row is a change set (ids assigned by the script), Sections picked from the document's table of contents and linked to it, and Issue and Agentic status from the Agent tab.",
+      "description": "Builds `Code.gs` (`--script`), the one Google Apps Script every review sheet runs (from `review-sheet.gs`), and one document's Config tab rows (`--config`), filled from the folio's `review/public-comment/sheet-sync.json`, its review anchors and the draft's `pdf-line-map.json`. The script keeps a public-comment review sheet's links and joins current: each comment No. links to its comment page; Sections, Page and Line no(s) link to the page of the frozen review draft; Review Change Sets joins its comments, suggested revisions, feedback and dispositions, each `No. n` linking to its row; and on both tabs Agentic status lists each pull request of the change-set, linked, with its status and what it changed, from the Agent tab. It reads the document's URLs, tab and column names and data from the sheet's Config tab (visible, locked to the owner), which the agent writes from these rows. A person pastes the script (one file) into the sheet once (Extensions > Apps Script) and runs `installTriggers`; from then on the sheet rebuilds itself within about a minute of an edit, with no agent. With `\"mode\": \"drafting\"` in the config it builds the drafting sheet instead: one Contributor Feedback tab where each row is a change set (ids assigned by the script), Sections picked from the document's table of contents and linked to it, and Issue and Agentic status from the Agent tab.",
       "install": {
         "service": "Google Apps Script bound to the review sheet: copy the template, have the agent write its Config tab, add editors to the \"Ready columns: editors\" lock, paste Code.gs, run installTriggers (skill review-sheet-script, \"Setting up a sheet for a new document\")"
       },
@@ -17778,7 +17787,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "tabular-csv",
       "title": "CSV tabular metadata",
-      "description": "Read a delimited text file into a `folio-tabular-csvw/v1` record: one table, its columns and their CSVW datatypes, each measured or explicitly undetermined. Routing is by content, never by extension: the first rows must agree on one field count of two or more, under exactly one of `,` `;` TAB `|`. A CSV's `fac:anchor` sheet and cell are a determined null. Governed by the `tabular-metadata` skill (bean `eief`).",
+      "description": "Read a delimited text file into a `folio-tabular-csvw/v1` record: one table, its columns and their CSVW datatypes, each measured or explicitly undetermined. Routing is by content, never by extension: the first rows must agree on one field count of two or more, under exactly one of `,` `;` TAB `|`. A CSV's `fac:anchor` sheet and cell are a determined null. Governed by the `tabular-metadata` skill.",
       "install": {
         "none": true
       },
@@ -17839,7 +17848,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "tabular-xlsx",
       "title": "Spreadsheet tabular metadata",
-      "description": "Read a workbook into a `folio-tabular-csvw/v1` record, one CSVW table per rectangular block of cells. Blocks are split on empty rows, then on empty columns, so several tables on one sheet are found, each anchored at its real top-left cell (`fac:anchor`: sheet, A1 cell, row, column). Dates are read through the number formats in `styles.xml`, not misread as integer serials. A malformed part is refused rather than half-read. No new dependency: ZIP via `node:zlib`, SpreadsheetML via `fast-xml-parser`. Governed by the `tabular-metadata` skill (bean `eief`).",
+      "description": "Read a workbook into a `folio-tabular-csvw/v1` record, one CSVW table per rectangular block of cells. Blocks are split on empty rows, then on empty columns, so several tables on one sheet are found, each anchored at its real top-left cell (`fac:anchor`: sheet, A1 cell, row, column). Dates are read through the number formats in `styles.xml`, not misread as integer serials. A malformed part is refused rather than half-read. Reads the ZIP with `node:zlib` and SpreadsheetML with `fast-xml-parser`. Governed by the `tabular-metadata` skill.",
       "install": {
         "none": true
       },
@@ -17898,8 +17907,8 @@
   ],
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
+    "sha": "46dd432d9e2eaf3079b57d021eabcd8385f25dca",
     "pr": "2926/merge",
-    "run": "41917059660"
+    "run": "41926788657"
   }
 }

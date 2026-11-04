@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
+    "sha": "46dd432d9e2eaf3079b57d021eabcd8385f25dca",
     "pr": "2926/merge",
-    "run": "41917059660"
+    "run": "41926788657"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "review-log-watch",
       "title": "Check a review log and its repository's issues for changes",
-      "description": "The mechanical check a review-log watcher runs on every poll (owner, 2026-11-01; Q-WATCH1 B). Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened left out) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0, and the watcher does nothing more. Changed: it lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Q-WATCH2 B; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through (owner, 10:18Z): Title is the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL. It exits 10. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state, so the next poll compares against it.",
+      "description": "The mechanical check a review-log watcher runs on every poll. Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (leaving out pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0. Changed: it exits 10 and lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Title the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state for the next poll to compare against.",
       "install": {
         "none": true
       },
@@ -380,7 +380,7 @@
           {
             "name": "repo",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The folio repository, `owner/name`, whose open issues are read with `gh api`.",
+            "description": "The folio repository, `owner/name`, whose issues, open and closed, are read with `gh api`.",
             "required": true,
             "arg": {
               "flag": "--repo"
@@ -425,7 +425,7 @@
           {
             "name": "sheetHash",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The sheet script's hash of the person-set cells, Watch!G1 (Q-WATCH4 A). Given, it stands for the cells, so `--sheet` needs only the header row and the Issue column.",
+            "description": "The sheet script's hash of the person-set cells, Watch!G1. Given, it stands for the cells, so `--sheet` needs only the header row and the Issue column.",
             "required": false,
             "arg": {
               "flag": "--sheet-hash"

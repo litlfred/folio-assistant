@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
+    "sha": "46dd432d9e2eaf3079b57d021eabcd8385f25dca",
     "pr": "2926/merge",
-    "run": "41917059660"
+    "run": "41926788657"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Evidence for a recommendation",
       "summary": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap; a change that states or alters no recommendation ends at its own event before any search.",
-      "description": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap; a change that states or alters no recommendation ends at its own event before any search. The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here.",
+      "description": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap; a change that states or alters no recommendation ends at its own event before any search. Evidence comes from three classes (trusted L1 sources, trusted L2/L3 content, data repositories), and each candidate's authority is verified against the publishing body's own API. STRAWPERSON: registries, grading system and API bindings are not fixed here.",
       "enforcement": "strict",
       "sourcePath": "processes/content/evidence-retrieval.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/evidence-retrieval.bpmn",

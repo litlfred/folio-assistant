@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "412736646b38f1f87aa904e766a1b4baac8e78fc",
+    "sha": "46dd432d9e2eaf3079b57d021eabcd8385f25dca",
     "pr": "2926/merge",
-    "run": "41917059660"
+    "run": "41926788657"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Committee review of a content change",
       "summary": "The review committee's review of one staged content change, ending in an approval or a request for changes: compare staged against main, slice the change and review each slice, settle withdrawn comments and disputed findings, gate on coverage, review the edit…",
-      "description": "The review committee's review of one staged content change, ending in an approval or a request for changes: compare staged against main, slice the change and review each slice, settle withdrawn comments and disputed findings, gate on coverage, review the editorial dependencies and the impact, and decide.\n\nCalled from content-change-review when the author submits. Which end it reaches is what the caller's GW_CommitteeApproved reads. Organising the review is the review coordinator's lane and deciding it is the committee's, on the owner's ruling of 2026-09-23 (bean en2d). Merging is not here: it is a separate, confirmed act in content-change-review-publish.",
+      "description": "The review committee's review of one staged content change, ending in an approval or a request for changes: compare staged against main, slice the change and review each slice, settle withdrawn comments and disputed findings, gate on coverage, review the editorial dependencies and the impact, and decide.\n\nCalled from content-change-review when the author submits. Which end it reaches is what the caller's GW_CommitteeApproved reads. Organising the review is the review coordinator's lane and deciding it is the committee's. Merging is not here: it is a separate, confirmed act in content-change-review-publish.",
       "enforcement": "strict",
       "sourcePath": "processes/content/content-change-review-committee.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/content-change-review-committee.bpmn",
