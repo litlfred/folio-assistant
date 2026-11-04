@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-04T13:50:43Z
+updated_at: 2026-11-04T20:12:55Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -210,3 +210,5 @@ _2026-11-03T08:49:58Z_ — Merge sweep ended 08:50Z. Merged: cat-harness #1002, 
 _2026-11-04T13:27:14Z_ — Merge sweep #2 started 13:26Z (owner: another 4 hours, until 17:26Z), same rules. Merged cat-harness#1024 (removes the qou migration checklist from platform docs; owner's choice) at 1d97eaf, all green. fa#2932 (.github/scripts repin-train fix) is waiting: its only red is bean-parents 'every open bean belongs to an epic', which reads bean data. I'm checking it against main's run 41837926987.
 
 _2026-11-04T13:50:43Z_ — Merge sweep #2: merged fa#2932 (repin-train re-judges a failed train while checks still run; .github/scripts only) at a073189. Its only red, bean-parents 'every open bean belongs to an epic', also fails on main run 41837926987 (61ea1972).
+
+_2026-11-04T20:12:55Z_ — Session restarted. The 14:08-18:08Z window lapsed while it was down; the owner said 'try again' at 20:12Z, so merge sweep plus re-pin window run until 00:12Z. Merged cat-harness#1026 (docs QA pass 2, owner-reviewed) at 33ec692. fa#2936 (leaf re-pins) has one new red: actor-facts-audit.test.ts:202 expects jekyll still unconsumed, but a newly pinned leaf now consumes it. The fix (drop jekyll from that loop in cat-harness-tools) is handed to author …RmCv, since this session can't attach cat-harness-tools. Train fa#2938 (20261104-1824) is red.
