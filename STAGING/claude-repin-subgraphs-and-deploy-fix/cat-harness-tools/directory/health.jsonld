@@ -5,9 +5,9 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/health.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "e0429e88c82e548357644a03c6d28a9303c3ae5e",
-    "pr": "claude/repin-subgraphs-and-deploy-fix",
-    "run": "41788675402"
+    "sha": "e7755d5a02c2b5a667efc3ac21f3f4e7a0148ae1",
+    "pr": "2926/merge",
+    "run": "41828370178"
   },
   "@graph": [
     {
@@ -25,7 +25,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/health"
       ],
-      "description": "Repository health reports for THIS repository: the one `health-report/v1` document `bun run cat-harness-tools/test/health/run.ts --instance <this instance>` writes. Each repository the separation made is its own clone, with its own size, publish branch, branches and stores, so each carries its own report (owner, 2026-10-10: \"All repos need health check\"). The graph typology is cat-harness's; its `health` entry says what separates a health report (about the repository) from a `qa` verdict (about an artefact). It sits at the root, not under `test/health/results/` as in cat-harness, because this instance declares `test/` as code and a declared directory nested inside another is the layout-norms defect (owner, 2026-10-10: option A, move it out of `test/`); at the root a state graph's path equals its id, as `beans/` does.",
+      "description": "Repository health reports for THIS repository: the one `health-report/v1` document `bun run cat-harness-tools/test/health/run.ts --instance <this instance>` writes. Each repository carries its own report. The graph typology is cat-harness's; its `health` entry says what separates a health report (about the repository) from a `qa` verdict (about an artefact). It sits at the root, not under `test/`, because `test/` is declared as code and a declared directory may not nest inside another; at the root a state graph's path equals its id, as `beans/` does.",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/health"
     }

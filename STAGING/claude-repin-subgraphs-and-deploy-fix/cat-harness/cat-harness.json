@@ -362,10 +362,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-11-04T07:17:37.324Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e0429e88c82e548357644a03c6d28a9303c3ae5e",
-  "sourceCommitSha": "e0429e88c82e548357644a03c6d28a9303c3ae5e",
-  "sourceCommitAt": "2026-11-04T06:54:52Z",
+  "generatedAt": "2026-11-04T12:41:24.765Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e7755d5a02c2b5a667efc3ac21f3f4e7a0148ae1",
+  "sourceCommitSha": "e7755d5a02c2b5a667efc3ac21f3f4e7a0148ae1",
+  "sourceCommitAt": "2026-11-04T12:19:49Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -51971,7 +51971,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "attribution",
       "title": "attribution",
-      "summary": "Who wrote a piece of derived content — bean `iqim`.",
+      "summary": "Who wrote a piece of derived content.",
       "module": "schemas/content/attribution.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/attribution"
@@ -52004,7 +52004,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "block-summary",
       "title": "block-summary",
-      "summary": "An agent's summary of a library block, kept BESIDE the block — the QA",
+      "summary": "An agent's summary of a library block, kept BESIDE the block as a QA",
       "module": "schemas/content/block-summary.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-summary"
@@ -52044,7 +52044,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "document-image",
       "title": "document-image",
-      "summary": "An image placed on a page of an ingested document — bean `d5f1`.",
+      "summary": "An image placed on a page of an ingested document.",
       "module": "schemas/content/document-image.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/document-image"
@@ -52064,7 +52064,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "document-structure",
       "title": "document-structure",
-      "summary": "`structure.json` as a BASE with VARIANTS — bean `rkqp`, owner 2026-09-30",
+      "summary": "`structure.json` as a BASE with VARIANTS.",
       "module": "schemas/content/document-structure.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/document-structure"
@@ -52084,7 +52084,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "figure-description",
       "title": "figure-description",
-      "summary": "What a person or agent SAYS a drawn figure shows — bean `a8wy`, under",
+      "summary": "What a person or agent SAYS a drawn figure shows — the judgement half of the",
       "module": "schemas/content/figure-description.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/figure-description"
@@ -52094,7 +52094,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "inline-code",
       "title": "inline-code",
-      "summary": "Backtick spans in authored prose, rendered as `<code>` — bean `mylx`.",
+      "summary": "Backtick spans in authored prose, rendered as `<code>`.",
       "module": "schemas/content/inline-code.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/inline-code"
@@ -52114,7 +52114,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "narrative",
       "title": "narrative",
-      "summary": "A generated narrative, and who stands behind it — bean `ju0u`.",
+      "summary": "A generated narrative, and who stands behind it.",
       "module": "schemas/content/narrative.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/narrative"
@@ -52134,7 +52134,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "pinned-terminology",
       "title": "pinned-terminology",
-      "summary": "The codes a PUBLISHED IG carries at ONE pinned version — bean `7wou`.",
+      "summary": "The codes a PUBLISHED IG carries at ONE pinned version.",
       "module": "schemas/content/pinned-terminology.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/pinned-terminology"
@@ -52144,7 +52144,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "prov",
       "title": "prov",
-      "summary": "W3C PROV-O: the record of a task or decision being performed. Issue #1180,",
+      "summary": "W3C PROV-O: the record of a task or decision being performed, extended for",
       "module": "schemas/content/prov.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/prov"
@@ -52164,7 +52164,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "section-verdicts",
       "title": "section-verdicts",
-      "summary": "Section verdicts — which ingested sections are not PROSE. Bean `fnqn`.",
+      "summary": "Section verdicts — which ingested sections are not PROSE.",
       "module": "schemas/content/section-verdicts.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/section-verdicts"
@@ -52214,7 +52214,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "vector-figure",
       "title": "vector-figure",
-      "summary": "A DRAWN figure, assembled and rendered — bean `ay3x`, under `m4xy`. The step",
+      "summary": "A DRAWN figure, assembled and rendered — the step above",
       "module": "schemas/content/vector-figure.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vector-figure"
@@ -52224,7 +52224,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "vector-labels",
       "title": "vector-labels",
-      "summary": "The positioned TEXT on a page that declares a figure — bean `a8wy`, under",
+      "summary": "The positioned TEXT on a page that declares a figure: the labels of a",
       "module": "schemas/content/vector-labels.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/vector-labels"
@@ -52460,7 +52460,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "instance-repositories",
       "title": "instance-repositories",
-      "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
+      "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand.",
       "module": "schemas/kg/instance-repositories.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/instance-repositories"
@@ -52553,7 +52553,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "prov-jsonld",
       "title": "prov-jsonld",
-      "summary": "PROV activities as PROV-JSONLD — links, not strings (beans `jcet`, `9y9j`).",
+      "summary": "PROV activities as PROV-JSONLD — links, not strings.",
       "module": "schemas/kg/prov-jsonld.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/prov-jsonld"
@@ -52683,7 +52683,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "url-space",
       "title": "url-space",
-      "summary": "Where a published thing is served: one resolver for the site's URL space",
+      "summary": "Where a published thing is served: one resolver for the site's URL space.",
       "module": "schemas/kg/url-space.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/url-space"
@@ -52693,7 +52693,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "validator-node",
       "title": "validator-node",
-      "summary": "A VALIDATOR as a node of the knowledge graph (bean riit). Owner, 2026-10-04:",
+      "summary": "A VALIDATOR as a node of the knowledge graph. **The validator names the",
       "module": "schemas/kg/validator-node.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/validator-node"
@@ -52713,7 +52713,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "archive-contents",
       "title": "archive-contents",
-      "summary": "An archive's entry list, as data — bean `twqe`.",
+      "summary": "An archive's entry list, as data.",
       "module": "schemas/library/archive-contents.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/archive-contents"
@@ -52803,7 +52803,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "recording",
       "title": "recording",
-      "summary": "A recorded meeting or talk as a library entry, and its transcripts. Bean",
+      "summary": "A recorded meeting or talk as a library entry, and its transcripts.",
       "module": "schemas/library/recording.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/recording"
@@ -52843,7 +52843,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "source-licence",
       "title": "source-licence",
-      "summary": "A source's licence, as one record wherever it is written — bean `7bg9`.",
+      "summary": "A source's licence, as one record wherever it is written.",
       "module": "schemas/library/source-licence.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/source-licence"
@@ -52873,7 +52873,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "tabular-csvw",
       "title": "tabular-csvw",
-      "summary": "A tabular source as CSVW, annotated with what CSVW cannot say — bean `eief`.",
+      "summary": "A tabular source as CSVW, annotated with what CSVW cannot say.",
       "module": "schemas/library/tabular-csvw.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tabular-csvw"
@@ -52883,7 +52883,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "tabular-records",
       "title": "tabular-records",
-      "summary": "What makes a dataset findable — bean `p67i`.",
+      "summary": "What makes a dataset findable.",
       "module": "schemas/library/tabular-records.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tabular-records"
@@ -53103,7 +53103,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "gates-report",
       "title": "gates-report",
-      "summary": "The typed reports of `bun run cat gates` and `bun run cat check:merged`",
+      "summary": "The typed reports of `bun run cat gates` and `bun run cat check:merged`.",
       "module": "schemas/sdlc/gates-report.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/gates-report"
@@ -53313,7 +53313,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "test-data",
       "title": "test-data",
-      "summary": "Test data sets (fixed and generated) and SME review case/verdict pairs —",
+      "summary": "Test data sets (fixed and generated) and SME review case/verdict pairs.",
       "module": "schemas/sdlc/test-data.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-data"
@@ -53343,7 +53343,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "test-run",
       "title": "test-run",
-      "summary": "A TEST RUN — what was measured, with what, and whether it can be redone.",
+      "summary": "A TEST RUN — what was measured, with what, and whether it can be redone:",
       "module": "schemas/sdlc/test-run.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-run"
@@ -53363,7 +53363,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "todo-index",
       "title": "todo-index",
-      "summary": "The published todo index — `folio-todo-index/v1`, described at last.",
+      "summary": "The published todo index — `folio-todo-index/v1`.",
       "module": "schemas/sdlc/todo-index.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/todo-index"
@@ -53383,7 +53383,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "viewer-nav-qa",
       "title": "viewer-nav-qa",
-      "summary": "The viewer-navbar audit — **what the owner's rule looks like as data**.",
+      "summary": "The viewer-navbar audit — the common navbar rail as data.",
       "module": "schemas/sdlc/viewer-nav-qa.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/viewer-nav-qa"
@@ -53469,7 +53469,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "workflow-tool-results",
       "title": "workflow-tool-results",
-      "summary": "Typed results of the workflow engine's tools (issue",
+      "summary": "Typed results of the workflow engine's tools.",
       "module": "schemas/tools/workflow-tool-results.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/workflow-tool-results"
@@ -53499,7 +53499,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "diff-renderers",
       "title": "diff-renderers",
-      "summary": "The diff renderers a reviewer chooses between on the review page. Bean",
+      "summary": "The diff renderers a reviewer chooses between on the review page.",
       "module": "schemas/ui/diff-renderers.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/diff-renderers"
@@ -53539,7 +53539,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "render-log",
       "title": "render-log",
-      "summary": "The render log — what was published to the publish branch, when, and why.",
+      "summary": "The render log — what was published to the publish branch, when, and why:",
       "module": "schemas/ui/render-log.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-log"
@@ -53549,7 +53549,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "render-output",
       "title": "render-output",
-      "summary": "The ONE implementation of a Tool output's render hint — bean `q2wm`, R17.",
+      "summary": "The ONE implementation of a Tool output's render hint.",
       "module": "schemas/ui/render-output.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/render-output"
@@ -53569,7 +53569,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "rendered-impact",
       "title": "rendered-impact",
-      "summary": "What a change does to a RENDERED site: the contract every renderer answers",
+      "summary": "What a change does to a RENDERED site: the contract every renderer answers.",
       "module": "schemas/ui/rendered-impact.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/rendered-impact"
@@ -53619,7 +53619,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "themes",
       "title": "themes",
-      "summary": "The themes this instance ships, and the default.",
+      "summary": "The themes this instance ships, and the default: grumpy-cat, white and",
       "module": "schemas/ui/themes.ts",
       "maintainedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tools/themes-css.jsonld"
@@ -56296,8 +56296,8 @@
   ],
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "e0429e88c82e548357644a03c6d28a9303c3ae5e",
-    "pr": "claude/repin-subgraphs-and-deploy-fix",
-    "run": "41788675402"
+    "sha": "e7755d5a02c2b5a667efc3ac21f3f4e7a0148ae1",
+    "pr": "2926/merge",
+    "run": "41828370178"
   }
 }
