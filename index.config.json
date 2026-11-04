@@ -50,7 +50,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "b0db826dd4d0d82710fbe5e6fa34d1e3a73d804c",
+          "ref": "1999ab47a39110fb49192983d83849bb6c8cc239",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -61,7 +61,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-04",
-              "ref": "b0db826dd4d0d82710fbe5e6fa34d1e3a73d804c",
+              "ref": "1999ab47a39110fb49192983d83849bb6c8cc239",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
               "standing": {
                 "follows": "main",
@@ -462,6 +462,10 @@
   },
   "mountApprovers": [
     "litlfred"
+  ],
+  "enableSubgraphs": [
+    "cat-harness.sdlc",
+    "cat-harness.work-plan"
   ],
   "gateExemptions": {
     "steps": [
