@@ -1225,7 +1225,10 @@ jobs:
     # owner 2026-10-07: "1y, 2y, 3y, 4y") removed them, and branch protection
     # now names the shard checks directly. This one was not part of that
     # ruling and stays.
-    needs: [gates-kg, gates-docs, gates-standalone, verdict-reuse]
+    # `skill-registration-chain` is a part since `skill:register:check` left
+    # `gates-kg` (it ran there twice; owner, 2026-11-03: make CI faster), so
+    # this required check still fails when the skill-registration chain does.
+    needs: [gates-kg, gates-docs, gates-standalone, skill-registration-chain, verdict-reuse]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -1234,6 +1237,7 @@ jobs:
           KG: ${{ needs.gates-kg.result }}
           DOCS: ${{ needs.gates-docs.result }}
           STANDALONE: ${{ needs.gates-standalone.result }}
+          SKILLS: ${{ needs.skill-registration-chain.result }}
           # `true` only on a push to `main` whose tree an earlier run already
           # judged green, which is the one case the standalone ratchet is
           # skipped by design (bean `qbco`); its verdict is that run's.
@@ -1251,7 +1255,7 @@ jobs:
         # the env vars, so it writes its own summary and WHICH part failed
         # reaches `output.summary` (bean `yqc4`).
         run: |
-          echo "kg: $KG   docs: $DOCS   standalone: $STANDALONE   reused: $REUSED   draft: $DRAFT"
+          echo "kg: $KG   docs: $DOCS   standalone: $STANDALONE   skills: $SKILLS   reused: $REUSED   draft: $DRAFT"
           if [ "$DRAFT" = "true" ]; then
             echo "draft: full tier skipped; the repository gates run when the PR is marked ready for review" | tee -a "$GITHUB_STEP_SUMMARY"
             exit 0
@@ -1260,7 +1264,7 @@ jobs:
             STANDALONE=success
             echo "### Standalone ratchet: verdict reused from run $REUSED_RUN (bean \`qbco\`)" >> "$GITHUB_STEP_SUMMARY"
           fi
-          if [ "$KG" != "success" ] || [ "$DOCS" != "success" ] || [ "$STANDALONE" != "success" ]; then
+          if [ "$KG" != "success" ] || [ "$DOCS" != "success" ] || [ "$STANDALONE" != "success" ] || [ "$SKILLS" != "success" ]; then
             {
               echo "### ✗ Repository gates"
               echo
@@ -1269,6 +1273,7 @@ jobs:
               echo "| workflows, skills, knowledge graph (\`gates-kg\`) | \`$KG\` |"
               echo "| instances, docs, translations (\`gates-docs\`) | \`$DOCS\` |"
               echo "| cat-harness standalone ratchet (\`gates-standalone\`) | \`$STANDALONE\` |"
+              echo "| skill-registration chain (\`skill-registration-chain\`) | \`$SKILLS\` |"
               echo
               echo "This job runs nothing itself — it is red because a part above is."
               echo "\`cancelled\` or \`skipped\` is NOT a pass: a skipped required check"
