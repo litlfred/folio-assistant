@@ -11,7 +11,7 @@
         "smart-base:document-kinds",
         "uml:overview"
       ],
-      "seconds": 190.84789010200004
+      "seconds": 286.79845404499997
     },
     {
       "cause": ".gitignore",
@@ -21,7 +21,7 @@
         "jsonld:contexts",
         "auto:docs"
       ],
-      "seconds": 27.64974725699995
+      "seconds": 43.42860644100001
     },
     {
       "cause": ".git/branch-mounts",
@@ -33,7 +33,7 @@
         "docs:pages",
         "processes:viz"
       ],
-      "seconds": 15.737827736000007
+      "seconds": 24.167480033000118
     },
     {
       "cause": "cat-harness-tools/cat-harness-tools.json",
@@ -54,15 +54,7 @@
         "kg:viewer",
         "render:bpmn"
       ],
-      "seconds": 15.308886801000046
-    },
-    {
-      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "writtenBy": "-",
-      "reran": [
-        "ig-index:build"
-      ],
-      "seconds": 12.687865651
+      "seconds": 22.646105790999602
     },
     {
       "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
@@ -71,7 +63,7 @@
         "state:visualizer",
         "site:viz"
       ],
-      "seconds": 12.076329787999974
+      "seconds": 17.874082757000114
     },
     {
       "cause": ".github/scripts/repin-train.ts",
@@ -80,7 +72,15 @@
         "external-schemas:viz",
         "docs:harness"
       ],
-      "seconds": 8.34139996900002
+      "seconds": 12.716564542999958
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 12.104496866000002
     },
     {
       "cause": "cat-harness-tools/adapters/README.md",
@@ -88,7 +88,7 @@
       "reran": [
         "library:viz"
       ],
-      "seconds": 4.372888814000006
+      "seconds": 6.8636475169999756
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
@@ -96,7 +96,7 @@
       "reran": [
         "smart-base:pages"
       ],
-      "seconds": 0.714777277999965
+      "seconds": 1.1408348380000097
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
@@ -104,15 +104,7 @@
       "reran": [
         "smart-trust:pages"
       ],
-      "seconds": 0.7019849429999595
-    },
-    {
-      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
-      "writtenBy": "-",
-      "reran": [
-        "smart:pages"
-      ],
-      "seconds": 0.5777014670000062
+      "seconds": 0.9975720789999468
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
@@ -120,7 +112,15 @@
       "reran": [
         "smart-trust-phw:pages"
       ],
-      "seconds": 0.4905941510000266
+      "seconds": 0.7693651659999742
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.7690662520000479
     },
     {
       "cause": "its script, imports or tools",
@@ -130,7 +130,7 @@
         "kind:table",
         "avatars:css"
       ],
-      "seconds": 0.2915952479999978
+      "seconds": 0.46170665899990126
     }
   ],
   "writers": [
@@ -142,7 +142,7 @@
         "kind": "path",
         "path": ".gitignore"
       },
-      "seconds": 6.933248375000025
+      "seconds": 10.978045962000033
     },
     {
       "writer": "avatars:css",
@@ -151,7 +151,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.09232466599997133
+      "seconds": 0.1516880339999916
     },
     {
       "writer": "bibliography:page",
@@ -161,7 +161,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 0.4379322460000403
+      "seconds": 0.720130851999973
     },
     {
       "writer": "docs:harness",
@@ -171,7 +171,7 @@
         "kind": "path",
         "path": ".github/scripts/repin-train.ts"
       },
-      "seconds": 3.230442907999968
+      "seconds": 5.075385875000037
     },
     {
       "writer": "docs:pages",
@@ -181,7 +181,7 @@
         "kind": "path",
         "path": ".git/branch-mounts"
       },
-      "seconds": 1.5993673200000194
+      "seconds": 2.492283899000031
     },
     {
       "writer": "document-kinds:viz",
@@ -191,17 +191,17 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 0.6019972380000399
+      "seconds": 0.9642246930000838
     },
     {
       "writer": "external-schemas:viz",
       "did": "ran",
-      "why": ".github/scripts/repin-train.ts changed (+1802 more: .github/workflows/cancel-on-close.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/repin-train-verdict.yml, .github/workflows/repin-train.yml, .gitignore, and 1795 others)",
+      "why": ".github/scripts/repin-train.ts changed (+1806 more: .github/workflows/cancel-on-close.yml, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, .github/workflows/main-qa.yml, .github/workflows/repin-train-verdict.yml, .github/workflows/repin-train.yml, .gitignore, and 1799 others)",
       "cause": {
         "kind": "path",
         "path": ".github/scripts/repin-train.ts"
       },
-      "seconds": 5.110957061000052
+      "seconds": 7.64117866799992
     },
     {
       "writer": "folio:viz",
@@ -211,13 +211,13 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 0.5027639409999829
+      "seconds": 0.7864723009999143
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
       "why": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "seconds": 12.687865651
+      "seconds": 12.104496866000002
     },
     {
       "writer": "jsonld:contexts",
@@ -227,7 +227,7 @@
         "kind": "path",
         "path": ".gitignore"
       },
-      "seconds": 1.2796547869999777
+      "seconds": 2.019756539999973
     },
     {
       "writer": "kg:viewer",
@@ -237,7 +237,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 0.34577270000003046
+      "seconds": 0.5340024989999365
     },
     {
       "writer": "kind:table",
@@ -246,17 +246,17 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.08937014700000873
+      "seconds": 0.1357009609999368
     },
     {
       "writer": "library:viz",
       "did": "ran",
-      "why": "cat-harness-tools/adapters/README.md changed (+1401 more: cat-harness-tools/archimate/schemas/README.md, cat-harness-tools/archimate/scripts/README.md, cat-harness-tools/beans/defs, cat-harness-tools/beans/defs/cat-tools-d5j0--subgraph-context-drops-a-needed-prefix-when-the-ch.md, cat-harness-tools/beans/defs/folio-assistant-1acg--checkhead-has-run-counts-an-action-required-run-as.md, cat-harness-tools/beans/defs/folio-assistant-3ozg--bun-test-rewrites-72-committed-script-sidecars-so.md, cat-harness-tools/beans/defs/folio-assistant-xxku--flushable-containers-a-named-store-with-a-buffer-l.md, and 1394 others)",
+      "why": "cat-harness-tools/adapters/README.md changed (+1405 more: cat-harness-tools/archimate/schemas/README.md, cat-harness-tools/archimate/scripts/README.md, cat-harness-tools/beans/defs, cat-harness-tools/beans/defs/cat-tools-d5j0--subgraph-context-drops-a-needed-prefix-when-the-ch.md, cat-harness-tools/beans/defs/folio-assistant-1acg--checkhead-has-run-counts-an-action-required-run-as.md, cat-harness-tools/beans/defs/folio-assistant-3ozg--bun-test-rewrites-72-committed-script-sidecars-so.md, cat-harness-tools/beans/defs/folio-assistant-xxku--flushable-containers-a-named-store-with-a-buffer-l.md, and 1398 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness-tools/adapters/README.md"
       },
-      "seconds": 4.372888814000006
+      "seconds": 6.8636475169999756
     },
     {
       "writer": "methodologies:viz",
@@ -266,7 +266,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 1.4314404799999902
+      "seconds": 2.237782351999893
     },
     {
       "writer": "navbar:include",
@@ -275,7 +275,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.10990043500001775
+      "seconds": 0.17431766399997287
     },
     {
       "writer": "node-kinds",
@@ -285,7 +285,7 @@
         "kind": "path",
         "path": ".git/branch-mounts"
       },
-      "seconds": 1.06366229800001
+      "seconds": 1.6574862320000538
     },
     {
       "writer": "openapi:viz",
@@ -295,7 +295,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 0.146779412999982
+      "seconds": 0.24661056599998846
     },
     {
       "writer": "processes:viz",
@@ -305,7 +305,7 @@
         "kind": "path",
         "path": ".git/branch-mounts"
       },
-      "seconds": 6.3171935440000375
+      "seconds": 9.626081515999976
     },
     {
       "writer": "render:bpmn",
@@ -315,7 +315,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 4.943516067999997
+      "seconds": 6.6438337090000275
     },
     {
       "writer": "schema:viz",
@@ -325,13 +325,13 @@
         "kind": "path",
         "path": ".git/branch-mounts"
       },
-      "seconds": 2.3313583949999885
+      "seconds": 3.5951218590000646
     },
     {
       "writer": "site:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 1.1424405109999933
+      "seconds": 1.329290294000064
     },
     {
       "writer": "skills:docs",
@@ -341,7 +341,7 @@
         "kind": "path",
         "path": ".git/branch-mounts"
       },
-      "seconds": 4.426246178999951
+      "seconds": 6.79650652699999
     },
     {
       "writer": "smart-base:document-kinds",
@@ -351,7 +351,7 @@
         "kind": "path",
         "path": ""
       },
-      "seconds": 0.44414306400000353
+      "seconds": 0.7032609759999905
     },
     {
       "writer": "smart-base:l1-extraction:pages",
@@ -361,37 +361,37 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 0.5978864100000355
+      "seconds": 0.9055020939999958
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "seconds": 0.714777277999965
+      "seconds": 1.1408348380000097
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
-      "seconds": 0.4905941510000266
+      "seconds": 0.7693651659999742
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "seconds": 0.7019849429999595
+      "seconds": 0.9975720789999468
     },
     {
       "writer": "smart:pages",
       "did": "ran",
       "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
-      "seconds": 0.5777014670000062
+      "seconds": 0.7690662520000479
     },
     {
       "writer": "state:visualizer",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 10.933889276999981
+      "seconds": 16.54479246300005
     },
     {
       "writer": "subgraph:jsonld",
@@ -401,7 +401,7 @@
         "kind": "path",
         "path": ".gitignore"
       },
-      "seconds": 19.436844094999948
+      "seconds": 30.430803939000004
     },
     {
       "writer": "subscriptions:viz",
@@ -411,7 +411,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 0.16268258200003766
+      "seconds": 0.25297868899989406
     },
     {
       "writer": "theme:viz",
@@ -421,7 +421,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 0.4363191629999783
+      "seconds": 0.7024909759999719
     },
     {
       "writer": "themes:css",
@@ -431,7 +431,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 0.41649727599998004
+      "seconds": 0.6679860379999736
     },
     {
       "writer": "tools:viz",
@@ -441,7 +441,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 2.4747028329999883
+      "seconds": 3.761578707000008
     },
     {
       "writer": "uml:overview",
@@ -451,7 +451,7 @@
         "kind": "path",
         "path": ""
       },
-      "seconds": 190.40374703800003
+      "seconds": 286.095193069
     },
     {
       "writer": "uploads:viz",
@@ -461,7 +461,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 2.1562187249999845
+      "seconds": 3.2206712259999475
     },
     {
       "writer": "voices:viz",
@@ -471,7 +471,7 @@
         "kind": "path",
         "path": "cat-harness-tools/cat-harness-tools.json"
       },
-      "seconds": 0.654377725999977
+      "seconds": 1.001841088999994
     }
   ]
 }
