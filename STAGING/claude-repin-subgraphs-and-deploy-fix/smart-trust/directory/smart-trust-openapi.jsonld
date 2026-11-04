@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-trust/smart-trust.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
+    "sha": "fd7f78b0d95a60ffbd2eef79f81212be810e8b2e",
     "pr": "2926/merge",
-    "run": "41837580823"
+    "run": "41904754854"
   },
   "@graph": [
     {
@@ -21,7 +21,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/openapi"
       ],
-      "description": "The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names (bean `s4ta`). Today one: the trust network gateway's API, which the IG's published `openapi/` carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` deliberately does not treat as the IG's own API. Each document is held VERBATIM beside a `<id>.source.json` recording the repository, path and commit it was read from; every operation in it is a node of this graph, with a page and an IRI here (`gateway/<operationId>/`, `gateway/<operationId>.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages fetch the document beside them, and are complete HTML, so `served` publishes all of it verbatim.",
+      "description": "The OpenAPI documents this instance holds, ingested by the cat-openapi harness from the sources `cat-openapi.config.json` names: the trust network gateway's API, which the published IG carries as a vendored Swagger UI and which `ingest-ig-artifacts.ts` does not treat as the IG's own API. Each document is held verbatim beside a `<id>.source.json` recording the repository, path and commit it was read from. Each operation is a node with a page and an IRI (`gateway/<operationId>/`, `gateway/<operationId>.jsonld`), written by `cat-openapi/scripts/gen-openapi-pages.ts`; the pages are complete HTML that fetch the document beside them, so `served` publishes them as they are.",
       "readmePath": "openapi/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-trust/directory/smart-trust-openapi",

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-trust/smart-trust.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "0eae250bceaa3979ec02ff9889a0c3d4426220b4",
+    "sha": "fd7f78b0d95a60ffbd2eef79f81212be810e8b2e",
     "pr": "2926/merge",
-    "run": "41837580823"
+    "run": "41904754854"
   },
   "@graph": [
     {
@@ -21,7 +21,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/document-kinds"
       ],
-      "description": "How this IG realises the document kinds of the layers it needs: today `dak.coverage.smart-trust.json`, the DAK view of `fhir-artifact-index/`, which places each artefact in one of the ten DAK components by its FHIR resource type and lists what no rule places. GENERATED at publish by the DAK layer's `gen-document-kinds.ts` (`bun run cat smart-base:document-kinds`; declared `builtAtPublish`, because the index it reads is built at publish too, fhir-harness#124) into this directory, and not committed, because the report is about this IG: it lived beside the DAK kind in the layer below until wrong-direction move M13 (folio-assistant#2598), where it was a lower layer holding a file about a higher one. Declared with its file in one commit, per bean `dh4f`.",
+      "description": "How this IG realises the document kinds of the layers it needs: `dak.coverage.smart-trust.json`, the DAK view of `fhir-artifact-index/`, which places each artefact in one of the ten DAK components by its FHIR resource type and lists what no rule places. Generated at publish, after the index it reads, by the DAK layer's `gen-document-kinds.ts` (`bun run cat smart-base:document-kinds`); not committed.",
       "readmePath": "document-kinds/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/smart-trust/directory/smart-trust-document-kinds",
