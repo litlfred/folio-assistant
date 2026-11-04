@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_CRDM_Deliver/node/GW_StakeholderOK.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-deploy-fix",
+    "sha": "5afa7a45cb3c08022c5eaec8da0ad11d12618fa7",
+    "pr": "2928/merge",
+    "run": "41748279578"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_CRDM_Deliver/node/GW_StakeholderOK",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Accepted?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_CRDM_Deliver",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/role/stakeholder",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_CRDM_Deliver/lane/Lane_Stakeholders",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_11",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_CRDM_Deliver#flow/SF_Process_CRDM_Deliver_13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Deliver/node/GW_StakeholderOK"
+    }
+  ]
+}

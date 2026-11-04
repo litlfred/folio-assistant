@@ -1,0 +1,120 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-deploy-fix",
+    "sha": "5afa7a45cb3c08022c5eaec8da0ad11d12618fa7",
+    "pr": "2928/merge",
+    "run": "41748279578"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Merge manager watch: wake, read the queue live, route",
+      "summary": "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands.",
+      "description": "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK.",
+      "enforcement": "strict",
+      "sourcePath": "processes/sdlc/merge-manager-watch.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/merge-manager-watch.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/assets/img/workflows/merge-manager-watch.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Start_Wake"
+      ],
+      "nodeCount": 8,
+      "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch#flow/Flow_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Start_Wake",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Task_Read",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch#flow/Flow_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Task_Read",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Gw_Route",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch#flow/Flow_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Saturated",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Gw_Route",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Call_Meta",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch#flow/Flow_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Ready",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Gw_Route",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Call_Train",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch#flow/Flow_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Stalled",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Gw_Route",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Call_Stalled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch#flow/Flow_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Nothing",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Gw_Route",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/End_Idle",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch#flow/Flow_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Call_Meta",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/End_Done",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch#flow/Flow_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Call_Train",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/End_Done",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch#flow/Flow_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/Call_Stalled",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/process/Process_MergeManagerWatch/node/End_Done",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_9"
+    }
+  ]
+}

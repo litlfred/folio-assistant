@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/tool-types/LatexEngine.schema.json",
+  "title": "LatexEngine",
+  "type": "string",
+  "enum": [
+    "pdflatex",
+    "lualatex",
+    "xelatex"
+  ],
+  "description": "The TeX engine.",
+  "staging": {
+    "branch": "claude/repin-tools-deploy-fix",
+    "sha": "5afa7a45cb3c08022c5eaec8da0ad11d12618fa7",
+    "pr": "2928/merge",
+    "run": "41748279578"
+  }
+}

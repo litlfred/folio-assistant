@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/skill/zero-trust-handover.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-deploy-fix",
+    "sha": "5afa7a45cb3c08022c5eaec8da0ad11d12618fa7",
+    "pr": "2928/merge",
+    "run": "41748279578"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/skill/zero-trust-handover",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "zero-trust-handover",
+      "title": "Zero-trust handover",
+      "description": "How this platform applies zero trust (the zero-trust-architecture methodology, NIST SP 800-207) to every hand-over between agents, skills, tools and graphs: rules H1-H9, the hand-over screen and where it is wired, the remote-mount trust gate, per-tool risk read from a tool's sinks, and the release security gate. A house application, not a methodology: read the node for the method, read this for what to do at a boundary.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/package/security"
+      ],
+      "instructionsPath": "skills/conduct/security/zero-trust-handover.md",
+      "instructionLines": 405,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/zero-trust-handover"
+    }
+  ]
+}

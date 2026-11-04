@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/capability/graphviz.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-deploy-fix",
+    "sha": "5afa7a45cb3c08022c5eaec8da0ad11d12618fa7",
+    "pr": "2928/merge",
+    "run": "41748279578"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/cat-harness/capability/graphviz",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "graphviz",
+      "name": "Graphviz",
+      "description": "Graph visualization tool for generating diagrams.",
+      "detection": {
+        "method": "command",
+        "command": "dot -V"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/graphviz"
+    }
+  ]
+}

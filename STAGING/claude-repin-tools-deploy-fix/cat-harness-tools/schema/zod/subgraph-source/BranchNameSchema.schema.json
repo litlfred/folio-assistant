@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/BranchName",
+  "definitions": {
+    "BranchName": {
+      "type": "string",
+      "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/subgraph-source/BranchNameSchema.schema.json",
+  "title": "BranchNameSchema",
+  "description": "Generated from `BranchNameSchema` in schemas/kg/subgraph-source.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-deploy-fix",
+    "sha": "5afa7a45cb3c08022c5eaec8da0ad11d12618fa7",
+    "pr": "2928/merge",
+    "run": "41748279578"
+  }
+}

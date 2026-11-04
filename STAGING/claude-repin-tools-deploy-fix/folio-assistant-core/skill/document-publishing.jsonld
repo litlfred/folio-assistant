@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/folio-assistant-core/skill/document-publishing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-deploy-fix",
+    "sha": "5afa7a45cb3c08022c5eaec8da0ad11d12618fa7",
+    "pr": "2928/merge",
+    "run": "41748279578"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/folio-assistant-core/skill/document-publishing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "document-publishing",
+      "title": "document-publishing",
+      "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
+      "instructionLines": 192,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-deploy-fix/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-publishing"
+    }
+  ]
+}

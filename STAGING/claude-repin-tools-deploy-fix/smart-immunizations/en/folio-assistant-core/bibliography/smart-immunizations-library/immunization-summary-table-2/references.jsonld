@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/folio/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "bibo": "http://purl.org/ontology/bibo/",
+    "fabio": "http://purl.org/spar/fabio/",
+    "dcterms:source": {
+      "@type": "@id"
+    },
+    "dcterms:hasVersion": {
+      "@type": "@id"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "references/immunization-summary-table-2",
+      "@type": [
+        "fabio:Work",
+        "bibo:Document"
+      ],
+      "dcterms:title": "Refer to https://www.who.int/teams/immunization-vaccines-and-biologicals/policies/position-papers for latest position paper updates. This table summarizes the WHO vaccination recommendations for children. The ages/intervals cited are for the development of country specific schedules and are not for health workers",
+      "dcterms:creator": [
+        "SHENDALE, Stephanie"
+      ],
+      "dcterms:issued": "D:20260105",
+      "dcterms:source": "smart-immunizations/library/immunization-summary-table-2/manifest.jsonld",
+      "dcterms:hasVersion": "smart-immunizations/library/immunization-summary-table-2"
+    }
+  ]
+}
