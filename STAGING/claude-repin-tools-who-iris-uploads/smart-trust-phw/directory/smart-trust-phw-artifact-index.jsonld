@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/smart-trust-phw/smart-trust-phw.jsonld",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   },
   "@graph": [
     {
@@ -21,7 +21,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/fhir-artifact-index"
       ],
-      "description": "The artefact index for smart-trust-phw. `index.json`, `menu.json`, `releases.json` and `package.tgz` are NOT COMMITTED: fhir-harness's `ig-index:build` writes them at publish from the IG's AST (`builtAtPublish`, fhir-harness#124). `ig-identity.json` and the README stay committed. Bean nr5p.",
+      "description": "The artefact index for smart-trust-phw. fhir-harness's `ig-index:build` writes `index.json`, `menu.json`, `releases.json` and `package.tgz` at publish from the IG's AST; they are not committed. `ig-identity.json` and the README are.",
       "readmePath": "fhir-artifact-index/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/smart-trust-phw/directory/smart-trust-phw-artifact-index",

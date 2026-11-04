@@ -5,17 +5,17 @@
   "sameAs": "http://smart.who.int/base/process/Process_L2ComponentEditReview.jsonld",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "L2 component edit and review",
-      "summary": "One pass over one L2 DAK component: the agent edits it, runs its checker, renders and stages it with a before/after, and hands it on; review forks off beside that hand-on and never holds it up, because adjudication is QA, not a gate.",
-      "description": "One pass over one L2 DAK component: the agent edits it, runs its checker, renders and stages it with a before/after, and hands it on; review forks off beside that hand-on and never holds it up, because adjudication is QA, not a gate. That is the owner's ruling of 2026-10-14. Called by each authoring track of l2-dak-authoring.bpmn (Process_L2Dak), one call per component pass.\n\nThe call's inputs, which are the only things that differ between components (skill l2-component-edit-review, \"The inputs, per component\"):\n- component: personas and user scenarios (C2, C3), business processes (C4), core data elements and glossary (C5) with their terminology bindings, decision-support and scheduling logic (C6, C7), indicators and requirements (C8, C9);\n- authoring skill: l2-dak-authoring, bpmn-authoring, dmn-authoring or terminology-management, named on the calling activity, so it joins this process's skills along the call path (review-task.bpmn's scoped composition);\n- renderer and diff: what the reviewer looks at, before and after;\n- checker: the mechanical checks the agent runs before asking anyone;\n- reviewing role: the person who takes on this process's reviewer lane for the call.\n\nOne process rather than one per component because nothing but those inputs differs: DMN's test cases are its checker, BPMN's picture is its renderer, the glossary's term diff (dak-data-dictionary-diff.ts) is its diff and its binding check its checker, and traceability to L1 is the checker of personas, scenarios and requirements.",
+      "summary": "One pass over one L2 DAK component: the agent edits it, runs its checker, renders and stages it with a before/after, and hands it on; review forks off beside the hand-on and never holds it up (adjudication is QA, not a gate).",
+      "description": "One pass over one L2 DAK component: the agent edits it, runs its checker, renders and stages it with a before/after, and hands it on; review forks off beside the hand-on and never holds it up (adjudication is QA, not a gate). Called once per component pass by each authoring track of l2-dak-authoring.bpmn (Process_L2Dak).\n\nOnly the call's inputs differ between components (skill l2-component-edit-review, \"The inputs, per component\"):\n- component: personas and user scenarios (C2, C3), business processes (C4), core data elements and glossary (C5) with their terminology bindings, decision-support and scheduling logic (C6, C7), indicators and requirements (C8, C9);\n- authoring skill: l2-dak-authoring, bpmn-authoring, dmn-authoring or terminology-management, named on the calling activity, so it joins this process's skills along the call path (review-task.bpmn's scoped composition);\n- renderer and diff: what the reviewer sees, before and after;\n- checker: the mechanical checks the agent runs before asking anyone;\n- reviewing role: the person who takes this process's reviewer lane for the call.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/l2-component-edit-review.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/l2-component-edit-review.bpmn",

@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/skill/classify-and-code-content.jsonld",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   },
   "@graph": [
     {
@@ -15,9 +15,9 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "classify-and-code-content",
       "title": "classify-and-code-content",
-      "description": "Classify and code L1 narrative content (recommendations, implementation practices, remarks, and proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, and GRADE ratings) using the `terminology-coding` methodology and the `terminology-lookup` Tool. Covers the authoring-agent's four-rung reuse-first lookup, the `l1-extraction-reviewer` lane for reading and signing proposed L1 coverage exclusions against the printed page (owner ruling 3b, 2026-10-12), and the `terminologist` / ontologist reviewer lane for adjudicating candidate codings and local glossary candidates.",
+      "description": "Classify and code L1 narrative content (recommendations, implementation practices, remarks, and proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, and GRADE ratings) using the `terminology-coding` methodology and the `terminology-lookup` Tool. Covers the authoring-agent's four-rung reuse-first lookup, the `l1-extraction-reviewer` lane that reads and signs proposed L1 coverage exclusions against the printed page, and the `terminologist` / ontologist lane that adjudicates candidate codings and local glossary candidates.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/classify-and-code-content.md",
-      "instructionLines": 159,
+      "instructionLines": 137,
       "inputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/input.schema.json",
       "outputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/output.schema.json",
       "hasInstructions": true,

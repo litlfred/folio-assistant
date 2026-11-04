@@ -366,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-04T21:28:33.115Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/36e5526b186043341796f6c0c044ac9fada28c3b",
-  "sourceCommitSha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-  "sourceCommitAt": "2026-11-04T20:59:00Z",
+  "generatedAt": "2026-11-04T22:15:29.680Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+  "sourceCommitSha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+  "sourceCommitAt": "2026-11-04T21:54:08Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -386,18 +386,18 @@
   },
   "@graph": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-rest-feed",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-signing",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
-      "name": "iris-rest-feed",
-      "title": "Reading IRIS changes over DSpace REST",
-      "description": "How to read changes from the WHO IRIS DSpace 7 REST API: the nightly \"changed since\" walk over Discovery, the weekly reconciliation that stands in for the deletions REST does not report, and the guard that stops a short listing from reading as a mass withdrawal.",
-      "instructionsPath": "skills/iris-rest-feed.md",
-      "instructionLines": 91,
+      "name": "iris-cdn-signing",
+      "title": "Signing and verifying an IRIS CDN release",
+      "description": "How an IRIS CDN release is packaged, signed and verified using published standards only: a BagIt bag (RFC 8493), a detached JWS (RFC 7515 App. F) with ES256 (RFC 7518), and the key published in a did:web DID document whose publicKeyJwk carries an x5c chain up to WHO's signing key. No GDHCN trust list is assumed.",
+      "instructionsPath": "skills/iris-cdn-signing.md",
+      "instructionLines": 130,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-dspace",
@@ -414,32 +414,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-signing",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-rest-feed",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
-      "name": "iris-cdn-signing",
-      "title": "Signing and verifying an IRIS CDN release",
-      "description": "How an IRIS CDN release is packaged, signed and verified using published standards only: a BagIt bag (RFC 8493), a detached JWS (RFC 7515 App. F) with ES256 (RFC 7518), and the key published in a did:web DID document whose publicKeyJwk carries an x5c chain up to WHO's signing key. No GDHCN trust list is assumed.",
-      "instructionsPath": "skills/iris-cdn-signing.md",
-      "instructionLines": 130,
+      "name": "iris-rest-feed",
+      "title": "Reading IRIS changes over DSpace REST",
+      "description": "How to read changes from the WHO IRIS DSpace 7 REST API: the nightly \"changed since\" walk over Discovery, the weekly reconciliation that stands in for the deletions REST does not report, and the guard that stops a short listing from reading as a mass withdrawal.",
+      "instructionsPath": "skills/iris-rest-feed.md",
+      "instructionLines": 91,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-exporter",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
-      "name": "iris-cdn-exporter",
-      "title": "The IRIS CDN Exporter",
-      "description": "The IRIS CDN Exporter agent — how WHO IRIS is exported onto Cloudflare — a git repository on Cloudflare Artifacts and R2 behind the CDN — with an initial load (metadata and PDFs), a nightly change ingest over the DSpace REST API, a weekly reconciliation, and one signed release per run. What the agent decides, what the pipeline does, and the no-churn rule both obey.",
-      "instructionsPath": "skills/iris-cdn-exporter.md",
-      "instructionLines": 73,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-oxigraph",
@@ -456,439 +442,18 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
-      "name": "IRIS CDN nightly change ingest",
-      "summary": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release.",
-      "description": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release. A night with no changes publishes nothing and commits nothing.",
-      "enforcement": "strict",
-      "sourcePath": "processes/iris-cdn-nightly.bpmn",
-      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-nightly.bpmn",
-      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/assets/img/workflows/iris-cdn-nightly.svg",
-      "startNode": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly"
-      ],
-      "nodeCount": 13,
-      "flowCount": 12,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N1",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N1"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N2",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N2"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N3",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/GW_Any",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N3"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N4",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "no",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/GW_Any",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/End_NoChange",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N4"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N5",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/GW_Any",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N5"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N6",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N6"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N7",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N7"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N8",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N8"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N9",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N9"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N10",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N10"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_Review",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N11"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_Review",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/End_Done",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N12"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
-      "name": "Build pipeline",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
-      "name": "IRIS CDN Exporter (agent)",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/iris-cdn-exporter",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Every night, 02:00 UTC",
-      "nodeKind": "start",
-      "bpmnType": "bpmn:StartEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N1"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Read the cursor of the last published run",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N1"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N2"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "List items changed since the cursor",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N2"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N3"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/GW_Any",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Anything changed?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N3"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N4",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N5"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/GW_Any"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/End_NoChange",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Nothing published, nothing committed",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N4"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_NoChange"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Fetch the changed records and bitstream lists",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-rest-feed",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-dspace"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N5"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N6"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Fetch only bitstreams whose checksum changed",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N6"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N7"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Write canonical records into the library",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N7"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N8"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Rebuild the whole graph (sorted output)",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-oxigraph",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/nquads-distribution"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N8"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N9"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Sign and publish the release",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:CallActivity",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-signing"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnSignPublish",
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N9"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N10"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Commit the advanced cursor",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-rest-feed"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N10"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N11"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_Review",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Review the run report; open beans for anomalies",
-      "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/iris-cdn-exporter",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
-      "requires": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-exporter"
-      ],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N11"
-      ],
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N12"
-      ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_Review"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/End_Done",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Night published and reviewed",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/iris-cdn-exporter",
-      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N12"
-      ],
-      "outgoing": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_Done"
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-exporter",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "iris-cdn-exporter",
+      "title": "The IRIS CDN Exporter",
+      "description": "The IRIS CDN Exporter agent — how WHO IRIS is exported onto Cloudflare — a git repository on Cloudflare Artifacts and R2 behind the CDN — with an initial load (metadata and PDFs), a nightly change ingest over the DSpace REST API, a weekly reconciliation, and one signed release per run. What the agent decides, what the pipeline does, and the no-churn rule both obey.",
+      "instructionsPath": "skills/iris-cdn-exporter.md",
+      "instructionLines": 73,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-exporter"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnInitialLoad",
@@ -2263,6 +1828,441 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "IRIS CDN nightly change ingest",
+      "summary": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release.",
+      "description": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release. A night with no changes publishes nothing and commits nothing.",
+      "enforcement": "strict",
+      "sourcePath": "processes/iris-cdn-nightly.bpmn",
+      "sourceUrl": "https://github.com/litlfred/who-iris/blob/main/processes/iris-cdn-nightly.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/assets/img/workflows/iris-cdn-nightly.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly"
+      ],
+      "nodeCount": 13,
+      "flowCount": 12,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/GW_Any",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/GW_Any",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/End_NoChange",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/GW_Any",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_Review",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_Review",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/End_Done",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly#flow/N12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Build pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "IRIS CDN Exporter (agent)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/iris-cdn-exporter",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Every night, 02:00 UTC",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Start_Nightly"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Read the cursor of the last published run",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "List items changed since the cursor",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/GW_Any",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Anything changed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N4",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/GW_Any"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/End_NoChange",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Nothing published, nothing committed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N4"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_NoChange"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Fetch the changed records and bitstream lists",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-rest-feed",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-dspace"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Fetch only bitstreams whose checksum changed",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Write canonical records into the library",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Rebuild the whole graph (sorted output)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-oxigraph",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/nquads-distribution"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Sign and publish the release",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnSignPublish",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Commit the advanced cursor",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/Task_Review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Review the run report; open beans for anomalies",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/skill/iris-cdn-exporter"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/node/End_Done",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Night published and reviewed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/process/Process_IrisCdnNightly#flow/N12"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-tools-who-iris-uploads/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_Done"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/tools",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "tools",
@@ -2911,8 +2911,8 @@
   ],
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   }
 }

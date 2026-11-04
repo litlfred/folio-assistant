@@ -358,17 +358,17 @@
   "partOf": "http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   },
   "@graph": [
     {
       "@id": "http://smart.who.int/base/tools/immz-schedule-app-local.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "immz-schedule-app-local",
-      "title": "Run the immunization schedule-check app locally, on a WHO or country adaptation IG",
-      "description": "Start the schedule-check web form from litlfred/awho-mcp on this machine: a HAPI FHIR server in Docker on 127.0.0.1, the WHO SMART Immunizations IG loaded, then a country adaptation IG after it (its decision-logic tables replace WHO's, and its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. Re-running reuses a server already loaded from the same commits; `--down` stops both.",
+      "title": "Run the immunization schedule-check app locally on a WHO or country IG",
+      "description": "Start litlfred/awho-mcp's schedule-check web form on this machine: a HAPI FHIR server in Docker, the WHO SMART Immunizations IG loaded, then optionally a country adaptation IG (its decision-logic tables replace WHO's; its country profile is generated from its `input/l2/dependencies.yaml`), the CQL cache warmed, and the form served. Both listen on 127.0.0.1. Unbuilt IGs are built with SUSHI first, and each Library's CQL is embedded from `input/cql/` as the IG Publisher would. A re-run reuses a server loaded from the same commits; `--down` stops both.",
       "install": {
         "cli": "git clone https://github.com/litlfred/awho-mcp && cd awho-mcp && python3 -m pip install -e ."
       },
@@ -380,7 +380,7 @@
           {
             "name": "who-ig",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "A checkout of the WHO SMART Immunizations IG, relative to the working directory (the folder holding the checkouts, e.g. `~/space_cats`).",
+            "description": "A WHO SMART Immunizations IG checkout, relative to the working directory (the folder holding the checkouts, e.g. `~/space_cats`).",
             "required": true,
             "arg": {
               "flag": "--who-ig"
@@ -427,7 +427,7 @@
           {
             "name": "url",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url",
-            "description": "The form, on 127.0.0.1. It stores nothing; each check is one inline `$apply` round.",
+            "description": "The form on 127.0.0.1. It stores nothing; each check is one inline `$apply` round.",
             "render": {
               "as": "url",
               "reason": "a reader opens the running app; the scheme is checked before it reaches an href"

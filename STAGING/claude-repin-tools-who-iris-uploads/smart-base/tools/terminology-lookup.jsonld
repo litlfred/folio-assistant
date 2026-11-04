@@ -358,9 +358,9 @@
   "partOf": "http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "terminology-lookup",
       "title": "Reuse-first terminology and code-list lookup",
-      "description": "Look up a concept or code token for a semantic slot (`condition`, `intervention`, `persona`, `medicine`, `domain`, `business-process`, `recommendation-strength`, `recommendation-direction`, `evidence-certainty`) across the four reuse-first precedence rungs of the `terminology-coding` methodology: (1) target guide's `l1-scenario-vocabulary/v1`, (2) `smart-base` generic personas (`DAK.Persona.*`), GRADE `code-lists/*.json` and `guideline-domain` SKOS glossary, (3) local WHO/ILO FSH CodeSystems (`ISCO08`, `CDHIv2`, `CDHIv1`, `CDSCv2`, `KGTerminologySystem`), and (4) a proposed `glossary-terms` candidate (`status: \"candidate\"`) or `could-not-determine` for `business-process`.",
+      "description": "Look up a concept or code token for a semantic slot across the four reuse-first rungs of the `terminology-coding` methodology: (1) the target guide's `l1-scenario-vocabulary/v1`; (2) smart-base's generic personas (`DAK.Persona.*`), GRADE `code-lists/*.json` and the `guideline-domain` SKOS glossary; (3) local WHO/ILO FSH CodeSystems (`ISCO08`, `CDHIv2`, `CDHIv1`, `CDSCv2`, `KGTerminologySystem`); (4) a proposed `glossary-terms` candidate (`status: \"candidate\"`), or `could-not-determine` for `business-process`.",
       "install": {
         "none": true
       },
@@ -380,37 +380,37 @@
           {
             "name": "slot",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "The semantic slot to classify and code (`condition`, `intervention`, `persona`, `medicine`, `domain`, `business-process`, `recommendation-strength`, `recommendation-direction`, `evidence-certainty`).",
+            "description": "The slot to code (`condition`, `intervention`, `persona`, `medicine`, `domain`, `business-process`, `recommendation-strength`, `recommendation-direction`, `evidence-certainty`).",
             "required": true
           },
           {
             "name": "query",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId",
-            "description": "The concept term, identifier, or code token to look up across the reuse-first precedence rungs.",
+            "description": "The term, identifier or code token to look up.",
             "required": true
           },
           {
             "name": "vocabulary",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Optional path to the target guide's personas and business processes (`l1-scenario-vocabulary/v1`), Rung 1.",
+            "description": "The target guide's personas and business processes (`l1-scenario-vocabulary/v1`), rung 1.",
             "required": false
           },
           {
             "name": "generic",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Optional path to smart-base's generic personas (`l1-scenario-vocabulary/v1`), Rung 2.",
+            "description": "smart-base's generic personas (`l1-scenario-vocabulary/v1`), rung 2.",
             "required": false
           },
           {
             "name": "scheme",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/DocId",
-            "description": "Optional scheme identifier filter (e.g. `guideline-domain`, `ISCO08`, `CDHIv2`, `grade-recommendation-strength`).",
+            "description": "Restrict to one scheme (e.g. `guideline-domain`, `ISCO08`, `CDHIv2`, `grade-recommendation-strength`).",
             "required": false
           },
           {
             "name": "out",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Optional repository path where the lookup result JSON is written.",
+            "description": "Where to write the result JSON.",
             "required": false
           }
         ],
@@ -418,7 +418,7 @@
           {
             "name": "result",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Lookup result JSON conforming to `schemas/skills/classify-and-code-content/output.schema.json`."
+            "description": "Result JSON conforming to `schemas/skills/classify-and-code-content/output.schema.json`."
           }
         ]
       },

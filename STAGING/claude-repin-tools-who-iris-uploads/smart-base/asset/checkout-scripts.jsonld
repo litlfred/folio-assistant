@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/asset/checkout-scripts.jsonld",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   },
   "@graph": [
     {
@@ -17,7 +17,7 @@
       "path": "package.json",
       "assetRole": "checkout-scripts",
       "title": "package.json — smart-base",
-      "description": "The checkout scripts this instance's code runs, under `checkoutScripts`. Each command is relative to the downstream checkout root. A downstream that mounts this instance reads them with `bun run cat` and `check:script-placement` only while this file's sha256 matches the mount lock (owner, 2026-10-07: Option A, by reference). folio-assistant#2448 moved them here from its root manifest."
+      "description": "The checkout scripts this instance's code runs, under `checkoutScripts`, each relative to the downstream checkout root. A downstream that mounts this instance reads them with `bun run cat` and `check:script-placement` only while this file's sha256 matches the mount lock."
     }
   ]
 }

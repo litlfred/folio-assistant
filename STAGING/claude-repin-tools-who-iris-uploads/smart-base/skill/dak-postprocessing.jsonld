@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/skill/dak-postprocessing.jsonld",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   },
   "@graph": [
     {
@@ -15,9 +15,9 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "dak-postprocessing",
       "title": "dak-postprocessing",
-      "description": "What the DAK post-processing phase accomplishes after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge that is the seam the just-the-docs transition cuts at. Read before changing a post-processing step, and before assuming the Publisher produced something it did not.",
+      "description": "What the DAK post-processing phase produces after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge — and how an IG repository's own site gets the same sidecars from the cached AST (`ig-site:sidecars`). Read before changing a post-processing step, and before assuming the Publisher produced something it did not.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/dak-postprocessing.md",
-      "instructionLines": 241,
+      "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/directory/smart-base-pipeline.jsonld",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   },
   "@graph": [
     {
@@ -22,7 +22,8 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "`pipeline/qa-checkers-dak.ts`, the automated DAK checkers `qa-checkers/` names (`DAK_AUTOMATED_CHECKERS`). Declared at the cutover (bean hupw) so a remote mount brings it; it was `content/pipeline/` until every layer's pipeline moved to `pipeline/` (owner, 2026-10-14, the rnfl move cat-harness-tools made on 2026-10-12).",
+      "description": "`pipeline/qa-checkers-dak.ts`, the automated DAK checkers `qa-checkers/` names (`DAK_AUTOMATED_CHECKERS`). Declared so a remote mount brings it.",
+      "readmePath": "pipeline/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-pipeline"
     }

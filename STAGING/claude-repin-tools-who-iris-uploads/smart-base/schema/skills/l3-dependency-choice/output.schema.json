@@ -18,7 +18,7 @@
         "required": [
           "packageId",
           "path",
-          "dakApi"
+          "sidecarApi"
         ],
         "properties": {
           "packageId": {
@@ -28,7 +28,7 @@
             "type": "string",
             "description": "The fhir-artifact-index graph ig-artifact-ingestion wrote."
           },
-          "dakApi": {
+          "sidecarApi": {
             "type": "string",
             "enum": [
               "present",
@@ -247,8 +247,8 @@
   "$id": "http://smart.who.int/base/schema/skills/l3-dependency-choice/output.schema.json",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   }
 }

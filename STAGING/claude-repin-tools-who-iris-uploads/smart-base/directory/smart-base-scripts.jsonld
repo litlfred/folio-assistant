@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/directory/smart-base-scripts.jsonld",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   },
   "@graph": [
     {
@@ -22,7 +22,8 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "This layer's own scripts and their tests: document-kinds, the DAK components figure, the DTH term findings, the smart-kg L1 extraction and pin, and the fhir-harness exclusions check, and the L1 recommendation scenario candidates with the vocabulary reader they resolve against (bean kvd2), whose test fixtures and measles run sit under `scripts/fixtures/`. It also holds `dth-init.ts`, which writes a new DTH repository's wiring and moved here from folio-assistant-core on 2026-11-01. Declared at the cutover (bean hupw) so a remote mount brings them.",
+      "description": "This layer's own scripts and their tests: document kinds, the DAK components figure, the DTH term findings, the smart-kg L1 extraction, the fhir-harness exclusions check, the L1 recommendation scenario candidates with the vocabulary reader they resolve against (fixtures and the measles run under `scripts/fixtures/`), the process renderer, and `dth-init.ts`, which writes a new DTH repository's wiring. Declared so a remote mount brings them.",
+      "readmePath": "scripts/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-scripts"
     }

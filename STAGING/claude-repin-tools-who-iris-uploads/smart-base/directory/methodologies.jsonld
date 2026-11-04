@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/directory/methodologies.jsonld",
   "staging": {
     "branch": "claude/repin-tools-who-iris-uploads",
-    "sha": "36e5526b186043341796f6c0c044ac9fada28c3b",
-    "pr": "claude/repin-tools-who-iris-uploads",
-    "run": "41911737609"
+    "sha": "7e328ee0aad9a7d272b88878274f2d9ec31bd8b7",
+    "pr": "2941/merge",
+    "run": "41920367542"
   },
   "@graph": [
     {
@@ -22,7 +22,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/methodology"
       ],
-      "description": "Methodologies adopted from the WHO digital-health corpus in `library/` -- somebody else's work, adopted whole, never a house process with a citation bolted on. `diig.md` is the first. Declared in the commit that created its content rather than ahead of it: a declared-but-absent directory is the `dh4f` defect, where every consumer scans nothing and reports a clean run over it. `skip` rather than `reproduce` because a downstream instance inherits the METHOD by depending on this layer, not by copying the directory.",
+      "description": "Methodologies adopted whole from the WHO digital-health corpus, each rendered from its source, never a house process with a citation added. `diig.md` is the first. `skip`: a downstream instance inherits the method by depending on this layer, not by copying the directory.",
       "readmePath": "methodologies/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/methodologies"
