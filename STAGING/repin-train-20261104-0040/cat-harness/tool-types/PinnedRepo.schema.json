@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/tool-types/PinnedRepo.schema.json",
+  "title": "PinnedRepo",
+  "type": "string",
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*\\/[A-Za-z0-9._-]+@[0-9a-f]{40}$",
+  "description": "A repository at one commit, e.g. <owner>/<repo>@<40-hex sha>",
+  "staging": {
+    "branch": "repin-train/20261104-0040",
+    "sha": "3314b8e2a5c2953227f2a2908524a505411d5d30",
+    "pr": "repin-train/20261104-0040",
+    "run": "41748693548"
+  }
+}

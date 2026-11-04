@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/role/qc-reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-0040",
+    "sha": "3314b8e2a5c2953227f2a2908524a505411d5d30",
+    "pr": "repin-train/20261104-0040",
+    "run": "41748693548"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/role/qc-reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "QC reviewer",
+      "title": "QC reviewer",
+      "notation": "qc-reviewer",
+      "description": "Reviewer with the publication quality gate. Checks the built artefact, not only the source.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/skill/evidence-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/skill/untainted-verification"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer"
+    }
+  ]
+}

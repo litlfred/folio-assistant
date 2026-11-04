@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/process/Process_KgSeparation/node/End_CutoverUnknown.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-0040",
+    "sha": "3314b8e2a5c2953227f2a2908524a505411d5d30",
+    "pr": "repin-train/20261104-0040",
+    "run": "41748693548"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/process/Process_KgSeparation/node/End_CutoverUnknown",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "UNKNOWN — not shown complete. Not clean",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/process/Process_KgSeparation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/process/Process_KgSeparation/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/process/Process_KgSeparation#flow/F34"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-0040/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/End_CutoverUnknown"
+    }
+  ]
+}

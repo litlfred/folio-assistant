@@ -1,0 +1,429 @@
+{
+  "against": "eec485fbf65af99423f2cd15e61c5dc8e546e6ac",
+  "skipped": 0,
+  "ran": 38,
+  "reused": 0,
+  "groups": [
+    {
+      "cause": "its script, imports or tools",
+      "writtenBy": "the commit",
+      "reran": [
+        "smart-base:document-kinds",
+        "uml:overview",
+        "library:viz",
+        "voices:viz",
+        "theme:viz",
+        "uploads:viz",
+        "document-kinds:viz",
+        "skills:docs",
+        "node-kinds",
+        "bibliography:page",
+        "jsonld:contexts",
+        "smart-base:l1-extraction:pages",
+        "tools:viz",
+        "auto:docs",
+        "openapi:viz",
+        "schema:viz",
+        "methodologies:viz",
+        "external-schemas:viz",
+        "subscriptions:viz",
+        "docs:pages",
+        "docs:harness",
+        "navbar:include",
+        "kind:table",
+        "avatars:css",
+        "themes:css",
+        "folio:viz",
+        "kg:viewer",
+        "state:visualizer",
+        "render:bpmn",
+        "processes:viz"
+      ],
+      "seconds": 359.62432638599984
+    },
+    {
+      "cause": "not recorded: the trace is 492194660 bytes, more than 268435456",
+      "writtenBy": "-",
+      "reran": [
+        "subgraph:jsonld"
+      ],
+      "seconds": 28.354458155
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 16.252782050999986
+    },
+    {
+      "cause": "not recorded: the trace is 283858655 bytes, more than 268435456",
+      "writtenBy": "-",
+      "reran": [
+        "slice:sqlite"
+      ],
+      "seconds": 12.633986960000009
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "writtenBy": "-",
+      "reran": [
+        "site:viz"
+      ],
+      "seconds": 1.6564275180000114
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-base:pages"
+      ],
+      "seconds": 1.0564165319999448
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust:pages"
+      ],
+      "seconds": 1.0211001610000385
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust-phw:pages"
+      ],
+      "seconds": 0.7399356569999364
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.716373254999984
+    }
+  ],
+  "writers": [
+    {
+      "writer": "auto:docs",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 10.72057889699994
+    },
+    {
+      "writer": "avatars:css",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.14418287299992516
+    },
+    {
+      "writer": "bibliography:page",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.7102283280000556
+    },
+    {
+      "writer": "docs:harness",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 5.55624857200007
+    },
+    {
+      "writer": "docs:pages",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 2.220745062000002
+    },
+    {
+      "writer": "document-kinds:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.9871611029999331
+    },
+    {
+      "writer": "external-schemas:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 6.051902038999949
+    },
+    {
+      "writer": "folio:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.7686376919999021
+    },
+    {
+      "writer": "ig-index:build",
+      "did": "ran",
+      "why": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "seconds": 16.252782050999986
+    },
+    {
+      "writer": "jsonld:contexts",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 1.729700552000082
+    },
+    {
+      "writer": "kg:viewer",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.5025579829999478
+    },
+    {
+      "writer": "kind:table",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.13069728799990843
+    },
+    {
+      "writer": "library:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 5.790726230000029
+    },
+    {
+      "writer": "methodologies:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 2.3272065580000634
+    },
+    {
+      "writer": "navbar:include",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.17004442399996333
+    },
+    {
+      "writer": "node-kinds",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 1.8785915470001056
+    },
+    {
+      "writer": "openapi:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.22735210999997799
+    },
+    {
+      "writer": "processes:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 10.128150999000063
+    },
+    {
+      "writer": "render:bpmn",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 6.546878323999932
+    },
+    {
+      "writer": "schema:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 3.863014856999973
+    },
+    {
+      "writer": "site:viz",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 1.6564275180000114
+    },
+    {
+      "writer": "skills:docs",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 7.165708790000062
+    },
+    {
+      "writer": "slice:sqlite",
+      "did": "ran",
+      "why": "not recorded: the trace is 283858655 bytes, more than 268435456",
+      "seconds": 12.633986960000009
+    },
+    {
+      "writer": "smart-base:document-kinds",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.6597066370000247
+    },
+    {
+      "writer": "smart-base:l1-extraction:pages",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.893768066000077
+    },
+    {
+      "writer": "smart-base:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "seconds": 1.0564165319999448
+    },
+    {
+      "writer": "smart-trust-phw:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "seconds": 0.7399356569999364
+    },
+    {
+      "writer": "smart-trust:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "seconds": 1.0211001610000385
+    },
+    {
+      "writer": "smart:pages",
+      "did": "ran",
+      "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "seconds": 0.716373254999984
+    },
+    {
+      "writer": "state:visualizer",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 16.111873384000035
+    },
+    {
+      "writer": "subgraph:jsonld",
+      "did": "ran",
+      "why": "not recorded: the trace is 492194660 bytes, more than 268435456",
+      "seconds": 28.354458155
+    },
+    {
+      "writer": "subscriptions:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.24852493200008757
+    },
+    {
+      "writer": "theme:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.6972539579999866
+    },
+    {
+      "writer": "themes:css",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.6952701139999553
+    },
+    {
+      "writer": "tools:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 3.8325191009999253
+    },
+    {
+      "writer": "uml:overview",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 264.839214154
+    },
+    {
+      "writer": "uploads:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 3.0358238979999443
+    },
+    {
+      "writer": "voices:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.9900579140000045
+    }
+  ]
+}

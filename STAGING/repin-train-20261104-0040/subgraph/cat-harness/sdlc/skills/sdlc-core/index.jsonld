@@ -1,0 +1,803 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/sdlc-core/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core",
+      "@type": "cat-harness:SkillPackage",
+      "name": "sdlc-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/activity-log",
+      "@type": "bootstrap:Skill",
+      "name": "activity-log",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9af25970b999fb01bb3407bfca7aa30cb7d383423f518d66a0adf878d0bdc1e1",
+        "bytes": 11715,
+        "sha256": "9af25970b999fb01bb3407bfca7aa30cb7d383423f518d66a0adf878d0bdc1e1"
+      },
+      "title": "Activity log — what an agent did, kept out of the graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication",
+      "@type": "bootstrap:Skill",
+      "name": "adjudication",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/797b9eb974a7b0b99bf98689a011e830eec530cf8c49b1e7025def865cb18a1a",
+        "bytes": 16211,
+        "sha256": "797b9eb974a7b0b99bf98689a011e830eec530cf8c49b1e7025def865cb18a1a"
+      },
+      "title": "Adjudication — judgement, when the mechanism ran out of facts"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adversarial-code-review",
+      "@type": "bootstrap:Skill",
+      "name": "adversarial-code-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f21ce07a5eafe507479a1bd78c906f4c524ab67f4d437493b1409bda7a6121d5",
+        "bytes": 4944,
+        "sha256": "f21ce07a5eafe507479a1bd78c906f4c524ab67f4d437493b1409bda7a6121d5"
+      },
+      "title": "Adversarial code review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-handoff",
+      "@type": "bootstrap:Skill",
+      "name": "agent-handoff",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/58b518e10cd678025e02637db3c49e7f35094463d234a786caf180bdcd3f3a17",
+        "bytes": 16417,
+        "sha256": "58b518e10cd678025e02637db3c49e7f35094463d234a786caf180bdcd3f3a17"
+      },
+      "title": "One task, two agents, one human between them"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/before-after-preview",
+      "@type": "bootstrap:Skill",
+      "name": "before-after-preview",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/108e1bfd7ef77d80cfb1c03a9d55ea94e5d58cf7340fecba3df2149f82d5bfef",
+        "bytes": 20747,
+        "sha256": "108e1bfd7ef77d80cfb1c03a9d55ea94e5d58cf7340fecba3df2149f82d5bfef"
+      },
+      "title": "/before-after-preview — show the reviewer the change, not a description of it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/benchmarking-mode",
+      "@type": "bootstrap:Skill",
+      "name": "benchmarking-mode",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/59032b41923b3e480522505c830ddedf69b2f3e828f6d51e0a02d94358a079ed",
+        "bytes": 5401,
+        "sha256": "59032b41923b3e480522505c830ddedf69b2f3e828f6d51e0a02d94358a079ed"
+      },
+      "title": "Benchmarking mode — reports across models, deliberately excluded from the KG"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/blocked-build-dependencies",
+      "@type": "bootstrap:Skill",
+      "name": "blocked-build-dependencies",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1e86760e482c13880c2675bb13c374e2fffebd284a3a16d3c8f63979aa37e173",
+        "bytes": 4512,
+        "sha256": "1e86760e482c13880c2675bb13c374e2fffebd284a3a16d3c8f63979aa37e173"
+      },
+      "title": "Blocked build dependencies — read the refusal before you work around it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/branch-archaeology",
+      "@type": "bootstrap:Skill",
+      "name": "branch-archaeology",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/773edbf73e91da2676e7a4b14eb3fcec55b09679eab2ed52d4265f069029eb4e",
+        "bytes": 9807,
+        "sha256": "773edbf73e91da2676e7a4b14eb3fcec55b09679eab2ed52d4265f069029eb4e"
+      },
+      "title": "Branch archaeology: what each branch holds that main does not"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/branch-freshness",
+      "@type": "bootstrap:Skill",
+      "name": "branch-freshness",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cf59c142359842693c9cf44f00164fa201e65a070869e0cbdb3b17326d8c74ed",
+        "bytes": 3604,
+        "sha256": "cf59c142359842693c9cf44f00164fa201e65a070869e0cbdb3b17326d8c74ed"
+      },
+      "title": "Branch freshness — stay current with main"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bun-use",
+      "@type": "bootstrap:Skill",
+      "name": "bun-use",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2af207ff5c2826a51bc6de062d221b650630ee8010112f5cf85def31b30cf47f",
+        "bytes": 5462,
+        "sha256": "2af207ff5c2826a51bc6de062d221b650630ee8010112f5cf85def31b30cf47f"
+      },
+      "title": "Bun Runtime, Toolchain, and Multi-Repo Conventions"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ci-health",
+      "@type": "bootstrap:Skill",
+      "name": "ci-health",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bef143d16b42ea0562a2478989851960174ccf00099bec1ca944d4ac77e02bf8",
+        "bytes": 17041,
+        "sha256": "bef143d16b42ea0562a2478989851960174ccf00099bec1ca944d4ac77e02bf8"
+      },
+      "title": "CI health — a red workflow looks exactly like a green one from in here"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/code-review-process",
+      "@type": "bootstrap:Skill",
+      "name": "code-review-process",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/87bc0000290a96ea6065fffb38e5508e5ba9d786372cd666e61e2fcfe87f20fa",
+        "bytes": 3608,
+        "sha256": "87bc0000290a96ea6065fffb38e5508e5ba9d786372cd666e61e2fcfe87f20fa"
+      },
+      "title": "Code review process — from PR to release approval"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/continual-progress",
+      "@type": "bootstrap:Skill",
+      "name": "continual-progress",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f489ceed6cbb0c92a63063e7ad9f4f35eb585d348f7350b1fb2ff82b1c628c9c",
+        "bytes": 18142,
+        "sha256": "f489ceed6cbb0c92a63063e7ad9f4f35eb585d348f7350b1fb2ff82b1c628c9c"
+      },
+      "title": "/continual-progress — trackable, always-PR'd, continually-committed work"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate",
+      "@type": "bootstrap:Skill",
+      "name": "coordinate",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c9d1b724549e325ea54700296b1a793949227017caa08c22d47f490d62b09c99",
+        "bytes": 29894,
+        "sha256": "c9d1b724549e325ea54700296b1a793949227017caa08c22d47f490d62b09c99"
+      },
+      "title": "/coordinate — multi-agent / multi-PR coordination"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/decision-audit",
+      "@type": "bootstrap:Skill",
+      "name": "decision-audit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b82f7cb9bb4b0ce41e5fd2386ed6e16be355b63cd1265267fd163530713f977",
+        "bytes": 4643,
+        "sha256": "3b82f7cb9bb4b0ce41e5fd2386ed6e16be355b63cd1265267fd163530713f977"
+      },
+      "title": "A decision is not a finding, and neither is a substitute for the other"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/delivery-summary",
+      "@type": "bootstrap:Skill",
+      "name": "delivery-summary",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f04a0fc2a7d9b9c9a5dbd0e926e9b0e738ea9b1b1e73a1746def348cb1331cc0",
+        "bytes": 2899,
+        "sha256": "f04a0fc2a7d9b9c9a5dbd0e926e9b0e738ea9b1b1e73a1746def348cb1331cc0"
+      },
+      "title": "Delivery Summary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/diff",
+      "@type": "bootstrap:Skill",
+      "name": "diff",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8d499aba99302bddbc5c6f2aaf012bd4ede09319e32d7a95d7698a94fb53f9c1",
+        "bytes": 6435,
+        "sha256": "8d499aba99302bddbc5c6f2aaf012bd4ede09319e32d7a95d7698a94fb53f9c1"
+      },
+      "title": "Diff — Content Block Change Report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/dispatch-agent",
+      "@type": "bootstrap:Skill",
+      "name": "dispatch-agent",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a0b8064c658987b1fec2ab1149a242231e8d7ce2c00656ec4125874faf7c43a7",
+        "bytes": 12309,
+        "sha256": "a0b8064c658987b1fec2ab1149a242231e8d7ce2c00656ec4125874faf7c43a7"
+      },
+      "title": "/dispatch-agent — parallel dispatch with a live 2-minute status heartbeat"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
+      "@type": "bootstrap:Skill",
+      "name": "feature-staging",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5abd55a27409079ea51f97e409460cd03a378d98a8fd733ec62a22dfc16f127b",
+        "bytes": 32320,
+        "sha256": "5abd55a27409079ea51f97e409460cd03a378d98a8fd733ec62a22dfc16f127b"
+      },
+      "title": "Feature-branch staging"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/finding-software",
+      "@type": "bootstrap:Skill",
+      "name": "finding-software",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5661ebbf9937100e10d5bbf18dc9305a51894062cb99df5bd546c239733b2ad0",
+        "bytes": 4322,
+        "sha256": "5661ebbf9937100e10d5bbf18dc9305a51894062cb99df5bd546c239733b2ad0"
+      },
+      "title": "Finding software — get it, do not route around it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/gate-tree-mutation",
+      "@type": "bootstrap:Skill",
+      "name": "gate-tree-mutation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a95539fd443b4cccd57ee03098454c0a3fc72bcb767baaf840c5ee9173785146",
+        "bytes": 9107,
+        "sha256": "a95539fd443b4cccd57ee03098454c0a3fc72bcb767baaf840c5ee9173785146"
+      },
+      "title": "\"NOT clean\" is a verdict about the RUN, not about your diff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/generalise-the-fix",
+      "@type": "bootstrap:Skill",
+      "name": "generalise-the-fix",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2cabb15bf86d3b737477be0c714e1f87f1b51344243ed6b30c33bacc52155980",
+        "bytes": 10250,
+        "sha256": "2cabb15bf86d3b737477be0c714e1f87f1b51344243ed6b30c33bacc52155980"
+      },
+      "title": "Generalise the fix, then attack the generalisation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/github-state-inspection",
+      "@type": "bootstrap:Skill",
+      "name": "github-state-inspection",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/75c0a8088cc32e5519686c4d435c38c8e1b165d16c994f573e44206671daa5ba",
+        "bytes": 14463,
+        "sha256": "75c0a8088cc32e5519686c4d435c38c8e1b165d16c994f573e44206671daa5ba"
+      },
+      "title": "Reading GitHub state — resolve the ref, do not compose the URL"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/goal-review",
+      "@type": "bootstrap:Skill",
+      "name": "goal-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f1e1a415f2d0a16e2ae4448bc5383ff6dbcfcfb72b07b7f67c83c2d0946834b4",
+        "bytes": 23172,
+        "sha256": "f1e1a415f2d0a16e2ae4448bc5383ff6dbcfcfb72b07b7f67c83c2d0946834b4"
+      },
+      "title": "Goal review — cold start, sweep a window, prioritise against stated goals"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/handover-report",
+      "@type": "bootstrap:Skill",
+      "name": "handover-report",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a26a90f24a1f3e91cc381e2eaaffa304b52b65ba8dfab3791b1e0bfe43eb6f7f",
+        "bytes": 6842,
+        "sha256": "a26a90f24a1f3e91cc381e2eaaffa304b52b65ba8dfab3791b1e0bfe43eb6f7f"
+      },
+      "title": "Handover report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-backlog",
+      "@type": "bootstrap:Skill",
+      "name": "integration-backlog",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/141a433046c0977a0554f91cabb51dd27ef38feff0a692c5f26624842a1aa631",
+        "bytes": 13720,
+        "sha256": "141a433046c0977a0554f91cabb51dd27ef38feff0a692c5f26624842a1aa631"
+      },
+      "title": "/integration-backlog — drive the backlog to zero, one PR at a time"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-watch",
+      "@type": "bootstrap:Skill",
+      "name": "integration-watch",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2f9ca2668f3793feda62ce1b6d1d460ecdabd93122c6a1e398595798d2d782ec",
+        "bytes": 8020,
+        "sha256": "2f9ca2668f3793feda62ce1b6d1d460ecdabd93122c6a1e398595798d2d782ec"
+      },
+      "title": "/integration-watch — dispatcher for the integration watchers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "integration-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ff143008e7046b243b238b211f5543c82e33614bdd4f154ae49e11b71fc8ee5b",
+        "bytes": 12363,
+        "sha256": "ff143008e7046b243b238b211f5543c82e33614bdd4f154ae49e11b71fc8ee5b"
+      },
+      "title": "integration-watcher (abstract parent)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/issue-working",
+      "@type": "bootstrap:Skill",
+      "name": "issue-working",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a89a4ec920486f9487f9b1470bf3c07d4a4c8309935ca7a6f2a7892d53b017e",
+        "bytes": 8883,
+        "sha256": "1a89a4ec920486f9487f9b1470bf3c07d4a4c8309935ca7a6f2a7892d53b017e"
+      },
+      "title": "Working an issue — announce, then re-check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-conflict-patterns",
+      "@type": "bootstrap:Skill",
+      "name": "merge-conflict-patterns",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f2b87e664c7b67e04be0e8944b46ddd318542328b1a3d11403359f128210bb51",
+        "bytes": 51635,
+        "sha256": "f2b87e664c7b67e04be0e8944b46ddd318542328b1a3d11403359f128210bb51"
+      },
+      "title": "Merge-conflict patterns — what a merge may resolve on its own"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-manager-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "merge-manager-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b72f18889d68c5030be356b394eda907da99bd76833c4bb2a1d0f27c7f77fd62",
+        "bytes": 5215,
+        "sha256": "b72f18889d68c5030be356b394eda907da99bd76833c4bb2a1d0f27c7f77fd62"
+      },
+      "title": "Merge manager watcher — the loop that runs the merge-steward role"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-queue",
+      "@type": "bootstrap:Skill",
+      "name": "merge-queue",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3997893acd8c07d899c6d668a72f0635d8db86554bad9b9640a4181720c45456",
+        "bytes": 64922,
+        "sha256": "3997893acd8c07d899c6d668a72f0635d8db86554bad9b9640a4181720c45456"
+      },
+      "title": "Merge queue — what lands next, and as what"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/merge-to-main",
+      "@type": "bootstrap:Skill",
+      "name": "merge-to-main",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/876661795c805ffc9edd1b64e7d5e4ed22e8f55ebc955f7c8b68d1746695f44b",
+        "bytes": 16613,
+        "sha256": "876661795c805ffc9edd1b64e7d5e4ed22e8f55ebc955f7c8b68d1746695f44b"
+      },
+      "title": "Merge to `main` — a sub-process with its own gate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/minimal-change",
+      "@type": "bootstrap:Skill",
+      "name": "minimal-change",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a127c796cd042b3ee3db85eaf8f4be903987228728fa059edc1c164f956c90a5",
+        "bytes": 2067,
+        "sha256": "a127c796cd042b3ee3db85eaf8f4be903987228728fa059edc1c164f956c90a5"
+      },
+      "title": "Minimal change"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/narrative-asserts-code",
+      "@type": "bootstrap:Skill",
+      "name": "narrative-asserts-code",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3cc79ec953bad165383cce6a7b4d344283cdf24b2008aa72711bebde64963432",
+        "bytes": 4554,
+        "sha256": "3cc79ec953bad165383cce6a7b4d344283cdf24b2008aa72711bebde64963432"
+      },
+      "title": "Does the prose say what the code does?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/opening-brief",
+      "@type": "bootstrap:Skill",
+      "name": "opening-brief",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ab6981b113051f208b1f70420daae62d7618e1be472282e5a68016f0f892c76d",
+        "bytes": 12255,
+        "sha256": "ab6981b113051f208b1f70420daae62d7618e1be472282e5a68016f0f892c76d"
+      },
+      "title": "Opening brief — brief the topic before you touch anything"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/package-release",
+      "@type": "bootstrap:Skill",
+      "name": "package-release",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d9882306fb6bbcec537d2ae67d2ec7b2bbbf97d0ea8636f2d1a38469d8c889d3",
+        "bytes": 5511,
+        "sha256": "d9882306fb6bbcec537d2ae67d2ec7b2bbbf97d0ea8636f2d1a38469d8c889d3"
+      },
+      "title": "Cutting a package release"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pending-show",
+      "@type": "bootstrap:Skill",
+      "name": "pending-show",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4231732b2a9b727911b49a0234a05d7ccf91bfb282d5a0f178c8e06746121aac",
+        "bytes": 1747,
+        "sha256": "4231732b2a9b727911b49a0234a05d7ccf91bfb282d5a0f178c8e06746121aac"
+      },
+      "title": "/pending-show — what is this session working on?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pickup",
+      "@type": "bootstrap:Skill",
+      "name": "pickup",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7c35dfc5368d38dd8bc9c92d924d16a628af61ad11a121fd4e1f1525e46b968d",
+        "bytes": 9856,
+        "sha256": "7c35dfc5368d38dd8bc9c92d924d16a628af61ad11a121fd4e1f1525e46b968d"
+      },
+      "title": "Pickup Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/platform-gates",
+      "@type": "bootstrap:Skill",
+      "name": "platform-gates",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c751ab68daca2f5fb3d51cee1eafc9e99ef956dd5d45f386ea598dca24ea252b",
+        "bytes": 17459,
+        "sha256": "c751ab68daca2f5fb3d51cee1eafc9e99ef956dd5d45f386ea598dca24ea252b"
+      },
+      "title": "The platform's own gates — run what CI will run"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pr-description",
+      "@type": "bootstrap:Skill",
+      "name": "pr-description",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e095be105df9be734cf17d07ac1d7440b55f2a7f4c7c09e14ca8158be50eb9f3",
+        "bytes": 8426,
+        "sha256": "e095be105df9be734cf17d07ac1d7440b55f2a7f4c7c09e14ca8158be50eb9f3"
+      },
+      "title": "pr-description — a PR body a first-time reader can follow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-for-handover",
+      "@type": "bootstrap:Skill",
+      "name": "prepare-for-handover",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eed057d86ebe94c10cb5e47167549ca2008190c6d96ab013abb5d3cd90640e0e",
+        "bytes": 4754,
+        "sha256": "eed057d86ebe94c10cb5e47167549ca2008190c6d96ab013abb5d3cd90640e0e"
+      },
+      "title": "Prepare for a handover"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge",
+      "@type": "bootstrap:Skill",
+      "name": "prepare-merge",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/181d31a7ffe98cd0fc2b5370b3847ce516af23cf4111ca25354a5c537c4825a8",
+        "bytes": 37118,
+        "sha256": "181d31a7ffe98cd0fc2b5370b3847ce516af23cf4111ca25354a5c537c4825a8"
+      },
+      "title": "Prepare-merge — get a feature branch ready to land"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto",
+      "@type": "bootstrap:Skill",
+      "name": "prepare-merge-auto",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a1a81d579871c93c56bc442b0581dc559c4c023eb3266e2431c0ae57d1d4e35d",
+        "bytes": 8355,
+        "sha256": "a1a81d579871c93c56bc442b0581dc559c4c023eb3266e2431c0ae57d1d4e35d"
+      },
+      "title": "/prepare-merge-auto — Autonomous merge pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-verification",
+      "@type": "bootstrap:Skill",
+      "name": "publish-verification",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9952fcbab28a7783caeeef767bd5dbda0bfd62a55ae77500deb916bd100e4b03",
+        "bytes": 4394,
+        "sha256": "9952fcbab28a7783caeeef767bd5dbda0bfd62a55ae77500deb916bd100e4b03"
+      },
+      "title": "Publish verification, and the one alert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/qa-report-signing",
+      "@type": "bootstrap:Skill",
+      "name": "qa-report-signing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e03d63226f400b2508a3ae758d699503975250ec85536a93aafb373873d54de7",
+        "bytes": 7234,
+        "sha256": "e03d63226f400b2508a3ae758d699503975250ec85536a93aafb373873d54de7"
+      },
+      "title": "QA report signing — two routes, chosen by the performer's reach"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/qa-reports",
+      "@type": "bootstrap:Skill",
+      "name": "qa-reports",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/33c1740787a81bbbc465f5a42c83ee411f32151426e0a6ed15c6d98ae15889f4",
+        "bytes": 10338,
+        "sha256": "33c1740787a81bbbc465f5a42c83ee411f32151426e0a6ed15c6d98ae15889f4"
+      },
+      "title": "QA reports — derived results on a branch, judgements on `main`"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/qa-witness",
+      "@type": "bootstrap:Skill",
+      "name": "qa-witness",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2d10520d090fc3a2035cf5d061252afdac0835ec3e0290254eb5bb9a139a6fcd",
+        "bytes": 7170,
+        "sha256": "2d10520d090fc3a2035cf5d061252afdac0835ec3e0290254eb5bb9a139a6fcd"
+      },
+      "title": "QA witnesses — the published projection of every verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ref-stewardship",
+      "@type": "bootstrap:Skill",
+      "name": "ref-stewardship",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6972732c22ffa711c07a42563c3f7cf696c7c9eefd6f54250aaa80570a03b743",
+        "bytes": 10472,
+        "sha256": "6972732c22ffa711c07a42563c3f7cf696c7c9eefd6f54250aaa80570a03b743"
+      },
+      "title": "Ref stewardship — one ref, many writers, one steward"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/related-work-coordination",
+      "@type": "bootstrap:Skill",
+      "name": "related-work-coordination",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/233f74d807bc55da7f95d882521fc922c8d74106e616b9a96055f556c9b90f40",
+        "bytes": 2897,
+        "sha256": "233f74d807bc55da7f95d882521fc922c8d74106e616b9a96055f556c9b90f40"
+      },
+      "title": "Related work: find it, sort it, ask"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/release-epic-planning",
+      "@type": "bootstrap:Skill",
+      "name": "release-epic-planning",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d0c8ec54d3dbda508a0bfd9ee16f991ffe903fe3877de799947c12b43c3bb4f4",
+        "bytes": 5007,
+        "sha256": "d0c8ec54d3dbda508a0bfd9ee16f991ffe903fe3877de799947c12b43c3bb4f4"
+      },
+      "title": "Release epic planning"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/release-lifecycle",
+      "@type": "bootstrap:Skill",
+      "name": "release-lifecycle",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/69bb094f1817477df0f450a13897e54bc3db27b5da5464db62be9bc32dd87783",
+        "bytes": 4111,
+        "sha256": "69bb094f1817477df0f450a13897e54bc3db27b5da5464db62be9bc32dd87783"
+      },
+      "title": "Release lifecycle — process and policy"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-impact",
+      "@type": "bootstrap:Skill",
+      "name": "rendered-impact",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5e257194c49575012a924f3515dd2c459474c8d9e029e28e1d662492432aeeed",
+        "bytes": 11159,
+        "sha256": "5e257194c49575012a924f3515dd2c459474c8d9e029e28e1d662492432aeeed"
+      },
+      "title": "Rendered impact — which rendered files a Change Set changes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/rendered-verification",
+      "@type": "bootstrap:Skill",
+      "name": "rendered-verification",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c2103e02a4eeffb5826cd17d2c347af16e92835fb5c1ef159d30c5f9e19ab45f",
+        "bytes": 17822,
+        "sha256": "c2103e02a4eeffb5826cd17d2c347af16e92835fb5c1ef159d30c5f9e19ab45f"
+      },
+      "title": "/rendered-verification — look at it, then send the picture"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/saturation-meta-merge",
+      "@type": "bootstrap:Skill",
+      "name": "saturation-meta-merge",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b648b0c0ba44039af1fd8f143a598174ca5aa680b54ea84fd1a928bf45b55abd",
+        "bytes": 7178,
+        "sha256": "b648b0c0ba44039af1fd8f143a598174ca5aa680b54ea84fd1a928bf45b55abd"
+      },
+      "title": "Saturation meta-merge — drain the queue when the runners are full"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/secrets",
+      "@type": "bootstrap:Skill",
+      "name": "secrets",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e312e72be5e1973f41e6dd423435fb7827e354ff4f4109233146906eb5c010a0",
+        "bytes": 10218,
+        "sha256": "e312e72be5e1973f41e6dd423435fb7827e354ff4f4109233146906eb5c010a0"
+      },
+      "title": "Secrets — the person handles the value, the agent handles everything else"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/session-intent",
+      "@type": "bootstrap:Skill",
+      "name": "session-intent",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1b1bde9373217502acfea4b38b74f136ffdc63407385f4ba27aa83782f60cde6",
+        "bytes": 12515,
+        "sha256": "1b1bde9373217502acfea4b38b74f136ffdc63407385f4ba27aa83782f60cde6"
+      },
+      "title": "/session-intent — durable session intent + results"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/signing",
+      "@type": "bootstrap:Skill",
+      "name": "signing",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/99bf4c0490c2a5c9efd416d549acb2aced23b9ac8b45119b2d57bfc3d362e286",
+        "bytes": 11769,
+        "sha256": "99bf4c0490c2a5c9efd416d549acb2aced23b9ac8b45119b2d57bfc3d362e286"
+      },
+      "title": "Signing — the process, not the code"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/specification-management",
+      "@type": "bootstrap:Skill",
+      "name": "specification-management",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5a347e7d56451caf1e8230197b30423376e8fd7a28fcf491180c6856e6737554",
+        "bytes": 6077,
+        "sha256": "5a347e7d56451caf1e8230197b30423376e8fd7a28fcf491180c6856e6737554"
+      },
+      "title": "Specification and requirements management"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/staging-review",
+      "@type": "bootstrap:Skill",
+      "name": "staging-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d922734ab9cc6f549df2f9f5557c7dd0645807cb90952549a421b8c8099c46e8",
+        "bytes": 40325,
+        "sha256": "d922734ab9cc6f549df2f9f5557c7dd0645807cb90952549a421b8c8099c46e8"
+      },
+      "title": "Staging review — before/after comparison"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/stalled-agent-triage",
+      "@type": "bootstrap:Skill",
+      "name": "stalled-agent-triage",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a3eb3adb01f361ce99ffb969685cabc1bc543b0d1358b1d1902eecbbda88efee",
+        "bytes": 5585,
+        "sha256": "a3eb3adb01f361ce99ffb969685cabc1bc543b0d1358b1d1902eecbbda88efee"
+      },
+      "title": "Stalled-agent triage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/swarm-management",
+      "@type": "bootstrap:Skill",
+      "name": "swarm-management",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/df8057e22c21551455345b1dcac0d10c8327eb3b7e6d9b986e18694c5189d722",
+        "bytes": 14035,
+        "sha256": "df8057e22c21551455345b1dcac0d10c8327eb3b7e6d9b986e18694c5189d722"
+      },
+      "title": "Swarm management"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-data-sets",
+      "@type": "bootstrap:Skill",
+      "name": "test-data-sets",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f22cd57931444f50ae7b4c10ff358e76a42ec375160c564ddc791ebe4a71c606",
+        "bytes": 7892,
+        "sha256": "f22cd57931444f50ae7b4c10ff358e76a42ec375160c564ddc791ebe4a71c606"
+      },
+      "title": "Test Data Sets & SME Case/Verdict Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-engineer",
+      "@type": "bootstrap:Skill",
+      "name": "test-engineer",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a5c8175683897dfdab577160c02c5e8e3ae988752e60cc6adb1f753f46528bf8",
+        "bytes": 6866,
+        "sha256": "a5c8175683897dfdab577160c02c5e8e3ae988752e60cc6adb1f753f46528bf8"
+      },
+      "title": "Test Engineer Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/test-plan-execution",
+      "@type": "bootstrap:Skill",
+      "name": "test-plan-execution",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f076864da70a8d863550759e69c14d798f3326882328e0357f4e7a1ed8238966",
+        "bytes": 8099,
+        "sha256": "f076864da70a8d863550759e69c14d798f3326882328e0357f4e7a1ed8238966"
+      },
+      "title": "Running a test plan — from a request to a signed certification"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/turn-reporting",
+      "@type": "bootstrap:Skill",
+      "name": "turn-reporting",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f8a13e370deb8a432b182c8012b1dc8b915fd9047e92f53f9101506b32ae2bc3",
+        "bytes": 14895,
+        "sha256": "f8a13e370deb8a432b182c8012b1dc8b915fd9047e92f53f9101506b32ae2bc3"
+      },
+      "title": "Turn reporting — say which bean you are on, every turn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/untainted-verification",
+      "@type": "bootstrap:Skill",
+      "name": "untainted-verification",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7700fc14d911bed24d5e2ce7f8f2e13fe60ec6507f246e65efde1224c1b3bec4",
+        "bytes": 9238,
+        "sha256": "7700fc14d911bed24d5e2ce7f8f2e13fe60ec6507f246e65efde1224c1b3bec4"
+      },
+      "title": "Untainted verification — the producer never writes the verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/upstream-version-adoption",
+      "@type": "bootstrap:Skill",
+      "name": "upstream-version-adoption",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5ca3811348101231c16f1e42d889634cc35676518a636ab3d199c6baee528679",
+        "bytes": 10053,
+        "sha256": "5ca3811348101231c16f1e42d889634cc35676518a636ab3d199c6baee528679"
+      },
+      "title": "Adopting an upstream version bump"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/visual-diff",
+      "@type": "bootstrap:Skill",
+      "name": "visual-diff",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c13c0d26fb38c03055adc4bb73fa493ef6b984a8138edd5284ef4d02f512c95d",
+        "bytes": 6384,
+        "sha256": "c13c0d26fb38c03055adc4bb73fa493ef6b984a8138edd5284ef4d02f512c95d"
+      },
+      "title": "Visual diff — see a figure change"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/watch",
+      "@type": "bootstrap:Skill",
+      "name": "watch",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0e6dd8e4933347fc0689dd3fb4c854c992554e096a8e5c658473e1805d464554",
+        "bytes": 13592,
+        "sha256": "0e6dd8e4933347fc0689dd3fb4c854c992554e096a8e5c658473e1805d464554"
+      },
+      "title": "/watch — background watcher with integration check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/where-a-proposal-goes",
+      "@type": "bootstrap:Skill",
+      "name": "where-a-proposal-goes",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/34e78bc3d2adf0a1f982fba3079a64f3a1649281234e934467a8b783e0e6fbe7",
+        "bytes": 3680,
+        "sha256": "34e78bc3d2adf0a1f982fba3079a64f3a1649281234e934467a8b783e0e6fbe7"
+      },
+      "title": "Where a proposal goes — the issue, not the documentation"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/sdlc-core/coordinate/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/sdlc-core/integration-watcher/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "sdlc/skills/sdlc-core",
+  "path": "sdlc/skills/sdlc-core/"
+}
