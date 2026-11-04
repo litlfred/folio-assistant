@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-03T16:13:41Z
+updated_at: 2026-11-04T06:51:32Z
 tags:
     - references
     - library
@@ -88,3 +88,5 @@ _2026-11-03T15:46:20Z_ — Owner (card): allow cat-harness-tools. litlfred/cat-h
 _2026-11-03T15:54:51Z_ — who-iris#176 CI red on two gates caused by the change: `check:state-on-main` (stale `who-iris::who-iris-uploads` baseline line) and `check:reference-direction` (two now-undeclared intakes name smart-base and smart-immunizations as provenance). Both fixed in cat-harness-tools#1453 (ef1a501): baseline line removed; exemption `INSTANCE_UPLOADS_DATA` for `<instance>/uploads/` quoting the owner's ruling; 135 tests pass. Order: #1452 → #1453 → #176 re-pins who-iris's cat-harness-tools to #1453's merge.
 
 _2026-11-03T16:13:41Z_ — cat-harness-tools#1453: the navbar-checkout `uploads` removal failed its own CI, because that test reads who-iris at the commit cat-harness-tools mounts (still declaring uploads). Reverted in 16f23c3; #1453 now carries only what who-iris#176 needs first (the `INSTANCE_UPLOADS_DATA` exemption and the state-on-main baseline line). Order: #1452 → #1453 → #176 re-pins its cat-harness-tools → the navbar edit lands with the re-pin that takes #176.
+
+_2026-11-04T06:51:32Z_ — Resumed (relayed by session_01EucfRoX2s5Q9rHUMB8HHbH). cat-harness-tools#1453 still failed the two navbar assertions, because it carried #1452's `attestations` edit too, and cat-harness-tools CI mounts a who-iris older than who-iris#175. Rebuilt the branch as main + 3326ce9 (exemption, its tests, the state-on-main baseline line; navbar test untouched); force-pushed over my own 16f23c3 only.
