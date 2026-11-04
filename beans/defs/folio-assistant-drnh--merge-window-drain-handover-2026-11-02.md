@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-03T08:49:58Z
+updated_at: 2026-11-04T13:27:14Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -206,3 +206,5 @@ _2026-11-03T08:49:21Z_ — 4-hour merge watch (owner 04:56Z), close-out by https
 6. Known reds, red on main too: kg:validate nested instances (qa-reports entries are partial until the layer-qa-publish rollout lands); bean-parents (bmat, rpc6 have no parent).
 
 _2026-11-03T08:49:58Z_ — Merge sweep ended 08:50Z. Merged: cat-harness #1002, #1003, #1004, #1005, #1006, #1007, #1011, #1012; fa #2898. Closed (owner card): fa#2864. Not merged: fa#2924 at eb8a885, with new-vs-main reds: check:state-on-main on smart-trust-uploads having no source declared, and bun test shard 1/4 'a queue's declared intake is ONE unit' (author …Rp9y told). Train fa#2923 is unmerged, with 1 new failure that cat-harness-tools#1442 fixes; …RqHz's next-train handover is above. Merged by others during the window: cat-harness #992, #993, #1008, #1009; fa #2919, #2875, #2885, #2904.
+
+_2026-11-04T13:27:14Z_ — Merge sweep #2 started 13:26Z (owner: another 4 hours, until 17:26Z), same rules. Merged cat-harness#1024 (removes the qou migration checklist from platform docs; owner's choice) at 1d97eaf, all green. fa#2932 (.github/scripts repin-train fix) is waiting: its only red is bean-parents 'every open bean belongs to an epic', which reads bean data. I'm checking it against main's run 41837926987.
