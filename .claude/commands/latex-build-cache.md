@@ -1,5 +1,5 @@
 ---
-description: "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hype..."
+description: "LaTeX build performance. What works is the iterative loop: a static preflight with no TeX, Tool `tex-install` for an engine, Tool `paper-feature-build` for quick changed-chapter builds with latexdi..."
 argument-hint: "[what to run it on]"
 generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---

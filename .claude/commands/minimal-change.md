@@ -6,7 +6,7 @@ generated: cat-harness-tools/scripts/gen-skill-commands.ts
 
 # /minimal-change
 
-Run the `minimal-change` skill. Read [`cat-harness/skills/sdlc/sdlc-core/minimal-change.md`](../../cat-harness/skills/sdlc/sdlc-core/minimal-change.md) and follow it.
+Run the `minimal-change` skill. Read [`cat-harness/sdlc/skills/sdlc-core/minimal-change.md`](../../cat-harness/sdlc/skills/sdlc-core/minimal-change.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the
