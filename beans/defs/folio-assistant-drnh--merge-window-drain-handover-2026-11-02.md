@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-04T20:12:55Z
+updated_at: 2026-11-04T20:22:20Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -212,3 +212,5 @@ _2026-11-04T13:27:14Z_ — Merge sweep #2 started 13:26Z (owner: another 4 hours
 _2026-11-04T13:50:43Z_ — Merge sweep #2: merged fa#2932 (repin-train re-judges a failed train while checks still run; .github/scripts only) at a073189. Its only red, bean-parents 'every open bean belongs to an epic', also fails on main run 41837926987 (61ea1972).
 
 _2026-11-04T20:12:55Z_ — Session restarted. The 14:08-18:08Z window lapsed while it was down; the owner said 'try again' at 20:12Z, so merge sweep plus re-pin window run until 00:12Z. Merged cat-harness#1026 (docs QA pass 2, owner-reviewed) at 33ec692. fa#2936 (leaf re-pins) has one new red: actor-facts-audit.test.ts:202 expects jekyll still unconsumed, but a newly pinned leaf now consumes it. The fix (drop jekyll from that loop in cat-harness-tools) is handed to author …RmCv, since this session can't attach cat-harness-tools. Train fa#2938 (20261104-1824) is red.
+
+_2026-11-04T20:22:20Z_ — Owner (20:2xZ): may attach repos. cat-harness-tools and who-iris attached. Owner approved merging fa#2926 (sub-graphs on; comment-only workflow edits) and who-iris#176 (uploads/ not a KG dir; workflow pins) once their reds are main-only. Findings: the actor-facts 'jekyll' fix is already on tools main as f5b90e7, so fa#2926 (tools 5e1644e) and fa#2936 (tools d5c25d7) both need tools at or after f5b90e7; told …RpQZ and …RmCv. tools#1473 (two-greys) is merged, so who-iris#176's re-run should clear. Watching fa#2926, fa#2936, who-iris#176.
