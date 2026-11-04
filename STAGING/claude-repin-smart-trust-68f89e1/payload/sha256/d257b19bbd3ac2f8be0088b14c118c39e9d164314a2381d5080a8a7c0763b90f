@@ -92,3 +92,5 @@ _2026-11-03T16:13:41Z_ — cat-harness-tools#1453: the navbar-checkout `uploads`
 _2026-11-04T06:51:32Z_ — Resumed (relayed by session_01EucfRoX2s5Q9rHUMB8HHbH). cat-harness-tools#1453 still failed the two navbar assertions, because it carried #1452's `attestations` edit too, and cat-harness-tools CI mounts a who-iris older than who-iris#175. Rebuilt the branch as main + 3326ce9 (exemption, its tests, the state-on-main baseline line; navbar test untouched); force-pushed over my own 16f23c3 only.
 
 _2026-11-04T07:03:12Z_ — Owner: "Repin and merge when needed and ready for the next 3 hours". **cat-harness-tools#1453 merged (42af00b)**, green. who-iris#176: merged main, re-pinned cat-harness-tools to 42af00b with consent recorded (f783f7d); CI running; merges on green.
+
+_2026-11-04T12:54Z_ — who-iris#176 still red: layer-mode CI mounts the folio-assistant index lock (cat-harness-tools d5c25d7, pre-#1453), not who-iris's own pin. Re-pin train folio-assistant#2935 moves it to 5e1644e (includes #1453). The remaining check:declared-dirs finding (undeclared-state uploads/) is fixed in the platform by cat-harness-tools#1468, under the owner's 2026-11-03 uploads ruling.
