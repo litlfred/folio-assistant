@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/skill/bpmn-authoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-trust-68f89e1",
+    "sha": "1b92fcddd7c43fa031f16e0803a1e1ccd8a2dcb1",
+    "pr": "2934/merge",
+    "run": "41827581295"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/skill/bpmn-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bpmn-authoring",
+      "title": "bpmn-authoring",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/bpmn-authoring.md",
+      "instructionLines": 240,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/skills/bpmn-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/skills/bpmn-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring"
+    }
+  ]
+}

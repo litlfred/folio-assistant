@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/skill/content-author.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-trust-68f89e1",
+    "sha": "1b92fcddd7c43fa031f16e0803a1e1ccd8a2dcb1",
+    "pr": "2934/merge",
+    "run": "41827581295"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/skill/content-author",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-author",
+      "title": "Content Authoring",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-author.md",
+      "instructionLines": 50,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/skills/content-author/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/skills/content-author/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-author"
+    }
+  ]
+}

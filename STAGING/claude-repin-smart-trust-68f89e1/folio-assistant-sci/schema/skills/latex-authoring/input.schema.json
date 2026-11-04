@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LaTeX Authoring Input",
+  "description": "Input schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "documentClass",
+    "mainFile"
+  ],
+  "properties": {
+    "documentClass": {
+      "type": "string",
+      "enum": [
+        "article",
+        "book",
+        "report",
+        "beamer"
+      ],
+      "description": "LaTeX document class."
+    },
+    "mainFile": {
+      "type": "string",
+      "description": "Path to the main .tex file."
+    },
+    "bibliographyFile": {
+      "type": "string",
+      "description": "Path to the .bib bibliography file."
+    },
+    "outputFormat": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "dvi",
+        "ps"
+      ],
+      "default": "pdf"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/folio-assistant-sci/schema/skills/latex-authoring/input.schema.json",
+  "staging": {
+    "branch": "claude/repin-smart-trust-68f89e1",
+    "sha": "1b92fcddd7c43fa031f16e0803a1e1ccd8a2dcb1",
+    "pr": "2934/merge",
+    "run": "41827581295"
+  }
+}

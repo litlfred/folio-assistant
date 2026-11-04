@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/TimeConstraint",
+  "definitions": {
+    "TimeConstraint": {
+      "type": "string",
+      "enum": [
+        "minutes",
+        "hours",
+        "days",
+        "weeks"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/decision-methodology-context/TimeConstraintSchema.schema.json",
+  "title": "TimeConstraintSchema",
+  "description": "Generated from `TimeConstraintSchema` in schemas/process/decision-methodology-context.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-smart-trust-68f89e1",
+    "sha": "1b92fcddd7c43fa031f16e0803a1e1ccd8a2dcb1",
+    "pr": "2934/merge",
+    "run": "41827581295"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-trust-68f89e1",
+    "sha": "1b92fcddd7c43fa031f16e0803a1e1ccd8a2dcb1",
+    "pr": "2934/merge",
+    "run": "41827581295"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Changes handled",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done"
+    }
+  ]
+}

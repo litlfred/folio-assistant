@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/process/Process_TestDataCuration/lane/Lane_Tester.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-trust-68f89e1",
+    "sha": "1b92fcddd7c43fa031f16e0803a1e1ccd8a2dcb1",
+    "pr": "2934/merge",
+    "run": "41827581295"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/process/Process_TestDataCuration/lane/Lane_Tester",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Tester",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/process/Process_TestDataCuration",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/role/tester",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Tester"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/schema/decision-request.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-trust-68f89e1",
+    "sha": "1b92fcddd7c43fa031f16e0803a1e1ccd8a2dcb1",
+    "pr": "2934/merge",
+    "run": "41827581295"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/schema/decision-request",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "decision-request",
+      "title": "decision-request",
+      "summary": "A decision handed to a person, as a shape rather than as a habit.",
+      "module": "schemas/process/decision-request.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/decision-request"
+    }
+  ]
+}

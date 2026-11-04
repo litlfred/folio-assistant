@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/LinkMode",
+  "definitions": {
+    "LinkMode": {
+      "type": "string",
+      "enum": [
+        "submodule",
+        "sibling",
+        "remote"
+      ],
+      "description": "How a new folio links the platform: a git submodule, a sibling checkout, or pinned remote mounts in index.config.json."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/LinkModeSchema.schema.json",
+  "title": "LinkModeSchema",
+  "description": "Generated from `LinkModeSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-smart-trust-68f89e1",
+    "sha": "1b92fcddd7c43fa031f16e0803a1e1ccd8a2dcb1",
+    "pr": "2934/merge",
+    "run": "41827581295"
+  }
+}

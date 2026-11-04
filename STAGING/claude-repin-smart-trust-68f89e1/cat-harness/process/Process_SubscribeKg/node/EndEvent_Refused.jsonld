@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-trust-68f89e1",
+    "sha": "1b92fcddd7c43fa031f16e0803a1e1ccd8a2dcb1",
+    "pr": "2934/merge",
+    "run": "41827581295"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Not subscribed, and the record says why",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/process/Process_SubscribeKg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/process/Process_SubscribeKg#flow/Flow_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-trust-68f89e1/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused"
+    }
+  ]
+}
