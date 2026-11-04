@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/process/Process_DocsSite/node/GW_Judged.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-2022",
+    "sha": "1d3439a2cf99e4e178706089fca6ee89fd9b397d",
+    "pr": "repin-train/20261104-2022",
+    "run": "41906170408"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/process/Process_DocsSite/node/GW_Judged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Did every built-site check pass?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/process/Process_DocsSite",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/process/Process_DocsSite#flow/Flow_J1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/process/Process_DocsSite#flow/Flow_J2",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/process/Process_DocsSite#flow/Flow_J3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Judged"
+    }
+  ]
+}

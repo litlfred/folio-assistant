@@ -1,0 +1,470 @@
+{
+  "against": "409f5be49981375de983b400c2a29b4328c233f7",
+  "skipped": 0,
+  "ran": 37,
+  "reused": 0,
+  "groups": [
+    {
+      "cause": ".",
+      "writtenBy": "the commit",
+      "reran": [
+        "smart-base:document-kinds",
+        "uml:overview"
+      ],
+      "seconds": 231.679762798
+    },
+    {
+      "cause": ".gitignore",
+      "writtenBy": "the commit",
+      "reran": [
+        "subgraph:jsonld",
+        "jsonld:contexts",
+        "auto:docs"
+      ],
+      "seconds": 35.510601199999854
+    },
+    {
+      "cause": "bootstrap-tools/bootstrap-tools.json",
+      "writtenBy": "the commit",
+      "reran": [
+        "library:viz",
+        "voices:viz",
+        "theme:viz",
+        "uploads:viz",
+        "document-kinds:viz",
+        "bibliography:page",
+        "smart-base:l1-extraction:pages",
+        "tools:viz",
+        "openapi:viz",
+        "methodologies:viz",
+        "subscriptions:viz",
+        "themes:css",
+        "folio:viz",
+        "kg:viewer",
+        "render:bpmn"
+      ],
+      "seconds": 24.294958184000045
+    },
+    {
+      "cause": ".git/branch-mounts",
+      "writtenBy": "the commit",
+      "reran": [
+        "skills:docs",
+        "node-kinds",
+        "schema:viz",
+        "docs:pages",
+        "processes:viz"
+      ],
+      "seconds": 20.079251736000124
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "writtenBy": "-",
+      "reran": [
+        "state:visualizer",
+        "site:viz"
+      ],
+      "seconds": 16.705686413999995
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 15.890016781000012
+    },
+    {
+      "cause": ".agents/rules/agent-memory.md",
+      "writtenBy": "the commit",
+      "reran": [
+        "external-schemas:viz",
+        "docs:harness"
+      ],
+      "seconds": 10.220241778000025
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-base:pages"
+      ],
+      "seconds": 0.8933437449999619
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust:pages"
+      ],
+      "seconds": 0.8693710199999622
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.7806021450000117
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust-phw:pages"
+      ],
+      "seconds": 0.5516146540000336
+    },
+    {
+      "cause": "its script, imports or tools",
+      "writtenBy": "the commit",
+      "reran": [
+        "navbar:include",
+        "kind:table",
+        "avatars:css"
+      ],
+      "seconds": 0.3710654580000555
+    }
+  ],
+  "writers": [
+    {
+      "writer": "auto:docs",
+      "did": "ran",
+      "why": ".gitignore changed (+1786 more: bootstrap-tools/bootstrap-tools.json, bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/publish-files.ts, bootstrap-tools/skills/bootstrap-contract-semver.md, bootstrap-tools/skills/github-pages.md, bootstrap-tools/skills/render-kg-to-github-pages.md, bootstrap/bootstrap.json, and 1779 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".gitignore"
+      },
+      "seconds": 9.128746884999913
+    },
+    {
+      "writer": "avatars:css",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.11937989400001242
+    },
+    {
+      "writer": "bibliography:page",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+92 more: bootstrap/bootstrap.json, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/content-type.ts, and 85 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 0.551952145999996
+    },
+    {
+      "writer": "docs:harness",
+      "did": "ran",
+      "why": ".agents/rules/agent-memory.md changed (+459 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 452 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".agents/rules/agent-memory.md"
+      },
+      "seconds": 4.290647080000024
+    },
+    {
+      "writer": "docs:pages",
+      "did": "ran",
+      "why": ".git/branch-mounts changed (+1740 more: beans/defs, beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md, bootstrap-tools/bootstrap-tools.json, bootstrap-tools/scripts/check-closure.ts, bootstrap/bootstrap.json, and 1733 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".git/branch-mounts"
+      },
+      "seconds": 1.9611003340000752
+    },
+    {
+      "writer": "document-kinds:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+124 more: bootstrap-tools/scripts/publish-files.ts, bootstrap/bootstrap.json, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, and 117 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 0.7788446799999802
+    },
+    {
+      "writer": "external-schemas:viz",
+      "did": "ran",
+      "why": ".agents/rules/agent-memory.md changed (+5158 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 5151 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".agents/rules/agent-memory.md"
+      },
+      "seconds": 5.929594698000001
+    },
+    {
+      "writer": "folio:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+132 more: bootstrap-tools/scripts/publish-files.ts, bootstrap/bootstrap.json, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, and 125 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 0.6566514320001006
+    },
+    {
+      "writer": "ig-index:build",
+      "did": "ran",
+      "why": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "seconds": 15.890016781000012
+    },
+    {
+      "writer": "jsonld:contexts",
+      "did": "ran",
+      "why": ".gitignore changed (+524 more: bootstrap, bootstrap-tools/bootstrap-tools.json, bootstrap/bootstrap.json, cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas, and 517 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".gitignore"
+      },
+      "seconds": 1.6884929449999473
+    },
+    {
+      "writer": "kg:viewer",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+130 more: bootstrap-tools/scripts/check-closure.ts, bootstrap/bootstrap.json, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, and 123 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 0.43247400000004566
+    },
+    {
+      "writer": "kind:table",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.11029785700002685
+    },
+    {
+      "writer": "library:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+3011 more: bootstrap-tools/processes/render-kg-to-github-pages.bpmn, bootstrap-tools/scenarios/roles.json, bootstrap-tools/scripts/README.md, bootstrap-tools/scripts/bootstrap-schema-page.ts, bootstrap-tools/scripts/check-bootstrap-concepts.ts, bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/check-node-iris.ts, and 3004 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 5.520439618000004
+    },
+    {
+      "writer": "methodologies:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+626 more: bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, bootstrap-tools/scripts/readme-graph-sections.ts, bootstrap-tools/scripts/subgraph-readmes.ts, bootstrap-tools/scripts/term-links.ts, bootstrap-tools/skills/bootstrap-contract-semver.md, and 619 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 1.943034829000011
+    },
+    {
+      "writer": "navbar:include",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.14138770700001624
+    },
+    {
+      "writer": "node-kinds",
+      "did": "ran",
+      "why": ".git/branch-mounts changed (+244 more: bootstrap-tools/AGENTS.md, bootstrap-tools/README.md, bootstrap-tools/bootstrap-tools.json, bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/export-graph.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, and 237 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".git/branch-mounts"
+      },
+      "seconds": 1.3626604639999569
+    },
+    {
+      "writer": "openapi:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+56 more: bootstrap/bootstrap.json, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas, cat-harness-tools/schemas/content/block-kinds.ts, cat-harness-tools/schemas/content/content-type.ts, cat-harness-tools/schemas/content/po-strings.ts, and 49 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 0.19286575199989603
+    },
+    {
+      "writer": "processes:viz",
+      "did": "ran",
+      "why": ".git/branch-mounts changed (+875 more: beans/defs, beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, beans/defs/folio-assistant-p7mb--whole-repo-derived-artefacts-still-committed-go-sta.md, bootstrap-tools/bootstrap-tools.json, bootstrap-tools/processes/render-kg-to-github-pages.bpmn, bootstrap-tools/scenarios/roles.json, and 868 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".git/branch-mounts"
+      },
+      "seconds": 8.05964267900004
+    },
+    {
+      "writer": "render:bpmn",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+319 more: bootstrap-tools/processes/render-kg-to-github-pages.bpmn, bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/render-bpmn.ts, bootstrap/bootstrap.json, bootstrap/processes/complete-initialization.bpmn, bootstrap/processes/discussion.bpmn, and 312 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 5.6549052669999655
+    },
+    {
+      "writer": "schema:viz",
+      "did": "ran",
+      "why": ".git/branch-mounts changed (+305 more: bootstrap-tools/bootstrap-tools.json, bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/export-graph.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, bootstrap-tools/scripts/publish-files.ts, bootstrap-tools/scripts/subgraph-jsonld.ts, and 298 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".git/branch-mounts"
+      },
+      "seconds": 3.0025651289999953
+    },
+    {
+      "writer": "site:viz",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 1.7946032439999982
+    },
+    {
+      "writer": "skills:docs",
+      "did": "ran",
+      "why": ".git/branch-mounts changed (+948 more: bootstrap-tools/bootstrap-tools.json, bootstrap-tools/processes/render-kg-to-github-pages.bpmn, bootstrap-tools/scenarios/roles.json, bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, bootstrap-tools/scripts/publish-files.ts, and 941 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".git/branch-mounts"
+      },
+      "seconds": 5.693283130000054
+    },
+    {
+      "writer": "smart-base:document-kinds",
+      "did": "ran",
+      "why": ". changed (+131 more: bootstrap-tools/bootstrap-tools.json, bootstrap-tools/scripts/check-closure.ts, bootstrap/bootstrap.json, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas, cat-harness-tools/schemas/conduct/model-capabilities.ts, and 124 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 0.544800933999999
+    },
+    {
+      "writer": "smart-base:l1-extraction:pages",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+129 more: bootstrap-tools/scripts/check-closure.ts, bootstrap/bootstrap.json, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, and 122 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 0.749762846000027
+    },
+    {
+      "writer": "smart-base:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "seconds": 0.8933437449999619
+    },
+    {
+      "writer": "smart-trust-phw:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "seconds": 0.5516146540000336
+    },
+    {
+      "writer": "smart-trust:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "seconds": 0.8693710199999622
+    },
+    {
+      "writer": "smart:pages",
+      "did": "ran",
+      "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "seconds": 0.7806021450000117
+    },
+    {
+      "writer": "state:visualizer",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 14.911083169999998
+    },
+    {
+      "writer": "subgraph:jsonld",
+      "did": "ran",
+      "why": ".gitignore changed (+1390 more: beans/defs, bootstrap-tools/bootstrap-tools.json, bootstrap-tools/processes/render-kg-to-github-pages.bpmn, bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/export-graph.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, and 1383 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".gitignore"
+      },
+      "seconds": 24.693361369999998
+    },
+    {
+      "writer": "subscriptions:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+72 more: bootstrap/bootstrap.json, cat-harness, cat-harness-tools/cat-harness-tools.json, cat-harness-tools/schemas, cat-harness-tools/schemas/conduct/model-capabilities.ts, cat-harness-tools/schemas/content/attribution.ts, cat-harness-tools/schemas/content/content-type.ts, and 65 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 0.1955203750000801
+    },
+    {
+      "writer": "theme:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+168 more: bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, bootstrap-tools/scripts/publish-files.ts, bootstrap-tools/scripts/readme-graph-sections.ts, bootstrap-tools/scripts/subgraph-readmes.ts, bootstrap-tools/scripts/term-links.ts, and 161 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 0.5840772669999861
+    },
+    {
+      "writer": "themes:css",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+156 more: bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, bootstrap-tools/scripts/publish-files.ts, bootstrap-tools/scripts/readme-graph-sections.ts, bootstrap-tools/scripts/subgraph-readmes.ts, bootstrap-tools/scripts/term-links.ts, and 149 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 0.5224354830000084
+    },
+    {
+      "writer": "tools:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+370 more: bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, bootstrap-tools/scripts/publish-files.ts, bootstrap-tools/scripts/readme-graph-sections.ts, bootstrap-tools/scripts/subgraph-readmes.ts, bootstrap-tools/scripts/term-links.ts, and 363 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 3.0789881609999576
+    },
+    {
+      "writer": "uml:overview",
+      "did": "ran",
+      "why": ". changed (+3389 more: .git/branch-mounts, .gitignore, bootstrap-tools/bootstrap-tools.json, bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/export-graph.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, and 3382 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 231.13496186400002
+    },
+    {
+      "writer": "uploads:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+190 more: bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, bootstrap-tools/scripts/publish-files.ts, bootstrap-tools/scripts/readme-graph-sections.ts, bootstrap-tools/scripts/subgraph-readmes.ts, bootstrap-tools/scripts/term-links.ts, and 183 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 2.611026740000001
+    },
+    {
+      "writer": "voices:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/bootstrap-tools.json changed (+147 more: bootstrap-tools/scripts/check-closure.ts, bootstrap-tools/scripts/generated-by.ts, bootstrap-tools/scripts/git-files.ts, bootstrap-tools/scripts/publish-files.ts, bootstrap-tools/scripts/readme-graph-sections.ts, bootstrap-tools/scripts/subgraph-readmes.ts, bootstrap-tools/scripts/term-links.ts, and 140 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/bootstrap-tools.json"
+      },
+      "seconds": 0.8219795879999874
+    }
+  ]
+}

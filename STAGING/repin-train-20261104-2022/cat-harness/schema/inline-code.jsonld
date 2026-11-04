@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/schema/inline-code.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-2022",
+    "sha": "1d3439a2cf99e4e178706089fca6ee89fd9b397d",
+    "pr": "repin-train/20261104-2022",
+    "run": "41906170408"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/schema/inline-code",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "inline-code",
+      "title": "inline-code",
+      "summary": "Backtick spans in authored prose, rendered as `<code>`.",
+      "module": "schemas/content/inline-code.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/inline-code"
+    }
+  ]
+}

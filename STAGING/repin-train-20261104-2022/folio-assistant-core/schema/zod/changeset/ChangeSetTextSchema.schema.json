@@ -1,0 +1,68 @@
+{
+  "$ref": "#/definitions/ChangeSetText",
+  "definitions": {
+    "ChangeSetText": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-changeset-text/v1"
+        },
+        "blocks": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "base": {
+                "type": "object",
+                "properties": {
+                  "prose": {
+                    "type": "string"
+                  },
+                  "html": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prose",
+                  "html"
+                ]
+              },
+              "head": {
+                "type": "object",
+                "properties": {
+                  "prose": {
+                    "type": "string"
+                  },
+                  "html": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prose",
+                  "html"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "blocks"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-2022/folio-assistant-core/schema/zod/changeset/ChangeSetTextSchema.schema.json",
+  "title": "ChangeSetTextSchema",
+  "description": "Generated from `ChangeSetTextSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261104-2022",
+    "sha": "1d3439a2cf99e4e178706089fca6ee89fd9b397d",
+    "pr": "repin-train/20261104-2022",
+    "run": "41906170408"
+  }
+}
