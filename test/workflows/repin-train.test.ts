@@ -181,11 +181,15 @@ const pull = (over: Partial<PullInfo> = {}): PullInfo => ({
   mergeable_state: "clean",
   ...over,
 });
-function stubApi(pr: PullInfo | PullInfo[], opts: { statuses?: Record<string, string>; refuse?: boolean } = {}) {
+function stubApi(pr: PullInfo | PullInfo[], opts: { statuses?: Record<string, string>; refuse?: boolean; running?: string[] } = {}) {
   const sent: Array<{ method: string; path: string; body: unknown }> = [];
   const api: Api = {
     async get<T>(path: string): Promise<T> {
       if (path.includes("/pulls?state=open")) return (Array.isArray(pr) ? pr : [pr]) as T;
+      if (path.includes("/check-runs")) {
+        const sha = path.split("/commits/")[1].split("/")[0];
+        return { check_runs: [opts.running?.includes(sha) ? run("bun test (2)", null, "in_progress") : run("bun test (2)", "failure")] } as T;
+      }
       if (path.endsWith("/status")) {
         const sha = path.split("/commits/")[1].split("/")[0];
         const state = opts.statuses?.[sha];
@@ -245,6 +249,13 @@ describe("a green train merges itself", () => {
     const fork = pull({ number: 5, head: { sha: "e".repeat(40), ref: "repin-train/e", repo: { full_name: "x/fork" } } });
     const { api } = stubApi([a, b, c, d, fork], { statuses: { ["b".repeat(40)]: "failure", ["c".repeat(40)]: "success", ["d".repeat(40)]: "error" } });
     expect(await trainsToJudge(api, REPO)).toEqual(["a".repeat(40), "c".repeat(40)]);
+  });
+
+  test("a failed train is judged again while its checks still run, so the comment lists every failure", async () => {
+    const b = pull({ number: 2, head: { sha: "b".repeat(40), ref: "repin-train/b", repo: { full_name: REPO } } });
+    const d = pull({ number: 4, head: { sha: "d".repeat(40), ref: "repin-train/d", repo: { full_name: REPO } } });
+    const { api } = stubApi([b, d], { statuses: { ["b".repeat(40)]: "failure", ["d".repeat(40)]: "failure" }, running: ["b".repeat(40)] });
+    expect(await trainsToJudge(api, REPO)).toEqual(["b".repeat(40)]);
   });
 });
 
