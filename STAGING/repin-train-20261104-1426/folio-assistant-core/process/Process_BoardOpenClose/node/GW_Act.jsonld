@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/process/Process_BoardOpenClose/node/GW_Act.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1426",
+    "sha": "733b6e634ff3f24c6ea8bdc056abd6c0bcad1aa6",
+    "pr": "repin-train/20261104-1426",
+    "run": "41847648064"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/process/Process_BoardOpenClose/node/GW_Act",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "What did the reader do?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/process/Process_BoardOpenClose/lane/Lane_Reader",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/process/Process_BoardOpenClose#flow/Flow_GW_Act_Join"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/process/Process_BoardOpenClose#flow/F_DoOpen",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/process/Process_BoardOpenClose#flow/F_DoRaise",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/process/Process_BoardOpenClose#flow/F_DoClose",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/process/Process_BoardOpenClose#flow/F_DoZoom",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/process/Process_BoardOpenClose#flow/F_Leave"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose/node/GW_Act"
+    }
+  ]
+}

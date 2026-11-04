@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/skill/bean-blocking.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1426",
+    "sha": "733b6e634ff3f24c6ea8bdc056abd6c0bcad1aa6",
+    "pr": "repin-train/20261104-1426",
+    "run": "41847648064"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/skill/bean-blocking",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bean-blocking",
+      "title": "Blocking is a claim about the work, not a mood",
+      "description": "Default to non-blocking when updating a bean's status. Mark blocked only when the work genuinely cannot proceed, and then always with what it waits on, when the wait expires, and what the next agent should do.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/bean-blocking.md",
+      "instructionLines": 103,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-blocking"
+    }
+  ]
+}

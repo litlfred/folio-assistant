@@ -1,0 +1,260 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/ui/ui-core/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
+      "@type": "cat-harness:SkillPackage",
+      "name": "ui-core"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/archimate-models",
+      "@type": "bootstrap:Skill",
+      "name": "archimate-models",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cdc43048675f2d35295bd9a83ee07c9f941cdf83f4ce5fc09d621ffb9b8d2771",
+        "bytes": 18097,
+        "sha256": "cdc43048675f2d35295bd9a83ee07c9f941cdf83f4ce5fc09d621ffb9b8d2771"
+      },
+      "title": "ArchiMate models — every view, element and relationship a node"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/auto-docs",
+      "@type": "bootstrap:Skill",
+      "name": "auto-docs",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/77e09e10a39117e9ee9467a32eefd9003a800d3ce2ec9b13677b2fc4a73d42bf",
+        "bytes": 4873,
+        "sha256": "77e09e10a39117e9ee9467a32eefd9003a800d3ce2ec9b13677b2fc4a73d42bf"
+      },
+      "title": "auto-docs — the index is generated, the meaning is authored"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-diagram-interchange",
+      "@type": "bootstrap:Skill",
+      "name": "board-diagram-interchange",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8f415f64942ea1d8851bd717cdb5181e2a6be1674a82a3aec885c76e1142273a",
+        "bytes": 4501,
+        "sha256": "8f415f64942ea1d8851bd717cdb5181e2a6be1674a82a3aec885c76e1142273a"
+      },
+      "title": "Relationship first, visualisation later"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/board-windows",
+      "@type": "bootstrap:Skill",
+      "name": "board-windows",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/bb7827bf91a3000756d7eb2391fc839be36eeb9ae546a4c4bfb9a78585dc5a53",
+        "bytes": 13208,
+        "sha256": "bb7827bf91a3000756d7eb2391fc839be36eeb9ae546a4c4bfb9a78585dc5a53"
+      },
+      "title": "Start in the avatar, open into a window"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deployment-awareness",
+      "@type": "bootstrap:Skill",
+      "name": "deployment-awareness",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e207f9ecf3bf2a4b1c7cc780279e9a5aedb8520f7f969d96790d9357d7bf3f73",
+        "bytes": 8238,
+        "sha256": "e207f9ecf3bf2a4b1c7cc780279e9a5aedb8520f7f969d96790d9357d7bf3f73"
+      },
+      "title": "Deployment awareness — UI surfaces, host constraints, and chat degradation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
+      "@type": "bootstrap:Skill",
+      "name": "docs-generation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e2cbb26b0c25b337187c7da57626fba8f63ffe84daf498280a6427e4fb432730",
+        "bytes": 4839,
+        "sha256": "e2cbb26b0c25b337187c7da57626fba8f63ffe84daf498280a6427e4fb432730"
+      },
+      "title": "Docs generation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-tiles",
+      "@type": "bootstrap:Skill",
+      "name": "harness-tiles",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/783df452ab56fddf70a0f8ccf6619701f897c7071045d1109d38a995c0827f16",
+        "bytes": 25485,
+        "sha256": "783df452ab56fddf70a0f8ccf6619701f897c7071045d1109d38a995c0827f16"
+      },
+      "title": "A tile is the harness's, not the node's"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/html-rendering-qc",
+      "@type": "bootstrap:Skill",
+      "name": "html-rendering-qc",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a05d14ffc44ea7428202855110f7904c0e2da282c5440c55d91cde6a0751e9c",
+        "bytes": 2762,
+        "sha256": "2a05d14ffc44ea7428202855110f7904c0e2da282c5440c55d91cde6a0751e9c"
+      },
+      "title": "HTML Rendering QC"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/incremental-render",
+      "@type": "bootstrap:Skill",
+      "name": "incremental-render",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b5ac07dfa81bdfe5df77d15148f8b84e17a372206bdd6eb7d509c4ebf71fb9fc",
+        "bytes": 7754,
+        "sha256": "b5ac07dfa81bdfe5df77d15148f8b84e17a372206bdd6eb7d509c4ebf71fb9fc"
+      },
+      "title": "Incremental render — the cache is easy, the cascade is the work"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-viewer",
+      "@type": "bootstrap:Skill",
+      "name": "kg-viewer",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/eb5580394a0ca6d581fa9b843946c78cc2311895a64437a50f40e9bb7de98219",
+        "bytes": 12464,
+        "sha256": "eb5580394a0ca6d581fa9b843946c78cc2311895a64437a50f40e9bb7de98219"
+      },
+      "title": "Rendering the knowledge graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/liquid-templates",
+      "@type": "bootstrap:Skill",
+      "name": "liquid-templates",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2469834d242d589d85d7f28c7f9ae67f6977722be6dd4297414c54fcba3a0c71",
+        "bytes": 10366,
+        "sha256": "2469834d242d589d85d7f28c7f9ae67f6977722be6dd4297414c54fcba3a0c71"
+      },
+      "title": "Liquid templates — layout only, every fact from the graph"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/markdown-render-check",
+      "@type": "bootstrap:Skill",
+      "name": "markdown-render-check",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c628133f885b3d0d7d849b4117cd5e797e8f5809e460a088f997b0e82646c420",
+        "bytes": 2514,
+        "sha256": "c628133f885b3d0d7d849b4117cd5e797e8f5809e460a088f997b0e82646c420"
+      },
+      "title": "Markdown Render Check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pdf-inline-viewer",
+      "@type": "bootstrap:Skill",
+      "name": "pdf-inline-viewer",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3dc8a4f37ad0727c2cca94c15a12593bc5305a0e49c96e91e519c142c6334853",
+        "bytes": 7587,
+        "sha256": "3dc8a4f37ad0727c2cca94c15a12593bc5305a0e49c96e91e519c142c6334853"
+      },
+      "title": "Inline PDF viewer — a pinned pdf.js, installed at build time"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/readme-sections",
+      "@type": "bootstrap:Skill",
+      "name": "readme-sections",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/14904d3be797e69de90661ff9884f4878bd5b2f134592fb849da914981037c5e",
+        "bytes": 14174,
+        "sha256": "14904d3be797e69de90661ff9884f4878bd5b2f134592fb849da914981037c5e"
+      },
+      "title": "A folio's README — the folio owns the file, the platform owns the markers"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-logging",
+      "@type": "bootstrap:Skill",
+      "name": "render-logging",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1e52a7bd624442497aa7649e609f272eddaa287871cc4109fc6519afce7171cb",
+        "bytes": 8830,
+        "sha256": "1e52a7bd624442497aa7649e609f272eddaa287871cc4109fc6519afce7171cb"
+      },
+      "title": "Render logging — the publish branch keeps its own history"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-order",
+      "@type": "bootstrap:Skill",
+      "name": "render-order",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4bfb4de9982643859e18e4df03f1632f3b2525183483d1736d829b2a53a60f4b",
+        "bytes": 5546,
+        "sha256": "4bfb4de9982643859e18e4df03f1632f3b2525183483d1736d829b2a53a60f4b"
+      },
+      "title": "Render order — flattening a dependency hierarchy, and the three stages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/serving-renderings",
+      "@type": "bootstrap:Skill",
+      "name": "serving-renderings",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7d54382caefbde394a8f32cadded9a6db8a38e1923edfddc25ab23b13bb78e73",
+        "bytes": 9051,
+        "sha256": "7d54382caefbde394a8f32cadded9a6db8a38e1923edfddc25ab23b13bb78e73"
+      },
+      "title": "Serving a rendering — endpoints, MIME types, and what each host can enforce"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-ui-review",
+      "@type": "bootstrap:Skill",
+      "name": "theme-ui-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fc1a1f65206207596a69c5158223965c166b898aaf9f47b763bf8b9df401be09",
+        "bytes": 5461,
+        "sha256": "fc1a1f65206207596a69c5158223965c166b898aaf9f47b763bf8b9df401be09"
+      },
+      "title": "At ingestion, and only at ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ui-accessibility",
+      "@type": "bootstrap:Skill",
+      "name": "ui-accessibility",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2dd0d8a22838c3a3c36dfcd54b7692dcd257fcd190285b79e448b5da32ffe6ea",
+        "bytes": 7584,
+        "sha256": "2dd0d8a22838c3a3c36dfcd54b7692dcd257fcd190285b79e448b5da32ffe6ea"
+      },
+      "title": "All UI must follow accessibility guidelines"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/visualizer-loading",
+      "@type": "bootstrap:Skill",
+      "name": "visualizer-loading",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a8dfef62fb050b1080291eb98f8d3c2e239cff866ced094bb2a7abf5d94f7499",
+        "bytes": 6231,
+        "sha256": "a8dfef62fb050b1080291eb98f8d3c2e239cff866ced094bb2a7abf5d94f7499"
+      },
+      "title": "Visualizer loading — the page is layout, the graph is fetched"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-design-review",
+      "@type": "bootstrap:Skill",
+      "name": "wireframe-design-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c014fdb20649b5076504e7fdc0e850ca9a7054a121a4ccc35e6ef94ddc3f38d7",
+        "bytes": 9354,
+        "sha256": "c014fdb20649b5076504e7fdc0e850ca9a7054a121a4ccc35e6ef94ddc3f38d7"
+      },
+      "title": "Wireframe design review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/wireframe-viewport-check",
+      "@type": "bootstrap:Skill",
+      "name": "wireframe-viewport-check",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1b1e9bf4bd1dbaec75688cc3762bb98e674a7f345a6e72ab78638d68118a603b",
+        "bytes": 2156,
+        "sha256": "1b1e9bf4bd1dbaec75688cc3762bb98e674a7f345a6e72ab78638d68118a603b"
+      },
+      "title": "Wireframe viewport check"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/ui/ui-core",
+  "path": "skills/ui/ui-core/"
+}

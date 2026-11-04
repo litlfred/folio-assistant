@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/process/Process_NamedQueryExecution/node/A_BindExecute.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1426",
+    "sha": "733b6e634ff3f24c6ea8bdc056abd6c0bcad1aa6",
+    "pr": "repin-train/20261104-1426",
+    "run": "41847648064"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/process/Process_NamedQueryExecution/node/A_BindExecute",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Bind Typed Parameters & Execute SPARQL",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/process/Process_NamedQueryExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/skill/named-query-execution"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/process/Process_NamedQueryExecution#flow/Flow_GuardPass",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Fetched"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/process/Process_NamedQueryExecution#flow/Flow_Executed"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_BindExecute"
+    }
+  ]
+}

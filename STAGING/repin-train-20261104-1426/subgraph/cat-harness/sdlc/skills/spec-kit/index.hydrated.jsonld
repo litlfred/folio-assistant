@@ -1,0 +1,78 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/spec-kit/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+      "@type": "cat-harness:SkillPackage",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "name": "spec-kit",
+      "path": "sdlc/skills/spec-kit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/change-size",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The change-size rule: keeps review increments adjudicable by establishing a line-count threshold (~400 effective lines), recording its empirical basis, weighting prose/KG lower than code, and distinguishing size from complexity.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 91,
+      "instructionsPath": "sdlc/skills/spec-kit/change-size.md",
+      "name": "change-size",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a0c8d6ddb4c03a88fec94b02de50b844008b25357a0eeacae3158505b3fa49f8",
+        "bytes": 4910,
+        "sha256": "a0c8d6ddb4c03a88fec94b02de50b844008b25357a0eeacae3158505b3fa49f8"
+      },
+      "title": "Change Size Rule — Threshold, Basis, and Complexity Weighting"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-kit",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists. Carries what this platform adopts and — separately, with reasons — what it refuses.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 293,
+      "instructionsPath": "sdlc/skills/spec-kit/spec-kit.md",
+      "name": "spec-kit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ad417c7ac7d58492f788dd1d16d6ba7e1a56e8376df34044190c8106cee7d27d",
+        "bytes": 14964,
+        "sha256": "ad417c7ac7d58492f788dd1d16d6ba7e1a56e8376df34044190c8106cee7d27d"
+      },
+      "title": "Spec Kit — spec-driven development"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-template",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The single declared template artefact for platform feature specifications, adopted from github/spec-kit. Mandatory sections and required fields are machine-readable here for automated validation.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 112,
+      "instructionsPath": "sdlc/skills/spec-kit/spec-template.md",
+      "name": "spec-template",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5b7a89b5d713720973d332004121acc83e5a35066d106df97f396d89f9790d28",
+        "bytes": 3783,
+        "sha256": "5b7a89b5d713720973d332004121acc83e5a35066d106df97f396d89f9790d28"
+      },
+      "title": "Feature Specification: [Feature Name]"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "sdlc/skills/spec-kit",
+  "path": "sdlc/skills/spec-kit/"
+}

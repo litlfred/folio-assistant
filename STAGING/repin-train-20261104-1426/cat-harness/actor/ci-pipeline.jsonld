@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/actor/ci-pipeline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1426",
+    "sha": "733b6e634ff3f24c6ea8bdc056abd6c0bcad1aa6",
+    "pr": "repin-train/20261104-1426",
+    "run": "41847648064"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/actor/ci-pipeline",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "ci-pipeline",
+      "actorKind": "system",
+      "title": "CI pipeline",
+      "description": "The build and validation system: validate, render, publish, and the mechanical half of the HCI gate. It runs a fixed program and exercises no judgement, so anything needing a decision belongs in another lane.",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/capability/jekyll"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/role/build-pipeline",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/role/tester",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/role/validation-pipeline"
+      ],
+      "permissionName": [
+        "qa-reporting"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/ci-pipeline"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/actor/librarian.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1426",
+    "sha": "733b6e634ff3f24c6ea8bdc056abd6c0bcad1aa6",
+    "pr": "repin-train/20261104-1426",
+    "run": "41847648064"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/actor/librarian",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "librarian",
+      "actorKind": "person",
+      "title": "Librarian",
+      "description": "Acquires a source and files it. `person` rather than `agent`, and the distinction is load-bearing: the decisions this actor owns are the ones an unattended engine must NOT make on its own — whether a capture may be redistributed, whether a logged-in view counts as the public document, and when an approximate vocabulary term is worse than a local one. An agent performs the capture; a person settles what it means.",
+      "meta": {
+        "workflow": "skills/workflows/content-acquisition.bpmn#Lane_Contributor"
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/role/librarian"
+      ],
+      "permissionName": [
+        "content-authoring"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/librarian"
+    }
+  ]
+}

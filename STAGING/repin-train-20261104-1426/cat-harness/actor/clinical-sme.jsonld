@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/actor/clinical-sme.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1426",
+    "sha": "733b6e634ff3f24c6ea8bdc056abd6c0bcad1aa6",
+    "pr": "repin-train/20261104-1426",
+    "run": "41847648064"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/actor/clinical-sme",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "clinical-sme",
+      "actorKind": "person",
+      "title": "Clinical Subject Matter Expert",
+      "description": "Clinical validator and ground-truth provider who ensures clinical accuracy and completeness of authored content.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.ClinicalSME",
+        "lifecycle": [
+          "validate",
+          "review",
+          "feedback"
+        ]
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/cat-harness/role/clinical-sme"
+      ],
+      "permissionName": [
+        "clinical-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/clinical-sme"
+    }
+  ]
+}

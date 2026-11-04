@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/smart-trust/smart-trust.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/smart-trust/directory/smart-trust-ast.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/smart-trust/smart-trust.jsonld",
+  "staging": {
+    "branch": "repin-train/20261104-1426",
+    "sha": "733b6e634ff3f24c6ea8bdc056abd6c0bcad1aa6",
+    "pr": "repin-train/20261104-1426",
+    "run": "41847648064"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/smart-trust/directory/smart-trust-ast",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-trust-ast",
+      "path": "fhir-ast/",
+      "contentSource": {
+        "kind": "family",
+        "branch": "cat/fhir-harness/fhir-ast/",
+        "keyFrom": "the IG's package id",
+        "familyRepository": "litlfred/smart-trust",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/ig-ast"
+      ],
+      "description": "WHO SMART Trust's IG Publisher AST, ingested although the IG's source is not. Read from the branch family `cat/fhir-harness/fhir-ast/` on `litlfred/smart-trust`, one branch per IG package id; this IG's is `cat/fhir-harness/fhir-ast/smart.who.int.trust`. Restored by `fhir-harness/scripts/ig-cache.sh`; never in the checkout.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261104-1426/smart-trust/directory/smart-trust-ast",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-ast"
+    }
+  ]
+}
