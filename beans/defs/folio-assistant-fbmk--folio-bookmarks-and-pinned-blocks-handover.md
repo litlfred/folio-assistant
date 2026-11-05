@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-02T19:13:00Z
+updated_at: 2026-11-05T13:34:01Z
 parent: folio-assistant-4j43
 tags:
     - folio-glass
@@ -59,3 +59,5 @@ _2026-11-02T18:55Z_ — draft PRs cat-harness#984 (docs-ui.js: data-fa-pin* cont
 _2026-11-02T18:53Z_ — badge/avatar fixes pushed (#984 head 364ddb5). Both PRs green + clean. Live preview https://claude.ai/artifact/J4dgvHxEMG8PQr6wYaJXoj; screenshots /mnt/project-files/folio-bookmarks-2026-11-02/. Merge was denied without owner OK: card Q-BMK-2 (A merge both, #984 first; B wait for gutter; C owner merges). Reminder set 19:36Z to check tools#1411/harness#981.
 _2026-11-02T19:04Z_ — owner tapped Q-BMK-2 A. MERGED cat-harness#984 (ea6ace8) and tools#1412 (109b850). Remaining: gutter 🔖 after tools#1411/harness#981; data-fa-pin on kg subject pages; #985 live windows. Re-pin train needs cat-harness >= ea6ace8 for sites to show it.
 _2026-11-02T19:13Z_ — STALL CHECKPOINT (owner 19:12Z). All work committed and pushed; no local changes in cat-harness or cat-harness-tools. Nothing open on GitHub from this thread. Resume at the first unchecked Plan item. A send_later reminder fires 19:36Z in the old session; if that session is gone, just check tools#1411 / harness#981 state.
+
+_2026-11-05T13:34:01Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
