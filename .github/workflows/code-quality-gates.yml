@@ -1015,6 +1015,10 @@ jobs:
     # Skipped on a push to `main` whose tree an earlier run already judged
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, verdict-reuse, publish-pages]
     if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -1090,15 +1094,17 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
-      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
-        # The IG instances commit no artefact index (fhir-harness#124 step 3):
-        # `ig-index:build` writes each one's index, menu, releases and package
-        # from the IG's cached AST. It takes about 15 seconds, so this job builds
-        # its own rather than waiting on qa-working-copy for the `ig-indexes`
-        # artifact.
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: bun run cat ig-index:build
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies. This job
+        # used to build its own (12-16 s) "rather than waiting on
+        # qa-working-copy", but it has `needs: qa-working-copy` for the QA
+        # working copy anyway, so the artifact is always there first: measured
+        # on run 41981133123, the download is 1-3 s.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -1338,6 +1344,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -2059,6 +2069,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -3251,6 +3265,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -4555,6 +4573,10 @@ jobs:
     # build them itself in `e2e-global-setup.ts` (`derive:publish`, which runs
     # `qa:refresh` for `uml:overview`): about 9 of a shard's ~13 minutes, three
     # times over, for the bytes `publish-pages` already uploads.
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [verdict-reuse, e2e-scope, qa-working-copy, publish-pages]
     if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true && needs.e2e-scope.outputs.affected != 'false' }}
     runs-on: ubuntu-latest
@@ -4630,15 +4652,17 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
-      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
-        # The IG instances commit no artefact index (fhir-harness#124 step 3):
-        # `ig-index:build` writes each one's index, menu, releases and package
-        # from the IG's cached AST. It takes about 15 seconds, so this job builds
-        # its own rather than waiting on qa-working-copy for the `ig-indexes`
-        # artifact.
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: bun run cat ig-index:build
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies. This job
+        # used to build its own (12-16 s) "rather than waiting on
+        # qa-working-copy", but it has `needs: qa-working-copy` for the QA
+        # working copy anyway, so the artifact is always there first: measured
+        # on run 41981133123, the download is 1-3 s.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -4811,6 +4835,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
