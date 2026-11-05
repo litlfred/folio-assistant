@@ -114,25 +114,22 @@ jobs:
       # Each QA step runs traced too, so a preview reruns only the QA steps
       # whose reads changed (owner card Q-CONE-2 B, 2026-11-01; records in
       # build/writer-cone/qa-records.json, kept by the cache below).
+      # One step for both modes, so the record mode stays the step it was.
+      # `record`: every step traced, and the time of the re-trace kept.
+      # `skip`: the carried-forward records, as a preview builds the copy.
       - name: Produce the QA working copy, every step traced (some writers read it)
-        if: steps.qa.outputs.mode == 'record'
         env:
-          CAT_WRITER_RECORD: '1'
+          QA_MODE: ${{ steps.qa.outputs.mode }}
           GITHUB_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
         run: |
           start=$(date +%s)
-          bun run cat qa:working-copy
-          date +%s > build/writer-cone/qa-recorded-at
-          echo "traced QA working copy took $(( $(date +%s) - start ))s" | tee -a "$GITHUB_STEP_SUMMARY"
-      - name: Produce the QA working copy from the carried-forward QA records
-        if: steps.qa.outputs.mode == 'skip'
-        env:
-          CAT_WRITER_SKIP: '1'
-          GITHUB_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
-        run: |
-          start=$(date +%s)
-          bun run cat qa:working-copy
-          echo "QA working copy (skip mode, records carried forward) took $(( $(date +%s) - start ))s" | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "$QA_MODE" = "record" ]; then
+            CAT_WRITER_RECORD=1 bun run cat qa:working-copy
+            date +%s > build/writer-cone/qa-recorded-at
+          else
+            CAT_WRITER_SKIP=1 bun run cat qa:working-copy
+          fi
+          echo "QA working copy ($QA_MODE) took $(( $(date +%s) - start ))s" | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Generate the mounted SMART IG instances' pages
         run: bun run smart:pages:publish
       - name: Java runtime the PlantUML release declares
