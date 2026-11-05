@@ -205,7 +205,24 @@ export function shareOf(files: readonly string[], k: number, n: number): string[
   return [...files].sort().filter((_, i) => i % n === k - 1);
 }
 
+/**
+ * Whether the checked-out `cqg_judge.py` refuses to let main reuse a PR run
+ * that judged only a selection (folio-assistant#2963, `SCOPED_STEP`). Without
+ * that refusal, `verdict-reuse.sh` could hand a PR's partial run to the push
+ * of its merge, and main would skip the whole suite. The push runs the judge
+ * of this same tree, so checking it here makes the merge order irrelevant.
+ */
+export function judgeRefusesScopedReuse(root: string): boolean {
+  try {
+    return /^SCOPED_STEP = /m.test(readFileSync(join(root, ".github/scripts/cqg_judge.py"), "utf-8"));
+  } catch {
+    return false;
+  }
+}
+
 export async function computeScope(root: string, diff: UpstreamDiff = gitUpstreamDiff): Promise<Scope> {
+  if (!judgeRefusesScopedReuse(root))
+    return { kind: "all", why: ".github/scripts/cqg_judge.py does not yet refuse to reuse a selection for main (#2963)" };
   const modPath = resolve(root, "cat-harness-tools/scripts/affected-tests.ts");
   if (!existsSync(modPath)) return { kind: "all", why: "cat-harness-tools/scripts/affected-tests.ts is not in the pinned cat-harness-tools yet" };
   const mod = (await import(modPath)) as AffectedModule;

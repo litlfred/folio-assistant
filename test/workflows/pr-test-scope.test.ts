@@ -11,7 +11,7 @@ import { join, resolve } from "node:path";
 
 import { parse } from "yaml";
 
-import { expand, lockChanges, nameOf, scopeFor, shareOf, testsNaming } from "../../.github/scripts/pr-test-scope.ts";
+import { computeScope, expand, judgeRefusesScopedReuse, lockChanges, nameOf, scopeFor, shareOf, testsNaming } from "../../.github/scripts/pr-test-scope.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 
@@ -109,6 +109,24 @@ describe("selection", () => {
     expect(shares.flat().sort()).toEqual([...files].sort());
     expect(shares[3]).toEqual(["d"]);
     expect(shareOf(["a"], 2, 4)).toEqual([]);
+  });
+});
+
+describe("the selection waits for the judge that refuses to reuse it (#2963)", () => {
+  test("a judge without SCOPED_STEP selects everything, whatever else is present", async () => {
+    const root = mkdtempSync(join(tmpdir(), "pr-scope-judge-"));
+    mkdirSync(join(root, ".github/scripts"), { recursive: true });
+    writeFileSync(join(root, ".github/scripts/cqg_judge.py"), "RUNS_SCANNED = 30\n");
+    expect(judgeRefusesScopedReuse(root)).toBe(false);
+    const s = await computeScope(root, () => []);
+    expect(s.kind).toBe("all");
+    expect(s.kind === "all" && s.why).toContain("#2963");
+  });
+  test("a judge with SCOPED_STEP lets the selection proceed", () => {
+    const root = mkdtempSync(join(tmpdir(), "pr-scope-judge-"));
+    mkdirSync(join(root, ".github/scripts"), { recursive: true });
+    writeFileSync(join(root, ".github/scripts/cqg_judge.py"), 'SCOPED_STEP = "bash .github/scripts/pr-bun-test.sh"\n');
+    expect(judgeRefusesScopedReuse(root)).toBe(true);
   });
 });
 
