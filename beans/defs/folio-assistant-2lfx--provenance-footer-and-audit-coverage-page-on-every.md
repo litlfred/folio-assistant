@@ -25,3 +25,5 @@ _2026-11-05T14:20:00Z_ — Owner: 'map the bpmn and tool pages too'. Done on too
 _2026-11-05T16:25:00Z_ — cat-harness#1051 (footer include + CSS) merged af63526 on green. tools#1510 still in CI (base-exact comparison shards).
 
 _2026-11-05T16:36:00Z_ — cat-harness-tools#1510 merged (202123a) on green; with cat-harness#1051 (af63526) the provenance footer is live for docs, skill, process, tool and node pages once the index re-pins (re-pin train, not this session). Done when: met. Closing.
+
+_2026-11-05T19:06:00Z_ — Follow-up from the merge steward: #1051 ignored the provenance paths without builtAtPublish entries, failing built-at-publish.test.ts on cat-harness main. Fixed by cat-harness#1071 (6cd5c4b), merged on green.
