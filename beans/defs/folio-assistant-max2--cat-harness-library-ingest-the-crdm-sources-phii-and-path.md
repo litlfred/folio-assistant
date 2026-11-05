@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-31T01:56:00Z
-updated_at: 2026-11-05T13:34:10Z
+updated_at: 2026-11-05T14:44:00Z
 parent: folio-assistant-dthl
 ---
 
@@ -20,8 +20,8 @@ The PHC handbook (who-iris 9789240093362-eng, sec-006) says its method "leverage
 Neither is in any library (checked cat-harness, smart-base, who-iris, smart-ra at their tips, 2026-10-31). Sandboxes cannot reach phii.org or path.org (HTTP 000), so agy fetches them.
 
 - [x] agy: fetch the PHII CRDM page(s) and any PHII CRDM PDF it links; fetch the PATH 2012 PDF
-- [ ] ingest each as a cat-harness library entry (library-ingestion skill), with sha256 and provenance
-- [ ] add the two entries to the PHC workplan cross-references (litlfred/dth-phc#1)
+- [x] ingest each as a cat-harness library entry (library-ingestion skill), with sha256 and provenance
+- [x] add the two entries to the PHC workplan cross-references (litlfred/dth-phc#1)
 
 Blocks folio-assistant-llxa. Thread: "Plan primary health care handbook KG". Working note: /mnt/project-files/dth-l2-ingest-2026-10-31/phc-sdlc-alignment.md
 
@@ -46,3 +46,5 @@ _2026-10-31T02:11:00Z_ — Fetched by `agy` and committed to `litlfred/cat-harne
   - `uploads/crdm/SHA256SUMS` (657 bytes) — `sha256: d3f993be6ee53214807c67312e5fd61329f012bc15238e0bc88f590024604618`
 
 _2026-11-05T13:34:10Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
+
+_2026-11-05T14:44:00Z_ — Ingested all 3 CRDM sources into `cat-harness/library/process/` (`phii-2023-crdm`, `phii-2021-defining-and-validating-requirements-guide`, `path-2012-common-requirements-mhis-crdm`) with visual inspection, verdicts (`library/image-verdicts.json`), 6-locale image descriptions, JSON-LD blocks/sections, and READMEs; removed `uploads/crdm/`; opened PR [`litlfred/cat-harness#1062`](https://github.com/litlfred/cat-harness/pull/1062) (awaiting owner review/merge); and updated `litlfred/dth-phc#1` cross-references + posted R12 comment (`#issuecomment-6660714011`).
