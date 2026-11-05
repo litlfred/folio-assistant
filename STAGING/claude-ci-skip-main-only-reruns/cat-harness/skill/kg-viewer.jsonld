@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/skill/kg-viewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/skill/kg-viewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "kg-viewer",
+      "title": "Rendering the knowledge graph",
+      "description": "Render a published knowledge-graph document so a person can read it — faceted index, node detail, followable edges, and an honest account of what the document is missing. Host-agnostic; the publishing is a separate Tool.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/kg-viewer.md",
+      "instructionLines": 271,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-viewer"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/externalSchema/w3c-csvw.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/externalSchema/w3c-csvw",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/ExternalSchema",
+      "name": "w3c-csvw",
+      "title": "Metadata Vocabulary for Tabular Data",
+      "authority": "W3C",
+      "specVersion": "2015-12-17",
+      "specUse": "conforms",
+      "specUrl": "https://www.w3.org/TR/tabular-metadata/",
+      "namespace": [
+        "http://www.w3.org/ns/csvw#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-csvw"
+    }
+  ]
+}

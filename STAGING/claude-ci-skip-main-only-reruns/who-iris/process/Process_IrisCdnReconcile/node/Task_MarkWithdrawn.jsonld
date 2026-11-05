@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Mark confirmed items withdrawn (keep bytes)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/skill/iris-rest-feed"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/process/Process_IrisCdnReconcile#flow/R7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/process/Process_IrisCdnReconcile#flow/R8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn"
+    }
+  ]
+}

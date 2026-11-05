@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/schema/waiver.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/schema/waiver",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "waiver",
+      "title": "waiver",
+      "summary": "A confirmation the owner has given **in advance**, scoped and dated.",
+      "module": "schemas/conduct/waiver.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/waiver"
+    }
+  ]
+}

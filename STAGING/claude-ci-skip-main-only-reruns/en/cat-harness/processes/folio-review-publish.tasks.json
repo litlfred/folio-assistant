@@ -1,0 +1,165 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_FolioReviewPublish",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish",
+ "tasks": {
+  "Task_Review": {
+   "id": "Task_Review",
+   "name": "Review and record feedback",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Review",
+   "lane": "Reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Reviewer",
+   "skills": [
+    {
+     "name": "content-review"
+    },
+    {
+     "name": "staging-review"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_Publish": {
+   "id": "Task_Publish",
+   "name": "Publish",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Publish",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "content-publish"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Call_ContributorFeedback": {
+   "id": "Call_ContributorFeedback",
+   "name": "Contributor feedback",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Call_ContributorFeedback",
+   "lane": "Authoring Committee",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Committee",
+   "skills": [
+    {
+     "name": "review-sheet-script"
+    }
+   ],
+   "calls": {
+    "name": "Contributor feedback on a working draft",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
+    "diagram": "contributor-feedback.html"
+   },
+   "role": {
+    "name": "authoring-committee",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-committee",
+    "title": "Authoring Committee",
+    "skills": [
+     {
+      "name": "review-sheet-script"
+     }
+    ]
+   }
+  }
+ }
+}

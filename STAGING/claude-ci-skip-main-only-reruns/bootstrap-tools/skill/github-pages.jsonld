@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/bootstrap-tools/skill/github-pages.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/bootstrap-tools/skill/github-pages",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "github-pages",
+      "title": "GitHub Pages' contract",
+      "description": "The contract GitHub Pages keeps as the host of a rendered Knowledge Graph: serve the gh-pages branch at the publication root URL, exactly as committed, and answer 404 for what is not there. A mechanical Actor plays this Role; this is what it must do, and what it is tested against.",
+      "instructionsPath": "skills/github-pages.md",
+      "instructionLines": 41,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/bootstrap-tools/directory/bootstrap-tools-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/github-pages"
+    }
+  ]
+}

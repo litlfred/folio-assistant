@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanOpen.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanOpen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Open the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/process/Process_Lifecycle",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/role/editor",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/process/Process_Lifecycle/lane/Lane_Editors",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/skill/bean-coordination"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/process/Process_Lifecycle#flow/H02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/process/Process_Lifecycle#flow/SF_Bean_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle/node/Call_BeanOpen"
+    }
+  ]
+}

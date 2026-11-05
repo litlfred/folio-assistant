@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/smart-base/process/Process_DthAuthoring/node/M0.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DthAuthoring/node/M0.jsonld",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/M0",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record milestone M0 · Charter recorded",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "http://smart.who.int/base/role/work-plan",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_WorkPlan",
+      "requires": [
+        "http://smart.who.int/base/skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F05"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F06"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/tool-types/PackageName.schema.json",
+  "title": "PackageName",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[a-z][a-z0-9-]*$",
+  "description": "A skill package, e.g. folio-core",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  }
+}

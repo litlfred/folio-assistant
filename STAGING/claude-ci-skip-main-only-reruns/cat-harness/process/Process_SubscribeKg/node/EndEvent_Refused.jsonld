@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Not subscribed, and the record says why",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/process/Process_SubscribeKg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/process/Process_SubscribeKg#flow/Flow_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/EndEvent_Refused"
+    }
+  ]
+}

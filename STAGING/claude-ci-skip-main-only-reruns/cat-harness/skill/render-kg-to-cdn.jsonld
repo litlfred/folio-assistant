@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/skill/render-kg-to-cdn.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/skill/render-kg-to-cdn",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "render-kg-to-cdn",
+      "title": "Render a Knowledge Graph to a CDN",
+      "description": "Render a Knowledge Graph, or a list of its Subgraphs, for publication to a CDN at a publication root URL, and report a status and one message. The same step for a staging preview and for a release — only the root URL and the target differ. Names the target's Tool, never its steps: GitHub Pages (`gh-pages`) is one Tool, and it carries its own subprocess.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/render-kg-to-cdn.md",
+      "instructionLines": 74,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-kg-to-cdn"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/smart-base/directory/library.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-skip-main-only-reruns/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/library.jsonld",
+  "staging": {
+    "branch": "claude/ci-skip-main-only-reruns",
+    "sha": "3cf5cc0f43b4f7a62cdf69d5c5250e3a93b5eb49",
+    "pr": "2949/merge",
+    "run": "41996148950"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/library",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "library",
+      "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library"
+      ],
+      "description": "L1 source content: one `<bib-slug>/` per ingested publication, holding `sections/*.md` and `structure.json`. Every knowledge-graph reference to one of these sources resolves through here, never to a loose path, a bare URL or `uploads/`: the corpus-grep checklist searches `library/` only. The id is the conventional `library`, so this entry overrides the default; overrides match on id, never on path. WHO IRIS publications live in who-iris: cite them as `{instance: \"litlfred/who-iris\"}`. smart-base's own L1 extraction of an IRIS handbook lives in `l1-extractions/`.",
+      "readmePath": "library/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/library"
+    }
+  ]
+}
