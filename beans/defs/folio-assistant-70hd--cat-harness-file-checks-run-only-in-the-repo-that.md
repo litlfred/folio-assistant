@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T14:45:00Z
+updated_at: 2026-11-05T15:20:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -44,3 +44,11 @@ _2026-11-05T14:05:00Z_ — Owner: "start on the other gate-own checks". Batch 2 
 _2026-11-05T14:40:00Z_ — Batch 3 = https://github.com/litlfred/cat-harness-tools/pull/1529 (stacked on #1508, #1521): gateOwnsFile + CAT_GATE_OWN_PATHS/FOREIGN_PATHS; scopes check:command-paths, check:subgraphs, check:concern-groups. Measured: check:subgraphs --check red unscoped and for own=cat-harness (dangling links in cat-harness), green for core/smart-trust. Merge order #1508 → #1521 → #1529. Open: generator --check halves need an owner call. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 
 _2026-11-05T14:45:00Z_ — Owner card "Generators", option 1 (measure first). Measured over 13 fa re-pin train verdicts (#2925–#2968) and a gate-name search of all 32 trains since 2026-10-29: of the 16 generator/other candidates only `upload-step:docs:check` was NEW from a lower layer, once (fa#2935, job 126587875492: `cat-harness/docs/reference/upload-step/index.md is stale`, gone by #2937). The likely shape is a lower layer's generator changing its output (tools 7a9371a), not an unconfirmed diff. 15 gates at zero. Not visible: the layer PR-check compare tables (they run only in smart-ra, smart-base, smart-immunizations, who-iris…, outside this session's scope), so this undercounts. Also NEW in trains, not on the list: kg:materialize:check, agent-memory:check, bpmn:checklist:check, kind:register:check, check:prov-qaqc, committed-output tests; their shapes are unsorted. Recommendation: no change to generator checks for now.
+
+_2026-11-05T15:20:00Z_ — Owner card "Generators" option 3 (re-measure with access). smart-immunizations and who-iris attached; smart-ra and smart-base refused twice by the session's permission classifier, not counted. Eight layer-PR compare jobs read (3 in full, 5 cut off by the log tail; lower bound). NEW gates by cause (s1 = a lower layer's committed file, s2 = a lower layer's generator output stale, s3 = own output moved because lower code changed):
+- Removed by the open scoping PRs: check:schema-nodes ×1 (s1, #1508); check:subgraphs ×1 (#1529; tail cut, shape unconfirmed).
+- Still s2 after them: folio-assistant-core:check:glossary ×3; bpmn:checklist:check, branch:readme:check, library:viz:check, translate-bpmn:bootstrap:check ×2 each; render:bpmn:check, glossary:pot:check, who-iris:dc:render:check ×1 each.
+- Still s1: check:process-index ×2, check:reference-direction(:strict) ×3, check:materialized-fixity, kg:materialize:check, uml:overview:check, check:state-on-main ×1 each.
+- Lower-layer code defects: check:qa-reviewer-permission (exit 78 counted as failing), publish:derive:publish (uml:overview writer exit 2).
+- s3/own: check:harness-state:check, translate-bpmn:check, check:declared-dirs; translation:* unclassified.
+Unread: 17 smart-immunizations and 5 who-iris failed runs (ids in the session). Conclusion: generator --check gates DO produce false NEW failures (s2 is the largest group); scoping validators alone is not enough.
