@@ -1,5 +1,6 @@
 ---
 # folio-assistant-bx4c
+$schema: bean/1.0.0
 title: mount:remote re-render writes into mounted instances, breaking mount:lock:check
 status: todo
 type: bug
