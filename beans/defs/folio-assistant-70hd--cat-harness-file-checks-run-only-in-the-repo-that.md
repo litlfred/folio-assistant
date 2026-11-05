@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T16:45:00Z
+updated_at: 2026-11-05T17:30:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -59,3 +59,5 @@ _2026-11-05T16:45:00Z_ — smart-ra + smart-base counted by the parent session (
 - **Own repo (9):** dth-terms ×3, corpus-gate ×3, translation:pot/obsolete ×2 (smart-ra's own translations), check:subgraphs ×1 (./FORMS.md, a root file).
 - **Unclassified (5):** kg:materialize, split:baseline, branch:readme (no paths); kind:json-schemas, gen:jsonld (mixed paths).
 Across all four repos, the gates with cross-layer false failures that the open scoping PRs do NOT cover: reference-direction (×4), materialized-fixity (×2), translate-bpmn:bootstrap (×3), processes/render:bpmn (×2), process-index (×2), ci-invocations, iri:sync, kg:materialize, glossary (×3), bpmn:checklist (×2), library:viz (×2), uml:overview, state-on-main.
+
+_2026-11-05T17:30:00Z_ — Owner card "Next batch" option 1 (validators next). Batch 4 = https://github.com/litlfred/cat-harness-tools/pull/1533 (stacked on #1508 → #1521 → #1529): check:reference-direction (scopeReport), check:process-index, check:ci-invocations, translate-bpmn --check. #1508 standalone failure was this PR's own test assuming the tools layer is in the harness corpus; fixed in 295afe2 (reproduced with the harness laid out alone). Remaining: check:materialized-fixity is folio-assistant-core's (needs a core PR); generator checks await the owner. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
