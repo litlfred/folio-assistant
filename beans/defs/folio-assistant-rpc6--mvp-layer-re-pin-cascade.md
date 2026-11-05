@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T18:17:17Z
+updated_at: 2026-11-05T18:32:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -79,3 +79,5 @@ _2026-11-05T18:16:06Z_ — Owner card "1. Known red": a gate that exited 0 on ma
 KNOWN reds now: translation:block-qa, check:process-index, library:viz, rendered-labels, state:visualizer, slice:sqlite, bpmn:checklist (until the index re-pins bootstrap), 0->78 not-applicable, y4pw content items; dth-sc also corpus-gate.
 
 _2026-11-05T18:17:17Z_ — MERGED smart-ips-pilgrimage#8 as 5642333 (freeze head 759ed30; only new red state:visualizer = known publish-skipped family; tests 0 new; comment on PR). dth-sc#18 69b6fac: corpus-gate (owner OK), check:subgraphs, translate-bpmn:bootstrap. dth-pc#18 e8c908f: check:subgraphs, translate-bpmn:bootstrap, gen:jsonld + dth-pc:check:kg-blocks (block .jsonld ns# -> ns/ regen). All three classes are covered by the final re-pin (bootstrap 12fa6d5, cat-harness#1069, site block regen).
+
+_2026-11-05T18:32:00Z_ — cat-harness-tools#1537 1512679: 1 new test failure (security-gate "from a layer checkout"): ownName() prefers GITHUB_REPOSITORY (cat-harness-tools in its own CI) while the judged root is the folio-assistant index it is mounted in, so the fa-recorded baseline was ignored at fa. Pushed 0ccd352: checkoutName(root) (origin, else dir name) for both baselines; 18/18 tests in smart-ra's tree.
