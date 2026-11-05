@@ -2,10 +2,11 @@
 # folio-assistant-jstq
 $schema: bean/1.0.0
 title: Fresh containers start with instance mounts older than index.lock.json, and mount-from-lock never refreshes them
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-11-05T13:27:15Z
-updated_at: 2026-11-05T13:27:15Z
+updated_at: 2026-11-05T15:19:33Z
 parent: folio-assistant-4j43
 ---
 
