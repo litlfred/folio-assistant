@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T08:26:16Z
+updated_at: 2026-11-05T11:30:23Z
 parent: folio-assistant-k3vv
 ---
 
@@ -25,3 +25,5 @@ What a move changes:
 - [ ] the owner's answer is recorded here (move, do not move, or later)
 
 _2026-11-05T08:40:00Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk from the CI-speed analysis of session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.
+
+_2026-11-05T11:30:23Z_ — **Owner answer (litlfred, card "xaa8 org", option 1): Later.** Decide after the MVP functional freeze; do not move now. The bean stays open until then. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
