@@ -1191,10 +1191,46 @@ jobs:
       - name: Judge each step from here against main's record (Q-PIPE-1)
         run: bash .github/scripts/cqg-step.sh --begin
 
+      # A pull request runs only the test files its change can affect (CI
+      # speed 7, child of bean folio-assistant-k3vv): the import closure of
+      # every changed file, re-pinned upstream files included, plus each test
+      # that names a changed file. Every other event runs the whole suite, so
+      # what a PR leaves out, the push of its merge to main runs. Selection
+      # never fails: whatever it cannot determine selects everything. Not a
+      # judged step (`CQG_UNJUDGED`): it asks no question about the tree.
+      - name: Select the test files this pull request can affect
+        id: scope
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          CQG_UNJUDGED: "true"
+          CQG_TEST_SCOPE: ${{ runner.temp }}/test-scope.json
+        run: bash .github/scripts/pr-bun-test.sh --scope
+
+      # Exactly one of the next two steps runs, and each gives the verdict
+      # (`CQG_VERDICT`). This one, on a pull request with a selection, runs
+      # this shard's share of it; an empty share runs nothing and writes
+      # "skipped — not affected" to the summary, never a pass. It comes BEFORE
+      # `bun test` so that one stays the job's last step
+      # (`check:red-gate-is-last`) and its `bun test` line stays the local gate
+      # set's (`gatesFrom`).
+      - name: bun test — the files this pull request can affect
+        if: ${{ steps.scope.outputs.kind == 'some' }}
+        env:
+          BUN_OPTIONS: --reporter=junit --reporter-outfile=${{ runner.temp }}/cqg/bun-junit.xml
+          CQG_TEST_SCOPE: ${{ runner.temp }}/test-scope.json
+          CQG_TESTS: bun
+          CQG_JUNIT: ${{ runner.temp }}/cqg/bun-junit.xml
+          CQG_VERDICT: "true"
+          CQG_TOKEN: ${{ github.token }}
+        run: bash .github/scripts/pr-bun-test.sh ${{ matrix.shard }} 4
+
       # The JUnit report names each failing test, so the verdict compares tests,
       # not the step. It stays the job's last step (`check:red-gate-is-last`),
-      # so it gives the verdict itself (`CQG_VERDICT`).
+      # so it gives the verdict itself (`CQG_VERDICT`). The whole suite: every
+      # push, merge group, dispatch and nightly run, and a pull request whose
+      # change selects everything.
       - name: bun test
+        if: ${{ steps.scope.outputs.kind != 'some' }}
         env:
           BUN_OPTIONS: --shard=${{ matrix.shard }}/4 --reporter=junit --reporter-outfile=${{ runner.temp }}/cqg/bun-junit.xml
           CQG_TESTS: bun
