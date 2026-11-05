@@ -12,7 +12,7 @@ updated_at: 2026-11-05T12:01:28Z
 parent: folio-assistant-k3vv
 ---
 
-Owner litlfred, 2026-11-05, via the analysis session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf: *"quadratic compute time in terms of # PRs to merge — how to linearize? do it all properly"*. Builds on [`saturation-meta-merge`](../../cat-harness/skills/sdlc/sdlc-core/saturation-meta-merge.md) (stack ready PRs on one branch, land once), [`merge-queue`](../../cat-harness/skills/sdlc/sdlc-core/merge-queue.md) §"A red train ejects one member", and the working re-pin train (`.github/workflows/repin-train*.yml`, `.github/scripts/repin-train.ts`). GitHub's merge queue is unavailable on this user-owned repo (bean `1hjm`; org move deferred, bean `xaa8`).
+Owner litlfred, 2026-11-05, via the analysis session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf: *"quadratic compute time in terms of # PRs to merge — how to linearize? do it all properly"*. Builds on [`saturation-meta-merge`](../../cat-harness/sdlc/skills/sdlc-core/saturation-meta-merge.md) (stack ready PRs on one branch, land once), [`merge-queue`](../../cat-harness/sdlc/skills/sdlc-core/merge-queue.md) §"A red train ejects one member", and the working re-pin train (`.github/workflows/repin-train*.yml`, `.github/scripts/repin-train.ts`). GitHub's merge queue is unavailable on this user-owned repo (work item `1hjm`; org move deferred, work item `xaa8`).
 
 ## Why it is quadratic today
 
