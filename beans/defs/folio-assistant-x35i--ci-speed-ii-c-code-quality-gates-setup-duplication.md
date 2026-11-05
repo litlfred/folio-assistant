@@ -2,13 +2,13 @@
 # folio-assistant-x35i
 $schema: bean/1.0.0
 title: 'CI speed II (c): Code-quality gates setup duplication (no bun cache, smart:pages x17, ig-index x10)'
-status: todo
+status: in-progress
 type: task
 priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T08:26:16Z
+updated_at: 2026-11-05T08:33:07Z
 parent: folio-assistant-k3vv
 ---
 
