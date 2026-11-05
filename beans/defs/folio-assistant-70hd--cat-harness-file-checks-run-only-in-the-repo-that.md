@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T18:10:00Z
+updated_at: 2026-11-05T18:15:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -73,3 +73,5 @@ _2026-11-05T17:40:00Z_ — #1521 standalone red: declared-paths ratchet counted 
 _2026-11-05T17:42:00Z_ — **Merged** litlfred/cat-harness-tools#1508 (a094099) on all-green CI, incl. Tests/Index gates/Standalone (no new failures). Next #1521 → #1529 → #1533 → #1534. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 
 _2026-11-05T18:10:00Z_ — **Merged** litlfred/cat-harness-tools#1521 (6f373ef) on all-green verdicts. Next #1529 → #1533 → #1534. Core fix applied and tested by session_01VQDpPcbpLjEo8EuzFLVq5Z (5d43ed2, local), waiting on #1529. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-05T18:15:00Z_ — #1529 had never re-run CI since 15:50: it conflicted with main in scripts/check-subgraphs.ts (main restructured it for the two-phase move rule, bean tsh9), and GitHub runs no pull_request workflow on a conflicted PR. Merged main in (6600d73), re-applied the scope to the new LinkContext structure; PR checks run 42081945867 started. #1533 (a4b95c8) and #1534 (e0210e2) carry it, clean against main. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
