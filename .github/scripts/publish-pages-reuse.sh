@@ -46,7 +46,8 @@
 set -uo pipefail
 
 WORKFLOW=code-quality-gates.yml
-PAGES_JOB='Publish-time pages, built once for this run (not a gate)'
+# The pages are built in the QA working copy job since owner card Q3 (2026-11-05).
+PAGES_JOB='QA working copy, built once for this run (not a gate)'
 BUNDLE=cat-harness-tools/scripts/qa-working-copy-bundle.sh
 
 output() { [ -n "${GITHUB_OUTPUT:-}" ] && echo "$1=$2" >> "$GITHUB_OUTPUT"; return 0; }
