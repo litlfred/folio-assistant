@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T14:09:08Z
+updated_at: 2026-11-05T14:24:33Z
 parent: folio-assistant-rwmf
 ---
 
@@ -40,3 +40,5 @@ _2026-11-05T13:48:22Z_ — Owner: "merge when green"; a merge watcher (merge on 
 _2026-11-05T14:00:08Z_ — smart-immunizations#114 at 10c2bb2 (all 8 layers at mains): 11 new reds, all from cat-harness 6e0dc31 (sdlc/ relocation) and the layers above it not yet regenerated: bpmn:checklist, translate-bpmn:bootstrap, translation obsolete/pot/block-qa, process-index (sdlc/processes/*.bpmn not in the published processes subgraph), library:viz (avatar kg-folio-asst-#-#-#.webp), kg:materialize + materialized-fixity (ihris; fixed on cat-harness main #1044), core check:glossary (core + who-iris generated glossaries), branch:readme (tools health state branch). Regen going onto cat-harness#1054 and a new core/who-iris glossary PR; #114 then re-pins onto them.
 
 _2026-11-05T14:09:08Z_ — Owner card "1. Treat as known": a site re-pin may merge when its only reds besides main's are these 3 KNOWN lower-layer reds: (1) cat-harness-tools:translation:block-qa:check — translation-coverage drop after cat-harness 7c759481 ("Say work item, not bean") reworded docs/concepts/architecture.md (37/61 strings, 5 locales) and docs/guides/agent-onboarding.md (fr 57/73); needs translators. (2) check:process-index and (3) library:viz:check — red only because CI skips publish:derive:publish (gen-fsh-guts-viz: cat/cat-harness/fsh-guts state branch not mounted), so the gitignored docs/subgraph/** and docs/assets/library/ avatars are unbuilt; both pass once built (subgraph:jsonld, library:viz). Not covered by the ruling: branch:readme:check on cat/cat-harness-tools/health (fix: bun run cat branch:readme --push cat/cat-harness-tools/health). cat-harness#1054 stays at e318fb7.
+
+_2026-11-05T14:24:33Z_ — Glossary regen (bun run cat glossary:page, generated at cat-harness a03d6b3, tools 13366a5, bootstrap 12fa6d5, bootstrap-tools 3a406fb, core 21da85c, who-iris 68e3a89): folio-assistant-core#648 d21b9a3 (9 files), who-iris#183 8f25812 (2), cat-harness#1061 5f3792c (3 skos.jsonld core's glossary:page writes). Layer repos' own CI never sees stale glossaries: derive:publish rewrites them in prep; in site runs derive:publish exits 1 (gen-fsh-guts-viz: fsh-guts state branch unmounted), which is why sites see them. Also stale but not yet flagged by a site: fhir-harness 3, smart-base 3, folio-assistant-sci 2 glossary/generated files. Sites must re-pin to these merges + tools >= 13366a5, bootstrap-tools >= 3a406fb. Merge watchers on all 13 PRs.
