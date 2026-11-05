@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T14:19:51Z
+updated_at: 2026-11-05T18:01:39Z
 parent: folio-assistant-k3vv
 ---
 
@@ -55,3 +55,5 @@ _2026-11-05T14:19:51Z_: **Moves honoured in the other link checkers.** The commi
 | check:agents-claims | not done, a candidate | it resolves bare module citations against fixed bases (here and the tools layer), not layer-relative paths; it would need a moved state of its own |
 | check:agents-xref, check:translated-link-depth, check:usage-paths, check:declared-paths, check:foreign-paths, check:reference-direction, check:qa-result-links, check:published-refs, site-dead-links, check:anchors | not needed | section citations, depth within one page tree, self-reference, code literals and naming direction, forge/ref URLs, or built-site HTML, so none resolves a relative path into another layer's source tree |
 Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk
+
+_2026-11-05T18:01:39Z_ — The two-phase move rule has landed: the skill in litlfred/cat-harness#1043 (d9f08ff), and the check in litlfred/cat-harness-tools#1492 (5803bff). After merging main, moves resolve inside judgeLink, so `state:push` honours them too. The extension to four more link checkers (583561f) comes next as its own PR. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
