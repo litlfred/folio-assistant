@@ -36,3 +36,5 @@ _2026-11-05T16:49Z_ — cat-harness#1032 full checks: tests 0 new failures; 4 ga
 _2026-11-05T17:02Z_ — Owner card "Re-pin #2975", option 1: owner merges folio-assistant#2975 when green; then #1032 checks are re-run and only what is still red (bar check:tools) gets fixed.
 
 _2026-11-05T17:49Z_ — folio-assistant#2975 (re-pin train) not merged and red: "QA working copy" failed at qa:refresh (writer check:rendered-labels produced nothing / failed), and most jobs below it failed. Train is owned by the "Broken beans links" session; not touched. #1032 stays waiting for a tools pin >= 2cee88d on folio-assistant main.
+
+_2026-11-05T18:52Z_ — folio-assistant main still pins tools c807dc9 (re-pin train not merged). One last check-in at +90 min, then parked.
