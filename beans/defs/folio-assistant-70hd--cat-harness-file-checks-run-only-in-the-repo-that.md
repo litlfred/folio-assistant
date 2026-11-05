@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T18:00:00Z
+updated_at: 2026-11-05T18:10:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -65,3 +65,5 @@ _2026-11-05T17:30:00Z_ — Owner card "Next batch" option 1 (validators next). B
 _2026-11-05T17:45:00Z_ — Owner card "Remaining" option 1 (materialized-fixity). Fix written for litlfred/folio-assistant-core (commit 2f35a33 on local branch claude/materialized-fixity-own-files, off core main 09bcfa8; patch kept in this session's scratchpad): collect() reads only records in files the caller owns (gateOwnsFile). Measured: 130 artefacts unscoped, 45 own=who-iris, 0 own=folio-assistant-core; new test 2/2. NOT pushed: add_repo push for folio-assistant-core refused by the session permission check. It must merge after core re-pins cat-harness-tools past #1529 (it imports lib/gate-own.ts). Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 
 _2026-11-05T18:00:00Z_ — Owner (relayed by session_01VQDpPfGantMCt7AV4LCCK2, ~16:20Z): generator checks "Scope them too". Batch 5 = https://github.com/litlfred/cat-harness-tools/pull/1534 (stacked on #1533): publish-check.ts (render:bpmn, uml:overview, glossary:page), bpmn:checklist, library:viz, branch:readme judge only the caller's output. Measured: bpmn-checklist 15→4 (cat-harness)→0 (smart-base); library:viz 547→547→0; render:bpmn 51 missing→0 for smart-base; branch:readme 1→0. Left: core (materialized-fixity written, kg:materialize, glossary:pot), who-iris dc:render, bootstrap-tools iri:sync. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-05T18:10:00Z_ — Owner card "Core fix" option 1: the core materialized-fixity patch was sent in full to session_01VQDpPfGantMCt7AV4LCCK2 (which can attach repos), to open in litlfred/folio-assistant-core after core re-pins cat-harness-tools past #1529. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
