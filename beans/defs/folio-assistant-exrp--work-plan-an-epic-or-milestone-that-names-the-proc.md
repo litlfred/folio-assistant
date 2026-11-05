@@ -51,3 +51,5 @@ _2026-11-05T18:03Z_ — Owner chose "Proposal seeds plan". Built `proposal:appro
 _2026-11-05T19:04Z_ — Merged on green: cat-harness-tools#1539 (proposal:approve) and cat-harness#1070 (todo-manager text). Plan step 4 done. Remaining: step 3 (a process declares whether it starts from a plan) and the proposal link on the page pointing at the store repository rather than the proposal's own.
 
 _2026-11-05T19:15Z_ — Owner chose "Fix proposal link": index gains plan.proposalHref resolved to the declaring repository (cat-harness-tools#1545), page uses it (cat-harness#1077). Verified in Chromium.
+
+_2026-11-05T20:12Z_ — Owner (relayed): plan step 3 not chosen now; filed as folio-assistant-rwhr (todo, parent rwmf).
