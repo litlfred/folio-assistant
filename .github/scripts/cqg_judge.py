@@ -77,6 +77,8 @@ SKIPPABLE = re.compile(
     r"|Repository gates — cat-harness standalone ratchet \(hard\))$"
 )
 RUNS_SCANNED = 30
+# The step that runs a PR's affected tests (CI speed 7, #2962); its first command is its label.
+SCOPED_STEP = "bash .github/scripts/pr-bun-test.sh"
 ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
 
 
@@ -203,11 +205,30 @@ def cmd_record(args):
             entry["undetermined"] = why
         else:
             entry["tests"] = tests
+    scoped = test_scope()
+    if kind and scoped is not None:
+        # CI speed 7 (#2962): this test step ran only the PR's affected files.
+        entry["scoped"] = scoped
     if exit_code != 0:
         entry["tail"] = tail_of(log_path)
     with open(os.path.join(state_dir(), "steps.jsonl"), "a", encoding="utf-8") as f:
         f.write(json.dumps(entry) + "\n")
     return 0
+
+
+def test_scope():
+    """The number of affected test files when CQG_TEST_SCOPE names a selection (`kind: some`), else None."""
+    path = os.environ.get("CQG_TEST_SCOPE")
+    if not path:
+        return None
+    try:
+        with open(path, encoding="utf-8") as f:
+            scope = json.load(f)
+    except (OSError, ValueError):
+        return None
+    if not isinstance(scope, dict) or scope.get("kind") != "some":
+        return None
+    return len(scope.get("files") or [])
 
 
 def tail_of(path, lines=15):
@@ -222,7 +243,7 @@ def build_report():
     d = state_dir()
     begun = os.path.isfile(os.path.join(d, "phase"))
     status = os.environ.get("CQG_JOB_STATUS", "success")
-    report = {"complete": begun and status == "success", "items": {}, "undetermined": [], "skipped": []}
+    report = {"complete": begun and status == "success", "items": {}, "undetermined": [], "skipped": [], "scoped": None}
     if not begun:
         report["undetermined"].append({"label": "(job)", "why": "the judged steps never began; an earlier step failed"})
     elif status != "success":
@@ -230,6 +251,8 @@ def build_report():
     path = os.path.join(d, "steps.jsonl")
     for line in open(path, encoding="utf-8") if os.path.isfile(path) else []:
         e = json.loads(line)
+        if e.get("scoped") is not None:
+            report["scoped"] = e["scoped"]
         if e.get("skipped"):
             report["skipped"].append({"label": e["label"], "why": e["skipped"]})
         elif e.get("undetermined"):
@@ -246,7 +269,7 @@ def build_report():
 
 
 def encode(report):
-    slim = {"complete": report["complete"], "undetermined": report["undetermined"],
+    slim = {"complete": report["complete"], "undetermined": report["undetermined"], "scoped": report.get("scoped"),
             "skipped": [k["label"] for k in report.get("skipped", [])],
             "items": {k: {"label": v["label"], "exit": v["exit"]} for k, v in report["items"].items()}}
     return MARKER + base64.b64encode(zlib.compress(json.dumps(slim, sort_keys=True).encode(), 9)).decode()
@@ -367,8 +390,11 @@ def cmd_verdict(_args):
                  *[f"- `{u['label']}`: {u['why']}" for u in head["undetermined"]],
                  "", *([f"Also failing: {len(fails)}."] if fails else [])])
         return 1
+    scope_note = ([f"Only the {head['scoped']} affected test file(s) were judged; the rest are skipped — not "
+                   "affected (not judged, and not a pass). The push of the merge to main runs the whole suite."]
+                  if head.get("scoped") is not None else [])
     if not fails:
-        summary([title, "", "No failures in the judged steps."])
+        summary([title, "", "No failures in the judged steps.", *([""] + scope_note if scope_note else [])])
         return 0
     event = os.environ.get("GITHUB_EVENT_NAME", "")
     if event != "pull_request":
@@ -396,6 +422,8 @@ def cmd_verdict(_args):
     if inherited:
         out += [f"{len(inherited)} failure(s) failing on main too — main's to fix, not counted here:", "",
                 "| failing on main too |", "| --- |", *rows(head, inherited)]
+    if scope_note:
+        out += ["", *scope_note]
     summary(out)
     return 1 if new else 0
 
@@ -423,6 +451,10 @@ def cmd_reuse_check(_args):
             if rec.get("skipped"):
                 return answer("false", f"`{j['name']}` in run {run_id} skipped {len(rec['skipped'])} step(s) on a "
                                        "local record, so it is not main's own run of them.")
+            if rec.get("scoped") is not None or any(
+                    v.get("label", "").startswith(SCOPED_STEP) for v in rec["items"].values()):
+                return answer("false", f"`{j['name']}` in run {run_id} ran only the PR's affected tests, "
+                                       "so main runs the whole suite.")
             if failing(rec):
                 return answer("false", f"`{j['name']}` in run {run_id} passed only because its "
                                        f"{len(failing(rec))} failure(s) were main's too, so main runs it again.")
