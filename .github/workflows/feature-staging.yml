@@ -310,16 +310,9 @@ jobs:
       # `ready_for_review` always build, and any failure to compute or read an
       # id builds, because a missing preview costs the reviewer.
       #
-      # The history is fetched without file contents and with only `.github/`
-      # checked out; `git diff` then fetches just the blobs the diff touches.
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        if: github.event_name == 'pull_request' && steps.defer.outputs.deferred != 'true'
-        continue-on-error: true
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-          filter: blob:none
-          sparse-checkout: .github
+      # The history is fetched into a bare repository, without file contents;
+      # `git diff` then fetches just the blobs the diff touches. Nothing of the
+      # PR is checked out or run: this job only reads git objects.
       - id: own-diff
         if: github.event_name == 'pull_request' && steps.defer.outputs.deferred != 'true'
         continue-on-error: true
@@ -332,6 +325,10 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           set -u
+          export GIT_DIR="$RUNNER_TEMP/own-diff.git"
+          git init -q --bare "$GIT_DIR"
+          git fetch -q --filter=blob:none "https://github.com/$REPO" "$HEAD_SHA" "$BASE_SHA" \
+            || { echo "could not fetch the PR's history: the preview builds"; exit 0; }
           mb=$(git merge-base "$BASE_SHA" "$HEAD_SHA" 2>/dev/null) || { echo "no merge base: the preview builds"; exit 0; }
           pid=$(git diff --binary "$mb" "$HEAD_SHA" | git patch-id --stable | cut -d' ' -f1)
           [ -n "$pid" ] || { echo "no patch id (an empty diff?): the preview builds"; exit 0; }
