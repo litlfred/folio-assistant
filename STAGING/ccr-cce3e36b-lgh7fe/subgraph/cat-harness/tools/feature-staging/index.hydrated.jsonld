@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/feature-staging.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.",
+      "description": "Publish a branch's built site to `branches/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.",
       "install": {
         "none": true
       },
@@ -29,7 +29,7 @@
             "arg": {
               "flag": "--cleanup-slug"
             },
-            "description": "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. For an orphan preview the health sweep reports: its pull request is already closed, so the close event cannot remove it.",
+            "description": "DELETION: the `branches/<slug>` to remove, instead of staging anything. For an orphan preview the health sweep reports: its pull request is already closed, so the close event cannot remove it.",
             "name": "cleanup_slug",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"

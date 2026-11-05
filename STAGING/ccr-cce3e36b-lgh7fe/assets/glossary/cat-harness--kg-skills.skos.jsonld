@@ -1516,7 +1516,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "How a checkout of this harness generates and publishes its docs site: regenerating derived references, composing the docs layers and each instance's site into one Jekyll source, building it with just-the-docs, the post-build passes, the TypeDoc API reference, the knowledge-graph export, and the full-replace publish to gh-pages and its STAGING previews."
+          "@value": "How a checkout of this harness generates and publishes its docs site: regenerating derived references, composing the docs layers and each instance's site into one Jekyll source, building it with just-the-docs, the post-build passes, the TypeDoc API reference, the knowledge-graph export, and the full-replace publish to gh-pages and its branches/ previews."
         }
       ],
       "skos:notation": "docs-generation",
@@ -1666,7 +1666,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Manages feature-branch staging deployments under gh-pages/STAGING/<branch-slug>/ for before/after publication review comparison. Handles branch creation, staging deployment, commit SHA stamping, and cleanup."
+          "@value": "Manages feature-branch staging deployments under gh-pages/branches/<branch-slug>/ for before/after publication review comparison. Handles branch creation, staging deployment, commit SHA stamping, and cleanup."
         }
       ],
       "skos:notation": "feature-staging",
@@ -3941,7 +3941,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (STAGING) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it."
+          "@value": "Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (branches/) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it."
         }
       ],
       "skos:notation": "staging-review",
@@ -4436,6 +4436,26 @@
       ],
       "skos:notation": "turn-reporting",
       "dcterms:source": "cat-harness/sdlc/skills/sdlc-core/turn-reporting.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/two-phase-move",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "two-phase-move"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Move a path that other layers link to without making the order of their re-pins matter: the moving layer declares the move and keeps answering at the old path for a window, the dependent layers switch in any order, and the old path goes once nothing links to it. Use before moving or renaming a directory another layer links into."
+        }
+      ],
+      "skos:notation": "two-phase-move",
+      "dcterms:source": "cat-harness/sdlc/skills/sdlc-core/two-phase-move.md",
       "skos:note": "candidate"
     },
     {

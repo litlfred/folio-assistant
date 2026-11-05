@@ -321,10 +321,8 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness-tools",
       "process": "Process_TestPlanExecution",
-      "status": "running",
-      "tokens": [
-        "Call_Sign"
-      ],
+      "status": "completed",
+      "tokens": [],
       "lastMoved": "2026-10-11T07:02:09.501Z",
       "beans": [
         "folio-assistant-ff09"
@@ -332,26 +330,11 @@
       "children": [
         {
           "process": "Process_QaReportSigning",
-          "status": "running",
-          "tokens": [
-            "Task_StoreSigned"
-          ]
+          "status": "completed",
+          "tokens": []
         }
       ],
-      "stuck": [
-        {
-          "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-10-11T07:02:09.501Z — 24 day(s), past the 7-day threshold"
-        },
-        {
-          "kind": "bean-closed",
-          "detail": "`folio-assistant-ff09` is completed while this instance still runs"
-        },
-        {
-          "kind": "bean-moved-on",
-          "detail": "`folio-assistant-ff09` was updated 2026-10-22T16:45:00Z, 11 day(s) after the instance last moved — the work went on and the position did not"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness-tools/workflows/crdm-detect-evaluation-r-3554a15543fc-54762ece6646/"
     }
   ]

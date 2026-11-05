@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 92 of 92 declared kind(s), 279 gate(s), 107 criteria.",
-      "count": 92,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 95 of 95 declared kind(s), 279 gate(s), 107 criteria.",
+      "count": 95,
       "entries": [
         {
           "kind": "archimate",
@@ -215,12 +215,25 @@
           "hasFiles": true
         },
         {
-          "kind": "business-processes",
+          "kind": "building-blocks",
           "state": "no-directory",
           "directories": [],
           "criteria": [],
           "subjectKinds": [],
           "gates": [],
+          "typed": true,
+          "adversarial": "never",
+          "hasFiles": false
+        },
+        {
+          "kind": "business-processes",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [
+            "bun run cat check:xml-comments"
+          ],
           "typed": false,
           "adversarial": "never",
           "hasFiles": false
@@ -1469,7 +1482,7 @@
             "bun run cat skills:docs:check"
           ],
           "typed": true,
-          "adversarial": "stale",
+          "adversarial": "reviewed",
           "hasFiles": true
         },
         {
@@ -1819,6 +1832,17 @@
           "hasFiles": true
         },
         {
+          "kind": "user-scenario",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "adversarial": "never",
+          "hasFiles": false
+        },
+        {
           "kind": "validators",
           "state": "covered",
           "directories": [
@@ -1940,6 +1964,17 @@
           "typed": true,
           "adversarial": "never",
           "hasFiles": true
+        },
+        {
+          "kind": "workshop",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "adversarial": "never",
+          "hasFiles": false
         }
       ]
     },
@@ -1963,7 +1998,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 19,
+      "count": 22,
       "entries": [
         {
           "kind": "archimate",
@@ -1976,9 +2011,16 @@
           "gates": []
         },
         {
-          "kind": "business-processes",
+          "kind": "building-blocks",
           "criteria": 0,
           "gates": []
+        },
+        {
+          "kind": "business-processes",
+          "criteria": 0,
+          "gates": [
+            "bun run cat check:xml-comments"
+          ]
         },
         {
           "kind": "cdn-site",
@@ -2061,6 +2103,16 @@
           "kind": "test-report",
           "criteria": 0,
           "gates": []
+        },
+        {
+          "kind": "user-scenario",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "workshop",
+          "criteria": 0,
+          "gates": []
         }
       ]
     },
@@ -2080,5 +2132,5 @@
       "entries": []
     }
   },
-  "total": 112
+  "total": 118
 }

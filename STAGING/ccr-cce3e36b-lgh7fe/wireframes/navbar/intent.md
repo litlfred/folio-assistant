@@ -23,7 +23,7 @@ This is the chrome every just-the-docs visualiser sits inside, the landing page 
 
 Drawn from a **built page**, not from source.
 
-- **The build:** the published site, as CI deployed it to `gh-pages` (source `7ef9d3a` on `main`, built 2026-10-06), taken from the `gh-pages` branch with `git archive`, because the published URL was unreachable from where this was drawn (the root, without `STAGING/`), served at `/folio-assistant/`, and driven with Playwright in Chromium at 1280×800 and 390×844. It is CI's own build with the pinned remote theme, so the chrome is evidence; `preview:site` uses the local theme gem, so it was not used for layout.
+- **The build:** the published site, as CI deployed it to `gh-pages` (source `7ef9d3a` on `main`, built 2026-10-06), taken from the `gh-pages` branch with `git archive`, because the published URL was unreachable from where this was drawn (the root, without `branches/`), served at `/folio-assistant/`, and driven with Playwright in Chromium at 1280×800 and 390×844. It is CI's own build with the pinned remote theme, so the chrome is evidence; `preview:site` uses the local theme gem, so it was not used for layout.
 - **The page:** the landing page, because the harness dividers open it.
 - **What was done on it:** the sidebar at rest, hovered and pinned open; every group unfolded; ▦ Harnesses opened; the glass pulled down; the dock shown; More, Todos and Glass settings opened; ▦ More actions → Page settings opened; and each cross-link followed.
 - **Visibility:** "visible" means hit-tested with `elementFromPoint`, because the closed strip keeps labels in the DOM at opacity 0.

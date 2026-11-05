@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "8a8093fd6ba901127f5605572bdd35e98551c278",
+    "sha": "7b3e0948bb58b7ba71cb1dedfde686f11f9f2830",
     "pr": "2954/merge",
-    "run": "42042361633"
+    "run": "42109744301"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "staging-review",
       "title": "Staging review — before/after comparison",
-      "description": "Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (STAGING) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it.",
+      "description": "Staging preview and before/after comparison for content review. Takes one optional string — what the reader wants to look at, in their own words — and returns a list of URLs, each looked up in the publish ref, with what is published at it and what to review there. Provides before (MAIN) and after (branches/) pairs so reviewers can compare rather than guess. Used by the CRDM feature development workflow, content authoring review sessions, and whenever a staging preview deploys or someone asks to see it.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/package/sdlc-core"
       ],

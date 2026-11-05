@@ -1794,7 +1794,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_FeatureStaging",
       "label": "CI/CD Pipeline",
-      "scopeNote": "Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.\n\nA FOURTH trigger starts none of them, and that is deliberate rather than an omission from this diagram. `merge_group` is declared on the workflow so it REPORTS in the merge queue — a required check that never reports on a `merge_group` event leaves every queued pull request pending forever — and all three jobs skip on it. A preview exists for the reviewers of a pull request; a queue entry has none and lives for minutes. Without the skip, `stage`'s existing guards all pass on a queue run (`github.event.action` is empty and the event is not a dispatch), so it would publish `STAGING/&lt;slug&gt;/` named after the ephemeral `gh-readonly-queue/...` ref, and nothing would ever remove it — `Start_Closed` below fires on `pull_request_target: closed`, and a queue branch is never a pull request that closes. That is the `plj1` shape arriving once per MERGE rather than once per pull request.",
+      "scopeNote": "Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `branches/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.\n\nA FOURTH trigger starts none of them, and that is deliberate rather than an omission from this diagram. `merge_group` is declared on the workflow so it REPORTS in the merge queue — a required check that never reports on a `merge_group` event leaves every queued pull request pending forever — and all three jobs skip on it. A preview exists for the reviewers of a pull request; a queue entry has none and lives for minutes. Without the skip, `stage`'s existing guards all pass on a queue run (`github.event.action` is empty and the event is not a dispatch), so it would publish `branches/&lt;slug&gt;/` named after the ephemeral `gh-readonly-queue/...` ref, and nothing would ever remove it — `Start_Closed` below fires on `pull_request_target: closed`, and a queue branch is never a pull request that closes. That is the `plj1` shape arriving once per MERGE rather than once per pull request.",
       "source": "cat-harness/sdlc/processes/feature-staging.bpmn"
     },
     {
@@ -2595,11 +2595,14 @@
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/beans",
       "@type": "skos:Concept",
-      "prefLabel": "Work plan",
-      "title": "Work plan",
+      "prefLabel": "Plans and work",
+      "title": "Plans and work",
       "notation": "kind/beans",
       "definition": "The work plan — what is being worked on, and where each running BPMN instance got to. Its inner directories are declared by `beans/beans.json`.",
-      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld"
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld",
+      "hiddenLabel": [
+        "Work plan"
+      ]
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/binary-release",
@@ -2635,6 +2638,15 @@
       "title": "Boards",
       "notation": "kind/boards",
       "definition": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/ui/board.ts`.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/building-blocks",
+      "@type": "skos:Concept",
+      "prefLabel": "Building blocks",
+      "title": "Building blocks",
+      "notation": "kind/building-blocks",
+      "definition": "Building-block catalogues -- layers and blocks (tools, systems, standards, trust networks) with their jurisdiction and what each is, the targets of a journey step's `uses` edges.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld"
     },
     {
@@ -3097,6 +3109,15 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/user-scenario",
+      "@type": "skos:Concept",
+      "prefLabel": "User scenarios",
+      "title": "User scenarios",
+      "notation": "kind/user-scenario",
+      "definition": "User scenarios as journey maps -- one file per journey: ordered steps, per actor what they do and feel, pain points, enablers, the record's trust state, and edges to user stories, BPMN tasks, requirements, FHIR examples and the building blocks each step uses.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/validators",
       "@type": "skos:Concept",
       "prefLabel": "Validators",
@@ -3148,6 +3169,15 @@
       "title": "Workflow state",
       "notation": "kind/workflow-state",
       "definition": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/workshop",
+      "@type": "skos:Concept",
+      "prefLabel": "Workshops",
+      "title": "Workshops",
+      "notation": "kind/workshop",
+      "definition": "Workshops over journeys -- modules, learning objectives, questions for the room per journey step, reference tables, printable sheets, job aids and readings.",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld"
     },
     {
@@ -3358,6 +3388,18 @@
       "broader": [
         "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld#node-kind/carried-note",
         "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld#node-kind/themed"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld#node-kind/work-plan",
+      "@type": "skos:Concept",
+      "prefLabel": "Work plan",
+      "title": "Work plan",
+      "notation": "node-kind/work-plan",
+      "definition": "An epic or milestone that names the process it runs, with a `process:` tag, and the proposal it came from, with a `proposal:` tag. Not every process needs one; the work items under it are its work.",
+      "broader": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld#node-kind/bean"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-glossary.jsonld"
     },

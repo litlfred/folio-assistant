@@ -103,7 +103,7 @@
       "@type": "prov:Entity",
       "cat-harness:provenanceKind": "issue",
       "cat-harness:section": "How this was drawn",
-      "prov:value": "- **The build:** the published site, as CI deployed it to `gh-pages`. Its `build.json` names source `7ef9d3a` on `main` (the merge of #2287), built 2026-10-06T15:04:58Z, and the footer reads \"deployed 7ef9d3a · 2026-10-06T14:48:45Z\". The proxy here refuses the published URL, so the files were taken from the `gh-pages` branch with `git archive` (the root, without `STAGING/`), served at `/folio-assistant/`, and driven with Playwright in Chromium at 1280×800 and 390×844. This is CI's own build, with the pinned remote theme, so the chrome is evidence. `preview:site` also builds here, but it uses the local theme gem, so it was not used for layout.",
+      "prov:value": "- **The build:** the published site, as CI deployed it to `gh-pages`. Its `build.json` names source `7ef9d3a` on `main` (the merge of #2287), built 2026-10-06T15:04:58Z, and the footer reads \"deployed 7ef9d3a · 2026-10-06T14:48:45Z\". The proxy here refuses the published URL, so the files were taken from the `gh-pages` branch with `git archive` (the root, without `branches/`), served at `/folio-assistant/`, and driven with Playwright in Chromium at 1280×800 and 390×844. This is CI's own build, with the pinned remote theme, so the chrome is evidence. `preview:site` also builds here, but it uses the local theme gem, so it was not used for layout.",
       "cat-harness:refs": [
         "#2287",
         "2026-10-06"

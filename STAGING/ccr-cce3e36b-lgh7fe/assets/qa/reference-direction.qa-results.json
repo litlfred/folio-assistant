@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/check-reference-direction.ts",
-    "script_hash": "ef3ed5b2d57a"
+    "script_hash": "13f422584063"
   },
   "subject": {
     "kind": "reference-direction",
@@ -35,11 +35,11 @@
       "entries": [
         {
           "instances": 12,
-          "occurrences": 6519,
+          "occurrences": 6543,
           "allowed": 0,
-          "wrongDirection": 8,
-          "wrongDirectionFiles": 6,
-          "exempt": 6511,
+          "wrongDirection": 10,
+          "wrongDirectionFiles": 7,
+          "exempt": 6533,
           "namesRepository": 0,
           "undetermined": 0,
           "pendingFiles": 0,
@@ -49,10 +49,14 @@
     },
     "wrong-direction": {
       "summary": "A.10 (owner, Q-B 2026-10-01): every file holding a wrong-direction reference — naming ONE instance above it or several — one entry per file and per instance it names. The backlog, recorded so that `--check` can tell an inherited pair from a NEW one: a file newly naming an instance above it, single destination or not, fails; one that stops is resolved. The fix is to REWORD in place (Q1), not to move the file.",
-      "count": 6,
+      "count": 7,
       "entries": [
         {
           "file": "bootstrap/models/models.json",
+          "target": "who-iris"
+        },
+        {
+          "file": "cat-harness-tools/scripts/state-mount.ts",
           "target": "who-iris"
         },
         {
@@ -78,5 +82,5 @@
       ]
     }
   },
-  "total": 7
+  "total": 8
 }

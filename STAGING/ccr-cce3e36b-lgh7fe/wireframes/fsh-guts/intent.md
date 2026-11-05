@@ -7,7 +7,7 @@ Three surfaces show the `fsh-guts` graph or lead to it:
 1. **The page.** `cat-harness/docs/cat-harness/fsh-guts/index.md (declared visualiser `cat-harness/fsh-guts`; `/fsh-guts/` is its alias)` is tile `fsh-guts` in `cat-harness/docs/_data/harness.json`, with surfaces `navbar`, `board` and `glass`.
    - Generator: `cat-harness/scripts/gen-fsh-guts-viz.ts`, declared as the visualisation's `writer`.
    - It is NOT committed: `fsh-guts/` is kept on a branch, so the page is built at publish by `derive:publish` after `state:mount`.
-   - It is declared `publish: "staging-only"` in `cat-harness.json`, so `compose-docs.ts` includes it only in local builds and `STAGING/<slug>/` previews.
+   - It is declared `publish: "staging-only"` in `cat-harness.json`, so `compose-docs.ts` includes it only in local builds and `branches/<slug>/` previews.
 2. **The dead-fish viewer**, under Settings at a dead-fish icon, with a counter on the icon and a dialog to select and display the items.
    - It is implemented in `cat-harness/docs/assets/js/docs-ui.js` (`FISH_GLYPH`, `fetchDiscarded`, `buildDiscardedView`, `buildDiscardedDetail`, and the Settings view in `buildViews`).
    - It reads `<base>/fsh-guts.json` (the `fa-fsh-guts-src` meta tag in `_includes/head_custom.html`), which `cat-harness/scripts/fsh-guts-export.ts` writes.
@@ -67,7 +67,7 @@ On web the panel mounts in the sidebar column (`mountPanelInSidebarColumn`). On 
 
 The glass (rendered): pulled down, its bottom strip holds ☑ Todos, ⚙ Settings and the declared `glass` tiles.
 - With `fa-staging` empty, as on a local or canonical build, **fsh-guts is not on the strip**.
-- With `fa-staging` set, as on a STAGING preview, it is, and it opens the page, not the viewer.
+- With `fa-staging` set, as on a branches/ preview, it is, and it opens the page, not the viewer.
 - The glass's ⚙ "Folio settings — theme, avatars, opacity" holds theme, avatars, opacity, blur, "Tidy the glass" and "Back to the default glass". It has **no Discarded tile**.
 
 ## Findings

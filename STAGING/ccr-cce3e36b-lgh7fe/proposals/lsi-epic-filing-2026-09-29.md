@@ -31,7 +31,7 @@ Thresholds (house, adjustable in the script): no-fit below cosine 0.3; ambiguous
 | `ngxj` TRANSLATION CATALOGUES: five pages shipped .md-only, so translation:drift holds every open | `bzyu` TRANSLATION | 0.57 | 0.14 | now under `1xhc` CI RELIABILITY |
 | `95sk` FOLIO AS CONVENTION (R24, R27–R29): the folio on any harness, materialised assets and read | `6lb8` FOLIO BOARD | 0.77 | 0.13 | now under `vke6` SPLIT (#223) |
 | `v1hw` VISUALISER: uploads/ — an uningested badge, a browsable queue, and the first WRITABLE surf | `yj32` HARNESS AS INTERFACE | 0.61 | 0.13 | now under `slw1` INGEST |
-| `oz5w` STAGING CLEANUP vs BRANCH REUSE: merging PR N deletes the preview PR N+1 just published | `1xhc` CI RELIABILITY | 0.64 | 0.13 | now under `ahvw` PROCESS |
+| `oz5w` branches/ CLEANUP vs BRANCH REUSE: merging PR N deletes the preview PR N+1 just published | `1xhc` CI RELIABILITY | 0.64 | 0.13 | now under `ahvw` PROCESS |
 | `cpmo` SMART-BASE CROSSWALKS: the v1 to v2 ConceptMaps exist, are draft, and one is incomplete | `uhkv` SMART STACK | 0.74 | 0.13 | now under `2yyh` SMART-BASE HARNESS |
 | `ceud` CI: a push to a PR branch fired NO workflow at all — a PR that looks untested rather than  | `1xhc` CI RELIABILITY | 0.61 | 0.12 | now under `1swy` QA |
 | `v9ah` SELF-DECLARED-DONE NAMES ONLY MID-FLIGHT WORK ITEMS: every finding the check produces is one no | `ahvw` PROCESS | 0.66 | 0.12 | now under `1xhc` CI RELIABILITY |

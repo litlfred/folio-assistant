@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "8a8093fd6ba901127f5605572bdd35e98551c278",
+    "sha": "7b3e0948bb58b7ba71cb1dedfde686f11f9f2830",
     "pr": "2954/merge",
-    "run": "42042361633"
+    "run": "42109744301"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "feature-staging",
       "title": "Stage a branch's preview",
-      "description": "Publish a branch's built site to `STAGING/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.",
+      "description": "Publish a branch's built site to `branches/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.",
       "install": {
         "none": true
       },
@@ -389,7 +389,7 @@
           {
             "name": "cleanup_slug",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/tool-types.schema.json#/$defs/Slug",
-            "description": "DELETION: the `STAGING/<slug>` to remove, instead of staging anything. For an orphan preview the health sweep reports: its pull request is already closed, so the close event cannot remove it.",
+            "description": "DELETION: the `branches/<slug>` to remove, instead of staging anything. For an orphan preview the health sweep reports: its pull request is already closed, so the close event cannot remove it.",
             "required": false,
             "arg": {
               "flag": "--cleanup-slug"

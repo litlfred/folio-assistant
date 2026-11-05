@@ -2026,6 +2026,21 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/process/user-scenario.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "user-scenario.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "instance": "cat-harness-tools",
+      "name": "user-scenario",
+      "graphNode": "schema",
+      "summary": "User scenarios: a DAK user scenario told as a journey map, and the",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/process/user-story.test.ts",
       "instance": "cat-harness-tools",
       "name": "user-story.test",
@@ -2038,6 +2053,21 @@
       "name": "user-story",
       "graphNode": "schema",
       "summary": "User stories — what a reader acting in a role is trying to do.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness-tools/schemas/process/workshop.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "workshop.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "instance": "cat-harness-tools",
+      "name": "workshop",
+      "graphNode": "schema",
+      "summary": "Workshops: the didactic layer over a set of journeys.",
       "isTest": false
     },
     {
@@ -2265,6 +2295,15 @@
       "name": "merge-review",
       "graphNode": "schema",
       "summary": "Agentic pre-merge review and would-have-blocked counterfactual schemas.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness-tools/schemas/sdlc/preview-prefix.ts",
+      "instance": "cat-harness-tools",
+      "name": "preview-prefix",
+      "graphNode": "none",
+      "reason": "one path constant and its readers",
+      "summary": "Where a branch's preview is published on the publish branch: `branches/<slug>/`.",
       "isTest": false
     },
     {
@@ -2538,6 +2577,15 @@
       "name": "viewer-nav-qa",
       "graphNode": "schema",
       "summary": "The viewer-navbar audit — the common navbar rail as data.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness-tools/schemas/sdlc/work-plan.ts",
+      "instance": "cat-harness-tools",
+      "name": "work-plan",
+      "graphNode": "none",
+      "reason": "a reading of a work item's tags; its one kind, {@link WorkPlanKind},",
+      "summary": "A work plan is an epic or a milestone that names the process it instantiates.",
       "isTest": false
     },
     {
@@ -25684,6 +25732,13 @@
           "doc": "The opt-in sub-graphs this instance switches on FOR ITSELF, qualified"
         },
         {
+          "name": "moves",
+          "type": "DeclaredMove[]",
+          "optional": true,
+          "array": true,
+          "doc": "Paths this instance moved and still answers for, during the window of the"
+        },
+        {
           "name": "taskIo",
           "type": "Record< string, { inputs?: string[]; outputs?: string[]; /** The task that REPAIRS this check when the `X` / `X:check` …",
           "optional": true,
@@ -25751,6 +25806,7 @@
         "cat-harness-tools/schemas/kg/cat-harness.ts#ContentAdapterDeclaration",
         "cat-harness-tools/schemas/kg/cat-harness.ts#ContentDirectory",
         "cat-harness-tools/schemas/kg/cat-harness.ts#ContentTypeTranslation",
+        "cat-harness-tools/schemas/kg/cat-harness.ts#DeclaredMove",
         "cat-harness-tools/schemas/kg/cat-harness.ts#GlassStripPin",
         "cat-harness-tools/schemas/kg/cat-harness.ts#HarnessVisualiser",
         "cat-harness-tools/schemas/kg/cat-harness.ts#InstanceLocation",
@@ -26338,6 +26394,60 @@
       ],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/cat-harness.ts#DeclaredMove",
+      "name": "DeclaredMove",
+      "module": "cat-harness-tools/schemas/kg/cat-harness.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/cat-harness.ts#DeclaredMoveSchema",
+      "name": "DeclaredMoveSchema",
+      "module": "cat-harness-tools/schemas/kg/cat-harness.ts",
+      "kind": "zod-object",
+      "doc": "One entry of a declaration's `moves` — see that field.",
+      "fields": [
+        {
+          "name": "from",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "to",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "until",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/, \"a date, `YYYY-MM-DD`\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "because",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -30581,7 +30691,7 @@
           "type": "z.string().optional()",
           "optional": true,
           "array": false,
-          "doc": "HOW TO FETCH WHILE STAGING, and the provenance of the bytes — not what is"
+          "doc": "HOW TO FETCH WHILE branches/, and the provenance of the bytes — not what is"
         },
         {
           "name": "provides",
@@ -33561,10 +33671,13 @@
       "name": "NameRule",
       "module": "cat-harness-tools/schemas/kg/node-kind-index.ts",
       "kind": "type-alias",
-      "doc": "The rules that find a kind's nodes WITHOUT a typology. One today.",
+      "doc": "The rules that find a kind's nodes WITHOUT a typology. Two today.",
       "fields": [],
       "extendsNames": [],
-      "values": [],
+      "values": [
+        "instance-declaration",
+        "process-tag"
+      ],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -35163,7 +35276,14 @@
           "type": "string",
           "optional": true,
           "array": false,
-          "doc": "Repo HEAD at review time."
+          "doc": "Repo HEAD at review time — read from older sidecars, no longer written."
+        },
+        {
+          "name": "tree",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Tree of repo HEAD at review time — what verdicts record since bean 69lr"
         },
         {
           "name": "scriptHash",
@@ -47749,6 +47869,895 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlock",
+      "name": "BuildingBlock",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlocks",
+      "name": "BuildingBlocks",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "name": "BuildingBlockSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "One block of a building-block catalogue.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Id",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "short",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A label for a crowded grid."
+        },
+        {
+          "name": "kind",
+          "type": "z.enum([\"tool\", \"system\", \"standard\", \"network\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`tool`: software anyone can deploy · `system`: a deployed system · `standard`: a specification · `network`: a trust network."
+        },
+        {
+          "name": "layer",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "doc": "One of the catalogue's layers."
+        },
+        {
+          "name": "jurisdiction",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "Whose block it is: a country for its deployed system, `International` for what anyone can adopt."
+        },
+        {
+          "name": "owner",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "what",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "What it is, in one sentence."
+        },
+        {
+          "name": "soWhat",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Why it matters for the journeys, in one sentence."
+        },
+        {
+          "name": "components",
+          "type": "z.array(Text).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The ArchiMate element keys that deploy this block."
+        },
+        {
+          "name": "links",
+          "type": "z.array(z.object({ label: Text, url: z.string().url() }).strict()).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlocksKind",
+      "name": "BuildingBlocksKind",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "`building-blocks/0.1.0`: the catalogue a step's `uses` edges point into.",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlocksSchema",
+      "name": "BuildingBlocksSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "BuildingBlocksKind"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlocksKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#Experience",
+      "name": "Experience",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#ExperienceSchema",
+      "name": "ExperienceSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "One actor's experience of a step.",
+      "fields": [
+        {
+          "name": "actor",
+          "type": "Id",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doing",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "feeling",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "In their own words."
+        },
+        {
+          "name": "emotion",
+          "type": "z.number().int().min(-2).max(2).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "-2 distressed, -1 worried, 0 neutral, 1 reassured, 2 delighted."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
+      "name": "HandoffSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "summary",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "from",
+          "type": "Id.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "to",
+          "type": "Id.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "offline",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "carrier",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "How it travels: a camera scan, a sync through a gateway, a QR on a phone."
+        },
+        {
+          "name": "payload",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What travels, in the data's own terms."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+      "name": "Id",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-scalar",
+      "doc": "A lower-case kebab id: a scenario, an actor, a story, a block.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#Illustration",
+      "name": "Illustration",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#IllustrationSchema",
+      "name": "IllustrationSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "A step's picture: the image when there is one, and the brief for drawing it",
+      "fields": [
+        {
+          "name": "src",
+          "type": "Text.optional().describe(\"The image, relative to the instance root. It carries NO text: the step title and any caption …",
+          "optional": true,
+          "array": false,
+          "doc": "The image, instance-relative (`docs/images/p3-mina.png`), with no text in it. Absent: not drawn yet."
+        },
+        {
+          "name": "alt",
+          "type": "Text.describe(\"What the picture shows: translatable page text, rendered beside the image as its caption, never baked in…",
+          "optional": false,
+          "array": false,
+          "doc": "What the picture shows, for a reader who cannot see it; translatable page text, the caption the picture itself never carries."
+        },
+        {
+          "name": "prompt",
+          "type": "Text.optional().describe(\"The scene, as a prompt for an image generator, for when no picture exists yet. It asks for no…",
+          "optional": true,
+          "array": false,
+          "doc": "The scene, as a prompt for an image generator: what to draw when `src` is absent. It asks for no readable text."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#IllustrationStyle",
+      "name": "IllustrationStyle",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#IllustrationStyleSchema",
+      "name": "IllustrationStyleSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "The style and cast a scenario's illustrations share, so each step's prompt says only its scene.",
+      "fields": [
+        {
+          "name": "prompt",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "The style prefix every step's prompt is read with."
+        },
+        {
+          "name": "cast",
+          "type": "z.array(z.object({ actor: Id, description: Text }).strict()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "How each person is drawn, kept the same across steps. Every person is fictional."
+        },
+        {
+          "name": "notes",
+          "type": "z.array(Text).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "What to keep in mind: cultural notes, what never to draw."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersona",
+      "name": "JourneyPersona",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema",
+      "name": "JourneyPersonaSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "The persona an actor plays in a journey, kept on the actor",
+      "fields": [
+        {
+          "name": "name",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "role",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "country",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "goal",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "needs",
+          "type": "z.array(Text).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "frustrations",
+          "type": "z.array(Text).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "initials",
+          "type": "z.string().min(1).max(3).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Two letters for an avatar; derived from `name` when absent."
+        },
+        {
+          "name": "color",
+          "type": "z.string().regex(/^#[0-9a-fA-F]{6}$/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A CSS colour for the persona's lane and curve; assigned in order when absent."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#PreconditionSchema",
+      "name": "PreconditionSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "title",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "Markdown."
+        },
+        {
+          "name": "requirements",
+          "type": "z.array(Text).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#RealisedBy",
+      "name": "RealisedBy",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#RealisedBySchema",
+      "name": "RealisedBySchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "The BPMN that carries a step out: a process file and, optionally, which of its flow nodes.",
+      "fields": [
+        {
+          "name": "process",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "The BPMN file, relative to the instance root."
+        },
+        {
+          "name": "tasks",
+          "type": "z.array(Text).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Flow-node ids in that process. Omitted: the whole process."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#RecordSchema",
+      "name": "RecordSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "state",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "A code of the scenario's `trustLadder` code list."
+        },
+        {
+          "name": "description",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "heldWhere",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#Reference",
+      "name": "Reference",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#ReferenceSchema",
+      "name": "ReferenceSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "A labelled link. `href` is a URL or a repository-relative path.",
+      "fields": [
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "href",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rel",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What the link is to the step or journey: `specifies`, `illustrates`, `reading`. Free text."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#ScenarioStep",
+      "name": "ScenarioStep",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#ScenarioV01",
+      "name": "ScenarioV01",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "undetermined",
+      "note": "{ /** DAK UserScenario.id. */ id: Id, /** DAK UserScenario.title. */ title: Text, /** DAK UserScenario.description[x]: Markdown. */ description: Text, /** DAK …",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#StepV01",
+      "name": "StepV01",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "undetermined",
+      "note": "{ /** The step's code in the story (J1, J2a, J4.0b, P3). */ id: z.string().regex(/^[A-Za-z0-9][A-Za-z0-9.-]*$/), title: Text, /** One sentence that tells the s…",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#StepV02",
+      "name": "StepV02",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "undetermined",
+      "note": "{ ...StepV01, /** What the specification does not yet cover for this step: each a finding, not a failure. */ gaps: z.array(Text).optional(), references: z.arra…",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "name": "Text",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#UserScenario",
+      "name": "UserScenario",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "doc": "A user scenario of either family, as a reader takes it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#UserScenarioKind",
+      "name": "UserScenarioKind",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "`user-scenario/0.2.0`, as a node kind: 0.1.0 plus grouping, views,",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#UserScenarioSchema",
+      "name": "UserScenarioSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "UserScenarioKind"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#UserScenarioKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#UserScenarioV01Schema",
+      "name": "UserScenarioV01Schema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "The draft family exactly as smart-trust-demo wrote and checked it: no 0.2.0 field, at least one step.",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(USER_SCENARIO_V01)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "steps",
+          "type": "z.array(z.object(StepV01).strict()).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#StepV01"
+      ],
+      "unresolved": [],
+      "external": [
+        "USER_SCENARIO_V01",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#UsesSchema",
+      "name": "UsesSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "A step's use of a building block, in the role it plays there.",
+      "fields": [
+        {
+          "name": "block",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "doc": "A block id in a `building-blocks` catalogue."
+        },
+        {
+          "name": "role",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "What the block does in THIS step, in one line."
+        },
+        {
+          "name": "component",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which ArchiMate component plays it here, when the block names more than one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#ViewRefSchema",
+      "name": "ViewRefSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "An ArchiMate view of a journey: a model id of the instance's `cat-archimate.config.json` and a view id in it.",
+      "fields": [
+        {
+          "name": "model",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "view",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#WhatIfSchema",
+      "name": "WhatIfSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "scenario",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "outcome",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-story.ts#UserStory",
       "name": "UserStory",
       "module": "cat-harness-tools/schemas/process/user-story.ts",
@@ -47843,6 +48852,757 @@
       "values": [],
       "refs": [
         "cat-harness-tools/schemas/process/role-graph.ts#RoleRefSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "name": "Id",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+      "name": "ModuleId",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-scalar",
+      "doc": "A module id: as the workshop numbers them (`M1`, `day-1-am`).",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#QuestionSchema",
+      "name": "QuestionSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "module",
+          "type": "ModuleId",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#ResourceKind",
+      "name": "ResourceKind",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "job-aid",
+        "handout",
+        "reading",
+        "slides",
+        "video",
+        "tool",
+        "template",
+        "link"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#StepTagSchema",
+      "name": "StepTagSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "doc": "Which rows of one table a step touches; `why` when the reason is not obvious.",
+      "fields": [
+        {
+          "name": "table",
+          "type": "Id",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "row",
+          "type": "Id",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "why",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#TableRowSchema",
+      "name": "TableRowSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Id",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "question",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The question the row asks a room."
+        },
+        {
+          "name": "what",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What the row means, in one sentence."
+        },
+        {
+          "name": "example",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A worked example from somewhere real."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "name": "Text",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#Workshop",
+      "name": "Workshop",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopKind",
+      "name": "WorkshopKind",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "doc": "`workshop/0.1.0`, as a node kind.",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopModule",
+      "name": "WorkshopModule",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopModuleSchema",
+      "name": "WorkshopModuleSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "ModuleId",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "day",
+          "type": "z.number().int().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Which day or session block it is in, when the workshop runs over several."
+        },
+        {
+          "name": "carries",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The question the module carries, in one line."
+        },
+        {
+          "name": "description",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "objectives",
+          "type": "z.array(Text).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "What a participant can do after it."
+        },
+        {
+          "name": "sheet",
+          "type": "Id.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The sheet (`sheets[].id`) the module fills."
+        },
+        {
+          "name": "tables",
+          "type": "z.array(Id).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Tables (`tables[].id`) the module works through."
+        },
+        {
+          "name": "durationMinutes",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentation",
+      "name": "WorkshopPresentation",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "name": "WorkshopPresentationSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "doc": "How the journeys viewer presents a workshop in a room (its overview and",
+      "fields": [
+        {
+          "name": "name",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The app's name in its frame (\"VaxLink\"); the workshop title when absent."
+        },
+        {
+          "name": "badge",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A short badge beside the name (\"Interactive Spec\")."
+        },
+        {
+          "name": "tagline",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "One line under the name."
+        },
+        {
+          "name": "occasion",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The occasion, first on the frame's top bar (\"WHO Pre-GDHF Vignette\")."
+        },
+        {
+          "name": "subject",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What the story is about, beside the occasion."
+        },
+        {
+          "name": "scope",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Where the story moves, after the step range (\"Thailand ⇄ Lao PDR\")."
+        },
+        {
+          "name": "status",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A status line at the right of the top bar."
+        },
+        {
+          "name": "story",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The story in one sentence: the overview's headline."
+        },
+        {
+          "name": "lede",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A line under it."
+        },
+        {
+          "name": "recordOf",
+          "type": "Id.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The actor whose record the trust ladder follows (\"Somsack's record\")."
+        },
+        {
+          "name": "presenterNote",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The presenter's note on the overview; a step's note is its `facilitatorCue`."
+        },
+        {
+          "name": "about",
+          "type": "z.object({ title: Text, text: Text.optional() }).strict().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A band on the overview naming what the walkthrough demonstrates, with `links`."
+        },
+        {
+          "name": "links",
+          "type": "z.array(z.object({ label: Text, href: Text, frame: Text.optional() }).strict()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Links out (the IG, its source, its journeys), drawn in the `about` band; one with `frame` is also on the app bar, under that label."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResource",
+      "name": "WorkshopResource",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
+      "name": "WorkshopResourceSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Id",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "ResourceKind",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "href",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A URL, or a path relative to the workshop file."
+        },
+        {
+          "name": "body",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "For a job aid: the short instructions themselves, Markdown, printed with it."
+        },
+        {
+          "name": "modules",
+          "type": "z.array(ModuleId).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "steps",
+          "type": "z.array(Text).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Step refs, `<scenario id>#<step id>`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+        "cat-harness-tools/schemas/process/workshop.ts#ResourceKind",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSchema",
+      "name": "WorkshopSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "WorkshopKind"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#WorkshopKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSheet",
+      "name": "WorkshopSheet",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSheetSchema",
+      "name": "WorkshopSheetSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Id",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "As the room calls it: \"Sheet 4\"."
+        },
+        {
+          "name": "title",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "size",
+          "type": "z.enum([\"A3\", \"A4\"]).default(\"A3\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "modules",
+          "type": "z.array(ModuleId).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "The modules whose questions it carries, in order."
+        },
+        {
+          "name": "fields",
+          "type": "z.array(z.object({ label: Text, lines: z.number().int().min(1).max(12).default(2) }).strict()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Write-in fields the sheet has besides the module questions."
+        },
+        {
+          "name": "assessmentStrip",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Print the assessment strip across its foot."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStep",
+      "name": "WorkshopStep",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStepSchema",
+      "name": "WorkshopStepSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "scenario",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "doc": "The scenario id (`user-scenario`), looked up in this instance first."
+        },
+        {
+          "name": "step",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "The step id in that scenario."
+        },
+        {
+          "name": "askTheRoom",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The one question for the whole room."
+        },
+        {
+          "name": "facilitatorCue",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A note to the facilitator on how to run the step."
+        },
+        {
+          "name": "questions",
+          "type": "z.array(QuestionSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "capabilities",
+          "type": "z.array(z.object({ id: Id, label: Text }).strict()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "What had to exist for the step to work: the rows the assessment rates."
+        },
+        {
+          "name": "tags",
+          "type": "z.array(StepTagSchema).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#QuestionSchema",
+        "cat-harness-tools/schemas/process/workshop.ts#StepTagSchema",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopTable",
+      "name": "WorkshopTable",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/workshop.ts#WorkshopTableSchema",
+      "name": "WorkshopTableSchema",
+      "module": "cat-harness-tools/schemas/process/workshop.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "Id",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "module",
+          "type": "ModuleId.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The module that teaches it."
+        },
+        {
+          "name": "rows",
+          "type": "z.array(TableRowSchema).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/workshop.ts#Id",
+        "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+        "cat-harness-tools/schemas/process/workshop.ts#TableRowSchema",
+        "cat-harness-tools/schemas/process/workshop.ts#Text"
       ],
       "unresolved": [],
       "external": [
@@ -49361,11 +51121,18 @@
           "doc": "When the audit ran (ISO-8601 UTC)."
         },
         {
+          "name": "reviewed_tree",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "Tree of repo HEAD at audit time (`HEAD^{tree}`, full git id, or the"
+        },
+        {
           "name": "reviewed_sha",
           "type": "string",
           "optional": true,
           "array": false,
-          "doc": "Repo HEAD at audit time (full git SHA). Producers must set this on"
+          "doc": "Repo HEAD at audit time (full git SHA). No longer written — superseded"
         },
         {
           "name": "notes",
@@ -56582,7 +58349,7 @@
           "type": "NonBlank",
           "optional": false,
           "array": false,
-          "doc": "The route this write owns — `/` for the published site, `STAGING/<slug>/`"
+          "doc": "The route this write owns — `/` for the published site, `branches/<slug>/`"
         },
         {
           "name": "requestedBy",
@@ -57530,7 +59297,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The `STAGING/<slug>` path segment. Derived, never reversed."
+          "doc": "The `branches/<slug>` path segment. Derived, never reversed."
         },
         {
           "name": "branch",
@@ -60820,6 +62587,96 @@
         "linked",
         "missing"
       ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/work-plan.ts#ProposalApproval",
+      "name": "ProposalApproval",
+      "module": "cat-harness-tools/schemas/sdlc/work-plan.ts",
+      "kind": "interface",
+      "doc": "What a proposal's front matter says about its approval.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The proposal's path, as the plan's `proposal:` tag spells it."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "plan",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/work-plan.ts#WorkPlanFinding",
+      "name": "WorkPlanFinding",
+      "module": "cat-harness-tools/schemas/sdlc/work-plan.ts",
+      "kind": "interface",
+      "doc": "A work-plan defect a reader should see: reported, never fatal.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "problem",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/work-plan.ts#WorkPlanTags",
+      "name": "WorkPlanTags",
+      "module": "cat-harness-tools/schemas/sdlc/work-plan.ts",
+      "kind": "interface",
+      "doc": "What a work item's tags say about it as a work plan.",
+      "fields": [
+        {
+          "name": "processes",
+          "type": "readonly string[]",
+          "optional": false,
+          "array": false,
+          "doc": "The processes it instantiates, in tag order, without duplicates."
+        },
+        {
+          "name": "proposal",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The proposal it was made from, when it names one."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
       "refs": [],
       "unresolved": [],
       "external": [],
@@ -68000,7 +69857,7 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The path on the publish branch — `STAGING/<slug>`, or `/` for the site."
+          "doc": "The path on the publish branch — `branches/<slug>`, or `/` for the site."
         },
         {
           "name": "slug",
@@ -90182,6 +92039,14 @@
     },
     {
       "from": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness-tools/schemas/kg/cat-harness.ts#DeclaredMove",
+      "via": "moves",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/kg/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness-tools/schemas/kg/cat-harness.ts#GlassStripPin",
       "via": "glassStrip",
       "kind": "field",
@@ -93669,6 +95534,430 @@
       "array": true
     },
     {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+      "via": "layer",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "components",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "jurisdiction",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "links",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "name",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "owner",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "short",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "soWhat",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlockSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "what",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlocksSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlocksKind",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#ExperienceSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+      "via": "actor",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#ExperienceSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "doing",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#ExperienceSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "feeling",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+      "via": "from",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+      "via": "to",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "carrier",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "payload",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "summary",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#IllustrationSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "alt",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#IllustrationSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "prompt",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#IllustrationSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "src",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#IllustrationStyleSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+      "via": "cast",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#IllustrationStyleSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "cast",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#IllustrationStyleSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "notes",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#IllustrationStyleSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "prompt",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "country",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "frustrations",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "goal",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "name",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "needs",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "role",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#PreconditionSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "description",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#PreconditionSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "requirements",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#PreconditionSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#RealisedBySchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "process",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#RealisedBySchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "tasks",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#RecordSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "description",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#RecordSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "heldWhere",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#RecordSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "state",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#ReferenceSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "href",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#ReferenceSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#ReferenceSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "rel",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#UserScenarioSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#UserScenarioKind",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#UserScenarioV01Schema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#StepV01",
+      "via": "steps",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#UsesSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+      "via": "block",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#UsesSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "component",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#UsesSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "role",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#ViewRefSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#ViewRefSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "model",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#ViewRefSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "view",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#WhatIfSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "outcome",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#WhatIfSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "scenario",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/process/user-story.ts#UserStoryGraphSchema",
       "to": "cat-harness-tools/schemas/process/user-story.ts#UserStorySchema",
       "via": "stories",
@@ -93688,6 +95977,462 @@
       "from": "cat-harness-tools/schemas/process/user-story.ts#UserStorySchema",
       "to": "cat-harness-tools/schemas/process/role-graph.ts#RoleRefSchema",
       "via": "role",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#QuestionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+      "via": "module",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#QuestionSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "text",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#StepTagSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "row",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#StepTagSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "table",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#StepTagSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "why",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#TableRowSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#TableRowSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "example",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#TableRowSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#TableRowSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "question",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#TableRowSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "what",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopModuleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "sheet",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopModuleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "tables",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopModuleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopModuleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "carries",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopModuleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "description",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopModuleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "objectives",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopModuleSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "recordOf",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "about",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "badge",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "lede",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "links",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "name",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "occasion",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "presenterNote",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "scope",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "status",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "story",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "subject",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "tagline",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+      "via": "modules",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#ResourceKind",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "body",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "description",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "href",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "steps",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#WorkshopKind",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSheetSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSheetSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+      "via": "modules",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSheetSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "fields",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSheetSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopSheetSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStepSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "capabilities",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStepSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "scenario",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStepSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#QuestionSchema",
+      "via": "questions",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStepSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#StepTagSchema",
+      "via": "tags",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStepSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "askTheRoom",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStepSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "capabilities",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStepSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "facilitatorCue",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopStepSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "step",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopTableSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "id",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopTableSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#ModuleId",
+      "via": "module",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopTableSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#TableRowSchema",
+      "via": "rows",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopTableSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "description",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopTableSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "title",
       "kind": "field",
       "optional": false,
       "array": false
@@ -99679,7 +102424,9 @@
       "parents": [
         "memory-record-core"
       ],
-      "subclasses": [],
+      "subclasses": [
+        "work-plan"
+      ],
       "typologies": [
         "bean-defs"
       ],
@@ -99725,6 +102472,19 @@
       "typologies": [
         "boards"
       ]
+    },
+    {
+      "id": "building-blocks",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "decl": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlocksKind",
+      "tag": "building-blocks/0.1.0",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "building-blocks"
+      ],
+      "page": "en/cat-harness-tools/building-blocks/"
     },
     {
       "id": "carried-note",
@@ -100998,6 +103758,19 @@
       ]
     },
     {
+      "id": "user-scenario",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "decl": "cat-harness-tools/schemas/process/user-scenario.ts#UserScenarioKind",
+      "tag": "user-scenario/0.2.0",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "user-scenario"
+      ],
+      "page": "en/cat-harness-tools/user-scenario/"
+    },
+    {
       "id": "viewer-nav-qa/v1",
       "source": "family",
       "instance": "cat-harness",
@@ -101036,6 +103809,31 @@
       "typologies": [
         "waiver"
       ]
+    },
+    {
+      "id": "work-plan",
+      "source": "node-kind",
+      "instance": "cat-harness",
+      "parents": [
+        "bean"
+      ],
+      "subclasses": [],
+      "typologies": [],
+      "page": "en/cat-harness/work-plan/",
+      "note": "cat-harness-tools/schemas/sdlc/work-plan.ts#WorkPlanKind — an export this reader does not model as a declaration"
+    },
+    {
+      "id": "workshop",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "decl": "cat-harness-tools/schemas/process/workshop.ts#WorkshopKind",
+      "tag": "workshop/0.1.0",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "workshop"
+      ],
+      "page": "en/cat-harness-tools/workshop/"
     }
   ],
   "sources": [

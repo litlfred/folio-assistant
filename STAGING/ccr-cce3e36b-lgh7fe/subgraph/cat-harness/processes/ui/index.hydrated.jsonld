@@ -788,7 +788,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/staging-render-log.svg",
-      "description": "Every change to the publish branch appends an entry to `_render-log/<day>.jsonl`. A removal is a NEW entry, never the erasure of the `rendered` one before it — the pair is the history. The lane is the build pipeline because every writer is a workflow job; no agent decides what goes in this log. A system lane runs a fixed program and exercises no judgement, which is exactly what an append-only log wants.\n\nThe question it exists to answer: what happened to STAGING/<slug>, and why. The publish branch has several publishers and one of them replaces the whole branch, which is why a removed preview needs a record of its own.",
+      "description": "Every change to the publish branch appends an entry to `_render-log/<day>.jsonl`. A removal is a NEW entry, never the erasure of the `rendered` one before it — the pair is the history. The lane is the build pipeline because every writer is a workflow job; no agent decides what goes in this log. A system lane runs a fixed program and exercises no judgement, which is exactly what an append-only log wants.\n\nThe question it exists to answer: what happened to branches/<slug>, and why. The publish branch has several publishers and one of them replaces the whole branch, which is why a removed preview needs a record of its own.",
       "enforcement": "strict",
       "flowCount": 12,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",

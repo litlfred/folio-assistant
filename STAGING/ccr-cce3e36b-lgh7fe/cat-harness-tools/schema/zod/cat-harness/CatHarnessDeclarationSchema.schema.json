@@ -1957,6 +1957,36 @@
             "pattern": "^[a-z0-9][a-z0-9-]*\\.[^\\s]+$"
           }
         },
+        "moves": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "minLength": 1
+              },
+              "to": {
+                "type": "string",
+                "minLength": 1
+              },
+              "until": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              "because": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "from",
+              "to",
+              "until"
+            ],
+            "additionalProperties": false
+          }
+        },
         "taskIo": {
           "type": "object",
           "propertyNames": {
@@ -2262,8 +2292,8 @@
   "description": "Generated from `CatHarnessDeclarationSchema` in schemas/kg/cat-harness.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "8a8093fd6ba901127f5605572bdd35e98551c278",
+    "sha": "7b3e0948bb58b7ba71cb1dedfde686f11f9f2830",
     "pr": "2954/merge",
-    "run": "42042361633"
+    "run": "42109744301"
   }
 }

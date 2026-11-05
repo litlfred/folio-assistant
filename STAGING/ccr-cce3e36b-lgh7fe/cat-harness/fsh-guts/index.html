@@ -3,9 +3,14 @@ function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttr
 function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
 function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
 function sep(){return document.createTextNode(' \u00b7 ');}
-function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function root(){var m=location.pathname.match(/^(.*\/(?:branches|STAGING)\/[^/]+\/)/);return m?m[1]:null;}
+// Release or preview (owner, 2026-11-05): a full build is a release and is
+// drawn purple, a preview green. Set here from staging.json, not in the
+// fragment, so the fragment stays byte-identical on every build.
+function kind(f){if(f.buildType!=='full')return;var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;b.style.background="#6B3FA0";b.setAttribute('data-fa-build-type','full');var t=b.querySelector('b');if(t)t.textContent='RELEASE BUILD';}
 function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
 function fill(d,f,r){
+  kind(f);
   while(d.firstChild)d.removeChild(d.firstChild);
   d.appendChild(document.createTextNode('\u2014 '));
   var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
