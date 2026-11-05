@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T13:24:22Z
-updated_at: 2026-11-05T14:01:11Z
+updated_at: 2026-11-05T14:04:54Z
 parent: folio-assistant-k3vv
 ---
 
@@ -25,3 +25,5 @@ On 2026-11-05 two failures reached every layer's CI from text, not code:
 _2026-11-05T13:24:22Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk at the request of the CI-speed parent session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.
 
 *2026-11-05* — PR https://github.com/litlfred/cat-harness-tools/pull/1526 (ready for review, not merged). state:push now runs the dangling-link rule (check-subgraphs' danglingLinksIn) and the retired-word rule on each graph's Markdown writes before the splice, and refuses a graph whose push would introduce a finding not already at the tip (compared with the mount's expect blob, counted per link target / per word). The bypass is CAT_GATES_BYPASS='<reason>', logged to the pre-push gates' push.log. Open policy point for the owner: the retired-word rule now applies to newly written work-plan prose; it can be dropped with a one-line change. Done-when boxes stay open until the PR merges and is re-pinned. — https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk
+
+_2026-11-05T14:04:54Z_ — **Owner ruling (card "asq1 words", option 1):** the work-plan push refuses both new broken links and new retired words in work-item prose. Older text never blocks. litlfred/cat-harness-tools#1526 already does this. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
