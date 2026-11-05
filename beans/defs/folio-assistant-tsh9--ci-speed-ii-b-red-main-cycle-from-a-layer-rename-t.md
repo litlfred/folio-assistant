@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T11:54:53Z
+updated_at: 2026-11-05T11:57:58Z
 parent: folio-assistant-k3vv
 ---
 
@@ -40,3 +40,5 @@ _2026-11-05T11:54:53Z_ — Claimed by HEAD — pushed to cat/cat-harness/beans s
 - skill `two-phase-move`: https://github.com/litlfred/cat-harness/pull/1043 — merge first
 - `moves` declaration field, honoured by `check:subgraphs` until `until`, `--check` fails past it: https://github.com/litlfred/cat-harness-tools/pull/1492
 Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk
+
+_2026-11-05T11:57:58Z_ — **Owner ruling (card "Move rule", option 1):** the two-phase move rule fits the "no redirects" rulings Q12 and Q18. It is a dated link-check allowance only, with no site redirect and no kept copy. Merge order: litlfred/cat-harness#1043, then litlfred/cat-harness-tools#1492 (or pin both together). Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
