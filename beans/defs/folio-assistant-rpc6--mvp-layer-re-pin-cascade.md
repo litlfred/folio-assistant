@@ -2,11 +2,11 @@
 # folio-assistant-rpc6
 $schema: bean/1.0.0
 title: 'MVP Phase 4: re-pin the layers on the 11 site PRs, bottom-up'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T20:08:03Z
+updated_at: 2026-11-05T20:42:21Z
 parent: folio-assistant-rwmf
 ---
 
@@ -93,3 +93,5 @@ _2026-11-05T18:57:52Z_ — MERGED cat-harness-tools#1537 as 42cc850 (all green):
 _2026-11-05T19:12:17Z_ — Final re-pin pushed (lock = final freeze set): smart-immunizations#114 90000d2, smart-ra#228 87151fd, dth-sc#18 5fbd9a9 (+ smart-base-templates / references overrides, AGENTS.md qa-sweep path), dth-phc#29 a81fc26, smart-immunizations-uganda#18 f26fc65 (+ .gitignore index block), dth-pc#18 6beedba (+ 128 block .jsonld from gen-block-jsonld). Watcher on all 6; reds judged by hand against the known-red list.
 
 _2026-11-05T20:08:03Z_ — MERGED dth-phc#29 as b96beba (only new red: check:subgraphs = 7 CRDM links, known via y4pw). Owner card "1. Known + work item": translation:obsolete (CI-only; 10 cat-harness agentic-harness / beans-and-todos .po; passes locally on the same mount) is a KNOWN red; added to y4pw.
+
+_2026-11-05T20:42:21Z_ — DONE. All 7 site re-pins MERGED at the final freeze set (cat-harness f5c9140, cat-harness-tools 42cc850, folio-assistant-core 705a2b8, who-iris 90bb3f5, smart-base 1e111a6, fhir-harness 299de78, bootstrap-tools 9f478d4, bootstrap 12fa6d5), each with tests 0 new and only known reds (comment on each PR): smart-ips-pilgrimage#8 5642333, dth-phc#29 b96beba, smart-immunizations-uganda#18 c3b0cd6, smart-immunizations#114 ca8a812, smart-ra#228 689463b, dth-pc#18 1e93e75, dth-sc#18 17f9d59 (owner card "1. Known, merge" for its partial-mount link). 10 layer fix PRs merged: who-iris#181, #183; core#647, #648, #649; cat-harness#1054, #1061, #1069; cat-harness-tools#1518, #1537. Remaining open work: bean y4pw (content calls, the CI-only translation:obsolete, the dth-sc partial-mount link); the 2 bpmn checklists stay known-red until the folio-assistant index re-pins bootstrap.

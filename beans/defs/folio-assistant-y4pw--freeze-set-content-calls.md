@@ -6,7 +6,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-11-05T17:40:03Z
-updated_at: 2026-11-05T20:08:03Z
+updated_at: 2026-11-05T20:42:21Z
 parent: folio-assistant-rwmf
 tags:
     - repin-freeze-2026-11-05
@@ -19,6 +19,7 @@ Filed from folio-assistant-rpc6. Owner card (2026-11-05, Q4 "1. Work items, know
 - [ ] **Undeclared serialisations / visualisers** (`check:subgraph-coverage`): cat-harness sdlc, sdlc-processes, sdlc-skills, work-plan, work-plan-skills, work-plan-tools; smart-base smart-base-templates; smart-ra references; who-iris attestations. Declare json/jsonld/schema.json and a visualiser, or an exemption with a reason, in each instance's <name>.json.
 - [ ] **Core example path** (`check:command-paths`): folio-assistant-core skills/content/folio-document-adapter/review-sheet-script.md:221 names review/public-comment/sheet-sync.json. Mark it as an example path or qualify it.
 - [ ] **CI-only translation:obsolete red** (owner card 2026-11-05, "1. Known + work item"): site CI flags 10 cat-harness .po files (translations/{ar,es,fr,ru,zh}/concepts/agentic-harness.po and guides/beans-and-todos.po) as holding stale msgids, but the same check passes locally on the same freeze mount (smart-immunizations-uganda at f26fc65). Find the CI-only cause (likely a derive step that rewrites the source page before the gates run) and fix it at its owner.
+- [ ] **dth-sc partial mount of smart-ra** (owner card 2026-11-05, "1. Known, merge"): dth-sc mounts dpi-h-ra's references/ but not its root, so dpi-h-ra/references/README.md → ../README.md is dangling (check:subgraphs). Repoint the link in litlfred/smart-ra (or mount the root README) and re-pin dth-sc.
 
 ## Done when
 Each item is fixed in its owning repo and merged, or the owner rules it stays.
