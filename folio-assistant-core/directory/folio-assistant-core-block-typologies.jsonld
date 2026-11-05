@@ -15,7 +15,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/block-kinds"
       ],
-      "description": "The document profile's block kinds (prose, example, remark, algorithm, simulator, equation, diagram, table, figure), one folio-block-kind/v1 node per file (bean riit, step 2). Owner, 2026-10-04: kinds are discoverable and not centrally managed; cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph, and the seven parallel tables they replace are gone.",
+      "description": "The document profile's block kinds (prose, example, remark, algorithm, simulator, equation, diagram, table, figure, recommendation), one folio-block-kind/v1 node per file. Kinds are discoverable and not centrally managed: cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph.",
       "readmePath": "block-kinds/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/folio-assistant-core-block-typologies"

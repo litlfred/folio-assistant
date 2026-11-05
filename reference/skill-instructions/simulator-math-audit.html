@@ -112,10 +112,7 @@
   
 </h2><p>Ensure every simulator in the folio accurately reflects the mathematics
 it claims to visualise, and that it derives its numbers rather than
-restating them.</p><blockquote><p>Recovered from a migration that lost its payload: qou carried a stub
-pointing at a folio-assistant path that never existed. Restored here
-and generalised — the original hardcoded one folio’s compute substrate
-and constants.</p></blockquote><h2 id="instructions"><a href="#instructions" class="anchor-heading" aria-labelledby="instructions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Instructions
+restating them.</p><h2 id="instructions"><a href="#instructions" class="anchor-heading" aria-labelledby="instructions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Instructions
   
   
 </h2><ol><li><p><strong>Identify simulators.</strong> Locate blocks with <code class="language-plaintext highlighter-rouge">kind: "simulator"</code> under
@@ -130,9 +127,7 @@ LaTeX/Markdown statement.</li><li><p><strong>CRITICAL — no hardcoded constants
 mathematical constant, and every formula, MUST be referenced
 dynamically from the folio’s compute substrate or imported from the
 paper’s canonical source. A simulator is part of the compute side
-of the repository, not a separate re-implementation.</p><p>A hardcoded constant is a silent divergence: the paper’s value can
-be corrected and the simulator will keep showing the old one, with
-nothing failing. Treat any literal numeric constant in a simulator
+of the repository, not a separate re-implementation.</p><p>Treat any literal numeric constant in a simulator
 as a finding unless it is a pure display parameter (canvas size,
 frame rate, colour).</p><p>Resolve the substrate from the folio rather than assuming a package
 name — check the folio’s <code class="language-plaintext highlighter-rouge">computations/</code> (or its configured compute

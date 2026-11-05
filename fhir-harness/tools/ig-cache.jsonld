@@ -374,7 +374,7 @@
           {
             "name": "action",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IgCacheAction",
-            "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
+            "description": "The verb. `doctor` diagnoses a restore that missed.",
             "required": true,
             "arg": {
               "positional": 0
@@ -400,7 +400,7 @@
           {
             "name": "remote",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName",
-            "description": "Git remote to fetch from / push to. Default 'origin'. Use when the IG's origin is upstream (WHO) and the cache lives on a fork.",
+            "description": "Git remote to fetch from / push to. Default 'origin'. Use when the IG's origin is upstream and the cache lives on a fork.",
             "required": false,
             "arg": {
               "flag": "--remote"

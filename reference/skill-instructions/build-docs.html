@@ -127,9 +127,7 @@ by default so ordinary builds stay fast):</p><div class="language-bash highlight
   <span class="nt">-e</span> <span class="s1">'s/# rev = /rev = /'</span> <span class="se">\</span>
   lakefile.toml <span class="o">&amp;&amp;</span> <span class="nb">rm</span> <span class="nt">-f</span> lakefile.toml.bak
 </code></pre></div></div><p><code class="language-plaintext highlighter-rouge">sed -i.bak … &amp;&amp; rm</code> is used because bare <code class="language-plaintext highlighter-rouge">sed -i</code> differs between GNU
-and BSD/macOS; the suffix form works on both. (The previous version of
-this skill hardcoded the macOS <code class="language-plaintext highlighter-rouge">sed -i ''</code> spelling, which fails on the
-Linux CI image.)</p></li><li><p>Update and build:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lake update doc-gen4
+and BSD/macOS; the suffix form works on both.</p></li><li><p>Update and build:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lake update doc-gen4
 lake <span class="nt">-R</span> <span class="nt">-Kenv</span><span class="o">=</span>dev build <span class="s2">"</span><span class="nv">$DOC_TARGET</span><span class="s2">"</span>
 </code></pre></div></div></li><li><p>Restore <code class="language-plaintext highlighter-rouge">lakefile.toml</code> so the <code class="language-plaintext highlighter-rouge">doc-gen4</code> dependency is not committed:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout lakefile.toml
 </code></pre></div></div><p>Do this even if the build failed — a modified <code class="language-plaintext highlighter-rouge">lakefile.toml</code> left

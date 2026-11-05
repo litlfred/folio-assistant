@@ -2,13 +2,13 @@
 
 ## Covers
 
-The `ig-ast` kind viewer, declared by this layer, the FHIR IG layer (owner, 2026-10-16: the kind belongs here), for every `ig-ast` directory an instance in the checkout declares. Drawn by this layer's Tool `ig-ast-pages` (`scripts/gen-ig-ast-pages.ts`): a hub at `<locale>/fhir-harness/ig-ast/` and one page per declaring instance under it. The route key is the one `index.json` records for this wireframe.
+The `ig-ast` kind viewer, declared by this layer, for every `ig-ast` directory an instance in the checkout declares. Drawn by this layer's Tool `ig-ast-pages` (`scripts/gen-ig-ast-pages.ts`): a hub at `<locale>/fhir-harness/ig-ast/` and one page per declaring instance under it. The route key is the one `index.json` records for this wireframe.
 
 ### How this was drawn
 
-From the pages `gen-ig-ast-pages --site` writes in a checkout of the index with the pull request that adds the viewer overlaid, not from a built site. Only one instance, an IG layer above this one, declares an `ig-ast` directory, and its branch family is not restored in a checkout, so the drawing is the hub and the "unknown" instance page. That instance is drawn as `<ig>`: this layer names no layer above it.
+From the pages `gen-ig-ast-pages --site` writes in a checkout of the index, not from a built site. Only one instance, an IG layer above this one, declares an `ig-ast` directory, and its branch family is not restored in a checkout, so the drawing is the hub and the "unknown" instance page. That instance is drawn as `<ig>`: this layer names no layer above it.
 
-Kept here, beside the viewer it draws, rather than in the platform's docs: `check:wireframes` reads the `wireframes/` of every declared docs directory, so the viewer and its wireframe land in one pull request.
+It is kept beside the viewer it draws: `check:wireframes` reads the `wireframes/` of every declared docs directory.
 
 ## Who it is for, and what they need to do
 

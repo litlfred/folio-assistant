@@ -298,9 +298,9 @@ process gets a note instead, because whether work is done is a judgement and a
 bean is never closed on someone else’s say-so — the same rule that stops you
 resolving a sibling’s.</p><p><strong>You do not draw <code class="language-plaintext highlighter-rouge">claim</code>, <code class="language-plaintext highlighter-rouge">resolve</code> or <code class="language-plaintext highlighter-rouge">archive</code> yourself.</strong> They live in two
 called processes and nowhere else (bean <code class="language-plaintext highlighter-rouge">folio-assistant-m8gz</code>, owner
-2026-10-24): <code class="language-plaintext highlighter-rouge">Process_BeanOpen</code> (<code class="language-plaintext highlighter-rouge">processes/sdlc/bean-open.bpmn</code>: check,
+2026-10-24): <code class="language-plaintext highlighter-rouge">Process_BeanOpen</code> (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-open.bpmn</code>: check,
 create, whose bean, claim or leave alone) and <code class="language-plaintext highlighter-rouge">Process_BeanClose</code>
-(<code class="language-plaintext highlighter-rouge">processes/sdlc/bean-close.bpmn</code>: complete or scrap, then one shared archive
+(<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-close.bpmn</code>: complete or scrap, then one shared archive
 step; or record the blocker and hand back). A process that works on a bean
 calls OPEN where the bean becomes its own, follows it with a <code class="language-plaintext highlighter-rouge">claimed</code> /
 <code class="language-plaintext highlighter-rouge">not yours</code> gateway, and calls CLOSE straight before each end it reaches from

@@ -108,8 +108,7 @@
   
   
 </h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">ig-binary-artefacts</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-ig-base</code> · Instance:
-<code class="language-plaintext highlighter-rouge">fhir-harness</code> · Tool <code class="language-plaintext highlighter-rouge">ig-binary-audit</code> · Bean <code class="language-plaintext highlighter-rouge">b8ip</code></p></blockquote><p>Owner, 2026-10-02 (paraphrased): look at what happens to the binary artefacts
-of a release on an IG overlay above this layer, and add it to skills and tools.</p><h2 id="what-the-publisher-writes"><a href="#what-the-publisher-writes" class="anchor-heading" aria-labelledby="what-the-publisher-writes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the Publisher writes
+<code class="language-plaintext highlighter-rouge">fhir-harness</code> · Tool <code class="language-plaintext highlighter-rouge">ig-binary-audit</code></p></blockquote><h2 id="what-the-publisher-writes"><a href="#what-the-publisher-writes" class="anchor-heading" aria-labelledby="what-the-publisher-writes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the Publisher writes
   
   
 </h2><p>Besides its pages, an IG Publisher run writes about twenty binary files into
@@ -124,17 +123,14 @@ Each is recomputable from the package or the build.</li><li><strong>Spreadsheets
   
   
 </h2><p>A pages deploy copies <code class="language-plaintext highlighter-rouge">output/</code> as it is. Each <strong>branch preview</strong> is another
-full copy, and git keeps every byte for good. Measured with
-<code class="language-plaintext highlighter-rouge">ig-binary-audit</code> on the WHO SMART Base IG fork’s <code class="language-plaintext highlighter-rouge">gh-pages</code> (<code class="language-plaintext highlighter-rouge">64ed896d</code>,
-2026-10-02):</p><div class="table-wrapper"><table><thead><tr><th></th><th>bytes</th><th>files</th></tr></thead><tbody><tr><td>the whole branch</td><td>5,029.7 MB</td><td>64,091</td></tr><tr><td>Publisher binaries</td><td>966.5 MB</td><td>399</td></tr><tr><td>of those, in 29 branch previews</td><td>907.1 MB</td><td>380</td></tr><tr><td><code class="language-plaintext highlighter-rouge">full-ig.zip</code> alone</td><td>644.7 MB</td><td>30 copies</td></tr></tbody></table></div><p>GitHub Pages publishes at most 1 GB, and <strong>94 % of the binary bytes are
-preview copies</strong> that nobody downloads twice. Deleting files over 100 MB
-before deploy, which is what the WHO workflow does, removes none of these,
-because each copy is under the limit.</p><h2 id="where-each-one-goes"><a href="#where-each-one-goes" class="anchor-heading" aria-labelledby="where-each-one-goes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where each one goes
+full copy, and git keeps every byte for good. GitHub Pages publishes at most
+1 GB; on one measured IG <code class="language-plaintext highlighter-rouge">gh-pages</code> branch, 966.5 MB were Publisher binaries
+and 94 % of those were copies in 29 branch previews (<code class="language-plaintext highlighter-rouge">full-ig.zip</code> alone:
+30 copies, 644.7 MB). Deleting files over 100 MB before deploy removes none
+of these, because each copy is under the limit.</p><h2 id="where-each-one-goes"><a href="#where-each-one-goes" class="anchor-heading" aria-labelledby="where-each-one-goes"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where each one goes
   
   
-</h2><p>Owner ruling, 2026-10-02: <em>“previews dont get binary, only releaes. KG should
-point to release binaries so people can materialze if they want. also so can
-list on ig justthedocs pages somewhere”</em>.</p><ol><li><strong>A preview carries no binaries.</strong> A reviewer reads pages, and binaries
+</h2><ol><li><strong>A preview carries no binaries.</strong> A reviewer reads pages, and binaries
 are published only on releases.</li><li><strong>A release carries the package and whatever the IG promises to
 distribute.</strong> Upload them as release assets, and link the release from
 the downloads page. The link names the repository it is built in, never a
@@ -142,12 +138,12 @@ hard-coded upstream.</li><li><strong>The knowledge graph points at release asset
 name, size, digest and download URL. Anyone who wants the bytes fetches
 them from there. <code class="language-plaintext highlighter-rouge">ingest-ig-releases</code> (Tool of the same name) writes it
 from GitHub’s release list.</li><li><strong>The IG’s just-the-docs site lists them</strong> on a generated <code class="language-plaintext highlighter-rouge">releases</code>
-page (<code class="language-plaintext highlighter-rouge">templates/ig-site/releases.liquid</code>): file, size and SHA-256 per
+page (<code class="language-plaintext highlighter-rouge">fhir-harness/scripts/templates/ig-site/releases.liquid</code>): file, size and SHA-256 per
 release, each linking to the asset.</li><li><strong>The published IG’s root may keep <code class="language-plaintext highlighter-rouge">package.tgz</code></strong>, since FHIR tooling
 fetches <code class="language-plaintext highlighter-rouge">&lt;canonical&gt;/package.tgz</code>. Nothing else needs to be there.</li><li><strong>What this pipeline renders from the package reads it from the served
 knowledge graph</strong>, never from a pages branch. The resource JSON views
 fetch the <code class="language-plaintext highlighter-rouge">package.tgz</code> that <code class="language-plaintext highlighter-rouge">ig-index:build</code> writes into
-<code class="language-plaintext highlighter-rouge">fhir-artifact-index/</code> at publish (bean <code class="language-plaintext highlighter-rouge">680p</code>, #124).</li></ol><h2 id="measure-before-deciding"><a href="#measure-before-deciding" class="anchor-heading" aria-labelledby="measure-before-deciding"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Measure before deciding
+<code class="language-plaintext highlighter-rouge">fhir-artifact-index/</code> at publish.</li></ol><h2 id="measure-before-deciding"><a href="#measure-before-deciding" class="anchor-heading" aria-labelledby="measure-before-deciding"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Measure before deciding
   
   
 </h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch <span class="nt">--depth</span> 1 origin +refs/heads/gh-pages:refs/remotes/origin/gh-pages

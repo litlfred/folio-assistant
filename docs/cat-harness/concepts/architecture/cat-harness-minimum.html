@@ -395,8 +395,8 @@ was wrong, which the measurement makes plain.</p><p><strong>Measured on <code cl
 <code class="language-plaintext highlighter-rouge">coordinate.md</code> alone is 731 lines carrying 94 matches for GitHub-ish terms —
 of which <strong>12</strong> are concrete invocations (<code class="language-plaintext highlighter-rouge">mcp__github__*</code>, <code class="language-plaintext highlighter-rouge">gh pr</code>, <code class="language-plaintext highlighter-rouge">gh api</code>)
 and the other 82 are conceptual: “pull request”, “PR”, “GitHub” as a noun.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># what was actually counted</span>
-<span class="nb">grep</span> <span class="nt">-ciE</span> <span class="s1">'github|gh pr|pull request|\bPR\b|mcp__github'</span> skills/sdlc/sdlc-core/coordinate.md   <span class="c"># 94</span>
-<span class="nb">grep</span> <span class="nt">-cE</span>  <span class="s1">'mcp__github|gh api|gh pr|gh issue'</span>             skills/sdlc/sdlc-core/coordinate.md   <span class="c"># 12</span>
+<span class="nb">grep</span> <span class="nt">-ciE</span> <span class="s1">'github|gh pr|pull request|\bPR\b|mcp__github'</span> sdlc/skills/sdlc-core/coordinate.md   <span class="c"># 94</span>
+<span class="nb">grep</span> <span class="nt">-cE</span>  <span class="s1">'mcp__github|gh api|gh pr|gh issue'</span>             sdlc/skills/sdlc-core/coordinate.md   <span class="c"># 12</span>
 </code></pre></div></div><p>So the split would have moved <strong>1,404 lines of portable prose to isolate on the
 order of a few dozen lines of mechanism</strong> — and would have done it by cutting
 along a repository boundary, the most expensive cut available, to separate

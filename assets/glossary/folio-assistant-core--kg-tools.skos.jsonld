@@ -66,7 +66,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on `main`, and [feedback] opens a new GitHub issue about the block, from the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the `block-actions` skill (bean `uphx`, REQ-17)."
+          "@value": "Each labelled block's links back to where it can be changed: [edit] opens the block's Markdown source in GitHub's editor on `main`, and [feedback] opens a new GitHub issue about the block, from the folio's `.github/ISSUE_TEMPLATE/block-feedback.yml` when it has one (prefilling only the fields it declares: block, section, source, page, url) or as a plain issue whose body carries the same facts. The document build draws these on every block; this Tool prints them as JSON for one block or all. Governed by the `block-actions` skill."
         }
       ],
       "skos:notation": "block-actions",
@@ -86,7 +86,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Write one `folio-dublin-core/v1` record and one `folio-catalogue-node/v1` item per library entry that the source ledger joins to a CSL-JSON reference, into the folio's declared `catalogue` directory, so `gen-library-jsonld` reads the title from the catalogue's `dc.title` instead of falling to the PDF or the slug. The join is exact: a ledger row naming the entry's `structure.json` source file, one reference id, and the same sha256 where both record one. Unjoined entries are reported and left alone. Never touches a node it did not write (folio-assistant-core#72)."
+          "@value": "Write one `folio-dublin-core/v1` record and one `folio-catalogue-node/v1` item per library entry that the source ledger joins to a CSL-JSON reference, into the folio's declared `catalogue` directory, so `gen-library-jsonld` reads the title from the catalogue's `dc.title` instead of falling to the PDF or the slug. The join is exact: a ledger row naming the entry's `structure.json` source file, one reference id, and the same sha256 where both record one. Unjoined entries are reported and left alone. Never touches a node it did not write."
         }
       ],
       "skos:notation": "catalogue-from-references",
@@ -146,7 +146,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Render every `folio-dublin-core/v1` record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (`<instanceRoot>/dublin-core/<stem>.dc.xml` and `.dc.jsonld`), so the site mount publishes them beside the item pages. Deterministic. `--check` fails on a missing, stale or orphaned rendering. Governed by the `dublin-core-renderings` skill (bean `7eak`)."
+          "@value": "Render every `folio-dublin-core/v1` record a catalogue item names as Dublin Core XML (qualified DC, per DCMI's XML guidelines) and as JSON-LD bound to DCMI Metadata Terms. Both are written into the instance's published root (`<instanceRoot>/dublin-core/<stem>.dc.xml` and `.dc.jsonld`), so the site mount publishes them beside the item pages. Deterministic. `--check` fails on a missing, stale or orphaned rendering. Governed by the `dublin-core-renderings` skill."
         }
       ],
       "skos:notation": "dublin-core-render",
@@ -166,7 +166,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "For every figure a source publication declares, report whether the folio built from it has a block and how computable it is: missing, excluded (signed off), picture (a PNG crop), linked (a picture linked to a model view), computable (a diagram, a table or a figure rebuilt by ArchiMate, BPMN, DMN, Mermaid, a class diagram or a generator), or cited (a picture kept on purpose, signed off). Exits non-zero when any declared figure is missing; `--require-computable` also fails on pictures."
+          "@value": "For every figure a source publication declares, report whether the folio built from it has a block and how computable it is: missing, excluded (signed off), picture (a PNG crop), linked (a picture linked to a model view), computable (a diagram, a table or a figure rebuilt by ArchiMate, BPMN, DMN, Mermaid, a class diagram or a generator), or cited (a picture kept on purpose, signed off). Exits non-zero when any declared figure is missing; `--require-computable` also fails on pictures, linked or not."
         }
       ],
       "skos:notation": "figure-coverage",
@@ -206,7 +206,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Adds no dependency: Playwright is already the platform's browser driver."
+          "@value": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Drives Chromium through Playwright."
         }
       ],
       "skos:notation": "folio-block-screenshots",
@@ -386,7 +386,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for. Issue #2405 FR-009."
+          "@value": "Of the normative sentences in a publication (the closed marker list of smart-kg's `docs/COVERAGE.md` §1), count how many an L1 extraction CAPTURED, how many are EXCLUDED for a fixed-list reason a person signed off, and how many are UNACCOUNTED — per page and in total. Writes the contract's §4 report and exits non-zero below 100% accounted-for."
         }
       ],
       "skos:notation": "l1-coverage",
@@ -426,7 +426,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The mechanical check a review-log watcher runs on every poll (owner, 2026-11-01; Q-WATCH1 B). Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened left out) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0, and the watcher does nothing more. Changed: it lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Q-WATCH2 B; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through (owner, 10:18Z): Title is the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL. It exits 10. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state, so the next poll compares against it."
+          "@value": "The mechanical check a review-log watcher runs on every poll. Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (leaving out pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0. Changed: it exits 10 and lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Title the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state for the next poll to compare against."
         }
       ],
       "skos:notation": "review-log-watch",
@@ -446,7 +446,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Builds `Code.gs` (one generic script for every document, `--script`) and one document's Config tab rows (`--config`): the Google Apps Script that keeps a public-comment review sheet's links and joins current: each comment No. links to its comment page, Sections, Page and Line no(s) link to the page of the frozen review draft, Review Change Sets joins its comments, suggested revisions, feedback and dispositions with each `No. n` linking to its row, and on both tabs Agentic status lists each pull request of the change-set, linked, with its status and what it changed, from the Agent tab. The script is the same for every review (`review-sheet.gs`); this Tool fills in one folio's data from its `review/public-comment/sheet-sync.json`, its review anchors and the draft's `pdf-line-map.json`. The script reads the document's URLs, tab and column names and data from the sheet's Config tab (visible, locked to the owner), which the agent writes from these rows. A person pastes the script (one file) into the sheet once (Extensions > Apps Script) and runs `installTriggers`; from then on the sheet rebuilds itself within five minutes of an edit, with no agent. With `\"mode\": \"drafting\"` in the config it builds the simpler drafting sheet instead: one Contributor Feedback tab where each row is a change set (ids assigned by the script), Sections picked from the document's table of contents and linked to it, and Issue and Agentic status from the Agent tab."
+          "@value": "Builds `Code.gs` (`--script`), the one Google Apps Script every review sheet runs (from `review-sheet.gs`), and one document's Config tab rows (`--config`), filled from the folio's `review/public-comment/sheet-sync.json`, its review anchors and the draft's `pdf-line-map.json`. The script keeps a public-comment review sheet's links and joins current: each comment No. links to its comment page; Sections, Page and Line no(s) link to the page of the frozen review draft; Review Change Sets joins its comments, suggested revisions, feedback and dispositions, each `No. n` linking to its row; and on both tabs Agentic status lists each pull request of the change-set, linked, with its status and what it changed, from the Agent tab. It reads the document's URLs, tab and column names and data from the sheet's Config tab (visible, locked to the owner), which the agent writes from these rows. A person pastes the script (one file) into the sheet once (Extensions > Apps Script) and runs `installTriggers`; from then on the sheet rebuilds itself within about a minute of an edit, with no agent. With `\"mode\": \"drafting\"` in the config it builds the drafting sheet instead: one Contributor Feedback tab where each row is a change set (ids assigned by the script), Sections picked from the document's table of contents and linked to it, and Issue and Agentic status from the Agent tab."
         }
       ],
       "skos:notation": "review-sheet-sync",
@@ -486,7 +486,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Read a delimited text file into a `folio-tabular-csvw/v1` record: one table, its columns and their CSVW datatypes, each measured or explicitly undetermined. Routing is by content, never by extension: the first rows must agree on one field count of two or more, under exactly one of `,` `;` TAB `|`. A CSV's `fac:anchor` sheet and cell are a determined null. Governed by the `tabular-metadata` skill (bean `eief`)."
+          "@value": "Read a delimited text file into a `folio-tabular-csvw/v1` record: one table, its columns and their CSVW datatypes, each measured or explicitly undetermined. Routing is by content, never by extension: the first rows must agree on one field count of two or more, under exactly one of `,` `;` TAB `|`. A CSV's `fac:anchor` sheet and cell are a determined null. Governed by the `tabular-metadata` skill."
         }
       ],
       "skos:notation": "tabular-csv",
@@ -506,7 +506,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Read a workbook into a `folio-tabular-csvw/v1` record, one CSVW table per rectangular block of cells. Blocks are split on empty rows, then on empty columns, so several tables on one sheet are found, each anchored at its real top-left cell (`fac:anchor`: sheet, A1 cell, row, column). Dates are read through the number formats in `styles.xml`, not misread as integer serials. A malformed part is refused rather than half-read. No new dependency: ZIP via `node:zlib`, SpreadsheetML via `fast-xml-parser`. Governed by the `tabular-metadata` skill (bean `eief`)."
+          "@value": "Read a workbook into a `folio-tabular-csvw/v1` record, one CSVW table per rectangular block of cells. Blocks are split on empty rows, then on empty columns, so several tables on one sheet are found, each anchored at its real top-left cell (`fac:anchor`: sheet, A1 cell, row, column). Dates are read through the number formats in `styles.xml`, not misread as integer serials. A malformed part is refused rather than half-read. Reads the ZIP with `node:zlib` and SpreadsheetML with `fast-xml-parser`. Governed by the `tabular-metadata` skill."
         }
       ],
       "skos:notation": "tabular-xlsx",

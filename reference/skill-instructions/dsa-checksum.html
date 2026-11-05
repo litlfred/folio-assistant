@@ -110,7 +110,7 @@
 </h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">dsa-checksum</code> · Package: <code class="language-plaintext highlighter-rouge">folio-document-adapter</code> · Process:
 <code class="language-plaintext highlighter-rouge">folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn</code>
 (<code class="language-plaintext highlighter-rouge">Task_Hash</code>, P2.2) · Checker: <code class="language-plaintext highlighter-rouge">folio-assistant-core/scripts/check-dsa-hash.ts</code>
-(<code class="language-plaintext highlighter-rouge">bun run cat check:dsa-hash</code>) · Bean: <code class="language-plaintext highlighter-rouge">folio-assistant-2z1t</code>.</p></blockquote><p>Every signed version of a Data Sharing Agreement (DSA) is published at its own
+(<code class="language-plaintext highlighter-rouge">bun run cat check:dsa-hash</code>)</p></blockquote><p>Every signed version of a Data Sharing Agreement (DSA) is published at its own
 immutable URL and carries a cryptographic digest of the exact signed legal text
 bytes. A change of even one byte to the legal text invalidates the recorded
 digest and requires publishing a new version (<code class="language-plaintext highlighter-rouge">dcat:version</code>) with its own URL

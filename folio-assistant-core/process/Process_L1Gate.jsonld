@@ -8,7 +8,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — the L1 completeness gate",
       "summary": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so.",
-      "description": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so. folio-assistant — Ingestion subprocess — the L1 completeness gate.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so.",
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-l1-completeness-gate.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-l1-completeness-gate.bpmn",

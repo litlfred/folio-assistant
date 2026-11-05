@@ -362,7 +362,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "sdc-checks",
       "title": "Check an IG's built Questionnaires with CSIRO's SDC libraries",
-      "description": "Build-time Structured Data Capture checks, one result per Questionnaire (`sdcChecks[]` of `fhir-questionnaire-wireframe`): `assemble` (`@aehrc/sdc-assemble` 2.0.3: an assemble-root's sub-forms resolve in this IG, and `--out` writes the assembled Questionnaire), `template-extract` (`@aehrc/sdc-template-extract` 1.0.16: extraction from the IG's fixture response yields the expected resources), `populate` (`@aehrc/sdc-populate` 4.7.2: FHIRPath pre-population from a fixture context gives the expected answers) and `behaviour` (`@aehrc/questionnaire-test-toolkit` 0.1.0: the IG's own behavioural test, warn-only). Owner, 2026-10-14: checks, not UI.",
+      "description": "Build-time Structured Data Capture checks, one result per Questionnaire (`sdcChecks[]` of `fhir-questionnaire-wireframe`): `assemble` (`@aehrc/sdc-assemble` 2.0.3: an assemble-root's sub-forms resolve in this IG, and `--out` writes the assembled Questionnaire), `template-extract` (`@aehrc/sdc-template-extract` 1.0.16: extraction from the IG's fixture response yields the expected resources), `populate` (`@aehrc/sdc-populate` 4.7.2: FHIRPath pre-population from a fixture context gives the expected answers) and `behaviour` (`@aehrc/questionnaire-test-toolkit` 0.1.0: the IG's own behavioural test, warn-only). Checks only, no UI.",
       "install": {
         "none": true
       },

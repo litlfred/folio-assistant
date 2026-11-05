@@ -111,11 +111,7 @@
 prove <strong>nothing</strong>. <code class="language-plaintext highlighter-rouge">proof-statement-integrity</code> guards the <em>statement</em> (signature
 unchanged vs prior commit, no <code class="language-plaintext highlighter-rouge">sorryAx</code>) but not the <em>content</em>. This skill
 catches the family of <strong>vacuous proofs</strong> — proofs whose validity is purely
-syntactic — and drains them to honest representations.</p><p>The canonical trigger: a batch “fix proof-statement-integrity” pass that
-discharges a <code class="language-plaintext highlighter-rouge">sorry</code>/false-<code class="language-plaintext highlighter-rouge">axiom</code> by wrapping the conclusion in a <code class="language-plaintext highlighter-rouge">structure</code>
-field and projecting it. That removes the <code class="language-plaintext highlighter-rouge">sorry</code> and the axiom, the statement
-is unchanged, the checker goes green — but the theorem now <strong>assumes its own
-conclusion</strong>.</p><h2 id="the-anti-pattern-family"><a href="#the-anti-pattern-family" class="anchor-heading" aria-labelledby="the-anti-pattern-family"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The anti-pattern family
+syntactic — and drains them to honest representations.</p><h2 id="the-anti-pattern-family"><a href="#the-anti-pattern-family" class="anchor-heading" aria-labelledby="the-anti-pattern-family"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The anti-pattern family
   
   
 </h2><h3 id="1-self-assuming-projection-circular--proof-no-self-assuming-projection"><a href="#1-self-assuming-projection-circular--proof-no-self-assuming-projection" class="anchor-heading" aria-labelledby="1-self-assuming-projection-circular--proof-no-self-assuming-projection"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Self-assuming projection (circular) — <code class="language-plaintext highlighter-rouge">proof-no-self-assuming-projection</code></h3><p>The conclusion is carried as a <code class="language-plaintext highlighter-rouge">structure</code>/<code class="language-plaintext highlighter-rouge">class</code> field and the proof returns
@@ -161,31 +157,24 @@ or unjustified content as a global axiom</em>.</p><div class="language-lean high
 opaque postulated construction) ⇒ add a <code class="language-plaintext highlighter-rouge">-- Ref:</code> (recipe-3), do NOT pretend
 to prove it.</li><li><strong>conditional input</strong> — belongs as a <code class="language-plaintext highlighter-rouge">[Class]</code> hypothesis on downstream
 consumers (recipe-2 / §3b-cond) rather than a global axiom.</li></ul><p>Do <strong>not</strong> flag an axiom that already carries a <code class="language-plaintext highlighter-rouge">-- Ref:</code> / citation — resting
-on a cited upstream result is sound.</p><p><strong>An API that is hard to unfold is not a reason to axiomatize.</strong> A published
-agent pipeline (MerLean, arXiv:2602.16554v1, Appendix A.3) axiomatized that
-the tensor product of two cycles is a cycle — one line from the Leibniz rule
-its own docstring states — because Mathlib’s total complex was hard to work
-with, and it converts any subgoal to an <code class="language-plaintext highlighter-rouge">axiom</code> once its attempt cap is hit.
-Both land in tier <strong>provable</strong>. Running out of attempts leaves an annotated
-<code class="language-plaintext highlighter-rouge">sorry</code>, never an <code class="language-plaintext highlighter-rouge">axiom</code>; see <code class="language-plaintext highlighter-rouge">bidirectional-agentic-autoformalization</code>
-§”Refusals” in <code class="language-plaintext highlighter-rouge">folio-assistant-sci/methodologies/</code>.</p><h2 id="why-proof-statement-integrity-misses-all-of-these"><a href="#why-proof-statement-integrity-misses-all-of-these" class="anchor-heading" aria-labelledby="why-proof-statement-integrity-misses-all-of-these"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why <code class="language-plaintext highlighter-rouge">proof-statement-integrity</code> misses all of these
+on a cited upstream result is sound.</p><p><strong>An API that is hard to unfold is not a reason to axiomatize</strong>, and running
+out of attempts leaves an annotated <code class="language-plaintext highlighter-rouge">sorry</code>, never an <code class="language-plaintext highlighter-rouge">axiom</code> — both cases land
+in tier <strong>provable</strong>. Worked case and rule:
+<code class="language-plaintext highlighter-rouge">bidirectional-agentic-autoformalization</code> §”Refusals” in
+<code class="language-plaintext highlighter-rouge">folio-assistant-sci/methodologies/</code>.</p><h2 id="why-proof-statement-integrity-misses-all-of-these"><a href="#why-proof-statement-integrity-misses-all-of-these" class="anchor-heading" aria-labelledby="why-proof-statement-integrity-misses-all-of-these"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why <code class="language-plaintext highlighter-rouge">proof-statement-integrity</code> misses all of these
   
   
-</h2><p>Per the QA registry, <code class="language-plaintext highlighter-rouge">proof-statement-integrity</code> is <code class="language-plaintext highlighter-rouge">automated: false</code>
-(agent-checked) and verifies exactly two things: (i) the provable-kind signature
-is <strong>unchanged</strong> vs the prior commit (or an author-approved restatement appears
-in the same <code class="language-plaintext highlighter-rouge">.md</code> + <code class="language-plaintext highlighter-rouge">.ts</code> diff); (ii) <code class="language-plaintext highlighter-rouge">lean_verify</code> shows no <code class="language-plaintext highlighter-rouge">sorryAx</code> /
-unexpected axioms. A self-assuming projection satisfies <strong>both</strong> — the signature
-is the intended one, and there is no <code class="language-plaintext highlighter-rouge">sorry</code>/axiom. Vacuity is a <em>semantic</em>
-property of the proof term, invisible to a signature-diff + axiom sweep. Hence a
-separate, agent-checked criterion family.</p><h2 id="legit-vs-anti--the-discriminators"><a href="#legit-vs-anti--the-discriminators" class="anchor-heading" aria-labelledby="legit-vs-anti--the-discriminators"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Legit vs. anti — the discriminators
+</h2><p><code class="language-plaintext highlighter-rouge">proof-statement-integrity</code> (agent-checked) verifies only that the
+provable-kind signature is unchanged (or restated in the same <code class="language-plaintext highlighter-rouge">.md</code> + <code class="language-plaintext highlighter-rouge">.ts</code>
+diff) and that <code class="language-plaintext highlighter-rouge">lean_verify</code> shows no <code class="language-plaintext highlighter-rouge">sorryAx</code> / unexpected axioms. A
+self-assuming projection passes both: vacuity is a property of the proof term.</p><h2 id="legit-vs-anti--the-discriminators"><a href="#legit-vs-anti--the-discriminators" class="anchor-heading" aria-labelledby="legit-vs-anti--the-discriminators"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Legit vs. anti — the discriminators
   
   
 </h2><p>Do <strong>not</strong> flag these legitimate patterns:</p><ul><li><strong>§3b-cond conditional-class</strong> where the proof <strong>composes</strong> multiple class
 fields or <strong>applies lemmas</strong> to <em>derive</em> the conclusion — <code class="language-plaintext highlighter-rouge">Iff.intro h.fwd
 h.bwd</code>, <code class="language-plaintext highlighter-rouge">h.step1.trans h.step2</code>, <code class="language-plaintext highlighter-rouge">by rw [h.a]; exact h.b</code>, <code class="language-plaintext highlighter-rouge">by linarith
 [h.x, h.y]</code>. The class fields encode <em>hypotheses</em>; the theorem <em>derives</em>. This
-is exactly the project authoring conventions-cond item 5’s required shape.</li><li><strong>Honest named axiom with <code class="language-plaintext highlighter-rouge">-- Ref:</code></strong> for a genuine external input, where
+is the shape §3b-cond item 5 of the project authoring conventions requires.</li><li><strong>Honest named axiom with <code class="language-plaintext highlighter-rouge">-- Ref:</code></strong> for a genuine external input, where
 downstream theorems <strong><code class="language-plaintext highlighter-rouge">obtain</code>/consume</strong> it rather than re-assuming the
 conclusion. Resting on a cited upstream axiom is sound; smuggling the
 conclusion into a local field is not.</li><li><strong>A field that is a genuine hypothesis</strong> the theorem then <em>uses</em>.</li><li><strong>Unused hypothesis kept for family uniformity</strong> (the agent should confirm the
@@ -232,7 +221,7 @@ to zero so the propositional field becomes <code class="language-plaintext highl
 for anyone. Demoting <code class="language-plaintext highlighter-rouge">instance</code> → <code class="language-plaintext highlighter-rouge">def</code> stops typeclass resolution supplying it
 silently, but it does not <em>say</em> what the hypothesis is worth.</p><p><strong>Parameterise the class over the data, then state the residual vacuity as a
 proved pair.</strong> Worked example in
-<a href="../../../.."><code class="language-plaintext highlighter-rouge">QOU/Archimedean/JetOrderIndependence.lean</code></a> — read it before
+the qou folio’s <code class="language-plaintext highlighter-rouge">QOU/Archimedean/JetOrderIndependence.lean</code> — read it before
 inventing your own:</p><div class="language-lean highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">/</span><span class="cd">-- The identically-zero transport error. -/</span>
 <span class="k">def</span> <span class="n">trivialError</span> : <span class="n">TransportErrorData</span> <span class="n">where</span>
   <span class="n">shadow</span> := <span class="k">fun</span> <span class="n">_</span> <span class="o">=&gt;</span> <span class="mi">0</span>
@@ -247,14 +236,11 @@ inventing your own:</p><div class="language-lean highlighter-rouge"><div class="
     <span class="n">For</span> <span class="n">a</span> <span class="n">specific</span> <span class="o">`</span><span class="n">E</span><span class="o">`</span> <span class="n">the</span> <span class="n">bound</span> <span class="n">is</span> <span class="n">a</span> <span class="n">real</span> <span class="n">constraint</span> <span class="n">that</span> <span class="n">can</span> <span class="n">fail</span><span class="o">.</span> <span class="o">-/</span>
 <span class="k">theorem</span> <span class="n">not_bound_of_physical_ne_zero</span> (<span class="n">h</span> : <span class="n">E</span><span class="o">.</span><span class="n">physical</span> <span class="n">N</span> <span class="o">≠</span> <span class="mi">0</span>) :
     <span class="o">¬</span> <span class="n">Nonempty</span> (<span class="n">SurrealParallelTransportBound</span> <span class="n">E</span>) := <span class="o">...</span>
-</code></pre></div></div><p>Read together the two say exactly what an instance buys: <strong>the hypothesis
-carries no information until the datum is pinned down, and real information as
-soon as it is.</strong> The trap becomes a machine-checked fact instead of a latent
-one — which is strictly better than forbidding the trivial model, because a
-non-degeneracy field on the class would prevent the trivial model <em>and</em>
-prevent saying anything about it.</p><p>Parameterising alone is not enough: it stops the class choosing its own shadow,
-but a consumer can still instantiate at the zero datum. The pair is what closes
-that.</p><p>Detected mechanically by <strong>two</strong> criteria in <code class="language-plaintext highlighter-rouge">cat-harness-tools/pipeline/qa-checkers-vacuity.ts</code>,
+</code></pre></div></div><p>Together the pair says what an instance buys: <strong>nothing until the datum is
+pinned down, a real constraint once it is.</strong> Parameterising alone is not
+enough — a consumer can still instantiate at the zero datum; the pair closes
+that. (A non-degeneracy field would forbid the trivial model and also forbid
+saying anything about it.)</p><p>Detected mechanically by <strong>two</strong> criteria in <code class="language-plaintext highlighter-rouge">folio-assistant-sci/pipeline/qa-checkers-vacuity.ts</code>,
 which partition the defect rather than overlap — a decl the first flags is
 skipped by the second:</p><ul><li><code class="language-plaintext highlighter-rouge">lean-no-vacuous-instance-data</code> — degenerate data <em>written as a constant</em>
 (<code class="language-plaintext highlighter-rouge">_ := 0</code>, <code class="language-plaintext highlighter-rouge">PUnit.unit</code>, <code class="language-plaintext highlighter-rouge">default</code>) plus a reflexivity discharge.</li><li><code class="language-plaintext highlighter-rouge">lean-no-definitional-laundering</code> — data that is <strong>not</strong> constant and is still
@@ -262,10 +248,8 @@ chosen so the claim becomes <code class="language-plaintext highlighter-rouge">r
 (<code class="language-plaintext highlighter-rouge">def F (args…) : Prop := True</code>), a constant one lambda deep
 (<code class="language-plaintext highlighter-rouge">member := fun _ =&gt; True</code>), and a field defined to BE the right-hand side its
 class field compares against (<code class="language-plaintext highlighter-rouge">w := fun _ =&gt; cableWidthColor</code> under
-<code class="language-plaintext highlighter-rouge">is_color : ∀ A, w A = cableWidthColor</code>).</li></ul><p>The two lists were measured <strong>disjoint</strong> on the qou corpus on 2026-08-24: a hand
-read found eight laundering sites, the constant detector found twenty-five, and
-no site appeared in both. If you are auditing for vacuity, running only one of
-them is running half the check.</p><p>The third shape grades <code class="language-plaintext highlighter-rouge">warn</code>, not <code class="language-plaintext highlighter-rouge">fail</code>, and says “REVIEW (not a verdict)” in
+<code class="language-plaintext highlighter-rouge">is_color : ∀ A, w A = cableWidthColor</code>).</li></ul><p>The two detectors find disjoint sets; running only one of them is running
+half the check.</p><p>The third shape grades <code class="language-plaintext highlighter-rouge">warn</code>, not <code class="language-plaintext highlighter-rouge">fail</code>, and says “REVIEW (not a verdict)” in
 its own evidence. Pinning a field to a formula and observing the law then holds
 by <code class="language-plaintext highlighter-rouge">rfl</code> is a legitimate way to exhibit a model; whether the class field was a
 <em>constraint</em> the instance had to meet or a <em>definition</em> it was entitled to make
@@ -304,14 +288,12 @@ concludes <code class="language-plaintext highlighter-rouge">True</code>”</em>
 honest open conjecture.</p></blockquote><h2 id="agent-inspection-ledger--making-agent-confirmation-mandatory"><a href="#agent-inspection-ledger--making-agent-confirmation-mandatory" class="anchor-heading" aria-labelledby="agent-inspection-ledger--making-agent-confirmation-mandatory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agent-inspection ledger — making agent confirmation mandatory
   
   
-</h2><p>The detector is <strong>high-recall by design</strong>; the legit-vs-genuine call requires
-agent inspection (a <code class="language-plaintext highlighter-rouge">decide</code> on a true concrete fact is legit; a <code class="language-plaintext highlighter-rouge">: True</code> hiding
-a real theorem is not). For <strong>content blocks</strong> that verdict lands on the
-<code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> sidecar (above). But a <strong>standalone library <code class="language-plaintext highlighter-rouge">.lean</code></strong>
-(<code class="language-plaintext highlighter-rouge">content/**/lean/&lt;Paper&gt;/**/*.lean</code> with no <code class="language-plaintext highlighter-rouge">.ts</code>/<code class="language-plaintext highlighter-rouge">.md</code> sibling) has <strong>no
-sidecar</strong>, so an agent verdict has nowhere durable to live — detection stays
-purely machine, and a one-off triage doc can silently mis-call a candidate
-“legit”. The <strong>review ledger</strong> closes that gap:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Seed/refresh: new + file-changed candidates become `needs-agent`.</span>
+</h2><p>The detector is <strong>high-recall</strong>; the legit-vs-genuine call needs an agent (a
+<code class="language-plaintext highlighter-rouge">decide</code> on a true concrete fact is legit; a <code class="language-plaintext highlighter-rouge">: True</code> hiding a real theorem is
+not). A content block’s verdict lands on its <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> sidecar. A
+standalone library <code class="language-plaintext highlighter-rouge">.lean</code> (<code class="language-plaintext highlighter-rouge">content/**/lean/&lt;Paper&gt;/**/*.lean</code>, no
+<code class="language-plaintext highlighter-rouge">.ts</code>/<code class="language-plaintext highlighter-rouge">.md</code> sibling) has no sidecar, so its verdict goes in the <strong>review
+ledger</strong>:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Seed/refresh: new + file-changed candidates become `needs-agent`.</span>
 bun run content/pipeline/lean-vacuity-axiom-audit.ts content/&lt;paper&gt; <span class="se">\</span>
   <span class="nt">--review-ledger</span> docs/audits/lean-vacuity-review-ledger.json
 <span class="c"># Enforce: exit 1 if ANY non-exempt candidate lacks a FRESH agent verdict.</span>
@@ -328,8 +310,7 @@ verdict can, and only while fresh.</li><li><strong>Resolved candidates are prune
 flags, so its key drops out).</li><li><strong>The agent workflow:</strong> run <code class="language-plaintext highlighter-rouge">--review-ledger</code> to materialise the queue, inspect
 each <code class="language-plaintext highlighter-rouge">needs-agent</code> entry per the legit-vs-anti discriminators above, write the
 verdict (+ disposition/evidence) into the ledger, fix every <code class="language-plaintext highlighter-rouge">genuine</code> /
-<code class="language-plaintext highlighter-rouge">advisory</code> candidate, then <code class="language-plaintext highlighter-rouge">--check-ledger</code> must pass. This is the
-“agent inspection, not just machine” gate.</li></ul><h2 id="qa-criteria-sidecar-params--wiring"><a href="#qa-criteria-sidecar-params--wiring" class="anchor-heading" aria-labelledby="qa-criteria-sidecar-params--wiring"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> QA criteria (sidecar params) — wiring
+<code class="language-plaintext highlighter-rouge">advisory</code> candidate, then <code class="language-plaintext highlighter-rouge">--check-ledger</code> must pass.</li></ul><h2 id="qa-criteria-sidecar-params--wiring"><a href="#qa-criteria-sidecar-params--wiring" class="anchor-heading" aria-labelledby="qa-criteria-sidecar-params--wiring"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> QA criteria (sidecar params) — wiring
   
   
 </h2><p>Mirrors the existing <code class="language-plaintext highlighter-rouge">proof-statement-integrity</code> model (Agent-checked,
@@ -339,7 +320,7 @@ verdict (+ disposition/evidence) into the ledger, fix every <code class="languag
 to the <code class="language-plaintext highlighter-rouge">PROOF</code> array (it auto-flows into <code class="language-plaintext highlighter-rouge">QA_CRITERIA_REGISTRY</code>,
 <code class="language-plaintext highlighter-rouge">PROOF_WATCHER_CRITERIA</code>, and the <code class="language-plaintext highlighter-rouge">proof</code> watcher axis). Use:
 <code class="language-plaintext highlighter-rouge">domain: "proof"</code>, <code class="language-plaintext highlighter-rouge">default_severity: "critical"</code>, <code class="language-plaintext highlighter-rouge">depends_on: ["lean"]</code>,
-<code class="language-plaintext highlighter-rouge">automated: false</code>, <code class="language-plaintext highlighter-rouge">applies_to: ["theorem","lemma","proposition","corollary"]</code>.</li><li><code class="language-plaintext highlighter-rouge">.claude/skills/local/proof-integration-watcher.md</code> — add a dispatch row per
+<code class="language-plaintext highlighter-rouge">automated: false</code>, <code class="language-plaintext highlighter-rouge">applies_to: ["theorem","lemma","proposition","corollary"]</code>.</li><li><code class="language-plaintext highlighter-rouge">skills/content/folio-paper-adapter/proof-integration-watcher.md</code> — add a dispatch row per
 criterion → <code class="language-plaintext highlighter-rouge">lean-proof-review</code> (logic-validity review type).</li><li>No new checker file: <code class="language-plaintext highlighter-rouge">qa-sweep</code> marks <code class="language-plaintext highlighter-rouge">automated: false</code> criteria
 <code class="language-plaintext highlighter-rouge">needs-agent</code>; <code class="language-plaintext highlighter-rouge">proof-integration-watcher</code> dispatches an agent that runs this
 skill and writes the <code class="language-plaintext highlighter-rouge">reviewer.kind="agent"</code> sidecar entry.</li></ol><p><code class="language-plaintext highlighter-rouge">bun run cat-harness-tools/pipeline/qa-sweep.ts &lt;block-path&gt; --only proof-no-self-assuming-projection</code>

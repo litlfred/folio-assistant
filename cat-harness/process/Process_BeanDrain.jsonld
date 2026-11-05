@@ -10,8 +10,8 @@
       "summary": "Draining open beans with several agents at once, as part of the SDLC: build one queue grouped by owner, then take a bean, open it, work it, close it, and take the next — refilling from the deepest queue when a drainer's list runs dry, until nothing drainable…",
       "description": "Draining open beans with several agents at once, as part of the SDLC: build one queue grouped by owner, then take a bean, open it, work it, close it, and take the next — refilling from the deepest queue when a drainer's list runs dry, until nothing drainable is left.\n\nYou are in this process when you are asked to drain beans, when you spawn drainers, or when you pull from a shared queue next to other agents. Each bean still goes through the ordinary OPEN and CLOSE (Process_BeanOpen, Process_BeanClose); what the drain adds is the queue around them, and the rule that a bean another agent holds is skipped, not worked. The queue is advisory: it says who should take a bean, and only OPEN's claim says who did.",
       "enforcement": "strict",
-      "sourcePath": "processes/sdlc/bean-drain.bpmn",
-      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/bean-drain.bpmn",
+      "sourcePath": "sdlc/processes/bean-drain.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/bean-drain.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/bean-drain.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Start"
@@ -22,7 +22,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_1",
@@ -30,7 +30,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Start",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_BuildQueue",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_2",
@@ -38,7 +38,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_BuildQueue",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Next",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_15",
@@ -46,7 +46,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Next",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_More",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_3",
@@ -55,7 +55,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_More",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_TakeNext",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_4",
@@ -63,7 +63,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_TakeNext",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Open",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_5",
@@ -71,7 +71,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Open",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Claimed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_6",
@@ -80,7 +80,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Claimed",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Work",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_7",
@@ -88,7 +88,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Work",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Close",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_8",
@@ -96,7 +96,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Close",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Next",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_9",
@@ -105,7 +105,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Claimed",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Skip",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_10",
@@ -113,7 +113,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Skip",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Next",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_11",
@@ -122,7 +122,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_More",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Refill",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_12",
@@ -130,7 +130,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Refill",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Refilled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_13",
@@ -139,7 +139,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Refilled",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_TakeNext",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain#flow/BD_14",
@@ -148,7 +148,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Refilled",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Drained",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     }
   ]
 }

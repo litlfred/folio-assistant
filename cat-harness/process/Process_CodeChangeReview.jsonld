@@ -10,8 +10,8 @@
       "summary": "Getting a change to the PLATFORM from \"this is needed\" to merged: claim the work, branch and announce it, make the change, prove it against the platform's own gates, and carry it through review to a merge somebody else is not left holding.",
       "description": "Getting a change to the PLATFORM from \"this is needed\" to merged: claim the work, branch and announce it, make the change, prove it against the platform's own gates, and carry it through review to a merge somebody else is not left holding.\n\nYou are in this process for a change to folio-assistant itself. `content-change-review` is the same shape for a folio's content, and the acceptance differs: here a code reviewer judges the engineering, there a review committee judges the editorial.\n\nThe loop back through \"root-cause the failure\" is the point of drawing this at all. Red CI is not a state you report and leave; it is a state you re-enter the process from. The same is true of a review that is not clear.",
       "enforcement": "strict",
-      "sourcePath": "processes/sdlc/code-change-review.bpmn",
-      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/code-change-review.bpmn",
+      "sourcePath": "sdlc/processes/code-change-review.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/code-change-review.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/code-change-review.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Start_Change"
@@ -22,7 +22,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f1",
@@ -30,7 +30,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Start_Change",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_ClaimBean",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f2",
@@ -39,7 +39,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/GW_BeanYours",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_BranchAndAnnounce",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f3",
@@ -47,7 +47,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_BranchAndAnnounce",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Implement",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f4",
@@ -55,7 +55,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Implement",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_RunGates",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f5",
@@ -63,7 +63,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_RunGates",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_CommitAndOpenPR",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f6",
@@ -71,7 +71,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_CommitAndOpenPR",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_RunCI",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f7",
@@ -79,7 +79,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_RunCI",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/GW_CIGreen",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f8",
@@ -88,7 +88,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/GW_CIGreen",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Review",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f9",
@@ -97,7 +97,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/GW_CIGreen",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Diagnose",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f11",
@@ -105,7 +105,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Diagnose",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Implement",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f12",
@@ -113,7 +113,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Review",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/GW_ReviewClear",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f13",
@@ -122,7 +122,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/GW_ReviewClear",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_AddressReview",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f14",
@@ -130,7 +130,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_AddressReview",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Implement",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f15",
@@ -139,7 +139,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/GW_ReviewClear",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_PrepareMerge",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f16",
@@ -147,7 +147,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_PrepareMerge",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_CloseBean",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f17",
@@ -155,7 +155,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_CloseBean",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_ArchiveBean",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/f18",
@@ -163,7 +163,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_ArchiveBean",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/End_Merged",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/SF_Bean_1",
@@ -171,7 +171,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_ClaimBean",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/GW_BeanYours",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview#flow/SF_Bean_2",
@@ -180,7 +180,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/GW_BeanYours",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/End_BeanNotYours",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     }
   ]
 }

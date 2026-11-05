@@ -132,7 +132,7 @@ evaluated the reprioritisation table and ordered the merge queue. Its own
 docblock said <em>“a library the merge steward and the tile call.”</em> Nothing called
 it — no <code class="language-plaintext highlighter-rouge">package.json</code> script, no workflow, no command — and the only thing that
 imported it was its own test. So the ordering a declared decision table exists
-to provide could not be asked for, and the queue was ordered by hand.</p><p><strong><code class="language-plaintext highlighter-rouge">cat-harness/processes/sdlc/decisions/merge-priority.dmn</code></strong> used the FEEL
+to provide could not be asked for, and the queue was ordered by hand.</p><p><strong><code class="language-plaintext highlighter-rouge">cat-harness/sdlc/processes/decisions/merge-priority.dmn</code></strong> used the FEEL
 unary test <code class="language-plaintext highlighter-rouge">not("green")</code> from the day it was drawn. <code class="language-plaintext highlighter-rouge">unaryTest</code> <strong>throws</strong> on
 <code class="language-plaintext highlighter-rouge">not(...)</code>, so the table was unevaluable by <strong>any</strong> caller, not merely uncalled.</p><p>The second one is the sharper version, and the detail that matters is where it
 was hiding: <strong>the committed <code class="language-plaintext highlighter-rouge">kg-qa</code> sidecar for that table read

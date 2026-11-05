@@ -8,7 +8,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Draft, review and publish",
       "summary": "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision.",
-      "description": "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision. folio-assistant — corpus to draft publication to officially published.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision.",
       "enforcement": "strict",
       "sourcePath": "processes/content/draft-to-publication.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/draft-to-publication.bpmn",

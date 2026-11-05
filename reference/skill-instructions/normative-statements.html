@@ -112,16 +112,14 @@ thing an L1 health-policy guidance note, a standard, or a terms-of-reference
 document exists to state.</p><h2 id="the-problem-this-addresses"><a href="#the-problem-this-addresses" class="anchor-heading" aria-labelledby="the-problem-this-addresses"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The problem this addresses
   
   
-</h2><p>A normative statement is not prose. It is the block readers cite, implementers
-trace to, and reviewers sign off individually. It wants a label, a stable
-identity, and a place in the dependency graph — everything a <code class="language-plaintext highlighter-rouge">theorem</code> has,
-and nothing a paragraph of <code class="language-plaintext highlighter-rouge">prose</code> has.</p><p>It is also <strong>not a theorem</strong>. Nothing proves it. Its authority is the issuing
-body’s, not a proof’s.</p><h2 id="what-to-do"><a href="#what-to-do" class="anchor-heading" aria-labelledby="what-to-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What to do
+</h2><p>A normative statement is the block readers cite, implementers trace to, and
+reviewers sign off individually, so it needs a label, a stable identity and a
+place in the dependency graph. It is <strong>not a theorem</strong>: nothing proves it, and
+its authority is the issuing body’s.</p><h2 id="what-to-do"><a href="#what-to-do" class="anchor-heading" aria-labelledby="what-to-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What to do
   
   
 </h2><p>Use a <strong><code class="language-plaintext highlighter-rouge">recommendation</code> block</strong>: one statement per block, with a label, a
-title, and its strength as a code. Bean <code class="language-plaintext highlighter-rouge">55ao</code> added the kind on the owner’s
-rulings of 2026-09-23 and 2026-10-06.</p><div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// content/&lt;slug&gt;/&lt;chapter&gt;/rec-cold-chain-audit.ts</span>
+title, and its strength as a code.</p><div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// folio/&lt;slug&gt;/&lt;chapter&gt;/rec-cold-chain-audit.ts</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">recommendation</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@folio/schemas/builders</span><span class="dl">"</span><span class="p">;</span>
 
 <span class="k">export</span> <span class="k">default</span> <span class="nf">recommendation</span><span class="p">({</span>
@@ -133,10 +131,10 @@ rulings of 2026-09-23 and 2026-10-06.</p><div class="language-ts highlighter-rou
 <span class="p">});</span>
 </code></pre></div></div><p>The block’s <code class="language-plaintext highlighter-rouge">.md</code> holds the statement itself, and its label becomes the anchor
 every cross-reference targets (<code class="language-plaintext highlighter-rouge">[see](#rec:cold-chain-audit)</code>).</p><ul><li><code class="language-plaintext highlighter-rouge">label</code>: a prefix of your folio’s own choosing, kept consistent across the
-corpus. The platform reserves none (Q1): the kind’s node says
+corpus. The platform reserves none: the kind’s node says
 <code class="language-plaintext highlighter-rouge">prefixEnforced: false</code>. <code class="language-plaintext highlighter-rouge">rec:</code> is recognised, never required. Pick a prefix
 once and write it down in the folio’s own AGENTS.md.</li><li><code class="language-plaintext highlighter-rouge">title</code>: the short form the document’s index and any cross-reference will
-show.</li><li><code class="language-plaintext highlighter-rouge">strength</code>: a <strong>code in a declared code list</strong> (Q2), not free text. Core
+show.</li><li><code class="language-plaintext highlighter-rouge">strength</code>: a <strong>code in a declared code list</strong>, not free text. Core
 declares two:
     <ul><li><code class="language-plaintext highlighter-rouge">grade-recommendation-strength</code>: <code class="language-plaintext highlighter-rouge">strong</code> or <code class="language-plaintext highlighter-rouge">conditional</code>, GRADE as the
 WHO handbook for guideline development applies it;</li><li><code class="language-plaintext highlighter-rouge">rfc2119-requirement-level</code>: <code class="language-plaintext highlighter-rouge">must</code>, <code class="language-plaintext highlighter-rouge">must-not</code>, <code class="language-plaintext highlighter-rouge">should</code>, <code class="language-plaintext highlighter-rouge">should-not</code>,
@@ -149,14 +147,13 @@ read the prose.</p></li><li><code class="language-plaintext highlighter-rouge">u
 definitions of terms it uses, the scope statement it sits under, and the
 evidence summary it rests on. This is what makes “what else changes if this
 recommendation changes?” answerable.</li><li><code class="language-plaintext highlighter-rouge">about[]</code>: optional labels of the DAK <code class="language-plaintext highlighter-rouge">health-intervention</code>s this
-recommendation is about. It is a <strong>link, not a merge</strong> (Q3): the two
+recommendation is about. It is a <strong>link, not a merge</strong>: the two
 vocabularies stay separate, and nothing in this one depends on the DAK
 adapter.</li></ul><p>Keep <strong>one statement per block</strong>. A block holding three recommendations cannot
 be cited, reviewed, superseded or traced individually, and splitting it later
-means renumbering everything that referenced it.</p><p><strong>Converting from the interim carrier.</strong> Before the kind existed, the
-convention was a labelled, titled <code class="language-plaintext highlighter-rouge">prose</code> block. Converting one means changing
-the builder call from <code class="language-plaintext highlighter-rouge">prose</code> to <code class="language-plaintext highlighter-rouge">recommendation</code> and adding <code class="language-plaintext highlighter-rouge">strength</code>. The
-label, title, <code class="language-plaintext highlighter-rouge">uses[]</code> and <code class="language-plaintext highlighter-rouge">.md</code> stay as they are, so no reference breaks.</p><h2 id="when-the-statement-comes-from-a-source"><a href="#when-the-statement-comes-from-a-source" class="anchor-heading" aria-labelledby="when-the-statement-comes-from-a-source"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When the statement comes from a source
+means renumbering everything that referenced it.</p><p><strong>Converting a labelled <code class="language-plaintext highlighter-rouge">prose</code> block.</strong> Change the builder call from <code class="language-plaintext highlighter-rouge">prose</code>
+to <code class="language-plaintext highlighter-rouge">recommendation</code> and add <code class="language-plaintext highlighter-rouge">strength</code>. The label, title, <code class="language-plaintext highlighter-rouge">uses[]</code> and <code class="language-plaintext highlighter-rouge">.md</code>
+stay as they are, so no reference breaks.</p><h2 id="when-the-statement-comes-from-a-source"><a href="#when-the-statement-comes-from-a-source" class="anchor-heading" aria-labelledby="when-the-statement-comes-from-a-source"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When the statement comes from a source
   
   
 </h2><p>A normative statement or requirement that a SOURCE makes is already a node in
@@ -168,11 +165,8 @@ cannot tell the two apart.</p><h2 id="what-not-to-do"><a href="#what-not-to-do" 
   
   
 </h2><ul><li><strong>Do not use <code class="language-plaintext highlighter-rouge">definition</code>.</strong> It is a math kind: its <code class="language-plaintext highlighter-rouge">lean</code> field is
-<em>required</em>, so the block will not validate in a document folio at all.
-Earlier guidance in <code class="language-plaintext highlighter-rouge">document-intake</code> suggested mapping guideline
-recommendations onto <code class="language-plaintext highlighter-rouge">definition</code> — that predates the document profile and
-is wrong for a document folio.</li><li><strong>Do not use a bare <code class="language-plaintext highlighter-rouge">prose</code> block any more.</strong> It was the interim carrier
-and still validates, but no criterion can tell it is normative.</li><li><strong>Do not use <code class="language-plaintext highlighter-rouge">theorem</code> or <code class="language-plaintext highlighter-rouge">proposition</code></strong> for a good-practice statement.
+<em>required</em>, so the block will not validate in a document folio at all.</li><li><strong>Do not use a bare <code class="language-plaintext highlighter-rouge">prose</code> block.</strong> It validates, but no criterion can tell
+it is normative.</li><li><strong>Do not use <code class="language-plaintext highlighter-rouge">theorem</code> or <code class="language-plaintext highlighter-rouge">proposition</code></strong> for a good-practice statement.
 They are outside this profile and <code class="language-plaintext highlighter-rouge">content_profile_check</code> rejects them.</li><li><strong>Do not encode the recommendation number in the label alone.</strong> Numbers are
 renumbered between editions; the label must survive that. Put the published
 number in the title or the prose.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill

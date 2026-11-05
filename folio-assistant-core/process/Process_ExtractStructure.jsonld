@@ -8,7 +8,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — extract structure",
       "summary": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates.",
-      "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates. folio-assistant — Ingestion subprocess — extract structure.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates.",
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-extract-structure.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-extract-structure.bpmn",

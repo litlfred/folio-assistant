@@ -111,8 +111,8 @@
   
   
 </h2><p>This skill performs a complete analysis-to-formalization pass on a single
-chapter of the manuscript.  It is the union of the Ontologist, Formalizer,
-and Lean Generation skills applied in a structured, chunked workflow.</p><h2 id="when-to-use-this-skill"><a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
+chapter of the manuscript.  It applies the <code class="language-plaintext highlighter-rouge">ontologist</code> (folio-assistant-core),
+<code class="language-plaintext highlighter-rouge">formalizer</code> and <code class="language-plaintext highlighter-rouge">lean-generation</code> skills in a structured, chunked workflow.</p><h2 id="when-to-use-this-skill"><a href="#when-to-use-this-skill" class="anchor-heading" aria-labelledby="when-to-use-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to Use This Skill
   
   
 </h2><ul><li>When a chapter is ready for its first Lean formalization pass</li><li>When reviewing a chapter for glossary completeness</li><li>When bringing a chapter’s Lean infrastructure from empty stubs to
@@ -139,9 +139,10 @@ this chapter</li><li>Identify terms <strong>used</strong> in definitions but not
   
 </h3><p>Write Lean <code class="language-plaintext highlighter-rouge">structure</code> or <code class="language-plaintext highlighter-rouge">class</code> declarations for the foundational algebraic
 objects in the chapter.  Follow these rules:</p><ul><li>Import from mathlib: <code class="language-plaintext highlighter-rouge">CategoryTheory.Monoidal.Basic</code>, <code class="language-plaintext highlighter-rouge">Functor.Basic</code>,
-<code class="language-plaintext highlighter-rouge">Algebra.Group.Basic</code>, etc.</li><li>Use <code class="language-plaintext highlighter-rouge">sorry</code> only for axiom placeholders that represent deep mathematical
-content (non-degeneracy, cohomological vanishing).  Prefer <code class="language-plaintext highlighter-rouge">True := by trivial</code>
-for conditions that are axiomatically assumed.</li><li>Every structure field gets a <code class="language-plaintext highlighter-rouge">/-- ... -/</code> docstring</li><li>Naming: <code class="language-plaintext highlighter-rouge">PascalCase</code> for structures, <code class="language-plaintext highlighter-rouge">camelCase</code> for defs/theorems,
+<code class="language-plaintext highlighter-rouge">Algebra.Group.Basic</code>, etc.</li><li>Use <code class="language-plaintext highlighter-rouge">sorry</code> (with a <code class="language-plaintext highlighter-rouge">-- Ref:</code> comment) only for axiom placeholders that
+represent deep mathematical content (non-degeneracy, cohomological
+vanishing). State an assumed condition as a real <code class="language-plaintext highlighter-rouge">Prop</code> field, never as
+<code class="language-plaintext highlighter-rouge">True</code> (see <code class="language-plaintext highlighter-rouge">lean-proof-vacuity-audit</code>).</li><li>Every structure field gets a <code class="language-plaintext highlighter-rouge">/-- ... -/</code> docstring</li><li>Naming: <code class="language-plaintext highlighter-rouge">PascalCase</code> for structures, <code class="language-plaintext highlighter-rouge">camelCase</code> for defs/theorems,
 <code class="language-plaintext highlighter-rouge">snake_case</code> for lemma names</li></ul><h3 id="chunk-4--lean-structures-geometric--analytic"><a href="#chunk-4--lean-structures-geometric--analytic" class="anchor-heading" aria-labelledby="chunk-4--lean-structures-geometric--analytic"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Chunk 4 — Lean Structures (Geometric / Analytic)
   
   

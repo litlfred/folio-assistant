@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 33,
+      "count": 44,
       "unit": "open beans"
     }
   },
@@ -123,6 +123,20 @@
       "file": "beans/defs/folio-assistant-6fez--library-sources-regroup-into-library-group-slug.md"
     },
     {
+      "id": "folio-assistant-6h4p",
+      "title": "CI speed II (a): merge-main restarts full CI on every labelled clean PR when main moves",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:26:15Z",
+      "updatedAt": "2026-11-05T08:26:15Z",
+      "preview": "## Evidence\nmerge-main (`.github/workflows/merge-main.yml`, from #1820 and #1834) merged main into **every** labelled PR on each push to main, conflicted or not. Each merge is a new head commit, so each PR restarted its full CI: about 130 runner-minutes per PR per push to main.\n\n## Fix\nThe sweep merges main only into PRs that are actually conflicted. A clean PR keeps its head and its runs; the mer",
+      "file": "beans/defs/folio-assistant-6h4p--ci-speed-ii-a-merge-main-restarts-full-ci-on-every.md"
+    },
+    {
       "id": "folio-assistant-75c5",
       "title": "INGEST: volume-separation acceptance run on the GDZ Invent. Math. volume",
       "status": "completed",
@@ -177,6 +191,20 @@
       "updatedAt": "2026-10-24T08:25:00Z",
       "preview": "From the proposal cat-harness/docs/proposals/credentials-needs-and-supply.md §2.3–2.4 (D3=A). Register three graph kinds: credential-needs (context), credential-profile (context), credential-registry (state). Write the needs for every secret in §1.1. The profile is personal-github with the App (D1=A). Declare sign-artefact as a need with no supply yet (D4=A). bootstrap-tools carries its own file, ",
       "file": "beans/defs/folio-assistant-9hxd--credentials-iii-credentials-declaration-needs-prof.md"
+    },
+    {
+      "id": "folio-assistant-9set",
+      "title": "CI speed II (c1): six gate jobs still wait on both qa-working-copy and publish-pages (cis1 part b, closed undone)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:26:16Z",
+      "updatedAt": "2026-11-05T08:33:07Z",
+      "preview": "`folio-assistant-cis1` (archived, status completed) had two parts. Part a, the mount cache, is done (`CAT_MOUNT_CACHE_DIR` in `mount-from-lock.ts` and the workflows). Part b was not: on main b3bc4d2, `code-quality-gates.yml` still has six jobs whose `needs` hold **both** `qa-working-copy` and `publish-pages`:\n\n- typescript-test\n- gates-kg\n- gates-docs\n- gates-unrun\n- e2e-shard\n- skill-registration",
+      "file": "beans/defs/folio-assistant-9set--ci-speed-ii-c1-six-gate-jobs-still-wait-on-both-qa.md"
     },
     {
       "id": "folio-assistant-amom",
@@ -249,6 +277,20 @@
       "file": "beans/defs/folio-assistant-bsd1--bean-store-behind-any-tool-and-agent-dispatch.md"
     },
     {
+      "id": "folio-assistant-bx4c",
+      "title": "mount:remote re-render writes into mounted instances, breaking mount:lock:check",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-rwmf",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:53:21Z",
+      "updatedAt": "2026-11-05T08:53:21Z",
+      "preview": "## Evidence\nOn 2026-11-05 we re-pinned folio-assistant#2926 (commit e5450ee). We seeded cat-harness at its main (c632a56) and ran `bun run cat mount:remote`. That command re-renders the agent surface, and in doing so it wrote into the **mounted cat-harness instance's own files**. cat-harness is mounted whole, so those files are inside the mount. Afterwards `mount:lock:check` and `mount:remote:chec",
+      "file": "beans/defs/folio-assistant-bx4c--mountremote-re-render-writes-into-mounted-instance.md"
+    },
+    {
       "id": "folio-assistant-c1ev",
       "title": "Phase 5: harness bean tidy-up (6fez, fwtz, p7mb, iirv)",
       "status": "completed",
@@ -314,7 +356,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T18:20:00Z",
-      "updatedAt": "2026-11-05T06:35:32Z",
+      "updatedAt": "2026-11-05T08:45:00Z",
       "preview": "## How to resume (read this first)\n\nThis bean is the drain's durable memory. Complete it when the window closes and every item below is merged, handed off or carded.\n\n1. Read this whole bean, newest comment last. The last comment is the current state.\n2. Re-check each PR live on GitHub (checks, mergeable) before acting; this bean may be minutes old.\n3. Work the list. Take over any item whose owner",
       "file": "beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md"
     },
@@ -373,6 +415,20 @@
       "updatedAt": "2026-11-02T19:13:00Z",
       "preview": "## How to resume (read this first)\n\n1. Read this bean, newest comment last. The last comment is the current state.\n2. Project thread: \"Add bookmarks and pinned blocks to folio\" (cmsg_017WNUkNK8kdDziPK58Pv6G9RCjaQapmrcxejK8nANXnjj).\n3. Check whether the left-gutter rework has merged: folio-assistant-core#616, cat-harness-tools#1411, cat-harness#981. Build on top of it, not beside it.\n4. Check wheth",
       "file": "beans/defs/folio-assistant-fbmk--folio-bookmarks-and-pinned-blocks-handover.md"
+    },
+    {
+      "id": "folio-assistant-fn8q",
+      "title": "CI speed II (e): gates before push (pre-push, agent hook, tree-keyed record)",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:26:16Z",
+      "updatedAt": "2026-11-05T08:26:16Z",
+      "preview": "Catch failures before they reach a runner: a pre-push hook, an agent hook, and a record keyed by the tree hash so CI can see the gates already passed on that exact tree. Sibling \"CI speed 3\", in cat-harness-tools. An agent's record never stands in for the QA verdict; it only lets CI skip a rebuild it will check.\n\n## Done when\n- [ ] the pre-push and agent hooks run the fast gates\n- [ ] the tree-key",
+      "file": "beans/defs/folio-assistant-fn8q--ci-speed-ii-e-gates-before-push-pre-push-agent-hoo.md"
     },
     {
       "id": "folio-assistant-ftpc",
@@ -501,18 +557,32 @@
       "file": "beans/defs/folio-assistant-jo5h--packfromast-manifest-path-read-outside-the-ast.md"
     },
     {
-      "id": "folio-assistant-ksek",
-      "title": "CI: green PR must mean green main",
-      "status": "completed",
-      "type": "epic",
+      "id": "folio-assistant-k2sg",
+      "title": "CI speed II (f): fewer runner requests (schedules, writer-records, watchdog churn)",
+      "status": "in-progress",
+      "type": "task",
       "priority": "normal",
-      "parent": "",
+      "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
-      "createdAt": "2026-10-23T08:42:44Z",
-      "updatedAt": "2026-11-01T23:05:00Z",
-      "preview": "Owner-approved process fix, 2026-10-23. Two checks ran only after merge (Liquid undefined-variable check, workflow_run on main; Post-merge regen check and repair, push to main), so a PR could be fully green and still turn main red, and every such merge emailed the owner a failure. The rule: whatever can be judged before a merge is judged before it, on the PR's own runs, and merge-guard is the only",
-      "file": "beans/defs/folio-assistant-ksek--ci-green-pr-must-mean-green-main.md"
+      "createdAt": "2026-11-05T08:26:16Z",
+      "updatedAt": "2026-11-05T08:33:33Z",
+      "preview": "## Evidence\n- scheduled workflows are about 50 % of all runs;\n- writer-records takes about 80 minutes;\n- watchdog runs churn.\n\nSibling \"CI speed 4\" of session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.\n\n## Done when\n- [ ] each schedule's interval is justified or widened\n- [ ] writer-records cost measured before and after\n- [ ] runner requests per day measured before and after\n\n_2026-",
+      "file": "beans/defs/folio-assistant-k2sg--ci-speed-ii-f-fewer-runner-requests-schedules-writ.md"
+    },
+    {
+      "id": "folio-assistant-k3vv",
+      "title": "CI speed II (2026-11-05): restarts on main moves, red-main cycle, setup duplication",
+      "status": "todo",
+      "type": "epic",
+      "priority": "high",
+      "parent": "folio-assistant-rwmf",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:25:48Z",
+      "updatedAt": "2026-11-05T08:25:48Z",
+      "preview": "CI-speed analysis of 2026-11-05 by session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf (owner litlfred asked for it). Successor to the archived `cisp` epic (2026-10-15), two of whose children closed without being done (see c1, c2).\n\nThe three biggest costs found:\n\n1. **Restarts when main moves.** merge-main merged main into every labelled clean PR on each push to main, so every such PR",
+      "file": "beans/defs/folio-assistant-k3vv--ci-speed-ii-2026-11-05-restarts-on-main-moves-red.md"
     },
     {
       "id": "folio-assistant-lgwt",
@@ -629,6 +699,20 @@
       "updatedAt": "2026-11-02T07:55:00Z",
       "preview": "Owner rule: no work for 2 h means a drain may take over. Comment on each PR that the drain took it over.\n- tools#1129 (draft, bean fwtz stamps): idle since 2026-10-31 17:49Z. Mark ready first, then merge main in, merge on green; update bean fwtz.\n- tools#1359 (draft, drop core's figure-rebuild PENDING entry): idle since 00:43Z. Ready, merge on green.\n- cat-harness#932 (processes viewer covers busi",
       "file": "beans/defs/folio-assistant-o161--harness-drain-take-over-stalled-prs.md"
+    },
+    {
+      "id": "folio-assistant-ohpz",
+      "title": "CI speed II (d): diff-keyed reuse when only main moved",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:26:16Z",
+      "updatedAt": "2026-11-05T08:33:31Z",
+      "preview": "When only main moved and the PR's own diff did not, most of the PR's verdicts still hold. Key reuse on the PR's diff and the files it reads, not on the head commit. Sibling \"CI speed 2\" of session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.\n\n## Done when\n- [ ] a re-run after a main-only move reuses the verdicts whose inputs did not change (run IDs cited)\n\n_2026-11-05T08:40:00Z_ — File",
+      "file": "beans/defs/folio-assistant-ohpz--ci-speed-ii-d-diff-keyed-reuse-when-only-main-move.md"
     },
     {
       "id": "folio-assistant-oz9e",
@@ -771,6 +855,34 @@
       "file": "beans/defs/folio-assistant-sbpn--smart-ra-block-panel-handover.md"
     },
     {
+      "id": "folio-assistant-tsh9",
+      "title": "CI speed II (b): red-main cycle from a layer rename; two-phase move rule",
+      "status": "todo",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:26:16Z",
+      "updatedAt": "2026-11-05T08:26:16Z",
+      "preview": "## Evidence\n- main red about 250 commits (#2781).\n- cat-harness moved `skills/sdlc` to `sdlc/skills`. That move needed fhir-harness#287, folio-assistant-sci#176 and smart-base#303, which were red only because main still pinned the old cat-harness. A dependency cycle across pins.\n- 14 re-pin trains in a row failed on the same 7 new failures, each about 110 to 130 runner-minutes: about 17 % of runne",
+      "file": "beans/defs/folio-assistant-tsh9--ci-speed-ii-b-red-main-cycle-from-a-layer-rename-t.md"
+    },
+    {
+      "id": "folio-assistant-tv20",
+      "title": "CI speed II (c2): Feature Staging still builds its own site (cis4, closed undone)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:26:16Z",
+      "updatedAt": "2026-11-05T08:33:40Z",
+      "preview": "`folio-assistant-cis4` (archived, status completed) asked that Feature Staging reuse what Code-quality gates already built. On main b3bc4d2, `feature-staging.yml` still mounts and runs `derive:publish` itself (the step \"Build the derived artefacts kept off the commit\"), so each PR push builds the site twice.\n\nFiled as a follow-up rather than reopening cis4, because an archived bean must stay termi",
+      "file": "beans/defs/folio-assistant-tv20--ci-speed-ii-c2-feature-staging-still-builds-its-ow.md"
+    },
+    {
       "id": "folio-assistant-uhkv",
       "title": "SMART STACK: core → fhir-harness → smart-base → {smart-l1, smart-dak, smart-ig}",
       "status": "completed",
@@ -825,6 +937,34 @@
       "updatedAt": "2026-11-01T19:40:00Z",
       "preview": "**Category:** security (RED FLAG, blocking) · **severity:** major · **rule:** scz-pin-third-party-by-full-sha (security.md row \"a third-party action → a runner\": `security:gate` blocks this)\n\n**Where (tag or branch refs, no SHA):**\n- smart-ra `release.yml`: `actions/checkout@v2` (line 22) and `WorldHealthOrganization/smart-html/.github/workflows/release.yml@main` (38) with `contents`, `pages`, `id",
       "file": "beans/defs/folio-assistant-x09n--unpinned-third-party-actions-in-write-token-workfl.md"
+    },
+    {
+      "id": "folio-assistant-x35i",
+      "title": "CI speed II (c): Code-quality gates setup duplication (no bun cache, smart:pages x17, ig-index x10)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:26:16Z",
+      "updatedAt": "2026-11-05T09:50:07Z",
+      "preview": "## Evidence\nCode-quality gates repeats its setup in every job:\n- no bun install cache;\n- `smart:pages` runs 17 times and `ig-index:build` 10 times per run;\n- the qa-working-copy → publish-pages chain sits in front of most jobs.\n\nWorked by the sibling \"CI speed 1\" of session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf. The two `cisp` children closed undone are filed under this epic as c",
+      "file": "beans/defs/folio-assistant-x35i--ci-speed-ii-c-code-quality-gates-setup-duplication.md"
+    },
+    {
+      "id": "folio-assistant-xaa8",
+      "title": "CI speed II (g): owner decision: move the repo under a free GitHub organization for the real merge queue",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:26:16Z",
+      "updatedAt": "2026-11-05T08:26:16Z",
+      "preview": "**An owner decision, not agent work.**\n\nGitHub's real merge queue is not offered on a personal-account repository (cat-harness `skills/sdlc/sdlc-core/merge-queue.md`, bean `1hjm`). `code-quality-gates.yml` already has a `merge_group` trigger, so the queue would work as soon as it is offered. Moving the repository under a free GitHub organization would offer it.\n\nWhat a move changes:\n- **Pages URLs",
+      "file": "beans/defs/folio-assistant-xaa8--ci-speed-ii-g-owner-decision-move-the-repo-under-a.md"
     },
     {
       "id": "folio-assistant-yj32",
@@ -886,20 +1026,20 @@
         "title": "GOAL 4 / PLATFORM: the harness's own reliability — gates, process, QA, merge pipeline, deployment — which every GOAL stands on",
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
-        "epics": 2,
-        "total": 25,
+        "epics": 3,
+        "total": 36,
         "closed": 5,
-        "open": 20,
-        "inProgress": 10,
-        "todo": 10,
+        "open": 31,
+        "inProgress": 15,
+        "todo": 16,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.2
+        "share": 0.1388888888888889
       }
     ],
     "orphanOpen": 12,
-    "openTotal": 33,
-    "coveredOpen": 20,
+    "openTotal": 44,
+    "coveredOpen": 31,
     "duplicateIds": 0
   }
 }

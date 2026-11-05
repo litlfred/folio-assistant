@@ -155,8 +155,8 @@ and the refusal says where it looked. The same holds for the harness’s own
 <code class="language-plaintext highlighter-rouge">mountDefaults.directories</code>.
 An id may also be a <strong>concern name</strong>, a code from
 <code class="language-plaintext highlighter-rouge">code-lists/concern-group.json</code> such as <code class="language-plaintext highlighter-rouge">sdlc</code>. It expands to every
-kind-first member the instance declares, such as <code class="language-plaintext highlighter-rouge">processes/sdlc/</code> and
-<code class="language-plaintext highlighter-rouge">skills/sdlc/</code>, read from each grouping kind’s own declaration file at the
+kind-first member the instance declares, such as <code class="language-plaintext highlighter-rouge">sdlc/processes/</code> and
+<code class="language-plaintext highlighter-rouge">sdlc/skills/</code>, read from each grouping kind’s own declaration file at the
 pin. Each member is locked as <code class="language-plaintext highlighter-rouge">&lt;directory id&gt;/&lt;code&gt;</code>. A code that none of
 the instance’s kinds declares is refused like any other unknown id.</li><li>After a review of hydrated metadata, `mount:remote –choose<harness>[:<instance>] --directories a,b --tools x,y` writes the choice
 into `overrides.<instance>` (the choice, never the state), so a fresh clone

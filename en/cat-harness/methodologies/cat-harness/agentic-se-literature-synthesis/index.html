@@ -370,7 +370,7 @@ never the whole-process XML graph.</li></ul><h3 id="2-context-poisoning-in-swarm
   
   
 </h3><ul><li><strong>Vulnerability</strong>:
-In <code class="language-plaintext highlighter-rouge">skills/sdlc/sdlc-core/dispatch-agent.md</code> and <code class="language-plaintext highlighter-rouge">swarm-management.md</code>, sub-tasks are spawned when an agent
+In <code class="language-plaintext highlighter-rouge">sdlc/skills/sdlc-core/dispatch-agent.md</code> and <code class="language-plaintext highlighter-rouge">swarm-management.md</code>, sub-tasks are spawned when an agent
 encounters complex sub-problems. In common usage, the parent agent frequently forwards its entire ongoing
 conversation transcript—including failed search attempts, erroneous grep commands, and hallucinated root-cause
 hypotheses—into the subagent’s prompt.</li><li><strong>Risk</strong>:
@@ -397,7 +397,7 @@ empirically calibrated false-positive rate below 5% across recorded historical d
   
   
 </h3><ul><li><strong>Vulnerability</strong>:
-While <code class="language-plaintext highlighter-rouge">skills/sdlc/sdlc-core/swarm-management.md</code> describes the conceptual discipline of stopping early, the
+While <code class="language-plaintext highlighter-rouge">sdlc/skills/sdlc-core/swarm-management.md</code> describes the conceptual discipline of stopping early, the
 underlying runner (<code class="language-plaintext highlighter-rouge">invoke_subagent</code>, background shell commands) lacked automated runtime predicates to detect
 and kill runaway agents.</li><li><strong>Risk</strong>:
 An agent trapped in an infinite search loop, circular git merge conflict, or hallucinated dependency chain

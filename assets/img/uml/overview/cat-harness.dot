@@ -116,7 +116,7 @@ digraph "cat_harness" {
     "cat_harness_schemas_skills_wireframe_viewport_check_output_schema_json_Wireframe_Viewport_Check_Output" [fillcolor="#e9edf3", class="fa_uml_kind_schemas", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Wireframe Viewport Check Output</b></td></tr><tr><td><i>«schema: skills/wireframe-viewport-check/output.schema.json»</i></td></tr><tr><td align="left">report [1] : string</td></tr><tr><td align="left">candidates [0..*] : Candidate[]</td></tr><tr><td align="left">stagingLinks [0..1] : any</td></tr></table>>];
     "cat_harness_schemas_staging_comparison_schema_json_Page" [fillcolor="#e9edf3", class="fa_uml_kind_schemas", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Page</b></td></tr><tr><td><i>«schema: staging-comparison.schema.json»</i></td></tr><tr><td align="left">title [1] : string</td></tr><tr><td align="left">before [0..1] : string&lt;uri&gt;</td></tr><tr><td align="left">after [0..1] : string&lt;uri&gt;</td></tr><tr><td align="left">summary [0..1] : string</td></tr></table>>];
     "cat_harness_schemas_staging_comparison_schema_json_Staging_links" [fillcolor="#e9edf3", class="fa_uml_kind_schemas", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Staging links</b></td></tr><tr><td><i>«schema: staging-comparison.schema.json»</i></td></tr><tr><td align="left">branch [1] : string</td></tr><tr><td align="left">slug [1] : string</td></tr><tr><td align="left">branchUrl [1] : string&lt;uri&gt;</td></tr><tr><td align="left">pr [0..1] : integer</td></tr><tr><td align="left">mainBaseUrl [1] : string&lt;uri&gt;</td></tr><tr><td align="left">stagingBaseUrl [1] : string&lt;uri&gt;</td></tr><tr><td align="left">pages [0..*] : Page[]</td></tr><tr><td align="left">missing [0..*] : string[]</td></tr></table>>];
-    "cat_harness_schemas_kinds_bean_defs_schema_json_Bean_definitions" [fillcolor="#e9edf3", class="fa_uml_kind_schemas", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Bean definitions</b></td></tr><tr><td><i>«schema: kinds/bean-defs.schema.json»</i></td></tr><tr><td align="left">id [0..1] : string</td></tr><tr><td align="left">title [0..1] : string</td></tr><tr><td align="left">status [0..1] : string</td></tr><tr><td align="left">type [0..1] : string</td></tr><tr><td align="left">priority [0..1] : string</td></tr><tr><td align="left">parent [0..1] : string</td></tr><tr><td align="left">blocking [0..*] : string[]</td></tr><tr><td align="left">blocked_by [0..*] : string[]</td></tr><tr><td align="left">created_at [0..1] : string</td></tr><tr><td align="left">updated_at [0..1] : string</td></tr><tr><td align="left">tags [0..*] : string[]</td></tr><tr><td align="left">issue [0..1] : integer | string</td></tr><tr><td align="left">targets [0..1] : string[] | string</td></tr><tr><td align="left">$schema [1] : string</td></tr></table>>];
+    "cat_harness_schemas_kinds_bean_defs_schema_json_Bean_definitions" [fillcolor="#e9edf3", class="fa_uml_kind_schemas", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Bean definitions</b></td></tr><tr><td><i>«schema: kinds/bean-defs.schema.json»</i></td></tr><tr><td align="left">id [0..1] : string</td></tr><tr><td align="left">title [0..1] : string</td></tr><tr><td align="left">tags [0..*] : string[]</td></tr><tr><td align="left">created_at [0..1] : string</td></tr><tr><td align="left">updated_at [0..1] : string</td></tr><tr><td align="left">status [0..1] : string</td></tr><tr><td align="left">type [0..1] : string</td></tr><tr><td align="left">priority [0..1] : string</td></tr><tr><td align="left">parent [0..1] : string</td></tr><tr><td align="left">blocking [0..*] : string[]</td></tr><tr><td align="left">blocked_by [0..*] : string[]</td></tr><tr><td align="left">issue [0..1] : integer | string</td></tr><tr><td align="left">targets [0..1] : string[] | string</td></tr><tr><td align="left">$schema [1] : string</td></tr></table>>];
     "cat_harness_schemas_kinds_binary_release_schema_json_Asset" [fillcolor="#e9edf3", class="fa_uml_kind_schemas", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Asset</b></td></tr><tr><td><i>«schema: kinds/binary-release.schema.json»</i></td></tr><tr><td align="left">name [1] : string</td></tr><tr><td align="left">bytes [1] : integer</td></tr><tr><td align="left">digest [0..1] : object</td></tr><tr><td align="left">fetchedFrom [1] : string</td></tr><tr><td align="left">contentType [0..1] : string</td></tr><tr><td align="left">disposition [1] : unknown | published | deleted-before-deploy | superseded | expired</td></tr><tr><td align="left">dispositionReason [0..1] : string</td></tr></table>>];
     "cat_harness_schemas_kinds_binary_release_schema_json_Binary_releases" [fillcolor="#e9edf3", class="fa_uml_kind_schemas", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Binary releases</b></td></tr><tr><td><i>«schema: kinds/binary-release.schema.json»</i></td></tr><tr><td align="left">$schema [1] : &quot;folio-binary-release/v1&quot;</td></tr><tr><td align="left">release [1] : object</td></tr><tr><td align="left">origin [1] : object</td></tr><tr><td align="left">assets [0..*] : Asset[]</td></tr></table>>];
     "cat_harness_schemas_kinds_board_positions_schema_json_Board_positions" [fillcolor="#e9edf3", class="fa_uml_kind_schemas", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Board positions</b></td></tr><tr><td><i>«schema: kinds/board-positions.schema.json»</i></td></tr><tr><td align="left">$schema [1] : &quot;folio-board-positions/v1&quot;</td></tr><tr><td align="left">boards [1] : map&lt;map&lt;object&gt;&gt;</td></tr></table>>];
@@ -382,6 +382,18 @@ digraph "cat_harness" {
     "grid_pkg_cat_harness_openapi_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_cat_harness_openapi_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_cat_harness_sdlc" {
+    label=<<b>cat-harness/sdlc</b><br/><i>«cat-harness»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_cat_harness_sdlc_cat_harness" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_cat_harness fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>cat-harness: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no validator registered</i></td></tr></table>>];
+    "grid_pkg_cat_harness_sdlc_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_sdlc_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
+  subgraph "cluster_pkg_cat_harness_work_plan" {
+    label=<<b>cat-harness/work-plan</b><br/><i>«cat-harness»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_cat_harness_work_plan_cat_harness" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_cat_harness fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>cat-harness: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no validator registered</i></td></tr></table>>];
+    "grid_pkg_cat_harness_work_plan_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_work_plan_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_cat_harness_archimate" {
     label=<<b>cat-harness/archimate</b><br/><i>«cat-harness»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "n_cat_harness_archimate_cat_harness" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_cat_harness fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>cat-harness: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no validator registered</i></td></tr></table>>];
@@ -615,6 +627,32 @@ digraph "cat_harness" {
     "grid_pkg_cat_harness_openapi_typologies_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
     "grid_pkg_cat_harness_openapi_typologies_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
   }
+  subgraph "cluster_pkg_cat_harness_sdlc_skills" {
+    label=<<b>cat-harness/sdlc-skills</b><br/><i>«skills»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_cat_harness_sdlc_skills_skills" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_skills fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>skills: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family skills names (4 named)</i></td></tr></table>>];
+    "grid_pkg_cat_harness_sdlc_skills_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_sdlc_skills_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
+  subgraph "cluster_pkg_cat_harness_sdlc_processes" {
+    label=<<b>cat-harness/sdlc-processes</b><br/><i>«processes»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "cat_harness_sdlc_processes_omg_bpmn_2_0" [fillcolor="#eee9f5", class="fa_uml_kind_processes", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Business Process Model and Notation (BPMN)</b></td></tr><tr><td><i>«ext: omg-bpmn-2.0»</i></td></tr><tr><td align="left">bpmn:assignment [0..*] : element</td></tr><tr><td align="left">bpmn:callActivity [0..*] : element</td></tr><tr><td align="left">bpmn:collaboration [0..*] : element</td></tr><tr><td align="left">bpmn:dataInput [0..*] : element</td></tr><tr><td align="left">bpmn:dataInputAssociation [0..*] : element</td></tr><tr><td align="left">bpmn:dataInputRefs [0..*] : element</td></tr><tr><td align="left">bpmn:definitions [0..*] : element</td></tr><tr><td align="left">bpmn:documentation [0..*] : element</td></tr><tr><td align="left">bpmn:endEvent [0..*] : element</td></tr><tr><td align="left">bpmn:exclusiveGateway [0..*] : element</td></tr><tr><td align="left">bpmn:extensionElements [0..*] : element</td></tr><tr><td align="left">bpmn:flowNodeRef [0..*] : element</td></tr><tr><td align="left">bpmn:from [0..*] : element</td></tr><tr><td align="left">bpmn:globalScriptTask [0..*] : element</td></tr><tr><td align="left">bpmn:globalTask [0..*] : element</td></tr><tr><td align="left">bpmn:import [0..*] : element</td></tr><tr><td align="left">bpmn:incoming [0..*] : element</td></tr><tr><td align="left">bpmn:inputSet [0..*] : element</td></tr><tr><td align="left">bpmn:ioSpecification [0..*] : element</td></tr><tr><td align="left">bpmn:lane [0..*] : element</td></tr><tr><td align="left">bpmn:laneSet [0..*] : element</td></tr><tr><td align="left">bpmn:outgoing [0..*] : element</td></tr><tr><td align="left">bpmn:outputSet [0..*] : element</td></tr><tr><td align="left">bpmn:parallelGateway [0..*] : element</td></tr><tr><td align="left">bpmn:participant [0..*] : element</td></tr><tr><td align="left">bpmn:process [0..*] : element</td></tr><tr><td align="left">bpmn:resource [0..*] : element</td></tr><tr><td align="left">bpmn:sequenceFlow [0..*] : element</td></tr><tr><td align="left">bpmn:serviceTask [0..*] : element</td></tr><tr><td align="left">bpmn:startEvent [0..*] : element</td></tr><tr><td align="left">bpmn:targetRef [0..*] : element</td></tr><tr><td align="left">bpmn:task [0..*] : element</td></tr><tr><td align="left">bpmn:timerEventDefinition [0..*] : element</td></tr><tr><td align="left">bpmn:to [0..*] : element</td></tr><tr><td align="left">bpmn:userTask [0..*] : element</td></tr></table>>];
+    "grid_pkg_cat_harness_sdlc_processes_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_sdlc_processes_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
+  subgraph "cluster_pkg_cat_harness_work_plan_skills" {
+    label=<<b>cat-harness/work-plan-skills</b><br/><i>«skills»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "n_cat_harness_work_plan_skills_skills" [style="rounded,filled,dashed", fillcolor="#f4f4f1", class="fa_uml_kind_skills fa_uml_undetermined", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td><b>skills: no node schema</b></td></tr><tr><td align="left"><i>could not determine: no node here carries a $schema family skills names (4 named)</i></td></tr></table>>];
+    "grid_pkg_cat_harness_work_plan_skills_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_work_plan_skills_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
+  subgraph "cluster_pkg_cat_harness_work_plan_tools" {
+    label=<<b>cat-harness/work-plan-tools</b><br/><i>«tools»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
+    "cat_harness_work_plan_tools_Remedy" [fillcolor="#eee9f5", class="fa_uml_kind_tools", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Remedy</b></td></tr><tr><td><i>«json: ToolDefinitionSchema»</i></td></tr><tr><td align="left">host [1] : string</td></tr><tr><td align="left">error [0..1] : string</td></tr><tr><td align="left">tool [0..1] : string</td></tr><tr><td align="left">none [0..1] : string</td></tr></table>>];
+    "cat_harness_work_plan_tools_Maintain" [fillcolor="#eee9f5", class="fa_uml_kind_tools", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>Maintain</b></td></tr><tr><td><i>«json: ToolDefinitionSchema»</i></td></tr><tr><td align="left">source [1] : string</td></tr><tr><td align="left">artefact [1] : string</td></tr><tr><td align="left">format [0..1] : string</td></tr></table>>];
+    "cat_harness_work_plan_tools_ToolDefinition" [fillcolor="#eee9f5", class="fa_uml_kind_tools", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>ToolDefinition</b></td></tr><tr><td><i>«json: ToolDefinitionSchema»</i></td></tr><tr><td align="left">id [1] : string</td></tr><tr><td align="left">title [1] : string</td></tr><tr><td align="left">description [1] : string</td></tr><tr><td align="left">install [1] : object</td></tr><tr><td align="left">invoke [1] : object</td></tr><tr><td align="left">io [1] : object</td></tr><tr><td align="left">satisfies [1..*] : string[]</td></tr><tr><td align="left">selection [0..1] : object</td></tr><tr><td align="left">requires [0..1] : object</td></tr><tr><td align="left">remedies [0..*] : Remedy[]</td></tr><tr><td align="left">maintains [0..*] : Maintain[]</td></tr><tr><td align="left">downstream [0..1] : object</td></tr><tr><td align="left">renders [0..*] : string[]</td></tr><tr><td align="left">subprocesses [0..*] : string[]</td></tr></table>>];
+    "grid_pkg_cat_harness_work_plan_tools_top" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+    "grid_pkg_cat_harness_work_plan_tools_bottom" [shape=point, style=invis, width=0, height=0, label="", class="kg-graph-anchor"];
+  }
   subgraph "cluster_pkg_cat_harness_archimate_validators" {
     label=<<b>cat-harness/archimate-validators</b><br/><i>«validators»</i>>; style="rounded"; color="#1b2432"; class="fa_uml_subgraph";
     "cat_harness_archimate_validators_folio_validator_v1_folio_validator_v1" [fillcolor="#f4f4f1", class="fa_uml_kind_validators", label=<<table border="0" cellborder="0" cellspacing="0" cellpadding="2"><tr><td border="1" sides="b"><b>folio-validator/v1</b></td></tr><tr><td><i>«json: ValidatorNodeSchema»</i></td></tr><tr><td align="left">$schema [1] : &quot;folio-validator/v1&quot;</td></tr><tr><td align="left">id [1] : string</td></tr><tr><td align="left">validates [1] : object</td></tr><tr><td align="left">schema [1] : string</td></tr><tr><td align="left">pages [0..1] : string</td></tr><tr><td align="left">rationale [0..1] : string</td></tr></table>>];
@@ -823,6 +861,8 @@ digraph "cat_harness" {
   "cat_harness_agent_skill_authoring_openai_Rule" -> "cat_harness_agent_skill_authoring_openai_Pattern" [dir=both, arrowtail=diamond, arrowhead=none, label="patterns", headlabel="0..*", class="fa_uml_composition"];
   "cat_harness_agent_skill_authoring_openai_Rule" -> "cat_harness_agent_skill_authoring_openai_Terminology" [dir=both, arrowtail=diamond, arrowhead=none, label="terminology", headlabel="0..*", class="fa_uml_composition"];
   "cat_harness_agent_skill_authoring_openai_VoiceProfile" -> "cat_harness_agent_skill_authoring_openai_Rule" [dir=both, arrowtail=diamond, arrowhead=none, label="rules", headlabel="1..*", class="fa_uml_composition"];
+  "cat_harness_work_plan_tools_ToolDefinition" -> "cat_harness_work_plan_tools_Remedy" [dir=both, arrowtail=diamond, arrowhead=none, label="remedies", headlabel="0..*", class="fa_uml_composition"];
+  "cat_harness_work_plan_tools_ToolDefinition" -> "cat_harness_work_plan_tools_Maintain" [dir=both, arrowtail=diamond, arrowhead=none, label="maintains", headlabel="0..*", class="fa_uml_composition"];
   "cat_harness_items_TodoNodeKind" -> "cat_harness_items_AlsoAbout" [dir=both, arrowtail=diamond, arrowhead=none, label="alsoAbout", headlabel="0..*", class="fa_uml_composition"];
   "grid_pkg_cat_harness_cat_harness_validators_top" -> "cat_harness_cat_harness_validators_folio_validator_v1_folio_validator_v1" [style=invis, class="kg-graph-anchor"];
   "cat_harness_cat_harness_validators_folio_validator_v1_folio_validator_v1" -> "grid_pkg_cat_harness_cat_harness_validators_bottom" [style=invis, class="kg-graph-anchor"];
@@ -1113,6 +1153,10 @@ digraph "cat_harness" {
   "n_cat_harness_cat_harness_upstream_code" -> "grid_pkg_cat_harness_cat_harness_upstream_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_openapi_top" -> "n_cat_harness_openapi_cat_harness" [style=invis, class="kg-graph-anchor"];
   "n_cat_harness_openapi_cat_harness" -> "grid_pkg_cat_harness_openapi_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_sdlc_top" -> "n_cat_harness_sdlc_cat_harness" [style=invis, class="kg-graph-anchor"];
+  "n_cat_harness_sdlc_cat_harness" -> "grid_pkg_cat_harness_sdlc_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_work_plan_top" -> "n_cat_harness_work_plan_cat_harness" [style=invis, class="kg-graph-anchor"];
+  "n_cat_harness_work_plan_cat_harness" -> "grid_pkg_cat_harness_work_plan_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_archimate_top" -> "n_cat_harness_archimate_cat_harness" [style=invis, class="kg-graph-anchor"];
   "n_cat_harness_archimate_cat_harness" -> "grid_pkg_cat_harness_archimate_bottom" [style=invis, class="kg-graph-anchor"];
   "cat_harness_memory_AlsoAbout" -> "cat_harness_memory_WaiverNode" [style=invis, class="kg-graph-anchor"];
@@ -1217,6 +1261,17 @@ digraph "cat_harness" {
   "cat_harness_openapi_validators_folio_validator_v1_folio_validator_v1" -> "grid_pkg_cat_harness_openapi_validators_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_openapi_typologies_top" -> "cat_harness_openapi_typologies_folio_graph_typology_v1_folio_graph_typology_v1" [style=invis, class="kg-graph-anchor"];
   "cat_harness_openapi_typologies_folio_graph_typology_v1_folio_graph_typology_v1" -> "grid_pkg_cat_harness_openapi_typologies_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_sdlc_skills_top" -> "n_cat_harness_sdlc_skills_skills" [style=invis, class="kg-graph-anchor"];
+  "n_cat_harness_sdlc_skills_skills" -> "grid_pkg_cat_harness_sdlc_skills_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_sdlc_processes_top" -> "cat_harness_sdlc_processes_omg_bpmn_2_0" [style=invis, class="kg-graph-anchor"];
+  "cat_harness_sdlc_processes_omg_bpmn_2_0" -> "grid_pkg_cat_harness_sdlc_processes_bottom" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_work_plan_skills_top" -> "n_cat_harness_work_plan_skills_skills" [style=invis, class="kg-graph-anchor"];
+  "n_cat_harness_work_plan_skills_skills" -> "grid_pkg_cat_harness_work_plan_skills_bottom" [style=invis, class="kg-graph-anchor"];
+  "cat_harness_work_plan_tools_Remedy" -> "cat_harness_work_plan_tools_ToolDefinition" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_work_plan_tools_top" -> "cat_harness_work_plan_tools_Remedy" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_work_plan_tools_top" -> "cat_harness_work_plan_tools_Maintain" [style=invis, class="kg-graph-anchor"];
+  "cat_harness_work_plan_tools_Maintain" -> "grid_pkg_cat_harness_work_plan_tools_bottom" [style=invis, class="kg-graph-anchor"];
+  "cat_harness_work_plan_tools_ToolDefinition" -> "grid_pkg_cat_harness_work_plan_tools_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_archimate_validators_top" -> "cat_harness_archimate_validators_folio_validator_v1_folio_validator_v1" [style=invis, class="kg-graph-anchor"];
   "cat_harness_archimate_validators_folio_validator_v1_folio_validator_v1" -> "grid_pkg_cat_harness_archimate_validators_bottom" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_archimate_typologies_top" -> "cat_harness_archimate_typologies_folio_graph_typology_v1_folio_graph_typology_v1" [style=invis, class="kg-graph-anchor"];
@@ -1269,13 +1324,15 @@ digraph "cat_harness" {
   "grid_pkg_cat_harness_library_bottom" -> "grid_pkg_cat_harness_swimlane_glossary_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_translation_sources_bottom" -> "grid_pkg_cat_harness_cat_harness_upstream_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_folio_bottom" -> "grid_pkg_cat_harness_openapi_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_folio_render_bottom" -> "grid_pkg_cat_harness_archimate_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_site_chrome_bottom" -> "grid_pkg_cat_harness_memory_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_docs_bottom" -> "grid_pkg_cat_harness_fsh_guts_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_site_bottom" -> "grid_pkg_cat_harness_beans_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_swimlane_glossary_bottom" -> "grid_pkg_cat_harness_todos_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_cat_harness_upstream_bottom" -> "grid_pkg_cat_harness_checkout_uploads_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_openapi_bottom" -> "grid_pkg_cat_harness_issue_marks_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_folio_render_bottom" -> "grid_pkg_cat_harness_sdlc_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_site_chrome_bottom" -> "grid_pkg_cat_harness_work_plan_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_docs_bottom" -> "grid_pkg_cat_harness_archimate_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_site_bottom" -> "grid_pkg_cat_harness_memory_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_swimlane_glossary_bottom" -> "grid_pkg_cat_harness_fsh_guts_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_cat_harness_upstream_bottom" -> "grid_pkg_cat_harness_beans_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_openapi_bottom" -> "grid_pkg_cat_harness_todos_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_sdlc_bottom" -> "grid_pkg_cat_harness_checkout_uploads_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_work_plan_bottom" -> "grid_pkg_cat_harness_issue_marks_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_archimate_bottom" -> "grid_pkg_cat_harness_merge_reviews_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_memory_bottom" -> "grid_pkg_cat_harness_cat_harness_libraries_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_fsh_guts_bottom" -> "grid_pkg_cat_harness_voices_top" [style=invis, class="kg-graph-anchor"];
@@ -1304,13 +1361,17 @@ digraph "cat_harness" {
   "grid_pkg_cat_harness_index_roles_bottom" -> "grid_pkg_cat_harness_docs_source_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_index_schemas_bottom" -> "grid_pkg_cat_harness_openapi_validators_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_index_skills_bottom" -> "grid_pkg_cat_harness_openapi_typologies_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_index_tasks_bottom" -> "grid_pkg_cat_harness_archimate_validators_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_index_tools_bottom" -> "grid_pkg_cat_harness_archimate_typologies_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_uml_overview_pages_bottom" -> "grid_pkg_cat_harness_defs_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_uml_overview_svgs_bottom" -> "grid_pkg_cat_harness_archive_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_docs_source_bottom" -> "grid_pkg_cat_harness_notes_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_openapi_validators_bottom" -> "grid_pkg_cat_harness_workflows_top" [style=invis, class="kg-graph-anchor"];
-  "grid_pkg_cat_harness_openapi_typologies_bottom" -> "grid_pkg_cat_harness_queue_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_index_tasks_bottom" -> "grid_pkg_cat_harness_sdlc_skills_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_index_tools_bottom" -> "grid_pkg_cat_harness_sdlc_processes_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_uml_overview_pages_bottom" -> "grid_pkg_cat_harness_work_plan_skills_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_uml_overview_svgs_bottom" -> "grid_pkg_cat_harness_work_plan_tools_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_docs_source_bottom" -> "grid_pkg_cat_harness_archimate_validators_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_openapi_validators_bottom" -> "grid_pkg_cat_harness_archimate_typologies_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_openapi_typologies_bottom" -> "grid_pkg_cat_harness_defs_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_sdlc_skills_bottom" -> "grid_pkg_cat_harness_archive_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_sdlc_processes_bottom" -> "grid_pkg_cat_harness_notes_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_work_plan_skills_bottom" -> "grid_pkg_cat_harness_workflows_top" [style=invis, class="kg-graph-anchor"];
+  "grid_pkg_cat_harness_work_plan_tools_bottom" -> "grid_pkg_cat_harness_queue_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_archimate_validators_bottom" -> "grid_pkg_cat_harness_surveys_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_archimate_typologies_bottom" -> "grid_pkg_cat_harness_marks_top" [style=invis, class="kg-graph-anchor"];
   "grid_pkg_cat_harness_defs_bottom" -> "grid_pkg_cat_harness_items_top" [style=invis, class="kg-graph-anchor"];

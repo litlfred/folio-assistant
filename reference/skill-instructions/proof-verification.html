@@ -116,10 +116,8 @@ allowed to count as “verified”.</p><h2 id="the-three-states-and-why-the-thir
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>state</th><th>means</th><th>evidenced by</th></tr></thead><tbody><tr><td><strong>verified</strong></td><td>Lean accepts it, it is non-vacuous, and the Lean claim matches the prose</td><td><code class="language-plaintext highlighter-rouge">lean-proof-review</code> + <code class="language-plaintext highlighter-rouge">lean-proof-vacuity-audit</code> + <code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code></td></tr><tr><td><strong>open</strong></td><td>there is a declaration, and at least one annotated <code class="language-plaintext highlighter-rouge">sorry</code></td><td><code class="language-plaintext highlighter-rouge">proof-gap-audit</code>, <code class="language-plaintext highlighter-rouge">proof-triage</code></td></tr><tr><td><strong>could not determine</strong></td><td>the toolchain did not run, or the cache was cold, or the build died before any declaration elaborated</td><td><code class="language-plaintext highlighter-rouge">lean-environment-setup</code></td></tr></tbody></table></div><p><strong>The third is never written as either of the other two.</strong> A build that did not
-run is not a failed proof, and it is emphatically not a passed one. This is the
-same rule the QA sweep, the CI-health report and the README sections all follow
-here, and it is the one most often broken under time pressure: an agent that
-cannot build reports “no errors”.</p><h2 id="what-a-green-build-does-not-tell-you"><a href="#what-a-green-build-does-not-tell-you" class="anchor-heading" aria-labelledby="what-a-green-build-does-not-tell-you"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a green build does not tell you
+run is not a failed proof, and it is emphatically not a passed one. An agent
+that cannot build must not report “no errors”.</p><h2 id="what-a-green-build-does-not-tell-you"><a href="#what-a-green-build-does-not-tell-you" class="anchor-heading" aria-labelledby="what-a-green-build-does-not-tell-you"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a green build does not tell you
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">lake build</code> answers one question — does this elaborate. It does not answer:</p><ul><li><strong>Is the statement inhabited?</strong> <code class="language-plaintext highlighter-rouge">lean-witness-audit</code>.</li><li><strong>Is it vacuous?</strong> <code class="language-plaintext highlighter-rouge">lean-proof-vacuity-audit</code>. A theorem whose hypotheses
@@ -131,9 +129,7 @@ recording it as such is worse than recording it open — an open claim gets
 worked, a falsely-verified one gets built upon.</p><h2 id="recording-it"><a href="#recording-it" class="anchor-heading" aria-labelledby="recording-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Recording it
   
   
-</h2><p><code class="language-plaintext highlighter-rouge">proof-status-tracking</code> owns the sidecar and its shape. Two rules from it worth
-repeating because they are what makes the record trustworthy:</p><ul><li>The status is written by the sweep, <strong>never hand-edited</strong>. A hand-edited
-status is an assertion wearing a measurement’s clothes.</li><li>Every <code class="language-plaintext highlighter-rouge">sorry</code> carries the proof obligation it stands for
+</h2><p><code class="language-plaintext highlighter-rouge">proof-status-tracking</code> owns the sidecar and its shape. Two of its rules:</p><ul><li>The status is written by the sweep, <strong>never hand-edited</strong>.</li><li>Every <code class="language-plaintext highlighter-rouge">sorry</code> carries the proof obligation it stands for
 (<code class="language-plaintext highlighter-rouge">skills/requirements/lean-verification.json</code>, SHALL). An unannotated <code class="language-plaintext highlighter-rouge">sorry</code>
 cannot be told from abandonment.</li></ul><h2 id="where-this-sits-in-the-process"><a href="#where-this-sits-in-the-process" class="anchor-heading" aria-labelledby="where-this-sits-in-the-process"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where this sits in the process
   

@@ -155,8 +155,7 @@ knowingly.</p><p>The script ends by asserting that every staged page is railed o
 the rail; a page with neither fails it.</p><h2 id="3-or-publish-it-dynamically-from-the-knowledge-graph"><a href="#3-or-publish-it-dynamically-from-the-knowledge-graph" class="anchor-heading" aria-labelledby="3-or-publish-it-dynamically-from-the-knowledge-graph"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Or publish it DYNAMICALLY, from the knowledge graph
   
   
-</h2><p>Owner, 2026-10-11 (qou): <em>“can we have it dynamically load from the KG instead
-of static content?”</em> — the hybrid route. doc-gen4 still elaborates; its static
+</h2><p>The hybrid route: doc-gen4 still elaborates; its static
 HTML is not published. <code class="language-plaintext highlighter-rouge">lean-kg-publish</code> reads doc-gen4’s per-module
 <strong>declaration data</strong> (<code class="language-plaintext highlighter-rouge">.lake/build/doc-data/declaration-data-&lt;Module&gt;.bmp</code>) and
 writes JSON-LD shards plus one viewer page:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run folio-assistant/folio-assistant-sci/adapters/paper/lean/lean-kg-publish.ts <span class="se">\</span>

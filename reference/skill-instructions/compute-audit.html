@@ -205,9 +205,7 @@ derivation. Demote to remark or null result.</li><li>“N-route convergence” c
   
   
 </h2><p>Any script expected to run <strong>&gt; 5 minutes wall</strong> <strong>must</strong> emit periodic
-progress lines — not silent until finish. Silent long computes are
-unmonitorable: a background run that prints nothing for an hour is
-indistinguishable between “progressing”, “hung”, and “crashed silently”.</p><p><strong>Rules for the script author:</strong> print a header (total work units,
+progress lines — not silent until finish.</p><p><strong>Rules for the script author:</strong> print a header (total work units,
 expected scaling, estimated wall); per-unit progress every ~10 s or ~5%
 of work, whichever is more frequent (unit index, wall elapsed,
 units/sec, ETA); phase markers between expensive steps; per-unit timing
@@ -223,8 +221,6 @@ python3 <span class="nt">-u</span> script.py <span class="nt">--args</span> ... 
 </code></pre></div></div><h2 id="harness-skills-that-dispatch-here"><a href="#harness-skills-that-dispatch-here" class="anchor-heading" aria-labelledby="harness-skills-that-dispatch-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Harness skills that dispatch here
   
   
-</h2><p>This layer sits above cat-harness, so the link points down from here. The
-harness skills below describe the slot generically (“the content type’s …”)
-and name no science skill (bean <code class="language-plaintext highlighter-rouge">syiq</code>).</p><ul><li><code class="language-plaintext highlighter-rouge">canonical-watcher</code>: as the compute-audit scanner, on any changed compute script.</li><li><code class="language-plaintext highlighter-rouge">production-vs-exploratory-discipline</code>: as the content type’s compute audit, which uses its 3-category classification.</li><li><code class="language-plaintext highlighter-rouge">integration-audit</code>: its <code class="language-plaintext highlighter-rouge">compute</code> re-audit runs this scan.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+</h2><ul><li><code class="language-plaintext highlighter-rouge">canonical-watcher</code>: as the compute-audit scanner, on any changed compute script.</li><li><code class="language-plaintext highlighter-rouge">production-vs-exploratory-discipline</code>: as the content type’s compute audit, which uses its 3-category classification.</li><li><code class="language-plaintext highlighter-rouge">integration-audit</code>: its <code class="language-plaintext highlighter-rouge">compute</code> re-audit runs this scan.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

@@ -175,7 +175,8 @@ contract and is not specified by this source.</li></ul><h2 id="what-the-library-
 </h2><ul><li><strong>No update, patch, delete, conditional create, or transaction/batch</strong> — the
 only write is <code class="language-plaintext highlighter-rouge">create</code> (POST). Anything else means dropping to
 <code class="language-plaintext highlighter-rouge">client.fhirClientDefault</code>, i.e. <code class="language-plaintext highlighter-rouge">fhirclient</code> directly, outside this library’s
-hydration and headers.</li><li><strong>No read by id</strong> helper beyond <code class="language-plaintext highlighter-rouge">requestResource("&lt;Type&gt;/&lt;id&gt;")</code>.</li><li><strong>No search helper, paging or <code class="language-plaintext highlighter-rouge">_include</code> handling.</strong></li><li><strong>No validation or profile conformance</strong> — <code class="language-plaintext highlighter-rouge">Transformer.toFhirClientType</code>
+hydration and headers.</li><li><strong>No read-by-id or search helper, paging or <code class="language-plaintext highlighter-rouge">_include</code> handling</strong> — use
+<code class="language-plaintext highlighter-rouge">requestResource</code>.</li><li><strong>No validation or profile conformance</strong> — <code class="language-plaintext highlighter-rouge">Transformer.toFhirClientType</code>
 and <code class="language-plaintext highlighter-rouge">toR4FhirType</code> (<code class="language-plaintext highlighter-rouge">src/Resource/transformer.ts</code>) copy keys verbatim; they
 do not transform content.</li><li><strong>R4 only</strong> — every type is from <code class="language-plaintext highlighter-rouge">fhir/r4</code>.</li></ul><h2 id="pitfalls"><a href="#pitfalls" class="anchor-heading" aria-labelledby="pitfalls"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Pitfalls
   

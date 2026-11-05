@@ -8,7 +8,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — derive content from the assets",
       "summary": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance.",
-      "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance. folio-assistant — Ingestion subprocess — derive content from the assets.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance.",
       "enforcement": "advisory",
       "sourcePath": "processes/library/ingest-derive-content.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-derive-content.bpmn",

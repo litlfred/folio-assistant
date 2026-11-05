@@ -8,7 +8,7 @@
       "action": "create test/health/results/ with its first health file (an empty directory is not tracked by git), or remove the entry from cat-harness.json"
     },
     "counts": {
-      "done": 42,
+      "done": 44,
       "not-done": 7,
       "could-not-determine": 3,
       "stated": 0
@@ -244,6 +244,20 @@
         "id": "directory:openapi",
         "namedBy": "cat-harness",
         "what": "declared directory openapi/ exists",
+        "state": "done",
+        "detail": "holds cat-harness"
+      },
+      {
+        "id": "directory:sdlc",
+        "namedBy": "cat-harness",
+        "what": "declared directory sdlc/ exists",
+        "state": "done",
+        "detail": "holds cat-harness"
+      },
+      {
+        "id": "directory:work-plan",
+        "namedBy": "cat-harness",
+        "what": "declared directory work-plan/ exists",
         "state": "done",
         "detail": "holds cat-harness"
       },

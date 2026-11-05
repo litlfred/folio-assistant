@@ -15,7 +15,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/tools"
       ],
-      "description": "The science layer's Tool nodes. Declared 2026-10-04 with the first two, `paper-feature-build` and `tex-install`, the iterative paper-build loop (issue #2117). Reached by the harness through tool auto-discovery (cat-harness/tools/discover.ts), never by an import.",
+      "description": "The science layer's Tool nodes. One `<id>/<id>.ts` (or `.json`) per folder: LaTeX build and checks, the Lean build, cache, audit and publish tools, and the proof-object tools. Reached by the harness through tool auto-discovery (cat-harness/tools/discover.ts), never by an import.",
       "readmePath": "tools/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-tools"

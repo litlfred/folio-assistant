@@ -123,23 +123,22 @@ runs the checks; the reviewer’s lane rules on them.</p><p>The <code class="lan
 is also held by <code class="language-plaintext highlighter-rouge">ci-pipeline</code> and <code class="language-plaintext highlighter-rouge">ig-publisher-service</code>. That a build system
 and a human share a permission is deliberate: <strong>emitting</strong> a QA report is
 mechanical, <strong>ruling</strong> on it is not.</p><p><code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code> marks <code class="language-plaintext highlighter-rouge">Task_ReviewFindings</code> and
-<code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code> <code class="language-plaintext highlighter-rouge">relaxable="false"</code> for exactly this reason. The
-editor seeing the findings, and the decision itself, are the gate; a policy
-that relaxed them would leave “strict base” meaning nothing.</p><h2 id="compute-the-gate-do-not-assert-it"><a href="#compute-the-gate-do-not-assert-it" class="anchor-heading" aria-labelledby="compute-the-gate-do-not-assert-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Compute the gate, do not assert it
+<code class="language-plaintext highlighter-rouge">Gateway_EditorDecision</code> <code class="language-plaintext highlighter-rouge">relaxable="false"</code>: the editor seeing the findings,
+and the decision itself, are the gate.</p><h2 id="compute-the-gate-do-not-assert-it"><a href="#compute-the-gate-do-not-assert-it" class="anchor-heading" aria-labelledby="compute-the-gate-do-not-assert-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Compute the gate, do not assert it
   
   
 </h2><p>Where a gateway carries <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:decision/&gt;</code>, pass the <strong>facts</strong> — e.g.
 <code class="language-plaintext highlighter-rouge">{ failCritical: 0, failMajor: 2 }</code> from <code class="language-plaintext highlighter-rouge">qa_sweep</code> totals — and let the DMN
 table return the branch. <code class="language-plaintext highlighter-rouge">workflow_complete</code> refuses a hand-supplied <code class="language-plaintext highlighter-rouge">outcome</code>
-at such a gateway.</p><p>This is what stops “QC passed” from being an opinion. <code class="language-plaintext highlighter-rouge">draft-qa-gate.dmn</code> is
-the table; <code class="language-plaintext highlighter-rouge">dmn-authoring</code> is how to change it.</p><h2 id="severity-is-the-gates-vocabulary"><a href="#severity-is-the-gates-vocabulary" class="anchor-heading" aria-labelledby="severity-is-the-gates-vocabulary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Severity is the gate’s vocabulary
+at such a gateway.</p><p><code class="language-plaintext highlighter-rouge">decisions/draft-qa-gate.dmn</code> is the table; <code class="language-plaintext highlighter-rouge">dmn-authoring</code> is how to change
+it.</p><h2 id="severity-is-the-gates-vocabulary"><a href="#severity-is-the-gates-vocabulary" class="anchor-heading" aria-labelledby="severity-is-the-gates-vocabulary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Severity is the gate’s vocabulary
   
   
 </h2><p>The corpus-wide convention, and what the tables read:</p><ul><li><strong>critical</strong> — a broken reference: something names a thing that does not
 exist, and a consumer following it gets nothing. Blocks.</li><li><strong>major</strong> — a missing join: intact, but a question has no answer.</li><li><strong>minor</strong> — coverage. Has legitimate instances, so it must not gate; forcing
 a fake entry onto a real step is worse than the gap.</li></ul><p><strong><code class="language-plaintext highlighter-rouge">unknown</code> is never counted as a pass</strong>, and it is not promoted either — it
-counts at its own criterion’s severity. A check that did not run has not
-cleared, and a QC gate is the last place that should be blurred.</p><h2 id="what-to-run"><a href="#what-to-run" class="anchor-heading" aria-labelledby="what-to-run"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What to run
+counts at its own criterion’s severity: a check that did not run has not
+cleared.</p><h2 id="what-to-run"><a href="#what-to-run" class="anchor-heading" aria-labelledby="what-to-run"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What to run
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">qa_sweep</code> for content, <code class="language-plaintext highlighter-rouge">bun run cat kg:audit</code> for the process/role/skill graph,

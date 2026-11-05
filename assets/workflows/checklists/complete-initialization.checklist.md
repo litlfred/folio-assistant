@@ -14,7 +14,7 @@ A SUB-PROCESS of initialize-harness, called after a harness is installed and als
 
 ### 1. Read the declaration, and each one it needs (`A_ReadDeclarations`)
 
-- Who: the `Knowledge Graph Data Store` lane (role `knowledge-graph-data-store`).
+- Who: the `Bootstrapping Agent` lane (role `bootstrapping-agent`).
 - Skill: `bootstrap-kg-navigation`.
 - What: `<name>.json` at the root, then each name in its `needs`, from a sibling checkout `../<name>/<name>.json`.
 - Record it: `workflow_complete` with `node: "A_ReadDeclarations"`.
@@ -34,6 +34,11 @@ A SUB-PROCESS of initialize-harness, called after a harness is installed and als
 - Skill: `initialization-steps`.
 - What: In the order of the table in `initialization-steps`: declaration, needs, each dependency's instructions, the documents at their IRIs (checked above, and listed first), directories, assets, README, README sections, site.
 - Record it: `workflow_complete` with `node: "A_ListSteps"`.
+- next: → `GW_NextStep_Join`
+
+### Merge — `GW_NextStep_Join`
+
+- Nothing to do or decide: the paths meet here and the engine passes through.
 - next: → `GW_NextStep` (A step not yet checked?)
 
 ### Decide — A step not yet checked? (`GW_NextStep`)
@@ -64,7 +69,7 @@ A SUB-PROCESS of initialize-harness, called after a harness is installed and als
   - «done» → `A_RecordStep` (Record the step in its state)
   - «not done, and I can do it» → `A_PerformStep` (Do it, then check again)
   - «stated» → `A_FollowStated` (Follow it, and say that you did)
-  - «needs a person, or could not determine» → `A_AskPerson` (Ask the person to do what only they can)
+  - «needs a person, or could not determine» → `A_AskPerson` (Ask the person)
 
 ### Decide — Every checkable step done? (`GW_AllDone`)
 
@@ -78,7 +83,7 @@ A SUB-PROCESS of initialize-harness, called after a harness is installed and als
 - Skill: `initialization-steps`.
 - What: The step, the declaration that named it, its state, what was seen, and — for anything not done — exactly what to do next.
 - Record it: `workflow_complete` with `node: "A_RecordStep"`.
-- next: → `GW_NextStep` (A step not yet checked?)
+- next: → `GW_NextStep_Join`
 
 ### 7. Do it, then check again (`A_PerformStep`)
 
@@ -96,7 +101,7 @@ A SUB-PROCESS of initialize-harness, called after a harness is installed and als
 - Record it: `workflow_complete` with `node: "A_FollowStated"`.
 - next: → `A_RecordStep` (Record the step in its state)
 
-### 9. Ask the person to do what only they can (`A_AskPerson`)
+### 9. Ask the person (`A_AskPerson`)
 
 - Who: the `Bootstrapping Agent` lane (role `bootstrapping-agent`).
 - Skill: `human-agent-discussion`, `publish-site`.

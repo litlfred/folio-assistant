@@ -10,8 +10,8 @@
       "summary": "Executing a `test-plan/v1` against a system under test and taking the result to a certification decision: requested by (or for) the system, run by a tester, re-executed in sample by an untainted checker, decided by a certifier through the plan's exit-criteria…",
       "description": "Executing a `test-plan/v1` against a system under test and taking the result to a certification decision: requested by (or for) the system, run by a tester, re-executed in sample by an untainted checker, decided by a certifier through the plan's exit-criteria table, and signed through `qa-report-signing.bpmn`.\n\nYou are in this process when somebody wants a system — a skill, an agent, a tool, a machine, an IG or a process — certified against a named plan. Executing a plan with no certification in view is still this process; it ends at `undetermined` or `refused` without anything being signed.\n\nThe run, the report and the certification are three records, and they point backwards: the run at the plan, the report at the run, the certification at the report. The certification is a judgement and lives under the declared `attestations` graph, on main; the report is derived and lives on the `qa-reports` branch.",
       "enforcement": "strict",
-      "sourcePath": "processes/sdlc/test-plan-execution.bpmn",
-      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/test-plan-execution.bpmn",
+      "sourcePath": "sdlc/processes/test-plan-execution.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/test-plan-execution.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/test-plan-execution.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Start_Request"
@@ -22,7 +22,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F01",
@@ -30,7 +30,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Start_Request",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_BeanOpen",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F02",
@@ -38,7 +38,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_Request",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_ResolvePlan",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F03",
@@ -46,7 +46,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_ResolvePlan",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_BindData",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F04",
@@ -54,7 +54,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_BindData",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_Execute",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F05",
@@ -62,7 +62,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_Execute",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_WriteRun",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F06",
@@ -70,7 +70,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_WriteRun",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_ReExecuteSample",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F07",
@@ -78,7 +78,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_ReExecuteSample",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_ExitCriteria",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F_Certified",
@@ -87,7 +87,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_ExitCriteria",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_RecordCertification",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F_Refused",
@@ -96,7 +96,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_ExitCriteria",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_RecordRefusal",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F_Undetermined",
@@ -105,7 +105,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_ExitCriteria",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_RecordUndetermined",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F08",
@@ -113,7 +113,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_RecordCertification",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_Sign",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F09",
@@ -121,7 +121,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_RecordRefusal",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F10",
@@ -129,7 +129,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_RecordUndetermined",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F11",
@@ -137,7 +137,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_Sign",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_FileCertification",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/F12",
@@ -145,7 +145,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_FileCertification",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_1",
@@ -154,7 +154,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_BeanYours",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_Request",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_2",
@@ -162,7 +162,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_BeanOpen",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_BeanYours",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_3",
@@ -171,7 +171,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_BeanYours",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/End_BeanNotYours",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/Flow_GW_BeanClosedHow",
@@ -179,7 +179,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_BeanClosedHow",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_4",
@@ -188,7 +188,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_BeanClosedHow",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/End_Certified",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_5",
@@ -197,7 +197,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_BeanClosedHow",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/End_Refused",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_6",
@@ -206,7 +206,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_BeanClosedHow",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/End_Undetermined",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc"
     }
   ]
 }

@@ -20,7 +20,7 @@
             "arg": {
               "positional": 0
             },
-            "description": "The pdflatex log to read. Nothing to read means no answer, not a pass.",
+            "description": "The pdflatex log to read.",
             "name": "log",
             "required": true,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -29,7 +29,7 @@
             "arg": {
               "flag": "--min"
             },
-            "description": "Ignore overruns below this size — the long tail is noise, and reporting it hides the rest.",
+            "description": "Ignore overruns below this size",
             "name": "min",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Dpi"

@@ -110,8 +110,7 @@
 </h1><p><code class="language-plaintext highlighter-rouge">corpus</code> (declared below this layer) is played by a <strong>mechanical</strong> actor: the
 versioned content store, which is written to and decides nothing. A role
 played by a machine is still a role, and its skills are its <strong>contract</strong>: the
-responsibilities it must perform, which a test can hold it to (owner,
-2026-10-16). This skill is the part of that contract this layer’s diagrams
+responsibilities it must perform, which a test can hold it to. This skill is the part of that contract this layer’s diagrams
 rely on, and nothing more.</p><h2 id="where-the-diagrams-lean-on-it"><a href="#where-the-diagrams-lean-on-it" class="anchor-heading" aria-labelledby="where-the-diagrams-lean-on-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the diagrams lean on it
   
   
@@ -141,8 +140,7 @@ plan’s.</p><h2 id="tests"><a href="#tests" class="anchor-heading" aria-labelle
 workflow engine and checks line 1 (the commit is enabled only after <code class="language-plaintext highlighter-rouge">accept</code>),
 and checks that the diagram binds the lane to this role and carries line 3’s
 policy. Line 2 and the content of the commit-hygiene statements are not
-exercised: no code in this layer performs the commit.</p><p><strong>Needs the owner’s review:</strong> this contract is read off one lane of one
-diagram.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+exercised: no code in this layer performs the commit.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/editing-hci-validation.html">Editing and HCI validation</a></td><td>Commit into the corpus</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">

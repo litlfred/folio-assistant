@@ -111,19 +111,17 @@
 installation.</p><h2 id="the-pipeline"><a href="#the-pipeline" class="anchor-heading" aria-labelledby="the-pipeline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The pipeline
   
   
-</h2><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content/**  →  document_render_md   →  build/&lt;slug&gt;.md
+</h2><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>folio/**    →  document_render_md   →  build/&lt;slug&gt;.md
                                     →  document_render_html  →  build/&lt;slug&gt;.html
                                     →  document_render_pdf   →  build/&lt;slug&gt;.pdf
-</code></pre></div></div><p>One assembly step, then pandoc. <code class="language-plaintext highlighter-rouge">document_render_md</code> is not an intermediate to
-skip past: run it first and read it. It is the only place the whole document
-appears in reading order in one file, and ordering problems are invisible
-block-by-block.</p><h2 id="before-rendering"><a href="#before-rendering" class="anchor-heading" aria-labelledby="before-rendering"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before rendering
+</code></pre></div></div><p>One assembly step, then pandoc. Run <code class="language-plaintext highlighter-rouge">document_render_md</code> first and read it:
+it is the only place the whole document appears in reading order in one
+file.</p><h2 id="before-rendering"><a href="#before-rendering" class="anchor-heading" aria-labelledby="before-rendering"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before rendering
   
   
 </h2><p>Run, in this order, and fix what each reports before moving on:</p><ol><li><strong><code class="language-plaintext highlighter-rouge">content_validate</code></strong> — schema, constraints, and profile conformance. A
 document folio that has acquired a math block or a <code class="language-plaintext highlighter-rouge">.lean</code> sibling fails
-here, which is the point: it fails at authoring time rather than at
-publication.</li><li><strong><code class="language-plaintext highlighter-rouge">qa_sweep</code></strong> — the QA axes over each block’s sidecar.</li><li><strong><code class="language-plaintext highlighter-rouge">document_render_md</code></strong> — read the assembly. Look for: sections that came
+here.</li><li><strong><code class="language-plaintext highlighter-rouge">qa_sweep</code></strong> — the QA axes over each block’s sidecar.</li><li><strong><code class="language-plaintext highlighter-rouge">document_render_md</code></strong> — read the assembly. Look for: sections that came
 out empty (a block written but never listed in <code class="language-plaintext highlighter-rouge">blocks[]</code>), blocks in an
 order that does not read, and the <code class="language-plaintext highlighter-rouge">&gt; **Missing block:**</code> marker, which
 means a section names a root that failed to load.</li></ol><h2 id="pdf-without-latex"><a href="#pdf-without-latex" class="anchor-heading" aria-labelledby="pdf-without-latex"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> PDF without LaTeX
@@ -131,10 +129,8 @@ means a section names a root that failed to load.</li></ol><h2 id="pdf-without-l
   
 </h2><p><code class="language-plaintext highlighter-rouge">document_render_pdf</code> drives pandoc with an HTML engine — <code class="language-plaintext highlighter-rouge">weasyprint</code>
 (recommended), <code class="language-plaintext highlighter-rouge">prince</code>, or <code class="language-plaintext highlighter-rouge">wkhtmltopdf</code>. If none is installed it reports
-which are missing and stops.</p><p>It does <strong>not</strong> fall back to <code class="language-plaintext highlighter-rouge">latexmk</code>, even on a machine that has it. A
-document folio is defined by not requiring TeX to publish, and a PDF that
-silently came out of LaTeX would misreport what the folio actually needs — the
-next person to build it on a clean machine is the one who pays.</p><p><code class="language-plaintext highlighter-rouge">document_render_html</code> needs only pandoc, so it works when the PDF path
+which are missing and stops.</p><p>It does <strong>not</strong> fall back to <code class="language-plaintext highlighter-rouge">latexmk</code>, even on a machine that has it: a
+document folio is defined by not requiring TeX to publish.</p><p><code class="language-plaintext highlighter-rouge">document_render_html</code> needs only pandoc, so it works when the PDF path
 cannot. When you are drafting rather than publishing, prefer it.</p><h2 id="styling"><a href="#styling" class="anchor-heading" aria-labelledby="styling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Styling
   
   
@@ -184,27 +180,25 @@ Formatting-only changes are ignored.</li></ul><h2 id="a-large-document-loads-its
   
 </h2><p><code class="language-plaintext highlighter-rouge">build-document-site.ts</code> publishes a document of 200 or more blocks
 (<code class="language-plaintext highlighter-rouge">LAZY_THRESHOLD</code>) as a <strong>shell plus data</strong>, because one page of every block
-is too heavy to use: the DPI-H document was 2.3 MB and froze for 200 ms on
-load (bean <code class="language-plaintext highlighter-rouge">v433</code>, owner 2026-10-06: <em>“dynamic JS load of KG, as should of
-rest of content”</em>).</p><div class="table-wrapper"><table><thead><tr><th>file</th><th>holds</th><th>who reads it</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">en/&lt;slug&gt;/index.html</code></td><td>headings, every block anchor, a placeholder per block, [edit]/[feedback] as data, comment-note counts</td><td>readers</td></tr><tr><td><code class="language-plaintext highlighter-rouge">&lt;slug&gt;/blocks/NNN.json</code></td><td>each block’s rendered HTML, 40 blocks per chunk, in document order</td><td>the shell, as the reader nears a block, then the rest in idle time</td></tr><tr><td><code class="language-plaintext highlighter-rouge">en/&lt;slug&gt;/index.hydrated.html</code></td><td>the whole document on one page, as before</td><td><code class="language-plaintext highlighter-rouge">file://</code> opens (fetch fails, so the shell goes there), readers without JavaScript, tools (<code class="language-plaintext highlighter-rouge">block-screenshots.ts</code>)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">&lt;slug&gt;/pc-notes.json</code></td><td>each block’s comment list (a public-comment folio)</td><td>a comment note, when opened</td></tr><tr><td><code class="language-plaintext highlighter-rouge">outline.json</code> <code class="language-plaintext highlighter-rouge">lazy</code></td><td>the hydrated page, the chunk count, and each block’s chunk</td><td>the rendered-impact predictor, which names the chunk a change alters (bean <code class="language-plaintext highlighter-rouge">bnjs</code>)</td></tr></tbody></table></div><p>Pages are under the page locale, <code class="language-plaintext highlighter-rouge">en/</code>, and data is not (issue #2527). The
-data keeps its address, so a script that reads it does not need to change.
+is too heavy to use.</p><div class="table-wrapper"><table><thead><tr><th>file</th><th>holds</th><th>who reads it</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">en/&lt;slug&gt;/index.html</code></td><td>headings, every block anchor, a placeholder per block, [edit]/[feedback] as data, comment-note counts</td><td>readers</td></tr><tr><td><code class="language-plaintext highlighter-rouge">&lt;slug&gt;/blocks/NNN.json</code></td><td>each block’s rendered HTML, 40 blocks per chunk, in document order</td><td>the shell, as the reader nears a block, then the rest in idle time</td></tr><tr><td><code class="language-plaintext highlighter-rouge">en/&lt;slug&gt;/index.hydrated.html</code></td><td>the whole document on one page</td><td><code class="language-plaintext highlighter-rouge">file://</code> opens (fetch fails, so the shell goes there), readers without JavaScript, tools (<code class="language-plaintext highlighter-rouge">block-screenshots.ts</code>)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">&lt;slug&gt;/pc-notes.json</code></td><td>each block’s comment list (a public-comment folio)</td><td>a comment note, when opened</td></tr><tr><td><code class="language-plaintext highlighter-rouge">outline.json</code> <code class="language-plaintext highlighter-rouge">lazy</code></td><td>the hydrated page, the chunk count, and each block’s chunk</td><td>the rendered-impact predictor, which names the chunk a change alters</td></tr></tbody></table></div><p>Pages are under the page locale, <code class="language-plaintext highlighter-rouge">en/</code>, and data is not.
 <code class="language-plaintext highlighter-rouge">scripts/document-site-route.ts</code> says where each one goes.</p><p>The name follows the knowledge graph’s own pair: a subgraph publishes
 <code class="language-plaintext highlighter-rouge">index.jsonld</code>, which references its members, and <code class="language-plaintext highlighter-rouge">index.hydrated.jsonld</code>, which
 holds them inline. The document page is the same pair: <code class="language-plaintext highlighter-rouge">index.html</code> references
-its blocks, <code class="language-plaintext highlighter-rouge">index.hydrated.html</code> holds them (owner, 2026-10-06).</p><p>A link to a block (<code class="language-plaintext highlighter-rouge">#prose:…</code>) or to a term inside one (<code class="language-plaintext highlighter-rouge">#term-…</code>) loads that
+its blocks, <code class="language-plaintext highlighter-rouge">index.hydrated.html</code> holds them.</p><p>A link to a block (<code class="language-plaintext highlighter-rouge">#prose:…</code>) or to a term inside one (<code class="language-plaintext highlighter-rouge">#term-…</code>) loads that
 chunk first and lands on it. <code class="language-plaintext highlighter-rouge">--lazy always|never</code> overrides the threshold.</p><p>Two rules for anything that reads the document page:</p><ul><li><strong>Want the text? Read <code class="language-plaintext highlighter-rouge">index.hydrated.html</code> when it exists.</strong> The shell has
-placeholders where the text goes.</li><li><strong>Find blocks by their anchor</strong> (<code class="language-plaintext highlighter-rouge">&lt;a id="&lt;label&gt;"&gt;</code>). It is on both pages.</li></ul><p>Searching the document’s comments is the dashboard’s job, not the page’s
-(owner: <em>“only the visualizer search for the PCs”</em>).</p><h2 id="what-is-not-implemented"><a href="#what-is-not-implemented" class="anchor-heading" aria-labelledby="what-is-not-implemented"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is not implemented
+placeholders where the text goes.</li><li><strong>Find blocks by their anchor</strong> (<code class="language-plaintext highlighter-rouge">&lt;a id="&lt;label&gt;"&gt;</code>). It is on both pages.</li></ul><p>Searching the document’s comments is the dashboard’s job, not the page’s.</p><h2 id="what-is-not-implemented"><a href="#what-is-not-implemented" class="anchor-heading" aria-labelledby="what-is-not-implemented"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is not implemented
   
   
-</h2><p>No citations, no bibliography, no glossary, no automatic cross-reference
-numbering. <code class="language-plaintext highlighter-rouge">\cite{…}</code> passes through <strong>verbatim</strong> — visible in the output
-rather than silently dropped — so a folio that needs references today should
-write them as Markdown links or footnotes.</p><p>Cross-references do work: every labelled block emits an HTML anchor, so
+</h2><p>The pandoc tools (<code class="language-plaintext highlighter-rouge">document_render_*</code>) have no citations, no bibliography, no
+glossary and no automatic cross-reference numbering: <code class="language-plaintext highlighter-rouge">\cite{…}</code> passes through
+<strong>verbatim</strong>, so write references as Markdown links or footnotes for that
+path. The site build (<code class="language-plaintext highlighter-rouge">build-document-site.ts</code>) does render <code class="language-plaintext highlighter-rouge">\cite{a,b}</code> as a
+muted <code class="language-plaintext highlighter-rouge">[a, b]</code> (each key linked to its entry with <code class="language-plaintext highlighter-rouge">--bibliography-url</code>) and
+<code class="language-plaintext highlighter-rouge">:defterm</code> / <code class="language-plaintext highlighter-rouge">:refterm</code> as a term and its link; it has no cross-reference
+numbering either.</p><p>Cross-references do work: every labelled block emits an HTML anchor, so
 <code class="language-plaintext highlighter-rouge">[see the scope statement](#rec:scope)</code> resolves in both HTML and PDF. Use the
-block’s <code class="language-plaintext highlighter-rouge">label</code>, not a heading-derived anchor — the heading anchor changes
-whenever the title is edited, which is exactly when the link most needs to
-keep working.</p><h2 id="release"><a href="#release" class="anchor-heading" aria-labelledby="release"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Release
+block’s <code class="language-plaintext highlighter-rouge">label</code>, not a heading-derived anchor, which changes whenever the
+title is edited.</p><h2 id="release"><a href="#release" class="anchor-heading" aria-labelledby="release"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Release
   
   
 </h2><p>Publication authorisation is the base process’s, not this skill’s:
@@ -216,8 +210,8 @@ review, then take the release decision through the workflow —
   
 </h3><p>A site build is a <code class="language-plaintext highlighter-rouge">preview</code> (a pull request’s <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code>: only what the
 change reaches, every whole-corpus index borrowed from main) or <code class="language-plaintext highlighter-rouge">full</code> (the
-main deploy, a public comment release, a release: every index rebuilt). Owner,
-2026-11-01; cat-harness skill <code class="language-plaintext highlighter-rouge">feature-staging</code>, section “Build types”.</p><p>Before <code class="language-plaintext highlighter-rouge">pc:release freeze</code>, dispatch the preview workflow for the branch with
+main deploy, a public comment release, a release: every index rebuilt). See
+cat-harness skill <code class="language-plaintext highlighter-rouge">feature-staging</code>, section “Build types”.</p><p>Before <code class="language-plaintext highlighter-rouge">pc:release freeze</code>, dispatch the preview workflow for the branch with
 <code class="language-plaintext highlighter-rouge">build_type: full</code>, so the frozen copy’s search index and slices describe the
 draft rather than main. Freeze refuses a copy whose <code class="language-plaintext highlighter-rouge">staging.json</code> says
 <code class="language-plaintext highlighter-rouge">buildType: "preview"</code>, and records the build type in <code class="language-plaintext highlighter-rouge">release.json</code>.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill

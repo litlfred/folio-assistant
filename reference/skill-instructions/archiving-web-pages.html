@@ -108,25 +108,18 @@
   
   
 </h1><p><strong>A URL is not an archive.</strong> It is a request you hope somebody else keeps
-answering. Everything below follows from that.</p><h2 id="two-fidelities-and-they-are-evidence-of-different-things"><a href="#two-fidelities-and-they-are-evidence-of-different-things" class="anchor-heading" aria-labelledby="two-fidelities-and-they-are-evidence-of-different-things"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two fidelities, and they are evidence of different things
+answering.</p><h2 id="two-fidelities-and-they-are-evidence-of-different-things"><a href="#two-fidelities-and-they-are-evidence-of-different-things" class="anchor-heading" aria-labelledby="two-fidelities-and-they-are-evidence-of-different-things"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Two fidelities, and they are evidence of different things
   
   
-</h2><div class="table-wrapper"><table><thead><tr><th></th><th><strong>PDF (or image) capture</strong></th><th><strong>zip / tarball (the page’s own bytes)</strong></th></tr></thead><tbody><tr><td>what it preserves</td><td>how the page LOOKED, at one moment, to one renderer</td><td>what the page WAS — markup, stylesheets, scripts, assets</td></tr><tr><td>what it is evidence of</td><td>appearance and layout</td><td>content and structure</td></tr><tr><td>reads without tooling</td><td>yes, anywhere, forever</td><td>no; needs unpacking, and often a browser</td></tr><tr><td>survives the site going dark</td><td>yes</td><td>yes</td></tr><tr><td>lets you re-extract text/tables later</td><td>badly — through OCR or PDF text, lossy</td><td>yes, from the source markup</td></tr><tr><td>citable as “this is what I saw”</td><td><strong>yes, and this is its job</strong></td><td>weakly — a reader cannot glance at it</td></tr></tbody></table></div><p><strong>Neither substitutes for the other</strong>, and the queue in this repository proves
-it. <code class="language-plaintext highlighter-rouge">uploads/</code> holds <code class="language-plaintext highlighter-rouge">Agent Skill best practices - Gemini CLI.pdf</code> and
-<code class="language-plaintext highlighter-rouge">Best Practices - Google Antigravity Docs.pdf</code> — captured as PDF only. Their
-images, stylesheets and any interactive content are simply gone, and no amount
-of later work recovers them. The pages may still be live today; that is luck,
-not archiving.</p><p>So the default is <strong>both</strong>, and dropping one is a decision to be recorded
-rather than a default to fall into.</p><h2 id="what-the-capture-has-to-carry-with-it"><a href="#what-the-capture-has-to-carry-with-it" class="anchor-heading" aria-labelledby="what-the-capture-has-to-carry-with-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the capture has to carry with it
+</h2><div class="table-wrapper"><table><thead><tr><th></th><th><strong>PDF (or image) capture</strong></th><th><strong>zip / tarball (the page’s own bytes)</strong></th></tr></thead><tbody><tr><td>what it preserves</td><td>how the page LOOKED, at one moment, to one renderer</td><td>what the page WAS — markup, stylesheets, scripts, assets</td></tr><tr><td>what it is evidence of</td><td>appearance and layout</td><td>content and structure</td></tr><tr><td>reads without tooling</td><td>yes, anywhere, forever</td><td>no; needs unpacking, and often a browser</td></tr><tr><td>survives the site going dark</td><td>yes</td><td>yes</td></tr><tr><td>lets you re-extract text/tables later</td><td>badly — through OCR or PDF text, lossy</td><td>yes, from the source markup</td></tr><tr><td>citable as “this is what I saw”</td><td><strong>yes, and this is its job</strong></td><td>weakly — a reader cannot glance at it</td></tr></tbody></table></div><p><strong>Neither substitutes for the other</strong>: a PDF-only capture has lost the page’s
+images, stylesheets and interactive content for good. The default is <strong>both</strong>;
+dropping one is a decision to record.</p><h2 id="what-the-capture-has-to-carry-with-it"><a href="#what-the-capture-has-to-carry-with-it" class="anchor-heading" aria-labelledby="what-the-capture-has-to-carry-with-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the capture has to carry with it
   
   
 </h2><p>A file with no capture record is an orphan the moment it is renamed. Record,
-as <a href="../../reference/skill-instructions/filing-dublin-core.html"><code class="language-plaintext highlighter-rouge">filing-dublin-core</code></a> describes:</p><ul><li>the <strong>URL as requested</strong>, and the final URL if it redirected — those differ
-more often than people expect, and the difference is sometimes the whole
-story</li><li><strong>when</strong> it was captured, to the timestamp</li><li><strong>how</strong> — “printed to PDF from a logged-in browser” and “fetched
+as <a href="../../reference/skill-instructions/filing-dublin-core.html"><code class="language-plaintext highlighter-rouge">filing-dublin-core</code></a> describes:</p><ul><li>the <strong>URL as requested</strong>, and the final URL if it redirected</li><li><strong>when</strong> it was captured, to the timestamp</li><li><strong>how</strong> — “printed to PDF from a logged-in browser” and “fetched
 unauthenticated” are different documents, and the second is what a reader
-can reproduce</li><li><strong>what came with it</strong> — the asset list, which is what makes the tarball
-half meaningful</li><li>the <strong>producer</strong> — which tool, which version</li></ul><p>The <code class="language-plaintext highlighter-rouge">.extraction.json</code> sidecars already in <code class="language-plaintext highlighter-rouge">uploads/</code> carry <code class="language-plaintext highlighter-rouge">container</code>,
+can reproduce</li><li><strong>what came with it</strong> — the asset list</li><li>the <strong>producer</strong> — which tool, which version</li></ul><p>The <code class="language-plaintext highlighter-rouge">.extraction.json</code> sidecars in an instance’s <code class="language-plaintext highlighter-rouge">uploads/</code> carry <code class="language-plaintext highlighter-rouge">container</code>,
 <code class="language-plaintext highlighter-rouge">method</code>, <code class="language-plaintext highlighter-rouge">capturedAt</code>, <code class="language-plaintext highlighter-rouge">producer</code>, <code class="language-plaintext highlighter-rouge">readAt</code> and <code class="language-plaintext highlighter-rouge">assets[]</code>. Read one before
 inventing a shape.</p><h2 id="things-that-are-easy-to-get-wrong"><a href="#things-that-are-easy-to-get-wrong" class="anchor-heading" aria-labelledby="things-that-are-easy-to-get-wrong"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Things that are easy to get wrong
   
@@ -134,23 +127,18 @@ inventing a shape.</p><h2 id="things-that-are-easy-to-get-wrong"><a href="#thing
 </h2><p><strong>A logged-in capture is not a public document.</strong> If the page was behind a
 session, the capture is of <em>your</em> view. Say so in the record, or a later
 reader will cite it as though anyone could have fetched it.</p><p><strong>Dynamic pages do not capture themselves.</strong> A page assembled by script after
-load may print as an empty shell. Check the capture, do not assume it.
-“Somebody saved a PDF” and “the content is in that PDF” are different claims.</p><p><strong>Paywalls and licences.</strong> Being able to fetch something is not permission to
-redistribute it. Record the licence or the absence of one; an unlicensed
-capture may be fine to hold and not fine to publish, and those are separate
-decisions made by a person.</p><p><strong>A redirect chain is data.</strong> Shorteners and trackers in the requested URL are
+load may print as an empty shell. Check that the content is in the capture.</p><p><strong>Paywalls and licences.</strong> Being able to fetch something is not permission to
+redistribute it. Record the licence or its absence; holding and publishing an
+unlicensed capture are separate decisions, made by a person.</p><p><strong>A redirect chain is data.</strong> Shorteners and trackers in the requested URL are
 part of how the source was found, and the final URL is what should be cited.</p><h2 id="what-is-not-settled-here"><a href="#what-is-not-settled-here" class="anchor-heading" aria-labelledby="what-is-not-settled-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is NOT settled here
   
   
-</h2><p>The <strong>archive format</strong> is not decided by this page. WARC is the standard web
-archiving container and is the obvious candidate; a plain zip of a
-single-page save is the cheap one. Which this project adopts — and whether a
-capture should be replayable rather than merely stored — must be settled
-against the published specification and the tooling actually available, not
-from memory. That is the same rule
-<a href="../../reference/skill-instructions/filing-dublin-core.html"><code class="language-plaintext highlighter-rouge">filing-dublin-core</code></a> states for vocabularies, and for
-the same reason: a format asserted from recollection is indistinguishable from
-a correct one until something tries to read it.</p><p>Until it is settled, capture <strong>both fidelities</strong>, record how, and do not
-pretend the question is closed.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+</h2><p>The <strong>archive format</strong> is not decided. WARC is the standard web archiving
+container and the obvious candidate; a plain zip of a single-page save is the
+cheap one. Which to adopt, and whether a capture must be replayable rather than
+merely stored, is settled against the published specification and available
+tooling, not from memory (the rule
+<a href="../../reference/skill-instructions/filing-dublin-core.html"><code class="language-plaintext highlighter-rouge">filing-dublin-core</code></a> states for vocabularies). Until
+then, capture <strong>both fidelities</strong> and record how.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

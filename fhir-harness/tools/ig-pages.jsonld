@@ -362,7 +362,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "ig-pages",
       "title": "Generate an IG instance's reader-facing pages from its artefact index",
-      "description": "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved down to this layer because nothing in it was one IG's own (#1767); with `--summary` it writes an instance's landing page, opening with that instance's harness section. For an instance whose docs declare `igSite` (bean `mftp`) it writes no index, menu or category pages — the IG site's own replace them — and only a front-matter `artifacts.md` naming the Tool that drew it. Where an instance declares a visualiser `renderedBy: ig-pages`, it also writes that visualiser's route page, `<base>/<instance>/<id>/`, which opens the artefact index; with `--site <dir>` it writes only those route pages, under that site. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
+      "description": "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. For an instance whose docs declare `igSite` it writes no index, menu or category pages — the IG site's own replace them — and only a front-matter `artifacts.md` naming the Tool that drew it. `build-ig-site` renders an IG's narrative pages from source; this Tool writes the artefact pages for every IG instance (`stage-ig-sites` copies them in).",
       "install": {
         "none": true
       },
@@ -383,7 +383,7 @@
           {
             "name": "site",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "A site being built: write ONLY the route pages of the visualisers declared `renderedBy: ig-pages` (`<locale>/<harness>/<id>/` and, per instance, `…/<instance>/`) under it, and nothing else: not `docs/`, not the instance. Each opens the IG's artefact index where the site carries it, and is that index otherwise. A repository's own site build passes it (`visualiser-writers.ts` in cat-harness-tools), since the instance is a pinned mount.",
+            "description": "Where an instance declares a visualiser `renderedBy: ig-pages`, the Tool writes that visualiser's route page. With this site directory it writes ONLY those route pages (`<locale>/<harness>/<id>/` and, per instance, `…/<instance>/`) under it: not `docs/`, not the instance. Each opens the IG's artefact index.",
             "required": false,
             "arg": {
               "flag": "--site"
@@ -410,7 +410,7 @@
           {
             "name": "full-pages",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
-            "description": "The opt-out. Without it (the default since 2026-10-12, owner: \"make thin default\") each artefact page is a THIN shell at the same address: identity and a pointer, the artefact's JSON-LD node beside it, the index node (`artifact/index.jsonld`) the IG site's list pages draw, and one shared renderer, `assets/ig-artifact.js`. With it, the full pages as before, and no JSON-LD. `--thin`, the old opt-in, is accepted and changes nothing.",
+            "description": "Default: each artefact page is a thin shell at the same address, with its JSON-LD node, the index node (`artifact/index.jsonld`) and the shared renderer `assets/ig-artifact.js`. With it: full pages, no JSON-LD.",
             "required": false
           },
           {

@@ -10,14 +10,14 @@
       "title": "idle-backlog",
       "description": "While idle or waiting on a long-running async task (a build, a long compute script, a CI run, a background agent), pull the applicable backlog in priority order and work non-conflicting items instead of stalling. Generalises AGENTS.md's 5-minute idle trigger into a reusable skill. Use whenever blocked on an async wait with no substantive output to produce.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/package/sdlc-core"
+        "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan"
       ],
-      "instructionsPath": "skills/sdlc/sdlc-core/idle-backlog.md",
+      "instructionsPath": "work-plan/skills/work-plan/idle-backlog.md",
       "instructionLines": 59,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/work-plan"
     }
   ]
 }

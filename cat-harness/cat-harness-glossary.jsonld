@@ -185,7 +185,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "label": "Log operator (human)",
       "scopeNote": "The only lane in this diagram that chooses: one entry by id, or everything. It was split out from a single conflated lane because a person's choice and a scheduled sweep's fixed program are not the same actor, which is why the sweep below has a lane of its own rather than sharing this one.",
-      "source": "cat-harness/processes/sdlc/activity-log.bpmn"
+      "source": "cat-harness/sdlc/processes/activity-log.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
@@ -194,7 +194,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging",
       "label": "Human actor",
       "scopeNote": "The only lane whose actor cannot be a machine — `deletion-requires-confirmation` is not satisfied by a click, so H_Confirm must repeat the slug rather than approve generically, which is what stops a confirmation from an earlier run being replayed against a different preview. It precedes Start_Dispatch rather than following it, so the dispatch entry point cannot fire at all until this lane has acted.",
-      "source": "cat-harness/processes/sdlc/feature-staging.bpmn"
+      "source": "cat-harness/sdlc/processes/feature-staging.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
@@ -203,7 +203,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
       "label": "Owner",
       "scopeNote": "The repository owner. The only lane that can say `merge`. Answers a question that carried the evidence; a person, never an agent, a sibling session or a bot.",
-      "source": "cat-harness/processes/sdlc/merge-to-main.bpmn"
+      "source": "cat-harness/sdlc/processes/merge-to-main.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
@@ -212,7 +212,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
       "label": "Owner",
       "scopeNote": "May override a placement, always with a reason. Releasing a merge to `main` is no longer drawn here: it is the Owner lane of `merge-to-main.bpmn`, which `Call_MergeToMain` descends into, so the owner's release has one definition for every process that merges rather than one per diagram.",
-      "source": "cat-harness/processes/sdlc/merge-train.bpmn"
+      "source": "cat-harness/sdlc/processes/merge-train.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
@@ -221,7 +221,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
       "label": "User",
       "scopeNote": "Answers one question: coordinate or not, and how. The question arrives with its context, options and a recommendation, so it can be answered without opening anything (interaction-modality §4.1).",
-      "source": "cat-harness/processes/sdlc/related-work.bpmn"
+      "source": "cat-harness/sdlc/processes/related-work.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Owner",
@@ -230,7 +230,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
       "label": "Owner",
       "scopeNote": "The repository owner, the only lane that decides. A meta-merge lands PRs on main without their own CI, so the choice between the offered options is a person's, made on a card that names each PR; a PR the card does not name gets no merge.",
-      "source": "cat-harness/processes/sdlc/saturation-meta-merge.bpmn"
+      "source": "cat-harness/sdlc/processes/saturation-meta-merge.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_User",
@@ -239,7 +239,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
       "label": "User",
       "scopeNote": "Decides one theme at a time: continue, fold into the plan, new epic, park, or scrap.",
-      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn"
+      "source": "cat-harness/sdlc/processes/stalled-agent-triage.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
@@ -348,10 +348,10 @@
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Review/Lane_Reviewer",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Reviewer",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Reviewer",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ThemeUIReview/Lane_Reviewer",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review"
       ]
     },
     {
@@ -373,24 +373,6 @@
       "source": "cat-harness/processes/library/human-translation-workflow.bpmn"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeCodeReview",
-      "label": "Reviewer",
-      "scopeNote": "The generic reviewer, taking this lane for the call path only: it reads what the pair checks left open and settles each item one of three ways. It can attest and raise findings but cannot overrule a checker on its own say-so — that is what the call into adjudication is for.",
-      "source": "cat-harness/processes/sdlc/narrative-code-review.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
-      "label": "Reviewer / SME",
-      "scopeNote": "Narrower than a general release review: the question is only whether what upstream-pins.json lists as bound still holds against the deployed MVP, not whether the new version is good on its own terms, and a finding here (GW_Findings) sends the run back to the Agent lane's own impact analysis rather than stopping it.",
-      "source": "cat-harness/processes/sdlc/upstream-version-adoption.bpmn"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Reviewer",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
@@ -407,6 +389,24 @@
       "label": "Reviewer",
       "scopeNote": "The single point in this process where a person looks rather than a tool measures, reached only after all four agent passes are done — so what this lane judges is the ingested assets as a whole, in the design they are for — not any one axis in isolation. Its finding is the only thing that can send the process to A_RaiseFindings; a clean ingest, a passing accessibility check and a correct branding pass can each be true and still miss what only laying the assets out and looking catches.",
       "source": "cat-harness/processes/ui/theme-ui-review.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_NarrativeCodeReview/Lane_PairReviewer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NarrativeCodeReview",
+      "label": "Reviewer",
+      "scopeNote": "The generic reviewer, taking this lane for the call path only: it reads what the pair checks left open and settles each item one of three ways. It can attest and raise findings but cannot overrule a checker on its own say-so — that is what the call into adjudication is for.",
+      "source": "cat-harness/sdlc/processes/narrative-code-review.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Review",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
+      "label": "Reviewer / SME",
+      "scopeNote": "Narrower than a general release review: the question is only whether what upstream-pins.json lists as bound still holds against the deployed MVP, not whether the new version is good on its own terms, and a finding here (GW_Findings) sends the run back to the Agent lane's own impact analysis rather than stopping it.",
+      "source": "cat-harness/sdlc/processes/upstream-version-adoption.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
@@ -477,7 +477,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "label": "Code reviewer",
       "scopeNote": "Its verdict, not the agent's own account of the diff, is what GW_ReviewClear reads: a finding routes the change back through Task_AddressReview to Task_Implement, and only a clear routes it forward to Task_PrepareMerge, so this lane alone determines which of those two paths a change takes.",
-      "source": "cat-harness/processes/sdlc/code-change-review.bpmn"
+      "source": "cat-harness/sdlc/processes/code-change-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
@@ -507,7 +507,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "label": "Clinical / scientific SME",
       "scopeNote": "Human subject-matter expert (`clinical-sme`, `judgementOnly: true`). Judges whether the decision-support output on a worked case or the indicator value on a cohort is clinically/scientifically right. No procedure yields the answer, which is why a person is in this lane.",
-      "source": "cat-harness/processes/sdlc/sme-test-data-review.bpmn"
+      "source": "cat-harness/sdlc/processes/sme-test-data-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
@@ -617,7 +617,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
       "label": "Publication manager",
       "scopeNote": "The existing publication-manager role: accountable for what is live, and so the one alerted when anything after the publish button fails. A person, because the triage is a judgement about a release.",
-      "source": "cat-harness/processes/sdlc/publish-alert.bpmn"
+      "source": "cat-harness/sdlc/processes/publish-alert.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human",
@@ -626,7 +626,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "label": "Human signer",
       "scopeNote": "Deleting this lane's role binding is not a documentation nicety: `check:fallback-roles` DERIVES the fallback role from whichever lane holds a task only a person can fill, so removing it turns that check red rather than merely undocumented. The gate that sends work here fires BEFORE any API attempt, never after one fails — an air-gapped host has no degraded mode to retry into, so this lane is a routing destination, not a retry path.",
-      "source": "cat-harness/processes/sdlc/qa-report-signing.bpmn"
+      "source": "cat-harness/sdlc/processes/qa-report-signing.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Publication",
@@ -635,7 +635,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
       "label": "Publication manager",
       "scopeNote": "Holds the one call in this subprocess that policy marks unrelaxable: PM_Decide's lane admits a person only, because a pin change is not an edit to the corpus but a change to what the published artefact is BUILT FROM — the fact that puts this decision in the publication manager's lane rather than the editor's, which owns corpus changes elsewhere in this repository.",
-      "source": "cat-harness/processes/sdlc/upstream-version-adoption.bpmn"
+      "source": "cat-harness/sdlc/processes/upstream-version-adoption.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
@@ -740,7 +740,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis",
       "label": "Business analyst",
       "scopeNote": "This lane's deliverable is the recommendation together with the rejected options — a rejected option with no record is a dead end the next agent walks back into — but it never authorises anything; A_Record hands both to whoever called the subprocess, and the decision stays theirs. Answering GW_Trigger `no` is not a skipped step either: End_TriggerNotMet is recorded as a distinct outcome from a completed comparison, because a caller unable to tell \"not needed\" from \"we chose X\" cannot audit either one.",
-      "source": "cat-harness/processes/sdlc/options-analysis.bpmn"
+      "source": "cat-harness/sdlc/processes/options-analysis.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_BA",
@@ -749,7 +749,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling",
       "label": "BA / Feature Requestor",
       "scopeNote": "Reviews the filed requirement's normative statements, three-axis traceability links, concern-group placement in docs/requirements/index.md, and any supersession or retirement transition, issuing the human adjudication required before a RequirementSet reaches accepted.",
-      "source": "cat-harness/processes/sdlc/requirements-filing.bpmn"
+      "source": "cat-harness/sdlc/processes/requirements-filing.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist",
@@ -841,28 +841,10 @@
       "definition": "Settles a criterion whose reviewer entries disagree, and records WHY. Inherits `reviewer` because an adjudicator is a reviewer with one added entitlement — the `adjudication` permission — and the separation is the point: a reviewer reports, an adjudicator settles, and a process where every reviewer could settle has no way to say who decided. The KNOWLEDGE spreads (several roles carry the `adjudication` skill, because each has to tell an adjudicable disagreement from a complaint); the ENTITLEMENT does not, and lives on the actor as a permission.",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
-      "label": "Adjudicator",
-      "scopeNote": "Every decision and every write is here, and that concentration is the accountability: a reviewer reports, an adjudicator settles, and a process where the settling were spread across lanes would have no way to say who decided. The role admits person and agent — `refresh-materialized` already states the reason, \"a human or agentic decision, never a merge rule\" — and the judgement steps are drawn as plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.\n\nA_Dispatch is in this lane although the adjudicator is its SUBJECT rather than its performer, and that is deliberate: whoever composes the brief chooses what the adjudicator may see, so putting it anywhere else would let the composing party grade its own input. `untainted-verification` states the rule the step enforces — the adjudicator is given the checker's output and never the artefact.",
-      "source": "cat-harness/processes/sdlc/adjudication.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
-      "label": "Adjudicator",
-      "scopeNote": "One lane, because every step here is the adjudicator's: asking the question, choosing among the answers, and writing the entry. The feedback provider's lane is in `adjudication.bpmn`, where stating a finding happens — a provider has no entitlement to settle what it reported, and drawing it here would suggest otherwise.\n\nThe role admits person and agent. `refresh-materialized` already gives the reason in its own words — \"a human or agentic decision, never a merge rule\" — and the steps are plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.",
-      "source": "cat-harness/processes/sdlc/criterion-adjudication.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Adjudicator",
@@ -872,6 +854,24 @@
       "label": "Adjudicator",
       "scopeNote": "Reached only when entries for one criterion disagree. Settles the disagreement with a reason, and decides between surviving candidates through options analysis.",
       "source": "cat-harness/processes/ui/wireframe-design-review.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_Adjudicator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "label": "Adjudicator",
+      "scopeNote": "Every decision and every write is here, and that concentration is the accountability: a reviewer reports, an adjudicator settles, and a process where the settling were spread across lanes would have no way to say who decided. The role admits person and agent — `refresh-materialized` already states the reason, \"a human or agentic decision, never a merge rule\" — and the judgement steps are drawn as plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.\n\nA_Dispatch is in this lane although the adjudicator is its SUBJECT rather than its performer, and that is deliberate: whoever composes the brief chooses what the adjudicator may see, so putting it anywhere else would let the composing party grade its own input. `untainted-verification` states the rule the step enforces — the adjudicator is given the checker's output and never the artefact.",
+      "source": "cat-harness/sdlc/processes/adjudication.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CriterionAdjudication/Lane_CriterionAdjudicator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
+      "label": "Adjudicator",
+      "scopeNote": "One lane, because every step here is the adjudicator's: asking the question, choosing among the answers, and writing the entry. The feedback provider's lane is in `adjudication.bpmn`, where stating a finding happens — a provider has no entitlement to settle what it reported, and drawing it here would suggest otherwise.\n\nThe role admits person and agent. `refresh-materialized` already gives the reason in its own words — \"a human or agentic decision, never a merge rule\" — and the steps are plain tasks rather than user tasks so the diagram does not assert a person where an agent is legitimate.",
+      "source": "cat-harness/sdlc/processes/criterion-adjudication.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
@@ -885,18 +885,9 @@
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Reviewers"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Reviewers",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider"
       ]
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
-      "label": "Feedback provider",
-      "scopeNote": "Drawn once for any number of providers — the owner's \"Judgment of &gt;= 1 Feedback Provider's feedback\" — because the process does not change with the count and a lane per provider would say it did. A script checker, a review agent, a reader and an SME all act here, which is why the role admits person, agent and system alike.\n\nThis lane knows the one thing the lane below does not: WHAT IT ACTUALLY LOOKED AT. A_StateFinding exists to move that across, and without it the adjudicator cannot tell a real disagreement from two parties reading different things — which looks identical from the sidecar and is not the same defect at all. The lane holds no gateway and reaches no end event on purpose: a provider states a finding and has no entitlement to settle it.",
-      "source": "cat-harness/processes/sdlc/adjudication.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Reviewers",
@@ -906,6 +897,15 @@
       "label": "Feedback providers",
       "scopeNote": "One or more reviewers (agent and human) who see candidates shuffled, without their author, and record pass, warn or fail per criterion with a reason. There are no scores and no averages.",
       "source": "cat-harness/processes/ui/wireframe-design-review.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Adjudication/Lane_FeedbackProvider",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
+      "label": "Feedback provider",
+      "scopeNote": "Drawn once for any number of providers — the owner's \"Judgment of &gt;= 1 Feedback Provider's feedback\" — because the process does not change with the count and a lane per provider would say it did. A script checker, a review agent, a reader and an SME all act here, which is why the role admits person, agent and system alike.\n\nThis lane knows the one thing the lane below does not: WHAT IT ACTUALLY LOOKED AT. A_StateFinding exists to move that across, and without it the adjudicator cannot tell a real disagreement from two parties reading different things — which looks identical from the sidecar and is not the same defect at all. The lane holds no gateway and reaches no end event on purpose: a provider states a finding and has no entitlement to settle it.",
+      "source": "cat-harness/sdlc/processes/adjudication.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder",
@@ -1020,6 +1020,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SecureAgentPermissions/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanClose/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_Drainer",
@@ -1034,8 +1035,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent"
       ]
     },
     {
@@ -1201,13 +1201,22 @@
       "source": "cat-harness/processes/process/session-state-machine.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",
+      "label": "Designer",
+      "scopeNote": "Writes the intent, produces candidates with real content, and runs the mechanical checks. Does not review its own candidates.",
+      "source": "cat-harness/processes/ui/wireframe-design-review.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Agent",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
       "label": "Agent (this session)",
       "scopeNote": "Brackets its own work with a start and an end entry rather than leaving either implied, and reads Gateway_Capture rather than assuming it: persisting when capture is on, but merely reporting the setting — never silently dropping the entry — when it is off or could not be determined.",
-      "source": "cat-harness/processes/sdlc/activity-log.bpmn"
+      "source": "cat-harness/sdlc/processes/activity-log.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanClose/Lane_Agent",
@@ -1216,7 +1225,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
       "label": "Agent (this session)",
       "scopeNote": "Closes only the bean its caller opened and claimed — Process_BeanOpen already sent someone else's to its sibling — and picks one of three recorded endings for it.",
-      "source": "cat-harness/processes/sdlc/bean-close.bpmn"
+      "source": "cat-harness/sdlc/processes/bean-close.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanDrain/Lane_Drainer",
@@ -1225,7 +1234,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "label": "Drainer",
       "scopeNote": "Takes beans from its own list one at a time and runs each through OPEN, the work and CLOSE before it takes the next. Its only bean writes are the ones OPEN and CLOSE make; a bean OPEN finds is someone else's is marked skip on the queue and left alone. It asks for a refill rather than picking from another owner's list.",
-      "source": "cat-harness/processes/sdlc/bean-drain.bpmn"
+      "source": "cat-harness/sdlc/processes/bean-drain.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanLifecycle/Lane_Agent",
@@ -1234,7 +1243,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle",
       "label": "Agent (this session)",
       "scopeNote": "Owns every transition on a bean it holds. Whether the bean is its own at all is decided inside Process_BeanOpen, whose sibling lane takes someone else's bean; this lane only reads the answer at GW_Yours and stops when it is not.",
-      "source": "cat-harness/processes/sdlc/bean-lifecycle.bpmn"
+      "source": "cat-harness/sdlc/processes/bean-lifecycle.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Agent",
@@ -1243,7 +1252,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "label": "Agent (this session)",
       "scopeNote": "Checks, creates and claims a bean it may hold. Open_Owner is the one branch this lane cannot finish itself: a bean that turns out to be someone else's goes to Lane_Sibling, and nothing on it is resolved, scrapped or edited from here.",
-      "source": "cat-harness/processes/sdlc/bean-open.bpmn"
+      "source": "cat-harness/sdlc/processes/bean-open.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Agent",
@@ -1252,7 +1261,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
       "label": "Authoring agent",
       "scopeNote": "The `no-clean-run-over-an-empty-set` convention is bound at this lane specifically because this is the one lane that writes checks — Lane_Pipeline runs them and Lane_Reviewer reads someone else's, so a check with nothing to assert over is this lane's failure mode to guard against, nobody else's. Every activity that is not mechanical execution (Lane_Pipeline) or an outside judgement (Lane_Reviewer) sits here, including both loop-backs — a red gate returns to Task_Implement through Task_Diagnose, and review findings return to it through Task_AddressReview — so this lane never hands work off without also owning what comes back.",
-      "source": "cat-harness/processes/sdlc/code-change-review.bpmn"
+      "source": "cat-harness/sdlc/processes/code-change-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Agent",
@@ -1261,7 +1270,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase",
       "label": "Authoring agent",
       "scopeNote": "Reached only when the command refused: an authored conflict, an undeclared path, or a resolution the gates could not reproduce. The refused paths are listed for it; what to do with an authored conflict is judgement.",
-      "source": "cat-harness/processes/sdlc/merge-base.bpmn"
+      "source": "cat-harness/sdlc/processes/merge-base.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Dispatched",
@@ -1270,7 +1279,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
       "label": "Dispatched agent",
       "scopeNote": "ONE agent with a modest budget, reached only when no live owner can be. May do what a declared pattern would have done; may NOT decide an authored conflict, which goes to the owner as a question.",
-      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn"
+      "source": "cat-harness/sdlc/processes/merge-refusal.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
@@ -1279,7 +1288,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RelatedWork",
       "label": "Agent",
       "scopeNote": "Searches, sorts and summarizes, and recommends. It never links, blocks, merges or comments on another piece of work before the user has answered, because coordinating is a commitment on behalf of the work's owners.",
-      "source": "cat-harness/processes/sdlc/related-work.bpmn"
+      "source": "cat-harness/sdlc/processes/related-work.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RequirementsFiling/Lane_Agent",
@@ -1288,7 +1297,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling",
       "label": "Authoring Agent",
       "scopeNote": "Executes the deterministic filing steps under methodologies/requirements-filing-and-organisation.md: classifies the filing mode and concern group, promotes the proposal via git mv (preserving git blame and proposedIn), binds Requirement front matter and three-axis lineage, updates superseded or retired records in place, updates docs/requirements/index.md, runs check:requirements, and records the human sign-off attestation.",
-      "source": "cat-harness/processes/sdlc/requirements-filing.bpmn"
+      "source": "cat-harness/sdlc/processes/requirements-filing.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SmeTestDataReview/Lane_Prepare",
@@ -1297,7 +1306,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "label": "Authoring agent",
       "scopeNote": "Prepares the review package from the fixed test data set (`test-data-fixed/1.0.0`): either a worked case with system output for decision support, or a cohort with computed and expected values for an indicator definition.",
-      "source": "cat-harness/processes/sdlc/sme-test-data-review.bpmn"
+      "source": "cat-harness/sdlc/processes/sme-test-data-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Triage",
@@ -1306,7 +1315,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
       "label": "Triage agent",
       "scopeNote": "Reads the footprint the stalled agents left, collects or reconstructs a handover report per agent, groups the work into 2-4 themes, and recommends. It never finishes, closes or deletes another agent's work.",
-      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn"
+      "source": "cat-harness/sdlc/processes/stalled-agent-triage.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Author",
@@ -1315,7 +1324,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
       "label": "Authoring agent",
       "scopeNote": "Authors or curates the test data set: classifies whether the case requires a fixed curated set or a deterministic generated recipe, invokes the content-type specialisation subprocess on the generated branch or SME review on the fixed branch, and writes the self-identifying node into its declared graph directory.",
-      "source": "cat-harness/processes/sdlc/test-data-curation.bpmn"
+      "source": "cat-harness/sdlc/processes/test-data-curation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Agent",
@@ -1324,7 +1333,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
       "label": "Agent",
       "scopeNote": "Entered only once Lane_Ci has confirmed a pin is behind and filed the issue, never to make that determination itself: A_PickUp's claim is what stops two sessions adopting the same bump. The judgement of adoption is not drawn here either — Call_Adopt hands it to its own reusable process, so this lane is only the hand-off from mechanical detection to judgement, not the judgement itself.",
-      "source": "cat-harness/processes/sdlc/upstream-pin-watch.bpmn"
+      "source": "cat-harness/sdlc/processes/upstream-pin-watch.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Agent",
@@ -1333,16 +1342,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
       "label": "Agent",
       "scopeNote": "Owns the whole MVP loop end to end except the two calls it cannot make: SF_UA_8 re-enters this lane's own A_Impact on a fixable finding rather than escalating, so a defect gets fixed and re-evidenced here before anyone outside the lane sees it, and Call_OptionsAnalysis sits here specifically because framing the options is not deciding among them — that judgement belongs to PM_Decide in a different lane entirely.",
-      "source": "cat-harness/processes/sdlc/upstream-version-adoption.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_WireframeDesignReview/Lane_Designer",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",
-      "label": "Designer",
-      "scopeNote": "Writes the intent, produces candidates with real content, and runs the mechanical checks. Does not review its own candidates.",
-      "source": "cat-harness/processes/ui/wireframe-design-review.bpmn"
+      "source": "cat-harness/sdlc/processes/upstream-version-adoption.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
@@ -1486,7 +1486,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
       "label": "Sibling session or human (not yours to close)",
       "scopeNote": "The only task here with no `cat-harness.processes:bean` op: its whole job is to write nothing to a bean it does not own, ending at Open_NotYours so the caller stops rather than works.",
-      "source": "cat-harness/processes/sdlc/bean-open.bpmn"
+      "source": "cat-harness/sdlc/processes/bean-open.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
@@ -1495,7 +1495,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
       "label": "Owning session",
       "scopeNote": "The session named in the PR's `Claude-Session:` trailer. The executor of the hand-back: claims the refusal bean, fixes the PR, reports on the PR in the bean's one-line formats.",
-      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn"
+      "source": "cat-harness/sdlc/processes/merge-refusal.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
@@ -1504,7 +1504,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
       "label": "Sibling session",
       "scopeNote": "The session that owns a handed-back PR. Fixes it on its own branch and re-signals ready; never merged on its behalf.",
-      "source": "cat-harness/processes/sdlc/merge-train.bpmn"
+      "source": "cat-harness/sdlc/processes/merge-train.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Sibling",
@@ -1513,7 +1513,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
       "label": "Sibling session",
       "scopeNote": "Every other session with a PR in the queue. It acts once: it stops pushing when the hold arrives and names the head it wants merged, so the steward stacks a branch nobody is still moving. It does not choose what lands; the owner does.",
-      "source": "cat-harness/processes/sdlc/saturation-meta-merge.bpmn"
+      "source": "cat-harness/sdlc/processes/saturation-meta-merge.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
@@ -1540,7 +1540,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
       "label": "Merge steward",
       "scopeNote": "The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle.",
-      "source": "cat-harness/processes/sdlc/merge-manager-watch.bpmn"
+      "source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Merger",
@@ -1549,7 +1549,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
       "label": "Merging session",
       "scopeNote": "The merge steward while a Merge Manager is active; with none active, the PR's own session takes this lane (owner ruling 2026-10-06). Reads evidence, finds and records authorisation, merges and follows through. Never authorises: that is the owner's lane, and no reading of an instruction moves it here.",
-      "source": "cat-harness/processes/sdlc/merge-to-main.bpmn"
+      "source": "cat-harness/sdlc/processes/merge-to-main.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Steward",
@@ -1558,7 +1558,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
       "label": "Merge steward",
       "scopeNote": "Composes the train from the queue, decides nothing the placement table or the owner has not, attributes and ejects on red, and lands at the tested SHA.",
-      "source": "cat-harness/processes/sdlc/merge-train.bpmn"
+      "source": "cat-harness/sdlc/processes/merge-train.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Steward",
@@ -1567,7 +1567,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
       "label": "Merge steward",
       "scopeNote": "The merge manager, acting as merge steward for the duration of the drain. It notices the runners are saturated, holds the swarm, dry-runs the meta-merge and asks the owner with every PR named; on a yes it cancels the queued PR runs, builds and lands the meta-merge branch, releases the hold and reports. It never lands anything the owner's card did not name.",
-      "source": "cat-harness/processes/sdlc/saturation-meta-merge.bpmn"
+      "source": "cat-harness/sdlc/processes/saturation-meta-merge.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -1598,6 +1598,9 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Audit",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Pipeline",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CiHealth/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeQualityGates/Lane_Ci",
@@ -1616,10 +1619,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TrackedWatch/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Pipeline",
-        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline"
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build"
       ]
     },
     {
@@ -1722,177 +1722,6 @@
       "source": "cat-harness/processes/process/render-kg-to-cdn.bpmn"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CiHealth/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth",
-      "label": "Scheduled log sweep",
-      "scopeNote": "Named a 'sweep' but every path through it writes something — the report file, the tracking label, and the issue itself (opened, edited or closed) — and keeping all three in one lane is what makes 'one tracking issue, edited in place' enforceable: a write split across lanes would leave two different actors able to touch the same issue with no ordering between them.",
-      "source": "cat-harness/processes/sdlc/ci-health-watch.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
-      "label": "CI/CD pipeline",
-      "scopeNote": "Exists as a separate lane for one reason: what it tests — the merge of head into base — is not a claim the Agent lane could make about its own tree, so GW_CIGreen has to be fed by an independent run rather than by the agent reporting its own gates as done.",
-      "source": "cat-harness/processes/sdlc/code-change-review.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeQualityGates/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates",
-      "label": "CI/CD Pipeline",
-      "scopeNote": "Joins every job before asking anything, then GW_Hard asks specifically about the HARD gates — the two warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red warn-only step it also ran. No count is given here on purpose: this paragraph carried \"seven jobs, five hard\" and then \"six-and-four\", and each was wrong the next time a job was split or folded (beans `om30`, `7fu5`). Count the `# bpmn-node:` lines in the workflow instead.",
-      "source": "cat-harness/processes/sdlc/code-quality-gates.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_DocsSite/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
-      "label": "CI/CD Pipeline",
-      "scopeNote": "Before it will even attempt the risky part, GW_Complete can refuse outright and end at End_Refused if a maintained artefact is missing — so an incomplete build never reaches Task_Publish's full replace at all, which is a harder stop than the restore/verify pair further down the same lane makes for a partial one.",
-      "source": "cat-harness/processes/sdlc/docs-site-publish.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging",
-      "label": "CI/CD Pipeline",
-      "scopeNote": "Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.\n\nA FOURTH trigger starts none of them, and that is deliberate rather than an omission from this diagram. `merge_group` is declared on the workflow so it REPORTS in the merge queue — a required check that never reports on a `merge_group` event leaves every queued pull request pending forever — and all three jobs skip on it. A preview exists for the reviewers of a pull request; a queue entry has none and lives for minutes. Without the skip, `stage`'s existing guards all pass on a queue run (`github.event.action` is empty and the event is not a dispatch), so it would publish `STAGING/&lt;slug&gt;/` named after the ephemeral `gh-readonly-queue/...` ref, and nothing would ever remove it — `Start_Closed` below fires on `pull_request_target: closed`, and a queue branch is never a pull request that closes. That is the `plj1` shape arriving once per MERGE rather than once per pull request.",
-      "source": "cat-harness/processes/sdlc/feature-staging.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GeneratedFileDrift/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GeneratedFileDrift",
-      "label": "Build pipeline",
-      "scopeNote": "The only lane: one mechanical step whose diff the gateway reads directly. There is no reviewer to hand off to; the check either matches or it does not.",
-      "source": "cat-harness/processes/sdlc/generated-file-drift.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift",
-      "label": "Build pipeline",
-      "scopeNote": "The only lane: the job runs one shared check.",
-      "source": "cat-harness/processes/sdlc/jsonld-drift-check.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Command",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase",
-      "label": "merge:main command",
-      "scopeNote": "Mechanical. Decides nothing a declaration has not decided: a path no pattern names is refused, and the gate set, not this lane, judges the result.",
-      "source": "cat-harness/processes/sdlc/merge-base.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
-      "label": "Build pipeline",
-      "scopeNote": "CI, not an agent. Regenerates the harness projections of the knowledge graph on the PR head and commits them to the PR branch, so the head whose evidence is read next is the head that would land. Judges nothing.",
-      "source": "cat-harness/processes/sdlc/merge-to-main.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
-      "label": "Build pipeline",
-      "scopeNote": "Mechanical: merges, regenerates and runs the gates, and reports. Judges nothing a declaration has not decided.",
-      "source": "cat-harness/processes/sdlc/merge-train.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent",
-      "label": "Scheduled log sweep",
-      "scopeNote": "Three exit states, and the job's own colour tracks none of them the way a reader would expect: a finding is fully recorded — issue tracked, PR commented — and the job still ends GREEN, because the finding is the repository's problem to see in the tracking issue, not this lane's to fail on. Only UNKNOWN turns the job itself RED, and one unreadable PR is enough to fail the whole sweep — this lane never reports a partial clean.",
-      "source": "cat-harness/processes/sdlc/pr-checks-present.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
-      "label": "CI/CD Pipeline",
-      "scopeNote": "The build pipeline, running unattended between the export and the deploy. Raises the one alert, the same way whichever step failed.",
-      "source": "cat-harness/processes/sdlc/publish-alert.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification",
-      "label": "CI/CD Pipeline",
-      "scopeNote": "Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass.",
-      "source": "cat-harness/processes/sdlc/publish-verification.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish",
-      "label": "CI/CD Pipeline",
-      "scopeNote": "Runs both paths as fixed programs. It decides nothing that needs judgement: whether a token can write is read from the event, whether a push was accepted is the push's exit code (never its stderr — spike `3ds9` measured a harmless \"push negotiation failed; proceeding anyway\"), and what retention removes is `planPrune`'s rule. A PR whose state cannot be read is KEPT: could-not-determine never deletes.",
-      "source": "cat-harness/processes/sdlc/qa-publish.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth",
-      "label": "Scheduled log sweep",
-      "scopeNote": "The only lane in this diagram, and everything it does is either checking or recording — never removing, which is deletion-requires-confirmation applied to the shape most tempted to break it. It is also where the inversion lives: a real finding leaves the job GREEN and speaks through one tracking issue edited in place, while \"could not tell\" is the only outcome that turns the job RED and leaves that issue deliberately untouched.",
-      "source": "cat-harness/processes/sdlc/repository-health-watch.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Pipeline",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
-      "label": "Build pipeline",
-      "scopeNote": "The CI system, which runs main's checks once on the merged result. Its verdict is what the steward reports; it is drawn as its own lane because it is a system acting on a fixed program, not a choice anybody makes.",
-      "source": "cat-harness/processes/sdlc/saturation-meta-merge.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TrackedWatch/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch",
-      "label": "Scheduled log sweep",
-      "scopeNote": "Every path through it writes something: the tracking label, and the issue itself (opened, edited or closed). Keeping all of it in one lane is what makes 'one tracking issue, edited in place' enforceable.",
-      "source": "cat-harness/processes/sdlc/tracked-watch.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
-      "label": "CI/CD Pipeline",
-      "scopeNote": "Owns exactly three outcomes and must keep them visibly different: current closes the tracking issue, behind opens or edits it, and UNKNOWN leaves the issue untouched while failing the job anyway — a watchdog that goes blind must never read as clean, so this lane is the one place that distinction cannot be collapsed into a single pass or fail. It hands off at the first sign of judgement: the moment a bump needs adopting, that is Lane_Agent's, never this one's.",
-      "source": "cat-harness/processes/sdlc/upstream-pin-watch.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
-      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
-      "label": "CI/CD Pipeline",
-      "scopeNote": "Produces evidence, not verdicts: Task_Gates going red does not end the process or loop by itself — \"this version breaks us\" is a finding the decider needs to see, not a reason for this lane to stop the run — and Task_Mvp exists so that finding is checked against a real deployed build rather than a description of one.",
-      "source": "cat-harness/processes/sdlc/upstream-version-adoption.bpmn"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -1918,6 +1747,177 @@
       "label": "CI/CD Pipeline",
       "scopeNote": "Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it.",
       "source": "cat-harness/processes/ui/staging-render-log.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CiHealth/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth",
+      "label": "Scheduled log sweep",
+      "scopeNote": "Named a 'sweep' but every path through it writes something — the report file, the tracking label, and the issue itself (opened, edited or closed) — and keeping all three in one lane is what makes 'one tracking issue, edited in place' enforceable: a write split across lanes would leave two different actors able to touch the same issue with no ordering between them.",
+      "source": "cat-harness/sdlc/processes/ci-health-watch.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview",
+      "label": "CI/CD pipeline",
+      "scopeNote": "Exists as a separate lane for one reason: what it tests — the merge of head into base — is not a claim the Agent lane could make about its own tree, so GW_CIGreen has to be fed by an independent run rather than by the agent reporting its own gates as done.",
+      "source": "cat-harness/sdlc/processes/code-change-review.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeQualityGates/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Joins every job before asking anything, then GW_Hard asks specifically about the HARD gates — the two warn-only results reach the same join but never the gate, so this lane's merge/block call is deliberately blind to a red warn-only step it also ran. No count is given here on purpose: this paragraph carried \"seven jobs, five hard\" and then \"six-and-four\", and each was wrong the next time a job was split or folded (beans `om30`, `7fu5`). Count the `# bpmn-node:` lines in the workflow instead.",
+      "source": "cat-harness/sdlc/processes/code-quality-gates.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_DocsSite/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Before it will even attempt the risky part, GW_Complete can refuse outright and end at End_Refused if a maintained artefact is missing — so an incomplete build never reaches Task_Publish's full replace at all, which is a harder stop than the restore/verify pair further down the same lane makes for a partial one.",
+      "source": "cat-harness/sdlc/processes/docs-site-publish.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.\n\nA FOURTH trigger starts none of them, and that is deliberate rather than an omission from this diagram. `merge_group` is declared on the workflow so it REPORTS in the merge queue — a required check that never reports on a `merge_group` event leaves every queued pull request pending forever — and all three jobs skip on it. A preview exists for the reviewers of a pull request; a queue entry has none and lives for minutes. Without the skip, `stage`'s existing guards all pass on a queue run (`github.event.action` is empty and the event is not a dispatch), so it would publish `STAGING/&lt;slug&gt;/` named after the ephemeral `gh-readonly-queue/...` ref, and nothing would ever remove it — `Start_Closed` below fires on `pull_request_target: closed`, and a queue branch is never a pull request that closes. That is the `plj1` shape arriving once per MERGE rather than once per pull request.",
+      "source": "cat-harness/sdlc/processes/feature-staging.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_GeneratedFileDrift/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GeneratedFileDrift",
+      "label": "Build pipeline",
+      "scopeNote": "The only lane: one mechanical step whose diff the gateway reads directly. There is no reviewer to hand off to; the check either matches or it does not.",
+      "source": "cat-harness/sdlc/processes/generated-file-drift.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift",
+      "label": "Build pipeline",
+      "scopeNote": "The only lane: the job runs one shared check.",
+      "source": "cat-harness/sdlc/processes/jsonld-drift-check.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeBase/Lane_Command",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase",
+      "label": "merge:main command",
+      "scopeNote": "Mechanical. Decides nothing a declaration has not decided: a path no pattern names is refused, and the gate set, not this lane, judges the result.",
+      "source": "cat-harness/sdlc/processes/merge-base.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
+      "label": "Build pipeline",
+      "scopeNote": "CI, not an agent. Regenerates the harness projections of the knowledge graph on the PR head and commits them to the PR branch, so the head whose evidence is read next is the head that would land. Judges nothing.",
+      "source": "cat-harness/sdlc/processes/merge-to-main.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
+      "label": "Build pipeline",
+      "scopeNote": "Mechanical: merges, regenerates and runs the gates, and reports. Judges nothing a declaration has not decided.",
+      "source": "cat-harness/sdlc/processes/merge-train.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent",
+      "label": "Scheduled log sweep",
+      "scopeNote": "Three exit states, and the job's own colour tracks none of them the way a reader would expect: a finding is fully recorded — issue tracked, PR commented — and the job still ends GREEN, because the finding is the repository's problem to see in the tracking issue, not this lane's to fail on. Only UNKNOWN turns the job itself RED, and one unreadable PR is enough to fail the whole sweep — this lane never reports a partial clean.",
+      "source": "cat-harness/sdlc/processes/pr-checks-present.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "The build pipeline, running unattended between the export and the deploy. Raises the one alert, the same way whichever step failed.",
+      "source": "cat-harness/sdlc/processes/publish-alert.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass.",
+      "source": "cat-harness/sdlc/processes/publish-verification.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Runs both paths as fixed programs. It decides nothing that needs judgement: whether a token can write is read from the event, whether a push was accepted is the push's exit code (never its stderr — spike `3ds9` measured a harmless \"push negotiation failed; proceeding anyway\"), and what retention removes is `planPrune`'s rule. A PR whose state cannot be read is KEPT: could-not-determine never deletes.",
+      "source": "cat-harness/sdlc/processes/qa-publish.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth",
+      "label": "Scheduled log sweep",
+      "scopeNote": "The only lane in this diagram, and everything it does is either checking or recording — never removing, which is deletion-requires-confirmation applied to the shape most tempted to break it. It is also where the inversion lives: a real finding leaves the job GREEN and speaks through one tracking issue edited in place, while \"could not tell\" is the only outcome that turns the job RED and leaves that issue deliberately untouched.",
+      "source": "cat-harness/sdlc/processes/repository-health-watch.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
+      "label": "Build pipeline",
+      "scopeNote": "The CI system, which runs main's checks once on the merged result. Its verdict is what the steward reports; it is drawn as its own lane because it is a system acting on a fixed program, not a choice anybody makes.",
+      "source": "cat-harness/sdlc/processes/saturation-meta-merge.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TrackedWatch/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch",
+      "label": "Scheduled log sweep",
+      "scopeNote": "Every path through it writes something: the tracking label, and the issue itself (opened, edited or closed). Keeping all of it in one lane is what makes 'one tracking issue, edited in place' enforceable.",
+      "source": "cat-harness/sdlc/processes/tracked-watch.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamPinWatch/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Owns exactly three outcomes and must keep them visibly different: current closes the tracking issue, behind opens or edits it, and UNKNOWN leaves the issue untouched while failing the job anyway — a watchdog that goes blind must never read as clean, so this lane is the one place that distinction cannot be collapsed into a single pass or fail. It hands off at the first sign of judgement: the moment a bump needs adopting, that is Lane_Agent's, never this one's.",
+      "source": "cat-harness/sdlc/processes/upstream-pin-watch.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Build",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Produces evidence, not verdicts: Task_Gates going red does not end the process or loop by itself — \"this version breaks us\" is a finding the decider needs to see, not a reason for this lane to stop the run — and Task_Mvp exists so that finding is checked against a real deployed build rather than a description of one.",
+      "source": "cat-harness/sdlc/processes/upstream-version-adoption.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
@@ -1983,7 +1983,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "label": "Validation and QA (mechanical + agents)",
       "scopeNote": "Owns everything except the act of signing: it builds the hashable run, computes the two facts — effectiveReach and whether the API is configured — that Gateway_SigningRoute's table reads rather than a hand-asserted choice, and after either route returns, records which one fired. The record is what lets a later reader know which trust assumption they are relying on without having to ask.",
-      "source": "cat-harness/processes/sdlc/qa-report-signing.bpmn"
+      "source": "cat-harness/sdlc/processes/qa-report-signing.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
@@ -2040,7 +2040,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
       "label": "Attestation service (API)",
       "scopeNote": "Reached only from the DMN table's one row where both egress and a configured endpoint are true — everything else in Gateway_SigningRoute's table routes around this lane entirely, so its presence in a trace is itself already the answer to whether egress existed. It carries exactly one task and no branch of its own, because the routing decision was already made before this lane was entered.",
-      "source": "cat-harness/processes/sdlc/qa-report-signing.bpmn"
+      "source": "cat-harness/sdlc/processes/qa-report-signing.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Attestation",
@@ -2049,7 +2049,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "label": "Attestation service",
       "scopeNote": "Signs the certification and files it. Reached only from `certified`: a refusal and an undetermined result are recorded by the certifier and signed by nobody. The signature itself is `qa-report-signing.bpmn`, called unchanged, whose own gateway chooses the API or a human release authority by the signer's reach.",
-      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
+      "source": "cat-harness/sdlc/processes/test-plan-execution.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/work-plan",
@@ -2245,7 +2245,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain",
       "label": "Queue keeper",
       "scopeNote": "Holds the queue file and nothing else: builds it from every bean copy, grouped by owner with what was left out and why, and refills a drainer whose list runs dry. It never claims — a queue entry says who should take a bean, and only the drainer's OPEN says who did. One agent can hold this lane and the drainer lane at once.",
-      "source": "cat-harness/processes/sdlc/bean-drain.bpmn"
+      "source": "cat-harness/sdlc/processes/bean-drain.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Steward",
@@ -2254,7 +2254,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
       "label": "Merge steward",
       "scopeNote": "Coordinator and verifier of the hand-back: records, hands back, takes back when the fail condition fires, and closes. Never edits the bean's instructions after the executor claims it; later facts go to the PR.",
-      "source": "cat-harness/processes/sdlc/merge-refusal.bpmn"
+      "source": "cat-harness/sdlc/processes/merge-refusal.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_StalledAgentTriage/Lane_Steward",
@@ -2263,7 +2263,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
       "label": "Merge steward",
       "scopeNote": "Receives the open PRs that lost their driver: which are green and ready, which are mid-merge, which must be re-driven from their PR head.",
-      "source": "cat-harness/processes/sdlc/stalled-agent-triage.bpmn"
+      "source": "cat-harness/sdlc/processes/stalled-agent-triage.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/integration-watcher",
@@ -2296,7 +2296,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "label": "Requester / system under test",
       "scopeNote": "The system under test, or whoever speaks for it, asking for certification against plan P at a named version. Its only task is the request, and that is the design rather than an omission: the system under test never writes a verdict about itself, so after this lane it is the SUBJECT of the process and never a performer in it.",
-      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
+      "source": "cat-harness/sdlc/processes/test-plan-execution.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/tester",
@@ -2319,7 +2319,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
       "label": "Tester",
       "scopeNote": "Records the SME's judgement as a validated `sme-case-verdict/1.0.0` node with attributable human `reviewer` identity and `reviewedAt` date, and updates the fixed data set's `review` status when passed.",
-      "source": "cat-harness/processes/sdlc/sme-test-data-review.bpmn"
+      "source": "cat-harness/sdlc/processes/sme-test-data-review.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestDataCuration/Lane_Tester",
@@ -2328,7 +2328,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration",
       "label": "Tester",
       "scopeNote": "Verifies that the curated fixed set or generated recipe self-identifies from its file content (`discriminateTestDataSet`) rather than from its directory path, verifies the canonical SHA-256 digest, and binds the `TestDataRef` into the `test-plan/v1` test case.",
-      "source": "cat-harness/processes/sdlc/test-data-curation.bpmn"
+      "source": "cat-harness/sdlc/processes/test-data-curation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TestPlanExecution/Lane_Tester",
@@ -2337,7 +2337,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "label": "Tester",
       "scopeNote": "Runs the plan against the system: resolves it, binds its fixed or generated test data, executes every case or skips it with a reason, and writes the `folio-test-run/v1` and the `test-report/v1`. Untainted from the system under test — never the same actor — and it does not certify: what it writes is what the certifier decides on.",
-      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
+      "source": "cat-harness/sdlc/processes/test-plan-execution.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/untainted-checker",
@@ -2358,7 +2358,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "label": "Untainted checker",
       "scopeNote": "A second party re-executing a sample of the cases from the plan and the data alone, never from the tester's verdicts. It rules on nothing: whether it agrees is a fact the certification table reads. One party doing both halves is not this check — it would compare a run with its own paraphrase of itself.",
-      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
+      "source": "cat-harness/sdlc/processes/test-plan-execution.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/certifier",
@@ -2379,7 +2379,7 @@
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
       "label": "Certifier",
       "scopeNote": "The accountable party for the decision, a specialisation of the stakeholder. The gateway is computed from the plan's exit-criteria table; what the certifier adds, and what makes it a judgement, is recording the decision under their name. Never the tester and never the system under test.",
-      "source": "cat-harness/processes/sdlc/test-plan-execution.bpmn"
+      "source": "cat-harness/sdlc/processes/test-plan-execution.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/deep-researcher",

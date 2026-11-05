@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/headless-render-qc.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.",
+      "description": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures.",
       "install": {
         "none": true
       },
@@ -20,7 +20,7 @@
             "arg": {
               "flag": "--screenshot"
             },
-            "description": "Save the screenshots as well as the verdict — which is the point when the reader is a person rather than a gate.",
+            "description": "Save the screenshots as well as the verdict.",
             "name": "screenshot",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"

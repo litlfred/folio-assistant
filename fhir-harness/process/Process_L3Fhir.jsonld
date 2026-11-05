@@ -8,7 +8,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "L3 FHIR IG pipeline",
       "summary": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready.",
-      "description": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready. Generic: what produces the source model is the layer above's own process, which maps its model and then calls Process_L3Fhir. This one names no such model. folio-assistant — the generic L3 FHIR IG pipeline.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready. Generic: what produces the source model is the layer above's own process, which maps its model and then calls Process_L3Fhir. This one names no such model.",
       "enforcement": "advisory",
       "sourcePath": "processes/content/l3-fhir-pipeline.bpmn",
       "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn",

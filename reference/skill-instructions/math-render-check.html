@@ -111,9 +111,7 @@
 before the user sees it on GitHub. A paper folio’s blocks carry math
 (<code class="language-plaintext highlighter-rouge">$...$</code>, <code class="language-plaintext highlighter-rouge">$$...$$</code>, fenced ```tex blocks), and GitHub’s renderer breaks
 some math patterns that the LaTeX pipeline accepts, especially display
-blocks hijacked by markdown’s list parser. These checks lived in
-<code class="language-plaintext highlighter-rouge">markdown-render-check</code> until 2026-10-24 and moved here under bean <code class="language-plaintext highlighter-rouge">syiq</code>
-(the owner’s ruling Q3 of 2026-10-01: split markdown-render-check).</p><p>Run them in step 2 of <code class="language-plaintext highlighter-rouge">markdown-render-check</code>, beside its own checks, and
+blocks hijacked by markdown’s list parser.</p><p>Run them in step 2 of <code class="language-plaintext highlighter-rouge">markdown-render-check</code>, beside its own checks, and
 report the same way.</p><h2 id="when-to-use"><a href="#when-to-use" class="anchor-heading" aria-labelledby="when-to-use"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to use
   
   

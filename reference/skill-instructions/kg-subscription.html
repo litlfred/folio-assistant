@@ -200,10 +200,10 @@ never disturbs. A path under no declared directory is refused, and so is a
 path whose parent is not chosen.</p><h2 id="a-subgraphs-nodes-without-its-bytes-metadata-mode"><a href="#a-subgraphs-nodes-without-its-bytes-metadata-mode" class="anchor-heading" aria-labelledby="a-subgraphs-nodes-without-its-bytes-metadata-mode"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A subgraph’s nodes without its bytes: metadata mode
   
   
-</h2><p>To know <em>what is in</em> a subgraph — every node of <code class="language-plaintext highlighter-rouge">skills/sdlc</code>, typed, labelled
+</h2><p>To know <em>what is in</em> a subgraph — every node of <code class="language-plaintext highlighter-rouge">sdlc/skills</code>, typed, labelled
 and linked — you do not need its files. Ask for its published
 <code class="language-plaintext highlighter-rouge">index.hydrated.jsonld</code> instead
-(<a href="../../reference/skill-instructions/kg-export.html"><code class="language-plaintext highlighter-rouge">kg-export</code></a> §”Named subgraphs”):</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>kg:materialize <span class="nt">--nodes</span> &lt;subscription&gt; &lt;subgraph-path&gt;   <span class="c"># e.g. --nodes cat skills/sdlc</span>
+(<a href="../../reference/skill-instructions/kg-export.html"><code class="language-plaintext highlighter-rouge">kg-export</code></a> §”Named subgraphs”):</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>kg:materialize <span class="nt">--nodes</span> &lt;subscription&gt; &lt;subgraph-path&gt;   <span class="c"># e.g. --nodes cat sdlc/skills</span>
 </code></pre></div></div><ul><li>It fetches <strong>one file</strong> at the pin,
 <code class="language-plaintext highlighter-rouge">&lt;docs&gt;/subgraph/&lt;HARNESS&gt;/&lt;path&gt;/index.hydrated.jsonld</code>. Here <code class="language-plaintext highlighter-rouge">&lt;docs&gt;</code> and
 <code class="language-plaintext highlighter-rouge">&lt;HARNESS&gt;</code> come from the cached declaration. The file is validated against

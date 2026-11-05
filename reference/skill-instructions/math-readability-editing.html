@@ -132,12 +132,11 @@ these conventions when editing; do not convert to raw LaTeX. The rules are in
 <code class="language-plaintext highlighter-rouge">math-md-authoring</code>.</p><h2 id="tex-snippet-validation-mandatory-after-edits"><a href="#tex-snippet-validation-mandatory-after-edits" class="anchor-heading" aria-labelledby="tex-snippet-validation-mandatory-after-edits"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> TeX snippet validation (mandatory after edits)
   
   
-</h2><p>After editing any <code class="language-plaintext highlighter-rouge">.md</code> file, run the TeX snippet validator on changed files:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content <span class="o">&amp;&amp;</span> bun run pipeline/validate-tex.ts <span class="nt">--file</span> &lt;path-to-changed.md&gt;
+</h2><p>After editing any <code class="language-plaintext highlighter-rouge">.md</code> file, run the TeX snippet validator on changed files:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run folio-assistant-sci/pipeline/validate-tex.ts <span class="nt">--file</span> &lt;path-to-changed.md&gt;
 </code></pre></div></div><p>This uses <strong>remark + remark-math</strong> to parse the markdown AST and extracts all
 TeX snippets (<code class="language-plaintext highlighter-rouge">$...$</code>, <code class="language-plaintext highlighter-rouge">$$...$$</code>, ` <code class="language-plaintext highlighter-rouge">tex</code> ` blocks), then validates each
 via <strong>unified-latex</strong> AST parsing. Fix any errors before considering the edit
-complete.</p><p>If TeX validation fails, fix the problematic snippet and re-validate before
-proceeding. Common issues:</p><ul><li>Unbalanced braces in inline math</li><li>Non-math environments inside <code class="language-plaintext highlighter-rouge">$$...$$</code> blocks</li><li>Malformed macros in ` <code class="language-plaintext highlighter-rouge">tex</code> ` fenced blocks</li></ul><h2 id="fallback-participation"><a href="#fallback-participation" class="anchor-heading" aria-labelledby="fallback-participation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fallback participation
+complete.</p><p>Common issues:</p><ul><li>Unbalanced braces in inline math</li><li>Non-math environments inside <code class="language-plaintext highlighter-rouge">$$...$$</code> blocks</li><li>Malformed macros in ` <code class="language-plaintext highlighter-rouge">tex</code> ` fenced blocks</li></ul><h2 id="fallback-participation"><a href="#fallback-participation" class="anchor-heading" aria-labelledby="fallback-participation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Fallback participation
   
   
 </h2><p>When the editor’s content-change fallback runs a readability pass after

@@ -11,7 +11,7 @@
         "declaredIn": "default",
         "kind": "directory"
       },
-      "description": "The science layer's Tool nodes. Declared 2026-10-04 with the first two, `paper-feature-build` and `tex-install`, the iterative paper-build loop (issue #2117). Reached by the harness through tool auto-discovery (cat-harness/tools/discover.ts), never by an import.",
+      "description": "The science layer's Tool nodes. One `<id>/<id>.ts` (or `.json`) per folder: LaTeX build and checks, the Lean build, cache, audit and publish tools, and the proof-object tools. Reached by the harness through tool auto-discovery (cat-harness/tools/discover.ts), never by an import.",
       "fileCount": 0,
       "holdsGraph": [
         "cat-harness:graphTypology/tools"
@@ -84,7 +84,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/content-manifest-validate.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while.",
+          "description": "Validate the block manifests under a path against their schemas.",
           "install": {
             "none": true
           },
@@ -147,7 +147,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/headless-render-qc.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering.",
+          "description": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures.",
           "install": {
             "none": true
           },
@@ -160,7 +160,7 @@
                 "arg": {
                   "flag": "--screenshot"
                 },
-                "description": "Save the screenshots as well as the verdict — which is the point when the reader is a person rather than a gate.",
+                "description": "Save the screenshots as well as the verdict.",
                 "name": "screenshot",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
@@ -263,7 +263,7 @@
                 "arg": {
                   "positional": 0
                 },
-                "description": "The pdflatex log to read. Nothing to read means no answer, not a pass.",
+                "description": "The pdflatex log to read.",
                 "name": "log",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -272,7 +272,7 @@
                 "arg": {
                   "flag": "--min"
                 },
-                "description": "Ignore overruns below this size — the long tail is noise, and reporting it hides the rest.",
+                "description": "Ignore overruns below this size",
                 "name": "min",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Dpi"
@@ -614,7 +614,7 @@
                 "arg": {
                   "positional": 0
                 },
-                "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
+                "description": "The verb. `doctor` tells a restore that silently missed from one that worked.",
                 "name": "action",
                 "required": true,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/LakeCacheAction"
@@ -693,7 +693,7 @@
                 "arg": {
                   "flag": "--content-root"
                 },
-                "description": "Where content blocks live. NOT a Lean project root — see the note above this node.",
+                "description": "Where content blocks live. not a Lean project root.",
                 "name": "contentRoot",
                 "required": false,
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
@@ -1245,7 +1245,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/paper-feature-build.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. Margin notes are off by default (`FAST_PREVIEW=1`, about 2x). Cross-references to chapters outside the build print as '??'. A preview, never a publish build. Run from the folio. Without a TeX engine the render still runs and the compile steps are skipped with a message.",
+          "description": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. A preview, never a publish build. Run from the folio.",
           "install": {
             "none": true
           },
@@ -1793,7 +1793,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-install.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. About 5 GB and 10-20 minutes, so run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal).",
+          "description": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. Run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal).",
           "install": {
             "none": true
           },
@@ -1892,7 +1892,7 @@
             ],
             "outputs": [
               {
-                "description": "Per snippet, what will not compile. Run in the platform it reports `Files scanned: 0` and exits 2 — could-not-determine (this repository carries no folio, so there was nothing to scan). Read the scanned count before reading the verdict.",
+                "description": "Per snippet, what will not compile. With no folio to scan it reports `Files scanned: 0` and exits 2 (could-not-determine). Read the scanned count before reading the verdict.",
                 "name": "report",
                 "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
               }
@@ -1922,7 +1922,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/tools/tex-source-audit.jsonld",
           "@type": "cat-harness:Tool",
-          "description": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion.",
+          "description": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript.",
           "install": {
             "none": true
           },

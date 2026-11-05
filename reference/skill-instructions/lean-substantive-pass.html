@@ -118,8 +118,8 @@ Level 3 (docstring enrichment, ~seconds/block)
 </code></pre></div></div><h2 id="0-when-to-invoke"><a href="#0-when-to-invoke" class="anchor-heading" aria-labelledby="0-when-to-invoke"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0. When to invoke
   
   
-</h2><ul><li>After <code class="language-plaintext highlighter-rouge">local/lean-generation</code> has populated <code class="language-plaintext highlighter-rouge">.lean</code> stubs with
-<code class="language-plaintext highlighter-rouge">holds : Prop</code> placeholders (the “backlog closure” pass).</li><li>Before <code class="language-plaintext highlighter-rouge">local/lean-completeness-audit</code> reports trivial-skeleton
+</h2><ul><li>After <code class="language-plaintext highlighter-rouge">lean-generation</code> has populated <code class="language-plaintext highlighter-rouge">.lean</code> stubs with
+<code class="language-plaintext highlighter-rouge">holds : Prop</code> placeholders (the “backlog closure” pass).</li><li>Before <code class="language-plaintext highlighter-rouge">lean-completeness-audit</code> reports trivial-skeleton
 status — typed sub-claims downgrade the audit verdict from
 “structural placeholder” to “named structural placeholder”.</li><li>After resolving a <code class="language-plaintext highlighter-rouge">.md</code> block’s <code class="language-plaintext highlighter-rouge">uses[]</code> cone (so the manuscript
 content is stable enough to encode as Lean types).</li></ul><h2 id="1-recognised-manuscript-patterns"><a href="#1-recognised-manuscript-patterns" class="anchor-heading" aria-labelledby="1-recognised-manuscript-patterns"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Recognised manuscript patterns
@@ -181,8 +181,8 @@ Use <code class="language-plaintext highlighter-rouge">⟨ctx.claim_i, ctx.claim
 sub-claim is a context field.</li></ul><h2 id="5-sub-skills-delegated"><a href="#5-sub-skills-delegated" class="anchor-heading" aria-labelledby="5-sub-skills-delegated"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Sub-skills delegated
   
   
-</h2><ul><li><code class="language-plaintext highlighter-rouge">local/lean-generation</code> — populates stubs initially.</li><li><code class="language-plaintext highlighter-rouge">local/lean-build-fix</code> — fixes any compilation errors from the
-typed sub-claim encoding (missing imports, syntax errors).</li><li><code class="language-plaintext highlighter-rouge">local/lean-completeness-audit</code> — measures coverage afterwards.</li><li><code class="language-plaintext highlighter-rouge">local/proof-conciseness</code> — tightens the final theorem proofs
+</h2><ul><li><code class="language-plaintext highlighter-rouge">lean-generation</code> — populates stubs initially.</li><li><code class="language-plaintext highlighter-rouge">lean-build-fix</code> — fixes any compilation errors from the
+typed sub-claim encoding (missing imports, syntax errors).</li><li><code class="language-plaintext highlighter-rouge">lean-completeness-audit</code> — measures coverage afterwards.</li><li><code class="language-plaintext highlighter-rouge">proof-conciseness</code> — tightens the final theorem proofs
 once they’re typed.</li></ul><h2 id="6-author-ask-templates"><a href="#6-author-ask-templates" class="anchor-heading" aria-labelledby="6-author-ask-templates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Author-ask templates
   
   

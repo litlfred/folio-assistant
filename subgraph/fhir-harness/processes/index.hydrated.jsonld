@@ -11,7 +11,7 @@
         "declaredIn": "default",
         "kind": "directory"
       },
-      "description": "The BPMN this layer OWNS, grouped by concern as the harness groups its own (`processes/<group>/`): `content/l3-fhir-pipeline.bpmn` and `content/ig-incremental-build.bpmn`, the FHIR IG pipeline and its incremental build. Moved up from cat-harness/processes/ by placement PR3 (bean `63wl`, owner rulings 2026-09-30), beside the IG skills they bind. `l3-fhir-pipeline.bpmn` still carries a documentary `bpmn:import` of smart-base's `l2-dak-authoring.bpmn` -- an upward reference one layer up, recorded rather than hidden (proposal §5, \"residuals one layer up\"). Declared WITH its files in one commit, per bean `dh4f`.",
+      "description": "The BPMN this layer OWNS, grouped by concern as the harness groups its own (`processes/<group>/`): in `content/`, the FHIR IG pipeline (`l3-fhir-pipeline.bpmn`), its incremental build (`ig-incremental-build.bpmn`), the IG AST cache and delta review (`ig-ast-cache.bpmn`, `ig-ast-delta-review.bpmn`) and the Questionnaire wireframe review (`questionnaire-wireframe-review.bpmn`), beside the IG skills they bind.",
       "fileCount": 0,
       "holdsGraph": [
         "bootstrap:graphTypology/processes"
@@ -30,7 +30,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
           "@type": "bootstrap:Process",
-          "description": "How an IG repository's own site is published, and how the AST it is built from is kept current (skill `ig-build-pipeline` §\"The AST cache lifecycle\"). Owner, 2026-10-14: \"i want AST to be used. it should be in cache branch\", and \"that should be in fhir-harness then smart-* all use that\".\n\nTHE RULE. An IG site is built from the IG Publisher AST read from the IG repository's cache branch `cat/fhir-harness/fhir-ast/<package id>`, never from Publisher HTML. The publish refuses an AST that is not valid for the commit it publishes (`ig-cache.sh restore` then `verify`). A later commit that changes no IG input (`sushi-config.yaml`, `ig.ini`, `input/`) does not make the AST stale.\n\nTHE REFRESH. The cache is written by ONE thing: fhir-harness's reusable workflow `.github/workflows/ig-ast-refresh.yml`, which an IG repository's Site publish calls as its first job (`ast`; template `templates/ig-repo-site/site-publish.yml`). It runs the Publisher through the AST exporter on a GitHub runner (Java, a 10 GB heap, tx.fhir.org), because an agent's container cannot. It seeds the branch only from a commit on the default branch whose inputs equal the tip's.\n\nWHAT IT DOES NOT CLAIM. A valid AST is a cache built from these inputs; it is not a release. Every page drawn from it carries the provisional mark (`ig-ast-delta`).",
+          "description": "How an IG repository's own site is published, and how the AST it is built from is kept current (skill `ig-build-pipeline` §\"The AST cache lifecycle\").\n\nTHE RULE. An IG site is built from the IG Publisher AST read from the IG repository's cache branch `cat/fhir-harness/fhir-ast/<package id>`, never from Publisher HTML. The publish refuses an AST that is not valid for the commit it publishes (`ig-cache.sh restore` then `verify`). A later commit that changes no IG input (`sushi-config.yaml`, `ig.ini`, `input/`) does not make the AST stale.\n\nTHE REFRESH. The cache is written by ONE thing: fhir-harness's reusable workflow `.github/workflows/ig-ast-refresh.yml`, which an IG repository's Site publish calls as its first job (`ast`; template `templates/ig-repo-site/site-publish.yml`). It runs the Publisher through the AST exporter on a GitHub runner (Java, 10 GB heap, tx.fhir.org). It seeds the branch only from a commit on the default branch whose inputs equal the tip's.\n\nA valid AST is a cache, not a release: every page drawn from it carries the provisional mark (`ig-ast-delta`).",
           "enforcement": "advisory",
           "flowCount": 10,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
@@ -320,7 +320,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
           "@type": "bootstrap:Process",
-          "description": "The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding. THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean `a9tx`, owner 2026-09-30: \"list and view differentials/deltas against AST ... as part of (sub-?)process/skills/tools, including pipeline rendering\").\n\nWHERE IT SITS. In `ig-incremental-build.bpmn` it belongs between Task_Merge and Task_Qa: after the restored and rebuilt records are merged, before the QC gates read the aggregate. That diagram predates the AST work and is not edited here; `ig-ast-delta` §\"Where this sits in a process\" states the placement until it is.\n\nWHAT IT GUARDS. An incremental build rebuilds only the cone of a change, computed on the BASE edges. If the cone rules miss a coupling, a resource that should have changed does not, and nothing downstream can tell: the merged AST looks exactly like a correct one. So a person reads the delta, and a difference nobody can explain is treated as a missed coupling rather than as a curiosity.\n\nWHAT IT DOES NOT CLAIM. A clean review says the delta is explained, not that the IG is correct. The AST stays a cache: every rendered page carries the provisional mark, and a release is still cut from a full build (`ig-publisher-reduction` P4).",
+          "description": "The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding.\n\nWHERE IT SITS. In `ig-incremental-build.bpmn` it belongs between Task_Merge and Task_Qa: after the restored and rebuilt records are merged, before the QC gates read the aggregate. That diagram does not call it yet; `ig-ast-delta` §\"Where this sits in a process\" states the placement.\n\nWHAT IT GUARDS. An incremental build rebuilds only the cone of a change, computed on the BASE edges. If the cone rules miss a coupling, a resource that should have changed does not, and nothing downstream can tell: the merged AST looks exactly like a correct one. So a person reads the delta, and a difference nobody can explain is treated as a missed coupling.\n\nWHAT IT DOES NOT CLAIM. A clean review says the delta is explained, not that the IG is correct. The AST stays a cache: every rendered page carries the provisional mark, and a release is still cut from a full build (`ig-publisher-reduction` P4).",
           "enforcement": "advisory",
           "flowCount": 9,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
@@ -538,7 +538,7 @@
           "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview/lane/Lane_Review",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
           "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview#flow/Flow_8",
-          "name": "Note the missed coupling on the bean",
+          "name": "Note the missed coupling on the work plan",
           "nodeKind": "activity",
           "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview#flow/Flow_9",
           "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
@@ -583,7 +583,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
           "@type": "bootstrap:Process",
-          "description": "A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy. One change — a PR push or a push to main — through the incremental IG build\nproposed in issue #199: restore the derived state, compute\nthe change's dependency cone, compile and validate only the cone against the\nwarm validator, re-render the cone's records, rebuild the meta-index, assemble\nthe site, gate on QA, then deploy — and, on main or a release only, seed the\ncache from the green build. A cache miss or a moved toolchain falls back to\ntoday's full build; an environment error stops the run and logs why. Advisory, like the other content-type pipelines: the\npackage that owns the content owns what adequate means.",
+          "description": "An incremental build for a FHIR Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy. One change (a PR push or a push to main) runs:\nrestore the derived state, compute the change's dependency cone, compile and\nvalidate only the cone against the warm validator, re-render the cone's\nrecords, rebuild the meta-index, assemble the site, gate on QA, then deploy;\non main or a release only, seed the cache from the green build. An unusable\ncache falls back to a full build; an environment error stops the run and logs\nwhy. Advisory, like the other content-type pipelines: the package that owns\nthe content owns what adequate means.",
           "enforcement": "advisory",
           "flowCount": 29,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
@@ -592,7 +592,7 @@
           "sourcePath": "processes/content/ig-incremental-build.bpmn",
           "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/ig-incremental-build.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/StartEvent_SourceChanged",
-          "summary": "A proposed incremental build for a WHO SMART Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy."
+          "summary": "An incremental build for a FHIR Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy."
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F01",
@@ -1348,7 +1348,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
           "@type": "bootstrap:Process",
-          "description": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready. Generic: what produces the source model is the layer above's own process, which maps its model and then calls Process_L3Fhir. This one names no such model. folio-assistant — the generic L3 FHIR IG pipeline.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+          "description": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready. Generic: what produces the source model is the layer above's own process, which maps its model and then calls Process_L3Fhir. This one names no such model.",
           "enforcement": "advisory",
           "flowCount": 12,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
@@ -1678,7 +1678,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
           "@type": "bootstrap:Process",
-          "description": "A built FHIR Questionnaire shown the way a person will meet it — a mid-fidelity wireframe at web and mobile width, and a live LHC-Forms form view — checked field for field against the L2 wireframe it was derived from, reviewed as a design, staged with deep links, and changed through requests that say which side was edited. Operating skill: fhir-questionnaire-wireframe. Owner decisions, 2026-10-14: LHC-Forms, vendored; the checker lives in this layer; either the Questionnaire or the wireframe may be the source of a change, and the request says which.\n\nWHERE IT SITS. After SUSHI has compiled the Questionnaire to JSON (l3-fhir-pipeline, Task_Sushi), and wherever a layer above reviews a Questionnaire's fidelity to its wireframe. It reads JSON only, so it can run on any IG that produces a Questionnaire.\n\nWHAT IT DOES NOT CLAIM. A faithful Questionnaire is not therefore a good form, and an accepted form is not therefore conformant: wireframe-design-review judges the first and fhir-validation the second.",
+          "description": "A built FHIR Questionnaire shown the way a person will meet it — a mid-fidelity wireframe at web and mobile width, and a live LHC-Forms form view — checked field for field against the L2 wireframe it was derived from, reviewed as a design, staged with deep links, and changed through requests that say which side was edited. Operating skill: fhir-questionnaire-wireframe.\n\nWHERE IT SITS. After SUSHI has compiled the Questionnaire to JSON (l3-fhir-pipeline, Task_Sushi), and wherever a layer above reviews a Questionnaire's fidelity to its wireframe. It reads JSON only, so it can run on any IG that produces a Questionnaire.\n\nWHAT IT DOES NOT CLAIM. A faithful Questionnaire is not therefore a good form, and an accepted form is not therefore conformant: wireframe-design-review judges the first and fhir-validation the second.",
           "enforcement": "advisory",
           "flowCount": 15,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
@@ -2081,6 +2081,174 @@
       ],
       "name": "processes/content",
       "path": "processes/content/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/processes/tools/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "@type": "bootstrap:Process",
+          "description": "How a host docs site builds every IG it mounts INSIDE itself, so each IG's pages wear the host's chrome (one sidebar, one search, one language selector) rather than being a site of their own. Subprocess of Tool `stage-ig-sites`; reached from `docs-site-publish`'s `Call_InstanceSites` (skill `docs-generation`).\n\nNO IG PUBLISHER RUNS. `build-ig-site` turns the IG's source into Jekyll source, with the Publisher's `site.data.fhir` filled from the IG's AST and `sushi-config.yaml`, and the host's ONE Jekyll build renders it with just-the-docs (skill `ig-render-jekyll`). Which IGs is DATA: each instance whose `fhir-artifact-index/menu.json` records a `source.of` (the IG repository) and `source.ref` (the commit). No workflow and no step here names an IG.\n\n`feature-staging.yml` runs the same steps for a pull request's preview, with `--changed-files`, so only the IGs a change reaches are rebuilt. An IG repository building its OWN site runs `stage-ig-sites --only <instance> --source <checkout> --compose-into <shell> --compose-at-root`, which is `ig-ast-cache`'s `Task_BuildSite`, not this process.",
+          "enforcement": "advisory",
+          "flowCount": 5,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "name": "Each IG, composed into a host docs site and rendered with just-the-docs",
+          "nodeCount": 6,
+          "sourcePath": "processes/tools/ig-docs-site-compose.bpmn",
+          "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/tools/ig-docs-site-compose.bpmn",
+          "startNode": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Start_Compose",
+          "summary": "How a host docs site builds every IG it mounts INSIDE itself, so each IG's pages wear the host's chrome (one sidebar, one search, one language selector) rather than being a site of their own."
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_1",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Start_Compose",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Indexes"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_2",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Indexes",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Pages"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_3",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Pages",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Stage"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_4",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Stage",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_ComposeInto"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_5",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_ComposeInto",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/End_Composed"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
+          "@type": "cat-harness:Lane",
+          "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "name": "Host docs site build (CI runner)",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/End_Composed",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:EndEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_5",
+          "name": "Each IG composed; build list handed to the host",
+          "nodeKind": "end",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Start_Compose",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:StartEvent",
+          "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "name": "Host docs source composed; IG sites wanted",
+          "nodeKind": "start",
+          "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_1",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+          "relaxable": true,
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_ComposeInto",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ServiceTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_4",
+          "name": "Compose each staged IG into the host source",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_5",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-render-jekyll",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Indexes",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ServiceTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_1",
+          "name": "Build each IG's artefact index",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_2",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Pages",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ServiceTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_2",
+          "name": "Generate each IG instance's artefact pages",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_3",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline",
+          "touchesWorkPlan": false
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Stage",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:ServiceTask",
+          "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_3",
+          "name": "Clone each IG at its recorded commit and stage it",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose#flow/Flow_4",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
+          "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": [
+            "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-render-jekyll",
+            "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline"
+          ],
+          "touchesWorkPlan": false
+        }
+      ],
+      "holdsGraph": [
+        "bootstrap:graphTypology/processes"
+      ],
+      "name": "processes/tools",
+      "path": "processes/tools/"
     }
   ],
   "holdsGraph": [

@@ -113,38 +113,35 @@ lane.</p></blockquote><p>Bind a DAK’s data elements to standard terminologies,
 and concept maps that result.</p><blockquote><p><strong>Sourcing.</strong> ICD-11, SNOMED CT and LOINC are external code systems with
 their own licences, release cycles and editorial rules; FHIR’s terminology
 layer is HL7’s. This skill states how binding is worked <strong>in this harness</strong>
-and defers to those authorities for the semantics. It is deliberately silent
-on which code to choose for a given concept — that is the terminologist’s
-judgement and the reason the process gives them their own lane.</p></blockquote><h2 id="inputs-and-outputs"><a href="#inputs-and-outputs" class="anchor-heading" aria-labelledby="inputs-and-outputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs and outputs
+and defers to those authorities for the semantics. Which code to choose for
+a given concept is the terminologist’s judgement, not this skill’s.</p></blockquote><h2 id="inputs-and-outputs"><a href="#inputs-and-outputs" class="anchor-heading" aria-labelledby="inputs-and-outputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs and outputs
   
   
-</h2><p><code class="language-plaintext highlighter-rouge">fhir-harness/schemas/skills/terminology-management/</code>:</p><ul><li><strong>in</strong> — <code class="language-plaintext highlighter-rouge">operation</code> (required), <code class="language-plaintext highlighter-rouge">targetStandard</code>, <code class="language-plaintext highlighter-rouge">inputFile</code></li><li><strong>out</strong> — <code class="language-plaintext highlighter-rouge">resources</code>, <code class="language-plaintext highlighter-rouge">unmappedConcepts</code></li></ul><p><strong><code class="language-plaintext highlighter-rouge">unmappedConcepts</code> is the important output.</strong> A binding pass that maps
+</h2><p><code class="language-plaintext highlighter-rouge">fhir-harness/schemas/skills/terminology-management/</code>:</p><ul><li><strong>in</strong> — <code class="language-plaintext highlighter-rouge">operation</code> (required), <code class="language-plaintext highlighter-rouge">targetStandard</code>, <code class="language-plaintext highlighter-rouge">inputFile</code></li><li><strong>out</strong> — <code class="language-plaintext highlighter-rouge">resources</code> (required), <code class="language-plaintext highlighter-rouge">unmappedConcepts</code></li></ul><p><strong><code class="language-plaintext highlighter-rouge">unmappedConcepts</code> is the important output.</strong> A binding pass that maps
 everything is either a small dictionary or a pass that guessed. Concepts with
 no defensible code are a normal result, and reporting them is what lets the
 clinical SME see where the DAK is asserting a local meaning.</p><h2 id="why-this-has-its-own-lane"><a href="#why-this-has-its-own-lane" class="anchor-heading" aria-labelledby="why-this-has-its-own-lane"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this has its own lane
   
   
-</h2><p>The authoring process that names this skill gives the terminologist a lane of
-their own rather than folding binding into authoring, and the reason is that a wrong binding is
-invisible downstream. A data element bound to a plausible-but-wrong code
-compiles, validates, publishes, and is wrong in every derived artefact. The
-separation exists so that the person who chooses codes is not the person under
+</h2><p>The authoring process gives the terminologist a lane of their own because a
+wrong binding is invisible downstream: a data element bound to a
+plausible-but-wrong code compiles, validates, publishes, and is wrong in every
+derived artefact. The person who chooses codes is not the person under
 pressure to finish the dictionary.</p><p>The <code class="language-plaintext highlighter-rouge">terminologist</code> role carries this skill and <code class="language-plaintext highlighter-rouge">clinical-sme</code> does not: they
 are different judgements. A clinician rules on whether the <em>concept</em> is right;
 the terminologist rules on whether the <em>code</em> denotes it.</p><h2 id="do-not-invent-a-code"><a href="#do-not-invent-a-code" class="anchor-heading" aria-labelledby="do-not-invent-a-code"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Do not invent a code
   
   
 </h2><p>If no code in the target standard denotes the concept, the answer is
-<code class="language-plaintext highlighter-rouge">unmappedConcepts</code>, not the nearest neighbour. “Close enough” bindings are the
-mechanism by which a DAK stops meaning what its guideline says, and they are
-unrecoverable once downstream systems have consumed them.</p><h2 id="tooling"><a href="#tooling" class="anchor-heading" aria-labelledby="tooling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tooling
+<code class="language-plaintext highlighter-rouge">unmappedConcepts</code>, not the nearest neighbour. A “close enough” binding
+changes what the data element means, and cannot be recovered once downstream
+systems have consumed it.</p><h2 id="tooling"><a href="#tooling" class="anchor-heading" aria-labelledby="tooling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Tooling
   
   
 </h2><p>The extractors and generators that read a source dictionary and write
-vocabularies and schemas belong to the layer whose model they read, and its
-own tooling skill says how to load them. Whatever they are, an absent toolchain
-degrades this skill to <code class="language-plaintext highlighter-rouge">skip</code> — never a clean run over a toolchain that was
-never present.</p><p>Validation of the resulting artefacts is <code class="language-plaintext highlighter-rouge">fhir-validation</code>, not this skill.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+vocabularies and schemas belong to the layer whose model they read; its own
+tooling skill says how to load them. An absent toolchain degrades this skill
+to <code class="language-plaintext highlighter-rouge">skip</code>, never to a clean run.</p><p>Validation of the resulting artefacts is <code class="language-plaintext highlighter-rouge">fhir-validation</code>, not this skill.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/classify-and-code-content.html">Classify and code content</a></td><td>Adjudicate slot codings and glossary candidates</td></tr><tr><td><a href="../../en/cat-harness/processes/dth-authoring.html">DTH authoring</a></td><td>Build glossary candidates from the TWG workbook; Link glossary to smart-ra SKOS (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/l2-dak-authoring.html">L2 DAK authoring</a></td><td>Terminology bindings (calls a sub-process)</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">

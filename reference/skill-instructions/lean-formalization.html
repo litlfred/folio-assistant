@@ -111,10 +111,9 @@
 Named by <code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code> step <strong>5 · Formalise in Lean</strong>, in the
 <code class="language-plaintext highlighter-rouge">Lean toolchain (lean-mcp)</code> lane.</p></blockquote><p>Take a block whose assertion is a formal mathematical claim and give it a
 <code class="language-plaintext highlighter-rouge">.lean</code> sibling that Lean 4 accepts.</p><p><strong>This skill is the entry point, not the manual.</strong> The formalisation work
-itself is covered in depth by <code class="language-plaintext highlighter-rouge">folio-paper-adapter</code>, which carries seventeen
-Lean skills and twelve proof skills. Fetching this one and stopping is the
-mistake it exists to prevent: it tells you which of those to open and in what
-order, and nothing here restates what they say.</p><h2 id="when-this-applies-at-all"><a href="#when-this-applies-at-all" class="anchor-heading" aria-labelledby="when-this-applies-at-all"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When this applies at all
+itself is covered in depth by <code class="language-plaintext highlighter-rouge">folio-paper-adapter</code>, which carries the Lean and
+proof skills. This says which of those to open and in what order; do not stop
+here.</p><h2 id="when-this-applies-at-all"><a href="#when-this-applies-at-all" class="anchor-heading" aria-labelledby="when-this-applies-at-all"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When this applies at all
   
   
 </h2><p>Only in a <strong>paper</strong> folio. The seven block kinds whose assertion is formal —
@@ -134,8 +133,7 @@ profile permits and the document profile forbids.</p><h2 id="the-order-to-work-i
 wrong are both invisible to <code class="language-plaintext highlighter-rouge">lake build</code>:</p><ul><li><strong>Vacuity</strong> — the statement is true because its hypotheses are unsatisfiable,
 so it asserts nothing. <code class="language-plaintext highlighter-rouge">lean-proof-vacuity-audit</code> is the check.</li><li><strong>Drift</strong> — the Lean statement is a weaker or different claim than the prose
 it sits beside. <code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code> is the check, and
-<code class="language-plaintext highlighter-rouge">lean-witness-audit</code> is how you evidence that a declaration is inhabited.</li></ul><p>Neither is caught by the build, and both produce a block that looks finished.
-Run them before you call a block formalised.</p><h2 id="uses-is-editorial-and-must-not-come-from-lean"><a href="#uses-is-editorial-and-must-not-come-from-lean" class="anchor-heading" aria-labelledby="uses-is-editorial-and-must-not-come-from-lean"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">uses[]</code> is editorial and must not come from Lean
+<code class="language-plaintext highlighter-rouge">lean-witness-audit</code> is how you evidence that a declaration is inhabited.</li></ul><p>Run both before you call a block formalised.</p><h2 id="uses-is-editorial-and-must-not-come-from-lean"><a href="#uses-is-editorial-and-must-not-come-from-lean" class="anchor-heading" aria-labelledby="uses-is-editorial-and-must-not-come-from-lean"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">uses[]</code> is editorial and must not come from Lean
   
   
 </h2><p>The block’s <code class="language-plaintext highlighter-rouge">uses[]</code> is what a <strong>reader</strong> must have read to follow the block.

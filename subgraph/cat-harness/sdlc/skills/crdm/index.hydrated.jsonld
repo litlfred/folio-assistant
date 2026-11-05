@@ -1,0 +1,155 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/crdm/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+      "@type": "cat-harness:SkillPackage",
+      "hasManifest": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "name": "crdm",
+      "path": "sdlc/skills/crdm"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-data-model",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The CRDM data-modelling phase — when in the requirements process a model is built, what it is built from, who confirms it, and what it hands to the phases either side. The technique it invokes is `data-modelling`; this skill carries only the sequencing and the sign-off.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 84,
+      "instructionsPath": "sdlc/skills/crdm/crdm-data-model.md",
+      "name": "crdm-data-model",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8d1f21b6ef8c4155bc3124136b708ebdb65b2b2fb051c2702ad6ffab9c7dba05",
+        "bytes": 3692,
+        "sha256": "8d1f21b6ef8c4155bc3124136b708ebdb65b2b2fb051c2702ad6ffab9c7dba05"
+      },
+      "title": "CRDM — the data-modelling phase"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-detect",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Detect when a request needs requirements agreed before anything is built, and which of the two parallel requirements methodologies governs it.",
+      "hasIOContract": true,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/crdm-detect/input.schema.json",
+      "instructionLines": 307,
+      "instructionsPath": "sdlc/skills/crdm/crdm-detect.md",
+      "name": "crdm-detect",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/crdm-detect/output.schema.json",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1c7b0550316b5bdf1ab353a5cd4ced77b0b2cf999afd58eb2357a021ba70b453",
+        "bytes": 14488,
+        "sha256": "1c7b0550316b5bdf1ab353a5cd4ced77b0b2cf999afd58eb2357a021ba70b453"
+      },
+      "title": "Feature-request detection (CRDM trigger)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-impact-analysis",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Guide for CRDM Phase 4 — Impact Analysis and Migration Planning. Systematic scan across 7 dimensions: schema, pipeline, adapter, folio, skill, migration, and test/documentation impact. Produces a structured assessment for posting to the GitHub issue.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 134,
+      "instructionsPath": "sdlc/skills/crdm/crdm-impact-analysis.md",
+      "name": "crdm-impact-analysis",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db41b1896716a2e4041dc0f9f0b388103ecd010cf15d68eb0f212ac91244c568",
+        "bytes": 3847,
+        "sha256": "db41b1896716a2e4041dc0f9f0b388103ecd010cf15d68eb0f212ac91244c568"
+      },
+      "title": "Phase 4 — Impact analysis (detail)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-needs-assessment",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Facilitate Phase 1 (Needs Assessment) of the CRDM requirements workflow. Guide the BA through stakeholder identification, source material gathering, and synthesising a domain-language needs statement. Post to the GitHub issue and iterate until the BA confirms the need is correctly captured.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 113,
+      "instructionsPath": "sdlc/skills/crdm/crdm-needs-assessment.md",
+      "name": "crdm-needs-assessment",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db4038eb2903e7e504d521407b99cd4e47c626d776e37dacad9556f666ff5139",
+        "bytes": 4102,
+        "sha256": "db4038eb2903e7e504d521407b99cd4e47c626d776e37dacad9556f666ff5139"
+      },
+      "title": "Phase 1 — Needs assessment (detail)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-recorded-walkthrough",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Turn a recorded requirements walkthrough (a video call where a business analyst demonstrates a feature and a stakeholder asks for changes) into CRDM Phase 3 requirements with evidence: transcripts compared, an independent transcript where one can be made, screenshots cut at the moments the speakers point at the screen, and every requirement traced to a timestamp. Use when someone uploads a meeting recording, a Teams/Zoom transcript (.vtt, .docx) or both, and asks for requirements from it.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 96,
+      "instructionsPath": "sdlc/skills/crdm/crdm-recorded-walkthrough.md",
+      "name": "crdm-recorded-walkthrough",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/80910a85b6f99daad4654561535dbff6fca737605d9a60371d61e1e6627b94e6",
+        "bytes": 5111,
+        "sha256": "80910a85b6f99daad4654561535dbff6fca737605d9a60371d61e1e6627b94e6"
+      },
+      "title": "Requirements from a recorded walkthrough"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-template",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Guide and template for CRDM Phase 3 — Requirements Definition. Helps the agent structure requirements from conversation using a REQ-### format with acceptance criteria, priority, and traceability.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 194,
+      "instructionsPath": "sdlc/skills/crdm/crdm-requirements-template.md",
+      "name": "crdm-requirements-template",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/aa4edbffc505f98a3fadd4edcf2f2efff3e169497a4fa261d5e1a7f1c6ecbac0",
+        "bytes": 7897,
+        "sha256": "aa4edbffc505f98a3fadd4edcf2f2efff3e169497a4fa261d5e1a7f1c6ecbac0"
+      },
+      "title": "Phase 3 — Requirements definition (detail)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/crdm-requirements-workflow",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/crdm",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "instructionLines": 532,
+      "instructionsPath": "sdlc/skills/crdm/crdm-requirements-workflow.md",
+      "name": "crdm-requirements-workflow",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/aa137986aef0f69bce93799cf422559c4c1dd8b53b10f30afc66f47ac59d40b8",
+        "bytes": 30481,
+        "sha256": "aa137986aef0f69bce93799cf422559c4c1dd8b53b10f30afc66f47ac59d40b8"
+      },
+      "title": "CRDM requirements workflow"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "sdlc/skills/crdm",
+  "path": "sdlc/skills/crdm/"
+}

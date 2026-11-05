@@ -26,7 +26,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step (bean m8gz), so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
+          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step, so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
         }
       ],
       "skos:notation": "GT_SeedWorkPlan",
@@ -66,7 +66,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Leave the way back reachable: the collapsed window becomes a control in its own position and focus moves to it — left alone, focus lands on <body> and the keyboard position is lost. An action whose inverse is not reachable is not a toggle (bean l4zi)."
+          "@value": "Leave the way back reachable: the collapsed window becomes a control in its own position and focus moves to it — left alone, focus lands on <body> and the keyboard position is lost. An action whose inverse is not reachable is not a toggle."
         }
       ],
       "skos:notation": "A_OfferWayBack",
@@ -406,7 +406,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Owner, 2026-11-01 (folio-assistant-core#498, Q-GLO-1 C): the source's glossary and abbreviations sections become candidate terms of a folio-glossary/v1 scheme with the Tool glossary-from-source, verbatim, each with source file#line, and an acronym as the notation of the term it expands. Terms a person owns are never changed, and only a person moves a term to authored. A source with no such section skips this step with nothing written."
+          "@value": "The source's glossary and abbreviations sections become candidate terms of a folio-glossary/v1 scheme with the Tool glossary-from-source, verbatim, each with source file#line, and an acronym as the notation of the term it expands. Terms a person owns are never changed, and only a person moves a term to authored. A source with no such section skips this step with nothing written."
         }
       ],
       "skos:notation": "Task_Glossary",
@@ -466,7 +466,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Call_BeanClose",
@@ -486,7 +486,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Call_BeanOpen",
@@ -686,7 +686,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it. Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check."
+          "@value": "adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it. Permitted answers: `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check."
         }
       ],
       "skos:notation": "Call_Adjudication",
@@ -726,7 +726,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The committee approves the change: the judgement, recorded with the evidence it rests on. Approving is not merging. They were one task (\"Approve and merge\") until bean en2d split them, because a self-authored change cannot be approved through GitHub's own review (the approver may not be the PR's author), and a merge needs the owner's explicit confirmation whoever approved."
+          "@value": "The committee approves the change: the judgement, recorded with the evidence it rests on. Approving is not merging: a self-authored change cannot be approved through GitHub's own review (the approver may not be the PR's author), and a merge needs the owner's explicit confirmation whoever approved."
         }
       ],
       "skos:notation": "Task_Approve",
@@ -826,7 +826,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`uses[]` is what a READER must have read to follow the block — never populated from the formal dependency graph. Once every changed block is covered, the committee checks the editorial dependencies of the change as a whole before judging its impact. Moved here from the harness's `review-narrative` by placement PR3 (bean `63wl`): reading order is a property of folio content, so the step belongs to the content process, which reaches the harness's review by calling DOWN into `review-task`."
+          "@value": "`uses[]` is what a READER must have read to follow the block — never populated from the formal dependency graph. Once every changed block is covered, the committee checks the editorial dependencies of the change as a whole before judging its impact. Reading order is a property of folio content, so the step belongs to the content process, which reaches the harness's review by calling DOWN into `review-task`."
         }
       ],
       "skos:notation": "Task_ReviewUses",
@@ -886,7 +886,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "On the edge OUT of `Task_AssessImpact` and before `Task_CommitPush`, because the impact assessment is the evidence the options are weighed against. An analysis before it would compare ways of absorbing a downstream effect nobody has measured yet; one after the commit would be a rationalisation of a choice already pushed. NOT between `Task_AssessImpact` and `Task_ReviewImpact`, although that is the handoff the work-plan named. Those two tasks are in DIFFERENT LANES with no sequence flow between them — the agent's assessment reaches the committee through `Task_CompareBeforeAfter`, not directly — so there was no edge there to interpose on. The conceptual handoff is real; the edge was not. In the Agent lane, matching `upstream-version-adoption`: this step produces the options and their trade-offs, and `GW_Approved` in the Review Committee lane is where a decision is taken. A subprocess in the reviewer's lane would read as the committee analysing its own options, which is a different process. On the trigger: reaching this call is not the same as running the whole of it. `Process_OptionsAnalysis` opens with `A_Frame`, whose trigger is `opening-brief`'s — irreversibility and surprise, not size — and leaving at that first activity is a correct outcome rather than a skipped step. A copy-edit exits immediately; a logic change that moves an indicator does not, and this is the diagram where that distinction has teeth, since `Task_EditLogic` feeds straight into the assessment."
+          "@value": "On the edge OUT of `Task_AssessImpact` and before `Task_CommitPush`, because the impact assessment is the evidence the options are weighed against. An analysis before it would compare ways of absorbing a downstream effect nobody has measured yet; one after the commit would be a rationalisation of a choice already pushed. Not between `Task_AssessImpact` and `Task_ReviewImpact`: those are in different processes with no sequence flow between them; the assessment reaches the committee through `Task_CompareBeforeAfter`. In the Agent lane, matching `upstream-version-adoption`: this step produces the options and their trade-offs, and `GW_Approved` in the committee review is where a decision is taken. On the trigger: reaching this call is not the same as running the whole of it. `Process_OptionsAnalysis` opens with `A_Frame`, whose trigger is `opening-brief`'s — irreversibility and surprise, not size — and leaving at that first activity is a correct outcome rather than a skipped step. A copy-edit exits immediately; a logic change that moves an indicator (from `Task_EditLogic`) does not."
         }
       ],
       "skos:notation": "Call_OptionsAnalysis",
@@ -1086,7 +1086,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Second dispatch point: the change was approved and merged, and the root of the site has been rebuilt from main. This is the moment docs-site.yml failed all 30 times over two months (bean xom7) while looking exactly like a green run from inside the repo. `note` rather than `claim`, and the difference is not cosmetic. By here the branch-watch bean already exists, and whether the publish SUCCEEDED is a judgement this step cannot make -- the build reports its own exit code, and xom7 is the record of that being believed. AGENTS.md: a bean is not closed on someone else's say-so. So the step records what it observed and leaves the verdict to the watcher."
+          "@value": "Second dispatch point: the change was approved and merged, and the root of the site has been rebuilt from main. A failing main build can look like a green run from inside the repo. `note` rather than `claim`: the branch-watch bean already exists, and whether the publish SUCCEEDED is not this step's judgement (the build reports its own exit code). A bean is not closed on someone else's say-so, so the step records what it observed and leaves the verdict to the watcher."
         }
       ],
       "skos:notation": "Task_WatchMainCI",
@@ -1106,7 +1106,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "feature-staging.yml triggers: 1. Regenerate docs (schema, skills, content-backed pages) 2. Render BPMN diagrams 3. Stamp build with commit SHA + timestamp + branch 4. Build Jekyll site with STAGING/ baseurl 5. Inject yellow staging banner into every HTML page A draft pull request is staged too, from its first push (owner, 2026-10-31, \"drafts get previews\"; folio-assistant#2836). A build takes about 22 minutes, and GitHub Pages about 3 to 4 more."
+          "@value": "feature-staging.yml triggers: 1. Regenerate docs (schema, skills, content-backed pages) 2. Render BPMN diagrams 3. Stamp build with commit SHA + timestamp + branch 4. Build Jekyll site with STAGING/ baseurl 5. Inject yellow staging banner into every HTML page A draft pull request is staged too, from its first push. A build takes about 22 minutes, and GitHub Pages about 3 to 4 more."
         }
       ],
       "skos:notation": "Task_BuildStaging",
@@ -1146,7 +1146,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The stage job copies the built site into gh-pages under STAGING/<branch-slug>/, then `staging-share.ts apply` keeps only the files that differ from the live site (cat-harness-tools#1115). The preview's staging-sw.js serves every other file from the live site and puts the staging banner back on it. Other previews and the main site are left as they are."
+          "@value": "The stage job copies the built site into gh-pages under STAGING/<branch-slug>/, then `staging-share.ts apply` keeps only the files that differ from the live site. The preview's staging-sw.js serves every other file from the live site and puts the staging banner back on it. Other previews and the main site are left as they are."
         }
       ],
       "skos:notation": "Task_DeployStaging",
@@ -1166,7 +1166,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "First dispatch point for a CI watcher: the feature branch has changed and a staging build now exists to watch. The watcher is DISPATCHED BY OPENING A BEAN, not by a workflow_dispatch -- per the owner on bean 29ij, this is a task/workflow initiation. That is the whole reason it is an activity rather than a line of prose. A bean makes the watch durable past the session that opened it: the container is reclaimed, and what survives is the claim. Starting the watcher and recording that it is running are ONE declared step, so the two cannot disagree about whether anything is watching. Claim rather than note: the watch is work in progress, and it is idempotent, so re-entering on a subsequent push does not duplicate it."
+          "@value": "First dispatch point for a CI watcher: the feature branch has changed and a staging build now exists to watch. The watcher is DISPATCHED BY OPENING A BEAN, not by a workflow_dispatch: this is a task/workflow initiation. A bean makes the watch durable past the session that opened it: the container is reclaimed, and what survives is the bean. Starting the watcher and recording that it is running are ONE declared step, so the two cannot disagree about whether anything is watching. It notes the watch on the bean rather than claiming it: only Process_BeanOpen claims a bean. The note is idempotent, so re-entering on a later push does not duplicate it."
         }
       ],
       "skos:notation": "Task_WatchBranchCI",
@@ -1206,7 +1206,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "One row, one branch, one active pull request (owner, 2026-10-31): the agent edits on the row's branch and opens its pull request, or updates it when the row comes round again. A closed pull request the committee wants back is reopened, or replaced by a new one on the same branch; earlier ones stay listed in Agentic status. Agentic status (Green) says where it is, and Staging review opens the preview's what-changed page. Before the preview is staged, the agent writes the change set's Disposition (change set) on the Agent tab: one line per feedback item, starting from the people's Blue Disposition, after an optional Overall statement; the sheet shows it in Disposition (agent) and flags any item without a disposition, or one that differs from the people's (owner, 2026-10-31)."
+          "@value": "One row, one branch, one active pull request: the agent edits on the row's branch and opens its pull request, or updates it when the row comes round again. A closed pull request the committee wants back is reopened, or replaced by a new one on the same branch; earlier ones stay listed in Agentic status. Agentic status (Green) says where it is, and Staging review opens the preview's what-changed page. Before the preview is staged, the agent writes the change set's Disposition (change set) on the Agent tab: one line per feedback item, starting from the people's Blue Disposition, after an optional Overall statement; the sheet shows it in Disposition (agent) and flags any item without a disposition, or one that differs from the people's."
         }
       ],
       "skos:notation": "Task_EditInPullRequest",
@@ -1226,7 +1226,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The agent merges the row's pull request, and Agentic status says merged. The change set's Dispositions blurb, as it stands when Ready for merge is set to Yes, is the summary: it goes into the merge, and closes the change set's issue (owner, 2026-10-31)."
+          "@value": "The agent merges the row's pull request, and Agentic status says merged. The change set's Dispositions blurb, as it stands when Ready for merge is set to Yes, is the summary: it goes into the merge, and closes the change set's issue."
         }
       ],
       "skos:notation": "Task_Merge",
@@ -1246,7 +1246,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Reads: the row (Title, Selected Sections, the Contributor Feedback columns, Disposition) and the sections it names. Writes: a proposed direction in Feedback (agent) (Green), and the row's feedback basis on the Agent tab, so the script can tell when the feedback has moved on. A question for people goes in Feedback (agent) as a Decision needed block with options and a recommendation, and the row's Agentic status becomes Needs human; a chat card may repeat it, but the sheet is the record. An answered question leaves the feedback: its decision is added to the change set's Disposition (change set) on the Agent tab, shown in Disposition (agent), whose decision history is appended to and never removed (owner, 2026-10-31)."
+          "@value": "Reads: the row (Title, Selected Sections, the Contributor Feedback columns, Disposition) and the sections it names. Writes: a proposed direction in Feedback (agent) (Green), and the row's feedback basis on the Agent tab, so the script can tell when the feedback has moved on. A question for people goes in Feedback (agent) as a Decision needed block with options and a recommendation, and the row's Agentic status becomes Needs human; a chat card may repeat it, but the sheet is the record. An answered question leaves the feedback: its decision is added to the change set's Disposition (change set) on the Agent tab, shown in Disposition (agent), whose decision history is appended to and never removed."
         }
       ],
       "skos:notation": "Task_Propose",
@@ -1266,7 +1266,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Reads: the change set's Disposition (change set), the people's Blue Disposition and feedback, the pull request's diff at its head commit, and the staging QA report. Checks that every feedback item has one disposition; that each agrees with the people's Blue Disposition; that each Accepted or Partially accepted item has the change in the diff, and a Not accepted, Noted, Duplicate or Out of scope item has none; that the diff changes nothing no disposition accounts for; and that the QA report for the staged commit has no failing gate. Writes: QA gate (change set) on the Agent tab, first line \"Passed <head sha>: …\" or \"Failed <head sha>: <why>\", and QA report (change set), the report's link. The sheet shows the gate under Staging review; a pass for an older commit reads as stale (owner, 2026-10-31)."
+          "@value": "Reads: the change set's Disposition (change set), the people's Blue Disposition and feedback, the pull request's diff at its head commit, and the staging QA report. Checks that every feedback item has one disposition; that each agrees with the people's Blue Disposition; that each Accepted or Partially accepted item has the change in the diff, and a Not accepted, Noted, Duplicate or Out of scope item has none; that the diff changes nothing no disposition accounts for; and that the QA report for the staged commit has no failing gate. Writes: QA gate (change set) on the Agent tab, first line \"Passed <head sha>: …\" or \"Failed <head sha>: <why>\", and QA report (change set), the report's link. The sheet shows the gate under Staging review; a pass for an older commit reads as stale."
         }
       ],
       "skos:notation": "Task_QaGate",
@@ -1426,7 +1426,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Tar/zip is opaque to every grep in the corpus until its contents are listed as data."
+          "@value": "NOT IMPLEMENTED; see docs/document-ingestion.md. Tar/zip is opaque to every grep in the corpus until its contents are listed as data."
         }
       ],
       "skos:notation": "Task_Archive",
@@ -1446,7 +1446,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md."
+          "@value": "No Tool yet; the method, and the choice of recogniser, is skill audio-transcription."
         }
       ],
       "skos:notation": "Task_Audio",
@@ -1466,7 +1466,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Applies equally to an image EXTRACTED FROM A PDF, not only to an uploaded one."
+          "@value": "NOT IMPLEMENTED; see docs/document-ingestion.md. Applies equally to an image EXTRACTED FROM A PDF, not only to an uploaded one."
         }
       ],
       "skos:notation": "Task_Image",
@@ -1506,7 +1506,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. CSV and spreadsheet: tabs, column and row headers, sizes, and what the dataset is about."
+          "@value": "Tools tabular-csv and tabular-xlsx, as CSVW (skill tabular-metadata). CSV and spreadsheet: tabs, column and row headers, sizes, and what the dataset is about."
         }
       ],
       "skos:notation": "Task_Tabular",
@@ -1526,7 +1526,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "NOT IMPLEMENTED. Tracked as a bean; see docs/document-ingestion.md. Mechanical and cheap; the checksum is what makes a remote asset verifiable."
+          "@value": "NOT IMPLEMENTED; see docs/document-ingestion.md. Mechanical and cheap; the checksum is what makes a remote asset verifiable."
         }
       ],
       "skos:notation": "Task_TechMeta",
@@ -1546,7 +1546,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Call_BeanClose",
@@ -1566,7 +1566,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Call_BeanOpen",
@@ -1586,7 +1586,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Core's shared review-and-publish process (Process_FolioReviewPublish): the reviewer reads the rendered folio and approves it, asks for changes, or sends a working draft to the Authoring Committee. Before 2026-11-01 each authoring process drew these steps itself (shared block G6, owner Q-BR-7 A)."
+          "@value": "Core's shared review-and-publish process (Process_FolioReviewPublish): the reviewer reads the rendered folio and approves it, asks for changes, or sends a working draft to the Authoring Committee."
         }
       ],
       "skos:notation": "Call_ReviewPublish",
@@ -1606,7 +1606,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn. A normative statement is a `recommendation` block (bean 55ao), drafted through normative-statements: one statement per block, a folio-chosen label, and its strength as a code in a declared code list, so a reviewer signs off each one individually."
+          "@value": "Every block edit runs the HCI validation gate — see editing-hci-validation.bpmn. A normative statement is a `recommendation` block, drafted through normative-statements: one statement per block, a folio-chosen label, and its strength as a code in a declared code list, so a reviewer signs off each one individually."
         }
       ],
       "skos:notation": "Task_AuthorBlocks",
@@ -1646,7 +1646,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "content_profile_check: no math kind, no lean field, no .lean sibling. This is the step a paper folio does not have, and the reason a document folio never needs Lean or TeX to publish."
+          "@value": "content_profile_check: no math kind, no lean field, no .lean sibling. A paper folio has no such step; this is why a document folio needs neither Lean nor TeX to publish."
         }
       ],
       "skos:notation": "Task_ProfileCheck",
@@ -1706,7 +1706,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step (bean m8gz), so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
+          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step, so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
         }
       ],
       "skos:notation": "Task_SeedPlan",
@@ -1746,7 +1746,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Call_BeanCloseEnded",
@@ -1766,7 +1766,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Call_BeanOpen",
@@ -1786,7 +1786,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Call_BeanOpenChange",
@@ -2266,7 +2266,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "On the edge out of `Task_ReviewFindings` and before `Task_RecordDecision`: the findings are the evidence, so the options can only be weighed once they exist, and after `Task_RecordDecision` the decision is already written down. NOT between `Gateway_EditorDecision` and `Task_RecordDecision`, which is the pair the work-plan named — in this diagram those run the OTHER WAY ROUND. `Flow_21b` goes `Task_RecordDecision` -> `Gateway_EditorDecision`, so the gateway reads a decision that has already been recorded, and interposing there would analyse options after the choice was made. In the Agent lane, and this diagram makes the reason sharp. `Task_RecordDecision` is a `userTask` in `Lane_Editor` that already names `decision-audit`, and `Process_OptionsAnalysis` ends with its own `decision-audit` note. Those are two different acts — the subprocess records that the options were WEIGHED, the editor records WHAT WAS CHOSEN — and putting the analysis in the editor's lane would collapse them, making the same party both analyse and decide. The subprocess's own documentation refuses that: it produces options and a recommendation, and the authorisation belongs to the calling step. `CallActivity_Evidence` sits in `Lane_Editor` instead, and that is not an inconsistency: the author performs the evidence retrieval, whereas here the point is that the analyst is not the decider. On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached `Task_ReviewFindings` with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not."
+          "@value": "On the edge out of `Task_ReviewFindings` and before `Task_RecordDecision`: the findings are the evidence, so the options can only be weighed once they exist, and after `Task_RecordDecision` the decision is already written down. Not between `Gateway_EditorDecision` and `Task_RecordDecision`: `Flow_21b` runs `Task_RecordDecision` -> `Gateway_EditorDecision`, so the gateway reads a decision already recorded. In the Agent lane: the subprocess records that the options were WEIGHED (its own `decision-audit` note), and `Task_RecordDecision` in `Lane_Editor` records WHAT WAS CHOSEN. The analyst is not the decider. (`CallActivity_Evidence` is in `Lane_Editor` because the author performs the retrieval.) On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached `Task_ReviewFindings` with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not."
         }
       ],
       "skos:notation": "Call_OptionsAnalysis",
@@ -2346,7 +2346,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Task_ClaimBean",
@@ -2486,7 +2486,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Task_ResolveBean",
@@ -2706,7 +2706,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Already-adjudicated guidance: WHO SMART DAKs at L2 and FHIR Implementation Guides at L3. A recommendation adopted in a published DAK is evidence of a different kind from a primary study -- it is a prior decision, with its own provenance, and must be cited as that rather than laundered into primary evidence. NOT YET SKILL-BACKED. This step named `corpus-search`, which has never existed. It is not `corpus-grep`, whose job is the pre-declaration check that something really is an open gap — searching adjudicated L2/L3 content for evidence is a different task, so pointing the ref there would have been a plausible-looking wrong answer. Left uncovered until the skill is written."
+          "@value": "Already-adjudicated guidance: WHO SMART DAKs at L2 and FHIR Implementation Guides at L3. A recommendation adopted in a published DAK is evidence of a different kind from a primary study -- it is a prior decision, with its own provenance, and must be cited as that rather than laundered into primary evidence. NOT YET SKILL-BACKED: no skill searches adjudicated L2/L3 content for evidence. `corpus-grep` is a different task (checking that a gap is really open)."
         }
       ],
       "skos:notation": "Task_L2L3Content",
@@ -2846,7 +2846,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier. The run also records WHICH SOFTWARE made the pages, in ocr/run-context.json: a folio-run-context/v1 (cat-harness schemas/run-context.ts, the record test runs and QA reports use for the same question), naming the OCR engine, the rasteriser and each language model with its version and the sha256 of the bytes that ran. Two OCRs of one scan can read differently (\"Manual\" and \"Manval\", bean turh), and without it neither could be told from the other or reproduced."
+          "@value": "A document ingested this way keeps its text in ocr/ and only a stub in sections/, which the documented sections/ grep cannot see. That asymmetry is why the corpus-grep checklist has a fourth tier. The run also records WHICH SOFTWARE made the pages, in ocr/run-context.json: a folio-run-context/v1 (cat-harness schemas/run-context.ts, the record test runs and QA reports use for the same question), naming the OCR engine, the rasteriser and each language model with its version and the sha256 of the bytes that ran. Two OCRs of one scan can read differently (\"Manual\" and \"Manval\"), and without it neither could be told from the other or reproduced."
         }
       ],
       "skos:notation": "Task_Ocr",
@@ -2886,7 +2886,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Write structure.json (pdf-structure/v1): doc id, TOC from the PDF outline or inferred from headings, page ranges, metadata, and source{} with the sha256 and a mimetype sniffed from the bytes, never the extension. A structure that could not be determined says so in structure_note rather than being rendered as one. For OCR'd text, source.runContext cites the OCR step's run context by sha256. A title already known for the document (the catalogue's dc.title, or one given with --title) is passed through as the raw title, so the sections' doc_title does not carry a scan's misreading (bean turh)."
+          "@value": "Write structure.json (pdf-structure/v1): doc id, TOC from the PDF outline or inferred from headings, page ranges, metadata, and source{} with the sha256 and a mimetype sniffed from the bytes, never the extension. A structure that could not be determined says so in structure_note rather than being rendered as one. For OCR'd text, source.runContext cites the OCR step's run context by sha256. A title already known for the document (the catalogue's dc.title, or one given with --title) is passed through as the raw title, so the sections' doc_title does not carry a scan's misreading."
         }
       ],
       "skos:notation": "Task_Structure",
@@ -2906,7 +2906,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_ContributorFeedback: while the document is a working draft, the Authoring Committee gives feedback through the Contributor Feedback sheet, and each change set is edited and merged in its own pull request. When its changes are merged, the document is validated and rendered again (owner, 2026-10-31)."
+          "@value": "Process_ContributorFeedback: while the document is a working draft, the Authoring Committee gives feedback through the Contributor Feedback sheet, and each change set is edited and merged in its own pull request. When its changes are merged, the document is validated and rendered again."
         }
       ],
       "skos:notation": "Call_ContributorFeedback",
@@ -2946,7 +2946,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The reviewer this folio binds. authoring-document relaxes the base SME step precisely because no single lane fits every document. Review the rendered paper, not a description of it, and record the feedback. The outcome is iterate — back to authoring — or approved for the publication path."
+          "@value": "The reviewer this folio binds. authoring-document relaxes the base SME step precisely because no single lane fits every document. Review the rendered folio, not a description of it, and record the feedback. The outcome is iterate — back to authoring — or approved for the publication path."
         }
       ],
       "skos:notation": "Task_Review",
@@ -2966,7 +2966,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Call_BeanClose",
@@ -2986,7 +2986,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Call_BeanOpen",
@@ -3026,7 +3026,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The person picks which of the content markers the scan found the harness declares in index.config.json, and nothing is declared unpicked. A PERSON'S STEP: the scan's `markers` that are not yet declared are offered as selectable options — one per marker, each with its paths and what declaring it means, plus \"none of these\" — and the person picks which parts of the repository to load into the KG. A tap card where the host has one; otherwise a numbered pick-list with a stated default. Never a typed reply. The default declares NOTHING: a harness that declared every marker it found would be slurping the repository, which is what this step exists to prevent. Only the picks reach Task_Scaffold, which declares exactly those in index.config.json. With no undeclared marker found, nothing is asked. The same question is put after setup by running the scan with `--markers` (repo-conversion §2a)."
+          "@value": "A PERSON'S STEP: the scan's `markers` that are not yet declared are offered as selectable options — one per marker, each with its paths and what declaring it means, plus \"none of these\" — and the person picks which parts of the repository to load into the KG. A tap card where the host has one; otherwise a numbered pick-list with a stated default. Never a typed reply. The default declares NOTHING. Only the picks reach Task_Scaffold, which declares exactly those in index.config.json. With no undeclared marker found, nothing is asked. The same question is put after setup by running the scan with `--markers` (repo-conversion §2a)."
         }
       ],
       "skos:notation": "Task_ChooseHarnessed",
@@ -3126,7 +3126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Before Pages is switched on, make sure the gh-pages branch exists — the semantics of A_Provision in bootstrap-tools' render-kg-to-github-pages.bpmn, first half. `git ls-remote --heads origin gh-pages`; if absent, `bun run cat-harness/scripts/pages-bootstrap.ts --provision` pushes an orphan gh-pages holding a placeholder index.html and .nojekyll (idempotent; never forced; the script creates no remote branch without the flag). Then Settings → Pages → \"Deploy from a branch: gh-pages, / (root)\" — not \"GitHub Actions\" when the publish workflow pushes gh-pages. Every publishing path reaches this step: new-repo, overlay and add-folio, and an overlay or new repo that remote-mounts its dependencies (litlfred/test, provisioned at 860f9c2). Owner, 2026-10-01: \"need to create gh-pages branch before can turn on\"; 2026-10-07: \"need to create gh-pages before can deploy\" (#2417)."
+          "@value": "Before Pages is switched on, make sure the gh-pages branch exists — the semantics of A_Provision in bootstrap-tools' render-kg-to-github-pages.bpmn, first half. `git ls-remote --heads origin gh-pages`; if absent, `bun run cat-harness/scripts/pages-bootstrap.ts --provision` pushes an orphan gh-pages holding a placeholder index.html and .nojekyll (idempotent; never forced; the script creates no remote branch without the flag). Then Settings → Pages → \"Deploy from a branch: gh-pages, / (root)\" — not \"GitHub Actions\" when the publish workflow pushes gh-pages. Every publishing path reaches this step: new-repo, overlay and add-folio, and an overlay or new repo that remote-mounts its dependencies."
         }
       ],
       "skos:notation": "Task_ProvisionGhPages",
@@ -3166,7 +3166,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A measured 404. The author is told the address and that the first build has not landed there yet — which is useful, and is not the same as being told it is live."
+          "@value": "A measured 404. The author is told the address and that the first build has not landed there yet."
         }
       ],
       "skos:notation": "Task_ReportPending",
@@ -3226,7 +3226,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "content/, uploads/, library/, the first manifests, <slug>.json and index.config.json (the instance's config inline in its entry; no <slug>.config.json, bean ymvt), the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. On the overlay path it declares in index.config.json exactly the markers picked at Task_ChooseHarnessed, and none it was not given. Refuses rather than overwrites when a folio is already present."
+          "@value": "content/, uploads/, library/, the first manifests, <slug>.json and index.config.json (the instance's config inline in its entry; no <slug>.config.json), the builder shim, AGENTS.md with its stubs, .mcp.json, the session-start hook and the beans store. On the overlay path it declares in index.config.json exactly the markers picked at Task_ChooseHarnessed, and none it was not given. Refuses rather than overwrites when a folio is already present."
         }
       ],
       "skos:notation": "Task_Scaffold",
@@ -3446,7 +3446,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Call_BeanClose",
@@ -3466,7 +3466,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Call_BeanOpen",
@@ -3486,7 +3486,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The harness's `document-ingestion.bpmn`: accept the upload by a declared route, extract its metadata into the KG, and catalogue the asset in library/ — placed if materialized, recorded as referenced if not. Everything below refines that result for a document. Called, not copied: this was Lane_0 and Task_Place of this diagram until placement PR6 moved them down as the basic flow."
+          "@value": "The harness's `document-ingestion.bpmn`: accept the upload by a declared route, extract its metadata into the KG, and catalogue the asset in library/ — placed if materialized, recorded as referenced if not. Everything below refines that result for a document. Called, not copied."
         }
       ],
       "skos:notation": "CallActivity_Basic",
@@ -3566,7 +3566,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "See ingest-l1-completeness-gate.bpmn. Skill-backed by `l1-document-ingestion` (2026-09-30, bean 7bg9; the section moved there from the harness's `library-ingestion` in placement PR6): its section \"What a complete L1 entry holds\" names `check:l1-complete` as the gate and states its three results. Until then this step named `paper-relevance-triage`, which never existed, and was left uncovered rather than bound to a guess. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead."
+          "@value": "See ingest-l1-completeness-gate.bpmn. Skill-backed by `l1-document-ingestion`: its section \"What a complete L1 entry holds\" names `check:l1-complete` as the gate and states its three results. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead."
         }
       ],
       "skos:notation": "CallActivity_Gate",
@@ -3646,7 +3646,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "EARLY, by the owner's ruling on bean 7bg9 (2026-09-20): before any derivation, because library/ is holds: content and anything derived first is committed, so refusing it later is a deletion nobody may take unasked. This step sees only the upload itself — the licence recorded in its intake.json (the same stated / unknown record a library manifest carries) and whether a LICENSE file sits beside it. It never infers a licence from extracted text. The verdict is stated, unknown, or UNDETERMINED, and undetermined is never reported as cleared: the pipeline proceeds and says so, because a licence that only extraction can reveal is a later check's to find."
+          "@value": "EARLY: before any derivation, because library/ is holds: content and anything derived first is committed, so refusing it later is a deletion nobody may take unasked. This step sees only the upload itself — the licence recorded in its intake.json (the same stated / unknown record a library manifest carries) and whether a LICENSE file sits beside it. It never infers a licence from extracted text. The verdict is stated, unknown, or UNDETERMINED, and undetermined is never reported as cleared: the pipeline proceeds and says so, because a licence that only extraction can reveal is a later check's to find."
         }
       ],
       "skos:notation": "Task_Licence",
@@ -3706,7 +3706,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Owner, 2026-09-24: \"Make as QA sidecar as part of general doc ingestion to slowly drain.\" Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run cat summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run cat summaries:record` writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run cat narratives`."
+          "@value": "A QA sidecar of general document ingestion, drained slowly. Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run cat summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run cat summaries:record` writes them into library/<bib-slug>/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run cat narratives`."
         }
       ],
       "skos:notation": "Task_SummaryQueue",
@@ -3766,7 +3766,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Back-translate each localized narrative into its source language and compare the meaning, to catch semantic drift and bad terminology that a forward-only check cannot see. Agentic, by the owner's ruling of 2026-10-06 (bean ktt2). Two parties are kept apart under untainted-verification: a back-translator that sees ONLY the target-language text, and an adjudicator that sees the original and the back-translation and rules. The verdict is recorded per block, under criterion `translation-semantic-roundtrip` in the block's `<block>.<locale>.translation-qa.json` sidecar, by the `translation-roundtrip-record` Tool (translation-manager §5). A terminology miss is a different criterion, `translation-terms-preserved` (acronyms, numbers, URLs that must survive), so Gateway_Drift can tell the two apart. Never close this step by reversing the PO's msgid→msgstr map: that returns the source exactly and scores 1.0 always. An empty `translation-semantic-roundtrip` entry list means \"not yet run\", which is never a pass."
+          "@value": "Back-translate each localized narrative into its source language and compare the meaning, to catch semantic drift and bad terminology that a forward-only check cannot see. Agentic. Two parties are kept apart under untainted-verification: a back-translator that sees ONLY the target-language text, and an adjudicator that sees the original and the back-translation and rules. The verdict is recorded per block, under criterion `translation-semantic-roundtrip` in the block's `<block>.<locale>.translation-qa.json` sidecar, by the `translation-roundtrip-record` Tool (translation-manager §5). A terminology miss is a different criterion, `translation-terms-preserved` (acronyms, numbers, URLs that must survive), so Gateway_Drift can tell the two apart. Never close this step by reversing the PO's msgid→msgstr map: that returns the source exactly and scores 1.0 always. An empty `translation-semantic-roundtrip` entry list means \"not yet run\", which is never a pass."
         }
       ],
       "skos:notation": "Task_RoundTrip",
@@ -3806,7 +3806,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Call_BeanClose",
@@ -3826,7 +3826,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Call_BeanOpen",
@@ -3966,7 +3966,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step (bean m8gz), so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
+          "@value": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step, so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike."
         }
       ],
       "skos:notation": "Task_SeedBeans",
@@ -4026,7 +4026,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "When the draft goes out for public comment: the release date is agreed, the draft is frozen as a line-numbered public comment release, every channel is set up against it and announced, and the comments that come back are placed, triaged, recommended on by the review committee and decided by the editor (Process_PublicCommentRelease, which calls Process_PublicComment). Bean v26p, issue #197."
+          "@value": "When the draft goes out for public comment: the release date is agreed, the draft is frozen as a line-numbered public comment release, every channel is set up against it and announced, and the comments that come back are placed, triaged, recommended on by the review committee and decided by the editor (Process_PublicCommentRelease, which calls Process_PublicComment)."
         }
       ],
       "skos:notation": "CallActivity_PublicComment",
@@ -4046,7 +4046,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Task_ArchiveReleaseBean",
@@ -4166,7 +4166,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Task_OpenReleaseBean",
@@ -4346,7 +4346,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "A change-set gets its primary GitHub issue the first time somebody engages with it (the Discuss form, a recommendation or decision on one of its comments, a mention, a PR), opened by the folio's public-comment workflow; any number of other issues may discuss it and are linked. People agree the requirements there, and the committee or editor changes the record with cs-add / cs-remove / cs-title / cs-requirements / cs-committee / cs-merge / cs-split / cs-close / cs-new. Making change-sets is people's (owner, 2026-11-02, Q-CS-1 C), in any of three ways, each like opening an issue: a row on the review sheet's Review Change Sets with only a Title (the sheet script gives it the next id), a change-set issue from the folio's change-set issue form, or feedback that says a change-set should be split, merged or moved. For the last two the agent proposes the change-sets and which comments go where, as a Decision needed question, and makes them only once an Editor sets Ready for agent to Yes. A comment is moved by typing another change-set's id, or new, in Change Set (human). The issue's change-set section is rendered from the record and put back if hand-edited; the nightly reconcile keeps every issue in line. The issue is for requirements; the PR that closes it is for preview, review and approval."
+          "@value": "A change-set gets its primary GitHub issue the first time somebody engages with it (the Discuss form, a recommendation or decision on one of its comments, a mention, a PR), opened by the folio's public-comment workflow; any number of other issues may discuss it and are linked. People agree the requirements there, and the committee or editor changes the record with cs-add / cs-remove / cs-title / cs-requirements / cs-committee / cs-merge / cs-split / cs-close / cs-new. Making change-sets is people's, in any of three ways, each like opening an issue: a row on the review sheet's Review Change Sets with only a Title (the sheet script gives it the next id), a change-set issue from the folio's change-set issue form, or feedback that says a change-set should be split, merged or moved. For the last two the agent proposes the change-sets and which comments go where, as a Decision needed question, and makes them only once an Editor sets Ready for agent to Yes. A comment is moved by typing another change-set's id, or new, in Change Set (human). The issue's change-set section is rendered from the record and put back if hand-edited; the nightly reconcile keeps every issue in line. The issue is for requirements; the PR that closes it is for preview, review and approval."
         }
       ],
       "skos:notation": "Task_GroupChangeSets",
@@ -4386,7 +4386,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "public-comment-changesets seed / propose: the agent groups the comments to be weighed into change-sets, one per change the document may need, each a record under changesets/ with its requirements and members. A PROPOSAL: nothing is decided, no GitHub issue is opened, and a comment may sit in zero, one or several change-sets. The record is the only one; everything shown about a change-set is rendered from it. A comment that arrives later is triaged the same way (Tool review-log-watch, cs-requests.ts triage): the agent suggests an open change-set that shares its sections, or a new one, and the committees (TWG) of that change-set, as its own suggestion only; a person's Change Set (human) or TWG (human) on the review sheet always wins. How a change-set came about does not matter: people adjudicate it (owner, 2026-11-02)."
+          "@value": "public-comment-changesets seed / propose: the agent groups the comments to be weighed into change-sets, one per change the document may need, each a record under changesets/ with its requirements and members. A PROPOSAL: nothing is decided, no GitHub issue is opened, and a comment may sit in zero, one or several change-sets. The record is the only one; everything shown about a change-set is rendered from it. A comment that arrives later is triaged the same way (Tool review-log-watch, cs-requests.ts triage): the agent suggests an open change-set that shares its sections, or a new one, and the committees (TWG) of that change-set, as its own suggestion only; a person's Change Set (human) or TWG (human) on the review sheet always wins. How a change-set came about does not matter: people adjudicate it."
         }
       ],
       "skos:notation": "Task_ProposeChangeSets",
@@ -4406,7 +4406,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "public-comment-changesets reroute, or cs-committee: <TWG> — <why> on GitHub from a person in the committee or editor lane (bean se3i, issue #197). Moves the change-set to another TWG review committee and records who, when, from, to and why on the change-set record, so re-ingesting comments never resets it. Person-only (userTask): agents cannot re-route a change-set on their own."
+          "@value": "public-comment-changesets reroute, or cs-committee: <TWG> — <why> on GitHub from a person in the committee or editor lane. Moves the change-set to another TWG review committee and records who, when, from, to and why on the change-set record, so re-ingesting comments never resets it. Person-only (userTask): agents cannot re-route a change-set on their own."
         }
       ],
       "skos:notation": "Task_RerouteChangeSet",
@@ -4466,7 +4466,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The existing content-change review, unchanged, of the author's branch: its PR lists the PC refs it answers, and its staging preview is the after side of every deep link. A change the reviewers send back returns to the author inside that process."
+          "@value": "The content-change review of the author's branch: its PR lists the PC refs it answers, and its staging preview is the after side of every deep link. A change the reviewers send back returns to the author inside that process."
         }
       ],
       "skos:notation": "CallActivity_ChangeSet",
@@ -4486,7 +4486,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch for one change-set. Its PR says Closes #N for the change-set issue, and opening it moves that issue's accepted comments to editing. Before its preview is staged, the author writes the change set's Disposition (change set) on the Agent tab: one line per comment (No. 136: Accepted. ...), starting from each comment's Blue Disposition on Review Public Comments, after an optional Overall statement. Quality check: every comment number in the change set has a disposition; the sheet flags gaps and words that differ from the people's (owner, 2026-10-31)."
+          "@value": "public-comment edit --branch: the author (human, or an agent in the author role) edits the folio's blocks as the decision says, on a feature branch for one change-set. Its PR says Closes #N for the change-set issue, and opening it moves that issue's accepted comments to editing. Before its preview is staged, the author writes the change set's Disposition (change set) on the Agent tab: one line per comment (No. 136: Accepted. ...), starting from each comment's Blue Disposition on Review Public Comments, after an optional Overall statement. Quality check: every comment number in the change set has a disposition; the sheet flags gaps and words that differ from the people's."
         }
       ],
       "skos:notation": "Task_AuthorEdits",
@@ -4506,7 +4506,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "public-comment incorporate, naming the branch, PR and staging URL; done by the folio's workflow when the PR that closes a change-set issue merges. A PR closed unmerged moves nothing. Ready for merge is set only once the QA gate has passed for the PR's head commit; set earlier, the agent does not merge until it passes. The change set's Dispositions blurb, as it stands when Ready for merge is set to Yes, is the summary that closes its issue (owner, 2026-10-31)."
+          "@value": "public-comment incorporate, naming the branch, PR and staging URL; done by the folio's workflow when the PR that closes a change-set issue merges. A PR closed unmerged moves nothing. Ready for merge is set only once the QA gate has passed for the PR's head commit; set earlier, the agent does not merge until it passes. The change set's Dispositions blurb, as it stands when Ready for merge is set to Yes, is the summary that closes its issue."
         }
       ],
       "skos:notation": "Task_Incorporate",
@@ -4526,7 +4526,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Before Ready for merge. Reads: the change set's Disposition (change set), each comment's Blue Disposition on Review Public Comments, the PR's diff at its head commit, and the staging QA report. Checks that every comment number has one disposition; that each agrees with the people's Blue Disposition; that each Accepted or Partially accepted comment has its change in the diff, and a Not accepted, Noted, Deferred, Duplicate or Out of scope one has none; that the diff changes nothing no disposition accounts for; and that the QA report for the staged commit has no failing gate. Writes: QA gate (change set), first line \"Passed <head sha>: …\" or \"Failed <head sha>: <why>\", and QA report (change set), the report's link. The sheet shows both under Staging review; a pass for an older commit reads as stale (owner, 2026-10-31)."
+          "@value": "Before Ready for merge. Reads: the change set's Disposition (change set), each comment's Blue Disposition on Review Public Comments, the PR's diff at its head commit, and the staging QA report. Checks that every comment number has one disposition; that each agrees with the people's Blue Disposition; that each Accepted or Partially accepted comment has its change in the diff, and a Not accepted, Noted, Deferred, Duplicate or Out of scope one has none; that the diff changes nothing no disposition accounts for; and that the QA report for the staged commit has no failing gate. Writes: QA gate (change set), first line \"Passed <head sha>: …\" or \"Failed <head sha>: <why>\", and QA report (change set), the report's link. The sheet shows both under Staging review; a pass for an older commit reads as stale."
         }
       ],
       "skos:notation": "Task_QaGate",
@@ -4606,7 +4606,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Freeze the draft as \"Draft for Public Comment Release vX\": a PDF with fixed line numbers and a site copy under a permanent PC/<version>/ path (not STAGING, never deleted on merge). Every channel cites this release's pages, lines and block ids. Line numbers run continuously through the document. Freeze from a FULL build (owner, 2026-11-01): dispatch the preview workflow for the branch with build_type: full first, because a preview borrows main's search index and slices; pc:release freeze refuses a preview build. Run `bun run cat pc:pdf` for the line-numbered PDF and its line map, then `bun run cat pc:release freeze` for the write-once copy under PC/<version>/. Skill: document-publishing."
+          "@value": "Freeze the draft as \"Draft for Public Comment Release vX\": a PDF with fixed line numbers and a site copy under a permanent PC/<version>/ path (not STAGING, never deleted on merge). Every channel cites this release's pages, lines and block ids. Line numbers run continuously through the document. Freeze from a FULL build: dispatch the preview workflow for the branch with build_type: full first, because a preview borrows main's search index and slices; pc:release freeze refuses a preview build. Run `bun run cat pc:pdf` for the line-numbered PDF and its line map, then `bun run cat pc:release freeze` for the write-once copy under PC/<version>/. Skill: document-publishing."
         }
       ],
       "skos:notation": "Task_BuildPcRelease",
@@ -4706,7 +4706,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "For each changed row, the agent pass of Contributor feedback on a working draft: Ready for agent = Yes gets its edit, Ready for merge = Yes its merge, and a Blue answer to a Decision needed question is taken up. Every new row (from an issue, a person or a TWG workbook), every row with an empty Feedback (agent) and every row whose Blue cells changed gets feedback in the same wake (owner, 2026-11-01: \"agent should provide feedback whenever blue change or whenever new row added\"), in the fixed layout: the ask first (Decision needed: with lettered options, one recommended, and where to answer), then Proposed direction: and Next:, only the tags bold (Q-FBK-1 A). The work stays inside the row's Selected Sections; a row with none gets a question asking which, and any edit outside them is named on an Outside the selected sections: line (Q-FBK-3 A). PRs are named as repo#n, which the sheet script links, and it adds a Where to review line linking each selected section on the preview. The agent then runs tools/review-log-watch/lint.ts and fixes what it flags: a cell that breaks the layout, or a PR state that GitHub contradicts. The agent records its step on the Agent tab at once, with the real time. Previews follow main: by default (Config PREVIEW_REFRESH automatic) the agent runs tools/review-log-watch/previews.ts on every poll for every open change-set PR, and also when people act on a change set (new Blue feedback, Ready for agent set to Yes, or feedback asking to update the preview); with PREVIEW_REFRESH on-feedback, only then. A branch behind main gets main merged in (a merge commit), pushed and restaged; a conflict a person must settle is asked in the change set's feedback (owner, 2026-11-02: \"actually automatic (as the default mode)\")."
+          "@value": "For each changed row, the agent pass of Contributor feedback on a working draft: Ready for agent = Yes gets its edit, Ready for merge = Yes its merge, and a Blue answer to a Decision needed question is taken up. Every new row (from an issue, a person or a TWG workbook), every row with an empty Feedback (agent) and every row whose Blue cells changed gets feedback in the same wake, in the fixed layout: the ask first (Decision needed: with lettered options, one recommended, and where to answer), then Proposed direction: and Next:, only the tags bold. The work stays inside the row's Selected Sections; a row with none gets a question asking which, and any edit outside them is named on an Outside the selected sections: line. PRs are named as repo#n, which the sheet script links, and it adds a Where to review line linking each selected section on the preview. The agent then runs tools/review-log-watch/lint.ts and fixes what it flags: a cell that breaks the layout, or a PR state that GitHub contradicts. The agent records its step on the Agent tab at once, with the real time. Previews follow main: by default (Config PREVIEW_REFRESH automatic) the agent runs tools/review-log-watch/previews.ts on every poll for every open change-set PR, and also when people act on a change set (new Blue feedback, Ready for agent set to Yes, or feedback asking to update the preview); with PREVIEW_REFRESH on-feedback, only then. A branch behind main gets main merged in (a merge commit), pushed and restaged; a conflict a person must settle is asked in the change set's feedback."
         }
       ],
       "skos:notation": "Task_AgentPass",
@@ -4726,7 +4726,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "For each row in the tool's append list (one per issue that no row's Issue cell links yet; owner, Q-WATCH2 B), appends it below the last row of Contributor Feedback: Title is the issue's title, the first Contributor Feedback column @login (#N): the issue's first paragraph, Issue its URL. The script gives each new row its Change-set id. No other writer adds issue rows. Then each row linking a closed issue (the tool's closedRows, and the rows just appended as closed) is hidden and its text struck through (owner, 2026-11-01 10:18Z)."
+          "@value": "For each row in the tool's append list (one per issue that no row's Issue cell links yet), appends it below the last row of Contributor Feedback: Title is the issue's title, the first Contributor Feedback column @login (#N): the issue's first paragraph, Issue its URL. The script gives each new row its Change-set id. No other writer adds issue rows. Then each row linking a closed issue (the tool's closedRows, and the rows just appended as closed) is hidden and its text struck through."
         }
       ],
       "skos:notation": "Task_AppendRows",
@@ -4746,7 +4746,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Reads Watch!F1:I1, the hash of the person-set cells that the sheet script writes on every refresh (Q-WATCH4 A), and Contributor Feedback's header row and Issue column, and saves them as JSON for the check. A sheet without the Watch hash yet is read whole. Reading is not agent work: it changes nothing."
+          "@value": "Reads Watch!F1:I1, the hash of the person-set cells that the sheet script writes on every refresh, and Contributor Feedback's header row and Issue column, and saves them as JSON for the check. A sheet without the Watch hash yet is read whole. Reading is not agent work: it changes nothing."
         }
       ],
       "skos:notation": "Task_ReadSheet",

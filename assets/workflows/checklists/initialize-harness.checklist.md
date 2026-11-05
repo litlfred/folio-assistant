@@ -36,7 +36,7 @@ THE ONLY PROCESS IN BOOTSTRAP AN ACTOR STARTS.
 
 ### 3. Read what each location already is (`A_ReadLocation`)
 
-- Who: the `Knowledge Graph Data Store` lane (role `knowledge-graph-data-store`).
+- Who: the `Bootstrapping Agent` lane (role `bootstrapping-agent`).
 - Skill: `bootstrap-kg-navigation`.
 - What: Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself.
 - Record it: `workflow_complete` with `node: "A_ReadLocation"`.
@@ -64,7 +64,7 @@ THE ONLY PROCESS IN BOOTSTRAP AN ACTOR STARTS.
 
 ### 5. Read the harness's declaration and instructions (`A_ReadDeclaration`)
 
-- Who: the `Knowledge Graph Data Store` lane (role `knowledge-graph-data-store`).
+- Who: the `Bootstrapping Agent` lane (role `bootstrapping-agent`).
 - Skill: `bootstrap-kg-navigation`.
 - What: Performed against the data store — a git repository, through the git CLI or a forge API.
 - Record it: `workflow_complete` with `node: "A_ReadDeclaration"`.

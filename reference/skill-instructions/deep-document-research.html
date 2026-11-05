@@ -120,18 +120,14 @@ an entry is fit to use. This begins after all three.</p><h2 id="the-loop-and-the
 </code></pre></div></div><p><strong>Stop when <code class="language-plaintext highlighter-rouge">σ ≥ τ</code>, or when <code class="language-plaintext highlighter-rouge">t = T_max</code>.</strong> Both, always.</p><ul><li>Threshold alone <strong>never terminates</strong> on a question the corpus cannot answer,
 and a corpus that cannot answer a question is the normal case rather than
 the exception.</li><li>Cap alone <strong>stops an answerable question early</strong>, and the answer it returns
-looks exactly like a complete one.</li></ul><p>A loop carrying one of them is a different method with a failure mode the
-paper’s does not have. If you implement only one, you have not implemented
-this.</p><p><strong>Say which one you stopped on.</strong> An answer that hit <code class="language-plaintext highlighter-rouge">T_max</code> is an answer with
+looks exactly like a complete one.</li></ul><p>A loop with only one of them is not this method.</p><p><strong>Say which one you stopped on.</strong> An answer that hit <code class="language-plaintext highlighter-rouge">T_max</code> is an answer with
 known gaps; one that reached <code class="language-plaintext highlighter-rouge">σ ≥ τ</code> is not. A report that does not
-distinguish them hands the reader a confidence nobody established — the same
-shape as a QA sweep reporting clean because it could not look.</p><h2 id="the-four-roles-are-four-questions-not-four-programs"><a href="#the-four-roles-are-four-questions-not-four-programs" class="anchor-heading" aria-labelledby="the-four-roles-are-four-questions-not-four-programs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four roles are four QUESTIONS, not four programs
+distinguish them hands the reader a confidence nobody established.</p><h2 id="the-four-roles-are-four-questions-not-four-programs"><a href="#the-four-roles-are-four-questions-not-four-programs" class="anchor-heading" aria-labelledby="the-four-roles-are-four-questions-not-four-programs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The four roles are four QUESTIONS, not four programs
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th></th><th>asks</th></tr></thead><tbody><tr><td><strong>plan</strong></td><td>which documents could possibly bear on this, at what granularity, and what are the sub-questions?</td></tr><tr><td><strong>search</strong></td><td>what does the corpus return for this sub-question at that granularity?</td></tr><tr><td><strong>refine</strong></td><td>of what came back, what is actually relevant and not a duplicate?</td></tr><tr><td><strong>report</strong></td><td>what does the accumulated evidence say, and where can a reader check each claim?</td></tr></tbody></table></div><p>One actor may perform all four. The <code class="language-plaintext highlighter-rouge">deep-researcher</code> role is one swimlane
-because the accountability is one: somebody stands behind the synthesis. Do
-not read the paper’s four agents as four roles — this repository’s role model
-is explicit that a role is an accountability, not a step.</p><h2 id="choose-the-granularity-per-question-and-say-you-chose"><a href="#choose-the-granularity-per-question-and-say-you-chose" class="anchor-heading" aria-labelledby="choose-the-granularity-per-question-and-say-you-chose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Choose the granularity per question, and say you chose
+because a role is an accountability, not a step: somebody stands behind the
+synthesis. Do not read the paper’s four agents as four roles.</p><h2 id="choose-the-granularity-per-question-and-say-you-chose"><a href="#choose-the-granularity-per-question-and-say-you-chose" class="anchor-heading" aria-labelledby="choose-the-granularity-per-question-and-say-you-chose"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Choose the granularity per question, and say you chose
   
   
 </h2><p>The method’s substance is that a corpus parsed at several granularities lets a
@@ -139,21 +135,20 @@ LATER step pick. A broad question is answered from summaries; a specific one
 from chunks. <strong>Picking once, in the pipeline, answers every future question the
 same way</strong> — which is the condition this method exists to escape.</p><p><strong>This checkout is not there yet.</strong> <code class="language-plaintext highlighter-rouge">l1-blocks.ts</code> produces blocks and sections
 exist; there is no <code class="language-plaintext highlighter-rouge">summary</code> level and no per-query choice. Until there is, say
-which granularity you searched rather than implying the corpus offered one.
-That is the honest form of a capability that is missing.</p><h2 id="three-things-not-to-adopt-with-it"><a href="#three-things-not-to-adopt-with-it" class="anchor-heading" aria-labelledby="three-things-not-to-adopt-with-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three things NOT to adopt with it
+which granularity you searched rather than implying the corpus offered one.</p><h2 id="three-things-not-to-adopt-with-it"><a href="#three-things-not-to-adopt-with-it" class="anchor-heading" aria-labelledby="three-things-not-to-adopt-with-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three things NOT to adopt with it
   
   
 </h2><ol><li><strong>Machine descriptions as fact.</strong> The paper converts figures to text with a
 VLM and uses the output. Here an agent’s description is a <code class="language-plaintext highlighter-rouge">draft</code> and only a
-person confirms it (<code class="language-plaintext highlighter-rouge">apply-image-verdicts.ts</code>, <code class="language-plaintext highlighter-rouge">schemas/narrative.ts</code>): <em>“an
-uncited narrative is indistinguishable from a transcription of the source.”</em>
+person confirms it (<code class="language-plaintext highlighter-rouge">apply-image-verdicts.ts</code>, cat-harness-tools
+<code class="language-plaintext highlighter-rouge">schemas/content/narrative.ts</code>): <em>“an uncited narrative is
+indistinguishable from a transcription of the source.”</em>
 Search over drafts if you must — and never report a draft as what the figure
 shows.</li><li><strong>A sufficiency function you invented.</strong> The paper gives σ a symbol and a
 threshold and never says how it is computed. If you need one, propose it and
 have it adjudicated; do not bury a judgement in a number.</li><li><strong>The paper’s numbers.</strong> 50.6% and “3.4× baselines” were measured on the
 authors’ own benchmark over their own 304 documents. They say nothing about
-this corpus, and quoting them here would be evidence for a claim nobody
-tested.</li></ol><h2 id="say-what-you-did-not-find"><a href="#say-what-you-did-not-find" class="anchor-heading" aria-labelledby="say-what-you-did-not-find"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Say what you did not find
+this corpus.</li></ol><h2 id="say-what-you-did-not-find"><a href="#say-what-you-did-not-find" class="anchor-heading" aria-labelledby="say-what-you-did-not-find"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Say what you did not find
   
   
 </h2><p>The one failure this method makes easy: an iterative search that ends quietly

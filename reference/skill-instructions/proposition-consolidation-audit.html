@@ -118,15 +118,16 @@ preferred shape:</p><div class="table-wrapper"><table><thead><tr><th>Anti-patter
   
 </h2><ul><li><strong>NOT a logical-equivalence audit.</strong> Two distinct theorems with the
 same conclusion but different hypotheses are NOT consolidation
-candidates. See <code class="language-plaintext highlighter-rouge">local/proof-narrative-lean-equivalence</code> for that.</li><li><strong>NOT a notation-collision audit.</strong> Two blocks using the same
-symbol for different objects is <code class="language-plaintext highlighter-rouge">local/ontologist</code> territory.</li><li><strong>NOT a section-reordering audit.</strong> That’s
-<code class="language-plaintext highlighter-rouge">local/chapter-complexity-review</code>.</li></ul><h2 id="when-to-invoke"><a href="#when-to-invoke" class="anchor-heading" aria-labelledby="when-to-invoke"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to invoke
+candidates. See <a href="../../reference/skill-instructions/proof-narrative-lean-equivalence.html"><code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code></a> for that.</li><li><strong>NOT a notation-collision audit.</strong> Two blocks using the same
+symbol for different objects is <code class="language-plaintext highlighter-rouge">ontologist</code> territory.</li><li><strong>NOT a section-reordering audit.</strong> That’s the harness’s
+<code class="language-plaintext highlighter-rouge">chapter-complexity-review</code> (paper half:
+<a href="../../reference/skill-instructions/paper-chapter-complexity.html"><code class="language-plaintext highlighter-rouge">paper-chapter-complexity</code></a>).</li></ul><h2 id="when-to-invoke"><a href="#when-to-invoke" class="anchor-heading" aria-labelledby="when-to-invoke"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When to invoke
   
   
 </h2><ul><li>Large new tranche of theorems landed in a chapter, want to check
 whether they introduce redundancy.</li><li>Reader feedback: “this chapter is too long” / “there’s a lot of
-special-casing”.</li><li>After authoring a new general parent theorem (this skill’s birth
-case): check whether old specialised props should be demoted.</li><li>Periodic: <code class="language-plaintext highlighter-rouge">/integration-watch consolidation</code> for a sweep.</li></ul><h2 id="inputs"><a href="#inputs" class="anchor-heading" aria-labelledby="inputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs
+special-casing”.</li><li>After authoring a new general parent theorem: check whether old
+specialised props should be demoted.</li><li>Periodic: <code class="language-plaintext highlighter-rouge">/integration-watch consolidation</code> for a sweep.</li></ul><h2 id="inputs"><a href="#inputs" class="anchor-heading" aria-labelledby="inputs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Inputs
   
   
 </h2><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/proposition-consolidation-audit                          → ask which chapter
@@ -159,8 +160,7 @@ hypothesis space); demote the rest to corollaries citing it.</p><h3 id="h3-sibli
   
 </h3><p>Two blocks A, B with <code class="language-plaintext highlighter-rouge">A.uses ∩ B.uses</code> covering &gt; 70% of A.uses, and
 both being <code class="language-plaintext highlighter-rouge">proposition</code>/<code class="language-plaintext highlighter-rouge">theorem</code>/<code class="language-plaintext highlighter-rouge">lemma</code>, where neither cites the
-other, are candidates for sibling-merger.</p><p><code class="language-plaintext highlighter-rouge">bun run pipeline/uses-overlap-audit.ts &lt;chapter&gt;</code> (script to add)
-computes the matrix.</p><h3 id="h4-identical-citation-tuple-lower-signal"><a href="#h4-identical-citation-tuple-lower-signal" class="anchor-heading" aria-labelledby="h4-identical-citation-tuple-lower-signal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> H4. Identical citation tuple (LOWER signal)
+other, are candidates for sibling-merger.</p><p>No script computes the matrix yet; see step 4.</p><h3 id="h4-identical-citation-tuple-lower-signal"><a href="#h4-identical-citation-tuple-lower-signal" class="anchor-heading" aria-labelledby="h4-identical-citation-tuple-lower-signal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> H4. Identical citation tuple (LOWER signal)
   
   
 </h3><p>Two propositions citing identical <code class="language-plaintext highlighter-rouge">cites: [a, b, c]</code> from the
@@ -198,9 +198,7 @@ other. Useful as a secondary filter on top of H1/H2.</p><h2 id="procedure"><a hr
 <span class="k">for</span> <span class="n">sig</span><span class="p">,</span> <span class="n">blocks</span> <span class="ow">in</span> <span class="n">sig_buckets</span><span class="p">.</span><span class="nf">items</span><span class="p">():</span>
     <span class="k">if</span> <span class="nf">len</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="nf">report</span><span class="p">(</span><span class="sh">"</span><span class="s">H2 candidate</span><span class="sh">"</span><span class="p">,</span> <span class="n">blocks</span><span class="p">)</span>
-</code></pre></div></div><p>(For the first cut, run grep + manual inspection rather than
-implementing the helper. The skill’s value is the heuristic
-checklist; the script is an optimisation.)</p><h3 id="4-h3-sweep--uses-overlap"><a href="#4-h3-sweep--uses-overlap" class="anchor-heading" aria-labelledby="4-h3-sweep--uses-overlap"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. H3 sweep — uses-overlap
+</code></pre></div></div><p>(No helper script exists; run grep and inspect by hand.)</p><h3 id="4-h3-sweep--uses-overlap"><a href="#4-h3-sweep--uses-overlap" class="anchor-heading" aria-labelledby="4-h3-sweep--uses-overlap"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. H3 sweep — uses-overlap
   
   
 </h3><p>For each pair of provable-kind blocks in the chapter:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>overlap = |A.uses ∩ B.uses| / max(|A.uses|, |B.uses|)
@@ -263,7 +261,7 @@ current branch and commit one consolidation per commit (cherry-
 pickable).</li></ul><h2 id="integration-with-integration-watch"><a href="#integration-with-integration-watch" class="anchor-heading" aria-labelledby="integration-with-integration-watch"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Integration with <code class="language-plaintext highlighter-rouge">/integration-watch</code></h2><p>A <code class="language-plaintext highlighter-rouge">consolidation</code> chip in the dispatcher’s <code class="language-plaintext highlighter-rouge">AskUserQuestion</code>:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/integration-watch consolidation              → just this audit
 /integration-watch proof consolidation         → in parallel with proof
 /integration-watch all                         → includes consolidation
-</code></pre></div></div><p>Per the <code class="language-plaintext highlighter-rouge">local/integration-watch</code> argument grammar, dispatch this
+</code></pre></div></div><p>Per the <code class="language-plaintext highlighter-rouge">integration-watch</code> argument grammar, dispatch this
 skill as a child whose Monitor watches for new <code class="language-plaintext highlighter-rouge">proposition</code> /
 <code class="language-plaintext highlighter-rouge">theorem</code> blocks added to <code class="language-plaintext highlighter-rouge">origin/main</code> and re-runs H1+H2 on the
 new block against its chapter neighbours. New consolidation
@@ -317,8 +315,6 @@ older blocks written before the parent existed.</li></ul><h2 id="example-session
 </code></pre></div></div><h2 id="harness-skills-that-dispatch-here"><a href="#harness-skills-that-dispatch-here" class="anchor-heading" aria-labelledby="harness-skills-that-dispatch-here"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Harness skills that dispatch here
   
   
-</h2><p>This layer sits above cat-harness, so the link points down from here. The
-harness skills below describe this one generically and name no science skill
-(bean <code class="language-plaintext highlighter-rouge">syiq</code>).</p><ul><li><code class="language-plaintext highlighter-rouge">domain-fencing</code>: H3 and H2 are the examples of domain in the vocabulary only, and of a shape that generalizes when the detection does not.</li><li><code class="language-plaintext highlighter-rouge">integration-backlog</code>: one of the routed improvers re-rated in the rate→improve loop.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+</h2><ul><li><code class="language-plaintext highlighter-rouge">domain-fencing</code>: H3 and H2 are the examples of domain in the vocabulary only, and of a shape that generalizes when the detection does not.</li><li><code class="language-plaintext highlighter-rouge">integration-backlog</code>: one of the routed improvers re-rated in the rate→improve loop.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

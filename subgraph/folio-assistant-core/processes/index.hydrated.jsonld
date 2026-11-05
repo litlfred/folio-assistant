@@ -11,7 +11,7 @@
         "declaredIn": "default",
         "kind": "directory"
       },
-      "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception.",
+      "description": "The BPMN core owns, by area: `content/` (authoring, editing and HCI validation, draft to publication, the content lifecycle, change review, evidence retrieval, contributor feedback), `library/` (L1 document ingestion and `deep-document-research`, Doc-Researcher's iterative loop), `conduct/` (getting started) and `ui/` (board interactions), with their DMN tables in each area's `decisions/`. A TOP-LEVEL directory, as the harness's diagrams are: `check:layout-norms` refuses a package subdirectory of an already-declared graph such as `methodologies/processes/`, and `workflowDirs` resolves only from a DECLARED directory.",
       "fileCount": 0,
       "holdsGraph": [
         "bootstrap:graphTypology/processes"
@@ -25,7 +25,7 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/globalTask/GT_SeedWorkPlan",
       "@type": "bootstrap:Task",
       "bpmnType": "bpmn:GlobalTask",
-      "description": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step (bean m8gz), so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike.",
+      "description": "The plan becomes beans, so a resumed session or a sibling agent can pick it up. The run's own bean was claimed by the Process_BeanOpen call before this step, so this step only notes the seeded plan on it; the beans themselves are written with the agent's own `beans create`, which no engine op performs. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike.",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Seed the work plan",
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/todo-manager",
@@ -42,7 +42,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted",
           "@type": "bootstrap:Process",
-          "description": "Somebody said \"create a folio\": work out which request they meant, with the branch computed by a decision table that may answer \"ask\", and what has to be true before anything is written. folio-assistant — getting started: from \"create a folio\" to a live site.\n\n\"Create a folio\" is five different requests. Gateway_Intent computes which one\nfrom decisions/folio-intent.dmn rather than letting the agent assume, and `ask`\nis one of the outcomes the table can return. Gateway_Live applies the same\nconstruction to publication, with `unknown` kept distinct from `not-yet`.\n\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is\ngenerated from it by `bun run cat render:bpmn` — never hand-edit the SVG.",
+          "description": "Somebody said \"create a folio\": work out which request they meant, with the branch computed by a decision table that may answer \"ask\", and what has to be true before anything is written, through to a live site.\n\n\"Create a folio\" is five different requests. Gateway_Intent computes which one\nfrom decisions/folio-intent.dmn rather than letting the agent assume, and `ask`\nis one of the outcomes the table can return. Gateway_Live applies the same\nconstruction to publication, with `unknown` kept distinct from `not-yet`.\n\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is\ngenerated from it by `bun run cat render:bpmn` — never hand-edit the SVG.",
           "enforcement": "strict",
           "flowCount": 28,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -51,7 +51,7 @@
           "sourcePath": "processes/conduct/getting-started.bpmn",
           "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/conduct/getting-started.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/StartEvent_AskToStart",
-          "summary": "Somebody said \"create a folio\": work out which request they meant, with the branch computed by a decision table that may answer \"ask\", and what has to be true before anything is written."
+          "summary": "Somebody said \"create a folio\": work out which request they meant, with the branch computed by a decision table that may answer \"ask\", and what has to be true before anything is written, through to a live site."
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted#flow/Flow_1",
@@ -757,7 +757,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview",
           "@type": "bootstrap:Process",
-          "description": "Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline deploys.\n\nYou are in this process when what is changing is a folio — a chapter, a block, a piece of deterministic logic — rather than the platform that renders it. `code-change-review` is the same shape for the other side of that line, and the distinction matters because a content change is accepted by a REVIEW COMMITTEE on editorial grounds while a platform change is accepted by a code reviewer on engineering ones.\n\nTwo things this is not. It is not the feedback workflow: `todo-review` triages what readers said about content that already exists. And the rendering the author reviews is a STAGED one, because a person cannot assess a rendered artefact from a description of it.\n\nThe diagram shows the phases and the hand-offs between them; each phase is its own process. Making the change is content-change-review-make, staging it is content-change-review-stage, the committee's review is content-change-review-committee, and merging and deploying is content-change-review-publish. The page was one diagram of 43 steps in five lanes until the owner found it \"long and hard to read\" (2026-10-31); the split follows bpmn-authoring's rule of one phase per call activity.",
+          "description": "Getting a change to a folio's CONTENT from a request into a published rendering: the author says what they want, an agent works out its scope and makes it, a review committee accepts or refuses it, and the pipeline deploys.\n\nYou are in this process when what is changing is a folio — a chapter, a block, a piece of deterministic logic — rather than the platform that renders it. `code-change-review` is the same shape for the platform: a content change is accepted by a REVIEW COMMITTEE on editorial grounds, a platform change by a code reviewer on engineering ones.\n\nTwo things this is not. It is not the feedback workflow: `todo-review` triages what readers said about content that already exists. And the rendering the author reviews is a STAGED one, because a person cannot assess a rendered artefact from a description of it.\n\nThe diagram shows the phases and the hand-offs between them; each phase is its own process. Making the change is content-change-review-make, staging it is content-change-review-stage, the committee's review is content-change-review-committee, and merging and deploying is content-change-review-publish. This follows bpmn-authoring's rule of one phase per call activity.",
           "enforcement": "strict",
           "flowCount": 18,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -1237,7 +1237,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee",
           "@type": "bootstrap:Process",
-          "description": "The review committee's review of one staged content change, ending in an approval or a request for changes: compare staged against main, slice the change and review each slice, settle withdrawn comments and disputed findings, gate on coverage, review the editorial dependencies and the impact, and decide.\n\nCalled from content-change-review when the author submits. Which end it reaches is what the caller's GW_CommitteeApproved reads. Organising the review is the review coordinator's lane and deciding it is the committee's, on the owner's ruling of 2026-09-23 (bean en2d). Merging is not here: it is a separate, confirmed act in content-change-review-publish.",
+          "description": "The review committee's review of one staged content change, ending in an approval or a request for changes: compare staged against main, slice the change and review each slice, settle withdrawn comments and disputed findings, gate on coverage, review the editorial dependencies and the impact, and decide.\n\nCalled from content-change-review when the author submits. Which end it reaches is what the caller's GW_CommitteeApproved reads. Organising the review is the review coordinator's lane and deciding it is the committee's. Merging is not here: it is a separate, confirmed act in content-change-review-publish.",
           "enforcement": "strict",
           "flowCount": 21,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -1996,7 +1996,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish",
           "@type": "bootstrap:Process",
-          "description": "Merging an approved content change on the owner's explicit confirmation and publishing it: remove the staging preview, rebuild the main site and watch it. A change that is not merged keeps its preview.\n\nCalled from content-change-review after the committee approves. Approving is the committee's judgement and merging is a separate, confirmed act (bean en2d), which is why the merge opens this phase rather than closing the review.",
+          "description": "Merging an approved content change on the owner's explicit confirmation and publishing it: remove the staging preview, rebuild the main site and watch it. A change that is not merged keeps its preview.\n\nCalled from content-change-review after the committee approves. Approving is the committee's judgement and merging is a separate, confirmed act, which is why the merge opens this phase rather than closing the review.",
           "enforcement": "strict",
           "flowCount": 7,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -2725,7 +2725,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
           "@type": "bootstrap:Process",
-          "description": "How a document folio — structured prose and policy guidance, with no Lean and no required TeX — is authored, built and reviewed end to end. folio-assistant — authoring a document end to end (no Lean, no required TeX).\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is generated\nfrom it by `bun run cat render:bpmn` — never hand-edit the SVG.\nThe shape is the paper process minus the Lean lane and plus one step, the profile\ncheck, which is what keeps a document folio publishable without either toolchain.\n\nReview, publish and committee feedback are core's shared Process_FolioReviewPublish, called after rendering (shared block G6 of the BPMN guidance review, owner Q-BR-7 A, 2026-11-01). Its `no` answer, changes asked, comes back to Task_AuthorBlocks.",
+          "description": "How a document folio — structured prose and policy guidance, with no Lean and no required TeX — is authored, built and reviewed end to end.\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is generated\nfrom it by `bun run cat render:bpmn` — never hand-edit the SVG.\nThe shape is the paper process minus the Lean lane and plus one step, the profile\ncheck, which is what keeps a document folio publishable without either toolchain.\n\nReview, publish and committee feedback are core's shared Process_FolioReviewPublish, called after rendering. Its `no` answer, changes asked, comes back to Task_AuthorBlocks.",
           "enforcement": "advisory",
           "flowCount": 17,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -3179,7 +3179,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle",
           "@type": "bootstrap:Process",
-          "description": "How a data sharing agreement is drafted, negotiated, signed, published with a version, a hash and a catalogue record, and later amended, renewed or ended. It covers the agreement as a document folio only: processes P1, P2 and P14 of the DSA process catalogue.\nTwo entry points: a request for an agreement (P1, then P2), and a change to one in force (P14). An amendment or a renewal with a new end date runs P1 and P2 again and publishes a new version linked to the old one; the old version stays readable.\nStandards named: ODRL 2.2 (the Agreement), DCAT 3 (catalogue record, distributions, checksums, versions) and DCMI Terms (dcterms:source from the policy to the text). No field is defined here.\nSteps no skill covers yet are user tasks with a no-skill reason starting \"Gap:\". Owner's option B13-B, 2026-10-30; folio-assistant#2702.\nConsent rules (owner, 2026-10-30), which every agreement drawn here keeps. 1. Legal basis: an agreement carries the odrl:obtainConsent duty only when consent is its legal basis; treatment, public-health law and research waivers do not rest on consent (P1.2a, P1.3). 2. Version pinning: a Consent cites the agreement's fixed-version URL and hash (FHIR R4 Consent.policy.uri), and for a computable agreement the ODRL policy uid is that same URL (P2.1, P2.2b, P2.3); an amendment that widens use needs new consent, one that narrows use does not (P14.3). 3. Plain language: every agreement that needs consent publishes a plain-language summary, hashed with the agreement, and that summary is what the person consents to (P1.2b, P2.2a). How a person gives, withdraws or is asked again for consent is the trust layer's, not this diagram's.",
+          "description": "How a data sharing agreement is drafted, negotiated, signed, published with a version, a hash and a catalogue record, and later amended, renewed or ended. It covers the agreement as a document folio only: processes P1, P2 and P14 of the DSA process catalogue.\nTwo entry points: a request for an agreement (P1, then P2), and a change to one in force (P14). An amendment or a renewal with a new end date runs P1 and P2 again and publishes a new version linked to the old one; the old version stays readable.\nStandards named: ODRL 2.2 (the Agreement), DCAT 3 (catalogue record, distributions, checksums, versions) and DCMI Terms (dcterms:source from the policy to the text). No field is defined here.\nSteps no skill covers yet are user tasks with a no-skill reason starting \"Gap:\".\nConsent rules, which every agreement drawn here keeps. 1. Legal basis: an agreement carries the odrl:obtainConsent duty only when consent is its legal basis; treatment, public-health law and research waivers do not rest on consent (P1.2a, P1.3). 2. Version pinning: a Consent cites the agreement's fixed-version URL and hash (FHIR R4 Consent.policy.uri), and for a computable agreement the ODRL policy uid is that same URL (P2.1, P2.2b, P2.3); an amendment that widens use needs new consent, one that narrows use does not (P14.3). 3. Plain language: every agreement that needs consent publishes a plain-language summary, hashed with the agreement, and that summary is what the person consents to (P1.2b, P2.2a). How a person gives, withdraws or is asked again for consent is the trust layer's, not this diagram's.",
           "enforcement": "advisory",
           "flowCount": 59,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -4588,7 +4588,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
           "@type": "bootstrap:Process",
-          "description": "What happens to one proposed change to one content block: drafted, validated mechanically and by review, shown to the editor, and committed to the corpus only if accepted. folio-assistant — editing a content block and its HCI validation gate.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+          "description": "What happens to one proposed change to one content block: drafted, validated mechanically and by review, shown to the editor, and committed to the corpus only if accepted.",
           "enforcement": "strict",
           "flowCount": 34,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -5411,7 +5411,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
           "@type": "bootstrap:Process",
-          "description": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap; a change that states or alters no recommendation ends at its own event before any search. The author reviews the guidance already in their content, frames the question as PICO, retrieves candidate evidence across three classes (trusted L1 sources, trusted L2/L3 content, data repositories), verifies each candidate's authority against the publishing body's own API, grades the body of evidence, and either attaches it to the recommendation or records the gap. STRAWPERSON: registries, grading system and API bindings are not fixed here.",
+          "description": "Frame a question for a recommendation, retrieve and appraise evidence from trusted sources, and either attach it or record the gap; a change that states or alters no recommendation ends at its own event before any search. Evidence comes from three classes (trusted L1 sources, trusted L2/L3 content, data repositories), and each candidate's authority is verified against the publishing body's own API. STRAWPERSON: registries, grading system and API bindings are not fixed here.",
           "enforcement": "strict",
           "flowCount": 21,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -5937,7 +5937,7 @@
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish",
           "@type": "bootstrap:Process",
           "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/folio-review-publish.svg",
-          "description": "Review a rendered folio and publish it, or send it back with changes. Shared by every authoring process: authoring-a-document (this instance) and authoring-a-paper (folio-assistant-sci) call it after they validate and render, so review, publish and committee feedback are drawn once (shared block G6 of the BPMN guidance review, owner Q-BR-7 A, 2026-11-01). What differs by folio kind stays with the caller: its writing loop, its own check (the content profile for a document, the Lean build for a paper), and its renderer. It ends one of three ways. `Published`: the caller closes its bean. `Changes asked` and `Feedback in: changes asked`: the caller goes back to its writing loop.",
+          "description": "Review a rendered folio and publish it, or send it back with changes. Shared by every authoring process: authoring-a-document (this instance) and authoring-a-paper (folio-assistant-sci) call it after they validate and render, so review, publish and committee feedback are drawn once. What differs by folio kind stays with the caller: its writing loop, its own check (the content profile for a document, the Lean build for a paper), and its renderer. It ends one of three ways. `Published`: the caller closes its bean. `Changes asked` and `Feedback in: changes asked`: the caller goes back to its writing loop.",
           "enforcement": "advisory",
           "flowCount": 7,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -6580,7 +6580,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Lifecycle",
           "@type": "bootstrap:Process",
-          "description": "One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities. folio-assistant — the content lifecycle end to end, one cycle of a folio.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+          "description": "One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities.",
           "enforcement": "strict",
           "flowCount": 15,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -7524,7 +7524,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange",
           "@type": "bootstrap:Process",
-          "description": "Called by Process_PublicComment (CallActivity_MakeChange) once the\neditor's decision on a comment changes the document. An author makes\nthe edit on a feature branch, the change set is reviewed on its staging\npreview as any content change (Process_ContentChangeReview), an\nindependent QA gate checks the dispositions against the pull request,\nand each comment the change set answers is marked incorporated when it\nmerges. Drawn on its own page so that each phase fits the screen.\nSkill: public-comment.",
+          "description": "Called by Process_PublicComment (CallActivity_MakeChange) once the\neditor's decision on a comment changes the document. An author makes\nthe edit on a feature branch, the change set is reviewed on its staging\npreview as any content change (Process_ContentChangeReview), an\nindependent QA gate checks the dispositions against the pull request,\nand each comment the change set answers is marked incorporated when it\nmerges.\nSkill: public-comment.",
           "enforcement": "strict",
           "flowCount": 7,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -7984,7 +7984,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
           "@type": "bootstrap:Process",
-          "description": "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision. folio-assistant — corpus to draft publication to officially published.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+          "description": "How the corpus becomes an officially published folio: a draft publication, its review, and the release authority's decision.",
           "enforcement": "strict",
           "flowCount": 25,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -8919,7 +8919,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg",
           "@type": "bootstrap:Process",
-          "description": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links. folio-assistant — Ingestion subprocess — build the L1 knowledge graph.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+          "description": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links.",
           "enforcement": "advisory",
           "flowCount": 7,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -9377,7 +9377,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
           "@type": "bootstrap:Process",
-          "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance. folio-assistant — Ingestion subprocess — derive content from the assets.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+          "description": "Derive content from an ingested source's assets: the archive, technical metadata, images, audio, tabular data and provenance.",
           "enforcement": "advisory",
           "flowCount": 13,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -9669,7 +9669,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure",
           "@type": "bootstrap:Process",
-          "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates. folio-assistant — Ingestion subprocess — extract structure.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+          "description": "Extract the structure of an uploaded source: its text layer, OCR where it has none, sections, structure and claim candidates.",
           "enforcement": "advisory",
           "flowCount": 8,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -9886,7 +9886,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
           "@type": "bootstrap:Process",
-          "description": "folio-assistant — L1 document ingestion — a document to the L1 source knowledge graph.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\n\nCARRIES THE BODY `document-ingestion.bpmn` HAD until placement PR6 (bean `apcg`; owner ruling 3, 2026-09-30: \"only basic doc ingestion high level workflow in cat-harness … more detailed doc ingestion/cataloguing methodologies in folio-asst-core\"). Every activity id is unchanged, so a reference to `Task_Detect` or `CallActivity_Extract` means what it meant.\n\nIT REFINES THE HARNESS FLOW BY CALLING IT. CallActivity_Basic runs the harness's `Process_Ingestion` first — accept the upload, put its metadata into the KG, catalogue the asset in library/ — and this process then reads the document into a complete L1 entry. That is the inversion the harness skill `library-ingestion` describes: the call points DOWN, from core to the harness, and nothing in the harness names this process. The theme branch's call into the harness's `ingest-theme.bpmn` is downward for the same reason; the four `ingest-*` phases sit beside this file. The method is the `l1-document-ingestion` skill.",
+          "description": "L1 document ingestion — a document to the L1 source knowledge graph.\n\nThe harness holds only the basic, high-level document-ingestion flow; the detailed ingestion and cataloguing method is here.\n\nIT REFINES THE HARNESS FLOW BY CALLING IT. CallActivity_Basic runs the harness's `Process_Ingestion` first — accept the upload, put its metadata into the KG, catalogue the asset in library/ — and this process then reads the document into a complete L1 entry. That is the inversion the harness skill `library-ingestion` describes: the call points DOWN, from core to the harness, and nothing in the harness names this process. The theme branch's call into the harness's `ingest-theme.bpmn` is downward for the same reason; the four `ingest-*` phases sit beside this file. The method is the `l1-document-ingestion` skill.",
           "enforcement": "advisory",
           "flowCount": 21,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -9895,7 +9895,7 @@
           "sourcePath": "processes/library/l1-document-ingestion.bpmn",
           "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/l1-document-ingestion.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/StartEvent_Document",
-          "summary": "folio-assistant — L1 document ingestion — a document to the L1 source knowledge graph."
+          "summary": "L1 document ingestion — a document to the L1 source knowledge graph."
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i1",
@@ -10413,7 +10413,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate",
           "@type": "bootstrap:Process",
-          "description": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so. folio-assistant — Ingestion subprocess — the L1 completeness gate.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+          "description": "Decide whether the derived content is complete enough to promote to the L1 graph, and who says so.",
           "enforcement": "advisory",
           "flowCount": 10,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
@@ -10680,7 +10680,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
           "@type": "bootstrap:Process",
-          "description": "What a reader does to a board and what the renderer does back: every card rests as its avatar, a window opens onto the one the reader chose, and it closes back to where it came from.\n\nYou are in this process when the question is a READER's — which card is open, what is raised, how to get back. Semantic zoom is in here too and is deliberately not the same mechanism: the threshold is resolved from the kind and applies itself by SIZE, while opening and closing are a person's acts. Conflating them is how a board starts changing under somebody who did not touch it.\n\nThe rule the diagram exists to hold is the one about the way back: an action whose inverse is not reachable is not a toggle, and a window that cannot be closed is a navigation dead end wearing a control's clothes.",
+          "description": "What a reader does to a board and what the renderer does back: every card rests as its avatar, a window opens onto the one the reader chose, and it closes back to where it came from.\n\nYou are in this process when the question is a READER's — which card is open, what is raised, how to get back. Semantic zoom is in here too and is deliberately not the same mechanism: the threshold is resolved from the kind and applies itself by SIZE, while opening and closing are a person's acts.\n\nThe rule the diagram holds is the one about the way back: an action whose inverse is not reachable is not a toggle.",
           "enforcement": "advisory",
           "flowCount": 14,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",

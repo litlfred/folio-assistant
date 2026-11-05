@@ -116,11 +116,10 @@ wherever that layer is present.</p><h2 id="heavy-proof-discipline"><a href="#hea
 </h2><p>Whenever you add or modify a formal theorem in a content block, you <strong>MUST</strong>
 also add or update a matching <code class="language-plaintext highlighter-rouge">**Proof.**</code> narrative block in the sibling
 <code class="language-plaintext highlighter-rouge">.md</code> file. See <code class="language-plaintext highlighter-rouge">formalizer</code> and <code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code> for the
-canonical format.</p><p>Anti-pattern (FORBIDDEN): touching the formal-proof file without touching
-<code class="language-plaintext highlighter-rouge">.md</code>, or vice versa. The formal theorem and the narrative proof move together
-in a single coherent change. A <code class="language-plaintext highlighter-rouge">.md</code> that describes the <strong>claim</strong> but omits
-the <strong>proof</strong> is incomplete: the reader must be able to follow the argument
-from the <code class="language-plaintext highlighter-rouge">.md</code> alone.</p><p>For every formal theorem <code class="language-plaintext highlighter-rouge">foo</code> proved in the sibling, the <code class="language-plaintext highlighter-rouge">.md</code> must contain:</p><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**Proposition (formal: `foo`).**</span> <span class="nt">&lt;statement&gt;</span>
+canonical format.</p><p>Never change the formal-proof file without the <code class="language-plaintext highlighter-rouge">.md</code>, or the <code class="language-plaintext highlighter-rouge">.md</code> without
+the formal file. A <code class="language-plaintext highlighter-rouge">.md</code> that states the <strong>claim</strong> but omits the <strong>proof</strong> is
+incomplete: the reader must be able to follow the argument from the <code class="language-plaintext highlighter-rouge">.md</code>
+alone.</p><p>For every formal theorem <code class="language-plaintext highlighter-rouge">foo</code> proved in the sibling, the <code class="language-plaintext highlighter-rouge">.md</code> must contain:</p><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**Proposition (formal: `foo`).**</span> <span class="nt">&lt;statement&gt;</span>
 <span class="ge">*Proof.*</span> <span class="nt">&lt;narrative</span> <span class="na">sketch</span> <span class="na">citing</span> <span class="na">key</span> <span class="na">lemmas</span> <span class="err">/</span> <span class="na">tactics</span><span class="nt">&gt;</span> $<span class="se">\s</span>quare$
 </code></pre></div></div><p>When editing existing blocks, run the <code class="language-plaintext highlighter-rouge">proof-narrative-lean-equivalence</code> audit
 to surface any formal theorems without narrative counterparts and backfill

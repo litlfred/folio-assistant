@@ -11,7 +11,7 @@
         "declaredIn": "default",
         "kind": "directory"
       },
-      "description": "The BPMN and DMN this layer OWNS: the paper's content processes, grouped by concern exactly as the harness groups its own (`processes/<group>/`, a DMN in `processes/<group>/decisions/`). `content/authoring-a-paper.bpmn` with `content/decisions/lean-build-gate.dmn`, and `content/atomic-mass-drift-check.bpmn`. Moved up from cat-harness/processes/ by placement PR3 (bean `63wl`, owner rulings 2026-09-30): both name Lean and paper skills that live here, which cat-harness cannot reach. Their calls and skill refs that stay generic point DOWN through core to the harness. Declared WITH its files in one commit, per bean `dh4f`.",
+      "description": "The BPMN and DMN this layer OWNS: the paper's content processes, grouped by concern exactly as the harness groups its own (`processes/<group>/`, a DMN in `processes/<group>/decisions/`). `content/authoring-a-paper.bpmn` with `content/decisions/lean-build-gate.dmn`, `content/atomic-mass-drift-check.bpmn` and `content/lean-docs-publish.bpmn`. They name Lean and paper skills that live here, which cat-harness cannot reach. Their calls and skill refs that stay generic point DOWN through core to the harness.",
       "fileCount": 0,
       "holdsGraph": [
         "bootstrap:graphTypology/processes"
@@ -30,7 +30,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_AtomicMassDrift",
           "@type": "bootstrap:Process",
-          "description": "Check that `AtomicMass.lean` is still in sync with the data table it is generated from. THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red.\n\nThe check itself is the shared `generated-file-drift` process (Process_GeneratedFileDrift), drawn once for every drift check. This diagram stays because its workflow's job names Start_Change (`# bpmn-node:`), which is what lets check:workflow-coverage see the job.",
+          "description": "Check that `AtomicMass.lean` is still in sync with the data table it is generated from: the job regenerates and diffs, and any difference fails.\n\nThe check itself is the shared `generated-file-drift` process (Process_GeneratedFileDrift), drawn once for every drift check. Its workflow's job names Start_Change (`# bpmn-node:`), which is how check:workflow-coverage sees the job.",
           "enforcement": "strict",
           "flowCount": 2,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes",
@@ -39,7 +39,7 @@
           "sourcePath": "processes/content/atomic-mass-drift-check.bpmn",
           "sourceUrl": "https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/atomic-mass-drift-check.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_AtomicMassDrift/node/Start_Change",
-          "summary": "Check that `AtomicMass.lean` is still in sync with the data table it is generated from."
+          "summary": "Check that `AtomicMass.lean` is still in sync with the data table it is generated from: the job regenerates and diffs, and any difference fails."
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_AtomicMassDrift#flow/Flow_0",
@@ -111,7 +111,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish",
           "@type": "bootstrap:Process",
-          "description": "Build the visualiser of a folio's declared `lean` directory — the Lake package's doc-gen4 HTML render — and put it inside the folio's built site with the harness navbar and rail. Owner, 2026-10-10: \"there should be a lean/ visualizer which is then the lean html render (but wrapped w/ cat-harness navbar chrome/rails)\".\n\nTWO STEPS IN TWO LANES, BECAUSE THEY FAIL DIFFERENTLY. The build is a Lake run over the folio's warm olean cache: expensive, and able to damage the cache it reads (a Lake build over an untraced restore evicts it). The publish is a file pass over the build's output: seconds, and unable to touch the cache. So the build sits with the Lean toolchain and refuses rather than risks; the publish sits with the build pipeline, in the slot where `stage-folio-local.ts` rails the folio's own pages — after the site is built, before the chrome check and deploy.\n\nBOTH ENDS THAT ARE NOT \"READY\" PUBLISH NOTHING. A guard that refused, a build that failed, and a page the rail did not reach are all reported as such, never as a site without Lean docs that looks complete.",
+          "description": "Build the visualiser of a folio's declared `lean` directory — the Lake package's doc-gen4 HTML render — and put it inside the folio's built site with the harness navbar and rail.\n\nTwo steps in two lanes. The build is a Lake run over the folio's warm olean cache: expensive, and able to damage the cache (a Lake build over an untraced restore evicts it), so it sits with the Lean toolchain and refuses rather than risks. The publish is a file pass over the build's output that cannot touch the cache; it sits with the build pipeline, after the site is built and before the chrome check and deploy, where `stage-folio-local.ts` rails the folio's own pages.\n\nOnly End_Ready publishes: a refused guard, a failed build and an unrailed page are each reported as such, never as a complete site without Lean docs.",
           "enforcement": "strict",
           "flowCount": 7,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes",
@@ -325,7 +325,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
           "@type": "bootstrap:Process",
-          "description": "How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting. folio-assistant — authoring a scientific paper end to end (Lean + LaTeX).\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\n\nReview, publish and committee feedback are core's shared Process_FolioReviewPublish, called after rendering (shared block G6 of the BPMN guidance review, owner Q-BR-7 A, 2026-11-01). Its `no` answer, changes asked, comes back to Task_AuthorBlocks.",
+          "description": "How a scientific paper or book folio is authored end to end, with Lean for its formal claims and LaTeX for its typesetting.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.\n\nReview, publish and committee feedback are core's shared Process_FolioReviewPublish, called after rendering. Its `no` answer, changes asked, comes back to Task_AuthorBlocks.",
           "enforcement": "advisory",
           "flowCount": 17,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes",

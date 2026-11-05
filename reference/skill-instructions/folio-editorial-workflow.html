@@ -121,9 +121,9 @@ core-layer routing rules alongside them.</p><h2 id="1-glossary-terminology-and-n
 introduces a terminology synonym or symbol, route to
 <a href="../../reference/skill-instructions/ontologist.html"><code class="language-plaintext highlighter-rouge">ontologist</code></a> to register a
 glossary entry and verify notation-register compliance; when it introduces a
-new domain concept, author a definition block.</li><li>** <code class="language-plaintext highlighter-rouge">:defterm</code> / <code class="language-plaintext highlighter-rouge">:refterm</code> backfilling (<code class="language-plaintext highlighter-rouge">md-authoring</code>):** use
-<a href="../../reference/skill-instructions/glossary-build.html"><code class="language-plaintext highlighter-rouge">glossary-build</code></a> (<code class="language-plaintext highlighter-rouge">pipeline/codemod-refterm.ts</code>)
-to backfill <code class="language-plaintext highlighter-rouge">:refterm[…]</code> directives from bare-text mentions of defined
+new domain concept, author a definition block.</li><li><strong><code class="language-plaintext highlighter-rouge">:defterm</code> / <code class="language-plaintext highlighter-rouge">:refterm</code> backfilling (<code class="language-plaintext highlighter-rouge">md-authoring</code>):</strong> use
+<a href="../../reference/skill-instructions/glossary-build.html"><code class="language-plaintext highlighter-rouge">glossary-build</code></a>
+(<code class="language-plaintext highlighter-rouge">folio-assistant-core/scripts/codemod-refterm.ts</code>) to backfill <code class="language-plaintext highlighter-rouge">:refterm[…]</code> directives from bare-text mentions of defined
 slugs.</li><li><strong>Ordered glossaries (<code class="language-plaintext highlighter-rouge">uses-editorial-review</code>, <code class="language-plaintext highlighter-rouge">render-order</code>):</strong> a glossary
 term’s <code class="language-plaintext highlighter-rouge">requires</code> relation follows the same authored-never-inferred
 discipline as block <code class="language-plaintext highlighter-rouge">uses[]</code>, verified in declaration order per

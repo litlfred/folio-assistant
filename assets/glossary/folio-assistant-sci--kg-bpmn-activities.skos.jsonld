@@ -86,7 +86,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn (bean m8gz, owner 2026-10-24); placed straight before the end so the engine's resolve sees nothing left but the archive step."
+          "@value": "Process_BeanClose: end the bean in a state that says why — complete and archive it, scrap it with its reasons and archive it, or record the blocker and hand it back. The one place resolve and archive are drawn; placed straight before the end so the engine's resolve sees nothing left but the archive step."
         }
       ],
       "skos:notation": "Call_BeanClose",
@@ -106,7 +106,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn (bean m8gz, owner 2026-10-24); the gateway after this reads which end it reached."
+          "@value": "Process_BeanOpen: check before you create, find out whose the bean is, and claim it — or leave it alone when it is someone else's. The one place a claim is drawn; the gateway after this reads which end it reached."
         }
       ],
       "skos:notation": "Call_BeanOpen",
@@ -126,7 +126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Core's shared review-and-publish process (Process_FolioReviewPublish): the reviewer reads the rendered folio and approves it, asks for changes, or sends a working draft to the Authoring Committee. Before 2026-11-01 each authoring process drew these steps itself (shared block G6, owner Q-BR-7 A)."
+          "@value": "Core's shared review-and-publish process (Process_FolioReviewPublish): the reviewer reads the rendered folio and approves it, asks for changes, or sends a working draft to the Authoring Committee."
         }
       ],
       "skos:notation": "Call_ReviewPublish",
@@ -206,7 +206,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Typeset the paper through LaTeX to PDF and HTML. Run latex_preflight first — missing packages, fonts or engine — rather than discovering them twenty minutes in. The preamble, class and macros belong to the folio, never to the platform."
+          "@value": "Typeset the paper through LaTeX to PDF and HTML. Run `latex-preflight` first to catch compile-breaking source patterns before a full compile. The preamble, class and macros belong to the folio, never to the platform."
         }
       ],
       "skos:notation": "Task_Render",

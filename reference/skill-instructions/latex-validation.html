@@ -190,12 +190,10 @@ citation key in <code class="language-plaintext highlighter-rouge">content/schem
 <code class="language-plaintext highlighter-rouge">references.bib</code> (auto-generated from <code class="language-plaintext highlighter-rouge">content/schema/references.ts</code>).</li><li>Validate all citation keys with <code class="language-plaintext highlighter-rouge">bun run validate-refs</code>.</li></ul><h2 id="mechanical-enforcement--the-preflight-linter-run-this-first"><a href="#mechanical-enforcement--the-preflight-linter-run-this-first" class="anchor-heading" aria-labelledby="mechanical-enforcement--the-preflight-linter-run-this-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Mechanical enforcement — the preflight linter (run this FIRST)
   
   
-</h2><p>The “No undefined control sequences” / balanced-braces aspirations in
-§1 are now <strong>mechanically enforced</strong> by a fast static gate that needs no
-TeX install. The content pipeline’s <code class="language-plaintext highlighter-rouge">validateLatexAst</code>
+</h2><p>The §1 undefined-control-sequence and balance checks are enforced by a
+static gate that needs no TeX install. The pipeline’s <code class="language-plaintext highlighter-rouge">validateLatexAst</code>
 (<code class="language-plaintext highlighter-rouge">render-latex.ts</code>) uses unified-latex, which <strong>never resolves macros</strong>,
-so three whole classes of fatal-pdflatex bug pass it silently and used
-to land on <code class="language-plaintext highlighter-rouge">main</code> needing a manual <code class="language-plaintext highlighter-rouge">fix(latex)</code> commit each time.</p><p><strong>Always run before declaring LaTeX clean:</strong></p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content
+so these fatal-pdflatex classes pass it silently.</p><p><strong>Always run before declaring LaTeX clean:</strong></p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>content
 bun run pipeline/build.ts &lt;paper&gt;.ts <span class="nt">--generate-main</span> <span class="nt">--main-out</span> ../main.tex <span class="se">\</span>
   <span class="nt">--preamble</span> ../latex/preamble.tex   <span class="c"># regenerate the compile unit</span>
 bun run latex-preflight              <span class="c"># gate: exits 1 on any issue</span>

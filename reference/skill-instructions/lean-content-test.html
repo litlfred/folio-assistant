@@ -119,19 +119,16 @@ conclusion in the PR body, as <code class="language-plaintext highlighter-rouge"
   
   
 </h2><p>A local <code class="language-plaintext highlighter-rouge">lake build</code> runs on a warm <code class="language-plaintext highlighter-rouge">.lake</code>, your toolchain and whatever
-build flags you set. CI runs cold. Check when the Lean workflow last ran, too:
-qou’s <code class="language-plaintext highlighter-rouge">lean_ci.yml</code> last ran 2026-04-25 and failed on <code class="language-plaintext highlighter-rouge">main</code>. Nothing
-dispatched it for four months, and 37 modules stopped compiling unnoticed,
-several with plain parse errors, which means files that had never compiled
-at all.</p><h2 id="what-a-lake-build-reaches"><a href="#what-a-lake-build-reaches" class="anchor-heading" aria-labelledby="what-a-lake-build-reaches"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a Lake build reaches
+build flags you set. CI runs cold. Check when the Lean workflow last ran:
+one nobody dispatches lets modules stop compiling unnoticed, including
+files that never compiled at all.</p><h2 id="what-a-lake-build-reaches"><a href="#what-a-lake-build-reaches" class="anchor-heading" aria-labelledby="what-a-lake-build-reaches"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a Lake build reaches
   
   
 </h2><p>Lake’s <code class="language-plaintext highlighter-rouge">lean_lib</code> uses <code class="language-plaintext highlighter-rouge">globs := roots.map Glob.one</code>, so <code class="language-plaintext highlighter-rouge">lake build</code>
 compiles the root module plus its transitive <code class="language-plaintext highlighter-rouge">import</code>s, not the source
-directory. <code class="language-plaintext highlighter-rouge">srcDir</code> widens where sources are <em>found</em>, never what is <em>built</em>.</p><p>Measured in qou on 2026-08-08: <code class="language-plaintext highlighter-rouge">lake build</code> reached <strong>853 of the 1618</strong>
-modules under <code class="language-plaintext highlighter-rouge">lean/QOU/</code>. The other 766 (47%) had no olean at all. Among
-them was the module holding the single <code class="language-plaintext highlighter-rouge">sorry</code> gating the Specht chain, which
-is why the package build’s sorry-warning list omitted it.</p><p>Count oleans against sources:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find .lake/build/lib/lean/QOU <span class="nt">-name</span> <span class="s1">'*.olean'</span> | <span class="nb">wc</span> <span class="nt">-l</span>   <span class="c"># 860</span>
+directory. <code class="language-plaintext highlighter-rouge">srcDir</code> widens where sources are <em>found</em>, never what is <em>built</em>.</p><p>In one folio, <code class="language-plaintext highlighter-rouge">lake build</code> reached about half the modules under its source
+tree; an unbuilt module held the only <code class="language-plaintext highlighter-rouge">sorry</code> gating a main result, so the
+build’s sorry-warning list omitted it.</p><p>Count oleans against sources:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find .lake/build/lib/lean/QOU <span class="nt">-name</span> <span class="s1">'*.olean'</span> | <span class="nb">wc</span> <span class="nt">-l</span>   <span class="c"># 860</span>
 find QOU <span class="nt">-name</span> <span class="s1">'*.lean'</span> | <span class="nb">wc</span> <span class="nt">-l</span>                         <span class="c"># 1618</span>
 </code></pre></div></div><p>A ratio far from 1 means every corpus-wide number read off that build, such
 as sorry counts, axiom counts or warning totals, is an undercount. Report what

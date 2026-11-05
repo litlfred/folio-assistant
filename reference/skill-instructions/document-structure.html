@@ -111,10 +111,9 @@
   
   
 </h2><p>Nothing derives the outline from the prose. Three manifests hold it, and each
-is an ordered list:</p><div class="table-wrapper"><table><thead><tr><th>File</th><th>Holds</th><th>Order means</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">content/&lt;slug&gt;/&lt;slug&gt;.ts</code></td><td><code class="language-plaintext highlighter-rouge">chapters: ChapterRef[]</code></td><td>reading order of chapters</td></tr><tr><td><code class="language-plaintext highlighter-rouge">&lt;chapter&gt;/&lt;chapter&gt;.ts</code></td><td><code class="language-plaintext highlighter-rouge">sections: Section[]</code></td><td>reading order within the chapter</td></tr><tr><td>a section’s <code class="language-plaintext highlighter-rouge">blocks: string[]</code></td><td>block root names</td><td>reading order within the section</td></tr></tbody></table></div><p>A block reaches the output <strong>iff</strong> some section names it. This is the single
-most common way work disappears: the <code class="language-plaintext highlighter-rouge">.ts</code> and <code class="language-plaintext highlighter-rouge">.md</code> are written, committed,
-and reviewed, and the block renders nowhere because nothing lists it. Adding
-the name to <code class="language-plaintext highlighter-rouge">blocks[]</code> is part of adding a block, not a follow-up.</p><h2 id="sections-may-nest-exactly-one-level"><a href="#sections-may-nest-exactly-one-level" class="anchor-heading" aria-labelledby="sections-may-nest-exactly-one-level"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sections may nest exactly one level
+is an ordered list:</p><div class="table-wrapper"><table><thead><tr><th>File</th><th>Holds</th><th>Order means</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">folio/&lt;slug&gt;/&lt;slug&gt;.ts</code></td><td><code class="language-plaintext highlighter-rouge">chapters: ChapterRef[]</code></td><td>reading order of chapters</td></tr><tr><td><code class="language-plaintext highlighter-rouge">&lt;chapter&gt;/&lt;chapter&gt;.ts</code></td><td><code class="language-plaintext highlighter-rouge">sections: Section[]</code></td><td>reading order within the chapter</td></tr><tr><td>a section’s <code class="language-plaintext highlighter-rouge">blocks: string[]</code></td><td>block root names</td><td>reading order within the section</td></tr></tbody></table></div><p>A block reaches the output <strong>iff</strong> some section names it: a block whose
+<code class="language-plaintext highlighter-rouge">.ts</code> and <code class="language-plaintext highlighter-rouge">.md</code> exist but that no <code class="language-plaintext highlighter-rouge">blocks[]</code> lists renders nowhere. Adding the
+name to <code class="language-plaintext highlighter-rouge">blocks[]</code> is part of adding a block.</p><h2 id="sections-may-nest-exactly-one-level"><a href="#sections-may-nest-exactly-one-level" class="anchor-heading" aria-labelledby="sections-may-nest-exactly-one-level"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Sections may nest exactly one level
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">subsections[]</code> on a section carries another section, whose <code class="language-plaintext highlighter-rouge">blocks[]</code> render
@@ -125,18 +124,17 @@ need a third level, you need another chapter.</p><h2 id="chapter-granularity"><a
   
 </h2><p>A chapter is the unit a reviewer is asked to read in one sitting, and the unit
 the work plan tracks. Prefer more, smaller chapters over few large ones: a
-chapter is also the unit that gets <em>rewritten</em>, and a 40-block chapter is one
-nobody will re-order.</p><h2 id="adding-a-chapter"><a href="#adding-a-chapter" class="anchor-heading" aria-labelledby="adding-a-chapter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a chapter
+chapter is also the unit that gets <em>rewritten</em>.</p><h2 id="adding-a-chapter"><a href="#adding-a-chapter" class="anchor-heading" aria-labelledby="adding-a-chapter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding a chapter
   
   
-</h2><ol><li><code class="language-plaintext highlighter-rouge">mkdir content/&lt;slug&gt;/&lt;chapter-dir&gt;</code></li><li>Write <code class="language-plaintext highlighter-rouge">&lt;chapter-dir&gt;/&lt;chapter-dir&gt;.ts</code> — title, optional <code class="language-plaintext highlighter-rouge">label</code>, and
+</h2><ol><li><code class="language-plaintext highlighter-rouge">mkdir folio/&lt;slug&gt;/&lt;chapter-dir&gt;</code></li><li>Write <code class="language-plaintext highlighter-rouge">&lt;chapter-dir&gt;/&lt;chapter-dir&gt;.ts</code> — title, optional <code class="language-plaintext highlighter-rouge">label</code>, and
 <code class="language-plaintext highlighter-rouge">sections[]</code> (which may start empty).</li><li>Add <code class="language-plaintext highlighter-rouge">{ dir: "&lt;chapter-dir&gt;" }</code> to the document manifest’s <code class="language-plaintext highlighter-rouge">chapters[]</code>, in
 the position it should be read.</li><li><code class="language-plaintext highlighter-rouge">content_validate</code>.</li><li><code class="language-plaintext highlighter-rouge">bun run review:anchors</code>, so the review sheet’s Selected Sections list
 and every comment’s placement see the new chapter.</li></ol><p><strong>Every document folio declares <code class="language-plaintext highlighter-rouge">review:anchors</code> and <code class="language-plaintext highlighter-rouge">check:review-anchors</code>
 from its first commit</strong> (<code class="language-plaintext highlighter-rouge">review-anchors-from-folio.ts --document &lt;doc&gt;</code>;
 the <code class="language-plaintext highlighter-rouge">--library</code>/<code class="language-plaintext highlighter-rouge">--source</code> flags only when it was seeded from a library
 file). The section list is what a review sheet’s dropdown reads; a folio
-without it leaves a linked sheet empty (owner, 2026-10-31, DTH-PC). See
+without it leaves a linked sheet empty. See
 <code class="language-plaintext highlighter-rouge">review-sheet-script</code>, “Linking a sheet to a repository”.</p><p>The directory name is the chapter’s slug; it appears in build output and in
 every path a reviewer sees, so name it for what the chapter is about rather
 than for its position. A <code class="language-plaintext highlighter-rouge">ch3-</code> prefix is a rename waiting to happen the first

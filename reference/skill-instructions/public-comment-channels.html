@@ -176,13 +176,11 @@ published public-comment process&gt;.
 recorded in §2. Nothing goes out until every link has been opened once.</p><h2 id="4-who-submitted-the-public-comment-source-tab"><a href="#4-who-submitted-the-public-comment-source-tab" class="anchor-heading" aria-labelledby="4-who-submitted-the-public-comment-source-tab"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Who submitted: the Public Comment Source tab
   
   
-</h2><p>Submitters are recorded the way the DPI-H Reference Architecture review
-records them (owner, 2026-10-31): in the review sheet’s <strong>Public Comment
-Source</strong> tab, one row per public comment. The columns are No., date received,
-channel, reviewer name, organisation, country / region, stakeholder type,
-email, and “Acknowledge by name (Yes/No)”. Every column is <strong>Grey</strong>,
-because the tab is the external source, copied in mechanically (owner,
-2026-10-31). The tab is locked, and it is the
+</h2><p>Submitters are recorded in the review sheet’s <strong>Public Comment Source</strong> tab,
+one row per public comment. The columns are No., date received, channel,
+reviewer name, organisation, country / region, stakeholder type, email, and
+“Acknowledge by name (Yes/No)”. Every column is <strong>Grey</strong>: the tab is the
+external source, copied in mechanically. The tab is locked, and it is the
 only place a submitter’s name and email are kept (the <code class="language-plaintext highlighter-rouge">public-comment</code>
 skill, §”The live review sheet”).</p><ul><li>Each channel asks for the details <strong>once per submission</strong>: at the top of
 the Excel sheet’s Comments tab, on the Form’s “About you” page, and from
@@ -193,7 +191,7 @@ the comment’s No. and its channel.</li><li>A returning submitter is recognised
 <code class="language-plaintext highlighter-rouge">schemas/public-comment.ts</code>). Someone who comments through two channels
 with the same email is therefore one reviewer.</li><li>The repository gets only that id, the organisation and the country. It
 gets the name <strong>only</strong> when the submitter answered Yes to “Acknowledge by
-name”, and never the email. The importer already follows this rule (the
+name”, and never the email. The importer follows this rule (the
 <code class="language-plaintext highlighter-rouge">public-comment</code> skill, §”Privacy”).</li><li>Submitter details are not configuration, so they never go in the Config
 tab. That tab holds the script’s settings and is written by the agent.</li></ul><h2 id="5-intake-each-channel-has-one-path-back"><a href="#5-intake-each-channel-has-one-path-back" class="anchor-heading" aria-labelledby="5-intake-each-channel-has-one-path-back"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Intake: each channel has one path back
   

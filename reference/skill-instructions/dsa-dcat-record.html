@@ -110,8 +110,7 @@
 </h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">dsa-dcat-record</code> · Package: <code class="language-plaintext highlighter-rouge">folio-document-adapter</code> · Process:
 <code class="language-plaintext highlighter-rouge">folio-assistant-core/processes/content/dsa-document-lifecycle.bpmn</code>
 (<code class="language-plaintext highlighter-rouge">Task_Catalogue</code>, P2.4–5) · Checker:
-<code class="language-plaintext highlighter-rouge">folio-assistant-core/scripts/check-dsa-hash.ts</code> (<code class="language-plaintext highlighter-rouge">bun run cat check:dsa-hash</code>)
-· Bean: <code class="language-plaintext highlighter-rouge">folio-assistant-2z1t</code>.</p></blockquote><p>Whereas <a href="../../reference/skill-instructions/filing-dublin-core.html"><code class="language-plaintext highlighter-rouge">filing-dublin-core</code></a>
+<code class="language-plaintext highlighter-rouge">folio-assistant-core/scripts/check-dsa-hash.ts</code> (<code class="language-plaintext highlighter-rouge">bun run cat check:dsa-hash</code>)</p></blockquote><p>Whereas <a href="../../reference/skill-instructions/filing-dublin-core.html"><code class="language-plaintext highlighter-rouge">filing-dublin-core</code></a>
 covers DCMI Metadata Terms on ingested library sources, a published Data
 Sharing Agreement requires a <strong>W3C DCAT 3</strong> catalogue record describing the
 agreement as a catalogued resource, its immutable legal text distribution and
@@ -138,8 +137,8 @@ computed <code class="language-plaintext highlighter-rouge">spdx:checksumValue</
 <code class="language-plaintext highlighter-rouge">dcat:previousVersion</code> naming the fixed-version URL of the version it
 amends, that is, the prior version’s <code class="language-plaintext highlighter-rouge">dcat:Resource</code> <code class="language-plaintext highlighter-rouge">@id</code> (<code class="language-plaintext highlighter-rouge">v2</code> points
 to <code class="language-plaintext highlighter-rouge">v1</code>). Consent processing walks this chain to carry older Consents
-across a narrowing amendment (https://github.com/litlfred/fhir-harness/pull/228), so a missing or wrong
-link fails <code class="language-plaintext highlighter-rouge">check:dsa-hash</code>.</li><li><strong>No custom properties:</strong> <code class="language-plaintext highlighter-rouge">check:dsa-hash</code> rejects any property not defined
+across a narrowing amendment, so a missing or wrong link fails
+<code class="language-plaintext highlighter-rouge">check:dsa-hash</code>.</li><li><strong>No custom properties:</strong> <code class="language-plaintext highlighter-rouge">check:dsa-hash</code> rejects any property not defined
 in ODRL 2.2, DCAT 3, or DCMI Terms.</li></ol><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   
   

@@ -46,7 +46,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Validate the block manifests under a path against their schemas. Exits 2 where no folio is present rather than reporting a clean run — the platform carries no content, and a validator that passes over nothing is how this one validated nothing for a while."
+          "@value": "Validate the block manifests under a path against their schemas."
         }
       ],
       "skos:notation": "content-manifest-validate",
@@ -66,7 +66,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering."
+          "@value": "Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures."
         }
       ],
       "skos:notation": "headless-render-qc",
@@ -326,7 +326,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. Margin notes are off by default (`FAST_PREVIEW=1`, about 2x). Cross-references to chapters outside the build print as '??'. A preview, never a publish build. Run from the folio. Without a TeX engine the render still runs and the compile steps are skipped with a message."
+          "@value": "Quick preview of a paper folio's branch: render the paper with the sci print template (plus the folio's notation fragment when it has one), then compile ONLY the chapters changed against a base ref, and a colored and a plain latexdiff of each. A preview, never a publish build. Run from the folio."
         }
       ],
       "skos:notation": "paper-feature-build",
@@ -466,7 +466,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. About 5 GB and 10-20 minutes, so run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal)."
+          "@value": "Install TeX Live (full) and latexmk where no TeX engine is present, disabling the firewalled launchpad PPAs that otherwise abort `apt-get update`. Idempotent: does nothing when pdflatex and memoize.sty are already present. Run it in the background. pdflatex unpacks early but is not usable until the post-install format build ends (`kpsewhich memoize.sty` returning a path is the ready signal)."
         }
       ],
       "skos:notation": "tex-install",
@@ -506,7 +506,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion."
+          "@value": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript."
         }
       ],
       "skos:notation": "tex-source-audit",
