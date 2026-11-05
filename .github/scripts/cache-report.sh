@@ -14,19 +14,26 @@
 #    take budget. Nothing main, or an open PR, can read is ever deleted here;
 #    LRU eviction at the 10 GB limit stays GitHub's.
 #
-# Usage: cache-report.sh [--hours N] [--prune]
+# 4. --json FILE writes the raw facts the cache viewer reads
+#    (cat-harness-tools `caches:viz --stored FILE`, schema `cache-report/1`):
+#    every entry (key, ref, sizeBytes, lastAccessedAt, createdAt) and the hit
+#    rate per cached-step step. The viewer matches each `cache` node to its
+#    entries by its location prefix, so nothing here names a node.
+#
+# Usage: cache-report.sh [--hours N] [--prune] [--json FILE]
 # Env: REPO (owner/name), GH_TOKEN (actions: read; write for --prune).
 # Writes Markdown to $GITHUB_STEP_SUMMARY (and stdout).
 # Exit: 0 · 1 when an API it needs could not be read (the report says which).
 
 set -uo pipefail
 
-hours=24; prune=false
+hours=24; prune=false; json=""
 while [ $# -gt 0 ]; do
   case "$1" in
     --hours) hours="$2"; shift 2 ;;
     --prune) prune=true; shift ;;
-    *) echo "usage: $0 [--hours N] [--prune]" >&2; exit 2 ;;
+    --json) json="$2"; shift 2 ;;
+    *) echo "usage: $0 [--hours N] [--prune] [--json FILE]" >&2; exit 2 ;;
   esac
 done
 : "${REPO:?REPO=owner/name}"
@@ -57,7 +64,7 @@ fi
 usage=$(gh api "repos/$REPO/actions/cache/usage" --jq '[.active_caches_size_in_bytes, .active_caches_count] | @tsv' 2>/dev/null) \
   || { say "**Budget: could not read actions/cache/usage** — not reported."; status=1; usage=""; }
 caches=$(gh api --paginate "repos/$REPO/actions/caches?per_page=100" \
-  --jq '.actions_caches[] | [.id, .key, .ref, .size_in_bytes, .last_accessed_at] | @tsv' 2>/dev/null) \
+  --jq '.actions_caches[] | [.id, .key, .ref, .size_in_bytes, .last_accessed_at, .created_at] | @tsv' 2>/dev/null) \
   || { say "**Budget: could not list caches** — not reported."; status=1; caches=""; }
 if [ -n "$usage" ]; then
   read -r bytes count <<< "$usage"
@@ -90,6 +97,25 @@ if [ "$prune" = true ] && [ -n "$caches" ]; then
     fi
   done <<< "$caches"
   say "### Pruned" "" "$deleted entries of closed PRs' merge refs, $(gib "$freed") freed (unreadable by any run)." ""
+fi
+
+# ---- 4. Raw facts for the viewer ----------------------------------------
+if [ -n "$json" ]; then
+  {
+    printf '%s\n' "$caches" | awk -F'\t' 'NF >= 5 { printf "E\t%s\t%s\t%s\t%s\t%s\n", $2, $3, $4, $5, $6 }'
+    printf '%s\n' "$names" | awk -F'--' 'NF >= 3 { printf "R\t%s\t%s\n", $2, $3 }'
+  } | python3 -c '
+import json, sys
+entries, runs = [], {}
+for line in sys.stdin:
+    f = line.rstrip("\n").split("\t")
+    if f[0] == "E" and len(f) >= 6:
+        entries.append({"key": f[1], "ref": f[2], "sizeBytes": int(f[3] or 0), "lastAccessedAt": f[4], "createdAt": f[5]})
+    elif f[0] == "R" and len(f) >= 3:
+        r = runs.setdefault(f[1], {"hit": 0, "warm": 0, "miss": 0}); r[f[2]] = r.get(f[2], 0) + 1
+hit = {s: round(r["hit"] / max(1, sum(r.values())), 4) for s, r in runs.items()}
+json.dump({"schema": "cache-report/1", "since": sys.argv[1], "hours": int(sys.argv[2]), "entries": entries, "runs": runs, "hitRate": hit}, open(sys.argv[3], "w"), indent=1)
+' "$since" "$hours" "$json" && say "Raw facts for the cache viewer: \`$json\`." || { say "**Could not write \`$json\`.**"; status=1; }
 fi
 
 exit "$status"

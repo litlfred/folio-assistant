@@ -145,7 +145,19 @@ jobs:
           if [ "${{ github.event_name }}" != workflow_dispatch ] && ! [[ "$(date -u +%H%M)" =~ ^06(0|1[0-4]) ]]; then
             echo "not the daily tick"; exit 0
           fi
-          bash .github/scripts/cache-report.sh --hours 24 --prune
+          bash .github/scripts/cache-report.sh --hours 24 --prune --json "$RUNNER_TEMP/cache-report.json"
+
+      # The raw facts the cache viewer reads (cat-harness-tools `caches:viz --stored`).
+      - name: Upload the cache report for the viewer
+        if: steps.cache.outcome == 'success'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        continue-on-error: true
+        with:
+          name: cache-report
+          path: ${{ runner.temp }}/cache-report.json
+          retention-days: 14
+          overwrite: true
+          if-no-files-found: ignore
 
       - name: Any sweep failed?
         if: steps.publish.outcome == 'failure' || steps.verify.outcome == 'failure' || steps.repin.outcome == 'failure' || steps.conflicted.outcome == 'failure' || steps.cache.outcome == 'failure'
