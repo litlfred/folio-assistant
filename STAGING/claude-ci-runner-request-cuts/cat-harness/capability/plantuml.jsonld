@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/capability/plantuml.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/capability/plantuml",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "plantuml",
+      "name": "PlantUML",
+      "description": "PlantUML diagram generator for UML, BPMN, and other diagram types.",
+      "detection": {
+        "method": "command",
+        "command": "plantuml -version"
+      },
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/capability/java-runtime",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/capability/graphviz"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/plantuml"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/feature-staging.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/feature-staging",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "feature-staging",
+      "title": "Feature-branch staging",
+      "description": "Manages feature-branch staging deployments under gh-pages/STAGING/<branch-slug>/ for before/after publication review comparison. Handles branch creation, staging deployment, commit SHA stamping, and cleanup.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/feature-staging.md",
+      "instructionLines": 574,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging"
+    }
+  ]
+}

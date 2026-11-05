@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_BeanLifecycle/lane/Lane_Agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_BeanLifecycle/lane/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Agent (this session)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_BeanLifecycle",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle/lane/Lane_Agent"
+    }
+  ]
+}

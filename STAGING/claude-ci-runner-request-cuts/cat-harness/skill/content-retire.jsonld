@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/content-retire.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/content-retire",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-retire",
+      "title": "Content Retirement",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-retire.md",
+      "instructionLines": 28,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-retire"
+    }
+  ]
+}

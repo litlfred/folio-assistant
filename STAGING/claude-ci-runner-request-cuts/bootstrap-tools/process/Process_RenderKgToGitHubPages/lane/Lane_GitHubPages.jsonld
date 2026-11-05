@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "GitHub Pages",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/bootstrap-tools/role/github-pages",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/bootstrap-tools/directory/bootstrap-tools-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages"
+    }
+  ]
+}

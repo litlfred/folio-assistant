@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/qa-witness.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/qa-witness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "qa-witness",
+      "title": "QA witnesses — the published projection of every verdict",
+      "description": "The QA projections written to `test/results/witnesses/` and stored on the `qa-reports` branch — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/qa-witness.md",
+      "instructionLines": 135,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/qa-witness"
+    }
+  ]
+}

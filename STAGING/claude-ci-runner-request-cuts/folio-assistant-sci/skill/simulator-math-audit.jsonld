@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/skill/simulator-math-audit.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/skill/simulator-math-audit",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "simulator-math-audit",
+      "title": "Simulator Math Audit",
+      "description": "Audit simulator content objects against the formal mathematics they visualise — formulas and physical constants must be derived from the paper's canonical sources, never hardcoded in the visualisation.",
+      "instructionsPath": "skills/content/folio-paper-adapter/simulator-math-audit.md",
+      "instructionLines": 72,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/simulator-math-audit"
+    }
+  ]
+}

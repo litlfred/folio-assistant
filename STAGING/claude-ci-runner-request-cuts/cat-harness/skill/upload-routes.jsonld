@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/upload-routes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/upload-routes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "upload-routes",
+      "title": "Two mechanisms and a persona",
+      "description": "How a file actually REACHES `uploads/` — the two mechanisms that write bytes into a declared queue, the persona that performs one of them on somebody's behalf, and what each writer owes that the route does not do for them. The step before intake and after acquisition.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/upload-routes.md",
+      "instructionLines": 193,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/upload-routes"
+    }
+  ]
+}

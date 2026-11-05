@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Failed; previous release still served",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/role/verifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/process/Process_IrisCdnSignPublish#flow/P12"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Failed"
+    }
+  ]
+}

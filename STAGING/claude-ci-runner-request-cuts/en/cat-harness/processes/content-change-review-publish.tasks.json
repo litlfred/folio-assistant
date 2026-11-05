@@ -1,0 +1,291 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_ContentChangeReviewPublish",
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish",
+ "tasks": {
+  "Task_Merge": {
+   "id": "Task_Merge",
+   "name": "Merge, on explicit confirmation",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_Merge",
+   "lane": "Review Committee",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Reviewer",
+   "skills": [
+    {
+     "name": "prepare-merge"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication"
+     },
+     {
+      "name": "content-feedback"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "narrative-asserts-code"
+     },
+     {
+      "name": "rendered-impact"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "visual-diff"
+     },
+     {
+      "name": "voice-overlay-review"
+     }
+    ]
+   }
+  },
+  "Task_CleanupStaging": {
+   "id": "Task_CleanupStaging",
+   "name": "Remove STAGING/<slug>/",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_CleanupStaging",
+   "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "feature-staging"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_RebuildMain": {
+   "id": "Task_RebuildMain",
+   "name": "Rebuild main site",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_RebuildMain",
+   "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "content-publish"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_WatchMainCI": {
+   "id": "Task_WatchMainCI",
+   "name": "Note the main-branch watch",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_WatchMainCI",
+   "lane": "CI/CD Pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "watch"
+    },
+    {
+     "name": "todo-manager"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/role/verifier.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/role/verifier",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "IRIS CDN verifier",
+      "title": "IRIS CDN verifier",
+      "notation": "verifier",
+      "description": "Anyone. Resolves the key from the did:web DID document, never from the package, and checks its x5c chain up to WHO's signing key. Cannot reach it: the verdict is unknown, not verified.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent",
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/who-iris/skill/iris-cdn-signing"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier"
+    }
+  ]
+}

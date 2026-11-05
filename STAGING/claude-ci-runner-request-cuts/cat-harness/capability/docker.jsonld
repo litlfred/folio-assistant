@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/capability/docker.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-runner-request-cuts",
+    "sha": "5215619800a4b0e2b6870ac62306d7a090c53cf2",
+    "pr": "2950/merge",
+    "run": "41995533390"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/capability/docker",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "docker",
+      "name": "Docker",
+      "description": "Docker container runtime for building and running containerized skill environments.",
+      "detection": {
+        "method": "command",
+        "command": "docker info"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/docker"
+    }
+  ]
+}
