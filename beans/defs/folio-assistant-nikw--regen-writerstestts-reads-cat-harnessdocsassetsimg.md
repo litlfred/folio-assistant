@@ -2,10 +2,11 @@
 # folio-assistant-nikw
 $schema: bean/1.0.0
 title: regen-writers.test.ts reads cat-harness/docs/assets/img/workflows, which cat-harness main no longer commits
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-11-05T17:31:39Z
-updated_at: 2026-11-05T17:31:39Z
+updated_at: 2026-11-05T17:37:26Z
 parent: folio-assistant-4j43
 ---
 
