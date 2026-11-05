@@ -211,3 +211,29 @@ describe("the workflow-PR off switch (owner, 2026-11-05)", () => {
     }
   });
 });
+
+describe("the sweep starts a runner only when a tick has something to do", () => {
+  const trainPull = (sha: string) => ({
+    number: 70, state: "open", body: writeState({ members: [{ number: 1, sha: sha }], queue: [] }),
+    head: { sha, ref: "merge-train/x", repo: { full_name: "o/r" } }, base: { ref: "main" },
+    labels: [{ name: "merge-train-batch" }],
+  });
+  const stub = (runs: Array<{ status: string; conclusion: string | null }>) => ({
+    async get<T>(path: string): Promise<T> {
+      if (path.includes("/pulls?state=all")) return [trainPull("c".repeat(40))] as T;
+      if (path.includes("/check-runs")) return { check_runs: runs.map((r, i) => ({ id: i + 1, name: `j${i}`, ...r })) } as T;
+      throw new Error(`unexpected ${path}`);
+    },
+    async send<T>(): Promise<T> { throw new Error("pending must not write"); },
+    async text(): Promise<string> { return ""; },
+  });
+  test("an open train whose checks still run is no work", async () => {
+    const { pending } = await import("../../.github/scripts/merge-train.ts");
+    expect(await pending(stub([{ status: "completed", conclusion: "success" }, { status: "in_progress", conclusion: null }]), "o/r")).toBeUndefined();
+    expect(await pending(stub([]), "o/r")).toBeUndefined();
+  });
+  test("an open train whose checks all finished is", async () => {
+    const { pending } = await import("../../.github/scripts/merge-train.ts");
+    expect(await pending(stub([{ status: "completed", conclusion: "failure" }]), "o/r")).toContain("judge it");
+  });
+});

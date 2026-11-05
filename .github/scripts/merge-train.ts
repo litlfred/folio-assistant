@@ -473,7 +473,14 @@ export async function tick(api: Api, repo: string, opts: TickOptions = {}): Prom
 export async function pending(api: Api, repo: string): Promise<string | undefined> {
   const trains = await trainPrs(api, repo);
   const open = trains.find((t) => t.state === "open");
-  if (open) return `train #${open.number} waits for a verdict`;
+  if (open) {
+    // Only once its checks have all finished: until then a tick would start a
+    // runner to learn "still being checked" (about four per train). The
+    // re-pin train's sweep asks the same (`trainsToJudge`).
+    const runs = await checkRuns(api, repo, open.headSha);
+    const done = runs.length > 0 && runs.every((r) => r.status === "completed");
+    return done ? `train #${open.number}'s checks have finished: judge it` : undefined;
+  }
   const queue = readState(trains.find((t) => readState(t.body))?.body)?.queue ?? [];
   const base = await mainBaseline(api, repo);
   const ready = (await pool(api, repo, base?.runs ?? [])).filter((x) => !x.why).map((x) => x.c.number);
