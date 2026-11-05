@@ -2,13 +2,13 @@
 # folio-assistant-akiq
 $schema: bean/1.0.0
 title: Derive builtAtPublish entries for foreign BPMN drawings instead of hand-listing them
-status: todo
+status: in-progress
 type: task
 priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T11:35:43Z
-updated_at: 2026-11-05T11:35:43Z
+updated_at: 2026-11-05T11:56:58Z
 parent: folio-assistant-k3vv
 ---
 
