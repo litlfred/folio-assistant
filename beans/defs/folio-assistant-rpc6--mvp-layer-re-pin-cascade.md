@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T13:38:11Z
+updated_at: 2026-11-05T13:38:58Z
 parent: folio-assistant-rwmf
 ---
 
@@ -32,3 +32,5 @@ _2026-11-05T12:58:17Z_ — Picked up by session https://claude.ai/code/session_0
 _2026-11-05T13:18:15Z_ — Owner card (this session): "1. Attach repos"; all 7 site repos attached. smart-immunizations#114 → 10c2bb2: all 8 layers re-pinned to mains (cat-harness 6e0dc31 has the sdlc/ layout that smart-base/fhir-harness link to); check:subgraphs passes locally (the PR's only new red). smart-ra#228 → 82268b1 (round 11: cat-harness 6e0dc31, tools c1c1d53, core 3822d57). Locally still red: who-iris 88 stale keywords.json; core check:command-paths (3) and foreign-paths ("folio" literals in public-comment.ts, review-anchors-from-folio.ts); cat-harness 2 stale bpmn checklists and an ihris/subgraphs/skills digest mismatch; smart-ra's own archimate visualiser path (check:subgraph-coverage). Waiting on CI to split new from main's. Re-pinning dth-sc#18, dth-phc#29, smart-ips-pilgrimage#8, smart-immunizations-uganda#18, dth-pc#18 by script (merge main in, seed each declared layer to main).
 
 _2026-11-05T13:38:11Z_ — Owner card: "1. Attach 4" (cat-harness, tools, core, who-iris attached). Pushed, CI queued: smart-immunizations#114 10c2bb2; smart-ra#228 253718b (round 11 + dpi-h-ra.json archimate visualiser writer, fixes check:subgraph-coverage + smart-ra's 2 keywords.json); dth-sc#18 a8a22ed; dth-phc#29 35fe71b; smart-ips-pilgrimage#8 d388ddd and smart-immunizations-uganda#18 ccc2ade (merged main in: conflicts only in pin files, took main's, then re-pinned); dth-pc#18 9f3809e (workflow-pins also pinned a layer-pr-checks @main + tools-ref: main — owner to OK before merge). Upstream fix PRs for #228: cat-harness#1054 (generated: 2 bpmn checklists, 25 bootstrap .pot, translation obsolete/pot; adding 62 keywords.json); who-iris#181 (24 keywords.json); cat-harness-tools#1518 (qa-refresh claims root test/results/library-qa — uml:overview red). ihris digest already fixed on cat-harness main (#1044). Core command-paths/foreign-paths: agent working. Order: merge the 3-4 layer PRs, then re-pin #228 to them.
+
+_2026-11-05T13:38:58Z_ — Owner card: dth-pc#18 "1. OK, merge" — may merge on green with the layer-pr-checks @main call pinned to the lock (tools-ref: main dropped).
