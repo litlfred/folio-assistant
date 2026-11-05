@@ -973,6 +973,10 @@ jobs:
     # Skipped on a push to `main` whose tree an earlier run already judged
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, verdict-reuse, publish-pages]
     if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -1298,6 +1302,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -2019,6 +2027,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -3211,6 +3223,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -4473,6 +4489,10 @@ jobs:
     # build them itself in `e2e-global-setup.ts` (`derive:publish`, which runs
     # `qa:refresh` for `uml:overview`): about 9 of a shard's ~13 minutes, three
     # times over, for the bytes `publish-pages` already uploads.
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [verdict-reuse, e2e-scope, qa-working-copy, publish-pages]
     if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true && needs.e2e-scope.outputs.affected != 'false' }}
     runs-on: ubuntu-latest
@@ -4731,6 +4751,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
