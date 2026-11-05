@@ -2,11 +2,11 @@
 # folio-assistant-llxa
 $schema: bean/1.0.0
 title: 'cat-harness CRDM skills: cite PHII and PATH CRDM as the method they adapt'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-31T01:56:00Z
-updated_at: 2026-10-31T06:42:00Z
+updated_at: 2026-11-05T13:34:18Z
 parent: folio-assistant-dthl
 blocked_by:
   - folio-assistant-max2
@@ -22,3 +22,5 @@ cat-harness `skills/sdlc/crdm/` (phases 1-6 and `processes/process/crdm-*.bpmn`)
 - [ ] align priority scales: PHC High/Medium/Low = Must/Should/Nice-to-have; the separate SHALL/SHOULD/MAY field cites the ingested rfc2119 / rfc8174 entries
 
 Needs the owner's OK before any PR. Thread: "Plan primary health care handbook KG".
+
+_2026-11-05T13:34:18Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
