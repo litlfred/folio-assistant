@@ -247,7 +247,7 @@ describe("one whole tick, against a stub GitHub", () => {
     labels: labels.map((name) => ({ name })), mergeable: true, mergeable_state: "clean", ...extra,
   });
   function world() {
-    const sent: Array<{ method: string; path: string; body: any }> = [];
+    const sent: Array<{ method: string; path: string; body: Record<string, unknown> }> = [];
     const green = { check_runs: [{ id: 9, name: "lint (hard)", status: "completed", conclusion: "success" }] };
     const train = pull(80, C, ["merge-train-batch"], "merge-train/x", {
       body: writeState({ members: [{ number: 11, sha: M1 }], queue: [] }),
@@ -269,7 +269,7 @@ describe("one whole tick, against a stub GitHub", () => {
         throw new Error(`unexpected GET ${p}`);
       },
       async send<T>(method: string, path: string, body: unknown): Promise<T> {
-        sent.push({ method, path, body });
+        sent.push({ method, path, body: (body ?? {}) as Record<string, unknown> });
         return undefined as T;
       },
       async text(): Promise<string> { return ""; },
