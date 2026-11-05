@@ -2,7 +2,7 @@
 # folio-assistant-exrp
 $schema: bean/1.0.0
 title: Work plan = an epic or milestone that names the process it instantiates; approved proposals seed it
-status: in-progress
+status: completed
 type: feature
 tags:
     - work-plan
@@ -53,3 +53,5 @@ _2026-11-05T19:04Z_ — Merged on green: cat-harness-tools#1539 (proposal:approv
 _2026-11-05T19:15Z_ — Owner chose "Fix proposal link": index gains plan.proposalHref resolved to the declaring repository (cat-harness-tools#1545), page uses it (cat-harness#1077). Verified in Chromium.
 
 _2026-11-05T20:12Z_ — Owner (relayed): plan step 3 not chosen now; filed as folio-assistant-rwhr (todo, parent rwmf).
+
+_2026-11-05T20:37Z_ — Merged on green: cat-harness-tools#1545 and cat-harness#1077 (proposal link resolves to the repository holding the proposal). All of the owner-chosen scope for this work item is landed; step 3 split to folio-assistant-rwhr.
