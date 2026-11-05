@@ -95,3 +95,5 @@ Supersedes the 2026-10-04 "stack cleanly" ruling **for generated paths only**. A
 _2026-11-05T13:43Z_: owner, relayed by the analysis session, on the token: **"1. I merge when green"**. No new token; PRs that change `.github/workflows/` merge one at a time and the train skips them. The off switch stays OFF (variable unset), so the two answers agree; no code change.
 
 _2026-11-05T14:30Z_: all in #2960. Still open: #2960 green and merged (waits for #2954 to make main green); #2962 runs the full suite on `merge-train/*` and `repin-train/*` (CI speed 7); the after-measurement.
+
+_2026-11-05T23:30Z_: #2954 landed (04cf7ef); #2960 updated at f4d51da (main merged, plus the landed-member fix and the mergeable_state qualifications). Waiting for its CI; the owner merges it when green (a workflow PR).
