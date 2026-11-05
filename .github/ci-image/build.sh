@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Build the CI image for this checkout and push it to <ref> (registry/name:tag).
+# The one recipe both jobs of ci-image.yml run: the pull-request job pushes to
+# a throwaway local registry and restores from it, the main/dispatch job
+# pushes to GHCR. Layers are zstd: smaller than gzip and several times faster
+# to unpack, and fetch.sh streams them.
+#
+# Usage: build.sh <ref> [insecure]   (from the repository root, after setup-bun)
+set -euo pipefail
+ref="$1"; insecure="${2:-}"
+tmp="${RUNNER_TEMP:-$(mktemp -d)}"
+here="$(cd "$(dirname "$0")" && pwd)"
+
+bash .github/mount-from-lock.sh --root .
+bun install --frozen-lockfile
+# Browsers only: their system libraries come from the runner (apt), which no
+# file carrier can provide; ci-setup installs those on the jobs that ask.
+PLAYWRIGHT_BROWSERS_PATH="$tmp/pw" bunx playwright install chromium
+bash "$here/prepare.sh" . "$tmp/pw" "$tmp/ctx"
+
+docker buildx create --name ci-image --driver docker-container --driver-opt network=host --use >/dev/null
+out="type=image,name=${ref},push=true,compression=zstd,compression-level=3,force-compression=true,oci-mediatypes=true"
+[ "$insecure" = insecure ] && out="${out},registry.insecure=true"
+docker buildx build --provenance=false --sbom=false --output "$out" "$tmp/ctx"

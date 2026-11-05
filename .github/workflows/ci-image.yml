@@ -1,0 +1,137 @@
+# CI image — build the prepared image every CI job restores its setup from
+# (bean folio-assistant-ay33).
+#
+# ghcr.io/litlfred/folio-assistant-ci:<key> holds the remote mounts
+# index.lock.json pins, node_modules and Playwright's Chromium, keyed by
+# .github/ci-image/key.sh. `.github/actions/ci-setup` streams it onto a job's
+# runner in place of mounting and installing; with no image for its key a job
+# falls back to those steps, so this workflow only ever saves time.
+#
+# Triggers:
+#   - a push to main that changes what the image holds or how it is built:
+#     build and push the new key's image, unless it already exists;
+#   - workflow_dispatch: the same, from any ref, for a first build or a
+#     forced rebuild;
+#   - a pull request touching the image's recipe: build it, push it to a
+#     throwaway registry INSIDE the job, restore it the way ci-setup does and
+#     verify the mounts. Nothing leaves the runner, and this job has no
+#     package permission.
+#
+# Security: the image holds no secret — every file comes from a public
+# repository at the commit the committed lock pins, or from npm through
+# bun.lock. Only the `publish` job can write a package (`packages: write`),
+# and it runs only on main or a dispatch. Actions are pinned by commit, and
+# the throwaway registry by digest.
+name: CI image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - index.lock.json
+      - bun.lock
+      - package.json
+      - .github/ci-image/**
+      - .github/actions/ci-setup/**
+      - .github/workflows/ci-image.yml
+  pull_request:
+    paths:
+      - .github/ci-image/**
+      - .github/actions/ci-setup/**
+      - .github/workflows/ci-image.yml
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Rebuild even if an image for this key exists
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-image-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  test:
+    name: Build and restore the image locally (no push)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      registry:
+        image: registry@sha256:a3d8aaa63ed8681a604f1dea0aa03f100d5895b6a58ace528858a7b332415373 # registry:2
+        ports:
+          - 5000:5000
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.4
+      - name: Build and push to the local registry
+        run: bash .github/ci-image/build.sh localhost:5000/folio-assistant-ci:test insecure
+      - name: Restore into a fresh checkout, as ci-setup does, and verify it
+        run: |
+          fresh="$RUNNER_TEMP/fresh"
+          git worktree add -q --detach "$fresh" HEAD
+          CI_IMAGE_SCHEME=http bash .github/ci-image/fetch.sh localhost:5000/folio-assistant-ci test "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw"
+          cd "$fresh"
+          bun run cat mount:lock:check
+          bun install --frozen-lockfile
+          PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/pw-fresh" bun -e '
+            const { chromium } = require("playwright");
+            const b = await chromium.launch(); const p = await b.newPage();
+            await p.setContent("<p>ok</p>"); console.log("chromium:", await p.textContent("p")); await b.close();'
+
+  publish:
+    name: Build and push the image for this key
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    concurrency:
+      group: ci-image-publish
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.4
+      - name: Image key, and whether it is already built
+        id: key
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ACTOR: ${{ github.actor }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          key="$(bash .github/ci-image/key.sh .)"
+          echo "key=$key" >> "$GITHUB_OUTPUT"
+          echo "$GH_TOKEN" | docker login ghcr.io -u "$ACTOR" --password-stdin
+          if [ "$FORCE" != true ] && docker manifest inspect "ghcr.io/litlfred/folio-assistant-ci:$key" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "::notice title=CI image::ghcr.io/litlfred/folio-assistant-ci:${key:0:12}… already exists"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Build and push
+        if: steps.key.outputs.exists != 'true'
+        env:
+          KEY: ${{ steps.key.outputs.key }}
+        run: bash .github/ci-image/build.sh "ghcr.io/litlfred/folio-assistant-ci:$KEY"
+      - name: Restore it the way a job will, and time it
+        env:
+          KEY: ${{ steps.key.outputs.key }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          fresh="$RUNNER_TEMP/fresh"
+          git worktree add -q --detach "$fresh" HEAD
+          status=0
+          bash .github/ci-image/fetch.sh ghcr.io/litlfred/folio-assistant-ci "$KEY" "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw" || status=$?
+          if [ "$status" -eq 3 ]; then
+            echo "::warning title=CI image::anonymous pull refused — the package is not public yet, so jobs will need packages:read (or the owner sets it public); timing with the job token"
+            REGISTRY_TOKEN="$GH_TOKEN" bash .github/ci-image/fetch.sh ghcr.io/litlfred/folio-assistant-ci "$KEY" "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw"
+          elif [ "$status" -ne 0 ]; then exit "$status"; fi
+          cd "$fresh" && bun run cat mount:lock:check
