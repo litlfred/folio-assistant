@@ -502,6 +502,11 @@
         "match": "bun .github/scripts/repin-train.ts verdict",
         "kind": "ci-only",
         "reason": "repin-train-verdict.yml's no-new-failures status (issue #2873, owner card Q-SPD-3 B): it compares the check runs GitHub reported on a train head with those on main and WRITES a commit status and PR comment, so its inputs exist only after those runs finish. A write about other checks' results, never a verdict on the tree; its logic is pinned by test/workflows/repin-train.test.ts in `bun test`."
+      },
+      {
+        "match": "bun run cat merge:train -- --base origin/main",
+        "kind": "ci-only",
+        "reason": "merge-train.yml's build step (bean folio-assistant-hd58, owner 2026-11-05): it stacks the PRs a person opted in onto origin/main on a new merge-train/<stamp> branch, resolving declared generated-path conflicts and running regen once, so its inputs are the live open PRs at that tick. It builds a branch for CI to judge; it is never a verdict on this tree. Its planning logic is pinned by test/workflows/merge-train.test.ts in `bun test`, and the builder itself (cat-harness-tools merge-train.ts) by its own tests."
       }
     ],
     "scripts": [
