@@ -13,8 +13,15 @@
 #   these bundles declare `{tracked}` as their input (`task-io.ts`): the whole
 #   tree, nothing narrower. The tree holds `bun.lock`, `index.lock.json` (the
 #   mount pins), the workflow, the Bun pin, the Playwright and PlantUML pins.
-# - the runner image (`ImageOS`, `ImageVersion`, `RUNNER_ARCH`) and the Bun,
-#   git and Node versions on PATH: the tools the tree does not pin.
+# - the exact versions of the tools the writers call that the tree does not
+#   pin: Bun, git, Node, Python and Java on PATH, with the OS family
+#   (`ImageOS`) and `RUNNER_ARCH`. NOT the runner image's build number
+#   (`ImageVersion`): it changes weekly, and two builds are live at once
+#   during a rollout. Measured 2026-11-05: runs 42025861803 and 42030336059,
+#   30 minutes apart on the same commit, got images 20261026.180.1 and
+#   20261101.186.1. Keyed on the image they could only hit by luck; keyed on
+#   the tools, a new image misses only when it changes a tool the build uses
+#   (there it did: Node v24.22.1 -> v24.22.2).
 # - whatever the caller adds (`digest NAME EXTRA...`): the publish-time pages
 #   add the QA working copy's manifest sha256, since they are built over it.
 #
@@ -68,7 +75,7 @@
 
 set -uo pipefail
 
-RECIPE=1
+RECIPE=2
 cmd="${1:-}"
 
 output() { [ -n "${GITHUB_OUTPUT:-}" ] && echo "$1=$2" >> "$GITHUB_OUTPUT"; echo "$1=$2"; return 0; }
@@ -96,10 +103,12 @@ case "$cmd" in
       echo "recipe $RECIPE"
       echo "bundle $name"
       echo "tree $tree"
-      echo "image ${ImageOS:-?} ${ImageVersion:-?} ${RUNNER_ARCH:-?}"
+      echo "os ${ImageOS:-?} ${RUNNER_ARCH:-?}"
       echo "bun $(ver bun --version)"
       echo "git $(ver git --version)"
       echo "node $(ver node --version)"
+      echo "python $(ver python3 --version)"
+      echo "java $(java -version 2>&1 | grep -m1 -i " version " || true)"
       for e in "$@"; do echo "extra $e"; done
     )
     printf '%s\n' "$inputs" | sed 's/^/digest input: /' >&2
