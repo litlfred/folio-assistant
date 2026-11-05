@@ -241,7 +241,7 @@ does not pick up the same item; a bean that turns out not to be wanted is
 <code class="language-plaintext highlighter-rouge">scrapped</code>, with its reasons, never deleted.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat-harness-tools/scripts/install-beans.sh <span class="o">&amp;&amp;</span> <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.local/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
 beans list                          <span class="c"># what is open</span>
 beans create <span class="s2">"&lt;title&gt;"</span>              <span class="c"># ...after checking the title does not exist</span>
-beans &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>     <span class="c"># claim it, visibly</span>
+bun run <span class="nb">cat </span>beans:claim &lt;<span class="nb">id</span><span class="o">&gt;</span>        <span class="c"># claim it, visibly</span>
 </code></pre></div></div><p><strong>2. Make your first folio.</strong> This repository is the <em>platform</em>; your content
 lives in its own. One command scaffolds it — the manifests, the declaration, the
 agent files and the link back here:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>init-folio <span class="nt">--help</span>
@@ -249,24 +249,19 @@ agent files and the link back here:</p><div class="language-sh highlighter-rouge
 render and review.</p><p><strong>3. Know which kind of thing you are writing.</strong> A <em>document</em> is structured
 prose; a <em>paper</em> is that plus the block kinds whose assertion is a formal claim,
 backed by Lean and typeset through LaTeX. The choice decides which blocks are
-legal and which gates run: <a href="./docs/cat-harness/concepts/content-types.html">Content types</a>.</p><p><strong>4. The documentation you will never read.</strong> <a href="./docs/cat-harness/guides/index.html">All of it</a> — the authoring guides, the architecture, the
-publication workflow, the generated schema and skill reference. It is here, it
-is thorough, and the honest expectation is that you will arrive at it from a
-search engine at the exact moment something breaks. That is a fine way to use
-it. The three steps above are the ones worth reading now.</p><p>When it is the <em>machinery</em> that has you puzzled rather than the authoring —
+legal and which gates run: <a href="./docs/cat-harness/concepts/content-types.html">Content types</a>.</p><p><strong>4. The rest of the documentation.</strong> <a href="./docs/cat-harness/guides/index.html">All of it</a> — the authoring guides, the architecture, the
+publication workflow, the generated schema and skill reference. Read it when you
+need it; the three steps above are the ones worth reading now.</p><p>When it is the <em>machinery</em> that has you puzzled rather than the authoring —
 who does a thing, under which process, using which skill — start at
-<a href="./docs/cat-harness/platform.html">The platform</a>. One sentence there
-carries the whole model, and every word in it is a separately declared
-object.</p><hr /><h2 id="what-is-folio-assistant"><a href="#what-is-folio-assistant" class="anchor-heading" aria-labelledby="what-is-folio-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is folio-assistant?
+<a href="./docs/cat-harness/platform.html">The platform</a>.</p><hr /><h2 id="what-is-folio-assistant"><a href="#what-is-folio-assistant" class="anchor-heading" aria-labelledby="what-is-folio-assistant"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is folio-assistant?
   
   
 </h2><p><strong>folio-assistant</strong> is the <em>platform</em> — it does not contain content. It provides
 the skills, schemas, tooling, and an MCP (Model Context Protocol) server that an
 LLM-driven agent uses to plan, author, validate, review, test, and publish a
-<strong>folio</strong> of content that lives in a separate repository.</p><blockquote><p><strong>Separation of concerns.</strong> This documentation describes the <em>formalism of the
-framework</em> and <em>how to use folio-assistant</em> — deliberately kept <strong>separate from
-any specific content</strong>. Where content appears in these pages, it is purely
-illustrative (an <em>example</em>), never the canonical artifact.</p></blockquote><pre><code class="language-mermaid">flowchart LR
+<strong>folio</strong> of content that lives in a separate repository.</p><blockquote><p><strong>Separation of concerns.</strong> This documentation describes the framework and how
+to use it. Where content appears in these pages, it is an <em>example</em>, never the
+canonical artifact.</p></blockquote><pre><code class="language-mermaid">flowchart LR
     A[Author + LLM] --&gt;|chat / MCP tools| B(folio-assistant)
     B --&gt; C{Content adapter}
     C --&gt;|paper| D[Lean + LaTeX repo]

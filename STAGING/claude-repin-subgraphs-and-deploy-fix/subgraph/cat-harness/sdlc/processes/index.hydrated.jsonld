@@ -3035,16 +3035,16 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/docs-site-publish.svg",
-      "description": "Publish the docs site to `gh-pages`, verify the export before the deploy, and keep the open pull requests' previews alive across a deploy that replaces the whole branch. PUBLISHING THE SITE IS A FULL REPLACE, AND THAT IS THE WHOLE REASON THIS IS DRAWN. Bean `7yvd`. The workflow is 432 lines and its shape is not legible from them: what a reader needs to know is that `gh-pages` is REPLACED wholesale, so anything on that branch which this build did not produce is gone unless something puts it back.\n\nThat is bean `plj1` — every open pull request's review preview deleted by an unrelated merge, silently, for months. The repair is the two steps either side of the publish, and they are a PAIR: `Restore the open PRs' staging previews` copies them into the publish directory before the replace, and `Did the previews survive?` reads the deployed ref afterwards. Neither is sufficient alone — a restore nobody verifies is a restore that can silently stop working, which is exactly how the original defect lasted.\n\nBOTH GATEWAYS REFUSE RATHER THAN WARN, and the second is three-state: it fails on a preview that is missing AND on a check that could not tell, because a verification that has gone blind must not read as permission. Same rule as `ci-health` — could-not-determine is never rendered as clean.\n\n`Regenerate every derived reference from its source` stands for five separate generators (schema reference, skill instruction pages, content-backed docs, the translation index, the BPMN renders). They are drawn as one task on purpose: they are independent of each other and sequential only because a single job runs them, so five boxes would assert an ordering the workflow does not have.\n\nMechanical throughout. There is no human lane, which is what makes `build-pipeline` the right lane rather than a convenient one. VERIFIED AND ALERTED (bean vigi, owner 2026-09-23): the export is verified BEFORE the deploy and blocks it on anything but a pass; and every step after the publish button that fails — an incomplete export, a verification failure, a failed deploy, a lost preview — goes through one alert to the publication manager. A clean publish closes that alert.",
+      "description": "Builds the docs site from this checkout's sources and publishes it to `gh-pages` (`.github/workflows/docs-site.yml`). Publishing replaces `gh-pages` wholesale: anything on the branch that this build did not produce is gone unless restored, so the open pull requests' staging previews are copied in before the replace and checked on the deployed branch after it. The site is published whatever the built-site checks find: they run before the push and are judged after it, so a finding turns the run red with the site already live. A refused security gate or a failed deploy stops the run, and a check that could not tell counts as a failure (`ci-health`). Every failure, from a refused security gate to a lost preview or a failed check, goes through one alert to the publication manager, and the next clean publish closes it. Mechanical throughout; there is no human lane.",
       "enforcement": "strict",
       "flowCount": 20,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "name": "Publishing the docs site, and keeping the previews alive",
-      "nodeCount": 17,
+      "nodeCount": 18,
       "sourcePath": "sdlc/processes/docs-site-publish.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/docs-site-publish.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Start_Push",
-      "summary": "Publish the docs site to `gh-pages`, verify the export before the deploy, and keep the open pull requests' previews alive across a deploy that replaces the whole branch."
+      "summary": "Builds the docs site from this checkout's sources and publishes it to `gh-pages` (`.github/workflows/docs-site.yml`)."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_0",
@@ -3058,6 +3058,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_1",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Regenerate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_InstanceSites"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_1b",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_InstanceSites",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Build"
@@ -3075,24 +3083,6 @@
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Export",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Complete"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_4",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Complete",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "name": "something is missing",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Alert"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_5",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Complete",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "name": "complete",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Verify"
     },
@@ -3119,7 +3109,7 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_CloseAlert"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Judge"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_9",
@@ -3165,6 +3155,32 @@
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Alert"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J1",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Judge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Judged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J2",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Judged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_CloseAlert"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J3",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Judged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "name": "no — the site is live",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Alert"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_S1",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_SecurityGate",
@@ -3196,25 +3212,7 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Verify",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Verified"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V2",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Verified",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "name": "yes",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Restore"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V3",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Verified",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "name": "no, or could not tell",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Alert"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
@@ -3233,9 +3231,8 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
       "incoming": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_S3",
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_4",
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V3",
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_D2",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J3",
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_9"
       ],
       "name": "Alert the publication manager",
@@ -3248,13 +3245,29 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_InstanceSites",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_1",
+      "name": "Compose each instance's site [its Tool]",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_1b",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Verify",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
       "calledElement": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_5",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_3",
       "name": "Verify the export",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V1",
@@ -3293,24 +3306,6 @@
       "touchesWorkPlan": false
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Complete",
-      "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_3",
-      "name": "Is every maintained artefact present?",
-      "nodeKind": "exclusive",
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_4",
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_5"
-      ],
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "relaxable": true,
-      "touchesWorkPlan": false
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Deployed",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
@@ -3322,6 +3317,24 @@
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_D1",
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_D2"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Judged",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J1",
+      "name": "Did every built-site check pass?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J2",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J3"
       ],
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
@@ -3365,24 +3378,6 @@
       "touchesWorkPlan": false
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Verified",
-      "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V1",
-      "name": "Verified?",
-      "nodeKind": "exclusive",
-      "outgoing": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V2",
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V3"
-      ],
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "relaxable": true,
-      "touchesWorkPlan": false
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Start_Push",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:StartEvent",
@@ -3402,7 +3397,7 @@
       "bpmnType": "bpmn:Task",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_1",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_1b",
       "name": "Build the Jekyll site and the API reference",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_2",
@@ -3417,7 +3412,7 @@
       "bpmnType": "bpmn:Task",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_8",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J2",
       "name": "Close the publication manager's alert, if open",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_C1",
@@ -3436,6 +3431,21 @@
       "name": "Export the knowledge graph and its schema",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_3",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Judge",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_8",
+      "name": "Judge the built-site checks",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J1",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
       "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
       "relaxable": true,
@@ -3479,7 +3489,7 @@
       "bpmnType": "bpmn:Task",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V2",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V1",
       "name": "Restore the OPEN PRs' staging previews",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_6",
@@ -8003,7 +8013,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/publish-verification.svg",
-      "description": "Run the verifier set over the built tree between the export and the deploy, blocking it: pass, fail or could-not-tell, and the caller deploys only on a pass. Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the build produced, run BEFORE deployment and blocking — \"a failure triggers an alert to the publisher manager\". This process only verifies and says how it went; the caller (docs-site-publish) blocks the deploy on anything but a pass and routes the failure through Process_PublishAlert, the one alert every step after the publish button shares.",
+      "description": "Run the verifier set over the built tree between the export and the deploy, and report pass, fail or could-not-tell. This process only verifies and says how it went. The caller (docs-site-publish) deploys either way, judges the outcome after the push, and routes anything but a pass through Process_PublishAlert, the one alert every failure shares.",
       "enforcement": "strict",
       "flowCount": 6,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/sdlc",
@@ -8012,7 +8022,7 @@
       "sourcePath": "sdlc/processes/publish-verification.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/publish-verification.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification/node/Start_Exported",
-      "summary": "Run the verifier set over the built tree between the export and the deploy, blocking it: pass, fail or could-not-tell, and the caller deploys only on a pass."
+      "summary": "Run the verifier set over the built tree between the export and the deploy, and report pass, fail or could-not-tell."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishVerification#flow/F_1",

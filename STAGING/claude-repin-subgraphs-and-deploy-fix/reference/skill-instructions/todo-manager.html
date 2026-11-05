@@ -103,7 +103,7 @@
   @media print, (forced-colors: active) {
     html:root { background-image: none; }
   }
-</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/todo-manager.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#installing-beans-fresh-sandbox--cloud-container","label":"Installing beans (fresh sandbox / cloud container)"},{"href":"#what-the-session-start-sweep-emits-and-why-in-that-order","label":"What the session-start sweep emits, and why in that order"},{"href":"#core-directives-for-sessions","label":"Core Directives for Sessions"},{"href":"#where-beans-live","label":"Where beans live"},{"href":"#check-before-you-create--beans-create-is-not-idempotent-strict","label":"Check before you create — beans create is not idempotent (STRICT)"},{"href":"#check-before-you-update----body-file-replaces-the-body-strict","label":"Check before you UPDATE — --body-file REPLACES the body (STRICT)"},{"href":"#which-parent--the-criterion-nobody-wrote-down","label":"WHICH parent — the criterion nobody wrote down","children":[{"href":"#how-to-choose","label":"How to choose","depth":1},{"href":"#a-session-is-a-log-not-a-parent","label":"A session is a log, not a parent","depth":1}],"fold":"2 sub-sections"},{"href":"#a-goal-is-a-milestone-bean-and-an-epic-joins-one-by-parenting-to-it","label":"A GOAL is a milestone bean, and an epic joins one by parenting to it"},{"href":"#after-you-create--parent-it-and-re-run-the-guard-before-you-push","label":"After you create — parent it, and re-run the guard before you push","children":[{"href":"#a-new-bean-also-owes-readmesubgraphs--and-this-is-the-most-missed-step","label":"A new bean also owes readme:subgraphs — and this is the most-missed step","depth":1}],"fold":"1 sub-section"},{"href":"#when-the-beans-cli-is-not-there--you-are-still-not-read-only","label":"When the beans CLI is not there — you are still not read-only"},{"href":"#check-before-you-work--a-checkbox-is-a-claim-not-a-measurement-strict","label":"Check before you WORK — a checkbox is a claim, not a measurement (STRICT)","children":[{"href":"#measured-one-session-four-beans","label":"Measured, one session, four beans","depth":1},{"href":"#the-two-failures-this-prevents-and-they-are-different","label":"The two failures this prevents, and they are different","depth":1},{"href":"#what-re-measure-means-concretely","label":"What “re-measure” means, concretely","depth":1},{"href":"#and-a-bean-you-re-measure-you-record","label":"And a bean you re-measure, you record","depth":1}],"fold":"4 sub-sections"},{"href":"#working-with-beans","label":"Working with Beans"},{"href":"#archiving--two-dispositions-and-they-answer-different-questions","label":"Archiving — two dispositions, and they answer different questions","children":[{"href":"#why-neither-replaces-the-other","label":"Why neither replaces the other","depth":1},{"href":"#where-this-sits-against-resolve--two-layers-not-two-spellings","label":"Where this sits against resolve — two layers, not two spellings","depth":1},{"href":"#where-the-bean-ops-live--open-and-close-called-by-every-process","label":"Where the bean ops live — OPEN and CLOSE, called by every process","depth":1}],"fold":"3 sub-sections"},{"href":"#status-display-format","label":"Status Display Format"},{"href":"#coordination-discipline","label":"Coordination discipline"},{"href":"#relationship-to-other-surfaces","label":"Relationship to other surfaces"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/todo-manager.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#installing-beans-fresh-sandbox--cloud-container","label":"Installing beans (fresh sandbox / cloud container)"},{"href":"#what-the-session-start-sweep-emits-and-why-in-that-order","label":"What the session-start sweep emits, and why in that order"},{"href":"#core-directives-for-sessions","label":"Core Directives for Sessions"},{"href":"#where-beans-live","label":"Where beans live"},{"href":"#check-before-you-create--beans-create-is-not-idempotent-strict","label":"Check before you create — beans create is not idempotent (STRICT)"},{"href":"#check-before-you-update----body-file-replaces-the-body-strict","label":"Check before you UPDATE — --body-file REPLACES the body (STRICT)"},{"href":"#which-parent--the-criterion-nobody-wrote-down","label":"WHICH parent — the criterion nobody wrote down","children":[{"href":"#how-to-choose","label":"How to choose","depth":1},{"href":"#a-session-is-a-log-not-a-parent","label":"A session is a log, not a parent","depth":1}],"fold":"2 sub-sections"},{"href":"#a-goal-is-a-milestone-bean-and-an-epic-joins-one-by-parenting-to-it","label":"A GOAL is a milestone bean, and an epic joins one by parenting to it"},{"href":"#after-you-create--parent-it-and-re-run-the-guard-before-you-push","label":"After you create — parent it, and re-run the guard before you push","children":[{"href":"#a-new-bean-also-owes-readmesubgraphs--and-this-is-the-most-missed-step","label":"A new bean also owes readme:subgraphs — and this is the most-missed step","depth":1}],"fold":"1 sub-section"},{"href":"#when-the-beans-cli-is-not-there--you-are-still-not-read-only","label":"When the beans CLI is not there — you are still not read-only"},{"href":"#check-before-you-work--a-checkbox-is-a-claim-not-a-measurement-strict","label":"Check before you WORK — a checkbox is a claim, not a measurement (STRICT)","children":[{"href":"#the-two-failures-this-prevents-and-they-are-different","label":"The two failures this prevents, and they are different","depth":1},{"href":"#what-re-measure-means-concretely","label":"What “re-measure” means, concretely","depth":1},{"href":"#and-a-bean-you-re-measure-you-record","label":"And a bean you re-measure, you record","depth":1}],"fold":"3 sub-sections"},{"href":"#working-with-beans","label":"Working with Beans"},{"href":"#archiving--two-dispositions-and-they-answer-different-questions","label":"Archiving — two dispositions, and they answer different questions","children":[{"href":"#why-neither-replaces-the-other","label":"Why neither replaces the other","depth":1},{"href":"#where-this-sits-against-resolve--two-layers-not-two-spellings","label":"Where this sits against resolve — two layers, not two spellings","depth":1},{"href":"#where-the-bean-ops-live--open-and-close-called-by-every-process","label":"Where the bean ops live — OPEN and CLOSE, called by every process","depth":1}],"fold":"3 sub-sections"},{"href":"#status-display-format","label":"Status Display Format"},{"href":"#coordination-discipline","label":"Coordination discipline"},{"href":"#relationship-to-other-surfaces","label":"Relationship to other surfaces"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
 function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
 function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
@@ -224,14 +224,11 @@ Managed entirely via the <code class="language-plaintext highlighter-rouge">bean
 Beans and sidecars are NOT synonymous! Do NOT convert bulk QA queue items into
 beans. They are completely separate workflow systems.</li><li><code class="language-plaintext highlighter-rouge">todo-review</code> = triage of <strong>content feedback</strong> stored under
 <code class="language-plaintext highlighter-rouge">feedback/&lt;paper&gt;/</code> and surfaced via the MCP <code class="language-plaintext highlighter-rouge">/todos</code>
-dashboard. That is paper-content scope, not session scope.</li></ul></blockquote><p>Instead of an in-memory list or markdown checklists, we manage session work and cross-agent coordination using the <code class="language-plaintext highlighter-rouge">beans</code> CLI issue tracker.</p><blockquote><p><strong>This skill was split on 2026-09-19 (bean <code class="language-plaintext highlighter-rouge">tdmg</code>).</strong> It had reached 396 lines
-against <code class="language-plaintext highlighter-rouge">skill-not-a-document</code>’s 400-line threshold while carrying three
-separable disciplines. What stayed here is the <strong>bean mechanics</strong>: installing
-the CLI, the STRICT check before <code class="language-plaintext highlighter-rouge">beans create</code>, the fallback when the CLI is
-absent, the status vocabulary, and the coordination rules below. What moved:</p><ul><li><a href="../../reference/skill-instructions/opening-brief.html"><code class="language-plaintext highlighter-rouge">opening-brief.md</code></a> — what you say <strong>before</strong> starting a
+dashboard. That is paper-content scope, not session scope.</li></ul></blockquote><p>Instead of an in-memory list or markdown checklists, we manage session work and cross-agent coordination using the <code class="language-plaintext highlighter-rouge">beans</code> CLI issue tracker.</p><p>This skill holds the <strong>bean mechanics</strong>: installing the CLI, the STRICT check
+before <code class="language-plaintext highlighter-rouge">beans create</code>, the fallback when the CLI is absent, the status
+vocabulary, and the coordination rules below. Report formats are elsewhere:</p><ul><li><a href="../../reference/skill-instructions/opening-brief.html"><code class="language-plaintext highlighter-rouge">opening-brief.md</code></a> — what you say <strong>before</strong> starting a
 bean or a topic.</li><li><a href="../../reference/skill-instructions/turn-reporting.html"><code class="language-plaintext highlighter-rouge">turn-reporting.md</code></a> — what you say <strong>during and after</strong>
-each turn, including the STRICT “next”-line rule.</li></ul><p>No rule changed in the split. If you are looking for a report format, it is in
-one of those two.</p></blockquote><h2 id="installing-beans-fresh-sandbox--cloud-container"><a href="#installing-beans-fresh-sandbox--cloud-container" class="anchor-heading" aria-labelledby="installing-beans-fresh-sandbox--cloud-container"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Installing beans (fresh sandbox / cloud container)
+each turn, including the STRICT “next”-line rule.</li></ul><h2 id="installing-beans-fresh-sandbox--cloud-container"><a href="#installing-beans-fresh-sandbox--cloud-container" class="anchor-heading" aria-labelledby="installing-beans-fresh-sandbox--cloud-container"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Installing beans (fresh sandbox / cloud container)
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">beans</code> is the <a href="https://github.com/hmans/beans"><code class="language-plaintext highlighter-rouge">hmans/beans</code></a> Go binary — a
@@ -247,10 +244,8 @@ CLI when it is genuinely missing</strong> — bounded and quiet, falling through
 degraded reader rather than failing the hook — and prepends the install
 directory when the binary is already there, so a second session does not
 reinstall. If the sweep still reports the CLI missing, it could not be installed
-there.</p><p><strong>That the installer runs, rather than being recommended, is the lesson of the
-2026-09-18 incident above.</strong> An imperative somebody has to act on is weaker than
-the act itself; a parenthetical “run the installer for full priming” was read
-and not acted on.</p><p>The order is not arbitrary:</p><ol><li><strong>Interaction preferences — first</strong>, because they change the <em>form</em> of every
+there. The sweep installs rather than recommends, because an instruction
+somebody has to act on is weaker than the act itself.</p><p>The order is not arbitrary:</p><ol><li><strong>Interaction preferences — first</strong>, because they change the <em>form</em> of every
 question that follows. A question asked before them may have to be asked
 again.</li><li>Work-plan priming and the open list.</li><li><strong>The roadmap.</strong> A flat list of a hundred ids in creation order is <strong>data,
 not a plan</strong>; the milestone/epic structure is what lets an end-of-turn report
@@ -270,7 +265,7 @@ note</strong> on each bean you worked — <code class="language-plaintext highli
 written to the declared <code class="language-plaintext highlighter-rouge">notes</code> directory of <code class="language-plaintext highlighter-rouge">beans/beans.json</code> and keyed by
 branch, so it is one file per session per bean by construction
 (<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”Adding to a bean”). See
-§”A session is a log, not a parent” below for why, and what it cost.</li><li><strong>Every todo is a bean, parented by SUBJECT.</strong> Each task, probe or action
+§”A session is a log, not a parent” below for why.</li><li><strong>Every todo is a bean, parented by SUBJECT.</strong> Each task, probe or action
 item is a bean (<code class="language-plaintext highlighter-rouge">--type task</code>) under the epic whose subject it is —
 §”WHICH parent” — not under anything representing the session.
 <code class="language-plaintext highlighter-rouge">beans create "&lt;Task Title&gt;" --type task --parent &lt;subject-epic-id&gt;</code></li><li><strong>No manual <code class="language-plaintext highlighter-rouge">.md</code> checklists:</strong> Never use <code class="language-plaintext highlighter-rouge">session-beans.md</code> or raw Markdown <code class="language-plaintext highlighter-rouge">- [ ]</code> checklists to track global tasks. Always use the <code class="language-plaintext highlighter-rouge">beans</code> CLI to prevent namespace pollution and maintain the official project tracking.</li><li><strong>Check before you create:</strong> <code class="language-plaintext highlighter-rouge">beans create</code> is <strong>not</strong> idempotent. Run the existence check below before every <code class="language-plaintext highlighter-rouge">beans create</code> — no exceptions.</li><li><strong>Brief before you work:</strong> claiming a bean records <em>which</em> item is taken; the opening brief records what it is taken <strong>for</strong>. Write it before the first tool call, in the chat. See §”Opening brief” below.</li><li><strong>Write beans to the work-plan store, never into a code PR:</strong> create, claim, note and status changes go to the store through its Tool. The store’s operations are in <a href="../../reference/skill-instructions/work-plan-store.html"><code class="language-plaintext highlighter-rouge">work-plan-store</code></a>; how the Tool in use performs them (today the git state branch, <a href="../../reference/skill-instructions/work-plan-store-git-branch.html"><code class="language-plaintext highlighter-rouge">work-plan-store-git-branch</code></a>) is on that Tool’s page. Do <strong>not</strong> commit bean files to code PR branches on <code class="language-plaintext highlighter-rouge">main</code>.</li></ol><h2 id="where-beans-live"><a href="#where-beans-live" class="anchor-heading" aria-labelledby="where-beans-live"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where beans live
@@ -280,7 +275,7 @@ item is a bean (<code class="language-plaintext highlighter-rouge">--type task</
 <a href="../../reference/skill-instructions/work-plan-store.html"><code class="language-plaintext highlighter-rouge">work-plan-store</code></a>, and this skill uses it only through
 that contract’s operations (<code class="language-plaintext highlighter-rouge">get</code>, <code class="language-plaintext highlighter-rouge">list</code>, <code class="language-plaintext highlighter-rouge">create</code>, <code class="language-plaintext highlighter-rouge">update</code>, <code class="language-plaintext highlighter-rouge">note</code>,
 <code class="language-plaintext highlighter-rouge">history</code>, <code class="language-plaintext highlighter-rouge">positions</code>). Which Tool backs it is the deployment’s choice
-(cat-harness#991, Q-BSD-2 A). Today every checkout uses the git state branch;
+Today every checkout uses the git state branch;
 how to mount it, which commands perform each operation and how changes are
 pushed are on its page,
 <a href="../../reference/skill-instructions/work-plan-store-git-branch.html"><code class="language-plaintext highlighter-rouge">work-plan-store-git-branch</code></a>.</p><ul><li><strong>Never bundle beans in code PR commits.</strong> Code PRs touch code and
@@ -298,70 +293,47 @@ m = [b for b in json.load(sys.stdin) if b["title"] == t]
 print(f"{len(m)} exact match(es)")
 [print(" ", b["id"], b["status"]) for b in m]'</span> <span class="s2">"</span><span class="nv">$T</span><span class="s2">"</span>
 </code></pre></div></div><ul><li><p><strong>≥ 1 match</strong> → do <strong>not</strong> create. Claim the existing bean instead, with
-<strong><code class="language-plaintext highlighter-rouge">bun run cat beans:claim &lt;id&gt;</code></strong> — which reads the default branch first, refuses
-a bean a sibling holds or one already closed, and records a holder note so the
-next session’s check can see you.</p><p><strong>Not <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --status in-progress</code>.</strong> That is the older advice and
-it is what this line used to say. It writes no holder note, so the claim is
-invisible to <code class="language-plaintext highlighter-rouge">beans:claim</code>’s own <code class="language-plaintext highlighter-rouge">already-claimed</code> check — measured 2026-09-25,
-97 of the 100 non-epic <code class="language-plaintext highlighter-rouge">in-progress</code> beans on <code class="language-plaintext highlighter-rouge">main</code> record no holder, and the
-guard answered “go ahead” for all 97 (bean <code class="language-plaintext highlighter-rouge">c3d7</code>). Two sessions claimed one
-bean 61 s apart on 2026-09-19 and shipped two PRs; that is the failure the tool
-exists to stop, and routing around it puts it back.</p><p>Read the outcome — three of them are refusals, and <code class="language-plaintext highlighter-rouge">held-unknown</code> means it
+<strong><code class="language-plaintext highlighter-rouge">bun run cat beans:claim &lt;id&gt;</code></strong> — which reads the shared store first,
+refuses a bean a sibling holds or one already closed, and records a holder
+note so the next session’s check can see you.</p><p><strong>Not <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --status in-progress</code>.</strong> It writes no holder note,
+so the claim is invisible to <code class="language-plaintext highlighter-rouge">beans:claim</code>’s own <code class="language-plaintext highlighter-rouge">already-claimed</code> check.</p><p>Read the outcome — three of them are refusals, and <code class="language-plaintext highlighter-rouge">held-unknown</code> means it
 could not tell a live sibling from an abandoned claim:
-<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination.md</code> §”<code class="language-plaintext highlighter-rouge">bun run cat beans:claim</code>”</a>.</p></li><li><p><strong>0 matches</strong> → run the <strong>semantic</strong> check before creating:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>lsi:near <span class="s2">"</span><span class="nv">$T</span><span class="s2">"</span>          <span class="c"># add --body "&lt;first paragraph&gt;" when you have one</span>
+<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination.md</code> §”<code class="language-plaintext highlighter-rouge">bun run cat beans:claim &lt;id&gt;</code> — how it behaves”</a>.</p></li><li><p><strong>0 matches</strong> → run the <strong>semantic</strong> check before creating:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>lsi:near <span class="s2">"</span><span class="nv">$T</span><span class="s2">"</span>          <span class="c"># add --body "&lt;first paragraph&gt;" when you have one</span>
 </code></pre></div></div><p>The exact-title check above catches the same WORDS; this catches the same
 work in other words. It folds the title into an LSI index of every bean (all
 statuses — a completed one is often the answer) and prints the nearest five
 plus the closest epic. <strong>Read every hit marked <code class="language-plaintext highlighter-rouge">←</code> (cosine ≥ 0.7) before
 creating.</strong> If one is the same work, claim or reopen it rather than create;
-if it is related, create and say so in the body. Measured when it landed: a
-reworded title for the known duplicate pair <code class="language-plaintext highlighter-rouge">3ozg</code>/<code class="language-plaintext highlighter-rouge">rmcf</code> found both at
-0.72–0.75. The score proposes; whether a hit IS the same work is your call
+if it is related, create and say so in the body. The score proposes; whether a hit IS the same work is your call
 (method <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/lsi.md"><code class="language-plaintext highlighter-rouge">lsi</code></a>, refusal 3).</p></li><li><p><strong>A bean ABOUT ONE OBJECT is keyed on the object, not the title.</strong> When the
 work targets a single named thing (a Lean declaration, a block label, a
 file), titles drift: “Prove Foo.bar”, “PROVE(lean): Foo.bar”, “close sorry
-in Foo.bar”. Neither check above is guaranteed to pair them. <strong>Measured in
-<code class="language-plaintext highlighter-rouge">qou</code> 2026-10-04: most of its 141 duplicate groups were generator re-runs
-filing one Lean declaration under a new title</strong> (bean <code class="language-plaintext highlighter-rouge">yr93</code>). So write the
+in Foo.bar”. Neither check above is guaranteed to pair them, and generator
+re-runs are the usual source of such duplicates. So write the
 key into the bean as a line of its own, <code class="language-plaintext highlighter-rouge">Target: lean:Foo.bar</code> (or
 <code class="language-plaintext highlighter-rouge">block:&lt;label&gt;</code>, <code class="language-plaintext highlighter-rouge">file:&lt;path&gt;</code>), and before creating search the WHOLE store
 for that line, archive included, because a completed bean is often the
 answer:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">grep</span> <span class="nt">-rlF</span> <span class="s2">"Target: lean:Foo.bar"</span> beans/defs/   <span class="c"># the archive is beans/defs/archive/</span>
 </code></pre></div></div><p>A hit is the same work: claim it, reopen it with a note, or link to it.
 <strong>A generator that files beans MUST write the key and run this check</strong>,
-since a re-run is exactly the case the title checks miss. The typed field
-this line stands in for (<code class="language-plaintext highlighter-rouge">targets:</code> validated against the content graph)
-is bean <code class="language-plaintext highlighter-rouge">f227</code>.</p></li><li><p><strong>Still new</strong> → <code class="language-plaintext highlighter-rouge">beans create "$T" --type task</code>, under the epic <code class="language-plaintext highlighter-rouge">lsi:near</code>
+since a re-run is exactly the case the title checks miss.</p></li><li><p><strong>Still new</strong> → <code class="language-plaintext highlighter-rouge">beans create "$T" --type task</code>, under the epic <code class="language-plaintext highlighter-rouge">lsi:near</code>
 printed if it fits (§”WHICH parent — the criterion nobody wrote down” below).</p></li></ul><p><code class="language-plaintext highlighter-rouge">--search</code> is a fuzzy Bleve query, so the exact-title comparison inside the
-pipe is load-bearing — do not drop it and trust <code class="language-plaintext highlighter-rouge">--search</code> alone.</p><p><strong>Why this is STRICT.</strong> In the <code class="language-plaintext highlighter-rouge">qou</code> folio on 2026-08-04, one agent context
-re-ran its 15-bean session work-plan ~980 times back-to-back (median 19 s per
-cycle, ~16 h wall). Because <code class="language-plaintext highlighter-rouge">create</code> is unconditional, that produced <strong>14,688
-duplicate beans</strong> — 92 % of every open bean in that repo. The damage was not
-just clutter:</p><ul><li>the session-start sweep and the idle-backlog policy were reading mostly noise;</li><li>~980 copies of an already-proved item sat at <code class="language-plaintext highlighter-rouge">todo</code>;</li><li>the duplicates <strong>collided with the IDs of 15 real beans</strong>, making
-<code class="language-plaintext highlighter-rouge">beans update &lt;id&gt;</code> ambiguous for those;</li><li>they corrupted a later agent’s own corpus-grep — 4,928 <code class="language-plaintext highlighter-rouge">beans</code> files matched
-one search term across just 36 titles, inflating 14 real source files into an
-apparent 54 and nearly landing a false correction in a PR body.</li></ul><p>The runaway loop is not something a doc can prevent; an unguarded <code class="language-plaintext highlighter-rouge">create</code> is.
-This rule is platform-level so every folio inherits it.</p><h2 id="check-before-you-update----body-file-replaces-the-body-strict"><a href="#check-before-you-update----body-file-replaces-the-body-strict" class="anchor-heading" aria-labelledby="check-before-you-update----body-file-replaces-the-body-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Check before you UPDATE — <code class="language-plaintext highlighter-rouge">--body-file</code> REPLACES the body (STRICT)
+pipe is load-bearing — do not drop it and trust <code class="language-plaintext highlighter-rouge">--search</code> alone.</p><p><strong>Why this is STRICT.</strong> Because <code class="language-plaintext highlighter-rouge">create</code> is unconditional, an agent that
+re-runs a work-plan step in a loop mints thousands of duplicates: the sweep and
+the backlog then read mostly noise, duplicates can collide with real bean ids,
+and corpus searches over <code class="language-plaintext highlighter-rouge">beans/</code> are inflated. An unguarded <code class="language-plaintext highlighter-rouge">create</code> is what
+the rule prevents. It is platform-level so every folio inherits it.</p><h2 id="check-before-you-update----body-file-replaces-the-body-strict"><a href="#check-before-you-update----body-file-replaces-the-body-strict" class="anchor-heading" aria-labelledby="check-before-you-update----body-file-replaces-the-body-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Check before you UPDATE — <code class="language-plaintext highlighter-rouge">--body-file</code> REPLACES the body (STRICT)
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent; <code class="language-plaintext highlighter-rouge">beans update</code> is not additive. They are
 different failures and both cost a durable artefact, so they sit together.</p><p><strong>A bean’s body is an append-only record of who found what, when.</strong> Every note
-in it is dated and signed, and later notes cite earlier ones — the closing note
-on <code class="language-plaintext highlighter-rouge">gjli</code> opens <em>“the 2026-09-19 note above did”</em>. Replace the body and you
-have not edited a field; you have deleted findings that other beans, commits
-and issues point at.</p><p><code class="language-plaintext highlighter-rouge">beans update</code> offers four ways to write one, and <strong>only one of them appends</strong>:</p><div class="table-wrapper"><table><thead><tr><th>flag</th><th>what it does</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">--body-append &lt;text&gt;</code> | <code class="language-plaintext highlighter-rouge">--body-append -</code></td><td><strong>appends.</strong> <code class="language-plaintext highlighter-rouge">-</code> reads stdin</td></tr><tr><td><code class="language-plaintext highlighter-rouge">--body-file &lt;path&gt;</code></td><td><strong>REPLACES the whole body</strong> with the file</td></tr><tr><td><code class="language-plaintext highlighter-rouge">--body &lt;text&gt;</code> | <code class="language-plaintext highlighter-rouge">--body -</code></td><td><strong>REPLACES</strong></td></tr><tr><td><code class="language-plaintext highlighter-rouge">--body-replace-old/-new</code></td><td>replaces one substring; leaves the rest</td></tr></tbody></table></div><p>Measured 2026-09-22 on a scratch store: a bean carrying two notes, given
-<code class="language-plaintext highlighter-rouge">--body-file</code> with a third, kept the third alone. <strong>Exit 0, no warning, no
-diff, no prompt.</strong> Nothing in the output distinguishes it from an append.</p><p><strong>For a long, multi-paragraph note, use <code class="language-plaintext highlighter-rouge">--body-append -</code>:</strong></p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans update &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> completed <span class="nt">--body-append</span> - <span class="o">&lt;&lt;</span><span class="sh">'</span><span class="no">NOTE</span><span class="sh">'
+in it is dated and signed, and later notes cite earlier ones. Replace the body
+and you have deleted findings that other beans, commits and issues point at.</p><p><code class="language-plaintext highlighter-rouge">beans update</code> offers four ways to write one, and <strong>only one of them appends</strong>:</p><div class="table-wrapper"><table><thead><tr><th>flag</th><th>what it does</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">--body-append &lt;text&gt;</code> | <code class="language-plaintext highlighter-rouge">--body-append -</code></td><td><strong>appends.</strong> <code class="language-plaintext highlighter-rouge">-</code> reads stdin</td></tr><tr><td><code class="language-plaintext highlighter-rouge">--body-file &lt;path&gt;</code></td><td><strong>REPLACES the whole body</strong> with the file</td></tr><tr><td><code class="language-plaintext highlighter-rouge">--body &lt;text&gt;</code> | <code class="language-plaintext highlighter-rouge">--body -</code></td><td><strong>REPLACES</strong></td></tr><tr><td><code class="language-plaintext highlighter-rouge">--body-replace-old/-new</code></td><td>replaces one substring; leaves the rest</td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">--body-file</code> replaces with <strong>exit 0, no warning, no diff, no prompt</strong>: nothing
+in the output distinguishes it from an append.</p><p><strong>For a long, multi-paragraph note, use <code class="language-plaintext highlighter-rouge">--body-append -</code>:</strong></p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans update &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> completed <span class="nt">--body-append</span> - <span class="o">&lt;&lt;</span><span class="sh">'</span><span class="no">NOTE</span><span class="sh">'
 _2026-09-22T06:51:22Z_ — what you found, and how you know it.
 </span><span class="no">NOTE
-</span></code></pre></div></div><p>That is the form the long-note case actually needs, and naming only
-<code class="language-plaintext highlighter-rouge">--body-append "Your note"</code> is why this skill did not prevent the loss it is
-now recording: an agent with four paragraphs to write reaches past an inline
-string argument for the flag that takes a <strong>file</strong>, and <code class="language-plaintext highlighter-rouge">--body-file</code> is
-sitting right there, one letter’s difference from <code class="language-plaintext highlighter-rouge">--body-append</code>, doing
-something else entirely. (<code class="language-plaintext highlighter-rouge">beans create</code> <strong>rejects</strong> <code class="language-plaintext highlighter-rouge">--body-file -</code> with a
-heredoc — bean <code class="language-plaintext highlighter-rouge">5wrg</code> found that separately. So the two subcommands disagree
-about the same flag name, which is one more reason not to reach for it.)</p><p>The timestamp prefix is an <strong>authored convention, not a CLI feature</strong> — no flag
+</span></code></pre></div></div><p>Do not reach for <code class="language-plaintext highlighter-rouge">--body-file</code> because the note is long. (<code class="language-plaintext highlighter-rouge">beans create</code> <strong>rejects</strong> <code class="language-plaintext highlighter-rouge">--body-file -</code> with a heredoc, so the two subcommands also
+disagree about that flag.)</p><p>The timestamp prefix is an <strong>authored convention, not a CLI feature</strong> — no flag
 adds it. Write it yourself or the note joins the previous paragraph undated.</p><p><strong>Recovery, if it has already happened.</strong> The store is committed, which is the
 whole reason this is survivable: <code class="language-plaintext highlighter-rouge">git show HEAD:&lt;bean-file&gt;</code> returns the body
 as of the last commit, and the lost notes can be reassembled with the new front
@@ -372,11 +344,7 @@ reconstruction from an original.</p><h2 id="which-parent--the-criterion-nobody-w
   
   
 </h2><p><strong>A bean’s parent is the epic whose SUBJECT it is, not the epic you happen to
-be working in.</strong> That sentence was missing from this skill until 2026-09-20,
-and its absence is measurable: in one session six new beans were all filed
-under <code class="language-plaintext highlighter-rouge">yj32</code>, the epic that session was working in, while their subjects
-belonged to four different epics. The owner spotted it — <em>“beans misfiled…
-wrong skills guidance? tools guidance?”</em> — and the answer was yes, this file.</p><p><strong>Nothing catches a wrong parent.</strong> <code class="language-plaintext highlighter-rouge">check-bean-parents</code> tests exactly two
+be working in.</strong></p><p><strong>Nothing catches a wrong parent.</strong> <code class="language-plaintext highlighter-rouge">check-bean-parents</code> tests exactly two
 things: that an open bean HAS a <code class="language-plaintext highlighter-rouge">parent</code>, and that the parent NAMES A BEAN
 THAT EXISTS. A bean filed under the wrong epic satisfies both, so it is
 textually clean, the guard is green, and it is only findable by a person
@@ -395,15 +363,8 @@ read alongside it</strong>, and say in the body why the other was not chosen —
 parent is a claim about where somebody should go looking.</li></ol><h3 id="a-session-is-a-log-not-a-parent"><a href="#a-session-is-a-log-not-a-parent" class="anchor-heading" aria-labelledby="a-session-is-a-log-not-a-parent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A session is a log, not a parent
   
   
-</h3><p>Until 2026-10-04 Core Directive 1 read <em>“Every session is a Bean … you MUST
-create a parent bean (<code class="language-plaintext highlighter-rouge">--type milestone</code> or <code class="language-plaintext highlighter-rouge">--epic</code>)”</em>, with
-<code class="language-plaintext highlighter-rouge">beans create "Session: &lt;Branch/Goal&gt;" --type milestone</code>, and this section
-said the opposite — file by subject — and called the conflict “real”. Agents
-followed the directive, because a numbered MUST outranks a paragraph that
-disagrees with it three screens down. <strong>Measured in the <code class="language-plaintext highlighter-rouge">qou</code> folio
-2026-10-04: 292 of its 353 <code class="language-plaintext highlighter-rouge">type: epic</code> beans were session logs</strong> (bean
-<code class="language-plaintext highlighter-rouge">8unf</code>, issue #2106). The roadmap’s top level — the thing <code class="language-plaintext highlighter-rouge">beans roadmap</code>
-exists to show — was mostly a diary.</p><p>What that costs is not clutter alone:</p><ul><li><strong>An epic is a claim about where to look for a SUBJECT.</strong> A session epic
+</h3><p>Do not create a <code class="language-plaintext highlighter-rouge">Session: …</code> epic or milestone. It turns the roadmap’s top
+level into a diary, and:</p><ul><li><strong>An epic is a claim about where to look for a SUBJECT.</strong> A session epic
 points at one sitting, which ended; nobody looks there for the work, so its
 children are lost to the next agent filing by subject.</li><li><strong>It defeats the guards.</strong> <code class="language-plaintext highlighter-rouge">check-bean-parents</code> passes a task parented to a
 session epic, because the parent exists and is an epic. The wrong parent is
@@ -420,18 +381,12 @@ children by subject, move the narrative into a note, then set the log to
 beans, commits and PRs cite its id.</p><h2 id="a-goal-is-a-milestone-bean-and-an-epic-joins-one-by-parenting-to-it"><a href="#a-goal-is-a-milestone-bean-and-an-epic-joins-one-by-parenting-to-it" class="anchor-heading" aria-labelledby="a-goal-is-a-milestone-bean-and-an-epic-joins-one-by-parenting-to-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A GOAL is a <code class="language-plaintext highlighter-rouge">milestone</code> bean, and an epic joins one by parenting to it
   
   
-</h2><p><strong>Measured 2026-09-20, bean <code class="language-plaintext highlighter-rouge">wqht</code>.</strong> The owner had stated three goals in chat.
-The store held <strong>13 in-progress epics and 0 milestones</strong>, with the <code class="language-plaintext highlighter-rouge">milestone</code>
-type configured and unused. No epic carried a goal’s words, so classifying 140
-open items against those goals was a judgement made from scratch — and it would
-have been made from scratch again at the next review, differently.</p><p>Nothing in this skill or in <code class="language-plaintext highlighter-rouge">session-intent</code> said where a goal LIVES. Both
-describe a “goal-scoped” queue, and a queue scoped to an object that does not
-exist cannot be a query; it can only be a re-derivation. The owner chose,
-2026-09-20:</p><blockquote><p><strong>A goal is a <code class="language-plaintext highlighter-rouge">milestone</code> bean, in the owner’s own words, and the epics
+</h2><p>A “goal-scoped” queue needs the goal to exist as an object, or every review
+re-derives the classification from scratch.</p><blockquote><p><strong>A goal is a <code class="language-plaintext highlighter-rouge">milestone</code> bean, in the owner’s own words, and the epics
 serving it are parented to it.</strong></p></blockquote><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans create <span class="s2">"&lt;the goal, verbatim&gt;"</span> <span class="nt">--type</span> milestone   <span class="c"># after the existence check above</span>
 beans update &lt;epic-id&gt; <span class="nt">--parent</span> &lt;milestone-id&gt;
-</code></pre></div></div><p>Three properties make this the cheap answer rather than a new mechanism:</p><ul><li><strong>The type already exists</strong> and <code class="language-plaintext highlighter-rouge">check-bean-parents</code> already permits an epic
-under a milestone, so nothing had to be built.</li><li><strong><code class="language-plaintext highlighter-rouge">beans roadmap</code> groups by <code class="language-plaintext highlighter-rouge">parent:</code></strong>, so the goals become the roadmap’s
+</code></pre></div></div><p>Three properties make this the cheap answer rather than a new mechanism:</p><ul><li><strong>The type exists</strong> and <code class="language-plaintext highlighter-rouge">check-bean-parents</code> permits an epic under a
+milestone.</li><li><strong><code class="language-plaintext highlighter-rouge">beans roadmap</code> groups by <code class="language-plaintext highlighter-rouge">parent:</code></strong>, so the goals become the roadmap’s
 top level the moment the epics are parented — which is what a roadmap was
 always for.</li><li><strong>“Prioritise against the goals” becomes a query</strong>: walk down from the
 milestone. An item under no goal is then <em>visible</em> as such, which is itself
@@ -447,23 +402,16 @@ criterion at each.</p><hr /><h2 id="after-you-create--parent-it-and-re-run-the-g
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">check-bean-parents</code> fails on an <strong>open bean with no <code class="language-plaintext highlighter-rouge">parent</code></strong>, because such a
-bean lands in the roadmap’s Miscellaneous section where nobody looks for it. The
-guard works. The way it gets past you is procedural, and it happened <strong>twice in
-one session</strong> on 2026-09-20:</p><ol><li><p><strong>A multi-flag <code class="language-plaintext highlighter-rouge">beans update</code> can apply only some of its flags.</strong> <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; -s in-progress --parent &lt;epic&gt;</code> set the status, silently
-left the parent unset, and <strong>reported success</strong>. As two calls it worked. So
-after setting several properties at once, <strong>read the front matter back</strong> —
+bean lands in the roadmap’s Miscellaneous section where nobody looks for it.
+Two ways past it:</p><ol><li><p><strong>A multi-flag <code class="language-plaintext highlighter-rouge">beans update</code> can apply only some of its flags</strong> and still
+report success (<code class="language-plaintext highlighter-rouge">-s in-progress --parent &lt;epic&gt;</code> can set the status and
+leave the parent unset). After setting several properties at once, <strong>read
+the front matter back</strong> —
 <code class="language-plaintext highlighter-rouge">grep -n "^status:\|^parent:\|^priority:" beans/defs/&lt;file&gt;.md</code> — rather than
-trusting the “Updated …” line.</p></li><li><p><strong>A bean created after your last test run is an unguarded bean.</strong> The second
-occurrence was not the CLI at all: the bean was minted, its body written and
-its priority set <em>after</em> <code class="language-plaintext highlighter-rouge">bun test</code> had passed, and the push went out on that
-stale green. CI caught it, which cost a cycle for a one-line fix.</p></li></ol><p><strong>So: <code class="language-plaintext highlighter-rouge">beans create</code> and the <code class="language-plaintext highlighter-rouge">--parent</code> that follows it are one action, and
+trusting the “Updated …” line.</p></li><li><p><strong>A bean created after your last test run is an unguarded bean.</strong></p></li></ol><p><strong>So: <code class="language-plaintext highlighter-rouge">beans create</code> and the <code class="language-plaintext highlighter-rouge">--parent</code> that follows it are one action, and
 touching the bean store invalidates your last test run.</strong> Re-run at least
-<code class="language-plaintext highlighter-rouge">bun test cat-harness-tools/scripts/tests/check-bean-parents.test.ts</code> — 105 ms —
-before pushing.</p><p>The general shape is worth more than the bean case: <strong>a green suite is green for
-the tree you ran it against.</strong> Anything added afterwards, including an artefact
-that is “just a note”, is untested. This is the cheap end of the same discipline
-<code class="language-plaintext highlighter-rouge">continual-progress</code> states about verifying rendered work rather than describing
-it.</p><h3 id="a-new-bean-also-owes-readmesubgraphs--and-this-is-the-most-missed-step"><a href="#a-new-bean-also-owes-readmesubgraphs--and-this-is-the-most-missed-step" class="anchor-heading" aria-labelledby="a-new-bean-also-owes-readmesubgraphs--and-this-is-the-most-missed-step"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A new bean also owes <code class="language-plaintext highlighter-rouge">readme:subgraphs</code> — and this is the most-missed step
+<code class="language-plaintext highlighter-rouge">bun test cat-harness-tools/scripts/tests/check-bean-parents.test.ts</code> before
+pushing. <strong>A green suite is green for the tree you ran it against.</strong></p><h3 id="a-new-bean-also-owes-readmesubgraphs--and-this-is-the-most-missed-step"><a href="#a-new-bean-also-owes-readmesubgraphs--and-this-is-the-most-missed-step" class="anchor-heading" aria-labelledby="a-new-bean-also-owes-readmesubgraphs--and-this-is-the-most-missed-step"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A new bean also owes <code class="language-plaintext highlighter-rouge">readme:subgraphs</code> — and this is the most-missed step
   
   
 </h3><p><code class="language-plaintext highlighter-rouge">beans/README.md</code> is GENERATED and carries per-subdirectory counts, so creating
@@ -473,17 +421,10 @@ beans:</p><div class="language-plaintext highlighter-rouge"><div class="highligh
 </code></pre></div></div><p>That is <code class="language-plaintext highlighter-rouge">readme:subgraphs:check</code>. Run its writer before you push:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>readme:subgraphs          <span class="c"># updates beans/README.md; push state via branch-store</span>
 bun run <span class="nb">cat </span>readme:subgraphs:check    <span class="c"># must exit 0</span>
 bun cat-harness-tools/scripts/branch-store.ts push <span class="nt">--id</span> beans  <span class="c"># or: bun run cat state:push</span>
-</code></pre></div></div><p><strong>Measured 2026-10-03: three separate PRs failed this gate on the same day</strong> —
-one for a new bean, one for a new bean on a dispatched agent’s branch, and one
-for a newly declared subgraph directory. The second is the instructive case:
-that agent pushed <strong>four consecutive commits</strong> to fix it, every one editing the
-bean’s prose, because the check’s name says “declared directory’s README” and
-gives no hint that adding a bean is what dirtied it. Sixteen of its seventeen
-checks were green the whole time.</p><p>So the step is cheap and the DIAGNOSIS is expensive, which is the argument for
-putting it here rather than leaving it to be rediscovered: a session that reads
-only the failing check name will look at directories and never at the bean it
-just created. Read the failing STEP, and remember that <code class="language-plaintext highlighter-rouge">beans/</code> is a declared
-directory like any other.</p><p>The same shape applies one door along: <strong>editing a skill owes
+</code></pre></div></div><p>The check’s name gives no hint that adding a bean dirtied it, so a session that
+reads only the name looks at directories and never at the bean it just
+created. Read the failing
+STEP, and remember that <code class="language-plaintext highlighter-rouge">beans/</code> is a declared directory like any other.</p><p>The same shape applies one door along: <strong>editing a skill owes
 <code class="language-plaintext highlighter-rouge">bun run cat skill:register</code></strong>, which <code class="language-plaintext highlighter-rouge">skill-registration</code> carries in full. Both are
 instances of one rule — a declared artefact has generated neighbours, and the
 CLI that writes the artefact does not write them.</p><h2 id="when-the-beans-cli-is-not-there--you-are-still-not-read-only"><a href="#when-the-beans-cli-is-not-there--you-are-still-not-read-only" class="anchor-heading" aria-labelledby="when-the-beans-cli-is-not-there--you-are-still-not-read-only"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When the <code class="language-plaintext highlighter-rouge">beans</code> CLI is not there — you are still not read-only
@@ -497,41 +438,25 @@ bun run <span class="nb">cat </span>beans:fallback show &lt;<span class="nb">id<
 bun run <span class="nb">cat </span>beans:fallback claim &lt;<span class="nb">id</span><span class="o">&gt;</span>
 bun run <span class="nb">cat </span>beans:fallback create <span class="s2">"&lt;title&gt;"</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>
 bun run <span class="nb">cat </span>beans:fallback note &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="s2">"&lt;what you found&gt;"</span>
-</code></pre></div></div><p>A read-only fallback is not a fallback for an agent — it lets you see the plan
-and touch nothing, and a session that can see its plan but not claim it does its
-work unclaimed. That is not hypothetical: it is what happened on 2026-09-18
-across two merged PRs.</p><p>Its <code class="language-plaintext highlighter-rouge">create</code> <strong>refuses an exact duplicate title</strong> and names the bean to claim
-instead. The CLI’s <code class="language-plaintext highlighter-rouge">create</code> does not, and that is the mechanism behind the
-14,688 duplicates in <code class="language-plaintext highlighter-rouge">qou</code>. <code class="language-plaintext highlighter-rouge">--force</code> exists for a genuinely intended duplicate
+</code></pre></div></div><p>A read-only fallback would let a session see its plan but not claim it, so it
+would do its work unclaimed.</p><p>Its <code class="language-plaintext highlighter-rouge">create</code> <strong>refuses an exact duplicate title</strong> and names the bean to claim
+instead; the CLI’s <code class="language-plaintext highlighter-rouge">create</code> does not. <code class="language-plaintext highlighter-rouge">--force</code> exists for a genuinely intended duplicate
 and has to be typed.</p><h2 id="check-before-you-work--a-checkbox-is-a-claim-not-a-measurement-strict"><a href="#check-before-you-work--a-checkbox-is-a-claim-not-a-measurement-strict" class="anchor-heading" aria-labelledby="check-before-you-work--a-checkbox-is-a-claim-not-a-measurement-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Check before you WORK — a checkbox is a claim, not a measurement (STRICT)
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent, and §”Check before you create” above is the
 guard. This is its twin at the other end: <strong>a bean’s stated state is a claim
-somebody wrote down once, and the code has moved since.</strong></p><blockquote><p><strong>Re-measure a bean’s open items against the code before you act on them.</strong></p></blockquote><p>The cost is not wasted effort. It is <em>acting on a stale claim</em>, and twice in
-one session (2026-09-20) that came within a single edit of re-introducing a
-defect a test had been written to catch.</p><h3 id="measured-one-session-four-beans"><a href="#measured-one-session-four-beans" class="anchor-heading" aria-labelledby="measured-one-session-four-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Measured, one session, four beans
+somebody wrote down once, and the code has moved since.</strong></p><blockquote><p><strong>Re-measure a bean’s open items against the code before you act on them.</strong></p></blockquote><p>The cost of skipping this is not wasted effort; it is acting on a stale claim.</p><h3 id="the-two-failures-this-prevents-and-they-are-different"><a href="#the-two-failures-this-prevents-and-they-are-different" class="anchor-heading" aria-labelledby="the-two-failures-this-prevents-and-they-are-different"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two failures this prevents, and they are different
   
   
-</h3><div class="table-wrapper"><table><thead><tr><th>bean</th><th>what the file said</th><th>what was true</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">sa8y</code></td><td>four items open</td><td>one open; two done, one a <strong>deliberate</strong> decision</td></tr><tr><td><code class="language-plaintext highlighter-rouge">vo9d</code></td><td>five items open</td><td>one open; four done by siblings</td></tr><tr><td><code class="language-plaintext highlighter-rouge">30hn</code></td><td>16 of 33 undeclared</td><td>14 of 41 — and the mover was <strong>this session</strong></td></tr><tr><td><code class="language-plaintext highlighter-rouge">koth</code> / <code class="language-plaintext highlighter-rouge">b11x</code></td><td>two beans</td><td>one defect, filed <strong>3m53s apart</strong></td></tr></tbody></table></div><h3 id="the-two-failures-this-prevents-and-they-are-different"><a href="#the-two-failures-this-prevents-and-they-are-different" class="anchor-heading" aria-labelledby="the-two-failures-this-prevents-and-they-are-different"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The two failures this prevents, and they are different
+</h3><p><strong>1. Doing work that exists.</strong> Siblings finish items without ticking the box.</p><p><strong>2. Undoing a decision that was recorded elsewhere.</strong> An open item can read
+like a gap when the absence is deliberate and explained in a comment in the
+file the bean is about. Doing the obvious thing then re-introduces the defect
+the decision avoids. The decision is in the file, not the bean.</p><h3 id="what-re-measure-means-concretely"><a href="#what-re-measure-means-concretely" class="anchor-heading" aria-labelledby="what-re-measure-means-concretely"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What “re-measure” means, concretely
   
   
-</h3><p><strong>1. Doing work that exists.</strong> The cheap one. <code class="language-plaintext highlighter-rouge">vo9d</code>’s four items were done by
-<code class="language-plaintext highlighter-rouge">11d43ce4fb</code> and <code class="language-plaintext highlighter-rouge">ca5ec3e373</code>, neither of which ticked a box.</p><p><strong>2. Undoing a decision that was recorded elsewhere.</strong> The expensive one.
-<code class="language-plaintext highlighter-rouge">sa8y</code>’s <em>“the three unbound lanes get roles”</em> reads like a gap. The roles
-exist; what is missing is <code class="language-plaintext highlighter-rouge">lanes</code>, and its absence is deliberate —
-<code class="language-plaintext highlighter-rouge">bootstrap/scenarios/roles.json</code> carries a <code class="language-plaintext highlighter-rouge">_lanes_comment</code> explaining that
-binding them mints three dangling links in the root’s graph, with bean <code class="language-plaintext highlighter-rouge">pve3</code>
-owning the question. <strong>Doing the obvious thing would have re-created the exact
-shape of the wrong fix <code class="language-plaintext highlighter-rouge">sa8y</code> exists to record.</strong></p><p>The decision was never in the bean. It was in the file the bean is about.</p><h3 id="what-re-measure-means-concretely"><a href="#what-re-measure-means-concretely" class="anchor-heading" aria-labelledby="what-re-measure-means-concretely"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What “re-measure” means, concretely
-  
-  
-</h3><ul><li><strong>Run the thing.</strong> <code class="language-plaintext highlighter-rouge">sa8y</code>’s headline finding was fixed hours earlier;
-<code class="language-plaintext highlighter-rouge">kg:audit</code> says so in one command.</li><li><strong>Read the body, not just the boxes.</strong> <code class="language-plaintext highlighter-rouge">vo9d</code> describes a Tool node its own
-checkbox still shows unticked.</li><li><strong>Date it.</strong> <code class="language-plaintext highlighter-rouge">git log -S</code> on the symbol or the file against the bean’s
-<code class="language-plaintext highlighter-rouge">created_at</code> separates <em>fixed since</em> from <em>wrong when written</em> — and <code class="language-plaintext highlighter-rouge">vo9d</code>
-was the second: it listed <code class="language-plaintext highlighter-rouge">check-l1-complete.ts</code> as having no callers when
-<code class="language-plaintext highlighter-rouge">ingest-document.ts</code> had imported from it 32 minutes earlier.</li><li><strong>Read the file the bean is about</strong>, for a comment saying why it is the way
+</h3><ul><li><strong>Run the thing</strong> — the audit or check that measures the item.</li><li><strong>Read the body, not just the boxes.</strong></li><li><strong>Date it.</strong> <code class="language-plaintext highlighter-rouge">git log -S</code> on the symbol or the file against the bean’s
+<code class="language-plaintext highlighter-rouge">created_at</code> separates <em>fixed since</em> from <em>wrong when written</em>.</li><li><strong>Read the file the bean is about</strong>, for a comment saying why it is the way
 it is. That is where a deliberate absence lives.</li></ul><h3 id="and-a-bean-you-re-measure-you-record"><a href="#and-a-bean-you-re-measure-you-record" class="anchor-heading" aria-labelledby="and-a-bean-you-re-measure-you-record"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> And a bean you re-measure, you record
   
   
@@ -541,9 +466,8 @@ Tick what is done and name who did it; withdraw a done-when you no longer
 believe, with reasons, rather than leaving it unmet. Where the bean and the
 code disagree, <strong>the code is what is true and the bean is what is wrong</strong> —
 the same rule <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/AGENTS.md"><code class="language-plaintext highlighter-rouge">AGENTS.md</code></a> states for a skill against
-that file.</p><p>This is the work-plan half. The cross-session half — why two sessions can file
-one defect four minutes apart — is
-<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”A claim is branch-local”.</p><h2 id="working-with-beans"><a href="#working-with-beans" class="anchor-heading" aria-labelledby="working-with-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Working with Beans
+that file.</p><p>This is the work-plan half. The cross-session half is
+<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”Claims are global via the branch store”.</p><h2 id="working-with-beans"><a href="#working-with-beans" class="anchor-heading" aria-labelledby="working-with-beans"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Working with Beans
   
   
 </h2><p><strong>1. Finding Tasks &amp; Graph Analytics (<code class="language-plaintext highlighter-rouge">beans:query</code> / <code class="language-plaintext highlighter-rouge">bean_query</code>)</strong>
@@ -551,18 +475,17 @@ Use <code class="language-plaintext highlighter-rouge">beans list</code> for sim
 You can map out sequence blockers using:
 <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --blocked-by &lt;blocker-id&gt;</code> <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --blocking &lt;blocked-id&gt;</code></p><p><strong>3. Updating Status &amp; Adding Comments</strong></p><ul><li>When starting work: <code class="language-plaintext highlighter-rouge">bun run cat beans:claim &lt;id&gt;</code> — a claim goes through the
 claim tool, never through <code class="language-plaintext highlighter-rouge">beans update</code>, so it is visible to the next
-session’s check (bean <code class="language-plaintext highlighter-rouge">c3d7</code>)</li><li>When completed: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --status completed</code></li><li>To add notes or discussion: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --body-append "Your note"</code>,
+session’s check</li><li>When completed: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --status completed</code></li><li>To add notes or discussion: <code class="language-plaintext highlighter-rouge">beans update &lt;id&gt; --body-append "Your note"</code>,
 or <code class="language-plaintext highlighter-rouge">--body-append -</code> with a heredoc when it runs to paragraphs. <strong>Never
 <code class="language-plaintext highlighter-rouge">--body-file</code></strong> — it replaces the whole body, silently, exit 0:
 §”Check before you UPDATE”.</li></ul><p><strong>4. A bean that delivers a requirement copies its success criteria</strong>
 When a bean is part of a work plan — it delivers one or more <code class="language-plaintext highlighter-rouge">req:</code> statements
 (or a plan’s <code class="language-plaintext highlighter-rouge">REQ-###</code> / <code class="language-plaintext highlighter-rouge">FR-###</code>) — it names them in its body and its
 <code class="language-plaintext highlighter-rouge">## Done when</code> is <strong>copied from their success criteria</strong>, one checkbox per
-criterion, with the criterion’s key (issue #2405 FR-007). Closing the bean is
-then judging those criteria. The bean ids are also listed in the requirement
-set’s <code class="language-plaintext highlighter-rouge">workPlan</code> — a set at <code class="language-plaintext highlighter-rouge">planned</code> with none is refused by
-<code class="language-plaintext highlighter-rouge">check:requirements</code> (issue #2405, FR-010/FR-012). The rule and an example are in the content layer’s
-the <code class="language-plaintext highlighter-rouge">requirement-definition</code> skill (<code class="language-plaintext highlighter-rouge">skill_fetch requirement-definition</code>)
+criterion, with the criterion’s key. Closing the bean is then judging those
+criteria. The bean ids are also listed in the requirement set’s <code class="language-plaintext highlighter-rouge">workPlan</code> — a
+set at <code class="language-plaintext highlighter-rouge">planned</code> with none is refused by <code class="language-plaintext highlighter-rouge">check:requirements</code>. The rule and an
+example are in the content layer’s <code class="language-plaintext highlighter-rouge">requirement-definition</code> skill (<code class="language-plaintext highlighter-rouge">skill_fetch requirement-definition</code>)
 §”The work plan is beans”.</p><h2 id="archiving--two-dispositions-and-they-answer-different-questions"><a href="#archiving--two-dispositions-and-they-answer-different-questions" class="anchor-heading" aria-labelledby="archiving--two-dispositions-and-they-answer-different-questions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Archiving — two dispositions, and they answer different questions
   
   
@@ -570,15 +493,13 @@ the <code class="language-plaintext highlighter-rouge">requirement-definition</c
 set. It <strong>moves</strong>, never deletes: an archived bean is still resolvable by id,
 which is what makes it a disposal an agent may perform at all
 (<a href="../../reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a>).</p><p><strong>There are two ways it can be driven, they are not alternatives, and a
-process author needs to know which one they are reaching for.</strong> Owner,
-2026-09-20: <em>“outline both options and why used for. that is part of the
-skills to explain in context of larger process.”</em></p><div class="table-wrapper"><table><thead><tr><th></th><th><strong>a per-activity op</strong></th><th><strong>a periodic sweep</strong></th></tr></thead><tbody><tr><td>what it is</td><td>a step inside one process — a fourth <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean op&gt;</code> beside <code class="language-plaintext highlighter-rouge">claim</code>, <code class="language-plaintext highlighter-rouge">note</code>, <code class="language-plaintext highlighter-rouge">resolve</code></td><td>a scheduled run over the whole store</td></tr><tr><td>the question it answers</td><td><em>is <strong>this item’s</strong> work over?</em></td><td><em>is <strong>the store</strong> still readable?</em></td></tr><tr><td>what decides</td><td>the process reaching a step that means completion</td><td>a uniform, process-independent criterion — <code class="language-plaintext highlighter-rouge">completed</code> or <code class="language-plaintext highlighter-rouge">scrapped</code></td></tr><tr><td>what the archive then records</td><td><strong>why</strong> — “archived because the release shipped”</td><td><strong>when</strong> — “archived in the sweep of that date”</td></tr><tr><td>what it cannot do</td><td>reach a bean no process resolved</td><td>know that <em>this</em> release is what terminated <em>this</em> item</td></tr></tbody></table></div><h3 id="why-neither-replaces-the-other"><a href="#why-neither-replaces-the-other" class="anchor-heading" aria-labelledby="why-neither-replaces-the-other"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why neither replaces the other
+process author needs to know which one they are reaching for.</strong></p><div class="table-wrapper"><table><thead><tr><th></th><th><strong>a per-activity op</strong></th><th><strong>a periodic sweep</strong></th></tr></thead><tbody><tr><td>what it is</td><td>a step inside one process — a fourth <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean op&gt;</code> beside <code class="language-plaintext highlighter-rouge">claim</code>, <code class="language-plaintext highlighter-rouge">note</code>, <code class="language-plaintext highlighter-rouge">resolve</code></td><td>a scheduled run over the whole store</td></tr><tr><td>the question it answers</td><td><em>is <strong>this item’s</strong> work over?</em></td><td><em>is <strong>the store</strong> still readable?</em></td></tr><tr><td>what decides</td><td>the process reaching a step that means completion</td><td>a uniform, process-independent criterion — <code class="language-plaintext highlighter-rouge">completed</code> or <code class="language-plaintext highlighter-rouge">scrapped</code></td></tr><tr><td>what the archive then records</td><td><strong>why</strong> — “archived because the release shipped”</td><td><strong>when</strong> — “archived in the sweep of that date”</td></tr><tr><td>what it cannot do</td><td>reach a bean no process resolved</td><td>know that <em>this</em> release is what terminated <em>this</em> item</td></tr></tbody></table></div><h3 id="why-neither-replaces-the-other"><a href="#why-neither-replaces-the-other" class="anchor-heading" aria-labelledby="why-neither-replaces-the-other"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why neither replaces the other
   
   
 </h3><p><strong>The op cannot cover the store.</strong> A bean resolved by a process with no
-archive step, by hand, or by a sibling session, is never reached. Coverage
-depends on every path having been drawn, and paths are added faster than they
-are wired.</p><p><strong>The sweep cannot carry authority.</strong> It knows only status. It cannot say
+archive step, by hand, or by a sibling session, is never reached; coverage
+would depend on every path having been drawn, and paths are added faster than
+they are wired.</p><p><strong>The sweep cannot carry authority.</strong> It knows only status. It cannot say
 that a requirement was archived <em>because the stakeholder signed off</em>, which
 is the fact an audit of the CRDM close would want — and <code class="language-plaintext highlighter-rouge">crdm-close.bpmn</code> is
 precisely where that authority exists.</p><p>So the honest shape is: <strong>the sweep is the floor, the op is the exception.</strong>
@@ -590,14 +511,7 @@ recording that reason is worth the extra edge on the diagram.</p><h3 id="where-t
 </h3><p><code class="language-plaintext highlighter-rouge">resolve</code> is the <strong>process</strong> saying <em>“I am done with this item.”</em> Archiving
 is the <strong>store</strong> saying <em>“this is no longer in the working set.”</em> They are
 different layers and they are allowed to be far apart in time — which is why
-<code class="language-plaintext highlighter-rouge">resolve</code> must never imply an archive.</p><p>That gap is exactly what produced the backlog. Measured 2026-09-20: every
-process that touches the work plan reaches <code class="language-plaintext highlighter-rouge">resolve</code> and stops —
-<code class="language-plaintext highlighter-rouge">draft-to-publication</code> (claim → note → resolve), <code class="language-plaintext highlighter-rouge">crdm-close</code> (resolve),
-<code class="language-plaintext highlighter-rouge">code-change-review</code> (claim → resolve). <code class="language-plaintext highlighter-rouge">resolve</code> sets <code class="language-plaintext highlighter-rouge">completed</code>, and
-<code class="language-plaintext highlighter-rouge">completed</code> is what <code class="language-plaintext highlighter-rouge">beans archive</code> moves. Each of them manufactured the
-condition; none discharged it; <strong>219 beans</strong> accumulated until the owner
-asked for the sweep by hand.</p><p><strong>The per-activity op is built</strong> (bean <code class="language-plaintext highlighter-rouge">folio-assistant-m8gz</code>; owner,
-2026-10-20: a step op). A step carrying
+<code class="language-plaintext highlighter-rouge">resolve</code> must never imply an archive, and why the sweep is still needed.</p><p><strong>The per-activity op:</strong> a step carrying
 <code class="language-plaintext highlighter-rouge">&lt;cat-harness.processes:bean op="archive"/&gt;</code> moves the instance’s bean into
 <code class="language-plaintext highlighter-rouge">beans/defs/archive/</code>, with a line saying which process closed it. It does so
 only once the process has finished and the bean is <code class="language-plaintext highlighter-rouge">completed</code> or <code class="language-plaintext highlighter-rouge">scrapped</code>;
@@ -605,12 +519,9 @@ otherwise it leaves the bean in place with a note saying why, because
 <code class="language-plaintext highlighter-rouge">check:bean-archive</code> allows only terminal beans in the archive.</p><h3 id="where-the-bean-ops-live--open-and-close-called-by-every-process"><a href="#where-the-bean-ops-live--open-and-close-called-by-every-process" class="anchor-heading" aria-labelledby="where-the-bean-ops-live--open-and-close-called-by-every-process"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the bean ops live — OPEN and CLOSE, called by every process
   
   
-</h3><p>Owner, 2026-10-24 (option A, bean <code class="language-plaintext highlighter-rouge">m8gz</code>): <em>call it, and consolidate.</em> The
-claim, resolve and archive ops were hand copies — 19 claims in 18 diagrams, 13
-resolves in 11, 3 archives in 3 — and they had drifted: seven processes opened
-a bean they never closed, eight closed one without archiving it. They now live
-in two called processes, and nowhere else:</p><div class="table-wrapper"><table><thead><tr><th></th><th>process</th><th>what it does</th><th>ops it carries</th></tr></thead><tbody><tr><td><strong>OPEN</strong></td><td><code class="language-plaintext highlighter-rouge">Process_BeanOpen</code> (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-open.bpmn</code>)</td><td>check before you create, create, whose bean, claim — or leave it alone</td><td><code class="language-plaintext highlighter-rouge">claim</code></td></tr><tr><td><strong>CLOSE</strong></td><td><code class="language-plaintext highlighter-rouge">Process_BeanClose</code> (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-close.bpmn</code>)</td><td>outcome: complete, or scrap with reasons, then <strong>one shared archive step</strong>; or record the blocker and hand back</td><td><code class="language-plaintext highlighter-rouge">resolve</code>, <code class="language-plaintext highlighter-rouge">archive</code> (and a <code class="language-plaintext highlighter-rouge">note</code> for the blocker)</td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">Process_BeanLifecycle</code> is now OPEN → work → CLOSE, calling both.
-<code class="language-plaintext highlighter-rouge">Process_BeanDrain</code> (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-drain.bpmn</code>, bean <code class="language-plaintext highlighter-rouge">bssi</code>) is the
+</h3><p>The claim, resolve and archive ops live in two called processes, and nowhere
+else, so no process can open a bean it never closes:</p><div class="table-wrapper"><table><thead><tr><th></th><th>process</th><th>what it does</th><th>ops it carries</th></tr></thead><tbody><tr><td><strong>OPEN</strong></td><td><code class="language-plaintext highlighter-rouge">Process_BeanOpen</code> (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-open.bpmn</code>)</td><td>check before you create, create, whose bean, claim — or leave it alone</td><td><code class="language-plaintext highlighter-rouge">claim</code></td></tr><tr><td><strong>CLOSE</strong></td><td><code class="language-plaintext highlighter-rouge">Process_BeanClose</code> (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-close.bpmn</code>)</td><td>outcome: complete, or scrap with reasons, then <strong>one shared archive step</strong>; or record the blocker and hand back</td><td><code class="language-plaintext highlighter-rouge">resolve</code>, <code class="language-plaintext highlighter-rouge">archive</code> (and a <code class="language-plaintext highlighter-rouge">note</code> for the blocker)</td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">Process_BeanLifecycle</code> is OPEN → work → CLOSE, calling both.
+<code class="language-plaintext highlighter-rouge">Process_BeanDrain</code> (<code class="language-plaintext highlighter-rouge">sdlc/processes/bean-drain.bpmn</code>) is the
 same over a queue: build the queue grouped by owner, then for each bean OPEN →
 work → CLOSE, and refill when a drainer’s list runs dry. A bean OPEN finds is
 someone else’s is marked skip on the queue, not worked.</p><p><strong>How a process uses them.</strong> Call <code class="language-plaintext highlighter-rouge">Process_BeanOpen</code> where the bean becomes
@@ -636,8 +547,7 @@ whose only marks are <code class="language-plaintext highlighter-rouge">note</co
 that nothing calls is <strong>reported, not failed</strong>: it writes on whatever bean
 its instance was started with and never decides that bean’s fate.</p><p>The sweep is still <code class="language-plaintext highlighter-rouge">beans archive</code>, run deliberately — the floor under every
 process that never reached CLOSE. Note the CLI prints <code class="language-plaintext highlighter-rouge">.beans/archive/</code> but
-honours <code class="language-plaintext highlighter-rouge">path:</code> from <code class="language-plaintext highlighter-rouge">.beans.yml</code>; here that means <code class="language-plaintext highlighter-rouge">beans/defs/archive/</code>.
-Analysis: <code class="language-plaintext highlighter-rouge">cat-harness/docs/proposals/bean-archiving-in-bpmn.md</code>.</p><h2 id="status-display-format"><a href="#status-display-format" class="anchor-heading" aria-labelledby="status-display-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Status Display Format
+honours <code class="language-plaintext highlighter-rouge">path:</code> from <code class="language-plaintext highlighter-rouge">.beans.yml</code>; here that means <code class="language-plaintext highlighter-rouge">beans/defs/archive/</code>.</p><h2 id="status-display-format"><a href="#status-display-format" class="anchor-heading" aria-labelledby="status-display-format"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Status Display Format
   
   
 </h2><p>When the user asks “status” or “show beans”, run <code class="language-plaintext highlighter-rouge">beans list</code> and display the
@@ -652,23 +562,17 @@ node:</p><div class="language-plaintext highlighter-rouge"><div class="highlight
 </code></pre></div></div><h2 id="coordination-discipline"><a href="#coordination-discipline" class="anchor-heading" aria-labelledby="coordination-discipline"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Coordination discipline
   
   
-</h2><p>These four were carried only by <code class="language-plaintext highlighter-rouge">.claude/skills/local/todo-manager.md</code> until
-2026-09-19 — a copy that <code class="language-plaintext highlighter-rouge">skill_fetch</code> does not serve — so an agent asking for
-this skill by name never received them. Ported here as part of bean <code class="language-plaintext highlighter-rouge">tdmg</code>.</p><ol><li><strong>Claim before you work.</strong> Mark the bean <code class="language-plaintext highlighter-rouge">in-progress</code> so sibling sessions
-working the same goal do not duplicate the effort — and know what that buys
-you. The claim lives on YOUR branch, so it is invisible on <code class="language-plaintext highlighter-rouge">origin/main</code>
-until your PR exists; it announces the item is taken, it does not reserve it.
-So also <code class="language-plaintext highlighter-rouge">git fetch origin main</code> and check the open PR list for the bean id
-before you start. Two sessions claimed one bean 61 seconds apart on
-2026-09-19 and shipped two PRs for it. Full rule:
-<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination.md</code> §”A claim is branch-local”</a>.
+</h2><ol><li><strong>Claim before you work</strong>, with <code class="language-plaintext highlighter-rouge">bun run cat beans:claim &lt;id&gt;</code>, so sibling
+sessions working the same goal do not duplicate the effort. Also check the
+open PR list for the bean id and its subject before you start: a claim
+announces the item is taken, but a sibling may already have a PR. Full rule:
+<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination.md</code> §”Claims are global via the branch store”</a>.
 <strong>Brief it in the same turn you claim it</strong> —
 <a href="../../reference/skill-instructions/opening-brief.html"><code class="language-plaintext highlighter-rouge">opening-brief.md</code></a>. The claim tells a sibling the item is
 taken; the brief tells them, and the author, what it is being taken <em>for</em>.</li><li><strong>One source of truth per concern.</strong> Do not fork a bean into a parallel
 <code class="language-plaintext highlighter-rouge">todos/*.json</code> queue; link to the queue from the bean instead.</li><li><strong>Move wiring and script together.</strong> When relocating a hook-backed script,
 move its hook reference in the same change — a script without its wiring, or
-a hook reference without its script, is the migration failure mode that left
-dangling references behind (<code class="language-plaintext highlighter-rouge">docs/folio-assistant-migration.md</code> §2).</li><li><strong>Close on landing.</strong> When the work lands, close the tracking bean and update
+a hook reference without its script, leaves a dangling reference.</li><li><strong>Close on landing.</strong> When the work lands, close the tracking bean and update
 any cross-repo ownership note.</li></ol><h2 id="relationship-to-other-surfaces"><a href="#relationship-to-other-surfaces" class="anchor-heading" aria-labelledby="relationship-to-other-surfaces"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Relationship to other surfaces
   
   

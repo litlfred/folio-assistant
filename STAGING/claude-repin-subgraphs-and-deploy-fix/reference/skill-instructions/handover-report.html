@@ -290,26 +290,20 @@ handover becomes a different ruling by the second handover.</li><li><strong>Neve
 since when, and when to re-check, so a stale block can be told from a live
 one.</li><li><strong>Update in place.</strong> Re-run <code class="language-plaintext highlighter-rouge">beans:note</code> on the same branch and bean, which
 gives the same file. Do not append a second report.</li><li><p><strong>Every unstarted item gets a DISPATCH LINE, in one fixed sentence.</strong></p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Do bean folio-assistant-&lt;id&gt; on branch &lt;branch-to-create&gt; of repo &lt;owner&gt;/&lt;repo&gt;.
-</code></pre></div></div><p>The owner asked for exactly this shape, twice, 2026-10-03: <em>“for the agent,
-i mean something like "Do bean folio-assistant-tlk2 on branch
-claude/blissful-ride-c2f26u-rename-script of repo litlfred/folio-assistant."”</em>
-— and then <em>“make sure those short dispatch is part of the handover skills,
-so it is used again”</em>. It is a format, not a suggestion: write it verbatim
-with the three slots filled.</p><p><strong>Why one sentence, and why these three slots.</strong> A dispatch is read by
+</code></pre></div></div><p>It is a format, not a suggestion: write it verbatim with the three slots
+filled.</p><p><strong>Why one sentence, and why these three slots.</strong> A dispatch is read by
 somebody with no context — the owner pasting it into a new session, or a
 steward handing out work. The three slots are the minimum that makes it
 actionable alone: the BEAN says what and carries its own Done-when, the
 BRANCH stops two agents landing on one ref, and the REPO is required because
 an agent’s session may be scoped to a different one. Drop any slot and the
-recipient has to come back and ask.</p><p>Three rules measured the same day:</p><ul><li><strong>Name a branch that does not exist yet</strong>, and say so. A line naming a
-branch that was already finished sent an agent to a dead ref, which it
-reported back as “that branch does not exist and the bean is already
-completed” — a whole round lost to a stale line.</li><li><strong>One bean per line.</strong> Not a theme, not “the three remaining X”. The bean
+recipient has to come back and ask.</p><p>Three rules:</p><ul><li><strong>Name a branch that does not exist yet</strong>, and say so. A line naming a
+finished branch sends an agent to a dead ref.</li><li><strong>One bean per line.</strong> Not a theme, not “the three remaining X”. The bean
 is what carries the Done-when, and a line that names a theme hands over a
 judgement instead of a task.</li><li><strong>Order them, and say what is ordered.</strong> If a line must follow another,
 write that above the block — not inside the sentence, which stays fixed.
-A handover that lists four dispatchable beans with a hidden prerequisite
-is worse than one that lists the one that is ready.</li></ul><p><code class="language-plaintext highlighter-rouge">dispatch-agent</code> governs what happens AFTER the line is sent — the progress
+A hidden prerequisite makes a list of dispatchable beans worse than a
+list of the one that is ready.</li></ul><p><code class="language-plaintext highlighter-rouge">dispatch-agent</code> governs what happens AFTER the line is sent — the progress
 contract and the heartbeat. This rule is only about writing the line so the
 work can be handed on at all.</p></li></ol><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   

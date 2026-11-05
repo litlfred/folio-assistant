@@ -220,24 +220,15 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 (<code class="language-plaintext highlighter-rouge">Process_MergeToMain</code>) is the process. Its two gateways are computed by
 <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/sdlc/processes/decisions/merge-evidence.dmn"><code class="language-plaintext highlighter-rouge">merge-evidence.dmn</code></a> and
 <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/sdlc/processes/decisions/merge-authorisation.dmn"><code class="language-plaintext highlighter-rouge">merge-authorisation.dmn</code></a>.</p><p><strong>Every process that ends in a write to <code class="language-plaintext highlighter-rouge">main</code> calls it.</strong> Today that is
-<code class="language-plaintext highlighter-rouge">merge-train.bpmn</code> (<code class="language-plaintext highlighter-rouge">Call_MergeToMain</code>, in place of the old <code class="language-plaintext highlighter-rouge">Task_Release</code> and
-<code class="language-plaintext highlighter-rouge">Task_Land</code>) and <code class="language-plaintext highlighter-rouge">crdm-close.bpmn</code> (<code class="language-plaintext highlighter-rouge">Call_MergeToMain</code>, between the recorded
+<code class="language-plaintext highlighter-rouge">merge-train.bpmn</code> (<code class="language-plaintext highlighter-rouge">Call_MergeToMain</code>) and <code class="language-plaintext highlighter-rouge">crdm-close.bpmn</code> (<code class="language-plaintext highlighter-rouge">Call_MergeToMain</code>, between the recorded
 sign-off and the issue close). <a href="../../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a> stops before
 it; <a href="../../reference/skill-instructions/prepare-merge-auto.html"><code class="language-plaintext highlighter-rouge">prepare-merge-auto</code></a> Phase 4 runs it. A process
 that merges without calling it is a process with a hole in it, and the remedy is
 a call activity, not a paragraph.</p><h2 id="why-this-is-a-process-of-its-own"><a href="#why-this-is-a-process-of-its-own" class="anchor-heading" aria-labelledby="why-this-is-a-process-of-its-own"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why this is a process of its own
   
   
-</h2><p><strong>2026-10-09:</strong> one session merged seven pull requests into <code class="language-plaintext highlighter-rouge">main</code> across seven
-repositories (cat-harness, bootstrap-tools, the tools layer above this one, and
-four content instances above that). None of those
-repositories runs CI. The owner’s instruction had been <em>“fix all issues until
-green”</em>, and the session read it as permission to merge. A safety classifier
-flagged the action as “Merge Without Review”. The same instruction then appeared
-as the <code class="language-plaintext highlighter-rouge">evidence</code> of two <code class="language-plaintext highlighter-rouge">trust.consent</code> re-pins in <code class="language-plaintext highlighter-rouge">folio-assistant</code>’s
-<code class="language-plaintext highlighter-rouge">index.config.json</code>.</p><p>Nothing stopped it, because merging was never a step: it was the last line of
-<code class="language-plaintext highlighter-rouge">prepare-merge-auto</code>, a task in <code class="language-plaintext highlighter-rouge">merge-train</code>, and a line in CRDM Phase 6.
-None of the three could refuse, and none covered a repository with no CI.</p><h2 id="the-steps"><a href="#the-steps" class="anchor-heading" aria-labelledby="the-steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The steps
+</h2><p>A merge inlined as the last line of another process cannot refuse, and does not
+cover a repository with no CI. As its own step it can.</p><h2 id="the-steps"><a href="#the-steps" class="anchor-heading" aria-labelledby="the-steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The steps
   
   
 </h2><p>CI regenerates the harness projections on the head
@@ -248,8 +239,7 @@ answers: merge, hold or refuse. The merging session records the answer (not
 relaxable), merges pinned to the head, confirms <code class="language-plaintext highlighter-rouge">main</code>, republishes the
 repository’s site, re-pins downstream mounts and reports. Each step’s own text is in the diagram.</p><p>The merging session is the <code class="language-plaintext highlighter-rouge">merge-steward</code> lane. With a Merge Manager active,
 that is the steward. With none active, the PR’s own session takes the lane
-(owner ruling 2026-10-06, <a href="../../reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code></a> §”When no Merge
-Manager is active”). The gate is the same for both.</p><h2 id="evidence--read-on-the-head-live-every-time"><a href="#evidence--read-on-the-head-live-every-time" class="anchor-heading" aria-labelledby="evidence--read-on-the-head-live-every-time"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Evidence — read on the head, live, every time
+(<a href="../../reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code></a> §”When no Merge Manager is active”). The gate is the same for both.</p><h2 id="evidence--read-on-the-head-live-every-time"><a href="#evidence--read-on-the-head-live-every-time" class="anchor-heading" aria-labelledby="evidence--read-on-the-head-live-every-time"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Evidence — read on the head, live, every time
   
   
 </h2><p><strong>What lands is the head the evidence was read on.</strong> Read these facts from
@@ -306,8 +296,8 @@ over <code class="language-plaintext highlighter-rouge">none</code> when the que
 <code class="language-plaintext highlighter-rouge">green</code>. Everything else is <code class="language-plaintext highlighter-rouge">ask</code>, including <code class="language-plaintext highlighter-rouge">waiver</code> over <code class="language-plaintext highlighter-rouge">none</code>.</p><p><strong>The authorisation is bound to the head it was given against.</strong> A push after it
 re-opens the question. The one exception is a bot merge of <code class="language-plaintext highlighter-rouge">main</code> into the head
 with no other change. <strong>A batch authorisation covers the PRs listed when it was
-given</strong>, not PRs that arrive later (owner, 2026-10-04, quoted in
-<a href="../../reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code></a> §Landing).</p><h2 id="asking--evidence-before-the-question"><a href="#asking--evidence-before-the-question" class="anchor-heading" aria-labelledby="asking--evidence-before-the-question"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Asking — evidence before the question
+given</strong>, not PRs that arrive later (<a href="../../reference/skill-instructions/merge-queue.html"><code class="language-plaintext highlighter-rouge">merge-queue</code></a>
+§Landing).</p><h2 id="asking--evidence-before-the-question"><a href="#asking--evidence-before-the-question" class="anchor-heading" aria-labelledby="asking--evidence-before-the-question"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Asking — evidence before the question
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">Task_Ask</code> follows
@@ -323,8 +313,8 @@ with the PR open. Nothing is closed and nothing is deleted.</p><h2 id="recording
   
 </h2><p><strong>An authorisation nobody wrote down cannot be told from one that was never
 given.</strong> <code class="language-plaintext highlighter-rouge">Task_RecordAuthorisation</code> writes it before the merge. The shape
-already exists: <code class="language-plaintext highlighter-rouge">ReleaseSchema</code> in <code class="language-plaintext highlighter-rouge">schemas/sdlc/merge-queue.ts</code> (bean <code class="language-plaintext highlighter-rouge">ixmq</code>), and
-this step reuses it rather than inventing a second one.</p><p><strong>Where the repository has the merge queue</strong>, record it with the command that
+already exists: <code class="language-plaintext highlighter-rouge">ReleaseSchema</code> in <code class="language-plaintext highlighter-rouge">schemas/sdlc/merge-queue.ts</code>, and this
+step reuses it rather than inventing a second one.</p><p><strong>Where the repository has the merge queue</strong>, record it with the command that
 validates it:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>merge:queue:decide <span class="nt">--pr</span> &lt;n&gt; <span class="nt">--verdict</span> merge <span class="se">\</span>
   <span class="nt">--by</span> &lt;owner<span class="s1">'s login&gt; --captured-by &lt;your session URL&gt; \
   --quote "&lt;the owner'</span>s words, verbatim&gt;<span class="s2">" --source &lt;where they said it&gt; </span><span class="se">\</span><span class="s2">
@@ -365,8 +355,7 @@ fix forward (<a href="../../reference/skill-instructions/continual-progress.html
 can merge into a red main”). With no CI, report “not verified: no CI”. Do
 not report it as green.</li><li><p><strong><code class="language-plaintext highlighter-rouge">Task_Republish</code>: rebuild and republish the repository’s site.</strong> A
 merge that changes what a published site shows is not done until the site
-shows it (owner, 2026-10-30: <em>“merged PRs by agent should trigger page
-rebuild in process”</em>). When the merged repository’s <code class="language-plaintext highlighter-rouge">index.config.json</code>
+shows it. When the merged repository’s <code class="language-plaintext highlighter-rouge">index.config.json</code>
 declares <code class="language-plaintext highlighter-rouge">site.build</code>, build from the merge commit and publish:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run cat-harness-tools/scripts/build-instance-site.ts <span class="nt">--root</span> <span class="nb">.</span> <span class="se">\</span>
   <span class="nt">--instance</span> &lt;name&gt; <span class="nt">--publish</span> <span class="nt">--remote</span> https://github.com/&lt;owner&gt;/&lt;repo&gt;
 </code></pre></div></div><p>This is agent-run, never a GitHub Actions workflow. The build’s gates stay

@@ -11,7 +11,7 @@
         "smart-base:document-kinds",
         "uml:overview"
       ],
-      "seconds": 272.196042697
+      "seconds": 277.82000251000005
     },
     {
       "cause": "cat-harness",
@@ -39,7 +39,7 @@
         "kg:viewer",
         "render:bpmn"
       ],
-      "seconds": 47.806714043000255
+      "seconds": 47.76153805700028
     },
     {
       "cause": "beans/defs",
@@ -49,7 +49,7 @@
         "docs:pages",
         "processes:viz"
       ],
-      "seconds": 43.081243181
+      "seconds": 43.7684787900002
     },
     {
       "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
@@ -58,7 +58,15 @@
         "state:visualizer",
         "site:viz"
       ],
-      "seconds": 17.004418888000075
+      "seconds": 18.605593557999935
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 17.179561396999983
     },
     {
       "cause": ".agents/rules/agent-memory.md",
@@ -67,15 +75,7 @@
         "external-schemas:viz",
         "docs:harness"
       ],
-      "seconds": 12.462648189000088
-    },
-    {
-      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "writtenBy": "-",
-      "reran": [
-        "ig-index:build"
-      ],
-      "seconds": 10.940558885000005
+      "seconds": 12.60531532500009
     },
     {
       "cause": ".claude/skills/local/bean-coordination.md",
@@ -83,7 +83,7 @@
       "reran": [
         "skills:docs"
       ],
-      "seconds": 7.531663598999963
+      "seconds": 7.462965161000029
     },
     {
       "cause": "bootstrap",
@@ -91,15 +91,7 @@
       "reran": [
         "jsonld:contexts"
       ],
-      "seconds": 2.022306922000018
-    },
-    {
-      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "writtenBy": "-",
-      "reran": [
-        "smart-base:pages"
-      ],
-      "seconds": 1.141856890999945
+      "seconds": 2.214780437999987
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
@@ -107,15 +99,15 @@
       "reran": [
         "smart-trust:pages"
       ],
-      "seconds": 1.0645817379999207
+      "seconds": 1.2434333229999757
     },
     {
-      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
       "writtenBy": "-",
       "reran": [
-        "smart-trust-phw:pages"
+        "smart-base:pages"
       ],
-      "seconds": 0.7603763299999992
+      "seconds": 1.2128013180000707
     },
     {
       "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
@@ -123,19 +115,27 @@
       "reran": [
         "smart:pages"
       ],
-      "seconds": 0.7046821909999708
+      "seconds": 0.8292996649999405
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust-phw:pages"
+      ],
+      "seconds": 0.8026109299999662
     }
   ],
   "writers": [
     {
       "writer": "auto:docs",
       "did": "ran",
-      "why": "cat-harness changed (+901 more: cat-harness/cat-harness.json, cat-harness/docs/architecture/sdlc-agentic-coverage.md, cat-harness/docs/assets/img/uml/overview/cat-harness, cat-harness/docs/assets/workflows/checklists/complete-initialization.checklist.md, cat-harness/docs/assets/workflows/checklists/initialize-harness.checklist.md, cat-harness/docs/concepts/agentic-harness.md, cat-harness/docs/concepts/ar/agentic-harness.md, and 894 others)",
+      "why": "cat-harness changed (+1453 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/README.md, cat-harness/docs/ar, cat-harness/docs/ar/index.md, cat-harness/docs/architecture, cat-harness/docs/architecture/sdlc-agentic-coverage.md, and 1446 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 11.30091047100001
+      "seconds": 11.32329864500009
     },
     {
       "writer": "avatars:css",
@@ -145,93 +145,93 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.15973372500005645
+      "seconds": 0.16054586499999277
     },
     {
       "writer": "bibliography:page",
       "did": "ran",
-      "why": "cat-harness changed (+16 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 9 others)",
+      "why": "cat-harness changed (+18 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/library/README.md, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, and 11 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.7356744790000376
+      "seconds": 0.7838795709999977
     },
     {
       "writer": "docs:harness",
       "did": "ran",
-      "why": ".agents/rules/agent-memory.md changed (+192 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 185 others)",
+      "why": ".agents/rules/agent-memory.md changed (+317 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 310 others)",
       "cause": {
         "kind": "path",
         "path": ".agents/rules/agent-memory.md"
       },
-      "seconds": 5.758276121000061
+      "seconds": 5.3184508730000815
     },
     {
       "writer": "docs:pages",
       "did": "ran",
-      "why": "beans/defs changed (+887 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-dkqd--say-work-item-not-bean-in-prose-generate-a-glossar.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, cat-harness, cat-harness/cat-harness.json, cat-harness/docs/architecture/sdlc-agentic-coverage.md, cat-harness/docs/assets/img/uml/overview/cat-harness, and 880 others)",
+      "why": "beans/defs changed (+1490 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-dkqd--say-work-item-not-bean-in-prose-generate-a-glossar.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, beans/defs/folio-assistant-ksek--ci-green-pr-must-mean-green-main.md, cat-harness, cat-harness/cat-harness.json, cat-harness/docs, and 1483 others)",
       "cause": {
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 2.353443372000009
+      "seconds": 2.573607367000077
     },
     {
       "writer": "document-kinds:viz",
       "did": "ran",
-      "why": "cat-harness changed (+16 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 9 others)",
+      "why": "cat-harness changed (+18 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/index.lock.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, and 11 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 1.0600631329999306
+      "seconds": 1.0422604910000228
     },
     {
       "writer": "external-schemas:viz",
       "did": "ran",
-      "why": ".agents/rules/agent-memory.md changed (+2886 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 2879 others)",
+      "why": ".agents/rules/agent-memory.md changed (+4239 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 4232 others)",
       "cause": {
         "kind": "path",
         "path": ".agents/rules/agent-memory.md"
       },
-      "seconds": 6.704372068000026
+      "seconds": 7.2868644520000085
     },
     {
       "writer": "folio:viz",
       "did": "ran",
-      "why": "cat-harness changed (+18 more: cat-harness/cat-harness.json, cat-harness/docs/concepts/agentic-harness.md, cat-harness/docs/en/cat-harness/folio, cat-harness/docs/guides/beans-and-todos.md, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, and 11 others)",
+      "why": "cat-harness changed (+25 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/_config.yml, cat-harness/docs/concepts/agentic-harness.md, cat-harness/docs/concepts/architecture.md, cat-harness/docs/concepts/content-types.md, cat-harness/docs/concepts/skills.md, and 18 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.828934162999969
+      "seconds": 0.8439291410000296
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
       "why": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "seconds": 10.940558885000005
+      "seconds": 17.179561396999983
     },
     {
       "writer": "jsonld:contexts",
       "did": "ran",
-      "why": "bootstrap changed (+300 more: cat-harness, cat-harness/cat-harness.json, cat-harness/docs/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--kg-skills.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--platform.skos.jsonld, cat-harness/docs/assets/img/uml/overview/cat-harness, and 293 others)",
+      "why": "bootstrap changed (+454 more: cat-harness, cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/ar, cat-harness/docs/architecture, cat-harness/docs/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld, and 447 others)",
       "cause": {
         "kind": "path",
         "path": "bootstrap"
       },
-      "seconds": 2.022306922000018
+      "seconds": 2.214780437999987
     },
     {
       "writer": "kg:viewer",
       "did": "ran",
-      "why": "cat-harness changed (+11 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 4 others)",
+      "why": "cat-harness changed (+12 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, and 5 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.5564460730000864
+      "seconds": 0.6202663000000175
     },
     {
       "writer": "kind:table",
@@ -241,27 +241,27 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.13837614200008103
+      "seconds": 0.1541802340000868
     },
     {
       "writer": "library:viz",
       "did": "ran",
-      "why": "cat-harness changed (+1488 more: cat-harness/cat-harness.json, cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html, cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, and 1481 others)",
+      "why": "cat-harness changed (+2185 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html, cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html, and 2178 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 6.7683561359999
+      "seconds": 6.838517207000056
     },
     {
       "writer": "methodologies:viz",
       "did": "ran",
-      "why": "cat-harness changed (+347 more: cat-harness/cat-harness.json, cat-harness/methodologies/agentic-se-literature-synthesis.md, cat-harness/methodologies/kepner-tregoe.md, cat-harness/methodologies/madr.md, cat-harness/methodologies/requirements-filing-and-organisation.md, cat-harness/methodologies/sdlc-agentic-landscape.md, cat-harness/methodologies/wiregen.md, and 340 others)",
+      "why": "cat-harness changed (+493 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/methodologies/agentic-se-literature-synthesis.md, cat-harness/methodologies/kepner-tregoe.md, cat-harness/methodologies/madr.md, cat-harness/methodologies/requirements-filing-and-organisation.md, cat-harness/methodologies/sdlc-agentic-landscape.md, and 486 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 2.397756495999987
+      "seconds": 2.3792680779999356
     },
     {
       "writer": "navbar:include",
@@ -271,17 +271,17 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.1759857990000164
+      "seconds": 0.18597772700001952
     },
     {
       "writer": "node-kinds",
       "did": "ran",
-      "why": "cat-harness changed (+20 more: cat-harness/AGENTS.md, cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, and 13 others)",
+      "why": "cat-harness changed (+23 more: cat-harness/AGENTS.md, cat-harness/README.md, cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/bootstrap/initialization.md, cat-harness/package.json, cat-harness/processes, and 16 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 1.9144705590000377
+      "seconds": 1.7105018339999951
     },
     {
       "writer": "openapi:viz",
@@ -291,53 +291,53 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.2344366030000383
+      "seconds": 0.2471112439999124
     },
     {
       "writer": "processes:viz",
       "did": "ran",
-      "why": "beans/defs changed (+463 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-dkqd--say-work-item-not-bean-in-prose-generate-a-glossar.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, cat-harness, cat-harness/cat-harness.json, cat-harness/docs/assets/img/workflows/ig-ast-delta-review.svg, cat-harness/docs/assets/img/workflows/ig-incremental-build.svg, and 456 others)",
+      "why": "beans/defs changed (+658 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-dkqd--say-work-item-not-bean-in-prose-generate-a-glossar.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, beans/defs/folio-assistant-ksek--ci-green-pr-must-mean-green-main.md, cat-harness, cat-harness/cat-harness.json, cat-harness/docs, and 651 others)",
       "cause": {
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 10.71047237199999
+      "seconds": 10.8060060980001
     },
     {
       "writer": "render:bpmn",
       "did": "ran",
-      "why": "cat-harness changed (+117 more: cat-harness/cat-harness.json, cat-harness/docs/guides/beans-and-todos.md, cat-harness/docs/process/crdm-methodology.md, cat-harness/docs/source/guides-beans-and-todos/guides-beans-and-todos.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, and 110 others)",
+      "why": "cat-harness changed (+183 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/_config.yml, cat-harness/docs/assets/img/workflows/docs-site-publish.svg, cat-harness/docs/assets/img/workflows/sub-kg-lifecycle.svg, cat-harness/docs/guides/beans-and-todos.md, cat-harness/docs/process/crdm-methodology.md, and 176 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 6.668867037000018
+      "seconds": 6.812735337999999
     },
     {
       "writer": "schema:viz",
       "did": "ran",
-      "why": "cat-harness changed (+24 more: cat-harness/cat-harness.json, cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html, cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, and 17 others)",
+      "why": "cat-harness changed (+25 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html, cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html, and 18 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 3.9038899400000227
+      "seconds": 3.8903780790000457
     },
     {
       "writer": "site:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 1.2563170290000272
+      "seconds": 1.553313248999999
     },
     {
       "writer": "skills:docs",
       "did": "ran",
-      "why": ".claude/skills/local/bean-coordination.md changed (+554 more: .claude/skills/local/todo-manager.md, cat-harness, cat-harness/AGENTS.md, cat-harness/cat-harness.json, cat-harness/docs/architecture/sdlc-agentic-coverage.md, cat-harness/docs/assets/img/workflows/activity-log.svg, cat-harness/docs/assets/img/workflows/actor-role-administration.svg, and 547 others)",
+      "why": ".claude/skills/local/bean-coordination.md changed (+751 more: .claude/skills/local/todo-manager.md, cat-harness, cat-harness/AGENTS.md, cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/_config.yml, cat-harness/docs/architecture/sdlc-agentic-coverage.md, and 744 others)",
       "cause": {
         "kind": "path",
         "path": ".claude/skills/local/bean-coordination.md"
       },
-      "seconds": 7.531663598999963
+      "seconds": 7.462965161000029
     },
     {
       "writer": "smart-base:document-kinds",
@@ -347,57 +347,57 @@
         "kind": "path",
         "path": ""
       },
-      "seconds": 0.7363079649999854
+      "seconds": 0.7095582169999834
     },
     {
       "writer": "smart-base:l1-extraction:pages",
       "did": "ran",
-      "why": "cat-harness changed (+16 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 9 others)",
+      "why": "cat-harness changed (+17 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, and 10 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.9700083990000421
+      "seconds": 0.961733372000046
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "seconds": 1.141856890999945
+      "seconds": 1.2128013180000707
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
-      "seconds": 0.7603763299999992
+      "seconds": 0.8026109299999662
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "seconds": 1.0645817379999207
+      "seconds": 1.2434333229999757
     },
     {
       "writer": "smart:pages",
       "did": "ran",
       "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
-      "seconds": 0.7046821909999708
+      "seconds": 0.8292996649999405
     },
     {
       "writer": "state:visualizer",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 15.748101859000046
+      "seconds": 17.052280308999936
     },
     {
       "writer": "subgraph:jsonld",
       "did": "ran",
-      "why": "beans/defs changed (+713 more: cat-harness, cat-harness/AGENTS.md, cat-harness/cat-harness.json, cat-harness/docs/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--kg-skills.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--platform.skos.jsonld, and 706 others)",
+      "why": "beans/defs changed (+1036 more: beans/defs/archive, cat-harness, cat-harness/AGENTS.md, cat-harness/README.md, cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/README.md, and 1029 others)",
       "cause": {
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 30.017327437
+      "seconds": 30.38886532500002
     },
     {
       "writer": "subscriptions:viz",
@@ -407,17 +407,17 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.2518846299999859
+      "seconds": 0.2762908639999805
     },
     {
       "writer": "theme:viz",
       "did": "ran",
-      "why": "cat-harness changed (+16 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 9 others)",
+      "why": "cat-harness changed (+18 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/index.lock.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, and 11 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.7616991810000036
+      "seconds": 0.7360102440000046
     },
     {
       "writer": "themes:css",
@@ -427,47 +427,47 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.6955567779999692
+      "seconds": 0.7004245210000081
     },
     {
       "writer": "tools:viz",
       "did": "ran",
-      "why": "cat-harness changed (+104 more: cat-harness/cat-harness.json, cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html, cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, and 97 others)",
+      "why": "cat-harness changed (+211 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html, cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html, and 204 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 3.8586349340000887
+      "seconds": 3.785733657000004
     },
     {
       "writer": "uml:overview",
       "did": "ran",
-      "why": ". changed (+3099 more: cat-harness, cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/_data, cat-harness/docs/_data/todo_listing.json, cat-harness/docs/_includes, cat-harness/docs/_includes/generated, and 3092 others)",
+      "why": ". changed (+3162 more: cat-harness, cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/_data, cat-harness/docs/_data/todo_listing.json, cat-harness/docs/_includes, cat-harness/docs/_includes/generated, and 3155 others)",
       "cause": {
         "kind": "path",
         "path": ""
       },
-      "seconds": 271.459734732
+      "seconds": 277.11044429300006
     },
     {
       "writer": "uploads:viz",
       "did": "ran",
-      "why": "cat-harness changed (+20 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 13 others)",
+      "why": "cat-harness changed (+22 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/library/README.md, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, and 15 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 3.357343743000063
+      "seconds": 3.2388531580000417
     },
     {
       "writer": "voices:viz",
       "did": "ran",
-      "why": "cat-harness changed (+18 more: cat-harness/cat-harness.json, cat-harness/docs/reference/skill-instructions, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, and 11 others)",
+      "why": "cat-harness changed (+19 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/reference/skill-instructions, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, and 12 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 1.0676856219999027
+      "seconds": 1.0696424869999754
     }
   ]
 }

@@ -103,7 +103,7 @@
   @media print, (forced-colors: active) {
     html:root { background-image: none; }
   }
-</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/integration-watcher.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#domain-slots-every-child-must-fill","label":"Domain slots (every child must fill)"},{"href":"#0-invocation-as-integration-watch-args","label":"Invocation as /integration-watch [args]","icon":"0"},{"href":"#0a-repo-owner-preferences-binding-for-all-watchers","label":"0a. Repo-owner preferences (binding for all watchers)"},{"href":"#0c-sibling-coordination","label":"0c. Sibling coordination"},{"href":"#0d-askuserquestion-accessibility","label":"0d. AskUserQuestion accessibility"},{"href":"#where-each-section-lives","label":"Where each section lives"},{"href":"#6-goal-driven-invariants","label":"Goal-driven invariants","icon":"6"},{"href":"#7-output-style","label":"Output style","icon":"7"},{"href":"#8-integration","label":"Integration","icon":"8"},{"href":"#9-role-gating","label":"Role gating","icon":"9"},{"href":"#anti-patterns-shared-across-all-children","label":"Anti-patterns (shared across all children)"},{"href":"#checklist-shared-across-all-children","label":"Checklist (shared across all children)"},{"href":"#0b-idle-time-backlog-policy-5-minute-trigger","label":"0b. Idle-time backlog policy (5-minute trigger)"},{"href":"#5-idle-backlog-sweep","label":"Idle backlog sweep","icon":"5","children":[{"href":"#5a-discovery-run-once-at-session-start-refresh-every-50-items","label":"5a. Discovery (run once at session start, refresh every 50 items)","depth":1},{"href":"#5b-prioritisation","label":"5b. Prioritisation","depth":1},{"href":"#5c-per-item-processing","label":"5c. Per-item processing","depth":1},{"href":"#5d-quiescence--heartbeat--auto-pull-from-queue-when-idle","label":"5d. Quiescence + heartbeat — AUTO-PULL FROM QUEUE WHEN IDLE","depth":1},{"href":"#5d-bis-own-pr-ci-wait-counts-as-idle-mandatory","label":"5d-bis. Own-PR-CI-wait counts as idle (MANDATORY)","depth":1},{"href":"#5e-idle-author-ask-dispatcher","label":"5e. Idle author-ask dispatcher","depth":1},{"href":"#5f-witness-drift-ci-failure-pattern-recovery-recipe","label":"5f. Witness-drift CI failure pattern (RECOVERY RECIPE)","depth":1},{"href":"#5g-watch-prs-you-prepare","label":"5g. Watch PRs you prepare","depth":1},{"href":"#5j-backlog-found-issue--spin-up-your-own-pr","label":"5j. Backlog-found issue — spin up your own PR","depth":1},{"href":"#5k-handover-doc-for-very-large-backlog-issues","label":"5k. Handover doc for very-large backlog issues","depth":1},{"href":"#5i-sibling-pr-findings--post-comment-dont-fix","label":"5i. Sibling-PR findings — post comment, don’t fix","depth":1},{"href":"#5h-post-completion-voice-review-on-prepared-prs","label":"5h. Post-completion voice review on prepared PRs","depth":1},{"href":"#5l-resume-protocol--suggest-next-action-on-session-start","label":"5l. Resume protocol — suggest next action on session start","depth":1},{"href":"#5m-sequential-by-default-parallel-agents-require-explicit-consent","label":"5m. Sequential-by-default; parallel agents require explicit consent","depth":1}],"fold":"14 sub-sections"},{"href":"#1-baseline--setup-run-once-per-session","label":"Baseline + setup (run once per session)","icon":"1"},{"href":"#2-active-watching","label":"Active watching","icon":"2","children":[{"href":"#2a-watch-originmain-monitor-poll","label":"2a. Watch origin/main (Monitor poll)","depth":1},{"href":"#2b-subscribe-to-prs","label":"2b. Subscribe to PRs","depth":1},{"href":"#2c-continuous-main-following-for-own-prs-mandatory","label":"2c. Continuous main-following for own PRs (MANDATORY)","depth":1},{"href":"#2d-stop-conditions","label":"2d. Stop conditions","depth":1}],"fold":"4 sub-sections"},{"href":"#3-trigger-filter--does-this-event-match-the-domain","label":"Trigger filter — does this event match the domain?","icon":"3","children":[{"href":"#3a-on-new-commit-derivation-completion-detection-mandatory","label":"3a. On-new-commit derivation-completion detection (MANDATORY)","depth":1},{"href":"#3b-removal-over-banner-policy-mandatory-for-legacy--superseded","label":"3b. Removal-over-banner policy (MANDATORY for legacy / superseded)","depth":1},{"href":"#3c-on-new-commit-skill-availability-detection-mandatory","label":"3c. On-new-commit skill-availability detection (MANDATORY)","depth":1}],"fold":"3 sub-sections"},{"href":"#4-per-event-qa-pipeline","label":"Per-event QA pipeline","icon":"4","children":[{"href":"#4a-scope-reduction","label":"4a. Scope reduction","depth":1},{"href":"#4b-dispatch-parallel-agent-calls","label":"4b. Dispatch (parallel Agent calls)","depth":1},{"href":"#4c-synthesize-findings","label":"4c. Synthesize findings","depth":1},{"href":"#4d-attempt-fixes-collaborator-only","label":"4d. Attempt fixes (collaborator+ only)","depth":1},{"href":"#4e-author-asks--one-ask-per-stuck-block","label":"4e. Author asks — one ask per stuck block","depth":1},{"href":"#4f-update-the-queue--ledger","label":"4f. Update the queue + ledger","depth":1},{"href":"#4g-refresh-spawned-prs-against-main-superseded-by-2c","label":"4g. Refresh spawned PRs against main (superseded by §2c)","depth":1}],"fold":"7 sub-sections"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/integration-watcher.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#domain-slots-every-child-must-fill","label":"Domain slots (every child must fill)"},{"href":"#0-invocation-as-integration-watch-args","label":"Invocation as /integration-watch [args]","icon":"0"},{"href":"#0a-repo-owner-preferences-binding-for-all-watchers","label":"0a. Repo-owner preferences (binding for all watchers)"},{"href":"#0c-sibling-coordination","label":"0c. Sibling coordination"},{"href":"#0d-askuserquestion-accessibility","label":"0d. AskUserQuestion accessibility"},{"href":"#where-each-section-lives","label":"Where each section lives"},{"href":"#6-goal-driven-invariants","label":"Goal-driven invariants","icon":"6"},{"href":"#7-output-style","label":"Output style","icon":"7"},{"href":"#8-integration","label":"Integration","icon":"8"},{"href":"#9-role-gating","label":"Role gating","icon":"9"},{"href":"#anti-patterns-shared-across-all-children","label":"Anti-patterns (shared across all children)"},{"href":"#checklist-shared-across-all-children","label":"Checklist (shared across all children)"},{"href":"#0b-idle-time-backlog-policy-5-minute-trigger","label":"0b. Idle-time backlog policy (5-minute trigger)"},{"href":"#5-idle-backlog-sweep","label":"Idle backlog sweep","icon":"5","children":[{"href":"#5a-discovery-run-once-at-session-start-refresh-every-50-items","label":"5a. Discovery (run once at session start, refresh every 50 items)","depth":1},{"href":"#5b-prioritisation","label":"5b. Prioritisation","depth":1},{"href":"#5c-per-item-processing","label":"5c. Per-item processing","depth":1},{"href":"#5d-quiescence--heartbeat--auto-pull-from-queue-when-idle","label":"5d. Quiescence + heartbeat — AUTO-PULL FROM QUEUE WHEN IDLE","depth":1},{"href":"#5d-bis-own-pr-ci-wait-counts-as-idle-mandatory","label":"5d-bis. Own-PR-CI-wait counts as idle (MANDATORY)","depth":1},{"href":"#5e-idle-author-ask-dispatcher","label":"5e. Idle author-ask dispatcher","depth":1},{"href":"#5f-witness-drift-ci-failure-pattern-recovery-recipe","label":"5f. Witness-drift CI failure pattern (RECOVERY RECIPE)","depth":1},{"href":"#5g-watch-prs-you-prepare","label":"5g. Watch PRs you prepare","depth":1},{"href":"#5j-backlog-found-issue--spin-up-your-own-pr","label":"5j. Backlog-found issue — spin up your own PR","depth":1},{"href":"#5k-handover-doc-for-very-large-backlog-issues","label":"5k. Handover doc for very-large backlog issues","depth":1},{"href":"#5i-sibling-pr-findings--post-comment-dont-fix","label":"5i. Sibling-PR findings — post comment, don’t fix","depth":1},{"href":"#5h-post-completion-voice-review-on-prepared-prs","label":"5h. Post-completion voice review on prepared PRs","depth":1},{"href":"#5l-resume-protocol--suggest-next-action-on-session-start","label":"5l. Resume protocol — suggest next action on session start","depth":1},{"href":"#5m-sequential-by-default-parallel-agents-require-explicit-consent","label":"5m. Sequential-by-default; parallel agents require explicit consent","depth":1}],"fold":"14 sub-sections"},{"href":"#1-baseline--setup-run-once-per-session","label":"Baseline + setup (run once per session)","icon":"1"},{"href":"#2-active-watching","label":"Active watching","icon":"2","children":[{"href":"#2a-watch-originmain-monitor-poll","label":"2a. Watch origin/main (Monitor poll)","depth":1},{"href":"#2b-subscribe-to-prs","label":"2b. Subscribe to PRs","depth":1},{"href":"#2c-continuous-main-following-for-own-prs-mandatory","label":"2c. Continuous main-following for own PRs (MANDATORY)","depth":1},{"href":"#2d-stop-conditions","label":"2d. Stop conditions","depth":1}],"fold":"4 sub-sections"},{"href":"#3-trigger-filter--does-this-event-match-the-domain","label":"Trigger filter — does this event match the domain?","icon":"3","children":[{"href":"#3a-on-new-commit-derivation-completion-detection-mandatory","label":"3a. On-new-commit derivation-completion detection (MANDATORY)","depth":1},{"href":"#3b-removal-over-banner-policy-mandatory-for-legacy--superseded","label":"3b. Removal-over-banner policy (MANDATORY for legacy / superseded)","depth":1},{"href":"#3c-on-new-commit-skill-availability-detection-mandatory","label":"3c. On-new-commit skill-availability detection (MANDATORY)","depth":1}],"fold":"3 sub-sections"},{"href":"#4-per-event-qa-pipeline","label":"Per-event QA pipeline","icon":"4","children":[{"href":"#4a-scope-reduction","label":"4a. Scope reduction","depth":1},{"href":"#4b-dispatch-parallel-agent-calls","label":"4b. Dispatch (parallel Agent calls)","depth":1},{"href":"#4c-synthesize-findings","label":"4c. Synthesize findings","depth":1},{"href":"#4d-attempt-fixes-collaborator-only","label":"4d. Attempt fixes (collaborator+ only)","depth":1},{"href":"#4e-author-asks--one-ask-per-stuck-block","label":"4e. Author asks — one ask per stuck block","depth":1},{"href":"#4f-update-the-queue--ledger","label":"4f. Update the queue + ledger","depth":1},{"href":"#4g-refresh-spawned-prs-against-main--fallback-for-2c","label":"4g. Refresh spawned PRs against main — fallback for §2c","depth":1}],"fold":"7 sub-sections"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
 function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
 function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
@@ -239,8 +239,7 @@ watcher and its one-line QA axis, then surface the structured chip set.</p><h2 i
   
 </h2><p>Per <a href="../../reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a> the repo owner types with
 difficulty and prefers a small set of binding behavioural defaults.
-These override the historical watcher defaults — every child inherits
-them.</p><ol><li><strong>One branch / one PR for related things.</strong> Group many related
+Every child inherits them.</p><ol><li><strong>One branch / one PR for related things.</strong> Group many related
 fixes (especially backlog items) into a single branch + single PR.
 Don’t open small per-item PRs. See §5j step 1 (“Cluster
 aggressively”) and §5g step 5 for the merge-prompt sequencing.</li><li><strong>Don’t spawn more than one agent at a time without explicit
@@ -251,9 +250,8 @@ calls in one response are still fine; agent spawns are the
 constraint).</li><li><strong>Group a lot — backlog batches are large by default.</strong> When the
 backlog has 4-20 related items in the same finding bucket, do them
 all in one branch, stacked as multiple commits if they need
-different commit messages. Don’t split into N small branches.</li></ol><p>These rules supersede any “default to parallel” / “one PR per item”
-framing earlier in this document. When in doubt: cluster more,
-dispatch fewer agents, ask before parallelising.</p><h2 id="0c-sibling-coordination"><a href="#0c-sibling-coordination" class="anchor-heading" aria-labelledby="0c-sibling-coordination"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0c. Sibling coordination
+different commit messages. Don’t split into N small branches.</li></ol><p>When in doubt: cluster more, dispatch fewer agents, ask before
+parallelising.</p><h2 id="0c-sibling-coordination"><a href="#0c-sibling-coordination" class="anchor-heading" aria-labelledby="0c-sibling-coordination"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0c. Sibling coordination
   
   
 </h2><p>Per <a href="../../reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">coordinate</code></a>, on coordinating intent with sibling
@@ -271,9 +269,7 @@ proactively — don’t wait for them to step on the rake.</li><li><strong>Durin
 for coordination updates that affect your branch’s scope.
 <code class="language-plaintext highlighter-rouge">mcp__github__pull_request_read get_comments</code> on each watched
 sibling; new comments addressed to “all watchers” or referencing
-your branch’s keywords are actionable backlog items.</li></ul><p>This rule supersedes the historical “post on the PR only when asked”
-framing — proactive coordination on workplan start + during idle is
-now the default.</p><h2 id="0d-askuserquestion-accessibility"><a href="#0d-askuserquestion-accessibility" class="anchor-heading" aria-labelledby="0d-askuserquestion-accessibility"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0d. AskUserQuestion accessibility
+your branch’s keywords are actionable backlog items.</li></ul><h2 id="0d-askuserquestion-accessibility"><a href="#0d-askuserquestion-accessibility" class="anchor-heading" aria-labelledby="0d-askuserquestion-accessibility"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0d. AskUserQuestion accessibility
   
   
 </h2><p>Per <a href="../../reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a> and its <code class="language-plaintext highlighter-rouge">low-dexterity</code>
@@ -287,11 +283,10 @@ every pending decision.</li><li><strong>Phrase questions to allow optional notes
 add ‘Other’ with a free-text note if needed.”</li><li>Single-select is OK only for genuinely mutually-exclusive actions.</li></ul><h2 id="where-each-section-lives"><a href="#where-each-section-lives" class="anchor-heading" aria-labelledby="where-each-section-lives"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where each section lives
   
   
-</h2><p>This skill was 1281 lines. An agent reads it before acting, every time, and at
-that length it skims — so the parts that apply to one phase are beside it
-rather than in here. <strong>Nothing was deleted and no section was renumbered</strong>,
-because children cite the parent by number (<code class="language-plaintext highlighter-rouge">parent §4b</code>, <code class="language-plaintext highlighter-rouge">parent §5m</code>) and
-those citations have to keep resolving.</p><div class="table-wrapper"><table><thead><tr><th>§</th><th>what</th><th>where</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">0a</code>, <code class="language-plaintext highlighter-rouge">0c</code>, <code class="language-plaintext highlighter-rouge">0d</code></td><td>invocation, and the policies binding on every watcher</td><td><strong>here</strong> — read before you start</td></tr><tr><td><code class="language-plaintext highlighter-rouge">0b</code></td><td>idle-time backlog policy (5-minute trigger)</td><td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/sdlc/skills/sdlc-core/integration-watcher/idle-backlog.md"><code class="language-plaintext highlighter-rouge">integration-watcher/idle-backlog.md</code></a></td></tr><tr><td><code class="language-plaintext highlighter-rouge">1</code>–<code class="language-plaintext highlighter-rouge">4</code></td><td>setup, active watching, trigger filter, per-event QA pipeline</td><td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/sdlc/skills/sdlc-core/integration-watcher/lifecycle.md"><code class="language-plaintext highlighter-rouge">integration-watcher/lifecycle.md</code></a></td></tr><tr><td><code class="language-plaintext highlighter-rouge">5</code></td><td>idle backlog sweep, and the handover issue template</td><td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/sdlc/skills/sdlc-core/integration-watcher/idle-backlog.md"><code class="language-plaintext highlighter-rouge">integration-watcher/idle-backlog.md</code></a></td></tr><tr><td><code class="language-plaintext highlighter-rouge">6</code>–<code class="language-plaintext highlighter-rouge">9</code>, anti-patterns, checklist</td><td>invariants, output style, integration, role gating</td><td><strong>here</strong></td></tr></tbody></table></div><p><strong>Running a watcher:</strong> read this file, then <code class="language-plaintext highlighter-rouge">lifecycle.md</code>. You reach
+</h2><p>The parts that apply to one phase are in files beside this one, so an agent
+reading this file before acting reads all of it. Section
+numbers are shared across them, because children cite the parent by number
+(<code class="language-plaintext highlighter-rouge">parent §4b</code>, <code class="language-plaintext highlighter-rouge">parent §5m</code>).</p><div class="table-wrapper"><table><thead><tr><th>§</th><th>what</th><th>where</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">0</code>, <code class="language-plaintext highlighter-rouge">0a</code>, <code class="language-plaintext highlighter-rouge">0c</code>, <code class="language-plaintext highlighter-rouge">0d</code></td><td>invocation, and the policies binding on every watcher</td><td><strong>here</strong> — read before you start</td></tr><tr><td><code class="language-plaintext highlighter-rouge">0b</code></td><td>idle-time backlog policy (5-minute trigger)</td><td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/sdlc/skills/sdlc-core/integration-watcher/idle-backlog.md"><code class="language-plaintext highlighter-rouge">integration-watcher/idle-backlog.md</code></a></td></tr><tr><td><code class="language-plaintext highlighter-rouge">1</code>–<code class="language-plaintext highlighter-rouge">4</code></td><td>setup, active watching, trigger filter, per-event QA pipeline</td><td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/sdlc/skills/sdlc-core/integration-watcher/lifecycle.md"><code class="language-plaintext highlighter-rouge">integration-watcher/lifecycle.md</code></a></td></tr><tr><td><code class="language-plaintext highlighter-rouge">5</code></td><td>idle backlog sweep, and the handover issue template</td><td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/sdlc/skills/sdlc-core/integration-watcher/idle-backlog.md"><code class="language-plaintext highlighter-rouge">integration-watcher/idle-backlog.md</code></a></td></tr><tr><td><code class="language-plaintext highlighter-rouge">6</code>–<code class="language-plaintext highlighter-rouge">9</code>, anti-patterns, checklist</td><td>invariants, output style, integration, role gating</td><td><strong>here</strong></td></tr></tbody></table></div><p><strong>Running a watcher:</strong> read this file, then <code class="language-plaintext highlighter-rouge">lifecycle.md</code>. You reach
 <code class="language-plaintext highlighter-rouge">idle-backlog.md</code> only when the queue is empty and the idle trigger fires.</p><h2 id="6-goal-driven-invariants"><a href="#6-goal-driven-invariants" class="anchor-heading" aria-labelledby="6-goal-driven-invariants"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Goal-driven invariants
   
   
@@ -308,8 +303,8 @@ own-branch commit; failure blocks the commit, queues the violation as
 </code></pre></div></div></li><li>An author ask when escalating (see §4e).</li><li>End-of-session: tail of the ledger + queue stats.</li></ul><h2 id="8-integration"><a href="#8-integration" class="anchor-heading" aria-labelledby="8-integration"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Integration
   
   
-</h2><ul><li><strong>Built on</strong>: <code class="language-plaintext highlighter-rouge">local/watch</code> (Monitor scaffolding), <code class="language-plaintext highlighter-rouge">local/coordinate</code>
-(PR triage helpers).</li><li><strong>Dispatches</strong>: see each child’s Slot C.</li><li><strong>Produces</strong>: <code class="language-plaintext highlighter-rouge">beans/${NAME}-queue.json</code> (live state) +
+</h2><ul><li><strong>Built on</strong>: <code class="language-plaintext highlighter-rouge">watch</code> (Monitor scaffolding), <code class="language-plaintext highlighter-rouge">coordinate</code> (PR triage
+helpers).</li><li><strong>Dispatches</strong>: see each child’s Slot C.</li><li><strong>Produces</strong>: <code class="language-plaintext highlighter-rouge">beans/${NAME}-queue.json</code> (live state) +
 <code class="language-plaintext highlighter-rouge">beans/${NAME}-ledger.md</code> (event log).</li><li><strong>Complements</strong> other watchers — each owns one axis. Coordinate via
 <code class="language-plaintext highlighter-rouge">/coordinate</code> if the user is running more than one.</li></ul><h2 id="9-role-gating"><a href="#9-role-gating" class="anchor-heading" aria-labelledby="9-role-gating"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Role gating
   
@@ -331,9 +326,9 @@ existing specialists / scripts.</li><li>❌ Subscribe to <strong>every</strong> 
   
   
 </h1><p>What a watcher does when nothing is arriving: the 5-minute idle trigger (§0b)
-and the backlog sweep it runs (§5), including the handover issue template.</p><p>Split from the parent because it is 40 % of the file and applies only in the
-idle branch — a watcher processing events never reaches it.</p><p><strong>Section numbers are the parent’s and do not change here</strong> — children cite
-<code class="language-plaintext highlighter-rouge">parent §5a</code> and <code class="language-plaintext highlighter-rouge">parent §5m</code>, and those references resolve to this file.</p><h2 id="0b-idle-time-backlog-policy-5-minute-trigger"><a href="#0b-idle-time-backlog-policy-5-minute-trigger" class="anchor-heading" aria-labelledby="0b-idle-time-backlog-policy-5-minute-trigger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0b. Idle-time backlog policy (5-minute trigger)
+and the backlog sweep it runs (§5), including the handover issue template. A
+watcher processing events never reaches it.</p><p><strong>Section numbers are the parent’s</strong> — <code class="language-plaintext highlighter-rouge">parent §5a</code> and <code class="language-plaintext highlighter-rouge">parent §5m</code> resolve
+to this file.</p><h2 id="0b-idle-time-backlog-policy-5-minute-trigger"><a href="#0b-idle-time-backlog-policy-5-minute-trigger" class="anchor-heading" aria-labelledby="0b-idle-time-backlog-policy-5-minute-trigger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 0b. Idle-time backlog policy (5-minute trigger)
   
   
 </h2><p>Per <a href="../../reference/skill-instructions/idle-backlog.html"><code class="language-plaintext highlighter-rouge">idle-backlog</code></a> (the 5-minute idle
@@ -391,15 +386,13 @@ the specific blocker and move on.</li></ul></li><li><strong>Cross-cutting cleanu
 bibliography items, glossary backfills).</li></ol><p>For this skill’s children specifically:</p><ul><li>The watcher’s queue file is the primary backlog source (item 3).
 When triggered, read the queue, pull the highest-priority
 <code class="language-plaintext highlighter-rouge">needs-author</code> or unresolved <code class="language-plaintext highlighter-rouge">triage</code> item, and apply the §4 → §5 →
-§6 child-specific procedure on it.</li><li>If the queue is empty/all-terminal, fall through to item 4
-(cross-cutting cleanups). Don’t sit idle if there’s reachable
+§6 child-specific procedure on it.</li><li>If the queue is empty/all-terminal, fall through to items 4–5 (stale
+sidecars and witnesses, cross-cutting cleanups). Don’t sit idle if there’s reachable
 cleanup work.</li><li>The “pause” command from the user IS a terminal state — do not
 pursue backlog after the user says “pause” or “stop until I’m back”.
 Only the explicit “resume” / “continue” restart command lifts the
-pause.</li></ul><p>This rule exists because integration-watcher sessions often spend long
-stretches in idle monitor-TICK mode after the in-flight tranche lands.
-Productive idle is “work the next queue item”, not “TICK heartbeats
-forever”.</p><h2 id="5-idle-backlog-sweep"><a href="#5-idle-backlog-sweep" class="anchor-heading" aria-labelledby="5-idle-backlog-sweep"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Idle backlog sweep
+pause.</li></ul><p>Watcher sessions spend long stretches idle once the in-flight tranche lands,
+and productive idle is working the next queue item, not heartbeats.</p><h2 id="5-idle-backlog-sweep"><a href="#5-idle-backlog-sweep" class="anchor-heading" aria-labelledby="5-idle-backlog-sweep"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Idle backlog sweep
   
   
 </h2><p>When the queue has been quiescent for ≥ 10 minutes (no main commits, no
@@ -474,8 +467,7 @@ compute source edits AND on any <code class="language-plaintext highlighter-roug
 change.</p><p><strong>Failure mode:</strong> even a comment-only edit can trigger validate.
 Validate runs many scripts; one regenerates a witness that has drifted
 on main since the last refresh (e.g. a <code class="language-plaintext highlighter-rouge">files_scanned</code> count moved when
-a new probe landed without a witness refresh). The drift check fires.</p><p><strong>The pattern is endemic.</strong> Main’s own commit log shows repeated
-<code class="language-plaintext highlighter-rouge">post-rebase drift refresh</code> / <code class="language-plaintext highlighter-rouge">post-push drift refresh</code> entries — author</p><ul><li>sibling agents do this routinely.</li></ul><p><strong>Sub-case: quick-fail = billing.</strong> If a CI job fails in <strong>under ~60
+a new probe landed without a witness refresh). The drift check fires.</p><p><strong>Sub-case: quick-fail = billing.</strong> If a CI job fails in <strong>under ~60
 seconds</strong>, the runner almost never reached the validators. This is a
 billing / queue / quota condition on the CI account, <strong>not</strong> a content
 failure. Treat as a flake: do NOT rebase, do NOT regenerate witnesses,
@@ -495,9 +487,9 @@ local diagnosis.</p><h3 id="5g-watch-prs-you-prepare"><a href="#5g-watch-prs-you
   
 </h3><p>When a watcher (or any skill it dispatches) <strong>prepares a PR</strong>, the
 watcher <strong>must</strong> add the new PR to its subscription set immediately and
-follow up on review activity. Author oversight expectation: <em>“watch PRs
-you prepare for review comments and respond if you can. if not ask
-author. once done, ask author if they want to merge and provide link”</em>.</p><p>Per prepared PR:</p><ol><li><strong>Subscribe.</strong> Right after <code class="language-plaintext highlighter-rouge">create_pull_request</code>, call
+follow up on review activity: respond to review comments where you can,
+ask the author where you cannot, and once done ask the author whether to
+merge, with the link.</p><p>Per prepared PR:</p><ol><li><strong>Subscribe.</strong> Right after <code class="language-plaintext highlighter-rouge">create_pull_request</code>, call
 <code class="language-plaintext highlighter-rouge">mcp__github__subscribe_pr_activity</code> with the new PR number. Add to
 the ledger under “watching”.</li><li><strong>Request automated reviews from the available bots.</strong> Call
 <code class="language-plaintext highlighter-rouge">mcp__github__request_copilot_review</code>. Any other automatic reviewer
@@ -656,7 +648,7 @@ push.</li><li>The author explicitly authorises the cross-branch action.</li></ul
   
   
 </h3><p>When a prepared PR (per §5g) lands its <strong>last substantive fix</strong>, run
-<code class="language-plaintext highlighter-rouge">local/one-voice-audit</code> on the <strong>diff scope</strong> before the merge prompt:</p><ul><li><strong>PR touches <code class="language-plaintext highlighter-rouge">.md</code> content</strong> → run the §1 greps (status leaks, emoji,
+<code class="language-plaintext highlighter-rouge">one-voice-audit</code> on the <strong>diff scope</strong> before the merge prompt:</p><ul><li><strong>PR touches <code class="language-plaintext highlighter-rouge">.md</code> content</strong> → run the §1 greps (status leaks, emoji,
 work-tracker words, first-person tone, unicode crashes) on the diff.
 Apply mechanical fixes. Push as <code class="language-plaintext highlighter-rouge">style: voice sweep on PR diff</code>. Then
 the §5g step 5 merge prompt.</li><li><strong>PR is content-free</strong> (only formal-layer, <code class="language-plaintext highlighter-rouge">.ts</code>, <code class="language-plaintext highlighter-rouge">.py</code>, witness JSON,
@@ -719,9 +711,7 @@ the user types <code class="language-plaintext highlighter-rouge">/integration-w
 audited[block].{sha,criteria}</code> makes the audit ledger fully replayable.</p><h3 id="5m-sequential-by-default-parallel-agents-require-explicit-consent"><a href="#5m-sequential-by-default-parallel-agents-require-explicit-consent" class="anchor-heading" aria-labelledby="5m-sequential-by-default-parallel-agents-require-explicit-consent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5m. Sequential-by-default; parallel agents require explicit consent
   
   
-</h3><p>Repo-owner preference: <strong>don’t spawn more than one agent at a time
-unless explicit consent.</strong> This overrides the historical
-“parallel-by-default” model.</p><p><strong>Default rule:</strong> while idle, the watcher does its own work
+</h3><p><strong>Don’t spawn more than one agent at a time without explicit consent.</strong></p><p><strong>Default rule:</strong> while idle, the watcher does its own work
 <strong>sequentially in the foreground</strong> — one backlog item / one PR triage /
 one criterion sweep at a time. Foreground reads (<code class="language-plaintext highlighter-rouge">Read</code>, <code class="language-plaintext highlighter-rouge">Grep</code>, <code class="language-plaintext highlighter-rouge">Bash</code>
 for inspection) can still run in parallel within a single response; the
@@ -752,7 +742,7 @@ binds you before you start.</p><p><strong>Section numbers are the parent’s and
 <span class="nv">OWNER</span><span class="o">=</span>&lt;repo-owner&gt;
 <span class="nv">REPO</span><span class="o">=</span>&lt;repo-name&gt;
 
-<span class="c"># CatBootstrap the queue + ledger under beans/ (queue tracked as a bulk-JSON</span>
+<span class="c"># Bootstrap the queue + ledger under beans/ (queue tracked as a bulk-JSON</span>
 <span class="c"># coordination queue; ledger gitignored — both survive branch switches)</span>
 <span class="nb">mkdir</span> <span class="nt">-p</span> beans
 <span class="nv">NAME</span><span class="o">=</span><span class="s2">"&lt;your-watcher-name&gt;"</span>
@@ -765,7 +755,7 @@ binds you before you start.</p><p><strong>Section numbers are the parent’s and
 |----------|-------|-------|----------|--------|
 </span><span class="no">EOF
 
-</span><span class="c"># Stash main baseline so §5f timeout-recovery can diff cleanly.</span>
+</span><span class="c"># Stash main baseline so timeout recovery (watch.md §5b) can diff cleanly.</span>
 <span class="c"># Explicit refspec — see coordinate.md §8a: a bare fetch may not write</span>
 <span class="c"># refs/remotes/origin/main, and a baseline read from an unwritten ref is not one.</span>
 git fetch origin <span class="s1">'+refs/heads/main:refs/remotes/origin/main'</span> 2&gt;/dev/null
@@ -862,10 +852,9 @@ subscribe to any new ones. Subscription is idempotent.</p><h3 id="2c-continuous-
 </h3><p>Every new commit landing on <code class="language-plaintext highlighter-rouge">origin/main</code> (detected via the §2a Monitor
 poll) <strong>must</strong> trigger an own-PR rebase walk via §5g step 7
 <strong>unconditionally</strong> — independent of whether the §3 trigger filter
-matches the commit’s scope or §4 dispatch runs any specialists.</p><p>The rationale: a watcher session that lets its own PRs accumulate
-“behind by N commits” against <code class="language-plaintext highlighter-rouge">origin/main</code> ships dirty work to
-reviewers and risks GitHub’s “needs rebase” state silently when the
-user comes back to merge.</p><p><strong>Fire rule</strong> (every Monitor commit line):</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>on new main commit SHA detected by Monitor:
+matches the commit’s scope or §4 dispatch runs any specialists. An own PR
+left behind <code class="language-plaintext highlighter-rouge">origin/main</code> reaches reviewers stale and can silently enter
+GitHub’s “needs rebase” state.</p><p><strong>Fire rule</strong> (every Monitor commit line):</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>on new main commit SHA detected by Monitor:
   1. Refresh local main tracking: git fetch origin main
   2. Walk every own PR (this watcher created in this session)
      per §5g step 7 — worktree rebase + force-with-lease push.
@@ -925,8 +914,8 @@ because it depended on this derivation, the dependency is now
 closed. Re-classify per §4d.</li><li><strong>Trigger removal candidacy.</strong> If the queued item was a placeholder
 or probing block waiting for the canonical form, mark <code class="language-plaintext highlighter-rouge">status:
 queued-for-removal</code> (see §3b below).</li><li><strong>Update the ledger</strong> with a <code class="language-plaintext highlighter-rouge">derivation-completion</code> row citing both
-the new commit SHA and the queue item id.</li></ol><p>This prevents the watcher from carrying stale “open problem” framings
-after the actual closure lands.</p><h3 id="3b-removal-over-banner-policy-mandatory-for-legacy--superseded"><a href="#3b-removal-over-banner-policy-mandatory-for-legacy--superseded" class="anchor-heading" aria-labelledby="3b-removal-over-banner-policy-mandatory-for-legacy--superseded"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3b. Removal-over-banner policy (MANDATORY for legacy / superseded)
+the new commit SHA and the queue item id.</li></ol><p>This keeps the watcher from carrying stale “open problem” framings after the
+closure lands.</p><h3 id="3b-removal-over-banner-policy-mandatory-for-legacy--superseded"><a href="#3b-removal-over-banner-policy-mandatory-for-legacy--superseded" class="anchor-heading" aria-labelledby="3b-removal-over-banner-policy-mandatory-for-legacy--superseded"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3b. Removal-over-banner policy (MANDATORY for legacy / superseded)
   
   
 </h3><p>When a canonical derivation lands and supersedes a legacy / deprecated /
@@ -942,14 +931,14 @@ a separate, reviewable change.</li><li>Cite the superseding block in the removal
 </h3><p>In addition to the domain trigger filter (Slot B) and the §3a
 derivation-completion check, every watcher must check whether the
 incoming commit (or batch in the unreviewed range) <strong>added a new skill
-file</strong> under <code class="language-plaintext highlighter-rouge">.claude/skills/</code>:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SHA_RANGE</span><span class="o">=</span><span class="s2">"&lt;LAST_REVIEWED&gt;..&lt;NEW_SHA&gt;"</span>
+file</strong> under a <code class="language-plaintext highlighter-rouge">skills/</code> directory:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SHA_RANGE</span><span class="o">=</span><span class="s2">"&lt;LAST_REVIEWED&gt;..&lt;NEW_SHA&gt;"</span>
 git diff <span class="nt">--name-only</span> <span class="nt">--diff-filter</span><span class="o">=</span>A <span class="s2">"</span><span class="nv">$SHA_RANGE</span><span class="s2">"</span> <span class="se">\</span>
-  <span class="nt">--</span> <span class="s1">'.claude/skills/local/*.md'</span> <span class="s1">'.claude/skills/*/*.md'</span>
+  <span class="nt">--</span> <span class="s1">'*skills/*.md'</span>
 </code></pre></div></div><p>For each new skill file:</p><ol><li><strong>Read the frontmatter</strong> — extract <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">roles</code>, <code class="language-plaintext highlighter-rouge">description</code>,
 <code class="language-plaintext highlighter-rouge">inherits</code>.</li><li><strong>Decide relevance</strong> to this watcher’s domain (Slot A goal). A new
 skill is relevant when its <code class="language-plaintext highlighter-rouge">description</code> mentions a file kind /
 pattern this watcher audits, OR it is a sibling integration-watcher
-child (<code class="language-plaintext highlighter-rouge">inherits: local/integration-watcher</code>), OR it provides a new
+child (<code class="language-plaintext highlighter-rouge">inherits: sdlc-core/integration-watcher</code>), OR it provides a new
 specialist this watcher could dispatch via Slot C.</li><li><strong>Surface to the user via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code></strong> with 3 chips: <code class="language-plaintext highlighter-rouge">Adopt
 now</code> / <code class="language-plaintext highlighter-rouge">Defer to follow-up branch</code> / <code class="language-plaintext highlighter-rouge">Not relevant</code>.</li><li><strong>Record the decision in the watcher’s ledger</strong> under a <code class="language-plaintext highlighter-rouge">### New
 skills</code> subsection so future sessions don’t re-prompt.</li></ol><p>This rule applies to skill files only. Skills landing on sibling PRs
@@ -1032,9 +1021,12 @@ block the queue on a single unanswered ask.</p><h3 id="4f-update-the-queue--ledg
 <span class="nb">echo</span> <span class="s2">"| </span><span class="nv">$ts</span><span class="s2"> | &lt;event&gt; | &lt;scope&gt; | &lt;N critical / N major / N minor&gt; | &lt;N auto / N asked / N deferred&gt; |"</span> <span class="se">\</span>
   <span class="o">&gt;&gt;</span> <span class="s2">"beans/</span><span class="k">${</span><span class="nv">NAME</span><span class="k">}</span><span class="s2">-ledger.md"</span>
 </code></pre></div></div><p>Update <code class="language-plaintext highlighter-rouge">beans/${NAME}-queue.json</code> with new items + status changes via
-<code class="language-plaintext highlighter-rouge">Edit</code>.</p><h3 id="4g-refresh-spawned-prs-against-main-superseded-by-2c"><a href="#4g-refresh-spawned-prs-against-main-superseded-by-2c" class="anchor-heading" aria-labelledby="4g-refresh-spawned-prs-against-main-superseded-by-2c"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4g. Refresh spawned PRs against main <em>(superseded by §2c)</em></h3><p>The continuous main-following rule is now §2c (mandatory, unconditional
-on every main commit, <strong>before</strong> §3 / §4 dispatch). §4g remains as a
-redundant safety net: if §2c somehow didn’t fire (e.g. the Monitor
+<code class="language-plaintext highlighter-rouge">Edit</code>.</p><h3 id="4g-refresh-spawned-prs-against-main--fallback-for-2c"><a href="#4g-refresh-spawned-prs-against-main--fallback-for-2c" class="anchor-heading" aria-labelledby="4g-refresh-spawned-prs-against-main--fallback-for-2c"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4g. Refresh spawned PRs against main — fallback for §2c
+  
+  
+</h3><p>The continuous main-following rule is §2c (mandatory, unconditional on every
+main commit, <strong>before</strong> §3 / §4 dispatch). This is the safety net: if §2c
+didn’t fire (e.g. the Monitor
 crashed between detection and rebase walk), the §4 pipeline completion
 can also trigger §5g step 7 as a fallback. The rebase runs in a
 worktree; witness-drift conflicts auto-resolve via §5f; substantive

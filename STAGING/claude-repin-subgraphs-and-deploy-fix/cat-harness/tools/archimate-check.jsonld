@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "0e9a5364c852b7d198ad124be63aa34fb5c26e96",
+    "sha": "133757f32c8fb5a1c19651829cf028edd8ba7d47",
     "pr": "2926/merge",
-    "run": "41981371111"
+    "run": "41994798290"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "archimate-check",
       "title": "Check an instance's ArchiMate models against its config",
-      "description": "The gate for the `archimate` graph typology: every model `cat-archimate.config.json` names is held, parses (Archi's native XML or its zipped archive), and resolves — every box in every view draws an element the model holds, every relationship's ends are in the model — and no `.archimate` file is held that the config does not name.",
+      "description": "The ArchiMate gate (graph typology `archimate`): every model an instance's `cat-archimate.config.json` names is held, parses (Archi's native XML or its zipped archive), and resolves — every box in every view draws an element the model holds, every relationship's ends are in the model — and no `.archimate` file is held that the config does not name.",
       "install": {
         "none": true
       },

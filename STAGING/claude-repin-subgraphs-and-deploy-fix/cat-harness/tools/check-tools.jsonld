@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "0e9a5364c852b7d198ad124be63aa34fb5c26e96",
+    "sha": "133757f32c8fb5a1c19651829cf028edd8ba7d47",
     "pr": "2926/merge",
-    "run": "41981371111"
+    "run": "41994798290"
   },
   "@graph": [
     {
@@ -381,7 +381,7 @@
           {
             "name": "report",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/Text",
-            "description": "The satisfies map, the count of skills with and without a Tool, then the verdict. Exit 0 every join holds, 1 at least one does not. A skill with NO Tool is reported and is deliberately NOT a failure — many are pure judgement, and failing on them would make the report unusable."
+            "description": "The satisfies map, the count of skills with and without a Tool, then the verdict. Exit 0 every join holds, 1 at least one does not. A skill with NO Tool is reported and is NOT a failure: many skills are pure judgement, and failing on them would make the report unusable."
           }
         ]
       },

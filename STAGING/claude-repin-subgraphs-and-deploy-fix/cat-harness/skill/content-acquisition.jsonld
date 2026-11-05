@@ -4,22 +4,22 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "0e9a5364c852b7d198ad124be63aa34fb5c26e96",
+    "sha": "133757f32c8fb5a1c19651829cf028edd8ba7d47",
     "pr": "2926/merge",
-    "run": "41981371111"
+    "run": "41994798290"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/skill/content-acquisition",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "content-acquisition",
-      "title": "Acquisition is the step before ingestion, and it had no home",
+      "title": "Acquisition is the step before ingestion",
       "description": "Getting a resource INTO the graph in the first place — accepting one offered unprompted, or asking for one and then asking for it to be uploaded. The channels are plural and open: `uploads/` is one, the conversation is another. Runs before document ingestion, which begins only once a file has landed.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/content-acquisition.md",
-      "instructionLines": 104,
+      "instructionLines": 87,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

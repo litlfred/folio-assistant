@@ -232,30 +232,24 @@ folio-supplied data. See §7.</p><h2 id="2-your-first-five-minutes"><a href="#2-
 </h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans prime <span class="o">&amp;&amp;</span> beans list      <span class="c"># the work-plan — see §6</span>
 cat-harness-tools/scripts/session-start-coord-sweep.sh  <span class="c"># CLI-independent equivalent</span>
 bun run <span class="nb">cat </span>check-deps                     <span class="c"># what this environment can do</span>
-</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">--check-deps</code> matters more than it looks. Many checks degrade to <code class="language-plaintext highlighter-rouge">n/a</code>
-rather than failing when a tool is missing (no Lean toolchain, no Atlas,
-no LaTeX). <strong>An <code class="language-plaintext highlighter-rouge">n/a</code> is not a pass.</strong> If you report “all clean” without
-knowing what was skipped, you are reporting the absence of data as a
-result.</p><h2 id="3-find-the-right-skill--dont-improvise"><a href="#3-find-the-right-skill--dont-improvise" class="anchor-heading" aria-labelledby="3-find-the-right-skill--dont-improvise"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Find the right skill — don’t improvise
+</code></pre></div></div><p>Many checks degrade to <code class="language-plaintext highlighter-rouge">n/a</code> rather than failing when a tool is missing (no
+Lean toolchain, no Atlas, no LaTeX). <strong>An <code class="language-plaintext highlighter-rouge">n/a</code> is not a pass:</strong> say what was
+skipped and why, because “all clean” over skipped checks reports the absence of
+data as a result.</p><h2 id="3-find-the-right-skill--dont-improvise"><a href="#3-find-the-right-skill--dont-improvise" class="anchor-heading" aria-labelledby="3-find-the-right-skill--dont-improvise"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Find the right skill — don’t improvise
   
   
 </h2><p>Skills are the unit of work here. Before hand-rolling a procedure, check
-whether one exists. <strong>Ask for it; do not navigate to it.</strong></p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>skill_list                                      # every skill, with its summary
+whether one exists. <strong>Ask for it; do not navigate to it,</strong> because a hardcoded
+path goes missing the moment the layout moves.</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>skill_list                                      # every skill, with its summary
 skill_fetch skill="&lt;id&gt;" package_name="&lt;pkg&gt;"   # the instruction body to follow
 work_plan_prime                                 # the work plan — see §6
-</code></pre></div></div><p>No MCP server attached? The same graph is on disk, and reading it is three
-steps rather than a remembered path: open <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> at the repository
-root, take each <code class="language-plaintext highlighter-rouge">directories[]</code> entry whose <code class="language-plaintext highlighter-rouge">graphs</code> includes <code class="language-plaintext highlighter-rouge">cat-harness</code>,
-and read the <code class="language-plaintext highlighter-rouge">.md</code> files under it.</p><p><strong>Read <a href="../../../reference/skill-instructions/kg-navigation.html"><code class="language-plaintext highlighter-rouge">kg-navigation</code></a>
+</code></pre></div></div><p>No MCP server attached? The same graph is on disk: open <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code> at the
+repository root, take the <code class="language-plaintext highlighter-rouge">directories[]</code> entries whose <code class="language-plaintext highlighter-rouge">graphTypologies</code> hold
+skills, and read the <code class="language-plaintext highlighter-rouge">.md</code> files under them.</p><p><strong>Read <a href="../../../reference/skill-instructions/kg-navigation.html"><code class="language-plaintext highlighter-rouge">kg-navigation</code></a>
 before your first search.</strong> It carries both routes in full, what counts as a
 skill (three node kinds under those paths are not skills), and the three ways
 the search goes wrong — including the one where you edit the wrong copy of a
-skill that exists in three.</p><p>This section used to list three directory paths instead. That is the practice
-<code class="language-plaintext highlighter-rouge">AGENTS.md</code> opens by warning against — <em>“hardcoding a path is how a skill goes
-missing the moment the layout moves”</em> — and one of the three names a graph typology
-that has since been renamed. The declaration is the answer; a path is a
-snapshot of it.</p><p>Two generated references are worth knowing about, and neither is where you
-start:</p><div class="table-wrapper"><table><thead><tr><th>Where</th><th>What it gives you</th></tr></thead><tbody><tr><td><a href="../../../reference/skills/">Skill schema reference</a></td><td>generated input/output contract per skill</td></tr><tr><td><a href="../../../reference/skill-instructions/">Skill instructions</a></td><td>generated full instruction bodies</td></tr><tr><td><a href="../concepts/skills.html">Skills &amp; roles</a></td><td>how skills, roles, and capabilities compose</td></tr></tbody></table></div><p>Both <code class="language-plaintext highlighter-rouge">reference/</code> directories are <strong>generated</strong> — never hand-edit them.
+skill that exists in three.</p><p>Where to read more — not where you start:</p><div class="table-wrapper"><table><thead><tr><th>Where</th><th>What it gives you</th></tr></thead><tbody><tr><td><a href="../../../reference/skills/">Skill schema reference</a></td><td>generated input/output contract per skill</td></tr><tr><td><a href="../../../reference/skill-instructions/">Skill instructions</a></td><td>generated full instruction bodies</td></tr><tr><td><a href="../concepts/skills.html">Skills &amp; roles</a></td><td>how skills, roles, and capabilities compose</td></tr></tbody></table></div><p>Both <code class="language-plaintext highlighter-rouge">reference/</code> directories are <strong>generated</strong> — never hand-edit them.
 Regenerate with <code class="language-plaintext highlighter-rouge">bun run cat-harness-tools/scripts/gen-schema-docs.ts</code> and
 <code class="language-plaintext highlighter-rouge">bun run cat-harness-tools/scripts/gen-skill-docs.ts</code>.</p><h2 id="4-the-content-object-model-briefly"><a href="#4-the-content-object-model-briefly" class="anchor-heading" aria-labelledby="4-the-content-object-model-briefly"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. The content object model, briefly
   
@@ -268,7 +262,7 @@ Regenerate with <code class="language-plaintext highlighter-rouge">bun run cat-h
 <em>status</em> is derived at build time, never stored in the manifest.</p><h2 id="5-two-dependency-relations--do-not-conflate-them"><a href="#5-two-dependency-relations--do-not-conflate-them" class="anchor-heading" aria-labelledby="5-two-dependency-relations--do-not-conflate-them"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Two dependency relations — do not conflate them
   
   
-</h2><p>This trips up agents constantly.</p><ul><li><strong><code class="language-plaintext highlighter-rouge">uses[]</code> is editorial.</strong> “What must a reader have read to follow
+</h2><ul><li><strong><code class="language-plaintext highlighter-rouge">uses[]</code> is editorial.</strong> “What must a reader have read to follow
 this block?” Authored — agent/human maintained.</li><li><strong>The formal graph is machine-derived</strong> from <code class="language-plaintext highlighter-rouge">lean.ref</code>, never
 hand-written.</li></ul><p>They diverge legitimately in both directions: a proof invokes <code class="language-plaintext highlighter-rouge">simp</code>
 lemmas nobody needs to read about; a theorem is motivated by an example
@@ -280,10 +274,10 @@ this changes?”) take the union:</p><div class="language-sh highlighter-rouge">
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">beans</code> is the <strong>single</strong> todo mechanism — session-local <em>and</em>
-cross-agent. <code class="language-plaintext highlighter-rouge">beans/</code> is committed, so a plan survives a resume in a
-fresh container.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans list
+cross-agent. <code class="language-plaintext highlighter-rouge">beans/</code> is kept on a state branch and mounted at session start
+(<code class="language-plaintext highlighter-rouge">bun run cat state:mount</code>), so a plan survives a resume in a fresh container.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans list
 beans create <span class="s2">"&lt;title&gt;"</span>
-beans update &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> <span class="k">in</span><span class="nt">-progress</span>    <span class="c"># CLAIM before you work</span>
+bun run <span class="nb">cat </span>beans:claim &lt;<span class="nb">id</span><span class="o">&gt;</span>             <span class="c"># CLAIM before you work</span>
 </code></pre></div></div><p>Claim before working so two sessions don’t pick the same item, and never
 close a bean a sibling is mid-flight on (a finished one closes on evidence, not on authorship), and never delete ANY bean — scrap it with reasons instead. Do not stand up a parallel todo
 store. Do not <code class="language-plaintext highlighter-rouge">beans create</code> bulk machine-generated queues (<code class="language-plaintext highlighter-rouge">*.qa.json</code>,
@@ -322,13 +316,12 @@ content_validate / qa_sweep / proof_status / latex_preflight /
 lean_build), then pushes. <strong>It does not merge.</strong></p><p>Watching a sibling PR: <code class="language-plaintext highlighter-rouge">/watch &lt;pr|branch&gt;</code>.</p><h2 id="9-where-to-look-things-up"><a href="#9-where-to-look-things-up" class="anchor-heading" aria-labelledby="9-where-to-look-things-up"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Where to look things up
   
   
-</h2><div class="table-wrapper"><table><thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody><tr><td>Project commands, conventions</td><td><code class="language-plaintext highlighter-rouge">AGENTS.md</code> (the agent-generic source of truth)</td></tr><tr><td>What a skill does</td><td><code class="language-plaintext highlighter-rouge">skills/**/</code>, or the generated <a href="../../../reference/skill-instructions/">instruction bodies</a></td></tr><tr><td>A skill’s typed contract</td><td><a href="../../../reference/skills/">Skill schema reference</a></td></tr><tr><td>What a QA criterion means</td><td><code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code> — descriptions are the spec</td></tr><tr><td>The block schema</td><td><code class="language-plaintext highlighter-rouge">schemas/types.ts</code></td></tr><tr><td>The QA sidecar schema</td><td><code class="language-plaintext highlighter-rouge">schemas/block-qa.ts</code></td></tr><tr><td>What this environment can do</td><td><code class="language-plaintext highlighter-rouge">cat-harness/scenarios/capabilities/*.json</code>, <code class="language-plaintext highlighter-rouge">--check-deps</code></td></tr><tr><td>Lean tooling roadmap</td><td><a href="https://github.com/litlfred/folio-assistant/issues/198">Lean tooling proposal</a></td></tr></tbody></table></div><h2 id="10-habits-that-keep-you-out-of-trouble"><a href="#10-habits-that-keep-you-out-of-trouble" class="anchor-heading" aria-labelledby="10-habits-that-keep-you-out-of-trouble"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10. Habits that keep you out of trouble
+</h2><div class="table-wrapper"><table><thead><tr><th>Question</th><th>Answer</th></tr></thead><tbody><tr><td>Project commands, conventions</td><td><code class="language-plaintext highlighter-rouge">AGENTS.md</code> (the agent-generic source of truth)</td></tr><tr><td>What a skill does</td><td><code class="language-plaintext highlighter-rouge">skills/**/</code>, or the generated <a href="../../../reference/skill-instructions/">instruction bodies</a></td></tr><tr><td>A skill’s typed contract</td><td><a href="../../../reference/skills/">Skill schema reference</a></td></tr><tr><td>What a QA criterion means</td><td><code class="language-plaintext highlighter-rouge">content/pipeline/qa-criteria-registry.ts</code> — descriptions are the spec</td></tr><tr><td>The block schema</td><td><code class="language-plaintext highlighter-rouge">schemas/types.ts</code></td></tr><tr><td>The QA sidecar schema</td><td><code class="language-plaintext highlighter-rouge">schemas/block-qa.ts</code></td></tr><tr><td>What this environment can do</td><td><code class="language-plaintext highlighter-rouge">cat-harness/scenarios/capabilities/*.json</code>, <code class="language-plaintext highlighter-rouge">--check-deps</code></td></tr></tbody></table></div><h2 id="10-habits-that-keep-you-out-of-trouble"><a href="#10-habits-that-keep-you-out-of-trouble" class="anchor-heading" aria-labelledby="10-habits-that-keep-you-out-of-trouble"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10. Habits that keep you out of trouble
   
   
-</h2><ul><li><strong><code class="language-plaintext highlighter-rouge">n/a</code> is not a pass.</strong> Say what was skipped and why.</li><li><strong>Claim a bean before durable work.</strong> Others may be running.</li><li><strong>Don’t hardcode a paper name.</strong> A folio may hold several; resolve
+</h2><ul><li><strong>Don’t hardcode a paper name.</strong> A folio may hold several; resolve
 with <code class="language-plaintext highlighter-rouge">findPapers()</code> / <code class="language-plaintext highlighter-rouge">soleFolioPaper()</code> from
-<code class="language-plaintext highlighter-rouge">content/pipeline/repo-root.ts</code>.</li><li><strong>Don’t write content into the platform.</strong> If it names a chapter, a
-constant, or a vocabulary, it is folio data.</li><li><strong>Regenerate, never hand-edit,</strong> anything under <code class="language-plaintext highlighter-rouge">docs/reference/</code>.</li><li><strong>Read the criterion description before acting on a finding.</strong> They
+<code class="language-plaintext highlighter-rouge">content/pipeline/repo-root.ts</code>.</li><li><strong>Read the criterion description before acting on a finding.</strong> They
 state severity, intent, and what explicitly does <em>not</em> count.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

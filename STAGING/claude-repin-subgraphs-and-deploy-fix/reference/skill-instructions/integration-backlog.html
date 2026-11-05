@@ -253,8 +253,8 @@ skill writes commits and merges.</p><p>If no argument is supplied, surface a 4-c
 the AGENTS.md user-accessibility convention.</p><h2 id="workflow-per-axis"><a href="#workflow-per-axis" class="anchor-heading" aria-labelledby="workflow-per-axis"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Workflow (per axis)
   
   
-</h2><p>For each resolved axis, run §1 → §6 in order. The loop body in §2-§5
-repeats until the axis is exhausted or the author types “stop”.</p><h3 id="1-audit--count--cluster-open-findings"><a href="#1-audit--count--cluster-open-findings" class="anchor-heading" aria-labelledby="1-audit--count--cluster-open-findings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §1. Audit — count + cluster open findings
+</h2><p>For each resolved axis, run §1 → §4 and then §6 in order. The loop body in
+§2–§4 repeats until the axis is exhausted or the author types “stop”.</p><h3 id="1-audit--count--cluster-open-findings"><a href="#1-audit--count--cluster-open-findings" class="anchor-heading" aria-labelledby="1-audit--count--cluster-open-findings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §1. Audit — count + cluster open findings
   
   
 </h3><ol><li>Read every <code class="language-plaintext highlighter-rouge">&lt;block&gt;.qa.json</code> (or watcher queue file) for the axis to
@@ -319,10 +319,9 @@ request reviews)</li><li><strong>Phase 2</strong>: Resolve review comments autom
     <ul><li>Mechanical fixes → commit directly</li><li>Architectural questions → structured <code class="language-plaintext highlighter-rouge">AskUserQuestion</code> (🟡,
 multi-select, with file + line + reviewer text quoted)</li><li>False-positive review comments → polite one-line counter-comment</li></ul></li><li><strong>Phase 3</strong>: Structured user questions (only when genuinely blocked)</li><li><strong>Phase 4</strong>: Merge (after all comments resolved + CI green) via
 <code class="language-plaintext highlighter-rouge">merge_method: "rebase"</code> per AGENTS.md §Branch + PR workflow rule 7</li><li><strong>Phase 5</strong>: Post-merge sibling notification</li></ul><p>See <a href="../../reference/skill-instructions/prepare-merge-auto.html"><code class="language-plaintext highlighter-rouge">sdlc/skills/sdlc-core/prepare-merge-auto.md</code></a>
-for the full workflow specification.</p><p><strong>Note</strong>: the previous §4 + §5 logic (manual review-comment triage +
-separate pre-merge confirmation) is now subsumed by
-<code class="language-plaintext highlighter-rouge">/prepare-merge-auto</code> phases 2–4. The merge-method default (rebase) and
-the owner-confirmation requirement are preserved in the skill’s Phase 4.</p><h3 id="6-loop-control"><a href="#6-loop-control" class="anchor-heading" aria-labelledby="6-loop-control"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §6. Loop control
+for the full workflow specification.</p><p>Review-comment triage and the pre-merge owner confirmation are
+<code class="language-plaintext highlighter-rouge">/prepare-merge-auto</code> phases 2–4; the merge-method default (rebase) and the
+owner-confirmation requirement are in its Phase 4.</p><h3 id="6-loop-control"><a href="#6-loop-control" class="anchor-heading" aria-labelledby="6-loop-control"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> §6. Loop control
   
   
 </h3><p>After merging (or deferring) a batch:</p><ol><li><strong>Refresh the audit</strong> (<code class="language-plaintext highlighter-rouge">qa-sweep</code> again — open count may have dropped
@@ -337,8 +336,7 @@ fails across M batches (M-1 merged + 1 deferred); wall-clock &lt;Z&gt;min</code>
 </h2><p>When multiple axes are requested:</p><ol><li>Compute the open-fail count per axis first; surface a single
 AskUserQuestion asking which axis to drain first (default to the axis
 with the highest critical-fail count).</li><li>Drain them sequentially (§1-§6 per axis).</li><li>Between axes, allow the user to insert other work via a pause:
-AskUserQuestion “Axis X complete. Continue to next, or pause?”.</li></ol><h2 id="persistence--beansintegration-backlog-ledgermd"><a href="#persistence--beansintegration-backlog-ledgermd" class="anchor-heading" aria-labelledby="persistence--beansintegration-backlog-ledgermd"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Persistence — <code class="language-plaintext highlighter-rouge">beans/integration-backlog-ledger.md</code></h2><p>Per <code class="language-plaintext highlighter-rouge">integration-watcher §0a</code> (work-plan policy) and <code class="language-plaintext highlighter-rouge">coordinate §0a</code>
-(ledger discipline), every batch decision and merge outcome is appended
+AskUserQuestion “Axis X complete. Continue to next, or pause?”.</li></ol><h2 id="persistence--beansintegration-backlog-ledgermd"><a href="#persistence--beansintegration-backlog-ledgermd" class="anchor-heading" aria-labelledby="persistence--beansintegration-backlog-ledgermd"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Persistence — <code class="language-plaintext highlighter-rouge">beans/integration-backlog-ledger.md</code></h2><p>Per the coordination ledger rule (<code class="language-plaintext highlighter-rouge">coordinate</code> §9), every batch decision and merge outcome is appended
 to:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans/integration-backlog-ledger.md
 </code></pre></div></div><p>Entry format:</p><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">### 2026-05-20T14:50Z — one-voice / voice-emoji-tables</span>
 <span class="p">-</span> batch: 17 blocks, 23 files (≤49 ✓)
@@ -353,12 +351,13 @@ to:</p><div class="language-plaintext highlighter-rouge"><div class="highlight">
   
   
 </h2><ul><li><strong>Built on</strong>: <code class="language-plaintext highlighter-rouge">integration-watcher</code> (audit identification),
-<code class="language-plaintext highlighter-rouge">integration-watch</code> (dispatcher pattern), <code class="language-plaintext highlighter-rouge">local/prepare-merge</code> (merge
-workflow), <code class="language-plaintext highlighter-rouge">local/coordinate</code> (ledger / sibling-PR coordination)</li><li><strong>Dispatches to</strong>: per-axis <code class="language-plaintext highlighter-rouge">Agent</code> calls for mechanical batches,
+<code class="language-plaintext highlighter-rouge">integration-watch</code> (dispatcher pattern), <code class="language-plaintext highlighter-rouge">prepare-merge-auto</code> (merge
+workflow), <code class="language-plaintext highlighter-rouge">coordinate</code> (ledger / sibling-PR coordination)</li><li><strong>Dispatches to</strong>: per-axis <code class="language-plaintext highlighter-rouge">Agent</code> calls for mechanical batches,
 direct edits for trivial ones, AskUserQuestion for judgement</li><li><strong>AGENTS.md links</strong>:
     <ul><li>work-plan policy (beans queue + idle-trigger)</li><li>User-accessibility (🟡, multi-select default, structured branch
-names)</li><li><code class="language-plaintext highlighter-rouge">litlfred/qou</code> <code class="language-plaintext highlighter-rouge">AGENTS.md</code> “Combine related work into one branch / one PR” — interpreted here
-as “combine related batches when ≤ 49 files; otherwise split”</li></ul></li></ul><h2 id="examples"><a href="#examples" class="anchor-heading" aria-labelledby="examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Examples
+names)</li></ul></li><li><strong>One branch / one PR for related things</strong> (<code class="language-plaintext highlighter-rouge">integration-watcher</code> §0a,
+rule 1) — interpreted here as “combine related batches when ≤ 49 files;
+otherwise split”</li></ul><h2 id="examples"><a href="#examples" class="anchor-heading" aria-labelledby="examples"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Examples
   
   
 </h2><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>User: /integration-backlog
@@ -369,9 +368,8 @@ User: /integration-backlog one-voice
   §2: AskUserQuestion for batch 1 (emoji tables, 17 blocks, 23 files)
   user answers `apply mechanically`
   §3: branch + commit + push + PR #952
-  §4: /prepare-merge; reviewer posts 2 comments; both mechanical → fixed
-  §5: AskUserQuestion "merge?" — user says merge
-  merged
+  §4: /prepare-merge-auto; reviewer posts 2 comments; both mechanical → fixed;
+      AskUserQuestion "merge?" — user says merge; merged
   → §6: loop to batch 2 …
 
 User: /integration-backlog all
@@ -394,9 +392,7 @@ covers the batch’s scope, defer + post a coordinate comment.</li></ul><h2 id="
   
 </h2><ul><li><a href="../../reference/skill-instructions/integration-watch.html"><code class="language-plaintext highlighter-rouge">integration-watch</code></a> — read-side dispatcher
 (monitor, no commits)</li><li><a href="../../reference/skill-instructions/integration-watcher.html"><code class="language-plaintext highlighter-rouge">integration-watcher</code></a> — abstract parent for
-the concrete watchers</li><li><a href="../../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">local/prepare-merge</code></a> — the merge workflow each
-batch runs through</li><li><a href="../../reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">local/coordinate</code></a> — sibling-PR coordination</li><li><code class="language-plaintext highlighter-rouge">litlfred/qou</code> <code class="language-plaintext highlighter-rouge">AGENTS.md</code> “Combine related work into one branch / one PR”
-and its structured-branch-name rule
-```</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+the concrete watchers</li><li><a href="../../reference/skill-instructions/prepare-merge-auto.html"><code class="language-plaintext highlighter-rouge">prepare-merge-auto</code></a> — the merge workflow each
+batch runs through</li><li><a href="../../reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">coordinate</code></a> — sibling-PR coordination</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

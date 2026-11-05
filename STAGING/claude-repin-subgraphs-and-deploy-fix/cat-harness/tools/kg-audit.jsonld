@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "0e9a5364c852b7d198ad124be63aa34fb5c26e96",
+    "sha": "133757f32c8fb5a1c19651829cf028edd8ba7d47",
     "pr": "2926/merge",
-    "run": "41981371111"
+    "run": "41994798290"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "kg-audit",
       "title": "Knowledge-graph audit",
-      "description": "Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes \"unbound since it was drawn\" distinguishable from \"broken in the commit under review\".",
+      "description": "Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. The sidecar distinguishes \"unbound since it was drawn\" from \"broken in the commit under review\".",
       "install": {
         "none": true
       },
@@ -400,7 +400,7 @@
           {
             "name": "sidecars",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The QA tree, mirroring each subject's own path — flat would collide, since several basenames already occur twice."
+            "description": "The QA tree, mirroring each subject's own path, because a flat tree would collide: several basenames occur twice."
           },
           {
             "name": "worstSeverity",

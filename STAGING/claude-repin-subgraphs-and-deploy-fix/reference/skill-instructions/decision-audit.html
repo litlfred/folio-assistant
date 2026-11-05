@@ -247,10 +247,9 @@ another finding, a <code class="language-plaintext highlighter-rouge">.qa.json</
 attestation under <code class="language-plaintext highlighter-rouge">test/attestations/</code>, a block label, a file range, a bib
 key, a workflow instance under <code class="language-plaintext highlighter-rouge">beans/workflows/</code>.</p><p><strong>Pin a derived QA citation to its commit.</strong> A file under <code class="language-plaintext highlighter-rouge">test/results/</code> is
 a working copy: its record is the entry the CI job <code class="language-plaintext highlighter-rouge">qa-publish</code> stores on the
-orphan <code class="language-plaintext highlighter-rouge">qa-reports</code> branch, keyed <code class="language-plaintext highlighter-rouge">main/&lt;sha&gt;/</code> or <code class="language-plaintext highlighter-rouge">pr/&lt;n&gt;/&lt;sha&gt;/</code> (arc
-<code class="language-plaintext highlighter-rouge">3fva</code>), and the committed copy goes when bean <code class="language-plaintext highlighter-rouge">5hox</code> removes it. So cite it
+orphan <code class="language-plaintext highlighter-rouge">qa-reports</code> branch, keyed <code class="language-plaintext highlighter-rouge">main/&lt;sha&gt;/</code> or <code class="language-plaintext highlighter-rouge">pr/&lt;n&gt;/&lt;sha&gt;/</code>. Cite it
 as <code class="language-plaintext highlighter-rouge">qa-reports:main/&lt;sha&gt;/&lt;path&gt;</code> — the same locator <code class="language-plaintext highlighter-rouge">bun run cat qa:fetch --ref</code>
-reads — or the citation dangles the day the file leaves <code class="language-plaintext highlighter-rouge">main</code>. A judgement in
+reads — or the citation dangles once the file leaves <code class="language-plaintext highlighter-rouge">main</code>. A judgement in
 <code class="language-plaintext highlighter-rouge">test/attestations/</code> stays on <code class="language-plaintext highlighter-rouge">main</code> and is cited by path.</p><h2 id="the-agent-assembles-the-citations-the-human-is-still-the-author"><a href="#the-agent-assembles-the-citations-the-human-is-still-the-author" class="anchor-heading" aria-labelledby="the-agent-assembles-the-citations-the-human-is-still-the-author"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The agent assembles the citations; the human is still the author
   
   
@@ -258,9 +257,9 @@ reads — or the citation dangles the day the file leaves <code class="language-
 should do it. Given a decision and the findings it is about, propose citations
 and say what each one shows:</p><ol><li>Start from the finding’s own <code class="language-plaintext highlighter-rouge">evidence</code> and walk what it points at.</li><li>Look for a witness that answers the same question the criterion was asking —
 a green build, a passing round-trip, a recomputed number.</li><li>Look for a prior decision on the same criterion; a standing overrule is
-usually the right precedent to cite.</li><li>Quote at the locator, so a citation that goes stale is visible as stale.</li></ol><p>Record yourself in <code class="language-plaintext highlighter-rouge">proposed_by</code>, never in <code class="language-plaintext highlighter-rouge">author</code>. The reasoning belongs to
-whoever made the decision, and a tool appearing as its author misattributes a
-judgement to something that did not make one.</p><h2 id="citations-you-could-not-resolve-are-not-citations-you-checked"><a href="#citations-you-could-not-resolve-are-not-citations-you-checked" class="anchor-heading" aria-labelledby="citations-you-could-not-resolve-are-not-citations-you-checked"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Citations you could not resolve are not citations you checked
+usually the right precedent to cite.</li><li>Quote at the locator, so a citation that goes stale is visible as stale.</li></ol><p>Record yourself in <code class="language-plaintext highlighter-rouge">proposed_by</code>, never in <code class="language-plaintext highlighter-rouge">author</code>: the reasoning belongs to
+whoever made the decision, and a tool recorded as author misattributes a
+judgement it did not make.</p><h2 id="citations-you-could-not-resolve-are-not-citations-you-checked"><a href="#citations-you-could-not-resolve-are-not-citations-you-checked" class="anchor-heading" aria-labelledby="citations-you-could-not-resolve-are-not-citations-you-checked"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Citations you could not resolve are not citations you checked
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">resolveCitations</code> returns <code class="language-plaintext highlighter-rouge">resolved</code>, <code class="language-plaintext highlighter-rouge">dangling</code> or <code class="language-plaintext highlighter-rouge">not-checked</code>, and

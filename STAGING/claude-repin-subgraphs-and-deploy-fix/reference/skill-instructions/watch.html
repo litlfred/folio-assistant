@@ -317,7 +317,7 @@ git diff <span class="nt">--name-only</span> <span class="nt">--cached</span> | 
 git rebase <span class="nt">--abort</span>
 git rebase origin/&lt;BRANCH&gt;   <span class="c"># re-rebase, skipping bad commits as above</span>
 <span class="c"># regenerate the affected artifacts via the project's generator(s), e.g.</span>
-bun run validate &lt;paper&gt;
+bun run <span class="nb">cat </span>regen
 git add &lt;regenerated-artifact-paths&gt;
 git commit <span class="nt">-m</span> <span class="s2">"Regen generated artifacts post-rebase against latest main"</span>
 git push <span class="nt">--force-with-lease</span>
@@ -333,7 +333,7 @@ our branch also touched, prefer <strong>rebase-and-regenerate</strong> over
 hand-merging.  Drift is structural; merging is fragile.</p><h3 id="q3--can-we-reuse"><a href="#q3--can-we-reuse" class="anchor-heading" aria-labelledby="q3--can-we-reuse"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Q3 — Can we reuse?
   
   
-</h3><p>Apply the four reuse questions from <code class="language-plaintext highlighter-rouge">prepare-merge.md §2a</code>:</p><ol><li><strong>Definitions / lemmas / helpers / witnesses</strong> — does the new
+</h3><p>Apply four reuse questions:</p><ol><li><strong>Definitions / lemmas / helpers / witnesses</strong> — does the new
 commit add something our branch is duplicating, paraphrasing, or
 reinventing?  Replace with <code class="language-plaintext highlighter-rouge">uses[]</code> / a citation and delete the
 local stand-in.</li><li><strong>Proofs</strong> — does a new lemma or tactic discharge a hypothesis,
@@ -351,10 +351,9 @@ claim is wired into the production compute chain. Capture the
 verdict here and feed it into Q4.</li></ul></li></ol><h3 id="q3a--did-upstream-land-a-new-skill-file"><a href="#q3a--did-upstream-land-a-new-skill-file" class="anchor-heading" aria-labelledby="q3a--did-upstream-land-a-new-skill-file"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Q3a — Did upstream land a new skill file?
   
   
-</h3><p>For each main-refresh, check whether <code class="language-plaintext highlighter-rouge">.claude/skills/local/*.md</code> (or
-<code class="language-plaintext highlighter-rouge">.claude/skills/&lt;pkg&gt;/*.md</code>) gained a new file between this branch’s
-prior baseline and the new <code class="language-plaintext highlighter-rouge">origin/main</code>:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="nt">--name-only</span> <span class="nt">--diff-filter</span><span class="o">=</span>A <span class="s2">"</span><span class="nv">$LAST_BASE</span><span class="s2">..origin/main"</span> <span class="se">\</span>
-  <span class="nt">--</span> <span class="s1">'.claude/skills/local/*.md'</span> <span class="s1">'.claude/skills/*/*.md'</span>
+</h3><p>For each main-refresh, check whether a skill directory the instance declares
+in its <code class="language-plaintext highlighter-rouge">kg</code> graph (<code class="language-plaintext highlighter-rouge">skill_list</code> names them) gained a new file between this
+branch’s prior baseline and the new <code class="language-plaintext highlighter-rouge">origin/main</code>:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="nt">--name-only</span> <span class="nt">--diff-filter</span><span class="o">=</span>A <span class="s2">"</span><span class="nv">$LAST_BASE</span><span class="s2">..origin/main"</span> <span class="nt">--</span> &lt;skill-dirs&gt;
 </code></pre></div></div><p>For each new skill file:</p><ol><li><strong>Read its frontmatter</strong> — extract <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">roles</code>, <code class="language-plaintext highlighter-rouge">description</code>,
 and any <code class="language-plaintext highlighter-rouge">inherits</code> field.</li><li><strong>Match against branch scope</strong> — does the skill’s description
 overlap with what this branch is doing? Heuristics:
@@ -371,11 +370,9 @@ rationale + file paths&gt;</code>.</p><p>1) <strong>Adopt now</strong> — invok
 2) <strong>Defer to follow-up branch</strong> — record the decision and
    note for the next branch; don’t change this branch.
 3) <strong>Not relevant</strong> — record so the watcher doesn’t re-prompt
-   on future main-refreshes.</p></blockquote></li><li><strong>Record the decision</strong> in the watcher’s ledger
-(<code class="language-plaintext highlighter-rouge">beans/&lt;watcher-name&gt;-ledger.md</code> for integration-watcher
-children, or chat-only for the bare <code class="language-plaintext highlighter-rouge">/watch</code> flow) so subsequent
-main-refreshes don’t re-prompt for the same skill.</li></ol><p>This rule applies to <strong>skill files only</strong> (<code class="language-plaintext highlighter-rouge">.claude/skills/local/*.md</code>
-and <code class="language-plaintext highlighter-rouge">.claude/skills/&lt;pkg&gt;/*.md</code>). Skills landing on sibling PRs that
+   on future main-refreshes.</p></blockquote></li><li><strong>Record the decision</strong> as a note on the watcher’s bean (or in chat for
+the bare <code class="language-plaintext highlighter-rouge">/watch</code> flow) so subsequent main-refreshes don’t re-prompt for
+the same skill.</li></ol><p>This rule applies to <strong>skill files only</strong>. Skills landing on sibling PRs that
 haven’t merged yet do NOT trigger this check — only <code class="language-plaintext highlighter-rouge">main</code> commits
 count, mirroring the §2 “watch origin/main” scope.</p><h3 id="q4--report-or-act"><a href="#q4--report-or-act" class="anchor-heading" aria-labelledby="q4--report-or-act"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Q4 — Report or act?
   
@@ -390,9 +387,8 @@ otherwise unsubscribe through the session platform.</li></ul><h2 id="5--common-u
 </h2><ul><li><strong>Artifact drift</strong>: upstream regenerated generated artifacts
 (<code class="language-plaintext highlighter-rouge">*.witness.json</code>, caches) while we also modified them →
 rebase-and-regenerate, never hand-merge.</li><li><strong>Toolchain version bumps</strong>: a dependency/toolchain hash changed →
-check our branch’s toolchain pin aligns before continuing a build.</li><li><strong>Schema migrations</strong>: if <code class="language-plaintext highlighter-rouge">content/schema/</code> changed, run
-<code class="language-plaintext highlighter-rouge">cd content &amp;&amp; bun run migrate-lean-refs</code> and <code class="language-plaintext highlighter-rouge">bun run validate</code>
-before continuing.</li><li><strong>Routine review-cycle commits</strong> (Gemini/Copilot fixes on unrelated
+check our branch’s toolchain pin aligns before continuing a build.</li><li><strong>Schema or generator changes</strong>: run <code class="language-plaintext highlighter-rouge">bun run cat regen</code> before
+continuing.</li><li><strong>Routine review-cycle commits</strong> (Gemini/Copilot fixes on unrelated
 PRs):  almost always Q1 = no overlap = skip with one-liner.</li></ul><h2 id="5b--monitor-timeout-recovery-mandatory-when-re-arming"><a href="#5b--monitor-timeout-recovery-mandatory-when-re-arming" class="anchor-heading" aria-labelledby="5b--monitor-timeout-recovery-mandatory-when-re-arming"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5b.  Monitor-timeout recovery (MANDATORY when re-arming)
   
   
@@ -420,13 +416,11 @@ git fetch origin <span class="s2">"+refs/heads/&lt;BRANCH&gt;:refs/remotes/origi
 <span class="k">fi</span>
 </code></pre></div></div><p>If <code class="language-plaintext highlighter-rouge">MISSED &gt;= 5</code> OR any missed commit touches a file in your branch’s
 diff, run the §3 integration checklist on the missed range BEFORE
-arming a fresh monitor.</p><p>This catches the failure mode where a focused work session (axiom
-discharge sweep, content authoring marathon, witness regeneration
-loop) silently lets main move 10+ commits ahead while the watcher
-is timed out.</p><h2 id="6--output-style"><a href="#6--output-style" class="anchor-heading" aria-labelledby="6--output-style"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6.  Output style
+arming a fresh monitor.</p><p>This catches main moving many commits ahead during a long focused session
+while the watcher is timed out.</p><h2 id="6--output-style"><a href="#6--output-style" class="anchor-heading" aria-labelledby="6--output-style"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6.  Output style
   
   
-</h2><p>Match user-accessibility note in AGENTS.md:</p><ul><li>One sentence per commit / event by default</li><li>Numbered choices when integration is non-obvious</li><li>Run small fixes proactively; flag big ones</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+</h2><p>Follow <a href="../../reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a>:</p><ul><li>One sentence per commit / event by default</li><li>Numbered choices when integration is non-obvious</li><li>Run small fixes proactively; flag big ones</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/code-change-review.html">Code change and review</a></td><td>Address the review</td></tr><tr><td><a href="../../en/cat-harness/processes/content-change-review-publish.html">Merge and publish a content change</a></td><td>Note the main-branch watch</td></tr><tr><td><a href="../../en/cat-harness/processes/content-change-review-stage.html">Stage the content change</a></td><td>Open the branch-watch bean</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
