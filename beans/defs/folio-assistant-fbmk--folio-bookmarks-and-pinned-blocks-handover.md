@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-05T13:34:01Z
+updated_at: 2026-11-05T14:04:00Z
 parent: folio-assistant-4j43
 tags:
     - folio-glass
@@ -44,9 +44,9 @@ Resume prompt: "read bean folio-assistant-fbmk on branch cat/cat-harness/beans o
 - [x] Core infra (cat-harness#984, branch claude/folio-pin-any-block; specs cat-harness-tools#1412): one generic opt-in, e.g. `data-fa-pin="<iri>"` + title/href/avatar/kind on any rendered block of any graph kind, so docs-ui.js gives it a pin control and calls `displayInFolio`. Store key = the node IRI.
 - [x] Bookmark = kind `bookmark`, href = document URL + block anchor, avatar = the document's cover + bookmark badge.
 - [x] Tests + PRs: merged cat-harness#984, tools#1412.
-- [ ] Gutter 🔖 in tools src/core/edit-links.ts block panel (after tools#1411 + harness#981 merge).
-- [ ] data-fa-pin on kg subject pages (tools scripts/kg-export.ts subjectPage; check docs-ui.js loads there).
-- [ ] cat-harness#985 live windows (lazy, per kind).
+- [x] Gutter 🔖 in tools src/core/edit-links.ts block panel (after tools#1411 + harness#981 merge).
+- [x] data-fa-pin on kg subject pages (tools scripts/kg-export.ts subjectPage; check docs-ui.js loads there).
+- [x] cat-harness#985 live windows (lazy, per kind).
 
 ## Log
 
@@ -61,3 +61,5 @@ _2026-11-02T19:04Z_ — owner tapped Q-BMK-2 A. MERGED cat-harness#984 (ea6ace8)
 _2026-11-02T19:13Z_ — STALL CHECKPOINT (owner 19:12Z). All work committed and pushed; no local changes in cat-harness or cat-harness-tools. Nothing open on GitHub from this thread. Resume at the first unchecked Plan item. A send_later reminder fires 19:36Z in the old session; if that session is gone, just check tools#1411 / harness#981 state.
 
 _2026-11-05T13:34:01Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
+
+_2026-11-05T14:04:00Z_ — Implemented remaining 3 items: (1) gutter `🔖` `.ba-bookmark[data-fa-pin-control]` + panel header `.bp-bookmark` in `cat-harness-tools/src/core/edit-links.ts` and regenerated `cat-harness/site-chrome/assets/js/edit-links.js` (`#982`); (2) `data-fa-pin*` and `data-fa-pin-control` on KG subject pages in `cat-harness-tools/scripts/kg-export.ts` (`subjectPage`) (`#982`); (3) lazy per-kind live windows on the folio glass via `window.faFolio.viewer(kind, { load, render })`, `openWindow`, and `closeWindow` in `cat-harness/site-chrome/assets/js/docs-ui.js` and `site-chrome/assets/css/docs-ui.css` (`#985`), with unit + Playwright e2e coverage in `test/content/folio-block-pins.e2e.ts` (7 pass). Opened PRs https://github.com/litlfred/cat-harness/pull/1060 and https://github.com/litlfred/cat-harness-tools/pull/1528.
