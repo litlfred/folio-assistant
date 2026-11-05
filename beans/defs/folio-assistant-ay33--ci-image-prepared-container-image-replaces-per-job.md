@@ -17,3 +17,19 @@ Sibling 'CI speed: prepared image' (launched by session_01VQDpPffYARDQ8juksAZScf
 [ ] ci-setup composite restores from the image, falls back cleanly
 [ ] setup seconds measured before/after with run IDs
 [ ] job-collapse proposal written
+
+## Progress (2026-11-05)
+
+- #2961 (infra): ci-image.yml, .github/ci-image/*, .github/actions/ci-setup. The PR test job was green on run 42024357472: build, then push to a throwaway registry, then a streamed restore with `mount:lock:check`, `bun install` and a Chromium launch, all in 7 s on a runner. The image is 7 zstd layers, about 700 MB compressed.
+- #2964 (wiring, stacked): changes only the setup steps of 13 CQG jobs and FS `stage`. The 4 jobs that run platform `.ts` directly keep a visible `mount-from-lock` step for check:workflow-submodules. A generic fix in cat-harness-tools (follow local composite actions) would remove those steps; this session was not granted access to that repo.
+- Baseline is CQG run 42012108138: 1742 s of setup out of 6344 s of job time. The in-scope part is about 870 s: mount cache 347, IG 131, layer mount 105, chromium 92, install 62, checkout 53, artifacts 43, setup-bun 35.
+- Owner decision pending: whether the GHCR package goes public or jobs get `packages: read`. Until then jobs fall back to today's steps.
+
+## Job-collapse proposal (once setup is ~10 s plus state:mount after cat-harness-tools#1489)
+
+The fixed cost per job falls from about 100 s to about 15 s. After that, the reason to keep a job separate is parallel wall time, not setup cost. Candidates:
+1. `hygiene` + `typescript-static` + `verdict-reuse`: three short jobs (2–4 min each) that share no artifact. Merging them into one saves 2 runner requests per run.
+2. `gates-standalone` + `gates-unrun`: both build their own IG indexes. Merging them saves 1 request and one `ig-index:build` (about 11 s).
+3. The bun-test shards: re-tune the shard count against the new fixed cost. With 15 s setup, fewer shards may still meet the same wall time.
+4. Keep the e2e shards and `qa-working-copy` separate, since they are on the critical path.
+These need the siblings that own `if:` and work steps (CI speed 2/3/7/10).
