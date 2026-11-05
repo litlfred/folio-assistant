@@ -35,3 +35,8 @@ So the order in which layers re-pin stops mattering. Belongs in cat-harness (an 
 _2026-11-05T08:40:00Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk from the CI-speed analysis of session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.
 
 _2026-11-05T11:54:53Z_ — Claimed by HEAD — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
+
+*2026-11-05* — The two-phase move rule is written and enforced, both PRs open for review (not merged):
+- skill `two-phase-move`: https://github.com/litlfred/cat-harness/pull/1043 — merge first
+- `moves` declaration field, honoured by `check:subgraphs` until `until`, `--check` fails past it: https://github.com/litlfred/cat-harness-tools/pull/1492
+Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk
