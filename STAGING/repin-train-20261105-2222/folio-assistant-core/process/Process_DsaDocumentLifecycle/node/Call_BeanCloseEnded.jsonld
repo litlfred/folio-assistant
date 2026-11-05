@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-2222",
+    "sha": "42511d128a630059072249a5f2dc2147a31de9ca",
+    "pr": "repin-train/20261105-2222",
+    "run": "42121015895"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F30",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F50"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/Flow_GW_BeanClosedHow"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded"
+    }
+  ]
+}

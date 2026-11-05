@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/schema/reader-filter.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-2222",
+    "sha": "42511d128a630059072249a5f2dc2147a31de9ca",
+    "pr": "repin-train/20261105-2222",
+    "run": "42121015895"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/schema/reader-filter",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "reader-filter",
+      "title": "reader-filter",
+      "summary": "The filter a READER applies to a board, which commits nothing.",
+      "module": "schemas/content/reader-filter.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/reader-filter"
+    }
+  ]
+}

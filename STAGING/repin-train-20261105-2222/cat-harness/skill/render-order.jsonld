@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/skill/render-order.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-2222",
+    "sha": "42511d128a630059072249a5f2dc2147a31de9ca",
+    "pr": "repin-train/20261105-2222",
+    "run": "42121015895"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/skill/render-order",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "render-order",
+      "title": "Render order — flattening a dependency hierarchy, and the three stages",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/render-order.md",
+      "instructionLines": 109,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/render-order"
+    }
+  ]
+}

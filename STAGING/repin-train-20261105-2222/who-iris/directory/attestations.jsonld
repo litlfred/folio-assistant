@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/who-iris/directory/attestations.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-2222",
+    "sha": "42511d128a630059072249a5f2dc2147a31de9ca",
+    "pr": "repin-train/20261105-2222",
+    "run": "42121015895"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/who-iris/directory/attestations",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "attestations",
+      "path": "test/attestations/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/who-iris/tree/cat/who-iris/attestations",
+        "kind": "branch",
+        "branch": "cat/who-iris/attestations",
+        "keyedBy": "tip",
+        "declaredIn": "declaration"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/attestations"
+      ],
+      "description": "The JUDGEMENT half of this instance's QA, on main (the qa-reports skill: derived verdicts go to the qa-reports branch, judgements stay here). Today: the untainted round-trip translation rulings of who-iris's own catalogues, one qa-attestations/v1 file per catalogue and locale under translation-qa/ (criterion translation-semantic-roundtrip), each string's ruling pinned by the hashes of the msgid and msgstr it judged. Converted losslessly on 2026-11-03 from the agents' TSVs that sat under test/results/ (owner: \"1. Convert to attestations\"; bean folio-assistant-7mwa), so that untracking the derived results could not lose them. scripts/translation-roundtrip-report.ts derives its qa-results/v1 report from them.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/who-iris/directory/attestations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/directory/attestations"
+    }
+  ]
+}

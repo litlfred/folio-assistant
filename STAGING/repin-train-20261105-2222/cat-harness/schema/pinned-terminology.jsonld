@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/schema/pinned-terminology.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-2222",
+    "sha": "42511d128a630059072249a5f2dc2147a31de9ca",
+    "pr": "repin-train/20261105-2222",
+    "run": "42121015895"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/schema/pinned-terminology",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "pinned-terminology",
+      "title": "pinned-terminology",
+      "summary": "The codes a PUBLISHED IG carries at ONE pinned version.",
+      "module": "schemas/content/pinned-terminology.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2222/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/pinned-terminology"
+    }
+  ]
+}
