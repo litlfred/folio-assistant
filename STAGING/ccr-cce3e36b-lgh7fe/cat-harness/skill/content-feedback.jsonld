@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/skill/content-feedback.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "pr": "2954/merge",
+    "run": "42019699864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/skill/content-feedback",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-feedback",
+      "title": "Content Feedback Collection",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-feedback.md",
+      "instructionLines": 45,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/skills/content-feedback/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/skills/content-feedback/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback"
+    }
+  ]
+}

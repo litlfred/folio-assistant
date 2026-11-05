@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/schema/harness-config.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "pr": "2954/merge",
+    "run": "42019699864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/schema/harness-config",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "harness-config",
+      "title": "harness-config",
+      "summary": "Cross-folio dependency schema for folio-assistant instances.",
+      "module": "schemas/kg/harness-config.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/harness-config"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-adapters.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "pr": "2954/merge",
+    "run": "42019699864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-adapters",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "core-adapters",
+      "path": "adapters/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "The content layer's own ContentAdapters: `document/`. Its imports into `cat-harness-tools/src/`, `cat-harness/schemas/` and `cat-harness-tools/pipeline/` are DOWNWARD and therefore legal (core declares `needs: [\"cat-harness\"]`); nothing in the harness imports it. Its consuming tests live in `scripts/tests/`. It needs `tsconfig.json`'s `include` entry (without it `bun run typecheck` passes while covering fewer files) and the `BUILTIN_ADAPTERS` module path, which is resolved by variable specifier, so no static-import gate checks it. `paper/` is the science layer's, in that layer's own `adapters/paper/`.",
+      "readmePath": "adapters/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-adapters",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-adapters"
+    }
+  ]
+}

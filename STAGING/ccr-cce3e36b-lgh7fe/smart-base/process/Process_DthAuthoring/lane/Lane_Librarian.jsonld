@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/smart-base/process/Process_DthAuthoring/lane/Lane_Librarian.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Librarian.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "pr": "2954/merge",
+    "run": "42019699864"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Librarian",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Librarian",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "bindsRole": "http://smart.who.int/base/role/librarian",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

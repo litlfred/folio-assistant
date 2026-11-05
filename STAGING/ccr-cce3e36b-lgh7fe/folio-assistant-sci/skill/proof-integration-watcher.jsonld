@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/skill/proof-integration-watcher.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "pr": "2954/merge",
+    "run": "42019699864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/skill/proof-integration-watcher",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "proof-integration-watcher",
+      "title": "/proof-integration-watcher",
+      "description": "Proof-QA integration watcher — watches origin/main + open active PRs + newly-opened PRs for narrative-proof (`.md`) or Lean-proof (`.lean`) changes, runs the proof QA skill suite on every detected change, queues gaps, attempts auto-discharge for easy sorries / naked conjectures with provable scaffolding, and escalates the rest to the author. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol) from `integration-watcher`.",
+      "instructionsPath": "skills/content/folio-paper-adapter/proof-integration-watcher.md",
+      "instructionLines": 454,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/proof-integration-watcher"
+    }
+  ]
+}

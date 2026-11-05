@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_CRDM_Close/node/A_RecordSignoff.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "pr": "2954/merge",
+    "run": "42019699864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_CRDM_Close/node/A_RecordSignoff",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record the sign-off attestation",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_CRDM_Close",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/globalTask/GT_RecordSignoff",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_CRDM_Close#flow/SF_Process_CRDM_Close_3",
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_CRDM_Close#flow/SF_Close_Missing"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_CRDM_Close#flow/SF_Close_Gate"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/A_RecordSignoff"
+    }
+  ]
+}

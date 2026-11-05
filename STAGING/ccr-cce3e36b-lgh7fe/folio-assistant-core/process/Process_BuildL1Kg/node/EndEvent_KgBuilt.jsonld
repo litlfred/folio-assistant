@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_BuildL1Kg/node/EndEvent_KgBuilt.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "pr": "2954/merge",
+    "run": "42019699864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_BuildL1Kg/node/EndEvent_KgBuilt",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "L1 graph built",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_BuildL1Kg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/EndEvent_KgBuilt"
+    }
+  ]
+}

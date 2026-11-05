@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/capability/bun-runtime.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "pr": "2954/merge",
+    "run": "42019699864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/capability/bun-runtime",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "bun-runtime",
+      "name": "Bun Runtime",
+      "description": "Bun JavaScript/TypeScript runtime.",
+      "detection": {
+        "method": "command",
+        "command": "bun --version"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/bun-runtime"
+    }
+  ]
+}

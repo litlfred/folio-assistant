@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/process/Process_PaperAuthoring/node/EndEvent_Published.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "pr": "2954/merge",
+    "run": "42019699864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/process/Process_PaperAuthoring/node/EndEvent_Published",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Paper published",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/process/Process_PaperAuthoring#flow/A16"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/EndEvent_Published"
+    }
+  ]
+}

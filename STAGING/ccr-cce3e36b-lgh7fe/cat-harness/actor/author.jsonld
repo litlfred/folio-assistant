@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/actor/author.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "pr": "2954/merge",
+    "run": "42019699864"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/actor/author",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "author",
+      "actorKind": "person",
+      "title": "Author",
+      "description": "A person who writes and revises content. Acts as the `author` role, and as `editor` when accepting a change into the corpus.",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/role/author",
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/role/editor"
+      ],
+      "permissionName": [
+        "content-authoring"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/author"
+    }
+  ]
+}
