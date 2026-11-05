@@ -2,13 +2,13 @@
 # folio-assistant-mbd8
 $schema: bean/1.0.0
 title: Cut node-kind-index.ts → src/auth/gateway.ts static import (move what it needs into schemas/)
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T12:36:36Z
-updated_at: 2026-11-05T12:36:36Z
+updated_at: 2026-11-05T12:45:16Z
 parent: folio-assistant-x35i
 ---
 
