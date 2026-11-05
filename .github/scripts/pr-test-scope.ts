@@ -77,7 +77,6 @@ function git(cwd: string, args: string[]): string | undefined {
   return r.status === 0 ? r.stdout : undefined;
 }
 
-const joinUp = (root: string, p: string): string => (root ? `${root.replace(/\/+$/, "")}/${p}` : p);
 const norm = (p: string): string => (p === "." || p === "" ? "" : p.replace(/^\.\//, "").replace(/\/+$/, ""));
 
 /** The files changed upstream between two commits, or undefined when they cannot be read. */
