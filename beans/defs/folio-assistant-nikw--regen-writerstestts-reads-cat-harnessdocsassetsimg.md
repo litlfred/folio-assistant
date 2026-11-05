@@ -14,3 +14,6 @@ Every cat-harness-tools PR tested against cat-harness main now fails `test/coord
 
 ## Done when
 - [ ] the render:bpmn case picks a committed drawing where cat-harness now keeps them, and passes against cat-harness main
+
+## Progress 2026-11-05
+- Blocked on cat-harness-tools#1504 (bean akiq, CI-speed session_01VQDpPfJKxVERPVKKWBTY8z): without it render:bpmn never redraws cat-harness's beside-source SVGs, so no valid fixture exists on main alone. Patch (firstBesideSource over cat-harness/processes) sent to that session to fold into #1504 or stack on it.
