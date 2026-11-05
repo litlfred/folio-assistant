@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 43,
+      "count": 44,
       "unit": "open beans"
     }
   },
@@ -275,6 +275,20 @@
       "updatedAt": "2026-11-02T19:13:00Z",
       "preview": "## How to resume (read this first)\n\nOwner ask 2026-11-02 18:56Z (thread cmsg_017WNUkNK8kdDziPK58Pv6G9PqHijxfA1UbP1sLEYKpWLG): process docs independent of the Beans store Tool (git branch is one Tool; a server/MCP service another); BPMN state machine starts an agent via API with a bean tagged process+task, tracks it, bean evolution over time readable. 18:58Z: write it in the context of the WHO Assu",
       "file": "beans/defs/folio-assistant-bsd1--bean-store-behind-any-tool-and-agent-dispatch.md"
+    },
+    {
+      "id": "folio-assistant-bx4c",
+      "title": "mount:remote re-render writes into mounted instances, breaking mount:lock:check",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-rwmf",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T08:53:21Z",
+      "updatedAt": "2026-11-05T08:53:21Z",
+      "preview": "## Evidence\nOn 2026-11-05 we re-pinned folio-assistant#2926 (commit e5450ee). We seeded cat-harness at its main (c632a56) and ran `bun run cat mount:remote`. That command re-renders the agent surface, and in doing so it wrote into the **mounted cat-harness instance's own files**. cat-harness is mounted whole, so those files are inside the mount. Afterwards `mount:lock:check` and `mount:remote:chec",
+      "file": "beans/defs/folio-assistant-bx4c--mountremote-re-render-writes-into-mounted-instance.md"
     },
     {
       "id": "folio-assistant-c1ev",
@@ -1013,19 +1027,19 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 3,
-        "total": 35,
+        "total": 36,
         "closed": 5,
-        "open": 30,
+        "open": 31,
         "inProgress": 15,
-        "todo": 15,
+        "todo": 16,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.14285714285714285
+        "share": 0.1388888888888889
       }
     ],
     "orphanOpen": 12,
-    "openTotal": 43,
-    "coveredOpen": 30,
+    "openTotal": 44,
+    "coveredOpen": 31,
     "duplicateIds": 0
   }
 }

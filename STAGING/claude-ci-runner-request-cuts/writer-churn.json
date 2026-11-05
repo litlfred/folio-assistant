@@ -11,7 +11,7 @@
         "smart-base:document-kinds",
         "uml:overview"
       ],
-      "seconds": 310.6068649369999
+      "seconds": 293.649635065
     },
     {
       "cause": ".github/scripts",
@@ -22,7 +22,7 @@
         "external-schemas:viz",
         "docs:harness"
       ],
-      "seconds": 49.73339925200004
+      "seconds": 46.60118710999994
     },
     {
       "cause": "index.config.json",
@@ -38,7 +38,7 @@
         "subscriptions:viz",
         "themes:css"
       ],
-      "seconds": 20.07893876899988
+      "seconds": 19.991902496000286
     },
     {
       "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
@@ -47,7 +47,7 @@
         "state:visualizer",
         "site:viz"
       ],
-      "seconds": 18.99078758100001
+      "seconds": 18.596276904999975
     },
     {
       "cause": "beans/defs",
@@ -56,7 +56,7 @@
         "docs:pages",
         "processes:viz"
       ],
-      "seconds": 14.888526286999928
+      "seconds": 14.431917470999995
     },
     {
       "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
@@ -64,7 +64,7 @@
       "reran": [
         "ig-index:build"
       ],
-      "seconds": 12.987852211000048
+      "seconds": 14.368776764000009
     },
     {
       "cause": "cat-harness/docs/en/cat-harness/attestations/index.html",
@@ -72,7 +72,7 @@
       "reran": [
         "auto:docs"
       ],
-      "seconds": 12.371615514000062
+      "seconds": 12.314351284999983
     },
     {
       "cause": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html",
@@ -81,7 +81,7 @@
         "library:viz",
         "tools:viz"
       ],
-      "seconds": 11.567973025999963
+      "seconds": 11.237833263000008
     },
     {
       "cause": "cat-harness/docs/assets/img/workflows/activity-log.svg",
@@ -89,7 +89,7 @@
       "reran": [
         "render:bpmn"
       ],
-      "seconds": 8.025344316999893
+      "seconds": 7.715352905000095
     },
     {
       "cause": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html",
@@ -97,23 +97,7 @@
       "reran": [
         "schema:viz"
       ],
-      "seconds": 4.253835007000016
-    },
-    {
-      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "writtenBy": "-",
-      "reran": [
-        "smart-trust:pages"
-      ],
-      "seconds": 1.263447285000002
-    },
-    {
-      "cause": "cat-harness/docs/reference/skill-instructions",
-      "writtenBy": "skills:docs",
-      "reran": [
-        "voices:viz"
-      ],
-      "seconds": 1.1618411719999275
+      "seconds": 4.091149240000057
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
@@ -121,7 +105,23 @@
       "reran": [
         "smart-base:pages"
       ],
-      "seconds": 1.1476050820000236
+      "seconds": 1.215663823000039
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust:pages"
+      ],
+      "seconds": 1.139246601000079
+    },
+    {
+      "cause": "cat-harness/docs/reference/skill-instructions",
+      "writtenBy": "skills:docs",
+      "reran": [
+        "voices:viz"
+      ],
+      "seconds": 1.0785546630000462
     },
     {
       "cause": "cat-harness/docs/en/cat-harness/folio",
@@ -129,7 +129,7 @@
       "reran": [
         "folio:viz"
       ],
-      "seconds": 0.9296734319999814
+      "seconds": 0.88955075699999
     },
     {
       "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
@@ -137,7 +137,7 @@
       "reran": [
         "smart:pages"
       ],
-      "seconds": 0.8729359949999489
+      "seconds": 0.8186025110000046
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
@@ -145,7 +145,7 @@
       "reran": [
         "smart-trust-phw:pages"
       ],
-      "seconds": 0.8569341890000506
+      "seconds": 0.8058379529999802
     },
     {
       "cause": "cat-harness/docs/_data/harness.json",
@@ -153,7 +153,7 @@
       "reran": [
         "navbar:include"
       ],
-      "seconds": 0.2049765320000006
+      "seconds": 0.19734883899998384
     }
   ],
   "writers": [
@@ -165,19 +165,19 @@
         "kind": "path",
         "path": "cat-harness/docs/en/cat-harness/attestations/index.html"
       },
-      "seconds": 12.371615514000062
+      "seconds": 12.314351284999983
     },
     {
       "writer": "avatars:css",
       "did": "skipped",
       "why": "reads unchanged since 9537d71d40fc (308 paths, 1 outputs)",
-      "seconds": 0.007716809000005014
+      "seconds": 0.00683019200002309
     },
     {
       "writer": "bibliography:page",
       "did": "skipped",
       "why": "reads unchanged since 9537d71d40fc (1809 paths, 784 outputs); evidence only, the audit did not clear it: unannotated input site at folio-assistant-core/schemas/materialization.ts:469 (clock)",
-      "seconds": 0.08258300499990583
+      "seconds": 0.0784133959999308
     },
     {
       "writer": "docs:harness",
@@ -187,7 +187,7 @@
         "kind": "path",
         "path": ".github/scripts"
       },
-      "seconds": 5.880575942000025
+      "seconds": 5.437696502999985
     },
     {
       "writer": "docs:pages",
@@ -197,7 +197,7 @@
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 2.8902530979999574
+      "seconds": 2.7585322640000376
     },
     {
       "writer": "document-kinds:viz",
@@ -207,7 +207,7 @@
         "kind": "path",
         "path": "index.config.json"
       },
-      "seconds": 1.138759701999952
+      "seconds": 1.1179496910000453
     },
     {
       "writer": "external-schemas:viz",
@@ -217,7 +217,7 @@
         "kind": "path",
         "path": ".github/scripts"
       },
-      "seconds": 7.5816113220000405
+      "seconds": 7.354001722999965
     },
     {
       "writer": "folio:viz",
@@ -227,13 +227,13 @@
         "kind": "path",
         "path": "cat-harness/docs/en/cat-harness/folio"
       },
-      "seconds": 0.9296734319999814
+      "seconds": 0.88955075699999
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
       "why": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "seconds": 12.987852211000048
+      "seconds": 14.368776764000009
     },
     {
       "writer": "jsonld:contexts",
@@ -243,19 +243,19 @@
         "kind": "path",
         "path": ".github/scripts"
       },
-      "seconds": 2.2811327599999496
+      "seconds": 2.231034314000048
     },
     {
       "writer": "kg:viewer",
       "did": "skipped",
       "why": "reads unchanged since 9537d71d40fc (650 paths, 3 outputs); evidence only, the audit did not clear it: unannotated input site at cat-harness-tools/scripts/kg-viewer.ts:1247 (env)",
-      "seconds": 0.018505635999958032
+      "seconds": 0.016084159999969417
     },
     {
       "writer": "kind:table",
       "did": "skipped",
       "why": "reads unchanged since 9537d71d40fc (305 paths, 1 outputs)",
-      "seconds": 0.008014966999995522
+      "seconds": 0.007353394999983721
     },
     {
       "writer": "library:viz",
@@ -265,7 +265,7 @@
         "kind": "path",
         "path": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html"
       },
-      "seconds": 7.37278820099996
+      "seconds": 7.185248930000002
     },
     {
       "writer": "methodologies:viz",
@@ -275,7 +275,7 @@
         "kind": "path",
         "path": "index.config.json"
       },
-      "seconds": 2.8683907299999847
+      "seconds": 2.777026049000095
     },
     {
       "writer": "navbar:include",
@@ -285,7 +285,7 @@
         "kind": "path",
         "path": "cat-harness/docs/_data/harness.json"
       },
-      "seconds": 0.2049765320000006
+      "seconds": 0.19734883899998384
     },
     {
       "writer": "node-kinds",
@@ -295,13 +295,13 @@
         "kind": "path",
         "path": "index.config.json"
       },
-      "seconds": 1.9170698040000862
+      "seconds": 1.793495058999979
     },
     {
       "writer": "openapi:viz",
       "did": "skipped",
       "why": "reads unchanged since 9537d71d40fc (383 paths, 100 outputs); evidence only, the audit did not clear it: unannotated input site at cat-harness-tools/openapi/scripts/ingest-openapi.ts:207 (spawn)",
-      "seconds": 0.013840381000074557
+      "seconds": 0.014625104999984614
     },
     {
       "writer": "processes:viz",
@@ -311,7 +311,7 @@
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 11.99827318899997
+      "seconds": 11.673385206999956
     },
     {
       "writer": "render:bpmn",
@@ -321,7 +321,7 @@
         "kind": "path",
         "path": "cat-harness/docs/assets/img/workflows/activity-log.svg"
       },
-      "seconds": 8.025344316999893
+      "seconds": 7.715352905000095
     },
     {
       "writer": "schema:viz",
@@ -331,13 +331,13 @@
         "kind": "path",
         "path": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html"
       },
-      "seconds": 4.253835007000016
+      "seconds": 4.091149240000057
     },
     {
       "writer": "site:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 1.3047220110000344
+      "seconds": 1.4202737920000217
     },
     {
       "writer": "skills:docs",
@@ -347,7 +347,7 @@
         "kind": "path",
         "path": "index.config.json"
       },
-      "seconds": 7.516039402000024
+      "seconds": 7.861846038999968
     },
     {
       "writer": "smart-base:document-kinds",
@@ -357,7 +357,7 @@
         "kind": "path",
         "path": ""
       },
-      "seconds": 0.8050489759999909
+      "seconds": 0.7311677209999762
     },
     {
       "writer": "smart-base:l1-extraction:pages",
@@ -367,37 +367,37 @@
         "kind": "path",
         "path": "index.config.json"
       },
-      "seconds": 1.0811596459998982
+      "seconds": 1.0114170870000962
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "seconds": 1.1476050820000236
+      "seconds": 1.215663823000039
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
-      "seconds": 0.8569341890000506
+      "seconds": 0.8058379529999802
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "seconds": 1.263447285000002
+      "seconds": 1.139246601000079
     },
     {
       "writer": "smart:pages",
       "did": "ran",
       "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
-      "seconds": 0.8729359949999489
+      "seconds": 0.8186025110000046
     },
     {
       "writer": "state:visualizer",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 17.686065569999975
+      "seconds": 17.176003112999954
     },
     {
       "writer": "subgraph:jsonld",
@@ -407,7 +407,7 @@
         "kind": "path",
         "path": ".github/scripts"
       },
-      "seconds": 33.99007922800002
+      "seconds": 31.578454569999945
     },
     {
       "writer": "subscriptions:viz",
@@ -417,7 +417,7 @@
         "kind": "path",
         "path": "index.config.json"
       },
-      "seconds": 0.2938104029999813
+      "seconds": 0.2855279689999297
     },
     {
       "writer": "theme:viz",
@@ -427,7 +427,7 @@
         "kind": "path",
         "path": "index.config.json"
       },
-      "seconds": 0.792299233000027
+      "seconds": 0.8003114760000026
     },
     {
       "writer": "themes:css",
@@ -437,7 +437,7 @@
         "kind": "path",
         "path": "index.config.json"
       },
-      "seconds": 0.7691001009999309
+      "seconds": 0.7538448600000702
     },
     {
       "writer": "tools:viz",
@@ -447,7 +447,7 @@
         "kind": "path",
         "path": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html"
       },
-      "seconds": 4.195184825000004
+      "seconds": 4.052584333000006
     },
     {
       "writer": "uml:overview",
@@ -457,7 +457,7 @@
         "kind": "path",
         "path": ""
       },
-      "seconds": 309.80181596099993
+      "seconds": 292.918467344
     },
     {
       "writer": "uploads:viz",
@@ -467,7 +467,7 @@
         "kind": "path",
         "path": "index.config.json"
       },
-      "seconds": 3.702309748
+      "seconds": 3.5904842660001015
     },
     {
       "writer": "voices:viz",
@@ -477,7 +477,7 @@
         "kind": "path",
         "path": "cat-harness/docs/reference/skill-instructions"
       },
-      "seconds": 1.1618411719999275
+      "seconds": 1.0785546630000462
     }
   ]
 }
