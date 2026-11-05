@@ -53,12 +53,12 @@ R = one full gates run on a candidate, M = a main push run (≈ R without reuse,
 The quadratic term c·N·R is gone (the train never re-merges per main push); main runs drop from N to N/k and are reused.
 
 ## Done when
-- [ ] `.github/scripts/merge-train.ts` with tested pure parts (select, bisect state, decide), node-only imports
-- [ ] `.github/workflows/merge-train.yml` (build, push, open, CI, verdict, merge, eject) and a `sweeps.yml` step that dispatches it only when there is work
-- [ ] `merge-main.yml` sweep skips `merge-train` PRs
-- [ ] code-quality-gates: a dispatch on main whose HEAD is a two-parent merge is looked up by its second parent (so a GITHUB_TOKEN merge still reuses C's run)
-- [ ] measured compute per merged PR before and after, recorded here
-- [ ] the skill `merge-queue` or `saturation-meta-merge` points at the automated train (cat-harness, separate PR)
+- [x] `.github/scripts/merge-train.ts` with tested pure parts (select, bisect state, decide), node-only imports
+- [x] `.github/workflows/merge-train.yml` (build, push, open, CI, verdict, merge, eject) and a `sweeps.yml` step that dispatches it only when there is work
+- [x] `merge-main.yml` sweep skips `merge-train` PRs
+- [x] code-quality-gates: a dispatch on main whose HEAD is a two-parent merge is looked up by its second parent (so a GITHUB_TOKEN merge still reuses C's run)
+- [ ] measured compute per merged PR before (done, below) and after (once trains run)
+- [x] the skill `merge-queue` points at the automated train (cat-harness#1053, e1a7cc1)
 
 ## Measured before (2026-11-05)
 
@@ -93,3 +93,5 @@ Supersedes the 2026-10-04 "stack cleanly" ruling **for generated paths only**. A
 #2962 scopes `bun test` on every `pull_request`. A `merge-train/*` (and `repin-train/*`) PR must run the full suite: it is the members' only CI, and after #2963 main refuses to reuse a scoped run. Proposed: #2962 treats those head refs as full runs.
 
 _2026-11-05T13:43Z_: owner, relayed by the analysis session, on the token: **"1. I merge when green"**. No new token; PRs that change `.github/workflows/` merge one at a time and the train skips them. The off switch stays OFF (variable unset), so the two answers agree; no code change.
+
+_2026-11-05T14:30Z_: all in #2960. Still open: #2960 green and merged (waits for #2954 to make main green); #2962 runs the full suite on `merge-train/*` and `repin-train/*` (CI speed 7); the after-measurement.
