@@ -470,6 +470,59 @@ describe("a local gate record on the PR head (bean fn8q) stands in for the gates
   });
 });
 
+describe("the verification sweep (bean fn8q) re-runs a run that skipped gates, then resolves its status", () => {
+  /** A stand-in `gh` serving one open PR, its statuses, its latest run and the run list; POSTs are logged. */
+  function sweep(o: { pending?: boolean; attempt?: number; status?: string; conclusion?: string; busy?: boolean; fork?: boolean }) {
+    const dir = mkdtempSync(join(tmpdir(), "cqg-sweep-"));
+    const bin = join(dir, "bin");
+    mkdirSync(bin);
+    const sha = "a".repeat(40);
+    const run = { id: 9, html_url: "https://example/runs/9", run_attempt: o.attempt ?? 1, status: o.status ?? "completed", conclusion: o.conclusion ?? "success" };
+    writeFileSync(join(dir, "pulls.json"), JSON.stringify([{ number: 5, head: { sha, ref: "b", repo: { full_name: o.fork ? "x/r" : "o/r" } } }]));
+    writeFileSync(join(dir, "statuses.json"), JSON.stringify(o.pending === false ? [] : [{ context: "gates/verified", state: "pending", created_at: "t" }]));
+    writeFileSync(join(dir, "run.json"), JSON.stringify({ workflow_runs: [run] }));
+    writeFileSync(join(dir, "runs.json"), JSON.stringify({ workflow_runs: [run, ...(o.busy ? [{ id: 8, run_attempt: 2, status: "in_progress" }] : [])] }));
+    writeFileSync(
+      join(bin, "gh"),
+      `#!/bin/sh\nif [ "$2" = "-X" ]; then echo "$*" >> '${dir}/posts.log'; exit 0; fi\ncase "$2" in\n  *"head_sha="*) cat '${dir}/run.json' ;;\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/pulls?"*) cat '${dir}/pulls.json' ;;\n  *"/statuses?"*) cat '${dir}/statuses.json' ;;\n  *) exit 1 ;;\nesac\n`,
+    );
+    chmodSync(join(bin, "gh"), 0o755);
+    const r = spawnSync("python3", [JUDGE, "sweep"], { env: { PATH: `${bin}:${process.env.PATH}`, REPO: "o/r" }, encoding: "utf8" });
+    const posts = existsSync(join(dir, "posts.log")) ? readFileSync(join(dir, "posts.log"), "utf8") : "";
+    return { status: r.status, out: r.stdout + r.stderr, posts };
+  }
+
+  test("nothing pending, or a fork's PR: nothing is done", () => {
+    expect(sweep({ pending: false }).posts).toBe("");
+    expect(sweep({ fork: true }).posts).toBe("");
+  });
+  test("a finished first attempt that skipped gates is re-run, one at a time", () => {
+    const r = sweep({});
+    expect(r.status).toBe(0);
+    expect(r.posts).toContain("repos/o/r/actions/runs/9/rerun");
+    expect(sweep({ busy: true }).posts).toBe("");
+  });
+  test("an unfinished run is left for the next sweep", () => {
+    expect(sweep({ status: "in_progress" }).posts).toBe("");
+  });
+  test("the re-run's pass verifies the record", () => {
+    const r = sweep({ attempt: 2 });
+    expect(r.posts).toContain("state=success");
+    expect(r.posts).not.toContain("/issues");
+  });
+  test("the re-run's failure revokes it: the status fails and an issue names the run", () => {
+    const r = sweep({ attempt: 2, conclusion: "failure" });
+    expect(r.posts).toContain("state=failure");
+    expect(r.posts).toContain("repos/o/r/issues");
+    expect(r.posts).toContain("https://example/runs/9");
+  });
+  test("a first attempt that failed itself is not re-run; its status fails", () => {
+    const r = sweep({ conclusion: "failure" });
+    expect(r.posts).toContain("state=failure");
+    expect(r.posts).not.toContain("/rerun");
+  });
+});
+
 describe("the workflow wires it as designed", () => {
   test("every judged job uses the wrapper, has actions: read, and names itself for main's lookup", () => {
     for (const id of JUDGED) {

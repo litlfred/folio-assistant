@@ -551,9 +551,83 @@ def cmd_covered(args):
     return 0
 
 
+# ---------------------------------------------------------------- the sweep
+
+
+def latest_run(repo, sha):
+    runs = gh(f"repos/{repo}/actions/workflows/{WORKFLOW}/runs?event=pull_request&head_sha={sha}&per_page=5")["workflow_runs"]
+    return runs[0] if runs else None
+
+
+def open_issue(repo, title, body):
+    try:
+        gh_post(f"repos/{repo}/issues", {"title": title, "body": body})
+    except RuntimeError as e:
+        print(f"::warning::could not open the revocation issue: {e}")
+
+
+def cmd_sweep(_args):
+    """Verify, one at a time, each open PR whose pending gates/verified status a local record left.
+
+    A pending status means a first attempt of code-quality gates skipped gates
+    on a local record. The sweep re-runs that same run (attempt 2 honours no
+    record, so it judges every gate on the same merge commit), off the PR's
+    critical path, and only when no other verification is in flight. When the
+    re-run is done it resolves the status from its conclusion; a re-run that
+    fails where the record said pass revokes: the status fails, which blocks
+    the merge, and an issue names the record's tree and run.
+    """
+    repo = os.environ.get("REPO") or os.environ.get("GITHUB_REPOSITORY", "")
+    runs = gh(f"repos/{repo}/actions/workflows/{WORKFLOW}/runs?event=pull_request&per_page=50")["workflow_runs"]
+    busy = any(r.get("run_attempt", 1) > 1 and r.get("status") != "completed" for r in runs)
+    waiting = []
+    for pr in gh(f"repos/{repo}/pulls?state=open&per_page=100"):
+        if (pr.get("head", {}).get("repo") or {}).get("full_name") != repo:
+            continue
+        sha = pr["head"]["sha"]
+        mine = [x for x in gh(f"repos/{repo}/commits/{sha}/statuses?per_page=100") if x.get("context") == STATUS_CONTEXT]
+        if mine and mine[0].get("state") == "pending":  # newest first: [0] is the status as it stands
+            waiting.append((mine[0].get("created_at", ""), pr["number"], sha))
+    if not waiting:
+        print("cqg sweep: no PR waits for the verification of a local gate record")
+        return 0
+    for at, num, sha in sorted(waiting):
+        run = latest_run(repo, sha)
+        if run is None or run.get("status") != "completed":
+            print(f"#{num}: its code-quality run is not finished; the next sweep looks again")
+            continue
+        url = run.get("html_url", "")
+        if run.get("run_attempt", 1) > 1:
+            if run.get("conclusion") == "success":
+                set_status(repo, sha, "success", "every gate re-run on the same tree: the local record holds", url)
+                print(f"#{num}: verified — the re-run of every gate passed")
+            else:
+                set_status(repo, sha, "failure", "the re-run of every gate failed where the local record said pass", url)
+                open_issue(repo, f"Local gate record contradicted on #{num} ({sha[:12]})",
+                           f"Code-quality gates skipped gates on #{num} on a local gate record (bean fn8q). "
+                           f"Re-running every gate on the same tree failed: {url}\n\n"
+                           "The record is revoked for this commit (the `gates/verified` status fails). If the "
+                           "failure is a skipped gate, the record was wrong: find what the local run did not see "
+                           "(an input the hook's environment lacks), and consider turning "
+                           "`CQG_HONOUR_LOCAL_RECORDS` off until it is understood.")
+                print(f"#{num}: REVOKED — the re-run failed: {url}")
+            continue
+        if run.get("conclusion") != "success":
+            set_status(repo, sha, "failure", "the run that skipped gates failed itself; a new push is judged afresh", url)
+            print(f"#{num}: the first attempt failed, so there is nothing to verify")
+            continue
+        if busy:
+            print(f"#{num}: waits — another verification is in flight")
+            continue
+        gh_post(f"repos/{repo}/actions/runs/{run['id']}/rerun", {})
+        busy = True
+        print(f"#{num}: re-running {url} to verify the gates it skipped")
+    return 0
+
+
 def main(argv):
     cmds = {"record": cmd_record, "verdict": cmd_verdict, "reuse-check": cmd_reuse_check,
-            "local-record": cmd_local_record, "covered": cmd_covered}
+            "local-record": cmd_local_record, "covered": cmd_covered, "sweep": cmd_sweep}
     if len(argv) < 2 or argv[1] not in cmds:
         print(f"usage: cqg_judge.py {{{'|'.join(cmds)}}} ...", file=sys.stderr)
         return 2

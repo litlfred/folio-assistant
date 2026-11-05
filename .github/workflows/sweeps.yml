@@ -48,7 +48,8 @@ on:
 permissions:
   contents: read
   pull-requests: read
-  statuses: read
+  statuses: write  # fn8q: resolve the gates/verified status a local gate record left pending
+  issues: write  # fn8q: open the revocation issue when a re-run contradicts a local record
   checks: read
   actions: write  # list artifacts and runs; dispatch the workflows
 
@@ -94,6 +95,11 @@ jobs:
         continue-on-error: true
         run: bash .github/scripts/preview-verify-sweep.sh
 
+      - name: Local gate record verify sweep (fn8q)
+        id: gates-verify
+        continue-on-error: true
+        run: python3 .github/scripts/cqg_judge.py sweep
+
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.4.4
@@ -134,7 +140,7 @@ jobs:
             --jq '.[] | select(.head.repo.full_name == "'"$REPO"'") | [.number, .head.ref, .head.sha] | @tsv')
 
       - name: Any sweep failed?
-        if: steps.publish.outcome == 'failure' || steps.verify.outcome == 'failure' || steps.repin.outcome == 'failure' || steps.conflicted.outcome == 'failure'
+        if: steps.publish.outcome == 'failure' || steps.verify.outcome == 'failure' || steps.gates-verify.outcome == 'failure' || steps.repin.outcome == 'failure' || steps.conflicted.outcome == 'failure'
         run: |
-          echo "::error::a sweep failed — publish=${{ steps.publish.outcome }} verify=${{ steps.verify.outcome }} repin=${{ steps.repin.outcome }} conflicted=${{ steps.conflicted.outcome }}"
+          echo "::error::a sweep failed — publish=${{ steps.publish.outcome }} verify=${{ steps.verify.outcome }} gates-verify=${{ steps.gates-verify.outcome }} repin=${{ steps.repin.outcome }} conflicted=${{ steps.conflicted.outcome }}"
           exit 1
