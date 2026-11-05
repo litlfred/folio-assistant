@@ -1,0 +1,61 @@
+---
+# folio-assistant-hd58
+$schema: bean/1.0.0
+title: 'CI speed II (h): merge train — batch opted-in PRs, CI once, bisect on red (linear compute in # PRs merged)'
+status: in-progress
+type: feature
+priority: high
+tags:
+    - ci-speed-ii
+created_at: 2026-11-05T11:54:45Z
+updated_at: 2026-11-05T11:54:45Z
+parent: folio-assistant-k3vv
+---
+
+Owner litlfred, 2026-11-05, via the analysis session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf: *"quadratic compute time in terms of # PRs to merge — how to linearize? do it all properly"*. Builds on [`saturation-meta-merge`](../../cat-harness/skills/sdlc/sdlc-core/saturation-meta-merge.md) (stack ready PRs on one branch, land once), [`merge-queue`](../../cat-harness/skills/sdlc/sdlc-core/merge-queue.md) §"A red train ejects one member", and the working re-pin train (`.github/workflows/repin-train*.yml`, `.github/scripts/repin-train.ts`). GitHub's merge queue is unavailable on this user-owned repo (bean `1hjm`; org move deferred, bean `xaa8`).
+
+## Why it is quadratic today
+
+With N PRs landing in a window, main moves N times. Already fixed: merge-main merges main only into CONFLICTED PRs (#2947), and PR results are reused when only main moved (#2949). What remains:
+
+1. A conflicted labelled PR is re-merged and its CI re-run on EVERY push to main: c conflicted PRs × N pushes.
+2. Every merge triggers a main push run: N main runs, each judging a tree that will be superseded.
+3. People and agents update branches before merging: each PR re-runs once per main move it sees.
+4. Superseded runs are cancelled late, after they hold a runner.
+
+Each is (something per PR) × (number of main moves) = O(N²).
+
+## The design: a batch train with lazy integration
+
+**Opt-in.** A PR joins when it carries the label `merge-train` and that label was added by a person (the `labeled` event's actor is a `User`, never a bot), or when it has an APPROVED review from a person with write access and its own checks are green. Never a draft, never a fork, base `main` only. Merging into main stays a person's decision: the label (or the approval) IS the decision, and the train merges nothing else.
+
+**Not admitted** (stay in the pool, named in the train's report): a head with a failing check of its own (the author fixes it first); a head with checks still running; a PR touching `.github/workflows/` (the train's token cannot push workflow files) or `subscriptions/` (held copies).
+
+**One candidate per tick.** On a tick (the 15-minute `sweeps.yml` dispatcher, or a dispatch) when no train is in flight, `merge-train.yml` builds `merge-train/<stamp>` from `origin/main` with `bun run cat merge:train -- --base origin/main --no-main <members>` (cat-harness-tools/scripts/merge-train.ts): each member merged with `merge-base.ts --no-regen`, conflicts resolved ONLY by declared patterns, then ONE `regen` over the stack. A member with an authored conflict is refused by the tool and stays out (back to its owner, as `merge-queue` §"A train admits only members that STACK cleanly" requires). Conflicts are thus resolved once, at train time, never per main push.
+
+**CI once.** The branch is pushed and ONE train PR (label `merge-train-batch`) is opened against main. CI runs once on the candidate head C (a bot-token push starts `pull_request`; with only GITHUB_TOKEN the gates are dispatched on the branch, as the re-pin train does). Affected-only selection and the result cache (siblings "CI speed 7" and "8") apply to that one run when they land.
+
+**Land in one step.** The verdict is the re-pin train's: no check fails on C that passes on main, check by check (`repin-train.ts compare`). When green, the train PR is merged with a merge commit, expected sha C. Its tree equals C's tree when main did not move, and its second parent is C, so main's push run REUSES C's verdict (`verdict-reuse.sh`, rule 1: second parent's run tested this tree) and skips the heavy jobs. Every member's head is now an ancestor of main, so GitHub marks each member PR merged; each gets one comment linking the train. If main moved meanwhile, GitHub refuses or the reuse misses; the next tick rebuilds.
+
+**Red: bisect, eject one.** A red batch B (|B| > 1) is split into halves B1, B2. B1 is tested next; B2 is queued behind it. Green halves land as they pass; a red half is split again. A red singleton is the culprit: it is ejected (label removed, one comment with the failing checks), and the rest land. With one culprit among k this costs about ⌈log₂ k⌉ extra runs, and the innocent halves land on the way. The queue is kept in the train PR's body (`<!-- merge-train:state {json} -->`), so the next tick resumes from the newest train PR; no store elsewhere.
+
+**Coordination with merge-main.yml.** Its sweep skips any PR labelled `merge-train`: the train integrates it lazily. A named dispatch still merges main into it if a person asks.
+
+## Compute model, per merged PR
+
+R = one full gates run on a candidate, M = a main push run (≈ R without reuse, ≈ light with reuse), k = PRs per train, c = conflicted labelled PRs, N = PRs merged in a window, p = a PR's own pushes.
+
+| | runner cost for N merged PRs | per merged PR |
+|---|---|---|
+| before (per-PR merge, merge-main on conflicted PRs) | N·p·R + c·N·R + N·M | p·R + c·R + M — grows with N through c and with every update-branch |
+| after (train) | N·p·R + (N/k)·(R + M_reused) + (red trains)·⌈log₂ k⌉·R | p·R + (R + M_reused)/k (+ log₂ k·R/k on a red train) |
+
+The quadratic term c·N·R is gone (the train never re-merges per main push); main runs drop from N to N/k and are reused.
+
+## Done when
+- [ ] `.github/scripts/merge-train.ts` with tested pure parts (select, bisect state, decide), node-only imports
+- [ ] `.github/workflows/merge-train.yml` (build, push, open, CI, verdict, merge, eject) and a `sweeps.yml` step that dispatches it only when there is work
+- [ ] `merge-main.yml` sweep skips `merge-train` PRs
+- [ ] code-quality-gates: a dispatch on main whose HEAD is a two-parent merge is looked up by its second parent (so a GITHUB_TOKEN merge still reuses C's run)
+- [ ] measured compute per merged PR before and after, recorded here
+- [ ] the skill `merge-queue` or `saturation-meta-merge` points at the automated train (cat-harness, separate PR)
