@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T17:16:00Z
+updated_at: 2026-11-05T17:21:38Z
 parent: folio-assistant-rwmf
 ---
 
@@ -60,3 +60,5 @@ _2026-11-05T16:40:03Z_ — core#648 went green at d21b9a3 but then conflicted wi
 _2026-11-05T16:48:17Z_ — MERGED cat-harness#1061 as e0e27ee (all green: 9 passed, 2 skipped; 3 glossary skos.jsonld). Merged so far: who-iris#181, #183; core#647; cat-harness#1061. Open: cat-harness#1054, tools#1518, core#648.
 
 _2026-11-05T17:16:00Z_ — MERGED cat-harness-tools#1518 as 78a982e (all green): qa-refresh claims the root test/results/library-qa (+ its test), and tools' 3 foreign-paths literals. Open: cat-harness#1054, core#648.
+
+_2026-11-05T17:21:38Z_ — MERGED cat-harness#1054 as a2da2ed (all green): 25 bootstrap .pot, translation obsolete/pot, 62 keywords.json (main's 2 checklists kept). Fix PRs: 6 of 7 merged; core#648 (9570a32) left.
