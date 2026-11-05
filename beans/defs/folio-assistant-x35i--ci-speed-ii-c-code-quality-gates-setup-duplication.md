@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T09:50:07Z
+updated_at: 2026-11-05T11:19:01Z
 parent: folio-assistant-k3vv
 ---
 
@@ -45,3 +45,7 @@ Per-job step times, CQG:
 - typescript-test 4 → 2 shards: `bun test` is **322 s** per shard (not 2m10s), setup ~100 s; 2 shards ≈ +5 min critical path. `workflow-yaml.test.ts` also pins `[1,2,3,4]`.
 - shard-1 `render:bpmn:check` + `smart-base:processes:render:check` to a no-`needs` job: they are 18–22 s and already shard-1 only; a new job costs ~100 s setup + Chromium.
 - merge `qa-working-copy` into `publish-pages`: would save one setup (~100 s) and one queue wait, but `publish-pages` needs `verdict-reuse`, the merged job installs a browser (its gates leave the fast set, `gates-workflows.test.ts`), and the diff-keyed-reuse work (`.github/scripts/{qa-copy,publish-pages}-reuse.sh`) is changing these two jobs. Deferred, not rejected.
+
+
+
+_2026-11-05T11:18Z_ — #2952 merged: shards download ig-indexes (12–16 s → 1–3 s, run 42012637449 vs 41981133123). bun cache and smart:pages carrying closed as not worth it (measured above). Remaining: the state:mount re-fetch, with session_01VQDpPeA2N8L3orQCPPMAas in cat-harness-tools.
