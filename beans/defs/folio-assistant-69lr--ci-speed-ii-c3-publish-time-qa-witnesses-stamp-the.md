@@ -32,3 +32,13 @@ Found (session https://claude.ai/code/session_01VQDpPd7y4nwxjHFm66CMKF): `review
 Why the tree, not the commit: on a PR, HEAD is `refs/pull/<n>/merge`, a commit GitHub replaces when main moves and may garbage-collect. So a reused `reviewed_sha` on main would address a commit that can vanish, which breaks the 2026-09-22 rule ("A CI verdict is reproducible from the `reviewed_sha` it records"). Main's merge commit has the same tree, so the tree id stays reachable and names exactly the inputs. `sameScriptVerdict` already treats the verdict as a function of its inputs, not of the commit.
 
 Ruling: witnesses carry `reviewed_tree` (HEAD^{tree}) as the address; `reviewed_sha` leaves the witnesses; the QA panel resolves a commit on main carrying that tree for its link; the commit that ran stays in the per-run record. `script_commit_sha` is kept unless the reuse runs show it differs between the PR and main (`script_hash` already identifies the code).
+
+## Landed 2026-11-05 (session https://claude.ai/code/session_01VQDpPd7y4nwxjHFm66CMKF)
+
+- cat-harness-tools#1536: `kind:json-schemas --check` judges the generator's own output when a harness builds the kind schemas at publish (owner card via the merge steward: "build it at publish").
+- cat-harness#1056: QA panel shows `reviewed_tree` and links it through `assets/qa/tree-commits.json`; `schemas/kinds/` built at publish, no longer committed.
+- cat-harness-tools#1509: every platform QA writer stamps `reviewed_tree` (HEAD^{tree}), declared in the block-qa interchange schema.
+- cat-harness-tools#1530: `qa-site-assets.ts tree-commits` writes the tree-to-commit index (owner card Q5, option 1).
+- folio-assistant-sci#181: the three sci writers stamp `reviewed_tree`.
+
+Remaining: the six-layer re-pin after #2954, then a folio-assistant PR adding the `tree-commits` step to `docs-site.yml`; then the "Done when" items below can be measured (a main push reusing a PR's publish-time pages).
