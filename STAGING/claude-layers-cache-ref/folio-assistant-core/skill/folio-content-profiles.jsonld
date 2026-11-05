@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/skill/folio-content-profiles.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/skill/folio-content-profiles",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "folio-content-profiles",
+      "title": "Folio content profiles — `document` base and `paper` extension",
+      "description": "The content-folio half of the harness's content-profiles skill: how a document folio is structured prose and how a paper folio extends it, block-kind discovery across block-kinds/ graphs, profile-check enforcement, and the TeX-free document render path.",
+      "instructionsPath": "skills/content/folio-document-adapter/folio-content-profiles.md",
+      "instructionLines": 48,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/folio-content-profiles"
+    }
+  ]
+}

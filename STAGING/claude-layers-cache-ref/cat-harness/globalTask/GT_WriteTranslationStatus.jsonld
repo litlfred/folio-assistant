@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/globalTask/GT_WriteTranslationStatus.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/globalTask/GT_WriteTranslationStatus",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Task",
+      "name": "Write status.json",
+      "summary": "Record the translation's standing in translations/<locale>/status.json.",
+      "description": "Record the translation's standing in translations/<locale>/status.json. The `official` input says which: `false` records it as unofficial ({ official: false, generatedBy, generatedAt }), usable but shown with a warning badge; `true` records the human sign-off with the SHA-256 of the source .md, so a later change to the source marks it stale.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skill/translation-manager"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_WriteTranslationStatus"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-sci/skill/uses-formal-comparison.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-sci/skill/uses-formal-comparison",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "uses-formal-comparison",
+      "title": "`uses[]` against the formal graph",
+      "description": "How a paper folio's formal dependency graph (from Lean) relates to the editorial `uses[]` relation the harness's uses-editorial-review audits: why they diverge, why `uses[]` is never populated from Lean, and how to read the advisory `uses-formal-coverage` finding.",
+      "instructionsPath": "skills/content/folio-paper-adapter/uses-formal-comparison.md",
+      "instructionLines": 66,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/uses-formal-comparison"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/smart-base/asset/checkout-scripts.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/asset/checkout-scripts.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/asset/checkout-scripts",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Asset",
+      "name": "checkout-scripts",
+      "path": "package.json",
+      "assetRole": "checkout-scripts",
+      "title": "package.json — smart-base",
+      "description": "The checkout scripts this instance's code runs, under `checkoutScripts`, each relative to the downstream checkout root. A downstream that mounts this instance reads them with `bun run cat` and `check:script-placement` only while this file's sha256 matches the mount lock."
+    }
+  ]
+}

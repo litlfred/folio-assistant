@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/role/corpus.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/role/corpus",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Corpus",
+      "title": "Corpus",
+      "notation": "corpus",
+      "description": "The versioned content store and the L1 source knowledge graph. Like the work plan, a MECHANICAL role: written to, deciding nothing, and held to the contract its skills state.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skill/kg-affordances",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skill/kg-subscription",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skill/materialize-remote"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus"
+    }
+  ]
+}

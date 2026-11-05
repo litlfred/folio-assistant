@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/process/Process_DeepDocumentResearch/node/Start_Question.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/process/Process_DeepDocumentResearch/node/Start_Question",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "A question about held documents",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/process/Process_DeepDocumentResearch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/role/deep-researcher",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/process/Process_DeepDocumentResearch#flow/F_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/node/Start_Question"
+    }
+  ]
+}

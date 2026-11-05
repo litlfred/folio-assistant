@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/process/Process_MergeManagerWatch/node/End_Done.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/process/Process_MergeManagerWatch/node/End_Done",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Wake handled",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/process/Process_MergeManagerWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/process/Process_MergeManagerWatch#flow/Flow_7",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/process/Process_MergeManagerWatch#flow/Flow_8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/process/Process_MergeManagerWatch#flow/Flow_9"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/End_Done"
+    }
+  ]
+}

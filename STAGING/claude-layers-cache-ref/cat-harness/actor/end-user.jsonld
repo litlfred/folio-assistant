@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/actor/end-user.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/actor/end-user",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "end-user",
+      "actorKind": "person",
+      "title": "End user",
+      "description": "The person the assistant is working for — the one who states intent and answers what the agent cannot decide from the filesystem.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/role/user"
+      ],
+      "permissionName": [
+        "adjudication"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/end-user"
+    }
+  ]
+}

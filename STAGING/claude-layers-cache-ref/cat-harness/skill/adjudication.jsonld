@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skill/adjudication.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skill/adjudication",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "adjudication",
+      "title": "Adjudication — judgement, when the mechanism ran out of facts",
+      "description": "Settle a review that reached no mechanical or consensus agreement. What makes a disagreement adjudicable, the shape its implementations share, why the adjudication LEADS the criterion while the checker's entry is kept beneath it, and the dispensation that records the reason — scoped to a version, never precedent.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/adjudication.md",
+      "instructionLines": 239,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adjudication"
+    }
+  ]
+}

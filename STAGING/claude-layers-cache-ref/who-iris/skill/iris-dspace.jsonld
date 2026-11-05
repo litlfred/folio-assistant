@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/who-iris/skill/iris-dspace.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/who-iris/skill/iris-dspace",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "iris-dspace",
+      "title": "IRIS, DSpace and Dublin Core",
+      "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path — and the requirements a tool reading a record must meet.",
+      "instructionsPath": "skills/iris-dspace.md",
+      "instructionLines": 211,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/who-iris/directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace"
+    }
+  ]
+}

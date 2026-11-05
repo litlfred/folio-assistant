@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/HealthFinding",
+  "definitions": {
+    "HealthFinding": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metric": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "major",
+            "minor"
+          ]
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "summary",
+        "severity",
+        "action"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/health-report/HealthFindingSchema.schema.json",
+  "title": "HealthFindingSchema",
+  "description": "Generated from `HealthFindingSchema` in schemas/sdlc/health-report.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  }
+}

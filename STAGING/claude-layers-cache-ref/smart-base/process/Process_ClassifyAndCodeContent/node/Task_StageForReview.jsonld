@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/smart-base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Stage codings, warnings and exclusions for review",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
+      "requires": [
+        "http://smart.who.int/base/skill/staging-review",
+        "http://smart.who.int/base/skill/interaction-modality"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C04"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ClassifyAndCodeContent#flow/C05"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

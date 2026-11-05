@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skills/content-plan/input.schema.json",
+  "title": "Content Plan Input",
+  "description": "Input schema for content planning — scope, team, timeline, governance.",
+  "type": "object",
+  "required": [
+    "projectName"
+  ],
+  "properties": {
+    "projectName": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Description of the content scope."
+    },
+    "targetDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "teamSize": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sprintDuration": {
+      "type": "string",
+      "enum": [
+        "1w",
+        "2w",
+        "3w",
+        "4w"
+      ],
+      "default": "2w"
+    }
+  },
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  }
+}

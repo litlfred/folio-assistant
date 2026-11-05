@@ -1,0 +1,20 @@
+{
+  "$ref": "#/definitions/InstanceId",
+  "definitions": {
+    "InstanceId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "description": "A workflow instance id — the stem of a file in the bean graph's workflow-state node"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/InstanceIdSchema.schema.json",
+  "title": "InstanceIdSchema",
+  "description": "Generated from `InstanceIdSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  }
+}

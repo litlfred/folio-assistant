@@ -1,0 +1,38 @@
+{
+  "$ref": "#/definitions/AttestationSubject",
+  "definitions": {
+    "AttestationSubject": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "path"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-attestations/AttestationSubjectSchema.schema.json",
+  "title": "AttestationSubjectSchema",
+  "description": "Generated from `AttestationSubjectSchema` in schemas/sdlc/qa-attestations.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  }
+}

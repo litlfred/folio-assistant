@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/fhir-harness/process/Process_IgIncremental/node/Task_Render.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Render.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/Task_Render",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Re-render the cone's records (fhir_narrative · skip lists)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Build",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    }
+  ]
+}

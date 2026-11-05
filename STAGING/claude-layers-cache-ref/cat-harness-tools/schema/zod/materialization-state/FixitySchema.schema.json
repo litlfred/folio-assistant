@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/Fixity",
+  "definitions": {
+    "Fixity": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "const": "sha256"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "verifiedAt": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "algorithm",
+        "digest"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/materialization-state/FixitySchema.schema.json",
+  "title": "FixitySchema",
+  "description": "Generated from `FixitySchema` in schemas/kg/materialization-state.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  }
+}

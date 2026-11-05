@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/externalSchema/spdx-license-list.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/externalSchema/spdx-license-list",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/ExternalSchema",
+      "name": "spdx-license-list",
+      "title": "SPDX License List",
+      "authority": "other",
+      "specVersion": "3.29.0",
+      "specUse": "reads",
+      "specUrl": "https://spdx.org/licenses/",
+      "namespace": [
+        "https://spdx.org/licenses/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/spdx-license-list"
+    }
+  ]
+}

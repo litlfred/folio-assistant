@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/MimeTypeRule",
+  "definitions": {
+    "MimeTypeRule": {
+      "type": "object",
+      "properties": {
+        "match": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contentType": {
+          "type": "string",
+          "pattern": "^[\\w.+-]+\\/[\\w.+-]+$"
+        }
+      },
+      "required": [
+        "match",
+        "contentType"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/site/MimeTypeRuleSchema.schema.json",
+  "title": "MimeTypeRuleSchema",
+  "description": "Generated from `MimeTypeRuleSchema` in schemas/kg/site.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  }
+}

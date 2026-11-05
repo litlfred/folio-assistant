@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/directory/core-pipeline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/directory/core-pipeline",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "core-pipeline",
+      "path": "pipeline/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "`pipeline/qa-checkers-recommendation.ts` and `pipeline/qa-checkers-acronyms.ts`, the automated checkers `qa-checkers/recommendation-strength-resolves.json` and `qa-checkers/acronym-in-glossary.json` name (`RECOMMENDATION_CHECKERS`, `ACRONYM_CHECKERS`), and `pipeline/plugin-slots.ts`, the table `pipeline-plugins/tabular-csvw.json` names (`PIPELINE_IMPLEMENTATIONS`). Under `pipeline/` because that is where the harness's `imports` input-site looks for a contributed checker, as for every layer.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/directory/core-pipeline",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-pipeline"
+    }
+  ]
+}

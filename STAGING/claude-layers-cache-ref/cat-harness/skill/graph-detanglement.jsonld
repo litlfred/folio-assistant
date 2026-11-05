@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skill/graph-detanglement.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skill/graph-detanglement",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "graph-detanglement",
+      "title": "Graph detanglement — the practice, not the migration",
+      "description": "Drive a tangled graph toward a clean partition, so a sub-graph can be split off when it grows too large or when a business reason separates it. The staged practice — declare in place, detangle, isolate, extract — and the seventeen moves for measurement, ordering, judgement and enforcement.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/package/graph-management"
+      ],
+      "instructionsPath": "skills/kg/graph-management/graph-detanglement.md",
+      "instructionLines": 281,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/graph-detanglement"
+    }
+  ]
+}

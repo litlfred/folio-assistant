@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/who-iris/skill/iris-cdn-signing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/who-iris/skill/iris-cdn-signing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "iris-cdn-signing",
+      "title": "Signing and verifying an IRIS CDN release",
+      "description": "How an IRIS CDN release is packaged, signed and verified using published standards only: a BagIt bag (RFC 8493), a detached JWS (RFC 7515 App. F) with ES256 (RFC 7518), and the key published in a did:web DID document whose publicKeyJwk carries an x5c chain up to WHO's signing key. No GDHCN trust list is assumed.",
+      "instructionsPath": "skills/iris-cdn-signing.md",
+      "instructionLines": 130,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/who-iris/directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-cdn-signing"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/tool-types/TimeWindow.schema.json",
+  "title": "TimeWindow",
+  "type": "string",
+  "pattern": "^(\\d{1,4}[hdw]|\\d{4}-\\d{2}-\\d{2})$",
+  "description": "A history window: a count with a unit (4h, 2d, 1w) or an ISO date.",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  }
+}

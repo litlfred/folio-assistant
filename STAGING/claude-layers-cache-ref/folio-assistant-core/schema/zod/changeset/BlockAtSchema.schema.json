@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/BlockAt",
+  "definitions": {
+    "BlockAt": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "section": {
+          "type": "string"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "file",
+        "kind"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-core/schema/zod/changeset/BlockAtSchema.schema.json",
+  "title": "BlockAtSchema",
+  "description": "Generated from `BlockAtSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  }
+}

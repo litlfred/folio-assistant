@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skill/bpmn-authoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skill/bpmn-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bpmn-authoring",
+      "title": "bpmn-authoring",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/bpmn-authoring.md",
+      "instructionLines": 228,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skills/bpmn-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skills/bpmn-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bpmn-authoring"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-sci/asset/checkout-scripts.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/folio-assistant-sci/asset/checkout-scripts",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Asset",
+      "name": "checkout-scripts",
+      "path": "package.json",
+      "assetRole": "checkout-scripts",
+      "title": "package.json — folio-assistant-sci",
+      "description": "The checkout scripts this instance's code runs, under `checkoutScripts`. Each command is relative to the downstream checkout root; a downstream that mounts this instance reads them with `bun run cat`.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/asset/checkout-scripts"
+    }
+  ]
+}

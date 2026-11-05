@@ -1,0 +1,24 @@
+{
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-layers-cache-ref/cat-harness/skills/crdm-detect/input.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CRDM Detect Input",
+  "description": "One user request to classify: is it a feature request (a platform capability change, which enters the CRDM requirements workflow) or a content request?",
+  "type": "object",
+  "required": [
+    "text"
+  ],
+  "properties": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The request as the user wrote it — an issue title and body, or a chat turn."
+    }
+  },
+  "additionalProperties": false,
+  "staging": {
+    "branch": "claude/layers-cache-ref",
+    "sha": "2eeadb0d54217715218b748eb063df5377e7ab00",
+    "pr": "2971/merge",
+    "run": "42129490972"
+  }
+}
