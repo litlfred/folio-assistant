@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T19:06:00Z
+updated_at: 2026-11-05T19:20:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -81,3 +81,5 @@ _2026-11-05T18:42:00Z_ — #1529 went all-green (incl. all three no-new-failures
 _2026-11-05T19:04:00Z_ — **Merged** litlfred/cat-harness-tools#1529 (fc768f6) on all-green verdicts; told session_01VQDpPcbpLjEo8EuzFLVq5Z (core fix) it can go once core re-pins past fc768f6. Next #1533 → #1534. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 
 _2026-11-05T19:06:00Z_ — **Merged** litlfred/cat-harness-tools#1533 (711e078) on all-green verdicts. Last: #1534 (8885482), head test shards 4/4 green, verdicts pending. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-05T19:20:00Z_ — #1534: Tests and Index gates green; Standalone red on src/tools/degradation.test.ts "the real join" (machine capability probe, 30 s; untouched by the diff; 17/17 locally). Re-ran run 42086434439 once; comment on the PR. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
