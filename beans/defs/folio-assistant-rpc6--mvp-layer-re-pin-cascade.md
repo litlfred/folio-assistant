@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T16:14:06Z
+updated_at: 2026-11-05T16:18:07Z
 parent: folio-assistant-rwmf
 ---
 
@@ -48,3 +48,5 @@ _2026-11-05T15:10:39Z_ — Owner card "1. Freeze one set": after the 7 fix PRs m
 _2026-11-05T15:18:29Z_ — MERGED who-iris#181 as 0237087 (24 keywords.json). Its only new failure was translation:block-qa:check (cat-harness agent-onboarding.fr gap, a known red per the owner ruling); comment on the PR. Watcher (merge on all-green only, stop on red after all checks finish) runs over cat-harness#1054, #1061, who-iris#183, tools#1518, core#647, #648; known-red cases are judged by hand.
 
 _2026-11-05T16:14:06Z_ — cat-harness#1054 e318fb7: 1 new red, bpmn:checklist:check: the 2 regenerated checklists followed bootstrap 12fa6d5, but cat-harness CI mounts bootstrap at the index pin c90ef45. Pushed fc16a9e keeping main's two checklists. FREEZE SET: bootstrap = c90ef45 (index pin), not bootstrap main, so the sites agree with cat-harness's committed bootstrap-derived artefacts.
+
+_2026-11-05T16:18:07Z_ — MERGED folio-assistant-core#647 as ba172dd (all green: 18 passed, 2 skipped): 21 foreign-path literals through declarations, command-path-ok markers.
