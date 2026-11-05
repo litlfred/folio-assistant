@@ -432,7 +432,10 @@
     if (plan.proposal) {
       box.appendChild(document.createTextNode(" · from "));
       var prop = el("code", { class: "fa-workplan-plan-proposal" }, plan.proposal);
-      var propHref = viewHref(plan.proposal);
+      // The projection resolves the link to the repository that holds the
+      // proposal; `viewHref` (the store's own repository) is the fallback
+      // for an index written before it did.
+      var propHref = plan.proposalHref || viewHref(plan.proposal);
       if (propHref) {
         var a = el("a", { href: propHref, class: "fa-workplan-plan-proposal-link",
                           title: "Open the proposal this plan came from" });

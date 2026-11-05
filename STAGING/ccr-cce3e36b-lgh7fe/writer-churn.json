@@ -11,7 +11,7 @@
         "smart-base:document-kinds",
         "uml:overview"
       ],
-      "seconds": 280.9127241939999
+      "seconds": 286.475713899
     },
     {
       "cause": "cat-harness",
@@ -37,7 +37,7 @@
         "kg:viewer",
         "render:bpmn"
       ],
-      "seconds": 56.47806257100008
+      "seconds": 58.801082494999974
     },
     {
       "cause": ".github/scripts",
@@ -46,7 +46,7 @@
         "subgraph:jsonld",
         "jsonld:contexts"
       ],
-      "seconds": 32.54169063600001
+      "seconds": 33.54680470800016
     },
     {
       "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
@@ -55,7 +55,7 @@
         "state:visualizer",
         "site:viz"
       ],
-      "seconds": 17.856814530000094
+      "seconds": 17.87259415800008
     },
     {
       "cause": "beans/defs",
@@ -64,7 +64,7 @@
         "docs:pages",
         "processes:viz"
       ],
-      "seconds": 12.666752156000003
+      "seconds": 13.290863373000057
     },
     {
       "cause": ".agents/rules/agent-memory.md",
@@ -73,7 +73,7 @@
         "external-schemas:viz",
         "docs:harness"
       ],
-      "seconds": 12.375491585000068
+      "seconds": 12.686756969000097
     },
     {
       "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
@@ -81,7 +81,7 @@
       "reran": [
         "ig-index:build"
       ],
-      "seconds": 10.66193419499998
+      "seconds": 11.31839327499998
     },
     {
       "cause": "the deploy at 09b732e38435 recorded nothing for it",
@@ -89,7 +89,7 @@
       "reran": [
         "kind:json-schemas"
       ],
-      "seconds": 1.4602359749999596
+      "seconds": 1.615984034000081
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
@@ -97,7 +97,7 @@
       "reran": [
         "smart-base:pages"
       ],
-      "seconds": 1.213175486000022
+      "seconds": 1.1598493799999123
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
@@ -105,15 +105,7 @@
       "reran": [
         "smart-trust:pages"
       ],
-      "seconds": 1.0783661330000032
-    },
-    {
-      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
-      "writtenBy": "-",
-      "reran": [
-        "smart:pages"
-      ],
-      "seconds": 0.8169322069999762
+      "seconds": 1.0294563459999626
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
@@ -121,7 +113,15 @@
       "reran": [
         "smart-trust-phw:pages"
       ],
-      "seconds": 0.8132822850000812
+      "seconds": 0.7542519349999492
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.7435522289999063
     },
     {
       "cause": "its script, imports or tools",
@@ -131,7 +131,7 @@
         "kind:table",
         "avatars:css"
       ],
-      "seconds": 0.4759503670000704
+      "seconds": 0.4716610629998613
     }
   ],
   "writers": [
@@ -143,7 +143,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 11.312653616999974
+      "seconds": 11.635349511999987
     },
     {
       "writer": "avatars:css",
@@ -152,7 +152,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.15233183600008487
+      "seconds": 0.14985336599999574
     },
     {
       "writer": "bibliography:page",
@@ -162,7 +162,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.7796869510000106
+      "seconds": 0.6991134669999592
     },
     {
       "writer": "docs:harness",
@@ -172,7 +172,7 @@
         "kind": "path",
         "path": ".agents/rules/agent-memory.md"
       },
-      "seconds": 5.029826577000087
+      "seconds": 5.766263786000083
     },
     {
       "writer": "docs:pages",
@@ -182,7 +182,7 @@
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 2.6009049349999986
+      "seconds": 2.5941590210000287
     },
     {
       "writer": "document-kinds:viz",
@@ -192,7 +192,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 1.013451961999992
+      "seconds": 1.0664236589999636
     },
     {
       "writer": "external-schemas:viz",
@@ -202,7 +202,7 @@
         "kind": "path",
         "path": ".agents/rules/agent-memory.md"
       },
-      "seconds": 7.3456650079999815
+      "seconds": 6.920493183000013
     },
     {
       "writer": "folio:viz",
@@ -212,13 +212,13 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.7979969529999653
+      "seconds": 0.837619692999986
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
       "why": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "seconds": 10.66193419499998
+      "seconds": 11.31839327499998
     },
     {
       "writer": "jsonld:contexts",
@@ -228,7 +228,7 @@
         "kind": "path",
         "path": ".github/scripts"
       },
-      "seconds": 2.2271526270000033
+      "seconds": 2.09498820900009
     },
     {
       "writer": "kg:viewer",
@@ -238,13 +238,13 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.5724166660000337
+      "seconds": 0.6046246100000572
     },
     {
       "writer": "kind:json-schemas",
       "did": "ran",
       "why": "the deploy at 09b732e38435 recorded nothing for it",
-      "seconds": 1.4602359749999596
+      "seconds": 1.615984034000081
     },
     {
       "writer": "kind:table",
@@ -253,7 +253,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.1395502629999537
+      "seconds": 0.14470615699992048
     },
     {
       "writer": "library:viz",
@@ -263,7 +263,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 6.592853201999911
+      "seconds": 7.0358457209999905
     },
     {
       "writer": "methodologies:viz",
@@ -273,7 +273,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 2.381368814000045
+      "seconds": 2.587808629999985
     },
     {
       "writer": "navbar:include",
@@ -282,7 +282,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.18406826800003181
+      "seconds": 0.1771015399999451
     },
     {
       "writer": "node-kinds",
@@ -292,7 +292,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 3.7791425619999646
+      "seconds": 4.074009073999943
     },
     {
       "writer": "openapi:viz",
@@ -302,7 +302,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.24221719600004143
+      "seconds": 0.2384398720000172
     },
     {
       "writer": "processes:viz",
@@ -312,7 +312,7 @@
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 10.065847221000004
+      "seconds": 10.69670435200003
     },
     {
       "writer": "render:bpmn",
@@ -322,7 +322,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 7.291447340000071
+      "seconds": 6.817151615999988
     },
     {
       "writer": "schema:viz",
@@ -332,13 +332,13 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 3.7421116020000773
+      "seconds": 4.11127528000006
     },
     {
       "writer": "site:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 1.2977233300000661
+      "seconds": 1.4670998930000934
     },
     {
       "writer": "skills:docs",
@@ -348,7 +348,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 7.147678478999994
+      "seconds": 7.838641269000014
     },
     {
       "writer": "smart-base:document-kinds",
@@ -358,7 +358,7 @@
         "kind": "path",
         "path": ""
       },
-      "seconds": 1.5113140840000123
+      "seconds": 1.5341714679999858
     },
     {
       "writer": "smart-base:l1-extraction:pages",
@@ -368,37 +368,37 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.9277944579999894
+      "seconds": 0.9798339799999958
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "seconds": 1.213175486000022
+      "seconds": 1.1598493799999123
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
-      "seconds": 0.8132822850000812
+      "seconds": 0.7542519349999492
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "seconds": 1.0783661330000032
+      "seconds": 1.0294563459999626
     },
     {
       "writer": "smart:pages",
       "did": "ran",
       "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
-      "seconds": 0.8169322069999762
+      "seconds": 0.7435522289999063
     },
     {
       "writer": "state:visualizer",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 16.559091200000026
+      "seconds": 16.405494264999987
     },
     {
       "writer": "subgraph:jsonld",
@@ -408,7 +408,7 @@
         "kind": "path",
         "path": ".github/scripts"
       },
-      "seconds": 30.31453800900001
+      "seconds": 31.451816499000067
     },
     {
       "writer": "subscriptions:viz",
@@ -418,7 +418,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.2626826290000463
+      "seconds": 0.257643827999942
     },
     {
       "writer": "theme:viz",
@@ -428,7 +428,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.7003884879999096
+      "seconds": 0.7542030860000523
     },
     {
       "writer": "themes:css",
@@ -438,7 +438,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.665183577000047
+      "seconds": 0.7034155510000419
     },
     {
       "writer": "tools:viz",
@@ -448,7 +448,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 3.976656238000025
+      "seconds": 4.044581502999994
     },
     {
       "writer": "uml:overview",
@@ -458,7 +458,7 @@
         "kind": "path",
         "path": ""
       },
-      "seconds": 279.4014101099999
+      "seconds": 284.941542431
     },
     {
       "writer": "uploads:viz",
@@ -468,7 +468,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 3.262755865000072
+      "seconds": 3.4167814589999614
     },
     {
       "writer": "voices:viz",
@@ -478,7 +478,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 1.0295759719999042
+      "seconds": 1.0983206850000424
     }
   ]
 }
