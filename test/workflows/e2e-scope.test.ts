@@ -9,17 +9,18 @@
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { chmodSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { parse } from "yaml";
 
 const WORKFLOW = resolve(import.meta.dir, "..", "..", ".github", "workflows", "code-quality-gates.yml");
 const wf = parse(readFileSync(WORKFLOW, "utf8")) as {
-  jobs: Record<string, { if?: string; needs?: string | string[]; steps: Array<{ id?: string; run?: string; env?: Record<string, string> }> }>;
+  jobs: Record<string, { if?: string; needs?: string | string[]; env?: Record<string, string>; steps: Array<{ id?: string; run?: string; env?: Record<string, string> }> }>;
 };
 const scopeJob = wf.jobs["e2e-scope"]!;
 const step = scopeJob.steps.find((s) => s.id === "scope")!;
+const dispatchStep = scopeJob.steps.find((s) => s.id === "dispatch-scope")!;
 
 /** Run the step with `gh` answering `listing` (lines `F\tpath` / `P\tpath`), or failing when null. */
 function scope(listing: string[] | null, changed?: number): { affected: string; summary: string } {
@@ -41,8 +42,8 @@ function scope(listing: string[] | null, changed?: number): { affected: string; 
       REPO: "o/r",
       PR: "1",
       CHANGED: String(changed ?? files),
-      INERT: step.env!.INERT!,
-      ALWAYS: step.env!.ALWAYS!,
+      INERT: scopeJob.env!.INERT!,
+      ALWAYS: scopeJob.env!.ALWAYS!,
     },
     encoding: "utf8",
   });
@@ -86,6 +87,53 @@ describe("e2e-scope skips the shards only when every changed file is inert", () 
 
   test("the answer is written to the job summary", () => {
     expect(scope(F("index.lock.json")).summary).toContain("index.lock.json");
+  });
+});
+
+/** Run the dispatch step in a repo whose `origin/main` is one commit and HEAD adds `paths`. */
+function dispatchScope(paths: string[]): string {
+  const dir = mkdtempSync(join(tmpdir(), "e2e-dispatch-"));
+  const git = (...args: string[]) => {
+    const r = spawnSync("git", ["-c", "user.name=t", "-c", "user.email=t@t", ...args], { cwd: dir, encoding: "utf8" });
+    expect(r.status).toBe(0);
+  };
+  git("init", "-q");
+  writeFileSync(join(dir, "base"), "x");
+  git("add", ".");
+  git("commit", "-qm", "base");
+  git("update-ref", "refs/remotes/origin/main", "HEAD");
+  for (const p of paths) {
+    mkdirSync(dirname(join(dir, p)), { recursive: true });
+    writeFileSync(join(dir, p), "y");
+  }
+  if (paths.length) {
+    git("add", ".");
+    git("commit", "-qm", "branch");
+  }
+  const out = join(dir, "out");
+  writeFileSync(out, "");
+  const r = spawnSync("bash", ["-e", "-c", dispatchStep.run!], {
+    cwd: dir,
+    env: { PATH: process.env.PATH, GITHUB_OUTPUT: out, GITHUB_STEP_SUMMARY: join(dir, "summary"), ...scopeJob.env },
+    encoding: "utf8",
+  });
+  expect(r.status).toBe(0);
+  return /^affected=(\S*)$/m.exec(readFileSync(out, "utf8"))?.[1] ?? "";
+}
+
+describe("a dispatch on a branch is scoped by its diff against main", () => {
+  test("inert files only: skipped", () => {
+    expect(dispatchScope([".github/workflows/docs-site.yml", "test/workflows/x.test.ts"])).toBe("false");
+  });
+  test("this workflow, or any other path: run", () => {
+    expect(dispatchScope([".github/workflows/code-quality-gates.yml"])).toBe("true");
+    expect(dispatchScope([".github/workflows/docs-site.yml", "src/a.ts"])).toBe("true");
+  });
+  test("no change against main: run", () => {
+    expect(dispatchScope([])).toBe("true");
+  });
+  test("the job runs on a dispatch of a branch, never of main", () => {
+    expect(scopeJob.if).toContain("github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'");
   });
 });
 
