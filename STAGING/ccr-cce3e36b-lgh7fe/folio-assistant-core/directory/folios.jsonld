@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/folios.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "379ae05a533fc5a6ae98107c9a3e393553f7d873",
+    "pr": "2946/merge",
+    "run": "41993568462"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/folios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "folios",
+      "path": "folios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/folio"
+      ],
+      "description": "What an AUTHOR creates using the graph -- a note, a visualization, a paper -- referencing the KG and rendered through the harness's just-the-docs document rendering. It declares the EXISTING `folio` kind rather than a new one: `folio` is 'authored content, rendered to a website', registered by core because only core can render it. The contrast is with `docs` in cat-harness, whose subject is the harness itself. Example: a catalogue goes in `library/` or is referenced remotely; a note ABOUT it is a folio; the page explaining how ingestion works is docs.",
+      "readmePath": "folios/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/folios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/folios"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/directory/library.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "379ae05a533fc5a6ae98107c9a3e393553f7d873",
+    "pr": "2946/merge",
+    "run": "41993568462"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/directory/library",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "library",
+      "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library"
+      ],
+      "description": "Ingested L1 source material for the sciences: `milnorlink`, the source text the `milnor-exposition-standard` skill reads; the Lean-autoformalization papers this layer's methodology nodes cite as `evidence`; papers on extracting mathematics from PDFs; and the CODATA 2022 constants table. `image-verdicts.json` holds the image-role judgements for this library's documents. The id is `library`, the conventional one, so this entry overrides the default rather than joining it: overrides match on id, never on path, so a distinct id at the same path would yield two entries for one directory and every fan-out consumer would scan it twice.",
+      "readmePath": "library/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/folio-assistant-sci/directory/library",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/library"
+    }
+  ]
+}
