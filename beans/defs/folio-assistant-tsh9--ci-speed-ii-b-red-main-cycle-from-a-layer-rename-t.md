@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T18:01:39Z
+updated_at: 2026-11-05T18:04:36Z
 parent: folio-assistant-k3vv
 ---
 
@@ -57,3 +57,5 @@ _2026-11-05T14:19:51Z_: **Moves honoured in the other link checkers.** The commi
 Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk
 
 _2026-11-05T18:01:39Z_ — The two-phase move rule has landed: the skill in litlfred/cat-harness#1043 (d9f08ff), and the check in litlfred/cat-harness-tools#1492 (5803bff). After merging main, moves resolve inside judgeLink, so `state:push` honours them too. The extension to four more link checkers (583561f) comes next as its own PR. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-05T18:04:36Z_ — Extension to four more link checkers: litlfred/cat-harness-tools#1540 (based on main after #1492). Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
