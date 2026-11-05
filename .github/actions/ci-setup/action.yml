@@ -80,9 +80,20 @@ runs:
         echo "::notice title=CI image::no usable image for key ${KEY:0:12} (exit ${status}); mounting and installing instead"
 
     # ── Fallback: the steps every job ran before (bean cis1, nn8e) ──────────
-    - name: Cache remote mounts (bean cis1)
-      if: steps.image.outputs.hit != 'true'
+    # Saved on main only; a pull request restores and never saves. Every PR
+    # job saving on a lock change cost ~9 s each in its post step, racing the
+    # others for the same key.
+    - name: Cache remote mounts (bean cis1), saved on main
+      if: steps.image.outputs.hit != 'true' && github.ref == 'refs/heads/main'
       uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      with:
+        path: ~/.cache/cat-mount
+        key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+        restore-keys: |
+          cat-mount-v1-
+    - name: Cache remote mounts (bean cis1), restore only
+      if: steps.image.outputs.hit != 'true' && github.ref != 'refs/heads/main'
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
       with:
         path: ~/.cache/cat-mount
         key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
