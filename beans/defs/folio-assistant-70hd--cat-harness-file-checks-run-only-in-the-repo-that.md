@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T13:50:00Z
+updated_at: 2026-11-05T14:05:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -38,3 +38,5 @@ _2026-11-05T13:40:00Z_ — Fix written and tested; **not yet pushed**: this sess
 - Not changed: `compare-gates.py` still counts head 78 vs base 0 as NEW; `repin-train.ts` counts any non-zero item. Other checks of lower-layer files can adopt `lib/gate-own.ts` one by one.
 
 _2026-11-05T13:50:00Z_ — Owner allowed push (card "Tools push", option 1: merge on green). PR https://github.com/litlfred/cat-harness-tools/pull/1508 opened (rebased on tools main 06d9615) and subscribed. Merge on green or with only main's own reds. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-05T14:05:00Z_ — Owner: "start on the other gate-own checks". Batch 2 = https://github.com/litlfred/cat-harness-tools/pull/1521 (stacked on #1508): shared `gateDirectoriesForGraph` in lib/gate-own.ts; scopes the SUBJECTS of check:methodology-evidence (citations still resolve corpus-wide; scoped run skips the committed QA doc), check:tabular-stubs, check:translation-officiality, check:waivers. Remaining: command-paths, subgraphs, concern-groups (need more than a call swap); generator --check halves need a separate decision. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
