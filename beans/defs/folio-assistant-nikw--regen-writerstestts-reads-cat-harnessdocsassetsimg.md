@@ -2,19 +2,20 @@
 # folio-assistant-nikw
 $schema: bean/1.0.0
 title: regen-writers.test.ts reads cat-harness/docs/assets/img/workflows, which cat-harness main no longer commits
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-11-05T17:31:39Z
-updated_at: 2026-11-05T17:50:21Z
+updated_at: 2026-11-05T18:33:16Z
 parent: folio-assistant-4j43
 ---
 
 Every cat-harness-tools PR tested against cat-harness main now fails `test/coordinator/regen-writers.test.ts > render:bpmn:check: red on a staled artefact…` with ENOENT at firstCommittedIn (line 69): litlfred/cat-harness@8cc73584 (2026-11-05, 'Build the whole workflows folder at publish; commit own drawings beside each .bpmn') removed docs/assets/img/workflows/. The case must find an own committed drawing beside a .bpmn instead. Seen on cat-harness-tools#1531 (proven not that PR's). Base-exact passes only on a base-cache hit with an older cat-harness.
 
 ## Done when
-- [ ] the render:bpmn case picks a committed drawing where cat-harness now keeps them, and passes against cat-harness main
+- [x] the render:bpmn case picks a committed drawing where cat-harness now keeps them, and passes against cat-harness main
 
 ## Progress 2026-11-05
 - Blocked on cat-harness-tools#1504 (bean akiq, CI-speed session_01VQDpPfJKxVERPVKKWBTY8z): without it render:bpmn never redraws cat-harness's beside-source SVGs, so no valid fixture exists on main alone. Patch (firstBesideSource over cat-harness/processes) sent to that session to fold into #1504 or stack on it.
 - Folded into cat-harness-tools#1504 as commit 18105180 by the CI-speed 6 session (firstBesideSource verbatim; unused firstCommittedIn removed). Checked: the render:bpmn case passes with cat-harness#1047 + #1504. To be pushed after folio-assistant#2954 lands; nikw closes when #1504 merges (owned there).
+- Fixed by cat-harness-tools#1538 (merged 2026-11-05 18:32Z): stales a bootstrap drawing beside its .bpmn, which render:bpmn draws on both sides of #1504, so it did not need to wait for #1504.
