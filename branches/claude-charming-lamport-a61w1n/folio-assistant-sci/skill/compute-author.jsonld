@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-sci/skill/compute-author.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/charming-lamport-a61w1n",
+    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "pr": "2970/merge",
+    "run": "42101071547"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-sci/skill/compute-author",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "compute-author",
+      "title": "Compute-author skill — read before writing compute code",
+      "description": "Pre-work briefing + durable patterns for anyone writing or modifying compute scripts (or the native crates they call). Read this BEFORE you write or change compute code — it covers precision discipline, the native↔script boundary cost, exact-arithmetic choices (big-integer vs big-rational vs arbitrary-precision float), algebraic-preflight requirements before optimization shortcuts, and witness-emission discipline. Sibling to `compute-audit` (post-hoc); this skill is pre-work.",
+      "instructionsPath": "skills/content/folio-paper-adapter/compute-author.md",
+      "instructionLines": 263,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/compute-author"
+    }
+  ]
+}

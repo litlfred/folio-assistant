@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_MergeToMain/node/Task_Merge.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/charming-lamport-a61w1n",
+    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "pr": "2970/merge",
+    "run": "42101071547"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_MergeToMain/node/Task_Merge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Merge, pinned to the evaluated head",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_MergeToMain",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/skill/merge-to-main"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": false,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_MergeToMain#flow/m19"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_MergeToMain#flow/m20"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Merge"
+    }
+  ]
+}

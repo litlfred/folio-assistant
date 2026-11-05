@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/smart-trust/smart-trust.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/smart-trust/directory/smart-trust-translations.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/smart-trust/smart-trust.jsonld",
+  "staging": {
+    "branch": "claude/charming-lamport-a61w1n",
+    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "pr": "2970/merge",
+    "run": "42101071547"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/smart-trust/directory/smart-trust-translations",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-trust-translations",
+      "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/translation-sources"
+      ],
+      "description": "The gettext side of smart-trust's own strings, one directory per target locale: the `glossary/` templates of the GDHCN glossary (`glossary/gdhcn.glossary.json`). A scheme's translations sit with the instance whose terms they translate. Written by `bun run cat glossary:pot`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/smart-trust/directory/smart-trust-translations",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/smart-trust-translations"
+    }
+  ]
+}

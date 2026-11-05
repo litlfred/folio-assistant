@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ActorDefinition-IMMZ.Persona.SystemAdministrator.jsonld",
+  "@type": "fhir:ActorDefinition",
+  "dcterms:identifier": "ActorDefinition/IMMZ.Persona.SystemAdministrator",
+  "schema:name": "SystemAdministrator",
+  "dcterms:title": "System administrator",
+  "dcterms:description": "A systems administrator, or a dedicated electronic immunization registry (EIR) staff, supervises the operation and storage of electronic health records and makes sure the server functions properly to allow clients and staff to communicate with each other, coordinate their actions and take care of essential tasks.\n\n**Alternate names**: IT manager, technical support, EIR staf.\n\n**ISCO-08**: 2522 Administrator, IT systems.\n\nA related generic persona of the WHO Digital Adaptation Kit for Immunizations.",
+  "schema:version": "0.2.0",
+  "dcterms:type": "Requirements: Actor Definitions",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/immunizations/ActorDefinition/IMMZ.Persona.SystemAdministrator"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/ActorDefinition/IMMZ.Persona.SystemAdministrator--438a1ea8.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "1f5b81da352b37240cbc53c8cce67bdef57d63f9"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.immunizations",
+    "schema:version": "0.2.0",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/immunizations"
+    }
+  }
+}

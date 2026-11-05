@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap/process/Process_Discussion/node/A_ListLocations.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap/process/Process_Discussion/node/A_ListLocations",
+      "@type": "bootstrap:ProcessNode",
+      "label": "List the locations this could install to",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap/process/Process_Discussion",
+      "requires": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap/skill/confirm-harness"
+    }
+  ]
+}

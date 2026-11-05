@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_TestPlanExecution/node/GW_BeanClosedHow.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/charming-lamport-a61w1n",
+    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "pr": "2970/merge",
+    "run": "42101071547"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_TestPlanExecution/node/GW_BeanClosedHow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "How did it end?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/role/attestation-service",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_TestPlanExecution/lane/Lane_Attestation",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_TestPlanExecution#flow/Flow_GW_BeanClosedHow"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_4",
+        "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_5",
+        "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_BeanClosedHow"
+    }
+  ]
+}

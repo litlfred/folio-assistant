@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/MemberDecision",
+  "definitions": {
+    "MemberDecision": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "amended",
+        "rejected",
+        "deferred"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap-tools/schema/zod/requirement-set/MemberDecisionSchema.schema.json",
+  "title": "MemberDecisionSchema",
+  "description": "Generated from `MemberDecisionSchema` in schemas/requirement-set.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/charming-lamport-a61w1n",
+    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "pr": "2970/merge",
+    "run": "42101071547"
+  }
+}

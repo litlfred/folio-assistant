@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/charming-lamport-a61w1n",
+    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "pr": "2970/merge",
+    "run": "42101071547"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "GitHub Pages",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap-tools/role/github-pages",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap-tools/directory/bootstrap-tools-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages"
+    }
+  ]
+}

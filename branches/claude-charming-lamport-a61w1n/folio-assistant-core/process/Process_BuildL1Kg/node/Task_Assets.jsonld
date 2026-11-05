@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Assets.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/charming-lamport-a61w1n",
+    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "pr": "2970/merge",
+    "run": "42101071547"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Assets",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record assets[] — local path or remote URL",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/process/Process_BuildL1Kg",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/skill/document-intake"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Assets"
+    }
+  ]
+}
