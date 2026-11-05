@@ -47,7 +47,7 @@ Each layer draws its own diagrams. cat-harness draws only its own 82. No layer l
 - [x] folio-assistant-core#644: 28 drawings
 - [x] folio-assistant-sci#179: 3 drawings
 - [x] cat-harness#1047: one folder entry replaces 53 lines; 84 committed host SVGs untracked; 45 own drawings beside their sources. Safe before or after the tools change (both verified).
-- [ ] cat-harness-tools: `render-bpmn.ts` draws beside the source for every instance (drop the workflow-visualiser exemption filter). Patch ready; this session has no access to the repo yet.
-- [ ] fhir-harness (6) and who-iris (4) commit their drawings. This session has no access yet.
+- [x] cat-harness-tools#1504: `render-bpmn.ts` draws beside the source for every instance; a test pins it. Lands LAST.
+- [x] fhir-harness#288 (6) and who-iris#180 (4)
 - [ ] folio-assistant re-pin: core, sci and cat-harness first; tools last (it requires every layer's drawings).
 - Later: smart-base's own `render-processes.ts` becomes redundant (same bytes).
