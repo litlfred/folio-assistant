@@ -2,13 +2,13 @@
 # folio-assistant-69lr
 $schema: bean/1.0.0
 title: 'CI speed II (c3): publish-time QA witnesses stamp the commit, so main never reuses a PR''s pages'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T12:07:57Z
-updated_at: 2026-11-05T12:07:57Z
+updated_at: 2026-11-05T12:55:20Z
 parent: folio-assistant-k3vv
 ---
 
