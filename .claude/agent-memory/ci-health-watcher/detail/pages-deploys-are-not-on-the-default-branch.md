@@ -1,7 +1,7 @@
 <!-- Generated from memory/pages-deploys-are-not-on-the-default-branch.md by `bun run cat agent-memory`. -->
 <!-- Not injected into MEMORY.md; read on demand. Edits here are lost. -->
 
-Bean `3yi4`, from the owner's correction: *"they are not. changes status of
+Work item `3yi4`, from the owner's correction: *"they are not. changes status of
 repo. tools need to look external."*
 
 ## Why the query was too narrow rather than missing
