@@ -21,3 +21,5 @@ Land in order: litlfred/cat-harness-tools#1479, then litlfred/cat-harness#1032 (
 
 
 _2026-11-05T12:59Z_ — Claimed. Step 1 blocked: add_repo for litlfred/cat-harness-tools (push) was refused by the session permission classifier, so tools#1479 cannot be read or merged from here. cat-harness and folio-assistant-core attached. #1032 head 0013b50 (draft), #639 head b009169 (draft); both wait on #1479. Asked owner.
+
+_2026-11-05T13:05Z_ — Owner allowed cat-harness-tools access (card, option 1). tools#1479 had one red, Standalone (no new failures): 2 agent-memory-repo-root tests not red on main. Cause: head commit 5b9510a changed the agent-memory generator, so the per-agent files committed in cat-harness go stale; they cannot be regenerated inside this chain. Reverted it on #1479 (d190ce7, no history rewrite), parked the commit on branch claude/agent-memory-rebase-skill-links for its own PR with the cat-harness regen, merged main (e47016f). CI re-running. PR subscriptions fail in this session; self check-ins instead.
