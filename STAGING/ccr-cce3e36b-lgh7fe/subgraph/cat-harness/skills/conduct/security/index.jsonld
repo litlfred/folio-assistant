@@ -1,0 +1,62 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/conduct/security/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/security",
+      "@type": "cat-harness:SkillPackage",
+      "name": "security"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/injection-boundaries",
+      "@type": "bootstrap:Skill",
+      "name": "injection-boundaries",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8f8a2d4dddb71dcf21903dbf9d5e5e6c23a6ab4168943dc70636730763590ce3",
+        "bytes": 6192,
+        "sha256": "8f8a2d4dddb71dcf21903dbf9d5e5e6c23a6ab4168943dc70636730763590ce3"
+      },
+      "title": "Injection — the value became program"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/path-containment",
+      "@type": "bootstrap:Skill",
+      "name": "path-containment",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/759bcc70ef7d7a7d939c80992d50c9233fd47955547eae2988bfa3851a8a8f44",
+        "bytes": 3276,
+        "sha256": "759bcc70ef7d7a7d939c80992d50c9233fd47955547eae2988bfa3851a8a8f44"
+      },
+      "title": "Path containment — two questions that look like one"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/security",
+      "@type": "bootstrap:Skill",
+      "name": "security",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d754b6fb34f2de53906aa7e779e27a9f57de3a196e52a3183bfeb12237964cf0",
+        "bytes": 5580,
+        "sha256": "d754b6fb34f2de53906aa7e779e27a9f57de3a196e52a3183bfeb12237964cf0"
+      },
+      "title": "Security — one question, asked at every boundary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/zero-trust-handover",
+      "@type": "bootstrap:Skill",
+      "name": "zero-trust-handover",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fbbf06beceed037a38522f8a599c0da10093a49069487c4ae78ecc6b939fa349",
+        "bytes": 27347,
+        "sha256": "fbbf06beceed037a38522f8a599c0da10093a49069487c4ae78ecc6b939fa349"
+      },
+      "title": "Zero-trust handover"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/conduct/security",
+  "path": "skills/conduct/security/"
+}

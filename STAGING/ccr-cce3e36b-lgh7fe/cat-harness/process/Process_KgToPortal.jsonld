@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "sha": "8a8093fd6ba901127f5605572bdd35e98551c278",
     "pr": "2954/merge",
-    "run": "42019699864"
+    "run": "42042361633"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "KG to public portal",
       "summary": "How a knowledge graph reaches a public portal this repository does not run: select, serialize, package, sign, distribute, and verify on the portal's side.",
-      "description": "How a knowledge graph reaches a public portal this repository does not run: select, serialize, package, sign, distribute, and verify on the portal's side. folio-assistant — KG to public portal.\n\nSix stages: select, serialize, package, sign, distribute, verify. Three\ndecisions belong to the DEPLOYMENT and are drawn as gateways rather than\nas steps — the ingestion transport, the versioned store, and the signing\nscheme. A pipeline that picks one of those is asserting a decision nobody\nmade.\n\nA CDN is a LAYER, not a publication host. PUBLICATION_HOSTS answers \"what\nserves the rendering\"; a cache answers \"what stands between the server and\nthe reader\", and the canonical URL stays the origin's either way.",
+      "description": "How a knowledge graph reaches a public portal this repository does not run: select, serialize, package, sign, distribute, and verify on the portal's side.\n\nThree decisions belong to the DEPLOYMENT and are drawn as gateways\nrather than\nas steps — the ingestion transport, the versioned store, and the signing\nscheme. A pipeline that picks one of those is asserting a decision nobody\nmade.\n\nA CDN is a LAYER, not a publication host. PUBLICATION_HOSTS answers \"what\nserves the rendering\"; a cache answers \"what stands between the server and\nthe reader\", and the canonical URL stays the origin's either way.",
       "enforcement": "advisory",
       "sourcePath": "processes/kg/kg-to-portal.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/kg/kg-to-portal.bpmn",

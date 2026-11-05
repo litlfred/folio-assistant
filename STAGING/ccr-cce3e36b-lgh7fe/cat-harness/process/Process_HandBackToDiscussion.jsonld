@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "sha": "8a8093fd6ba901127f5605572bdd35e98551c278",
     "pr": "2954/merge",
-    "run": "42019699864"
+    "run": "42042361633"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Hand back to the discussion",
       "summary": "How a sibling agent gets a card, question, result, blocker or context in front of the person: through the discussion agent that is talking with them, never only in its own thread.",
-      "description": "How a sibling agent gets a card, question, result, blocker or context in front of the person: through the discussion agent that is talking with them, never only in its own thread. The person's answer comes back the same way. The owner asked for it on 2026-10-31 after several sibling threads posted cards nobody saw (cat-harness#861).\n\nINPUT AND OUTPUT: the `hand-back-to-discussion` skill's schemas, schemas/skills/hand-back-to-discussion/input.schema.json (from, to, kind, summary, ask = the ask-the-person input, context, links, channels, answerRoute, blocking) and output.schema.json (shown, state, chosen, quote, answeredIn, marked, deliveredBack).\n\nTHE PERSON'S STEP is inside `Process_AskThePerson`, called by the discussion agent, so the asking rule (chat text first, then the card) holds here unchanged. A Blue-column answer in a review sheet is an answer to that same question.",
+      "description": "How a sibling agent gets a card, question, result, blocker or context in front of the person: through the discussion agent that is talking with them, never only in its own thread. The person's answer comes back the same way.\n\nINPUT AND OUTPUT: the `hand-back-to-discussion` skill's schemas, schemas/skills/hand-back-to-discussion/input.schema.json (from, to, kind, summary, ask = the ask-the-person input, context, links, channels, answerRoute, blocking) and output.schema.json (shown, state, chosen, quote, answeredIn, marked, deliveredBack).\n\nTHE PERSON'S STEP is inside `Process_AskThePerson`, called by the discussion agent, so the asking rule (chat text first, then the card) holds here unchanged. A Blue-column answer in a review sheet is an answer to that same question.",
       "enforcement": "strict",
       "sourcePath": "processes/process/hand-back-to-discussion.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/process/hand-back-to-discussion.bpmn",

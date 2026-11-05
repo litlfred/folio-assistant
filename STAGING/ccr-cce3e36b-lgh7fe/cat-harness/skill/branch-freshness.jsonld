@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "sha": "8a8093fd6ba901127f5605572bdd35e98551c278",
     "pr": "2954/merge",
-    "run": "42019699864"
+    "run": "42042361633"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "branch-freshness",
       "title": "Branch freshness — stay current with main",
-      "description": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.",
+      "description": "Read what changed on main often, and re-analyse the session workplan. Put main INTO the branch rarely: freely before a PR exists, and on a branch with a PR only when it conflicts, when the work needs something that just landed, or once just before it merges, because each such push re-runs the PR's whole CI. Prevents stale assumptions, merge conflicts, and duplicated work without spending CI on churn.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/branch-freshness.md",
-      "instructionLines": 112,
+      "instructionLines": 144,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

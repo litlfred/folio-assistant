@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "sha": "8a8093fd6ba901127f5605572bdd35e98551c278",
     "pr": "2954/merge",
-    "run": "42019699864"
+    "run": "42042361633"
   },
   "@graph": [
     {
@@ -14,12 +14,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "bean-blocking",
       "title": "Blocking is a claim about the work, not a mood",
-      "description": "Default to non-blocking when updating a bean's status. Mark blocked only when the work genuinely cannot proceed, and then always with what it waits on, when the wait expires, and what the next agent should do.",
+      "description": "Default to non-blocking when updating a work item's status. Mark blocked only when the work genuinely cannot proceed, and then always with what it waits on, when the wait expires, and what the next agent should do.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/package/work-plan"
       ],
       "instructionsPath": "work-plan/skills/work-plan/bean-blocking.md",
-      "instructionLines": 117,
+      "instructionLines": 104,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

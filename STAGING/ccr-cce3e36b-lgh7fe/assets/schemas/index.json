@@ -49943,6 +49943,20 @@
           "array": false
         },
         {
+          "name": "commands",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Every gate command in the set, in workflow order — what the run was asked"
+        },
+        {
+          "name": "heldOut",
+          "type": "z.array(z.string()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Gates of the set this run was told not to run (`--except`), so a record"
+        },
+        {
           "name": "failed",
           "type": "z.array(GateRefSchema.extend({ why: z.array(z.string()) }))",
           "optional": false,

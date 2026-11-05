@@ -1,0 +1,709 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../assets/js/vendor/lunr.min.js"></script><script src="../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Beans store behind any Tool, and a state machine that starts any model’s agent | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="The Beans store behind any Tool, and a state machine that starts any model’s agent" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="The Beans store behind any Tool, and a state machine that starts any model’s agent" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "proposals-bean-store-and-process-driver-2026-11-02",
+    "src": "../assets/qa/proposals-bean-store-and-process-driver-2026-11-02/page.translation.json",
+    "index": "../assets/qa/proposals-bean-store-and-process-driver-2026-11-02/qa-index.json",
+    "list": "../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../folio-assistant-core/","jsonld":"../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../assets/harness/site.json"><meta name="fa-todo-src" content="../assets/todos/index.json"><meta name="fa-todo-graph" content="../todos.jsonld"><meta name="fa-zoom-src" content="../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content=".."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../assets/beans/index.json"><meta name="fa-processes-src" content="../subgraph/index.jsonld"><meta name="fa-build-src" content="../build.json"><meta name="fa-fsh-guts-src" content="../fsh-guts.json"><link rel="stylesheet" href="../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../assets/css/docs-ui.css?v=b4497e8e1c4a"><link rel="stylesheet" href="../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../assets/css/avatars.css?v=456c57efeed4"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../assets/js/harness-data.js" defer></script><script src="../assets/js/vendor/qrcode.js" defer></script><script src="../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../assets/js/kg-render.js" defer></script><script src="../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../assets/js/docs-ui.js?v=69d9894b0281" defer></script><script src="../assets/js/edit-links.js?v=23ca1803a02a" defer></script><script src="../assets/js/work-plan.js" defer></script><script src="../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><style id="fa-page-ground" data-instance="cat-harness">
+  /* Grumpy cyborg agents, the theme of cat-harness. */
+  :root { --fa-page-scrim: rgba(39, 38, 43, 0.85); --fa-text-scrim: rgba(39, 38, 43, 0.96); }
+  :root[data-fa-scheme="light"] { --fa-page-scrim: rgba(255, 255, 255, 0.85); --fa-text-scrim: rgba(255, 255, 255, 0.96); }
+  /* The root carries the art, so it covers the whole viewport however short
+     the page; the body is made see-through so the art is not painted over. */
+  html:root body { background-color: transparent; }
+  html body .main-content { background-color: var(--fa-text-scrim); border-radius: 6px; }
+  html:root {
+    background-image:
+      linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+      url("../assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  @media (max-width: 48rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../assets/img/harness/landing-grumpy-cyborg-agents-card.webp");
+    }
+  }
+  @media (max-width: 30rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../assets/img/harness/landing-grumpy-cyborg-agents-mobile.webp");
+    }
+  }
+  /* Print and forced colours get the plain page: art is decoration. */
+  @media print, (forced-colors: active) {
+    html:root { background-image: none; }
+  }
+</style><link rel="stylesheet" href="../assets/css/navbar.css"><script src="../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../assets/page-layout.css" data-fa-page-layout><script src="../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root=".." data-fa-to-root="..">{"data":"rail-giobbw31pa","here":"/proposals/bean-store-and-process-driver-2026-11-02.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#in-brief","label":"In brief"},{"href":"#terms-used","label":"Terms used"},{"href":"#1-why-the-who-assured-ai-concept-note","label":"Why: the WHO Assured AI concept note","icon":"1"},{"href":"#2-what-the-owner-asked","label":"What the owner asked","icon":"2"},{"href":"#3-where-things-stood-2026-11-02","label":"Where things stood (2026-11-02)","icon":"3"},{"href":"#4-design","label":"Design","icon":"4","children":[{"href":"#41-the-work-plan-is-a-set-of-operations","label":"The work plan is a set of operations","icon":"4.1","depth":1},{"href":"#42-tools-behind-the-work-plan","label":"Tools behind the work plan","icon":"4.2","depth":1},{"href":"#43-the-engine-uses-the-operations","label":"The engine uses the operations","icon":"4.3","depth":1},{"href":"#44-where-a-bean-is-and-what-the-agent-is-given","label":"Where a bean is, and what the agent is given","icon":"4.4","depth":1},{"href":"#45-the-process-starts-the-agent","label":"The process starts the agent","icon":"4.5","depth":1},{"href":"#46-history-one-event-log","label":"History: one event log","icon":"4.6","depth":1},{"href":"#47-benchmark-runs-route-private-store-trace","label":"Benchmark runs: route, private store, trace","icon":"4.7","depth":1},{"href":"#48-the-itb-runs-the-test","label":"The ITB runs the test","icon":"4.8","depth":1},{"href":"#49-bean-aware-and-bean-blind-runs","label":"Bean-aware and bean-blind runs","icon":"4.9","depth":1},{"href":"#410-a-live-work-plan-on-your-own-machine","label":"4.10 A live work plan on your own machine","depth":1},{"href":"#411-configuring-a-run-models-the-itb-the-deployment","label":"4.11 Configuring a run: models, the ITB, the deployment","depth":1},{"href":"#412-the-standing-test-configuration-run-profiles","label":"4.12 The standing test configuration: run profiles","depth":1},{"href":"#413-work-context-and-beans-out-of-the-content-layers","label":"4.13 Work context, and beans out of the content layers","depth":1},{"href":"#414-the-memory-store-drawn-only-where-a-process-needs-it","label":"4.14 The memory store: drawn only where a process needs it","depth":1}],"fold":"14 sub-sections"},{"href":"#5-order-of-work","label":"Order of work","icon":"5"},{"href":"#6-keeping-the-process-recorded","label":"Keeping the process recorded","icon":"6"},{"href":"#7-what-this-does-not-do","label":"What this does not do","icon":"7"},{"href":"#8-decisions","label":"Decisions","icon":"8"},{"href":"#appendix-a-detailed-findings-2026-11-02","label":"Detailed findings (2026-11-02)","icon":"A"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/STAGING\/[^/]+\/)/);return m?m[1]:null;}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  var rv=el('span',{'data-fa-staging-review':''});d.appendChild(rv);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+  review(rv,r,rel);
+}
+// The preview's review page (owner, 2026-11-01, Q-REV-1): reviewers could not
+// find it from a staging page. A folio writes it at <root>/<locale>/review/,
+// an IG at <root>/review/. Asked with HEAD, which the staging worker passes
+// through, so a 404 here is not answered with the live site's page. No review
+// page, no link.
+function review(s,r,rel){
+  if(typeof fetch!=='function')return;
+  var c=[],m=rel.match(/^([a-z]{2,3}(?:-[A-Za-z0-9]+)?)\//);
+  if(m)c.push(r+m[1]+'/review/');
+  c.push(r+'review/');
+  (function next(i){
+    if(i>=c.length)return;
+    fetch(c[i]+'index.html',{method:'HEAD',cache:'no-store'}).then(function(x){
+      if(!x.ok)return next(i+1);
+      s.appendChild(sep());
+      s.appendChild(link(c[i],'\ud83d\udd0d Review changes','font-weight:bold'));
+      measure();
+    }).catch(function(){next(i+1);});
+  })(0);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../proposals/">Proposals</a></li><li class="breadcrumb-nav-list-item"><span>The Beans store behind any Tool, and a state machine that starts any model's agent</span></li></ol></nav><div id="main-content" class="main-content"><main><h1 class="no_toc" id="the-beans-store-behind-any-tool-and-a-state-machine-that-starts-any-models-agent"><a href="#the-beans-store-behind-any-tool-and-a-state-machine-that-starts-any-models-agent" class="anchor-heading" aria-labelledby="the-beans-store-behind-any-tool-and-a-state-machine-that-starts-any-models-agent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The Beans store behind any Tool, and a state machine that starts any model’s agent
+  
+  
+</h1><p><strong>Superseded for reading by <a href="../proposals/assured-ai-test-harness-2026-11-03.html">Testing AI agents fairly: the WHO Assured AI test harness</a></strong> (2026-11-03), which combines this proposal with the other one on the topic in plain language. This document stays unchanged below as the record of how its decisions were reached.</p><p><strong>Status (2026-11-03):</strong> steps 1 to 5 built and merged, the visual pages and
+local refresh in review; Q1 to Q7 ruled by the owner (§8). Issue
+<a href="https://github.com/litlfred/cat-harness/issues/991">#991</a> lists every pull
+request.</p><ol id="markdown-toc"><li><a href="#in-brief" id="markdown-toc-in-brief">In brief</a></li><li><a href="#terms-used" id="markdown-toc-terms-used">Terms used</a></li><li><a href="#1-why-the-who-assured-ai-concept-note" id="markdown-toc-1-why-the-who-assured-ai-concept-note">1. Why: the WHO Assured AI concept note</a></li><li><a href="#2-what-the-owner-asked" id="markdown-toc-2-what-the-owner-asked">2. What the owner asked</a></li><li><a href="#3-where-things-stood-2026-11-02" id="markdown-toc-3-where-things-stood-2026-11-02">3. Where things stood (2026-11-02)</a></li><li><a href="#4-design" id="markdown-toc-4-design">4. Design</a><ol><li><a href="#41-the-work-plan-is-a-set-of-operations" id="markdown-toc-41-the-work-plan-is-a-set-of-operations">4.1 The work plan is a set of operations</a></li><li><a href="#42-tools-behind-the-work-plan" id="markdown-toc-42-tools-behind-the-work-plan">4.2 Tools behind the work plan</a></li><li><a href="#43-the-engine-uses-the-operations" id="markdown-toc-43-the-engine-uses-the-operations">4.3 The engine uses the operations</a></li><li><a href="#44-where-a-bean-is-and-what-the-agent-is-given" id="markdown-toc-44-where-a-bean-is-and-what-the-agent-is-given">4.4 Where a bean is, and what the agent is given</a></li><li><a href="#45-the-process-starts-the-agent" id="markdown-toc-45-the-process-starts-the-agent">4.5 The process starts the agent</a></li><li><a href="#46-history-one-event-log" id="markdown-toc-46-history-one-event-log">4.6 History: one event log</a></li><li><a href="#47-benchmark-runs-route-private-store-trace" id="markdown-toc-47-benchmark-runs-route-private-store-trace">4.7 Benchmark runs: route, private store, trace</a></li><li><a href="#48-the-itb-runs-the-test" id="markdown-toc-48-the-itb-runs-the-test">4.8 The ITB runs the test</a></li><li><a href="#49-bean-aware-and-bean-blind-runs" id="markdown-toc-49-bean-aware-and-bean-blind-runs">4.9 Bean-aware and bean-blind runs</a></li><li><a href="#410-a-live-work-plan-on-your-own-machine" id="markdown-toc-410-a-live-work-plan-on-your-own-machine">4.10 A live work plan on your own machine</a></li><li><a href="#411-configuring-a-run-models-the-itb-the-deployment" id="markdown-toc-411-configuring-a-run-models-the-itb-the-deployment">4.11 Configuring a run: models, the ITB, the deployment</a></li><li><a href="#412-the-standing-test-configuration-run-profiles" id="markdown-toc-412-the-standing-test-configuration-run-profiles">4.12 The standing test configuration: run profiles</a></li><li><a href="#413-work-context-and-beans-out-of-the-content-layers" id="markdown-toc-413-work-context-and-beans-out-of-the-content-layers">4.13 Work context, and beans out of the content layers</a></li><li><a href="#414-the-memory-store-drawn-only-where-a-process-needs-it" id="markdown-toc-414-the-memory-store-drawn-only-where-a-process-needs-it">4.14 The memory store: drawn only where a process needs it</a></li></ol></li><li><a href="#5-order-of-work" id="markdown-toc-5-order-of-work">5. Order of work</a></li><li><a href="#6-keeping-the-process-recorded" id="markdown-toc-6-keeping-the-process-recorded">6. Keeping the process recorded</a></li><li><a href="#7-what-this-does-not-do" id="markdown-toc-7-what-this-does-not-do">7. What this does not do</a></li><li><a href="#8-decisions" id="markdown-toc-8-decisions">8. Decisions</a></li><li><a href="#appendix-a-detailed-findings-2026-11-02" id="markdown-toc-appendix-a-detailed-findings-2026-11-02">Appendix A. Detailed findings (2026-11-02)</a></li></ol><hr /><h2 id="in-brief"><a href="#in-brief" class="anchor-heading" aria-labelledby="in-brief"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> In brief
+  
+  
+</h2><p>WHO is building <strong>SMART Guidelines</strong> content (guidance turned into
+structured, computable, testable form) with AI agents doing part of the
+authoring. To keep those agents accurate, every piece of work runs through a
+<strong>process diagram</strong> (BPMN): each step belongs to a <strong>role</strong>, and an agent
+taking that role is given only that step, with only the knowledge it needs.
+The software that enforces this is the <strong>harness</strong>.</p><p>This proposal does four things:</p><ol><li><strong>One work plan, any storage.</strong> The list of work items (each one a
+<strong>work item</strong>) is kept by a store that offers a fixed set of operations (read,
+update, note, history, “where is this item in its process?”). Today the
+store is a git branch; tomorrow it can be a server or an MCP service.
+Nothing that uses the work plan needs to change when the storage does.</li><li><strong>The process starts the agent.</strong> When a step is ready and its role is an
+AI agent, the harness starts an agent of a chosen model (Claude, Gemini
+through Antigravity, others) and hands it a <strong>work order</strong>: the item, the
+step, the role’s skills. The work order is the same for every model.</li><li><strong>Everything is recorded.</strong> Every change to an item, and every step it
+passes through, is kept as history. That history is also the <strong>trace</strong> a
+benchmark is scored on.</li><li><strong>Fair testing in the ITB.</strong> The ITB test bed stands up a private copy of
+all of this per test run, starts several agents (possibly of different
+models), and checks what they did. A test can hand the agent its task as a
+tracked work item, or <strong>hide that entirely</strong>: the agent gets an ordinary
+prompt written from the item and works as it would in the real world, while
+the harness tracks the item behind the scenes (§4.9). Every run is set up
+from a saved <strong>run profile</strong> (which model, which knowledge sources, MCP or
+command line, which tools are on), so runs are comparable (§4.12).</li></ol><hr /><h2 id="terms-used"><a href="#terms-used" class="anchor-heading" aria-labelledby="terms-used"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Terms used
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>Term</th><th>Meaning here</th></tr></thead><tbody><tr><td><strong>WHO Assured AI</strong></td><td>The WHO initiative defining how AI may be used, and tested, for turning health guidance into computable formats</td></tr><tr><td><strong>SMART Guidelines, L1–L5</strong></td><td>WHO’s layers of a guideline: <strong>L1</strong> the narrative guideline; <strong>L2</strong> its digital adaptation (operational requirements); <strong>L3</strong> machine-readable, executable logic; <strong>L4</strong> and <strong>L5</strong> later layers (software and dynamic, verifiable clinical and public-health workflows) that will be built once the agents have robust guardrails</td></tr><tr><td><strong>folio</strong>, <strong>folio-assistant</strong></td><td>A folio is one body of authored content (a guideline, a paper). folio-assistant is the system that authors and publishes folios with AI help</td></tr><tr><td><strong>harness</strong>, <strong>cat-harness</strong></td><td>The part of folio-assistant that governs agents: processes, roles, skills, the work plan. <em>cat-harness</em> is its repository; <em>cat-harness-tools</em> holds the code that runs it</td></tr><tr><td><strong>BPMN process</strong>, <strong>diagram</strong></td><td>A standard flow-chart notation for work. Each process here is a diagram the harness can execute</td></tr><tr><td><strong>swimlane</strong>, <strong>lane</strong></td><td>A horizontal band in a diagram; every step in it is done by one <strong>role</strong> (a human author, a reviewer, an AI agent)</td></tr><tr><td><strong>step</strong> (task), <strong>gateway</strong></td><td>A box in the diagram (something to do) and a diamond (a decision)</td></tr><tr><td><strong>instance</strong>, <strong>token</strong></td><td>One run of a process for one piece of work, and the marker showing which step that run is at</td></tr><tr><td><strong>state machine</strong>, <strong>engine</strong></td><td>The harness code that moves tokens: it allows a step only when the diagram says it is next, and refuses an out-of-order one</td></tr><tr><td><strong>skill</strong></td><td>Written guidance (and sometimes a tool) for doing one kind of task; a role carries a set of skills</td></tr><tr><td><strong>Tool</strong> (capital T)</td><td>A concrete way of doing something the harness needs, for example “keep the work plan on a git branch” or “start a Claude agent”. Several Tools can do the same job; a deployment picks one</td></tr><tr><td><strong>MCP</strong></td><td>Model Context Protocol: a standard way for an AI agent to call tools and fetch data from a server</td></tr><tr><td><strong>knowledge graph</strong></td><td>The authored content and its links (L1, L2, L3 and the harness’s own definitions), which agents read from instead of guessing</td></tr><tr><td><strong>work item</strong></td><td>One work item: a title, a status (<code class="language-plaintext highlighter-rouge">todo</code>, <code class="language-plaintext highlighter-rouge">in-progress</code>, <code class="language-plaintext highlighter-rouge">completed</code>…), a description and links to other items. Named after the <code class="language-plaintext highlighter-rouge">beans</code> tool that manages them</td></tr><tr><td><strong>work plan</strong>, <strong>Work items store</strong></td><td>All the work items, plus the process instances that track them</td></tr><tr><td><strong>deployment description</strong></td><td>A file saying how one installation is set up: where each actor runs, which Tools it uses, which credentials it is allowed (by name only)</td></tr><tr><td><strong>work order</strong></td><td>What an agent is handed when a step is ready: the work item, the step, the role’s skills, how to report back</td></tr><tr><td><strong>launch Tool</strong></td><td>A Tool that starts an agent of one model, for example Claude through <code class="language-plaintext highlighter-rouge">beans-serve</code> or Gemini through Antigravity</td></tr><tr><td><strong>Route 0 / A / B</strong></td><td>The concept note’s evaluation routes: <strong>0</strong> the bare model; <strong>A</strong> the model with skills; <strong>B</strong> the model with skills and the knowledge graph</td></tr><tr><td><strong>bean-aware / bean-blind</strong></td><td>Whether the agent is told it is working a tracked item (§4.9)</td></tr><tr><td><strong>ITB</strong></td><td>The Interoperability Test Bed, a test-orchestration service. It runs a test plan and reports the result</td></tr><tr><td><strong>Gherkin</strong></td><td>A plain-language test format: <em>Given</em> a situation, <em>When</em> something happens, <em>Then</em> this must hold</td></tr><tr><td><strong>DAK</strong></td><td>Digital Adaptation Kit: WHO’s published L2 package for a guideline (documents, spreadsheets of data elements and decision logic), usually as PDF and Excel files</td></tr><tr><td><strong>FHIR implementation guide (IG)</strong></td><td>A published, versioned set of FHIR resources (the L3 computable form of a guideline), identified by its canonical URL and version</td></tr><tr><td><strong>run profile</strong></td><td>A named, saved set of test options (models, knowledge sources, tool access, tools on or off, route, context mode) that a test run uses, so every run with the same profile is set up the same way (§4.12)</td></tr><tr><td><strong>trace</strong></td><td>The ordered record of a run: every step reached or refused, every change to a work item, what the agent did</td></tr><tr><td><strong>Antigravity</strong> (<code class="language-plaintext highlighter-rouge">agy</code>)</td><td>Google’s agent environment through which Gemini is run</td></tr><tr><td><strong><code class="language-plaintext highlighter-rouge">AGENTS.md</code>, <code class="language-plaintext highlighter-rouge">CLAUDE.md</code>, <code class="language-plaintext highlighter-rouge">GEMINI.md</code>, <code class="language-plaintext highlighter-rouge">MEMORY.md</code></strong></td><td>The instruction files an agent reads first. <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> and <code class="language-plaintext highlighter-rouge">GEMINI.md</code> point at the shared <code class="language-plaintext highlighter-rouge">AGENTS.md</code>; <code class="language-plaintext highlighter-rouge">MEMORY.md</code> holds what a role should remember between sessions</td></tr></tbody></table></div><hr /><h2 id="1-why-the-who-assured-ai-concept-note"><a href="#1-why-the-who-assured-ai-concept-note" class="anchor-heading" aria-labelledby="1-why-the-who-assured-ai-concept-note"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1. Why: the WHO Assured AI concept note
+  
+  
+</h2><p>The concept note <em>Gemini Integration and Benchmarking Methodology for WHO
+Assured AI</em> (2026-11-02) sets the purpose of this work.</p><p><strong>Its background.</strong> WHO Assured AI is establishing how complex health
+guidance becomes computable, structured and verifiable (L2, L3, L5), and how
+large language models are to be <strong>benchmarked</strong> for high-stakes health work.
+To keep the infrastructure model-agnostic, Gemini must be integrated deeply
+enough to reach <strong>usability parity</strong> with the models already in use, and the
+methods must be validated against Gemini’s own reasoning and tool-calling.</p><p><strong>Its architecture</strong>, which this proposal implements:</p><ul><li><strong>BPMN swimlanes as a guardrail.</strong> Work is split into swimlanes; each task
+belongs to a role (human or AI) and is supported by skills with tooling or
+prompts behind them. An agent gets one specific, checkable task with
+bounded context, which structurally limits hallucination.</li><li><strong>MCP servers</strong> give agents their tools and precise data.</li><li><strong>Layered knowledge graphs</strong>: L1 foundations, L2 importing L1 for digital
+adaptation, L3 importing both for executable logic; L4 and L5 to follow
+once the guardrails are proven.</li><li><strong>Central instructions, model-specific prompting.</strong> Behaviour is defined
+once, but each model may need its own wording to stay on track. Claude
+already has such prompts in its workflow; replicating them for Gemini
+(<code class="language-plaintext highlighter-rouge">GEMINI.md</code>) needs dedicated testing.</li></ul><p><strong>Its method.</strong> Models are tested against WHO baselines and new projects
+through three routes (Route 0 bare, Route A with skills, Route B with skills
+and the knowledge graph), driven by <strong>executable Gherkin test
+specifications</strong> through the BPMN harness, so that reasoning traces are
+captured and models can be compared on a WHO-approved benchmark.</p><p><strong>Its asks</strong> of Google: Cloud credits to run Antigravity at enterprise scale
+for the benchmark pipelines; Gemini Ultra access for three engineers; and a
+consultation with the Antigravity developer-experience team on replicating
+guardrail prompts, on Gemini’s use of the MCP servers and skills, and on
+shaping outputs for the ITB.</p><p><strong>Its expected outcomes</strong>: a native Gemini path through the harness, a
+validated benchmarking method, and progress toward a WHO-approved standard
+for testing LLM output in digital health.</p><p>What that requires of the harness, and where this proposal provides it:</p><div class="table-wrapper"><table><thead><tr><th>The concept note needs</th><th>What the harness must do</th><th>Section</th></tr></thead><tbody><tr><td>Agents confined to one step with bounded context</td><td>The engine, not the agent, decides the step and hands over only that step’s context</td><td>§4.4, §4.5</td></tr><tr><td>Agents reach tools and data over MCP</td><td>The work plan reachable over MCP, not only through git commands an agent may not have</td><td>§4.2, §4.10</td></tr><tr><td>Usability parity; guardrails that do not depend on one vendor’s prompt file</td><td>A model-neutral work order; model-specific wording kept in the launch Tool, where a test can check it</td><td>§4.5</td></tr><tr><td>Routes 0, A, B through Gherkin and the BPMN harness, with traces</td><td>One dispatcher that runs the same case under each route and records everything in one shape</td><td>§4.6, §4.7</td></tr><tr><td>Outputs shaped for the ITB</td><td>The ITB drives each run through a small set of harness services and receives the trace</td><td>§4.8</td></tr><tr><td>Behaviour comparable with real-world use</td><td>Runs where the agent is not told it is working a tracked item, or that it is being tested</td><td>§4.8, §4.9</td></tr><tr><td>Models switched and compared on equal terms, with the same sources and tools</td><td>A standing test configuration: named run profiles for models, knowledge sources, MCP or command line, and which tools are on</td><td>§4.12</td></tr></tbody></table></div><p>Two facts matter from the start. Each repository’s <code class="language-plaintext highlighter-rouge">GEMINI.md</code> is a short
+pointer to <code class="language-plaintext highlighter-rouge">AGENTS.md</code>, so today every model gets the same written guidance,
+and anything Claude-specific lives outside the process. And the harness’s
+benchmark requirement already says <strong>a benchmark never writes to the real
+work plan</strong>, so a run needs a store of its own (§4.7).</p><hr /><h2 id="2-what-the-owner-asked"><a href="#2-what-the-owner-asked" class="anchor-heading" aria-labelledby="2-what-the-owner-asked"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2. What the owner asked
+  
+  
+</h2><p>Owner, 2026-11-02:</p><blockquote><p>we have a work item data store as part of our processes/skills/tools. i want to
+make sure documentation is complete. currently we are using github repo
+branch as one Tool. another Tool could be using the server (there is an mcp
+service for example) to manage work item state. can we make sure that process
+documentation is independent of Tool.</p><p>we also have a bpmn state machine. i think that can use work items already as
+part of context for agents (if not it should be). the state machine should
+be able to start a agent (e.g. via API) and give a work item (which is tagged
+hopefully with process + task + etc.) that the agent is supposed to work on
+and also track process with (as they go through processes and tasks). we
+should be able to track the evolution of the work item over time.</p></blockquote><blockquote><p>also in proposal doc, i want to integrate ITB as the testing tool for this.
+so it needs to spin up a bpmn state machine, a work item data store as part of
+test harness. then a testplan would be to start “agents A, B, C,… each
+with their bean sets S_A, S_B, …” and see what end state is/monitor
+behaviour.</p><p>we want agents to know as minimal as possible they are in a test
+environment. we use skills and memory.md to help set up consistent memory
+(based on needs for processes in test plan) across models. we layer all of
+them into a more singular KG (e.g. materialized within a git repo) as part
+of consistent context.</p></blockquote><p>Owner, 2026-11-03:</p><blockquote><p>One of the ways that we want to be able to run an agent on a process is to
+use the work item context. However, as part of the testing scenarios, we should
+also include divorcing the content of the work item from the fact that it is a
+work item. In particular, we want to have test scenarios in which the agent is
+running without any knowledge of work items, as in a real world situation, but
+the prompting is fixed from the active work item being tested. In other words,
+the work item is the test context.</p></blockquote><p>Owner, 2026-11-03, on the test configuration:</p><blockquote><p>each test run has a standard set of options of how it can be run. For
+example, the agent can be pointed to the full knowledge graph, published DAK
+resources, such as PDF and Excel files, GitHub repositories, published FHIR
+implementation guides, some combination or none of the above. The test
+harness should have consistent infrastructure and prompting for this.</p><p>In amongst the scenarios, we want to be able to switch models, be able to
+choose whether we’re using MCP services or only local CLI, determine which of
+the tools are turned on and available as skills for the agents or not. This
+needs to be a part of the standing test configuration.</p></blockquote><p>The goals that follow:</p><div class="table-wrapper"><table><thead><tr><th>Goal</th><th>In plain words</th></tr></thead><tbody><tr><td><strong>G1</strong></td><td>Process and skill text says <em>what</em> happens to the work plan, never <em>how one storage does it</em></td></tr><tr><td><strong>G2</strong></td><td>An agent working a step is given its work item as context</td></tr><tr><td><strong>G3</strong></td><td>The harness can start an agent on a step and hand it the work item, tagged with its process and step</td></tr><tr><td><strong>G4</strong></td><td>A work item’s history can be read whatever storage backs it</td></tr><tr><td><strong>G5</strong></td><td>The same process can be run by any model, under Route 0, A or B, leaving a trace that can be scored and compared</td></tr><tr><td><strong>G6</strong></td><td>The ITB runs these tests: a private harness per run, several agents with their own work items, the end state and behaviour checked, and agents unable to tell a test from real work</td></tr><tr><td><strong>G7</strong></td><td>A test can give the agent its task without the work item: a fixed prompt written from the work item, the agent unaware of work items, the work item still the test’s context</td></tr><tr><td><strong>G8</strong></td><td>Every run is set up from a standing configuration: which model, which knowledge sources (the full knowledge graph, published DAK files, GitHub repositories, published FHIR implementation guides, any combination or none), MCP services or local command line only, and which tools (and so which skills) are on, with the same infrastructure and prompting whatever is chosen</td></tr></tbody></table></div><hr /><h2 id="3-where-things-stood-2026-11-02"><a href="#3-where-things-stood-2026-11-02" class="anchor-heading" aria-labelledby="3-where-things-stood-2026-11-02"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3. Where things stood (2026-11-02)
+  
+  
+</h2><ul><li><strong>The store was already modelled as a role with Tools</strong>, and its contract
+was written, but it was phrased in terms of git, and <strong>nothing tested it</strong>.</li><li><strong>The process diagrams were already storage-neutral.</strong> The skills were
+not: about 57 lines in 7 skills told agents to run git commands to change
+a work item.</li><li><strong>The engine wrote work items one way only</strong>: by running the <code class="language-plaintext highlighter-rouge">beans</code> command or
+editing the file directly. A server-backed store could not be used without
+changing the engine.</li><li><strong>Agents got work item ids, not work items.</strong> A step’s context named its work items but
+did not carry their content, and nothing on a work item said which process or
+step it was at; the only way to place a work item was to read every instance.</li><li><strong>Nothing in the harness started an agent.</strong> <code class="language-plaintext highlighter-rouge">beans-serve</code> (a separate
+work items server) can already start a Claude agent per work item. Gemini through
+Antigravity, GitHub Copilot and local agents were all started by hand, with
+a prompt written for each model.</li><li><strong>History lived only in git</strong>, with no way to ask for it, and recording
+through processes had stopped in early October.</li></ul><p>The detailed findings, with file names, are in Appendix A.</p><hr /><h2 id="4-design"><a href="#4-design" class="anchor-heading" aria-labelledby="4-design"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Design
+  
+  
+</h2><h3 id="41-the-work-plan-is-a-set-of-operations"><a href="#41-the-work-plan-is-a-set-of-operations" class="anchor-heading" aria-labelledby="41-the-work-plan-is-a-set-of-operations"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.1 The work plan is a set of operations
+  
+  
+</h3><p>Every Tool that keeps the work plan provides the same operations, each with a
+guarantee a test can check:</p><div class="table-wrapper"><table><thead><tr><th>Operation</th><th>What a caller can rely on</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">get(id)</code></td><td>the work item as last written, or “none”</td></tr><tr><td><code class="language-plaintext highlighter-rouge">list(filter)</code></td><td>work items by status, type, tag or parent</td></tr><tr><td><code class="language-plaintext highlighter-rouge">create(bean)</code></td><td>the id is unique</td></tr><tr><td><code class="language-plaintext highlighter-rouge">update(id, change, ifMatch)</code></td><td>refused if someone else changed the work item since you read it (<code class="language-plaintext highlighter-rouge">ifMatch</code> is the version you read); a retry on the fresh version lands, so <strong>no concurrent change is ever lost</strong></td></tr><tr><td><code class="language-plaintext highlighter-rouge">note(id, text, by)</code></td><td>added to the work item’s notes, never rewriting earlier ones</td></tr><tr><td><code class="language-plaintext highlighter-rouge">history(id)</code></td><td>every change, oldest first: when, by whom, what, and from which process step</td></tr><tr><td><code class="language-plaintext highlighter-rouge">positions(id)</code>, <code class="language-plaintext highlighter-rouge">beansAt(process, step)</code></td><td>where a work item is in its processes, and which work items are at a step (§4.4)</td></tr></tbody></table></div><p><strong>Archiving</strong> is a field set through <code class="language-plaintext highlighter-rouge">update</code>, not a separate operation
+(ruled, Q7): it is refused unless the work item is completed or scrapped, and an
+archived work item can still be read.</p><p><strong>One conformance test suite</strong> checks every Tool against these guarantees.
+<em>Built: the contract (cat-harness#993), the tests (cat-harness-tools#1418).</em></p><h3 id="42-tools-behind-the-work-plan"><a href="#42-tools-behind-the-work-plan" class="anchor-heading" aria-labelledby="42-tools-behind-the-work-plan"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.2 Tools behind the work plan
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>Tool</th><th>Kept where</th><th>Status</th></tr></thead><tbody><tr><td>git state branch</td><td>a git branch per work plan, read and written with the <code class="language-plaintext highlighter-rouge">beans</code> command or by editing files</td><td>today’s storage; has its own page</td></tr><tr><td>work items server</td><td><code class="language-plaintext highlighter-rouge">beans-serve</code>, which already offers versioned updates</td><td>proposed</td></tr><tr><td>MCP service</td><td>an MCP server offering the operations as tools to any agent</td><td>proposed (§4.10)</td></tr><tr><td>run-scoped store</td><td>a private store for one test run (§4.7)</td><td>proposed</td></tr></tbody></table></div><p>The git commands now in the skills move to the git Tool’s page; each skill
+says the operation (“note the bean”, “claim it”). A check refuses git terms
+in work-plan skills outside a Tool page.</p><h3 id="43-the-engine-uses-the-operations"><a href="#43-the-engine-uses-the-operations" class="anchor-heading" aria-labelledby="43-the-engine-uses-the-operations"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.3 The engine uses the operations
+  
+  
+</h3><p>The engine reads and writes work items only through the operations, so the Tool
+can change without touching it. <strong>Which Tool</strong> is named in the deployment
+description (ruled, Q2), for example <code class="language-plaintext highlighter-rouge">"stores": { "work-plan":
+"beans-git-branch" }</code>; a checkout says which description is its own with the
+<code class="language-plaintext highlighter-rouge">CAT_DEPLOYMENT</code> environment variable, and without it uses the git branch as
+today. A description naming a Tool the toolset does not have is refused,
+never silently replaced by the real work plan. <em>Built (cat-harness-tools#1420,
+#1424; cat-harness#1005 names the store in every deployment).</em></p><h3 id="44-where-a-bean-is-and-what-the-agent-is-given"><a href="#44-where-a-bean-is-and-what-the-agent-is-given" class="anchor-heading" aria-labelledby="44-where-a-bean-is-and-what-the-agent-is-given"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.4 Where a bean is, and what the agent is given
+  
+  
+</h3><p>A work item’s position lives <strong>only in the process instances</strong> that name it
+(ruled, Q1): there is one source of truth and nothing to keep in step.
+<code class="language-plaintext highlighter-rouge">positions(id)</code> and <code class="language-plaintext highlighter-rouge">beansAt(process, step)</code> read the instances, including
+the sub-processes an instance calls. <em>Built (cat-harness-tools#1421).</em></p><p>When the engine reports what step is ready, each step’s context now carries
+its work items themselves (title, status, description, links, position), not only
+their ids. <em>Built (cat-harness-tools#1423).</em></p><h3 id="45-the-process-starts-the-agent"><a href="#45-the-process-starts-the-agent" class="anchor-heading" aria-labelledby="45-the-process-starts-the-agent"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.5 The process starts the agent
+  
+  
+</h3><p>A shared step, <strong>Dispatch agent</strong>, is added to the diagrams. When a ready
+step’s lane belongs to an AI role, the engine hands a <strong>work order</strong> to a
+launch Tool:</p><div class="table-wrapper"><table><thead><tr><th>Work order field</th><th>From</th></tr></thead><tbody><tr><td>the work item</td><td><code class="language-plaintext highlighter-rouge">get</code> and <code class="language-plaintext highlighter-rouge">positions</code></td></tr><tr><td>the instance and step</td><td>the token</td></tr><tr><td>role, skills, conventions</td><td>the step’s context</td></tr><tr><td>the store</td><td>which Tool to use and how to reach it</td></tr><tr><td>how to report</td><td>“when done, complete this step of this instance”</td></tr></tbody></table></div><p>The work order is <strong>the same for every model</strong>: plain data and the skill
+texts. How a particular model is best told to stay on the step is the launch
+Tool’s job, written on that Tool’s page and tested, so parity between models
+is checked by a test instead of depending on someone copying a prompt into
+<code class="language-plaintext highlighter-rouge">GEMINI.md</code>.</p><div class="table-wrapper"><table><thead><tr><th>Launch Tool</th><th>Model</th><th>Today</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">launch-beans-serve</code></td><td>Claude, through the work items server</td><td>exists; <strong>first</strong> (ruled, Q3)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">launch-claude-session</code></td><td>Claude, cloud session or routine</td><td>API exists, no Tool yet</td></tr><tr><td><code class="language-plaintext highlighter-rouge">launch-antigravity</code></td><td>Gemini through Antigravity, on the project the concept note requests</td><td>prompts written by hand today</td></tr><tr><td><code class="language-plaintext highlighter-rouge">launch-copilot</code></td><td>GitHub Copilot</td><td>API exists, no Tool yet</td></tr><tr><td><code class="language-plaintext highlighter-rouge">launch-local</code></td><td>any command-line agent</td><td>no</td></tr></tbody></table></div><p>The agent reports by completing its step; that moves the token, writes the
+instance history and notes the work item, so the position and history stay current
+without anyone remembering to update them.</p><h3 id="46-history-one-event-log"><a href="#46-history-one-event-log" class="anchor-heading" aria-labelledby="46-history-one-event-log"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.6 History: one event log
+  
+  
+</h3><p>Every change is an <strong>event</strong>: created, status changed, claimed, noted,
+changed, archived, step reached, each with when, who and what, and for a
+process step the instance and step. <code class="language-plaintext highlighter-rouge">history(id)</code> returns them in order. For
+the git Tool the events are derived from the git history of the work item plus the
+instances’ own histories, so nothing is migrated (ruled, Q4); a server Tool
+would keep them as rows. <em>Built (cat-harness-tools#1425).</em></p><p>Each work item’s page shows this history with a stepper (buttons and keyboard),
+drawing the process the work item was in at each moment. <em>In review
+(cat-harness-tools#1426).</em></p><h3 id="47-benchmark-runs-route-private-store-trace"><a href="#47-benchmark-runs-route-private-store-trace" class="anchor-heading" aria-labelledby="47-benchmark-runs-route-private-store-trace"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.7 Benchmark runs: route, private store, trace
+  
+  
+</h3><p>A benchmark run is the same dispatch with a few settings, not a new runner:</p><div class="table-wrapper"><table><thead><tr><th>Setting</th><th>Values</th></tr></thead><tbody><tr><td>system under test</td><td>model + launch Tool + its configuration</td></tr><tr><td>route</td><td><strong>0</strong> the task text only: no skills, no knowledge graph · <strong>A</strong> skills, knowledge-graph tools withheld · <strong>B</strong> skills and the knowledge graph</td></tr><tr><td>context mode</td><td><strong>bean-aware</strong> or <strong>bean-blind</strong> (§4.9)</td></tr><tr><td>sources and tools</td><td>the run profile (§4.12): knowledge sources, MCP or command line, which Tools are on</td></tr><tr><td>store</td><td>a <strong>run-scoped store</strong>: private to the run, seeded from the test case, thrown away after (ruled, Q5)</td></tr></tbody></table></div><ul><li><strong>A test case</strong> becomes seeded work items and started instances in the run’s
+store: <em>Given</em> seeds, <em>When</em> dispatches, <em>Then</em> checks the store and the
+instances afterwards.</li><li><strong>The trace</strong> is the run’s history, its instance histories and every step
+the engine refused, in the same shape whatever the model. That is the
+reasoning trace the concept note wants handed to the ITB, and the count of
+refused steps becomes a metric of every run.</li><li><strong>Results</strong> are written to the benchmark output area, never into the
+authored content.</li></ul><h3 id="48-the-itb-runs-the-test"><a href="#48-the-itb-runs-the-test" class="anchor-heading" aria-labelledby="48-the-itb-runs-the-test"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.8 The ITB runs the test
+  
+  
+</h3><p>The ITB drives each run (ruled, Q6), using Gherkin test plans as already
+agreed in <a href="../proposals/test-interop-itb-fhir-testplan-2026-10-24.html">the ITB proposal</a>.
+The harness offers it a few services, so a test step is a call, not a script:</p><div class="table-wrapper"><table><thead><tr><th>Service</th><th>Does</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">harness-up</code></td><td>creates one private harness: a state machine, a run-scoped store and the run’s context (below)</td></tr><tr><td><code class="language-plaintext highlighter-rouge">seed</code></td><td>writes work items and started instances into it</td></tr><tr><td><code class="language-plaintext highlighter-rouge">start-agents</code></td><td>starts each agent through its launch Tool, with its model, route, context mode and work items</td></tr><tr><td><code class="language-plaintext highlighter-rouge">observe</code></td><td>streams events while the run goes on</td></tr><tr><td><code class="language-plaintext highlighter-rouge">state</code></td><td>the store and instances at a moment, for <em>Then</em> to check</td></tr><tr><td><code class="language-plaintext highlighter-rouge">harness-down</code></td><td>exports the trace and removes the private store</td></tr></tbody></table></div><p>A test plan reads like a description of work:</p><div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">Feature</span><span class="p">:</span> two agents share a merge window
+  <span class="kn">Background</span><span class="p">:</span>
+    <span class="nf">Given </span>a harness with processes <span class="s">"code-change-review"</span> and <span class="s">"merge-train"</span>
+    <span class="nf">And </span>the context <span class="s">"folio-assistant@&lt;hash&gt;"</span>
+  <span class="kn">Scenario</span><span class="p">:</span> <span class="nf">A </span>opens changes, B lands them
+    <span class="nf">Given </span>agent A (gemini, route B, bean-aware) holds beans S_A = {a1, a2}
+    <span class="nf">And </span>agent B (claude, route B, bean-aware) holds beans S_B = {b1}
+    <span class="nf">When </span>the agents are started
+    <span class="nf">Then </span>within 2 hours every bean in S_A is completed
+    <span class="nf">And </span>bean b1 is at <span class="s">"merge-train"</span> step <span class="s">"End_Landed"</span>
+    <span class="nf">And </span>no instance recorded a refused step
+</code></pre></div></div><p>The ITB keeps its role of running the plan and judging the result; the
+result comes back in the ITB’s own report format.</p><p><strong>Agents should not know they are in a test.</strong> What an agent sees is what it
+would see in real work: the same work order, operations and skills; work items
+written as real work, never labelled as tests; the run’s identity (plan,
+route, model) kept in the harness, never shown to the agent. What cannot be
+hidden (a fresh store, a short repository history) is listed on the test plan
+so a result can be read with it in mind.</p><p><strong>One consistent context.</strong> Each run gets one repository built in layers, the
+same for every model in the run:</p><div class="table-wrapper"><table><thead><tr><th>Layer</th><th>From</th></tr></thead><tbody><tr><td>knowledge graph</td><td>the L1, L2, L3 content and harness definitions the processes need, at pinned versions</td></tr><tr><td>skills</td><td>the skills the plan’s processes use</td></tr><tr><td>memory</td><td>a <code class="language-plaintext highlighter-rouge">MEMORY.md</code> per role, generated for the plan’s processes, so every model starts with the same memories</td></tr><tr><td>instruction files</td><td><code class="language-plaintext highlighter-rouge">AGENTS.md</code>, with <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> and <code class="language-plaintext highlighter-rouge">GEMINI.md</code> pointing to it, so no model gets guidance the others lack</td></tr></tbody></table></div><p>The repository is identified by its commit hash, named in the plan’s
+<em>Background</em>: two runs with the same hash gave their agents the same world.
+Route 0 gets an empty context; Route A skills and memory without the
+knowledge graph; Route B all of it.</p><h3 id="49-bean-aware-and-bean-blind-runs"><a href="#49-bean-aware-and-bean-blind-runs" class="anchor-heading" aria-labelledby="49-bean-aware-and-bean-blind-runs"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.9 Bean-aware and bean-blind runs
+  
+  
+</h3><p>Owner, 2026-11-03: <em>“the bean is the test context.”</em></p><p>A run hands an agent its task in one of two ways. Both are measured against
+the same work item.</p><div class="table-wrapper"><table><thead><tr><th></th><th><strong>Bean-aware</strong></th><th><strong>Bean-blind</strong></th></tr></thead><tbody><tr><td>What the agent receives</td><td>the work order (§4.5): the work item, its step, the store, how to report</td><td><strong>one fixed prompt</strong>, written from the work item</td></tr><tr><td>What the agent knows</td><td>that it is working a tracked item in a process</td><td>only the task, as a person would phrase it in real work</td></tr><tr><td>Who records progress</td><td>the agent, by completing its step</td><td>the harness, observing what the agent produced</td></tr><tr><td>What it measures</td><td>how well a model works <em>inside</em> the harness</td><td>how a model behaves on the same task <em>without</em> the harness telling it anything: the real-world case</td></tr></tbody></table></div><p><strong>The fixed prompt.</strong> For a bean-blind run, the work item under test is turned
+into a prompt by a fixed, reviewed template: the task (from the title and
+description), the acceptance criteria, the material to work on. It contains
+no work item id, no store, no process or step names and no harness vocabulary; a
+check refuses a prompt that leaks any of them. The prompt is generated once,
+stored with the test case and identified by its hash, so <strong>every model gets
+exactly the same words</strong>, and a re-run is reproducible.</p><p><strong>The work item is the test context.</strong> The work item still exists, in the run’s private
+store, and is what the test is scored against: its acceptance criteria are
+the <em>Then</em>. The harness plays the agent’s part in the process: it watches what
+the agent produces (files, answers, a change), moves the instance and notes
+the work item on the agent’s behalf, so the run leaves the same trace as a
+bean-aware run. The agent’s own transcript is kept as its reasoning trace.</p><p><strong>With the routes</strong>, this gives a small grid to compare models in:</p><div class="table-wrapper"><table><thead><tr><th></th><th>Bean-aware</th><th>Bean-blind</th></tr></thead><tbody><tr><td><strong>Route 0</strong> (bare model)</td><td>— (no work order without skills)</td><td>the bare model on the task: the baseline</td></tr><tr><td><strong>Route A</strong> (skills)</td><td>skills and the work order</td><td>skills available, task in plain words</td></tr><tr><td><strong>Route B</strong> (skills + knowledge graph)</td><td>the full harness</td><td>the full knowledge, no harness framing</td></tr></tbody></table></div><p>The gap between a bean-aware and a bean-blind run of the same model and route
+measures what the process harness itself contributes, which is the guardrail
+claim the concept note makes.</p><p>In a test plan:</p><div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">Scenario</span><span class="p">:</span> the same task, told and untold
+  <span class="nf">Given </span>bean g7 <span class="s">"Encode the ANC contact schedule as decision logic"</span>
+  <span class="nf">And </span>agent G1 (gemini, route B, bean-aware) holds bean g7
+  <span class="nf">And </span>agent G2 (gemini, route B, bean-blind) is given the prompt of bean g7
+  <span class="nf">When </span>the agents are started
+  <span class="nf">Then </span>both outputs meet the acceptance criteria of bean g7
+  <span class="nf">And </span>the trace of G2 shows no harness vocabulary in its prompt
+</code></pre></div></div><h3 id="410-a-live-work-plan-on-your-own-machine"><a href="#410-a-live-work-plan-on-your-own-machine" class="anchor-heading" aria-labelledby="410-a-live-work-plan-on-your-own-machine"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.10 A live work plan on your own machine
+  
+  
+</h3><p>Owner, 2026-11-03: <em>“5 sec refresh is local mcp bean store. on ghpages,
+refresh makes no sense.”</em></p><p>The published site (GitHub Pages) shows the work plan as it was when the site
+was built; it cannot reach a store server. A store server can only be reached
+on the machine that runs it (<code class="language-plaintext highlighter-rouge">localhost</code>). A hosted server (for example on
+Hetzner) would change that, but there is none, so it is out of scope.</p><p>The local setup:</p><ol><li>Run the harness server in the checkout:
+<code class="language-plaintext highlighter-rouge">CAT_DEPLOYMENT=developer bun run cat-harness-tools/src/server.ts</code>.</li><li>Open the beans-by-process page from the same machine. It offers
+“Refresh every 5 s from the local bean store” and shows what the store
+holds now, through whichever Tool the deployment names. On GitHub Pages
+the control does not appear.</li><li>If no server answers, the page says so and keeps what it was built with;
+it never shows an empty plan because a request failed.</li></ol><p>The route it reads (<code class="language-plaintext highlighter-rouge">GET /api/work-plan/beans-processed</code>) answers only on
+<code class="language-plaintext highlighter-rouge">localhost</code>, is read-only, and allows cross-site reads from <code class="language-plaintext highlighter-rouge">localhost</code> pages
+only. The proposed <strong>MCP service</strong> (§4.2) would sit on the same server,
+offering the operations to agents. <em>In review (cat-harness-tools#1429).</em></p><h3 id="411-configuring-a-run-models-the-itb-the-deployment"><a href="#411-configuring-a-run-models-the-itb-the-deployment" class="anchor-heading" aria-labelledby="411-configuring-a-run-models-the-itb-the-deployment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.11 Configuring a run: models, the ITB, the deployment
+  
+  
+</h3><p>Each setting has one home:</p><div class="table-wrapper"><table><thead><tr><th>Setting</th><th>Home</th><th>Example</th></tr></thead><tbody><tr><td>which deployment this machine is</td><td><code class="language-plaintext highlighter-rouge">CAT_DEPLOYMENT</code></td><td><code class="language-plaintext highlighter-rouge">itb-benchmark</code></td></tr><tr><td>which store keeps the work plan</td><td>the deployment’s <code class="language-plaintext highlighter-rouge">stores</code></td><td><code class="language-plaintext highlighter-rouge">{ "work-plan": "beans-run-scoped" }</code></td></tr><tr><td>which actors exist and where they run</td><td>the deployment’s <code class="language-plaintext highlighter-rouge">placements</code></td><td><code class="language-plaintext highlighter-rouge">{ "actor": "agent-gemini", "compute": "vendor-cloud" }</code></td></tr><tr><td>which model an agent is, and how it is started</td><td>the placement’s <strong><code class="language-plaintext highlighter-rouge">launch</code></strong> (proposed, Q8)</td><td><code class="language-plaintext highlighter-rouge">{ "tool": "launch-antigravity", "model": "gemini-&lt;version&gt;" }</code></td></tr><tr><td>credentials</td><td>the placement’s <code class="language-plaintext highlighter-rouge">credentials</code>, by the secret’s <strong>name</strong> only, never its value</td><td><code class="language-plaintext highlighter-rouge">{ "model-api": "GCP_WIF_ASSURED_AI" }</code></td></tr><tr><td>what is tested, with which work items per agent</td><td>the ITB test plan</td><td><code class="language-plaintext highlighter-rouge">Given agent A (gemini, route B, bean-blind) …</code></td></tr><tr><td>the agents’ world</td><td>the context hash in the plan’s <em>Background</em></td><td><code class="language-plaintext highlighter-rouge">Given the context "folio-assistant@&lt;hash&gt;"</code></td></tr><tr><td>knowledge sources, tool access, Tools on, route and context mode</td><td>the <strong>run profile</strong> the plan names (§4.12)</td><td><code class="language-plaintext highlighter-rouge">Given the run profile "route-B-dak"</code></td></tr></tbody></table></div><p>A test plan names <strong>agents</strong>, never models: changing a model is a one-line
+change to the deployment, and the same plan then compares models fairly.</p><p>A sketch of a benchmark deployment with Claude and Gemini:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"itb-benchmark"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ITB benchmark run: Claude and Gemini on one plan"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"modes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"test"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"stores"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"work-plan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"beans-run-scoped"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"placements"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"actor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent-claude"</span><span class="p">,</span><span class="w"> </span><span class="nl">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"local"</span><span class="p">,</span><span class="w"> </span><span class="nl">"compute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"workstation"</span><span class="p">,</span><span class="w"> </span><span class="nl">"toolSurface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mcp"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"launch"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"tool"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch-beans-serve"</span><span class="p">,</span><span class="w"> </span><span class="nl">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"claude-&lt;version&gt;"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"actor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent-gemini"</span><span class="p">,</span><span class="w"> </span><span class="nl">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vendor-cloud"</span><span class="p">,</span><span class="w"> </span><span class="nl">"compute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vendor-cloud"</span><span class="p">,</span><span class="w"> </span><span class="nl">"toolSurface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mcp"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"modelProvenance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hosted"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"launch"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"tool"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch-antigravity"</span><span class="p">,</span><span class="w"> </span><span class="nl">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gemini-&lt;version&gt;"</span><span class="w"> </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"model-api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GCP_WIF_ASSURED_AI"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"liveData"</span><span class="p">:</span><span class="w"> </span><span class="s2">"artefacts-only"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><p>A run, end to end:</p><ol><li><code class="language-plaintext highlighter-rouge">CAT_DEPLOYMENT=itb-benchmark</code> is set where the harness runs.</li><li>The ITB calls <code class="language-plaintext highlighter-rouge">harness-up</code>: a state machine, a run-scoped store (because
+<code class="language-plaintext highlighter-rouge">stores</code> says so) and the pinned context.</li><li>The plan’s <em>Given</em> steps call <code class="language-plaintext highlighter-rouge">seed</code>, and for bean-blind agents the fixed
+prompts are generated and pinned.</li><li><em>When the agents are started</em> calls <code class="language-plaintext highlighter-rouge">start-agents</code>: each agent’s <code class="language-plaintext highlighter-rouge">launch</code>
+names its Tool and model; bean-aware agents get the work order, bean-blind
+agents their prompt.</li><li>The agents work; <code class="language-plaintext highlighter-rouge">observe</code> streams the events. On <code class="language-plaintext highlighter-rouge">localhost</code> the
+beans-by-process page shows the run live (§4.10).</li><li><em>Then</em> steps check <code class="language-plaintext highlighter-rouge">state</code>; <code class="language-plaintext highlighter-rouge">harness-down</code> exports the trace and removes
+the store. The ITB reports the result.</li></ol><p>From outside the harness, each model needs what the deployment names and
+whoever runs it supplies: for Claude, the <code class="language-plaintext highlighter-rouge">claude</code> command and its login; for
+Gemini, the Google Cloud project and identity the concept note requests,
+reached through Antigravity.</p><hr /><h3 id="412-the-standing-test-configuration-run-profiles"><a href="#412-the-standing-test-configuration-run-profiles" class="anchor-heading" aria-labelledby="412-the-standing-test-configuration-run-profiles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.12 The standing test configuration: run profiles
+  
+  
+</h3><p>Every test run is set up from a <strong>run profile</strong>: a named, saved file listing
+the options below. A test plan names the profile it uses; it never sets these
+options in its own text. Two runs with the same profile (and the same pinned
+context, §4.8) were set up identically, whatever model ran.</p><div class="table-wrapper"><table><thead><tr><th>Option</th><th>Choices</th><th>What the harness does with it</th></tr></thead><tbody><tr><td><strong>Models</strong></td><td>which model each agent actor runs, through its launch Tool (§4.11)</td><td>starts each agent through that launch Tool; switching a model changes this line only</td></tr><tr><td><strong>Knowledge sources</strong>, any combination or none</td><td>the <strong>knowledge graph</strong> (all of it, or chosen layers L1, L2, L3); <strong>published DAK files</strong> (PDF, Excel); <strong>GitHub repositories</strong>; <strong>published FHIR implementation guides</strong></td><td>puts exactly those sources into the run’s context repository (below), each pinned to a version, and nothing else</td></tr><tr><td><strong>Tool access</strong></td><td><strong>MCP</strong> services, <strong>local command line</strong> only, or <strong>both</strong></td><td>starts the harness’s MCP server for the run, or puts the command-line Tools on the agent’s path, or both</td></tr><tr><td><strong>Tools on or off</strong></td><td>a list of Tools that are on; every other Tool is off</td><td>an agent can call only the Tools that are on. A skill whose Tools are all off is not offered to the agent at all, so no agent is told about something it cannot use</td></tr><tr><td><strong>Route</strong></td><td>0, A, B</td><td>a shorthand for a combination of the rows above (below)</td></tr><tr><td><strong>Context mode</strong></td><td>bean-aware or bean-blind (§4.9)</td><td>decides whether the agent gets the work order or the fixed prompt</td></tr></tbody></table></div><p><strong>The routes are profiles.</strong> Route 0, A and B are not separate machinery; they
+are three standard profiles, and any other combination is a profile too:</p><div class="table-wrapper"><table><thead><tr><th>Profile</th><th>Knowledge sources</th><th>Tools on</th><th>Skills offered</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">route-0</code></td><td>none</td><td>none</td><td>none</td></tr><tr><td><code class="language-plaintext highlighter-rouge">route-A</code></td><td>none</td><td>the authoring Tools</td><td>the authoring skills</td></tr><tr><td><code class="language-plaintext highlighter-rouge">route-B</code></td><td>the knowledge graph</td><td>the authoring Tools and the knowledge-graph Tools</td><td>the authoring skills and the knowledge-graph skills</td></tr><tr><td><code class="language-plaintext highlighter-rouge">route-B-dak</code> <em>(example)</em></td><td>the knowledge graph and the published DAK files</td><td>as <code class="language-plaintext highlighter-rouge">route-B</code></td><td>as <code class="language-plaintext highlighter-rouge">route-B</code></td></tr><tr><td><code class="language-plaintext highlighter-rouge">docs-only</code> <em>(example)</em></td><td>published DAK files and FHIR implementation guides, no knowledge graph</td><td>file reading only</td><td>none</td></tr></tbody></table></div><p><strong>Consistent infrastructure.</strong> Whatever the profile, a run is built the same
+way, in the same order:</p><ol><li><strong>The context repository</strong> (§4.8) is assembled from the profile’s
+knowledge sources: knowledge-graph layers at their pinned versions; DAK
+files downloaded once and pinned by their checksum; GitHub repositories
+at a pinned commit; FHIR implementation guides as their published package
+at a pinned version. The repository’s commit hash identifies the whole
+context.</li><li><strong>Tools</strong>: the run’s MCP server (when the profile says MCP) is started
+offering only the Tools that are on; the command-line wrappers (when it
+says command line) are installed for only those Tools. A Tool that is off
+is simply not there; the agent is not told it exists.</li><li><strong>Skills</strong>: only skills backed by a Tool that is on (or needing no Tool)
+are copied into the context.</li><li><strong>Instruction files</strong> (<code class="language-plaintext highlighter-rouge">AGENTS.md</code>, with <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> and <code class="language-plaintext highlighter-rouge">GEMINI.md</code>
+pointing to it) and <code class="language-plaintext highlighter-rouge">MEMORY.md</code> are generated from the profile, so every
+model reads the same text.</li></ol><p><strong>Consistent prompting.</strong> The prompt an agent receives comes from one
+template per context mode, filled from the profile. It says, in the same
+words for every model, what the agent has to work with (“you have the
+following documents… you can use the following tools…”) and nothing about
+sources or Tools that are off. A check compares the prompts the run gave each
+agent: for the same profile they must be identical apart from the model’s own
+launch wording (§4.5), which is kept on the launch Tool’s page and reviewed.</p><p><strong>Where the configuration lives, and who reads it:</strong></p><div class="table-wrapper"><table><thead><tr><th>What</th><th>Where</th></tr></thead><tbody><tr><td>where agents run, which store, which credentials</td><td>the deployment description (§4.11)</td></tr><tr><td>what a run is allowed to see and use</td><td>the <strong>run profile</strong></td></tr><tr><td>what is tested</td><td>the ITB test plan, which names a profile</td></tr></tbody></table></div><p>In a test plan:</p><div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">Scenario Outline</span><span class="p">:</span> the same task under each profile and model
+  <span class="nf">Given </span>the run profile <span class="s">"&lt;profile&gt;"</span>
+  <span class="nf">And </span>agent A (<span class="nv">&lt;model&gt;</span>, bean-blind) is given the prompt of bean g7
+  <span class="nf">When </span>the agents are started
+  <span class="nf">Then </span>the output meets the acceptance criteria of bean g7
+
+  <span class="nn">Examples</span><span class="p">:</span>
+    <span class="p">|</span> <span class="nv">profile</span>     <span class="p">|</span> <span class="nv">model</span>  <span class="p">|</span>
+    <span class="p">|</span> <span class="n">route-0</span>     <span class="p">|</span> <span class="n">claude</span> <span class="p">|</span>
+    <span class="p">|</span> <span class="n">route-0</span>     <span class="p">|</span> <span class="n">gemini</span> <span class="p">|</span>
+    <span class="p">|</span> <span class="n">route-B</span>     <span class="p">|</span> <span class="n">claude</span> <span class="p">|</span>
+    <span class="p">|</span> <span class="n">route-B</span>     <span class="p">|</span> <span class="n">gemini</span> <span class="p">|</span>
+    <span class="p">|</span> <span class="n">route-B-dak</span> <span class="p">|</span> <span class="n">claude</span> <span class="p">|</span>
+    <span class="p">|</span> <span class="n">route-B-dak</span> <span class="p">|</span> <span class="n">gemini</span> <span class="p">|</span>
+</code></pre></div></div><p>One plan then sweeps models and profiles, and every row runs on identical
+infrastructure; only the line that varies differs.</p><p>A sketch of a profile file:</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"route-B-dak"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Knowledge graph and published DAK files, MCP tools"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"knowledgeSources"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"knowledgeGraph"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"layers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"L1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"L2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"L3"</span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"dak"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ANC DAK"</span><span class="p">,</span><span class="w"> </span><span class="nl">"files"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"anc-dak.pdf"</span><span class="p">,</span><span class="w"> </span><span class="s2">"anc-data-dictionary.xlsx"</span><span class="p">],</span><span class="w"> </span><span class="nl">"sha256"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"…"</span><span class="p">,</span><span class="w"> </span><span class="s2">"…"</span><span class="p">]</span><span class="w"> </span><span class="p">}],</span><span class="w">
+    </span><span class="nl">"githubRepositories"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nl">"fhirImplementationGuides"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"toolAccess"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mcp"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"tools"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"kg-search"</span><span class="p">,</span><span class="w"> </span><span class="s2">"kg-read"</span><span class="p">,</span><span class="w"> </span><span class="s2">"skill-fetch"</span><span class="p">,</span><span class="w"> </span><span class="s2">"workflow-next"</span><span class="p">,</span><span class="w"> </span><span class="s2">"workflow-complete"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"route"</span><span class="p">:</span><span class="w"> </span><span class="s2">"B"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"contextMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bean-blind"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div><h3 id="413-work-context-and-beans-out-of-the-content-layers"><a href="#413-work-context-and-beans-out-of-the-content-layers" class="anchor-heading" aria-labelledby="413-work-context-and-beans-out-of-the-content-layers"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.13 Work context, and beans out of the content layers
+  
+  
+</h3><p>Owner, 2026-11-03: <em>“the beans stay out of the smart base dependency tree …
+the knowledge graphs for the smart guidelines should not have any reference to
+beans in it. Otherwise it pollutes the testing run because the agent will then
+learn about beans and processes”</em>; <em>“when an agent takes up / processes /
+completes a task it should preserve memory/context. one Tool is a bean”</em>; <em>“so
+we remove beans from explicit in most diagrams, make sdlc a subgraph and clean
+up it and dependent harness use of beans”</em>.</p><p><strong>Where work items reach a content layer today</strong> (review of 2026-11-03):</p><ul><li>Through the dependency chain: smart-base → fhir-harness →
+folio-assistant-core → cat-harness. smart-base mounts cat-harness whole, and
+its instruction file tells the agent to read the cat-harness skills.</li><li>Through the diagrams. <code class="language-plaintext highlighter-rouge">Process_BeanOpen</code> and <code class="language-plaintext highlighter-rouge">Process_BeanClose</code> sit in
+<code class="language-plaintext highlighter-rouge">processes/sdlc/</code>, a folder of the one <code class="language-plaintext highlighter-rouge">processes</code> graph rather than a
+sub-graph, and are called by 15 cat-harness diagrams (7 of them outside
+<code class="language-plaintext highlighter-rouge">sdlc/</code>: kg, library, process, global tasks), by 8 fhir-harness diagrams and
+by 4 smart-base diagrams, including the DAK diagram
+<code class="language-plaintext highlighter-rouge">diig-investment-path.bpmn</code>. cat-harness’s diagrams also carry 115 task-level
+<code class="language-plaintext highlighter-rouge">op="note"</code> steps.</li><li>Through the MCP server, which offers every Tool in the chain, and the skill
+scan, which reads every sibling folder.</li><li>Through prose: about 200 of 265 cat-harness skill files say “bean”, many
+only as a provenance id (“bean <code class="language-plaintext highlighter-rouge">kg83</code>”).</li></ul><p>The work item <strong>data</strong> does not leak: it is on its own branch. The <strong>words</strong> do.</p><p><strong>A work item is tied to a process instance, not to a task.</strong> An instance names
+its work item (<code class="language-plaintext highlighter-rouge">bean</code>, <code class="language-plaintext highlighter-rouge">carriedBeans</code>), and every sub-process it calls inherits it.
+Tasks only act on it: the <code class="language-plaintext highlighter-rouge">op</code> steps, a data output to the Work items store
+(Q-BR-8 F), and a call activity naming extra work items.</p><p><strong>Work context: what replaces the markup</strong> (ruled, Q11: all three):</p><ol><li><strong>The engine</strong>, at every task boundary and with no markup in the diagram:
+    <ul><li>on <em>take up</em>, it hands the agent what was kept from earlier work on the
+same item;</li><li>on <em>complete</em>, it stores the agent’s completion summary, links and what
+is left open;</li><li>at the instance’s start and end, it does what <code class="language-plaintext highlighter-rouge">Process_BeanOpen</code> and
+<code class="language-plaintext highlighter-rouge">Process_BeanClose</code> did: claim, resolve, archive.</li></ul></li><li><strong>A neutral data store</strong>: a diagram may mark a task that must read or
+write the context explicitly with a standard BPMN data store named
+<em>Work context</em>. The engine binds it to the chosen Tool.</li><li><strong>The agent</strong> may record context during a task through a neutral MCP tool,
+<code class="language-plaintext highlighter-rouge">work_context_note</code>.</li></ol><p>All three write to one <strong>work-context store</strong>, a role like the work plan
+(§4.1), whose Tool the deployment or run profile chooses (§4.12):</p><div class="table-wrapper"><table><thead><tr><th><code class="language-plaintext highlighter-rouge">stores["work-context"]</code></th><th>Used by</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">work-plan</code> (default): a work item in the work-plan store, with each line’s metadata wrapped by the server</td><td>folio-assistant development and bean-aware runs (the real store); bean-blind test runs (the run-scoped store, Q5): the context is kept and measured, and the agent never learns it is a work item</td></tr><tr><td><code class="language-plaintext highlighter-rouge">none</code></td><td>a run that tests a cold start</td></tr></tbody></table></div><p>Owner, 2026-11-03: <em>“the neutral work_context_note is in reality a bean with
+metadata wrapped in the backend (just not exposed to agent)”</em>. So
+<code class="language-plaintext highlighter-rouge">work_context_note</code> is <strong>its own Tool</strong>, registered apart from the
+<code class="language-plaintext highlighter-rouge">workflow_*</code> tools and outside the <code class="language-plaintext highlighter-rouge">sdlc</code> sub-graph: an agent that is offered
+it sees a neutral name, description and one input, never the workflow tools
+it would otherwise reach through the dependency tree. The run’s launcher binds
+the session to its instance (<code class="language-plaintext highlighter-rouge">CAT_WORK_INSTANCE</code>); the agent never sees an
+instance or item id. <em>Built (cat-harness-tools#1435).</em></p><p>This is separate from <code class="language-plaintext highlighter-rouge">agent-memory</code>, which assembles each agent’s long-lived
+memory file; work context belongs to one item and one run.</p><p><strong>Two switches, not one.</strong> The harness’s own machinery (store, engine,
+trace) stays on in a test run, because the work item is the test’s context. What
+the <strong>agent</strong> is given (skills, knowledge graph, Tool list, instruction files,
+prompt) follows the run profile. A sub-graph that is switched off removes the
+material from the agent’s context; it does not stop the harness using it.</p><p><strong><code class="language-plaintext highlighter-rouge">sdlc</code> becomes a named sub-graph of cat-harness</strong> (ruled, Q12), on the
+pattern of <code class="language-plaintext highlighter-rouge">openapi/</code> and <code class="language-plaintext highlighter-rouge">archimate/</code>: one folder whose <code class="language-plaintext highlighter-rouge">graph.json</code> declares
+what it holds — the <code class="language-plaintext highlighter-rouge">sdlc</code> skills, the <code class="language-plaintext highlighter-rouge">sdlc</code> processes, the work-plan and
+work-context typologies, and the work item and workflow Tool definitions. It is
+off by default in every layer above cat-harness; folio-assistant switches it
+on. The MCP registrar and the skill scan honour the switch, and a whole-mount
+does not override it.</p><p><strong>Clean-up</strong> (ruled, Q13):</p><ul><li>No work item markup in diagrams outside the <code class="language-plaintext highlighter-rouge">sdlc</code> sub-graph: no calls to
+<code class="language-plaintext highlighter-rouge">Process_BeanOpen</code>/<code class="language-plaintext highlighter-rouge">Process_BeanClose</code>, no <code class="language-plaintext highlighter-rouge">op</code> steps, no Beans-store data
+outputs. The engine does that work (above). This covers cat-harness,
+fhir-harness and smart-base.</li><li>Provenance ids move out of agent-facing text (into the node’s provenance
+fields or the changelog).</li><li>Generic skills say <em>work context</em> and the operation, never “bean”.</li><li>The instruction files are generated from the run profile.</li><li>Development checkouts keep work items on; every content layer’s knowledge graph
+and every agent test context has them off.</li></ul><p><strong>The leak check, <code class="language-plaintext highlighter-rouge">check:context-leak</code>.</strong> The runner is generic, in
+cat-harness-tools; the vocabulary is a code list the <code class="language-plaintext highlighter-rouge">sdlc</code> sub-graph
+declares. It scans a built context — every file, the live MCP tool list, the
+generated instruction files and the fixed prompt — and, in each content
+layer’s CI, that layer’s bean-blind context. It matches <em>work item</em>, the
+provenance-id pattern, <code class="language-plaintext highlighter-rouge">beans/</code>, the work items branch name, <em>work plan</em>,
+<em>work order</em>, the <code class="language-plaintext highlighter-rouge">workflow_*</code> and work-plan tool ids, <code class="language-plaintext highlighter-rouge">Process_Bean*</code> and
+<code class="language-plaintext highlighter-rouge">cat-harness.processes:bean</code>. It does <strong>not</strong> match <em>process</em>, <em>BPMN</em> or
+<em>business process</em>: DAKs hold business processes as content. “Could not
+determine” is never clean. It starts in report mode and becomes a gate once
+the clean-up lands.</p><h3 id="414-the-memory-store-drawn-only-where-a-process-needs-it"><a href="#414-the-memory-store-drawn-only-where-a-process-needs-it" class="anchor-heading" aria-labelledby="414-the-memory-store-drawn-only-where-a-process-needs-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.14 The memory store: drawn only where a process needs it
+  
+  
+</h3><p>Owner, 2026-11-03: <em>“We need the memory store in the diagrams, only if a
+process explicitly requires it. For example, if an agent knows that it is
+shutting down and wants to write a record of where it’s at. Or if an agent
+wants to create a shared memory store as part of a swarm that they can
+collectively access. It may be that it gets implemented as a tool as beans.
+There may be other tools. We use beans as a tool in SDLC. We also use it as a
+tool for the same type of agentic memory in collaborative agent-assisted
+content development.”</em></p><p>So the work context of §4.13 is one use of a more general Role, the <strong>memory
+store</strong>:</p><ul><li><strong>A Role, not a Tool.</strong> Like the work plan (§4.1), it is a set of
+operations — <em>keep</em> an entry, <em>recall</em> entries, <em>checkpoint</em> where the work
+stands — over a <strong>scope</strong>: one item, one run, or one shared space a group
+of agents opens together. Work items are one Tool for it; a run-scoped store, a
+plain file store or a server are others. The deployment or run profile
+picks the Tool (<code class="language-plaintext highlighter-rouge">stores["memory"]</code>).</li><li><strong>Drawn only where a process needs it.</strong> A diagram draws a standard BPMN
+data store whose <code class="language-plaintext highlighter-rouge">dataStoreRef</code> is <code class="language-plaintext highlighter-rouge">memory</code> only where the process itself
+depends on memory:
+    <ul><li><strong>Checkpoint before stopping:</strong> a task such as <em>Record where the work
+stands</em> writes to it before an agent shuts down or hands over, and the
+task that resumes reads from it.</li><li><strong>Shared memory for a swarm:</strong> a task such as <em>Open a shared memory
+space</em> creates a scope that the agents of a parallel or multi-instance
+step all read and write; writes carry the version they read
+(<code class="language-plaintext highlighter-rouge">ifMatch</code>), so two agents never overwrite each other silently.</li><li><strong>Hand-over between lanes:</strong> a task in one lane writes what the next
+lane needs to know.
+No diagram draws it as routine bookkeeping. What every process needs (who
+took the work, when it finished) the engine keeps without a drawing (§4.13).</li></ul></li><li><strong>The agent’s side is neutral.</strong> The MCP tools (<code class="language-plaintext highlighter-rouge">memory_note</code>,
+<code class="language-plaintext highlighter-rouge">memory_recall</code>, <code class="language-plaintext highlighter-rouge">memory_checkpoint</code>) and their skill name no Tool. The
+backend wraps each entry with its metadata (process, step, instance, agent,
+time). It is its own Tool group, so a bean-blind agent can be offered it.</li><li><strong>Two kinds of work use work items for it today</strong>, and both keep them:
+software development (<code class="language-plaintext highlighter-rouge">sdlc</code>) and collaborative, agent-assisted content
+development (folio-assistant). So the work item Tool is <strong>not</strong> inside <code class="language-plaintext highlighter-rouge">sdlc</code>:
+it is its own sub-graph, <code class="language-plaintext highlighter-rouge">beans</code>, which <code class="language-plaintext highlighter-rouge">sdlc</code> and folio-assistant both
+switch on. The memory store Role, its data store, its tools and its skill
+sit in cat-harness itself, outside both, so a content layer’s diagram (a
+DAK authoring process, say) can draw a memory store without naming work items.</li></ul><p><strong>A work item is a memory record with more structure</strong> (owner, 2026-11-03:
+<em>“bean is a memory note w/ additional structure for process/role/ etc… can
+we formalize this a bit more in schema to show this and align a bit the
+services”</em>; ruled Q17, layered):</p><div class="table-wrapper"><table><thead><tr><th>Layer</th><th>Schema</th><th>Store interface</th><th>What it adds</th></tr></thead><tbody><tr><td>memory record</td><td><code class="language-plaintext highlighter-rouge">memory-record</code> (new base)</td><td><code class="language-plaintext highlighter-rouge">MemoryStore</code>: keep, recall, checkpoint, list by scope</td><td>id, title, scope (item, run, shared), <code class="language-plaintext highlighter-rouge">about</code>, tags, timestamps, and <strong>structured entries</strong>: each with text, when, who, kind (note, step done, checkpoint, taken up, closed) and, when the engine knows them, process, step, instance and role</td></tr><tr><td>work item</td><td><code class="language-plaintext highlighter-rouge">bean-defs</code> extends <code class="language-plaintext highlighter-rouge">memory-record</code></td><td><code class="language-plaintext highlighter-rouge">WorkPlanStore</code> extends <code class="language-plaintext highlighter-rouge">MemoryStore</code>: create, update with <code class="language-plaintext highlighter-rouge">ifMatch</code>, relations, positions, beansAt</td><td>status lifecycle, type, priority, parent and blocking</td></tr></tbody></table></div><p>So the memory service and the work item service are <strong>one service</strong>: a memory
+note is a work item note without the work-item fields, and the process and role
+are entry metadata the backend fills in. The work items Tool implements both
+layers and keeps entries in the work item body as lines it can parse back (the
+conformance tests check the round trip, so existing work items stay valid); a
+file store implements only <code class="language-plaintext highlighter-rouge">MemoryStore</code>. The curated agent memory (the
+<code class="language-plaintext highlighter-rouge">memory</code> kind, “never written by a process”) stays separate.</p><p><strong>The ITB chooses the memory Tool</strong>, and the test scenarios include (owner,
+2026-11-03: <em>“the test scenarios should include cases where agent is offered
+no memory store vs when it is offered beans as a Tool and the SDLC type
+processes”</em>):</p><div class="table-wrapper"><table><thead><tr><th>Scenario</th><th>The agent is offered</th><th>Behind it</th></tr></thead><tbody><tr><td>no memory</td><td>no memory tools</td><td>nothing kept for the agent; the harness still records the run</td></tr><tr><td>memory, neutral</td><td><code class="language-plaintext highlighter-rouge">memory_note</code>, <code class="language-plaintext highlighter-rouge">memory_recall</code>, <code class="language-plaintext highlighter-rouge">memory_checkpoint</code></td><td>work items (run-scoped) or the file store, chosen by the run profile</td></tr><tr><td>work items and SDLC</td><td>the work item Tools and the <code class="language-plaintext highlighter-rouge">sdlc</code> processes and skills</td><td>the run-scoped work items store, bean-aware (§4.9)</td></tr></tbody></table></div><p>Each is a run profile (§4.12), so the same case runs under all three and the
+ITB compares them.</p><h2 id="5-order-of-work"><a href="#5-order-of-work" class="anchor-heading" aria-labelledby="5-order-of-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Order of work
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>Step</th><th>Work</th><th>Status</th></tr></thead><tbody><tr><td>1</td><td>The contract as operations; the git Tool’s own page (§4.1, §4.2)</td><td>merged (cat-harness#993)</td></tr><tr><td>2</td><td>Conformance tests, run against the git Tool</td><td>merged (cat-harness-tools#1418)</td></tr><tr><td>3</td><td>The engine uses the operations (§4.3)</td><td>merged (#1420)</td></tr><tr><td>4</td><td>Where a work item is; the work item in each step’s context (§4.4)</td><td>merged (#1421, #1423)</td></tr><tr><td>4c</td><td>The deployment names the store (§4.3)</td><td>merged (#1424); deployments updated in cat-harness#1005</td></tr><tr><td>5</td><td>History and its event model (§4.6)</td><td>merged (#1425)</td></tr><tr><td>5b</td><td>The history stepper on each work item’s page; open/closed filter; all stores on one page</td><td>in review (#1426, #1428, #1432)</td></tr><tr><td>6</td><td>Skills say the operation, not the git command; a check keeps it so</td><td>next</td></tr><tr><td>7</td><td><em>Dispatch agent</em> and the first launch Tool, <code class="language-plaintext highlighter-rouge">launch-beans-serve</code> (§4.5)</td><td></td></tr><tr><td>8</td><td>A server Tool passes the same conformance tests</td><td></td></tr><tr><td>9</td><td>Run-scoped store; route and context-mode settings; a test case becomes seeded work items and instances (§4.7)</td><td></td></tr><tr><td>9b</td><td>Bean-blind runs: the fixed-prompt template, the leak check, the harness recording on the agent’s behalf (§4.9)</td><td></td></tr><tr><td>10</td><td><code class="language-plaintext highlighter-rouge">launch-antigravity</code>; the same cases under Routes 0, A, B for Claude and Gemini; traces exported for the ITB</td><td></td></tr><tr><td>11</td><td>The context builder: one pinned repository per run (§4.8)</td><td></td></tr><tr><td>12</td><td>The ITB services and the Gherkin steps that call them; the first multi-agent plan</td><td></td></tr><tr><td>13</td><td>The live local refresh (§4.10)</td><td>in review (#1429)</td></tr><tr><td>14</td><td><code class="language-plaintext highlighter-rouge">launch</code> on a placement (§4.11), once Q8 is ruled; the <code class="language-plaintext highlighter-rouge">itb-benchmark</code> deployment</td><td></td></tr><tr><td>15</td><td>Run profiles (§4.12): the file format and the standard profiles (<code class="language-plaintext highlighter-rouge">route-0</code>, <code class="language-plaintext highlighter-rouge">route-A</code>, <code class="language-plaintext highlighter-rouge">route-B</code>); the context builder reads knowledge sources from a profile (DAK files, GitHub repositories, FHIR implementation guides pinned); MCP or command-line Tools started with only the Tools that are on; skills and instruction files filtered to match; the prompt-equality check</td><td></td></tr><tr><td>16</td><td>The engine keeps work context at every task boundary; open and close done by the engine; <code class="language-plaintext highlighter-rouge">work_context_note</code> as its own Tool (§4.13)</td><td>merged (cat-harness-tools#1435; Tool nodes cat-harness#1010 in review)</td></tr><tr><td>17</td><td>Work item markup out of the cat-harness diagrams outside <code class="language-plaintext highlighter-rouge">sdlc</code> (§4.13)</td><td>merged (cat-harness#1011, cat-harness-tools#1436)</td></tr><tr><td>18</td><td>The <code class="language-plaintext highlighter-rouge">memory-record</code> base schema with structured entries, <code class="language-plaintext highlighter-rouge">bean-defs</code> extending it; <code class="language-plaintext highlighter-rouge">MemoryStore</code> (keep, recall, checkpoint over item, run and shared scopes) with <code class="language-plaintext highlighter-rouge">WorkPlanStore</code> extending it; the work item Tool for both; conformance tests for both layers; <code class="language-plaintext highlighter-rouge">stores["memory"]</code> (§4.14, Q17)</td><td>merged (cat-harness-tools#1437)</td></tr><tr><td>19</td><td>The engine binds a drawn <code class="language-plaintext highlighter-rouge">memory</code> data store: a task that reads it is handed the recalled entries, a task that writes it keeps its output; shared scopes for a swarm with <code class="language-plaintext highlighter-rouge">ifMatch</code></td><td>merged (cat-harness-tools#1438)</td></tr><tr><td>20</td><td>Neutral tools <code class="language-plaintext highlighter-rouge">memory_note</code>, <code class="language-plaintext highlighter-rouge">memory_recall</code>, <code class="language-plaintext highlighter-rouge">memory_checkpoint</code>, and their skill; <code class="language-plaintext highlighter-rouge">work_context_note</code> folded in</td><td>merged (cat-harness-tools#1438)</td></tr><tr><td>21</td><td>A second memory Tool (a run-scoped file store) passes the same conformance tests, so the Role is proven Tool-neutral</td><td>merged (cat-harness-tools#1439)</td></tr><tr><td>22</td><td><code class="language-plaintext highlighter-rouge">check:context-leak</code> in report mode; <code class="language-plaintext highlighter-rouge">check:bean-calls</code> retired; <code class="language-plaintext highlighter-rouge">bpmn-authoring</code> teaches the memory store patterns instead of work item open and close</td><td>in review (cat-harness-tools#1440)</td></tr><tr><td>23</td><td>Two named sub-graph folders of cat-harness, on the pattern of <code class="language-plaintext highlighter-rouge">openapi/</code> (Q18): <code class="language-plaintext highlighter-rouge">sdlc/</code> (the development processes and skills) and <code class="language-plaintext highlighter-rouge">work-plan/</code> (the work item Tool, its skills, the work item and workflow Tool definitions, the work-plan store skills). 23.1 the opt-in switch: a sub-graph marked <code class="language-plaintext highlighter-rouge">optIn</code>, a layer’s <code class="language-plaintext highlighter-rouge">enableSubgraphs</code>, the development override; honoured by the directory resolver, the skill scan, the tool server and the mount plan. 23.2 the move, a clean break (no redirects). 23.3 the tools layer’s paths and tests. 23.4 folio-assistant enables both; development-session hooks. 23.5 the leak check over a smart-base bean-blind context</td><td>in progress</td></tr><tr><td>24</td><td>fhir-harness and smart-base: work item markup out of their diagrams; their instruction files generated; the leak check a gate in their CI</td><td></td></tr><tr><td>25</td><td>Provenance ids out of agent-facing skill text across the layers</td><td></td></tr><tr><td>26</td><td>folio-assistant’s content-development processes draw the memory store where they need it (checkpoint, shared space)</td><td></td></tr><tr><td>27</td><td>Run profiles for the three memory scenarios (none, neutral memory, work items and SDLC), the memory Tool chosen per run, so the ITB compares them on the same cases</td><td></td></tr></tbody></table></div><p>Steps 1 to 6 change nothing for anyone using the git branch today. Steps 9,
+10 and 12 are what the concept note’s cloud credits and model access would
+pay for; steps 1 to 8 come first and need neither.</p><hr /><h2 id="6-keeping-the-process-recorded"><a href="#6-keeping-the-process-recorded" class="anchor-heading" aria-labelledby="6-keeping-the-process-recorded"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Keeping the process recorded
+  
+  
+</h2><p>A work item’s place in its process is only as good as the habit of recording it,
+and nothing can force that: anyone can edit the work-plan branch directly.
+So (owner, 2026-11-03) the recorded path is made the easy one, and drift is
+reported, never blocked:</p><ul><li><strong>Claiming or creating a work item starts its process.</strong> The claim command
+starts or advances the work item’s process instance.</li><li><strong>Agents get the work item with its step</strong> (§4.4), and completing the step
+records the move (§4.5).</li><li><strong>Drift is reported</strong>: an in-progress work item that no running instance names
+is flagged on the beans-by-process pages, in the repository health report
+and when a session starts.</li><li><strong>The skills say so</strong>: working a work item means starting or advancing its
+instance.</li></ul><hr /><h2 id="7-what-this-does-not-do"><a href="#7-what-this-does-not-do" class="anchor-heading" aria-labelledby="7-what-this-does-not-do"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. What this does not do
+  
+  
+</h2><ul><li>It does not move work items off the git branch; the git Tool stays the default.</li><li>It does not change what the diagrams mean.</li><li>It does not decide what an agent works on: dispatch starts an agent only on
+a step the process has already made ready.</li><li>It does not replace the ITB proposal’s test-plan and result formats; it
+adds the services a plan needs to test agents working through processes.</li></ul><hr /><h2 id="8-decisions"><a href="#8-decisions" class="anchor-heading" aria-labelledby="8-decisions"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. Decisions
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th></th><th>Question</th><th>Decision</th></tr></thead><tbody><tr><td>Q1</td><td>Where does a work item’s position live?</td><td><strong>Only in the process instances</strong>, read through store operations (2026-11-02)</td></tr><tr><td>Q2</td><td>How is the store Tool chosen?</td><td><strong>By the deployment description</strong> (2026-11-02); a checkout names its own with <code class="language-plaintext highlighter-rouge">CAT_DEPLOYMENT</code></td></tr><tr><td>Q3</td><td>First launch Tool?</td><td><strong><code class="language-plaintext highlighter-rouge">launch-beans-serve</code></strong> (2026-11-02)</td></tr><tr><td>Q4</td><td>Where does the git Tool’s history come from?</td><td><strong>Derived from git history plus instance histories</strong>, nothing migrated (2026-11-02)</td></tr><tr><td>Q5</td><td>Where does a benchmark run keep its work items?</td><td><strong>A run-scoped store</strong> (2026-11-02)</td></tr><tr><td>Q6</td><td>Who drives a test run?</td><td><strong>The ITB</strong>, calling the harness services (2026-11-02)</td></tr><tr><td>Q7</td><td>How is archiving expressed?</td><td><strong>A field set through <code class="language-plaintext highlighter-rouge">update</code></strong> (2026-11-02)</td></tr><tr><td>Q8</td><td>How does a deployment say which model runs each agent?</td><td><strong>Open.</strong> Recommended: <code class="language-plaintext highlighter-rouge">launch: { tool, model }</code> on the agent’s placement (§4.11). Default if unruled: that</td></tr><tr><td>Q9</td><td>Who records progress in a bean-blind run?</td><td><strong>Open.</strong> Recommended: the harness, observing the agent’s output (§4.9). Default if unruled: that</td></tr><tr><td>Q10</td><td>Where do run profiles live?</td><td><strong>Open.</strong> Recommended: one file per profile, in a declared <code class="language-plaintext highlighter-rouge">test-run-profiles/</code> directory of cat-harness, beside the deployment descriptions, with a schema; a test plan names a profile by its id (§4.12). Default if unruled: that</td></tr><tr><td>Q11</td><td>How is an agent’s context kept as it takes up, works and completes a task?</td><td><strong>All three</strong> (2026-11-03): the engine at every task boundary; an optional neutral <em>Work context</em> data store in a diagram; the agent’s own <code class="language-plaintext highlighter-rouge">work_context_note</code>. One work-context store, its Tool chosen by the deployment or run profile: work items, the run trace, or none (§4.13)</td></tr><tr><td>Q12</td><td>Where does the development material sit?</td><td><strong><code class="language-plaintext highlighter-rouge">sdlc</code> becomes a named sub-graph of cat-harness</strong>, off in the layers above, switched on by folio-assistant (2026-11-03, §4.13)</td></tr><tr><td>Q13</td><td>Do diagrams carry work item markup?</td><td><strong>No, outside <code class="language-plaintext highlighter-rouge">sdlc</code></strong> (2026-11-03): the engine does open, close and the per-task record; cat-harness, fhir-harness and smart-base are cleaned up (§4.13)</td></tr><tr><td>Q14</td><td>When does a diagram draw the memory store?</td><td><strong>Only where the process needs memory</strong> (2026-11-03): a checkpoint before stopping, a shared space for a swarm, a hand-over; never as bookkeeping. Work items are one Tool for it; there may be others (§4.14)</td></tr><tr><td>Q17</td><td>How are work items and the memory store formalised?</td><td><strong>Layered, one service</strong> (2026-11-03): <code class="language-plaintext highlighter-rouge">memory-record</code> base schema with structured entries; <code class="language-plaintext highlighter-rouge">bean-defs</code> extends it; <code class="language-plaintext highlighter-rouge">WorkPlanStore</code> extends <code class="language-plaintext highlighter-rouge">MemoryStore</code> (§4.14)</td></tr><tr><td>Q15</td><td>Where does the work item Tool sit?</td><td><strong>Its own sub-graph</strong> (2026-11-03, the default): <code class="language-plaintext highlighter-rouge">work-plan</code>, used by <code class="language-plaintext highlighter-rouge">sdlc</code> and by folio-assistant’s content development; the memory store Role stays in cat-harness itself (§4.14)</td></tr><tr><td>Q16</td><td>Does the engine keep the basics when no memory store is drawn?</td><td><strong>Yes, whenever the deployment names a memory Tool</strong> (2026-11-03, the default): taken up, each step done, closed; not drawn, not seen by the agent</td></tr><tr><td>Q18</td><td>How are <code class="language-plaintext highlighter-rouge">sdlc</code> and <code class="language-plaintext highlighter-rouge">work-plan</code> carved out?</td><td><strong>Named sub-graph folders</strong>, <code class="language-plaintext highlighter-rouge">sdlc/</code> and <code class="language-plaintext highlighter-rouge">work-plan/</code>, like <code class="language-plaintext highlighter-rouge">openapi/</code> (owner, 2026-11-03: option 2), <strong>a clean break</strong>: <em>“dont worry old IRIs”</em> — no redirects. Off in every layer unless that layer enables it for itself; a development override turns them on in a working checkout</td></tr></tbody></table></div><hr /><h2 id="appendix-a-detailed-findings-2026-11-02"><a href="#appendix-a-detailed-findings-2026-11-02" class="anchor-heading" aria-labelledby="appendix-a-detailed-findings-2026-11-02"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Appendix A. Detailed findings (2026-11-02)
+  
+  
+</h2><p>Measured on cat-harness <code class="language-plaintext highlighter-rouge">f06cff0</code> and cat-harness-tools <code class="language-plaintext highlighter-rouge">main</code>.</p><p><strong>The store as a role.</strong> <code class="language-plaintext highlighter-rouge">scenarios/roles.json</code> defines <code class="language-plaintext highlighter-rouge">work-plan</code> as a
+mechanical role with a <code class="language-plaintext highlighter-rouge">store</code> block; <code class="language-plaintext highlighter-rouge">skills/sdlc/sdlc-core/work-plan-store.md</code>
+was its contract; <code class="language-plaintext highlighter-rouge">processes/global-tasks.bpmn</code> declared one shared data store;
+the Tools <code class="language-plaintext highlighter-rouge">beans-cli</code>, <code class="language-plaintext highlighter-rouge">beans-manual</code>, <code class="language-plaintext highlighter-rouge">bean-query</code>, <code class="language-plaintext highlighter-rouge">bean-claim-check</code> and
+<code class="language-plaintext highlighter-rouge">work-plan-prime</code> satisfied the work item skills; the work item schema is
+<code class="language-plaintext highlighter-rouge">schemas/kinds/bean-defs.schema.json</code>.</p><p><strong>Git in the skills.</strong> Lines naming git or the branch store: <code class="language-plaintext highlighter-rouge">todo-manager</code> 14,
+<code class="language-plaintext highlighter-rouge">bean-coordination</code> 16, <code class="language-plaintext highlighter-rouge">idle-backlog</code> 12, <code class="language-plaintext highlighter-rouge">bean-drain</code> 7,
+<code class="language-plaintext highlighter-rouge">continual-progress</code> 5, <code class="language-plaintext highlighter-rouge">workflow-state</code> 2, <code class="language-plaintext highlighter-rouge">process-state</code> 1. The contract’s
+race and history responsibilities described git behaviour. The diagrams named
+no branch.</p><p><strong>The engine.</strong> <code class="language-plaintext highlighter-rouge">workflow_complete</code> (cat-harness-tools <code class="language-plaintext highlighter-rouge">src/tools/workflow.ts</code>)
+called <code class="language-plaintext highlighter-rouge">applyWorkPlanOp</code> (<code class="language-plaintext highlighter-rouge">src/workflow/bean-link.ts</code>), which ran the <code class="language-plaintext highlighter-rouge">beans</code>
+command and fell back to editing the Markdown file.</p><p><strong>Agent context.</strong> <code class="language-plaintext highlighter-rouge">TaskContext</code> (<code class="language-plaintext highlighter-rouge">src/workflow/instance.ts</code>) carried
+<code class="language-plaintext highlighter-rouge">carriedBeans</code> (ids), role, skills and conventions; an instance named its work item
+but a work item named no instance.</p><p><strong>Starting agents.</strong> No harness step started an agent. <code class="language-plaintext highlighter-rouge">beans-serve</code>
+(<code class="language-plaintext highlighter-rouge">litlfred/beans</code>) offers <code class="language-plaintext highlighter-rouge">sendAgentMessage</code>, <code class="language-plaintext highlighter-rouge">stopAgent</code> and session
+subscriptions, with a worktree per work item, running the <code class="language-plaintext highlighter-rouge">claude</code> command; a
+draft work item there wraps it in one MCP tool. The two experiment arms in
+cat-harness-tools (<code class="language-plaintext highlighter-rouge">arm-forced.ts</code>, one step at a time with refusals;
+<code class="language-plaintext highlighter-rouge">arm-self-managed.ts</code>, the whole diagram) already measure the guardrail the
+concept note describes, for one case in-process.</p><p><strong>History.</strong> Git history of the work items branch and the instances’ own
+<code class="language-plaintext highlighter-rouge">history</code>; the 12 instances on the branch had last moved 28 to 42 days
+earlier (#988).</p><p><strong>Gaps, as numbered in the first draft:</strong> N1 contract names git behaviour;
+N2 skills give git commands; N3 engine writes through one Tool; N4 no history
+operation; N5 a work item does not record its position; N6 context carries ids not
+work items; N7 nothing starts an agent; N8 positions go stale; N9 no conformance
+tests; N10 guardrails depend on how and which model is started; N11 no
+private store for benchmarks; N12 routes are no runner’s setting and traces
+are scattered; N13 the ITB plan has no steps to stand up a harness or start
+agents; N14 each model’s context is assembled differently; N15 (added
+2026-11-03) no way to run a task without telling the agent it is a tracked
+item; N16 (added 2026-11-03) no standing configuration of a run’s models,
+knowledge sources, tool access and tools.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

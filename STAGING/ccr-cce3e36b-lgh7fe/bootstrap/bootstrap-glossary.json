@@ -190,6 +190,63 @@
       "source": "bootstrap/processes/log-message.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/models",
+      "@type": "skos:Concept",
+      "prefLabel": "Models",
+      "title": "Models",
+      "notation": "kind/models",
+      "definition": "A Subgraph describing the language models an Actor may be: which languages each is good at, and whether a person checked.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/bootstrap-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes",
+      "@type": "skos:Concept",
+      "prefLabel": "Processes",
+      "title": "Processes",
+      "notation": "kind/processes",
+      "definition": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/bootstrap-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios",
+      "@type": "skos:Concept",
+      "prefLabel": "Scenarios",
+      "title": "Scenarios",
+      "notation": "kind/scenarios",
+      "definition": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/bootstrap-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas",
+      "@type": "skos:Concept",
+      "prefLabel": "Schemas",
+      "title": "Schemas",
+      "notation": "kind/schemas",
+      "definition": "A Subgraph of Node Schemas: files that state the shape other files must have.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/bootstrap-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/skills",
+      "@type": "skos:Concept",
+      "prefLabel": "Skills",
+      "title": "Skills",
+      "notation": "kind/skills",
+      "definition": "A Subgraph of Skills: the instructions an Actor follows to carry out a Task.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/bootstrap-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/",
+      "@type": "skos:Concept",
+      "prefLabel": "Bootstrap",
+      "title": "Bootstrap",
+      "notation": "harness/bootstrap",
+      "definition": "The graph an agent reads before it knows what this repository is.",
+      "altLabel": [
+        "bootstrap"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/bootstrap-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/role/initiator",
       "@type": "skos:Concept",
       "prefLabel": "Initiator",

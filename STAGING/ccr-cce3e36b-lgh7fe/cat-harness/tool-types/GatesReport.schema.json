@@ -50,6 +50,18 @@
       "minimum": 0,
       "maximum": 9007199254740991
     },
+    "commands": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "heldOut": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "failed": {
       "type": "array",
       "items": {
@@ -152,8 +164,8 @@
   "description": "One gate run: outcome and exit code, the failed gates with their salient lines, the skipped ones and why, and what changed the tree.",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "40b047d92fc06abceea4e04abc07ce84b274c2a6",
+    "sha": "8a8093fd6ba901127f5605572bdd35e98551c278",
     "pr": "2954/merge",
-    "run": "42019699864"
+    "run": "42042361633"
   }
 }

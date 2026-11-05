@@ -456,6 +456,33 @@
       "definition": "The vocabulary the IG AST's JSON-LD export uses for what FHIR does not name (key, file, dependsOn, target, provisional ...), and the base of the generated IG AST JSON Schemas' $id. An identifier, following the <stub>/<instance>/<version>/ns/<vocab># pattern; not a resolvable address.",
       "rdf:value": "https://litlfred.github.io/fhir-harness/v0/ns/ig-ast/",
       "source": "bean l0lq"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-code-lists.jsonld/retired-prose-words",
+      "@type": "skos:ConceptScheme",
+      "notation": "retired-prose-words",
+      "prefLabel": "Words prose no longer uses",
+      "definition": "Words this harness's narrative text has retired, each with the word that replaces it. Each code is the retired word as it is written; its label is what prose says instead. A retired word may still appear as a name: in code, in a link target, in a quotation, in a heading (its anchor), or joined to an identifier (`bean-coordination`, `beans/`, `bean/1.0.0`). Read by cat-harness-tools `scripts/retired-prose-words.ts`.",
+      "source": {
+        "@id": "https://github.com/litlfred/cat-harness/pull/1030"
+      },
+      "changeNote": "work item folio-assistant-dkqd; owner, 2026-11-04: \"make sure that those notions of beans in the narrative text are changed to work item\""
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-code-lists.jsonld/retired-prose-words/bean",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-code-lists.jsonld/retired-prose-words",
+      "notation": "bean",
+      "prefLabel": "work item",
+      "definition": "One piece of work in the work plan: a memory record with a status, a type, a priority, a parent and what it blocks. The `beans` CLI and its files keep the old name."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-code-lists.jsonld/retired-prose-words/beans",
+      "@type": "skos:Concept",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness-code-lists.jsonld/retired-prose-words",
+      "notation": "beans",
+      "prefLabel": "work items",
+      "definition": "The plural. `beans` in code font is still the name of the CLI, its directory and its state branch."
     }
   ]
 }

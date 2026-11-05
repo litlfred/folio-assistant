@@ -15,10 +15,10 @@
       "entries": [
         {
           "status": "completed",
-          "total": 1327,
+          "total": 1332,
           "instance": 15,
-          "namedId": 105,
-          "none": 1207
+          "namedId": 106,
+          "none": 1211
         },
         {
           "status": "scrapped",
@@ -31,7 +31,7 @@
     },
     "open-bean-linked-inferred": {
       "summary": "Not a finding: an open bean tied to a task only because its file NAMES a diagram id (inferred — a mention is not a run). Listed so the inference can be checked.",
-      "count": 2,
+      "count": 1,
       "entries": [
         {
           "severity": "info",
@@ -41,18 +41,9 @@
           "parent": "folio-assistant-rwmf",
           "basis": "named-id",
           "named": [
+            "Call_BeanClose",
+            "Call_BeanOpen",
             "Task_RecordConflict"
-          ]
-        },
-        {
-          "severity": "info",
-          "bean": "folio-assistant-pbv1",
-          "title": "BEANS BY PROCESS: processed-beans and processed-bean visualiser pages (BPMN with bean markers, filters, stalled search)",
-          "status": "in-progress",
-          "parent": "folio-assistant-yj32",
-          "basis": "named-id",
-          "named": [
-            "A_AnnounceBranch"
           ]
         }
       ]
@@ -64,7 +55,7 @@
     },
     "open-bean-unlinked": {
       "summary": "WARNING, never a failure. An open bean (todo, in-progress, draft) that no workflow instance names and whose file names no process or activity id of a declared diagram. It may belong to a process not yet in the graph; the groups say which ones cluster.",
-      "count": 41,
+      "count": 55,
       "entries": [
         {
           "severity": "warning",
@@ -74,7 +65,17 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-djj5",
-          "cosine": 0.52
+          "cosine": 0.545
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-2lfx",
+          "title": "Provenance footer and audit-coverage page on every document page",
+          "status": "in-progress",
+          "parent": "folio-assistant-4j43",
+          "basis": "none",
+          "group": "folio-assistant-4j43",
+          "cosine": 0.634
         },
         {
           "severity": "warning",
@@ -84,7 +85,7 @@
           "parent": "folio-assistant-4j43",
           "basis": "none",
           "group": "folio-assistant-4j43",
-          "cosine": 0.646
+          "cosine": 0.713
         },
         {
           "severity": "warning",
@@ -94,7 +95,17 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-4j43",
-          "cosine": 0.72
+          "cosine": 0.671
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-55ka",
+          "title": "Siblings asked the owner in prose without cards on 2026-11-05; make interaction-modality part of every sibling brief, and check that it's followed",
+          "status": "todo",
+          "parent": "folio-assistant-rwmf",
+          "basis": "none",
+          "group": "folio-assistant-4j43",
+          "cosine": 0.513
         },
         {
           "severity": "warning",
@@ -104,7 +115,17 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.631
+          "cosine": 0.603
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-69lr",
+          "title": "CI speed II (c3): publish-time QA witnesses stamp the commit, so main never reuses a PR's pages",
+          "status": "in-progress",
+          "parent": "folio-assistant-k3vv",
+          "basis": "none",
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.752
         },
         {
           "severity": "warning",
@@ -114,7 +135,27 @@
           "parent": "folio-assistant-k3vv",
           "basis": "none",
           "group": "folio-assistant-k3vv",
-          "cosine": 0.733
+          "cosine": 0.828
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-70hd",
+          "title": "cat-harness-file checks run only in the repo that commits the files (owner ruling 2026-11-05)",
+          "status": "in-progress",
+          "parent": "folio-assistant-4j43",
+          "basis": "none",
+          "group": "folio-assistant-4j43",
+          "cosine": 0.758
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-711q",
+          "title": "CI speed II (j): pull requests run only the bun-test files their change can affect",
+          "status": "in-progress",
+          "parent": "folio-assistant-k3vv",
+          "basis": "none",
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.819
         },
         {
           "severity": "warning",
@@ -124,7 +165,27 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.579
+          "cosine": 0.582
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-9ml4",
+          "title": "Cache-first CI: one cached-step primitive, derived keys, trust classes, budget, hit-rate report",
+          "status": "in-progress",
+          "parent": "folio-assistant-k3vv",
+          "basis": "none",
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.722
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-akiq",
+          "title": "Each layer draws its own BPMN diagrams; cat-harness stops drawing and hand-listing other layers' (plan, awaiting owner approval)",
+          "status": "in-progress",
+          "parent": "folio-assistant-k3vv",
+          "basis": "none",
+          "group": "folio-assistant-4j43",
+          "cosine": 0.611
         },
         {
           "severity": "warning",
@@ -134,7 +195,37 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.381
+          "cosine": 0.406
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-asq1",
+          "title": "Run the dangling-link and retired-word checks before each push to the work-plan store",
+          "status": "in-progress",
+          "parent": "folio-assistant-k3vv",
+          "basis": "none",
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.702
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-audl",
+          "title": "cat-harness: French translation of the rewritten docs/guides/agent-onboarding.md",
+          "status": "todo",
+          "parent": "folio-assistant-rwmf",
+          "basis": "none",
+          "group": "folio-assistant-4j43",
+          "cosine": 0.412
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-ay33",
+          "title": "CI image: prepared container image replaces per-job setup",
+          "status": "in-progress",
+          "parent": "folio-assistant-k3vv",
+          "basis": "none",
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.769
         },
         {
           "severity": "warning",
@@ -144,7 +235,7 @@
           "parent": "folio-assistant-npuo",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.795
+          "cosine": 0.81
         },
         {
           "severity": "warning",
@@ -154,7 +245,7 @@
           "parent": "folio-assistant-yj32",
           "basis": "none",
           "group": "folio-assistant-4j43",
-          "cosine": 0.629
+          "cosine": 0.677
         },
         {
           "severity": "warning",
@@ -163,8 +254,8 @@
           "status": "todo",
           "parent": "folio-assistant-rwmf",
           "basis": "none",
-          "group": "folio-assistant-yj32",
-          "cosine": 0.548
+          "group": "folio-assistant-4j43",
+          "cosine": 0.598
         },
         {
           "severity": "warning",
@@ -174,7 +265,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.85
+          "cosine": 0.817
         },
         {
           "severity": "warning",
@@ -184,7 +275,7 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-4j43",
-          "cosine": 0.442
+          "cosine": 0.519
         },
         {
           "severity": "warning",
@@ -194,7 +285,7 @@
           "parent": "folio-assistant-4j43",
           "basis": "none",
           "group": "folio-assistant-4j43",
-          "cosine": 0.701
+          "cosine": 0.688
         },
         {
           "severity": "warning",
@@ -204,17 +295,27 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.654
+          "cosine": 0.629
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-exrp",
           "title": "Work plan = an epic or milestone that names the process it instantiates; approved proposals seed it",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-rwmf",
           "basis": "none",
-          "group": "folio-assistant-dthl",
-          "cosine": 0.448
+          "group": "folio-assistant-4j43",
+          "cosine": 0.638
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-f1nc",
+          "title": "Library chain: library/ becomes a named sub-graph (tools#1479, cat-harness#1032, core#639)",
+          "status": "in-progress",
+          "parent": "folio-assistant-4j43",
+          "basis": "none",
+          "group": "folio-assistant-4j43",
+          "cosine": 0.885
         },
         {
           "severity": "warning",
@@ -224,7 +325,7 @@
           "parent": "folio-assistant-4j43",
           "basis": "none",
           "group": "folio-assistant-4j43",
-          "cosine": 0.689
+          "cosine": 0.658
         },
         {
           "severity": "warning",
@@ -234,7 +335,7 @@
           "parent": "folio-assistant-k3vv",
           "basis": "none",
           "group": "folio-assistant-k3vv",
-          "cosine": 0.648
+          "cosine": 0.83
         },
         {
           "severity": "warning",
@@ -244,7 +345,7 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.694
+          "cosine": 0.762
         },
         {
           "severity": "warning",
@@ -254,7 +355,7 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.346
+          "cosine": 0.337
         },
         {
           "severity": "warning",
@@ -264,17 +365,27 @@
           "parent": "folio-assistant-1xhc",
           "basis": "none",
           "group": "folio-assistant-k3vv",
-          "cosine": 0.462
+          "cosine": 0.48
         },
         {
           "severity": "warning",
-          "bean": "folio-assistant-gzgh",
-          "title": "Phase 4: watch owned harness PRs land and close paired issues",
-          "status": "todo",
+          "bean": "folio-assistant-hd58",
+          "title": "CI speed II (h): merge train — batch opted-in PRs, CI once, bisect on red (linear compute in # PRs merged)",
+          "status": "in-progress",
+          "parent": "folio-assistant-k3vv",
+          "basis": "none",
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.786
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-jstq",
+          "title": "Fresh containers start with instance mounts older than index.lock.json, and mount-from-lock never refreshes them",
+          "status": "in-progress",
           "parent": "folio-assistant-4j43",
           "basis": "none",
-          "group": "folio-assistant-4j43",
-          "cosine": 0.853
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.459
         },
         {
           "severity": "warning",
@@ -284,7 +395,7 @@
           "parent": "folio-assistant-k3vv",
           "basis": "none",
           "group": "folio-assistant-k3vv",
-          "cosine": 0.637
+          "cosine": 0.681
         },
         {
           "severity": "warning",
@@ -294,7 +405,7 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-k3vv",
-          "cosine": 0.856
+          "cosine": 0.829
         },
         {
           "severity": "warning",
@@ -304,17 +415,17 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.612
+          "cosine": 0.563
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-llxa",
           "title": "cat-harness CRDM skills: cite PHII and PATH CRDM as the method they adapt",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.698
+          "cosine": 0.703
         },
         {
           "severity": "warning",
@@ -324,7 +435,17 @@
           "parent": "folio-assistant-dthl",
           "basis": "none",
           "group": "folio-assistant-dthl",
-          "cosine": 0.657
+          "cosine": 0.67
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-mbd8",
+          "title": "Cut node-kind-index.ts → src/auth/gateway.ts static import (move what it needs into schemas/)",
+          "status": "in-progress",
+          "parent": "folio-assistant-x35i",
+          "basis": "none",
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.67
         },
         {
           "severity": "warning",
@@ -334,7 +455,7 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-k3vv",
-          "cosine": 0.548
+          "cosine": 0.537
         },
         {
           "severity": "warning",
@@ -344,17 +465,7 @@
           "parent": "folio-assistant-npuo",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.503
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-ohpz",
-          "title": "CI speed II (d): diff-keyed reuse when only main moved",
-          "status": "in-progress",
-          "parent": "folio-assistant-k3vv",
-          "basis": "none",
-          "group": "folio-assistant-k3vv",
-          "cosine": 0.766
+          "cosine": 0.497
         },
         {
           "severity": "warning",
@@ -364,7 +475,7 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.346
+          "cosine": 0.369
         },
         {
           "severity": "warning",
@@ -374,7 +485,7 @@
           "parent": "folio-assistant-vuip",
           "basis": "none",
           "group": "folio-assistant-4j43",
-          "cosine": 0.607
+          "cosine": 0.559
         },
         {
           "severity": "warning",
@@ -384,17 +495,7 @@
           "parent": "folio-assistant-yj32",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.416
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-rbib",
-          "title": "dpi-h-ra: footnote citations to KG bibliography (smart-ra#232, handover bean)",
-          "status": "in-progress",
-          "parent": "folio-assistant-4j43",
-          "basis": "none",
-          "group": "folio-assistant-dthl",
-          "cosine": 0.712
+          "cosine": 0.399
         },
         {
           "severity": "warning",
@@ -404,7 +505,7 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-4j43",
-          "cosine": 0.82
+          "cosine": 0.656
         },
         {
           "severity": "warning",
@@ -414,27 +515,17 @@
           "parent": "",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.342
-        },
-        {
-          "severity": "warning",
-          "bean": "folio-assistant-sbpn",
-          "title": "smart-ra block panel: left-gutter 📣, greyed section 🔗, filtered public comments (handover bean)",
-          "status": "in-progress",
-          "parent": "folio-assistant-4j43",
-          "basis": "none",
-          "group": "folio-assistant-4j43",
-          "cosine": 0.704
+          "cosine": 0.35
         },
         {
           "severity": "warning",
           "bean": "folio-assistant-tsh9",
           "title": "CI speed II (b): red-main cycle from a layer rename; two-phase move rule",
-          "status": "todo",
+          "status": "in-progress",
           "parent": "folio-assistant-k3vv",
           "basis": "none",
-          "group": "folio-assistant-4j43",
-          "cosine": 0.687
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.731
         },
         {
           "severity": "warning",
@@ -444,7 +535,17 @@
           "parent": "folio-assistant-k3vv",
           "basis": "none",
           "group": "folio-assistant-k3vv",
-          "cosine": 0.755
+          "cosine": 0.75
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-vgfp",
+          "title": "Derived imports closures: resolve computed-import verdicts (kind-validator, harness-config tables) from the declarations at fingerprint time, instead of static globs",
+          "status": "in-progress",
+          "parent": "folio-assistant-x35i",
+          "basis": "none",
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.712
         },
         {
           "severity": "warning",
@@ -454,7 +555,17 @@
           "parent": "folio-assistant-k3vv",
           "basis": "none",
           "group": "folio-assistant-k3vv",
-          "cosine": 0.683
+          "cosine": 0.768
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-x38u",
+          "title": "state:mount rewrites the .gitignore block from stale layer mounts without --id",
+          "status": "in-progress",
+          "parent": "folio-assistant-4j43",
+          "basis": "none",
+          "group": "folio-assistant-djj5",
+          "cosine": 0.673
         },
         {
           "severity": "warning",
@@ -463,8 +574,28 @@
           "status": "todo",
           "parent": "folio-assistant-k3vv",
           "basis": "none",
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.626
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-xxow",
+          "title": "Export page: list every exported file with its details, plus stable 'latest' copies",
+          "status": "in-progress",
+          "parent": "folio-assistant-dthl",
+          "basis": "none",
           "group": "folio-assistant-4j43",
-          "cosine": 0.598
+          "cosine": 0.706
+        },
+        {
+          "severity": "warning",
+          "bean": "folio-assistant-yeg4",
+          "title": "Shared verified layers cache ref",
+          "status": "in-progress",
+          "parent": "folio-assistant-k3vv",
+          "basis": "none",
+          "group": "folio-assistant-k3vv",
+          "cosine": 0.768
         },
         {
           "severity": "warning",
@@ -474,7 +605,7 @@
           "parent": "folio-assistant-rwmf",
           "basis": "none",
           "group": "folio-assistant-yj32",
-          "cosine": 0.456
+          "cosine": 0.453
         }
       ]
     },
@@ -484,44 +615,105 @@
       "entries": [
         {
           "severity": "warning",
+          "group": "folio-assistant-k3vv",
+          "size": 20,
+          "size_class": "candidate",
+          "nearest_epic": "folio-assistant-k3vv",
+          "nearest_epic_title": "CI speed II (2026-11-05): restarts on main moves, red-main cycle, setup duplication",
+          "mean_cosine": 0.711,
+          "terms": [
+            "main push",
+            "push run",
+            "merge-main push",
+            "push runs",
+            "litlfred cat-harness-tools",
+            "re-pin train",
+            "ci-speed analysis",
+            "cat-harness-tools merged"
+          ],
+          "beans": [
+            "folio-assistant-69lr",
+            "folio-assistant-6h4p",
+            "folio-assistant-711q",
+            "folio-assistant-9ml4",
+            "folio-assistant-asq1",
+            "folio-assistant-ay33",
+            "folio-assistant-fn8q",
+            "folio-assistant-fwtz",
+            "folio-assistant-hd58",
+            "folio-assistant-jstq",
+            "folio-assistant-k2sg",
+            "folio-assistant-k3vv",
+            "folio-assistant-mbd8",
+            "folio-assistant-nbp9",
+            "folio-assistant-tsh9",
+            "folio-assistant-tv20",
+            "folio-assistant-vgfp",
+            "folio-assistant-x35i",
+            "folio-assistant-xaa8",
+            "folio-assistant-yeg4"
+          ],
+          "filed_under": [
+            {
+              "epic": "folio-assistant-k3vv",
+              "beans": 16
+            },
+            {
+              "epic": "folio-assistant-4j43",
+              "beans": 1
+            }
+          ],
+          "known_processes": []
+        },
+        {
+          "severity": "warning",
           "group": "folio-assistant-4j43",
-          "size": 12,
+          "size": 17,
           "size_class": "candidate",
           "nearest_epic": "folio-assistant-4j43",
           "nearest_epic_title": "Harness drain 2026-11-02: cat-harness, cat-harness-tools, fhir-harness",
-          "mean_cosine": 0.675,
+          "mean_cosine": 0.641,
           "terms": [
             "re-pin train",
             "train cat-harness",
-            "train thread",
-            "train pins",
             "train re-pinned",
-            "train merges",
-            "train folio-assistant",
-            "train lock"
+            "re-pin who-iris",
+            "train pins",
+            "train lock",
+            "train pin",
+            "train merges"
           ],
           "beans": [
+            "folio-assistant-2lfx",
             "folio-assistant-3v2t",
             "folio-assistant-4j43",
+            "folio-assistant-55ka",
+            "folio-assistant-70hd",
+            "folio-assistant-akiq",
+            "folio-assistant-audl",
             "folio-assistant-bsd1",
+            "folio-assistant-bx4c",
             "folio-assistant-djj5",
             "folio-assistant-drnh",
+            "folio-assistant-exrp",
+            "folio-assistant-f1nc",
             "folio-assistant-fbmk",
-            "folio-assistant-gzgh",
             "folio-assistant-pga6",
             "folio-assistant-rpc6",
-            "folio-assistant-sbpn",
-            "folio-assistant-tsh9",
-            "folio-assistant-xaa8"
+            "folio-assistant-xxow"
           ],
           "filed_under": [
             {
               "epic": "folio-assistant-4j43",
-              "beans": 5
+              "beans": 6
+            },
+            {
+              "epic": "folio-assistant-dthl",
+              "beans": 1
             },
             {
               "epic": "folio-assistant-k3vv",
-              "beans": 2
+              "beans": 1
             },
             {
               "epic": "folio-assistant-yj32",
@@ -533,77 +725,34 @@
         {
           "severity": "warning",
           "group": "folio-assistant-dthl",
-          "size": 10,
+          "size": 8,
           "size_class": "candidate",
           "nearest_epic": "folio-assistant-dthl",
           "nearest_epic_title": "DTH handbooks as L2 documents on smart-ra (HRH pilot, PHC, SC, PC, SFP)",
-          "mean_cosine": 0.675,
+          "mean_cosine": 0.695,
           "terms": [
             "dth-sc dth-phc",
             "litlfred dth-phc",
-            "glossary acronyms",
-            "litlfred smart-ra",
-            "handbook acronyms",
             "dth-phc acmisvhk2kylqal0--p2u4op7g4r",
+            "handbook acronyms",
             "litlfred dth-pc",
-            "litlfred dth-hrh"
+            "dth-hrh log",
+            "phii crdm",
+            "dth-sc zpioagrxxpzmkauszz11nd27voctapimp3rdsl26x9y"
           ],
           "beans": [
             "folio-assistant-65aj",
             "folio-assistant-bmat",
             "folio-assistant-cysv",
             "folio-assistant-dthl",
-            "folio-assistant-exrp",
             "folio-assistant-ftpc",
             "folio-assistant-lgwt",
             "folio-assistant-llxa",
-            "folio-assistant-max2",
-            "folio-assistant-rbib"
+            "folio-assistant-max2"
           ],
           "filed_under": [
             {
               "epic": "folio-assistant-dthl",
-              "beans": 6
-            },
-            {
-              "epic": "folio-assistant-4j43",
-              "beans": 1
-            }
-          ],
-          "known_processes": []
-        },
-        {
-          "severity": "warning",
-          "group": "folio-assistant-k3vv",
-          "size": 9,
-          "size_class": "candidate",
-          "nearest_epic": "folio-assistant-k3vv",
-          "nearest_epic_title": "CI speed II (2026-11-05): restarts on main moves, red-main cycle, setup duplication",
-          "mean_cosine": 0.676,
-          "terms": [
-            "ci-speed analysis",
-            "main push",
-            "analysis session",
-            "cone deploy",
-            "merged main",
-            "full deploy",
-            "deploy stamps",
-            "dry run"
-          ],
-          "beans": [
-            "folio-assistant-6h4p",
-            "folio-assistant-fn8q",
-            "folio-assistant-fwtz",
-            "folio-assistant-k2sg",
-            "folio-assistant-k3vv",
-            "folio-assistant-nbp9",
-            "folio-assistant-ohpz",
-            "folio-assistant-tv20",
-            "folio-assistant-x35i"
-          ],
-          "filed_under": [
-            {
-              "epic": "folio-assistant-k3vv",
               "beans": 6
             }
           ],
@@ -612,17 +761,17 @@
         {
           "severity": "warning",
           "group": "folio-assistant-yj32",
-          "size": 9,
+          "size": 8,
           "size_class": "candidate",
           "nearest_epic": "folio-assistant-yj32",
           "nearest_epic_title": "HARNESS AS INTERFACE: a harness instance's default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system",
-          "mean_cosine": 0.435,
+          "mean_cosine": 0.424,
           "terms": [
             "epic open",
             "card q-dq",
             "epic closes",
-            "task bank",
             "old epic",
+            "task bank",
             "independent queues",
             "folio board",
             "spec-kit split"
@@ -630,7 +779,6 @@
           "beans": [
             "folio-assistant-9hxd",
             "folio-assistant-amom",
-            "folio-assistant-bx4c",
             "folio-assistant-fvec",
             "folio-assistant-nvhg",
             "folio-assistant-oz9e",
@@ -654,26 +802,35 @@
         {
           "severity": "warning",
           "group": "folio-assistant-djj5",
-          "size": 1,
-          "size_class": "singleton",
+          "size": 2,
+          "size_class": "small",
           "nearest_epic": "folio-assistant-djj5",
           "nearest_epic_title": "IG bibliographies derived from library/, not a hand-kept references/ directory",
-          "mean_cosine": 0.52,
+          "mean_cosine": 0.609,
           "terms": [
             "who-iris",
             "catalogues",
-            "businessprocessworkflow",
-            "q-dep",
-            "actordefinitions"
+            "mounts",
+            "lock",
+            "smart-base",
+            "cat-harness-tools",
+            "library",
+            "live"
           ],
           "beans": [
-            "folio-assistant-17iw"
+            "folio-assistant-17iw",
+            "folio-assistant-x38u"
           ],
-          "filed_under": [],
+          "filed_under": [
+            {
+              "epic": "folio-assistant-4j43",
+              "beans": 1
+            }
+          ],
           "known_processes": []
         }
       ]
     }
   },
-  "total": 50
+  "total": 63
 }
