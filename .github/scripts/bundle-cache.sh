@@ -25,10 +25,20 @@
 # - whatever the caller adds (`digest NAME EXTRA...`): the publish-time pages
 #   add the QA working copy's manifest sha256, since they are built over it.
 #
-# NOT in the key, as for `verdict-reuse.sh`, `qa-copy-reuse.sh` and
-# `publish-pages-reuse.sh`: the branch-kept graphs `state:mount` lays down and
-# the `qa-reports` entries the writers read when they ran. That is the one
-# input the tree does not pin, and it is said here rather than hidden.
+# - every branch-kept graph `state:mount` laid down, by the commit it was
+#   mounted at (the `tip` of each marker under `<git-dir>/branch-mounts/`).
+#   The writers read them: the processes page reads the work plan's workflow
+#   instances (found on #2966, run 42035462008: a page built from an older
+#   `beans` tip than the test read). So the digest is taken AFTER
+#   `state:mount`, and a marker that cannot be read is no digest at all.
+# - the head of `cat/cat-harness/qa-reports` (`QA_BRANCH`): the QA working copy build reads the
+#   qa-reports store (`qa-working-copy.ts`, `input-site: traced`).
+#
+# Measured cost of that honesty (2026-11-05): `cat/cat-harness/beans` took 10
+# commits between 14:06Z and 14:25Z, so two runs rarely see one tip. A hit
+# then needs the same tree AND an unmoved work plan; keys narrowed to what
+# each writer actually read are the traced-reads work (`writer-cone.ts`), not
+# a hand-kept list here.
 #
 # ## The record
 #
@@ -75,7 +85,7 @@
 
 set -uo pipefail
 
-RECIPE=2
+RECIPE=3
 cmd="${1:-}"
 
 output() { [ -n "${GITHUB_OUTPUT:-}" ] && echo "$1=$2" >> "$GITHUB_OUTPUT"; echo "$1=$2"; return 0; }
@@ -110,7 +120,17 @@ case "$cmd" in
       echo "python $(ver python3 --version)"
       echo "java $(java -version 2>&1 | grep -m1 -i " version " || true)"
       for e in "$@"; do echo "extra $e"; done
-    )
+      gitdir=$(git rev-parse --git-dir) || exit 1
+      if [ -d "$gitdir/branch-mounts" ]; then
+        for m in "$gitdir"/branch-mounts/*.json; do
+          [ -e "$m" ] || continue
+          jq -er '"state \(.key // .id) \(.repository // "origin") \(.branch) \(.tip)"' "$m" || exit 1
+        done
+      fi
+      qr=$(git ls-remote origin refs/heads/cat/cat-harness/qa-reports 2>/dev/null | cut -f1)
+      [ -n "$qr" ] || exit 1
+      echo "qa-reports $qr"
+    ) || { echo "digest: a state mount marker or the qa-reports head could not be read: no digest" >&2; exit 1; }
     printf '%s\n' "$inputs" | sed 's/^/digest input: /' >&2
     printf '%s\n' "$inputs" | sha256sum | cut -d' ' -f1
     ;;

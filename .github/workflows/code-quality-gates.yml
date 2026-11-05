@@ -786,6 +786,12 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Mount the subgraphs kept on branches (bean 9c7h)
+        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
+        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
+        # this step exits 1 loudly if the branch cannot be reached.
+        run: bun run cat state:mount
+
       # ## Built only when its inputs changed (beans x35i, tv20)
       #
       # The copy is keyed on a digest of the tree and the tool versions the
@@ -803,17 +809,12 @@ jobs:
 
       - name: Reuse a QA working copy already built from this digest (bundle cache)
         id: cache
+        if: ${{ steps.digest.outputs.digest != '' }}
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
         run: bash .github/scripts/bundle-cache.sh fetch qa-working-copy "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/qa-working-copy"
-
-      - name: Mount the subgraphs kept on branches (bean 9c7h)
-        # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
-        # refuses an unmounted copy (exit 2) rather than reading it as empty, and
-        # this step exits 1 loudly if the branch cannot be reached.
-        run: bun run cat state:mount
 
       - name: Build the IG artefact indexes this run reads (fhir-harness#124)
         # Each IG instance's fhir-artifact-index/ (index, menu, releases) is
@@ -924,6 +925,7 @@ jobs:
 
       - name: Record this copy under its digest (bundle cache)
         # Last, so a record exists only when the copy above was uploaded.
+        if: ${{ steps.digest.outputs.digest != '' }}
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
@@ -931,6 +933,7 @@ jobs:
         run: bash .github/scripts/bundle-cache.sh record qa-working-copy "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/bundle-record"
 
       - name: Upload the digest record (bundle cache)
+        if: ${{ steps.digest.outputs.digest != '' }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: bundle-qa-working-copy-${{ steps.digest.outputs.digest }}
