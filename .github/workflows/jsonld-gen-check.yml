@@ -57,6 +57,7 @@ on:
       - 'cat-harness-tools/scripts/gen-jsonld-context.ts'
       - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
+      - '.github/actions/cached-step/**'  # its mount cache goes through cached-step
   # MAIN ONLY (owner, 2026-11-01, card Q-PIPE-1 A). A push to a PR branch is
   # already judged by the `pull_request` run above; running on the branch push
   # too judged every PR commit twice and took a second runner slot each time.
@@ -136,16 +137,33 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      # The remote mounts through the one cache primitive (`cached-step`,
+      # trust `exact`; bean cis1). The key is the lock's digest: the lock pins
+      # every mounted tree, so it is the step's whole input. The verify IS the
+      # mount: the replayer checks every tree against the lock's digest, so a
+      # hit is verified exactly and a bad entry is a miss, never a mount.
+      - name: Restore remote mounts (cached-step)
+        id: mounts
+        uses: ./.github/actions/cached-step
         with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
+          step: cat-mount
+          key: ${{ hashFiles('index.lock.json') }}
+          paths: ~/.cache/cat-mount
+          trust: exact
+          verify: bash .github/mount-from-lock.sh --root .
       - name: Mount bootstrap and bootstrap-tools from the lock
+        if: steps.mounts.outputs.hit != 'true'
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
+      - name: Save remote mounts (cached-step)
+        if: success() && steps.mounts.outputs.hit != 'true'
+        uses: ./.github/actions/cached-step
+        with:
+          phase: save
+          step: cat-mount
+          key: ${{ hashFiles('index.lock.json') }}
+          paths: ~/.cache/cat-mount
+          trust: exact
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:

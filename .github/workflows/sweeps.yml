@@ -50,7 +50,7 @@ permissions:
   pull-requests: read
   statuses: read
   checks: read
-  actions: write  # list artifacts and runs; dispatch the workflows
+  actions: write  # list artifacts and runs; dispatch the workflows; read and prune the Actions cache
 
 # A tick that finds the previous one still running is not needed.
 concurrency:
@@ -133,8 +133,22 @@ jobs:
           done < <(gh api --paginate "repos/$REPO/pulls?state=open&per_page=100" \
             --jq '.[] | select(.head.repo.full_name == "'"$REPO"'") | [.number, .head.ref, .head.sha] | @tsv')
 
-      - name: Any sweep failed?
-        if: steps.publish.outcome == 'failure' || steps.verify.outcome == 'failure' || steps.repin.outcome == 'failure' || steps.conflicted.outcome == 'failure'
+      # Once a day (the first tick of 06:00-06:14 UTC) or on a dispatch: the hit rate of every
+      # `cached-step` and the Actions cache budget, and delete the entries of
+      # closed PRs' merge refs, which no run can read any more
+      # (`.github/actions/cached-step/README.md`, "Budget").
+      - name: Cache report — hit rate per step, budget (daily)
+        id: cache
+        continue-on-error: true
         run: |
-          echo "::error::a sweep failed — publish=${{ steps.publish.outcome }} verify=${{ steps.verify.outcome }} repin=${{ steps.repin.outcome }} conflicted=${{ steps.conflicted.outcome }}"
+          set -uo pipefail
+          if [ "${{ github.event_name }}" != workflow_dispatch ] && ! [[ "$(date -u +%H%M)" =~ ^06(0|1[0-4]) ]]; then
+            echo "not the daily tick"; exit 0
+          fi
+          bash .github/scripts/cache-report.sh --hours 24 --prune
+
+      - name: Any sweep failed?
+        if: steps.publish.outcome == 'failure' || steps.verify.outcome == 'failure' || steps.repin.outcome == 'failure' || steps.conflicted.outcome == 'failure' || steps.cache.outcome == 'failure'
+        run: |
+          echo "::error::a sweep failed — publish=${{ steps.publish.outcome }} verify=${{ steps.verify.outcome }} repin=${{ steps.repin.outcome }} conflicted=${{ steps.conflicted.outcome }} cache=${{ steps.cache.outcome }}"
           exit 1

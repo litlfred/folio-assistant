@@ -1,0 +1,85 @@
+# Determinism audit: build each producer whose output CI caches twice in the
+# same tree and diff the bytes (`.github/scripts/determinism-audit.sh`).
+#
+# A cached output can be verified against its key only when its producer is
+# a function of its inputs, so this says which producers may use
+# `cached-step`'s `exact` trust and `cache:publish`, and names every writer
+# that stamps the clock, the run, the merge ref or an unstable order.
+#
+# TRIGGERS: `workflow_dispatch` (all producers, or the ones named), weekly on
+# Monday, and a pull_request that edits the audit itself. Not on every PR: it
+# runs every producer twice, and its verdict is a list to work through, not a
+# gate. It never fails a run on a difference (that is what it reports); it
+# fails only when a producer could not run, which is could-not-determine.
+name: Determinism audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      producers:
+        description: "Space-separated producer names (default: all): qa-working-copy publish-pages smart-pages ig-index kg-export render-bpmn"
+        default: ""
+  schedule:
+    - cron: '37 3 * * 1'
+  pull_request:
+    paths:
+      - '.github/scripts/determinism-audit.sh'
+      - '.github/workflows/determinism-audit.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.4
+      - name: Restore remote mounts (cached-step)
+        id: mounts
+        uses: ./.github/actions/cached-step
+        with:
+          step: cat-mount
+          key: ${{ hashFiles('index.lock.json') }}
+          paths: ~/.cache/cat-mount
+          trust: exact
+          verify: bash .github/mount-from-lock.sh --root .
+      - name: Mount the layers from the lock
+        if: steps.mounts.outputs.hit != 'true'
+        run: bash .github/mount-from-lock.sh --root .
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.12"
+
+      - name: Build each producer twice and diff the bytes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          # What the reset removes and the producers read: the branch-kept graphs (bean 9c7h).
+          PREPARE: bun run cat state:mount
+          PRODUCERS: ${{ github.event.inputs.producers }}
+        run: |
+          # Exit 1 is the finding (a producer differs), reported, not a red run;
+          # 3 (a producer could not run) is could-not-determine, and fails.
+          # shellcheck disable=SC2086
+          bash .github/scripts/determinism-audit.sh $PRODUCERS || [ $? -eq 1 ]
+
+      - name: Upload the report, the logs and the per-run hashes
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: determinism-audit
+          path: |
+            build/determinism-audit/report.md
+            build/determinism-audit/*/*.log
+            build/determinism-audit/*/*.sha
+          retention-days: 14
+          if-no-files-found: ignore
