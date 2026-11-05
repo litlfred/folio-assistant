@@ -133,6 +133,12 @@ evicted too.
 
 ## Hit-rate reporting
 
+A cache that keeps its own transport, such as the layers ref (whose replayer
+verifies layer by layer) or the FHIR IG AST (whose refresh runs on its own
+runner), reports through `phase: report` with `result` (hit, warm or miss)
+and `why`. `cache:plan`'s decisions do the same. The daily report counts
+them all in one place.
+
 Every restore writes one line to the job summary:
 `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` It also
 uploads a tiny artifact named `cached-step--<step>--<result>--<unique>`

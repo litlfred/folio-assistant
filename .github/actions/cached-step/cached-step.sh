@@ -34,7 +34,15 @@ case "${1:-}" in
   key)
     [[ "${STEP:-}" =~ ^[a-z0-9][a-z0-9-]{0,62}$ ]] || die "step '${STEP:-}' is not [a-z0-9-]+"
     case "${TRUST:-}" in exact|verdict|main-only) ;; *) die "trust '${TRUST:-}' is not exact, verdict or main-only" ;; esac
-    case "${PHASE:-}" in restore|save) ;; *) die "phase '${PHASE:-}' is not restore or save" ;; esac
+    case "${PHASE:-}" in restore|save|report) ;; *) die "phase '${PHASE:-}' is not restore, save or report" ;; esac
+    if [ "$PHASE" = report ]; then
+      # A decision made elsewhere: no paths, no verify; only the key is namespaced.
+      out_multi paths ""
+      out prefix "$NS-$STEP-"
+      if [ -z "${KEY:-}" ] || [[ "$KEY" == undetermined* ]]; then out determined false; out why "the key could not be determined"; out key ""; exit 0; fi
+      if [[ "$KEY" =~ ^[A-Za-z0-9._-]{1,200}$ ]]; then k="$KEY"; else k=$(printf '%s' "$KEY" | sha256sum | cut -d' ' -f1); fi
+      out determined true; out key "$NS-$STEP-$k"; exit 0
+    fi
     if [ "$TRUST" = exact ] && [ "$PHASE" = restore ] && [ -z "${VERIFY:-}" ]; then
       die "an exact step needs a verify command: a restore nothing checks is not exact"
     fi
@@ -146,8 +154,19 @@ case "${1:-}" in
     summary "cached-step \`$STEP\` save: $save — $why."
     ;;
 
+  report)
+    case "${RESULT:-}" in hit|warm|miss) ;; *) die "report: result '${RESULT:-}' is not hit, warm or miss" ;; esac
+    [ -n "${WHY:-}" ] || die "report: a result needs a why"
+    record="cached-step--$STEP--$RESULT--${GITHUB_RUN_ID:-0}-${GITHUB_RUN_ATTEMPT:-0}-${GITHUB_JOB:-job}-$RANDOM$RANDOM"
+    mkdir -p "${RUNNER_TEMP:-/tmp}/cached-step"
+    printf 'step: %s\nresult: %s\ntrust: %s\nkey: %s\nwhy: %s\nreported: elsewhere\n' "$STEP" "$RESULT" "$TRUST" "${KEY:-}" "$WHY" \
+      > "${RUNNER_TEMP:-/tmp}/cached-step/$record.txt"
+    out record "$record"
+    summary "**cached-step \`$STEP\`: $RESULT** ($TRUST) — $WHY. Key \`${KEY:-undetermined}\`."
+    ;;
+
   *)
-    echo "usage: $0 key|fetch-ref|decide|policy  (inputs by environment; see action.yml)" >&2
+    echo "usage: $0 key|fetch-ref|decide|policy|report  (inputs by environment; see action.yml)" >&2
     exit 2
     ;;
 esac

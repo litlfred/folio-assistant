@@ -21,8 +21,17 @@ description: >-
 
 inputs:
   phase:
-    description: "`restore` (default) or `save`."
+    description: >-
+      `restore` (default), `save`, or `report`: record a hit/warm/miss decided
+      ELSEWHERE (a cache with its own transport, e.g. the layers ref or the IG
+      AST, or a `cache:plan` decision), so the daily hit-rate report counts it.
     default: restore
+  result:
+    description: "`report` only: hit, warm or miss."
+    default: ""
+  why:
+    description: "`report` only: one sentence, why."
+    default: ""
   step:
     description: "The step's id: [a-z0-9-]+. It namespaces the key (`cs1-<step>-…`) and the hit-rate report."
     required: true
@@ -110,6 +119,18 @@ runs:
         KEY: ${{ steps.ns.outputs.key }}
       run: bash "$GITHUB_ACTION_PATH/cached-step.sh" fetch-ref
 
+    - name: cached-step — report a decision made elsewhere
+      id: reported
+      if: inputs.phase == 'report'
+      shell: bash
+      env:
+        STEP: ${{ inputs.step }}
+        KEY: ${{ steps.ns.outputs.key }}
+        TRUST: ${{ inputs.trust }}
+        RESULT: ${{ inputs.result }}
+        WHY: ${{ inputs.why }}
+      run: bash "$GITHUB_ACTION_PATH/cached-step.sh" report
+
     - name: cached-step — decide
       id: decide
       if: inputs.phase == 'restore'
@@ -150,11 +171,11 @@ runs:
     # The hit-rate report (`cache-report.sh`) reads these NAMES only, so it
     # downloads nothing: cached-step--<step>--<hit|miss>--<unique>.
     - name: cached-step — record the outcome for the hit-rate report
-      if: inputs.phase == 'restore'
+      if: inputs.phase == 'restore' || inputs.phase == 'report'
       uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
       continue-on-error: true
       with:
-        name: ${{ steps.decide.outputs.record }}
-        path: ${{ runner.temp }}/cached-step/${{ steps.decide.outputs.record }}.txt
+        name: ${{ steps.decide.outputs.record || steps.reported.outputs.record }}
+        path: ${{ runner.temp }}/cached-step/${{ steps.decide.outputs.record || steps.reported.outputs.record }}.txt
         retention-days: 8
         if-no-files-found: ignore

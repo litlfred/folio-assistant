@@ -142,6 +142,24 @@ describe("policy", () => {
   });
 });
 
+describe("report (a decision made elsewhere)", () => {
+  test("records the result under the step, for the hit-rate report", () => {
+    const r = run("report", { STEP: "layers", TRUST: "exact", KEY: "cs1-layers-k", RESULT: "warm", WHY: "1 layer from refs/cat/layers/main" });
+    expect(r.code).toBe(0);
+    expect(r.outs.record).toMatch(/^cached-step--layers--warm--/);
+    expect(r.summary).toContain("cached-step `layers`: warm");
+  });
+  test("refuses a result that is not hit, warm or miss, and one without a why", () => {
+    expect(run("report", { STEP: "s", TRUST: "exact", RESULT: "passed", WHY: "x" }).code).toBe(2);
+    expect(run("report", { STEP: "s", TRUST: "exact", RESULT: "hit", WHY: "" }).code).toBe(2);
+  });
+  test("key accepts the report phase with no paths or verify", () => {
+    const r = run("key", { STEP: "layers", TRUST: "exact", PHASE: "report", KEY: "abc" });
+    expect(r.code).toBe(0);
+    expect(r.outs.key).toBe("cs1-layers-abc");
+  });
+});
+
 describe("action.yml", () => {
   const action = parse(readFileSync(join(DIR, "action.yml"), "utf8")) as { runs: { steps: Array<{ uses?: string; with?: Record<string, string> }> } };
   test("every third-party action is pinned to a full commit sha", () => {
