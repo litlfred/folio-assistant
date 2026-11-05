@@ -42,6 +42,37 @@
         "color": {
           "type": "string",
           "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "icon": {
+          "type": "string",
+          "enum": [
+            "baby",
+            "person",
+            "family",
+            "clinician",
+            "health-worker",
+            "hospital",
+            "clinic",
+            "home",
+            "phone",
+            "tablet",
+            "qr",
+            "paper",
+            "wifi-off",
+            "wifi",
+            "shield-check",
+            "calendar-check",
+            "stethoscope",
+            "link",
+            "transfer",
+            "globe",
+            "key",
+            "lock",
+            "database",
+            "tent",
+            "bus",
+            "plane"
+          ]
         }
       },
       "required": [
@@ -55,8 +86,8 @@
   "description": "Generated from `JourneyPersonaSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "18e1d822c728267e6e21ebdce5f153428ab9db8d",
+    "sha": "b3fa82fa38a56a73a87f1546e2c516c6fa280d4a",
     "pr": "2954/merge",
-    "run": "42113624043"
+    "run": "42122415817"
   }
 }

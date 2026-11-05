@@ -11,7 +11,7 @@
         "smart-base:document-kinds",
         "uml:overview"
       ],
-      "seconds": 286.475713899
+      "seconds": 288.80703645700004
     },
     {
       "cause": "cat-harness",
@@ -37,7 +37,7 @@
         "kg:viewer",
         "render:bpmn"
       ],
-      "seconds": 58.801082494999974
+      "seconds": 56.661760773999625
     },
     {
       "cause": ".github/scripts",
@@ -46,7 +46,7 @@
         "subgraph:jsonld",
         "jsonld:contexts"
       ],
-      "seconds": 33.54680470800016
+      "seconds": 33.10457762999996
     },
     {
       "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
@@ -55,7 +55,7 @@
         "state:visualizer",
         "site:viz"
       ],
-      "seconds": 17.87259415800008
+      "seconds": 18.369183880000026
     },
     {
       "cause": "beans/defs",
@@ -64,7 +64,7 @@
         "docs:pages",
         "processes:viz"
       ],
-      "seconds": 13.290863373000057
+      "seconds": 13.418539514999953
     },
     {
       "cause": ".agents/rules/agent-memory.md",
@@ -73,7 +73,7 @@
         "external-schemas:viz",
         "docs:harness"
       ],
-      "seconds": 12.686756969000097
+      "seconds": 12.643725527999923
     },
     {
       "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
@@ -81,7 +81,7 @@
       "reran": [
         "ig-index:build"
       ],
-      "seconds": 11.31839327499998
+      "seconds": 11.45311812
     },
     {
       "cause": "the deploy at 09b732e38435 recorded nothing for it",
@@ -89,7 +89,7 @@
       "reran": [
         "kind:json-schemas"
       ],
-      "seconds": 1.615984034000081
+      "seconds": 1.6350401459999848
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
@@ -97,7 +97,7 @@
       "reran": [
         "smart-base:pages"
       ],
-      "seconds": 1.1598493799999123
+      "seconds": 1.0761452109999954
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
@@ -105,7 +105,7 @@
       "reran": [
         "smart-trust:pages"
       ],
-      "seconds": 1.0294563459999626
+      "seconds": 1.0529611969999968
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
@@ -113,7 +113,7 @@
       "reran": [
         "smart-trust-phw:pages"
       ],
-      "seconds": 0.7542519349999492
+      "seconds": 0.8210967209999217
     },
     {
       "cause": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
@@ -121,7 +121,7 @@
       "reran": [
         "smart:pages"
       ],
-      "seconds": 0.7435522289999063
+      "seconds": 0.7354703510000836
     },
     {
       "cause": "its script, imports or tools",
@@ -131,19 +131,19 @@
         "kind:table",
         "avatars:css"
       ],
-      "seconds": 0.4716610629998613
+      "seconds": 0.509348410999868
     }
   ],
   "writers": [
     {
       "writer": "auto:docs",
       "did": "ran",
-      "why": "cat-harness changed (+1068 more: cat-harness-tools/package.json, cat-harness-tools/schemas/block-qa-schema/dist/index.d.ts, cat-harness-tools/schemas/block-qa-schema/js/index.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/kg/cat-harness.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/schemas/kg/harness-config.ts, and 1061 others)",
+      "why": "cat-harness changed (+1072 more: cat-harness-tools/libraries, cat-harness-tools/package.json, cat-harness-tools/schemas/block-qa-schema/dist/index.d.ts, cat-harness-tools/schemas/block-qa-schema/js/index.ts, cat-harness-tools/schemas/block-qa-schema/python/block_qa_schema, cat-harness-tools/schemas/block-qa-schema/tests, cat-harness-tools/schemas/content/avatars.ts, and 1065 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 11.635349511999987
+      "seconds": 11.155666711000027
     },
     {
       "writer": "avatars:css",
@@ -152,7 +152,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.14985336599999574
+      "seconds": 0.1558477219999768
     },
     {
       "writer": "bibliography:page",
@@ -162,27 +162,27 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.6991134669999592
+      "seconds": 0.7069311069999822
     },
     {
       "writer": "docs:harness",
       "did": "ran",
-      "why": ".agents/rules/agent-memory.md changed (+285 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .agents/skills/platform-boundary-guard-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/agent-memory/ci-health-watcher/detail/never-assert-on-a-qa-verdict-from-the-published-corpus.md, .claude/agent-memory/ci-health-watcher/detail/pages-deploys-are-not-on-the-default-branch.md, .claude/agent-memory/platform-boundary-guard/MEMORY.md, .claude/commands/pending-show.md, and 278 others)",
+      "why": ".agents/rules/agent-memory.md changed (+290 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .agents/skills/platform-boundary-guard-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/agent-memory/ci-health-watcher/detail/never-assert-on-a-qa-verdict-from-the-published-corpus.md, .claude/agent-memory/ci-health-watcher/detail/pages-deploys-are-not-on-the-default-branch.md, .claude/agent-memory/platform-boundary-guard/MEMORY.md, .claude/commands/pending-show.md, and 283 others)",
       "cause": {
         "kind": "path",
         "path": ".agents/rules/agent-memory.md"
       },
-      "seconds": 5.766263786000083
+      "seconds": 5.705161737999995
     },
     {
       "writer": "docs:pages",
       "did": "ran",
-      "why": "beans/defs changed (+1275 more: beans/defs/folio-assistant-6h4p--ci-speed-ii-a-merge-main-restarts-full-ci-on-every.md, beans/defs/folio-assistant-9set--ci-speed-ii-c1-six-gate-jobs-still-wait-on-both-qa.md, beans/defs/folio-assistant-bpnl--fix-overlapping-harness-bpmn-layouts.md, beans/defs/folio-assistant-bsd1--bean-store-behind-any-tool-and-agent-dispatch.md, beans/defs/folio-assistant-bx4c--mountremote-re-render-writes-into-mounted-instance.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, beans/defs/folio-assistant-exrp--work-plan-an-epic-or-milestone-that-names-the-proc.md, and 1268 others)",
+      "why": "beans/defs changed (+1277 more: beans/defs/folio-assistant-6h4p--ci-speed-ii-a-merge-main-restarts-full-ci-on-every.md, beans/defs/folio-assistant-9set--ci-speed-ii-c1-six-gate-jobs-still-wait-on-both-qa.md, beans/defs/folio-assistant-bpnl--fix-overlapping-harness-bpmn-layouts.md, beans/defs/folio-assistant-bsd1--bean-store-behind-any-tool-and-agent-dispatch.md, beans/defs/folio-assistant-bx4c--mountremote-re-render-writes-into-mounted-instance.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, beans/defs/folio-assistant-exrp--work-plan-an-epic-or-milestone-that-names-the-proc.md, and 1270 others)",
       "cause": {
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 2.5941590210000287
+      "seconds": 2.5978583879999353
     },
     {
       "writer": "document-kinds:viz",
@@ -192,17 +192,17 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 1.0664236589999636
+      "seconds": 1.0307041520000202
     },
     {
       "writer": "external-schemas:viz",
       "did": "ran",
-      "why": ".agents/rules/agent-memory.md changed (+3417 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .agents/skills/platform-boundary-guard-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/agent-memory/ci-health-watcher/detail/never-assert-on-a-qa-verdict-from-the-published-corpus.md, .claude/agent-memory/ci-health-watcher/detail/pages-deploys-are-not-on-the-default-branch.md, .claude/agent-memory/platform-boundary-guard/MEMORY.md, .claude/commands/pending-show.md, and 3410 others)",
+      "why": ".agents/rules/agent-memory.md changed (+3439 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .agents/skills/platform-boundary-guard-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/agent-memory/ci-health-watcher/detail/never-assert-on-a-qa-verdict-from-the-published-corpus.md, .claude/agent-memory/ci-health-watcher/detail/pages-deploys-are-not-on-the-default-branch.md, .claude/agent-memory/platform-boundary-guard/MEMORY.md, .claude/commands/pending-show.md, and 3432 others)",
       "cause": {
         "kind": "path",
         "path": ".agents/rules/agent-memory.md"
       },
-      "seconds": 6.920493183000013
+      "seconds": 6.938563789999927
     },
     {
       "writer": "folio:viz",
@@ -212,23 +212,23 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.837619692999986
+      "seconds": 0.8659898549999343
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
       "why": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "seconds": 11.31839327499998
+      "seconds": 11.45311812
     },
     {
       "writer": "jsonld:contexts",
       "did": "ran",
-      "why": ".github/scripts changed (+291 more: .github/workflows, bootstrap, cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/package.json, cat-harness-tools/schemas/kg/cat-harness.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, and 284 others)",
+      "why": ".github/scripts changed (+296 more: .github/workflows, bootstrap, cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/libraries, cat-harness-tools/package.json, cat-harness-tools/schemas/block-qa-schema/python/block_qa_schema, and 289 others)",
       "cause": {
         "kind": "path",
         "path": ".github/scripts"
       },
-      "seconds": 2.09498820900009
+      "seconds": 2.025817832999979
     },
     {
       "writer": "kg:viewer",
@@ -238,13 +238,13 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.6046246100000572
+      "seconds": 0.6051387689999538
     },
     {
       "writer": "kind:json-schemas",
       "did": "ran",
       "why": "the deploy at 09b732e38435 recorded nothing for it",
-      "seconds": 1.615984034000081
+      "seconds": 1.6350401459999848
     },
     {
       "writer": "kind:table",
@@ -253,27 +253,27 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.14470615699992048
+      "seconds": 0.17400731899996755
     },
     {
       "writer": "library:viz",
       "did": "ran",
-      "why": "cat-harness changed (+1809 more: cat-harness-tools/archimate/scripts/archimate-crossings.ts, cat-harness-tools/archimate/scripts/gen-archimate-pages.ts, cat-harness-tools/archimate/scripts/render-view.ts, cat-harness-tools/beans/defs, cat-harness-tools/beans/workflows/crdm-detect-evaluation-r-3554a15543fc-54762ece6646.json, cat-harness-tools/libraries/remark-gfm.library.json, cat-harness-tools/libraries/remark-html.library.json, and 1802 others)",
+      "why": "cat-harness changed (+1824 more: cat-harness-tools/archimate/scripts/archimate-crossings.ts, cat-harness-tools/archimate/scripts/gen-archimate-pages.ts, cat-harness-tools/archimate/scripts/render-view.ts, cat-harness-tools/beans/defs, cat-harness-tools/beans/workflows/crdm-detect-evaluation-r-3554a15543fc-54762ece6646.json, cat-harness-tools/libraries, cat-harness-tools/libraries/remark-gfm.library.json, and 1817 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 7.0358457209999905
+      "seconds": 6.697425394999911
     },
     {
       "writer": "methodologies:viz",
       "did": "ran",
-      "why": "cat-harness changed (+351 more: cat-harness-tools/package.json, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/kg/cat-harness.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/schemas/kg/harness-config.ts, cat-harness-tools/schemas/kg/node-kind.ts, cat-harness-tools/schemas/kg/opt-in-subgraphs.ts, and 344 others)",
+      "why": "cat-harness changed (+353 more: cat-harness-tools/libraries, cat-harness-tools/package.json, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/kg/cat-harness.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/schemas/kg/harness-config.ts, cat-harness-tools/schemas/kg/node-kind.ts, and 346 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 2.587808629999985
+      "seconds": 2.550319053000072
     },
     {
       "writer": "navbar:include",
@@ -282,7 +282,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.1771015399999451
+      "seconds": 0.17949336999992374
     },
     {
       "writer": "node-kinds",
@@ -292,7 +292,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 4.074009073999943
+      "seconds": 3.8801857369999633
     },
     {
       "writer": "openapi:viz",
@@ -302,17 +302,17 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.2384398720000172
+      "seconds": 0.25464723899995445
     },
     {
       "writer": "processes:viz",
       "did": "ran",
-      "why": "beans/defs changed (+462 more: beans/defs/folio-assistant-6h4p--ci-speed-ii-a-merge-main-restarts-full-ci-on-every.md, beans/defs/folio-assistant-9set--ci-speed-ii-c1-six-gate-jobs-still-wait-on-both-qa.md, beans/defs/folio-assistant-bpnl--fix-overlapping-harness-bpmn-layouts.md, beans/defs/folio-assistant-bsd1--bean-store-behind-any-tool-and-agent-dispatch.md, beans/defs/folio-assistant-bx4c--mountremote-re-render-writes-into-mounted-instance.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, beans/defs/folio-assistant-exrp--work-plan-an-epic-or-milestone-that-names-the-proc.md, and 455 others)",
+      "why": "beans/defs changed (+464 more: beans/defs/folio-assistant-6h4p--ci-speed-ii-a-merge-main-restarts-full-ci-on-every.md, beans/defs/folio-assistant-9set--ci-speed-ii-c1-six-gate-jobs-still-wait-on-both-qa.md, beans/defs/folio-assistant-bpnl--fix-overlapping-harness-bpmn-layouts.md, beans/defs/folio-assistant-bsd1--bean-store-behind-any-tool-and-agent-dispatch.md, beans/defs/folio-assistant-bx4c--mountremote-re-render-writes-into-mounted-instance.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, beans/defs/folio-assistant-exrp--work-plan-an-epic-or-milestone-that-names-the-proc.md, and 457 others)",
       "cause": {
         "kind": "path",
         "path": "beans/defs"
       },
-      "seconds": 10.69670435200003
+      "seconds": 10.820681127000018
     },
     {
       "writer": "render:bpmn",
@@ -322,7 +322,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 6.817151615999988
+      "seconds": 6.6874893300000116
     },
     {
       "writer": "schema:viz",
@@ -332,23 +332,23 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 4.11127528000006
+      "seconds": 4.075010614999919
     },
     {
       "writer": "site:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 1.4670998930000934
+      "seconds": 1.503299844000023
     },
     {
       "writer": "skills:docs",
       "did": "ran",
-      "why": "cat-harness changed (+521 more: cat-harness-tools/package.json, cat-harness-tools/pipeline/qa-witness.ts, cat-harness-tools/schemas/block-qa-schema/js/index.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/kg/cat-harness.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/schemas/kg/harness-config.ts, and 514 others)",
+      "why": "cat-harness changed (+522 more: cat-harness-tools/package.json, cat-harness-tools/pipeline/qa-witness.ts, cat-harness-tools/schemas/block-qa-schema/js/index.ts, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/kg/cat-harness.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/schemas/kg/harness-config.ts, and 515 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 7.838641269000014
+      "seconds": 7.508051182999974
     },
     {
       "writer": "smart-base:document-kinds",
@@ -358,7 +358,7 @@
         "kind": "path",
         "path": ""
       },
-      "seconds": 1.5341714679999858
+      "seconds": 1.5509508710000082
     },
     {
       "writer": "smart-base:l1-extraction:pages",
@@ -368,47 +368,47 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.9798339799999958
+      "seconds": 0.9489536770000122
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "seconds": 1.1598493799999123
+      "seconds": 1.0761452109999954
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
-      "seconds": 0.7542519349999492
+      "seconds": 0.8210967209999217
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "seconds": 1.0294563459999626
+      "seconds": 1.0529611969999968
     },
     {
       "writer": "smart:pages",
       "did": "ran",
       "why": "not recorded: the writer reads smart-base/docs/artifact and then rewrites it",
-      "seconds": 0.7435522289999063
+      "seconds": 0.7354703510000836
     },
     {
       "writer": "state:visualizer",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 16.405494264999987
+      "seconds": 16.865884036000004
     },
     {
       "writer": "subgraph:jsonld",
       "did": "ran",
-      "why": ".github/scripts changed (+671 more: .github/workflows, beans/defs, beans/notes, cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/package.json, cat-harness-tools/pipeline/block-module.ts, and 664 others)",
+      "why": ".github/scripts changed (+676 more: .github/workflows, beans/defs, beans/notes, cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/libraries, cat-harness-tools/package.json, and 669 others)",
       "cause": {
         "kind": "path",
         "path": ".github/scripts"
       },
-      "seconds": 31.451816499000067
+      "seconds": 31.07875979699998
     },
     {
       "writer": "subscriptions:viz",
@@ -418,7 +418,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.257643827999942
+      "seconds": 0.25286440399999266
     },
     {
       "writer": "theme:viz",
@@ -428,7 +428,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.7542030860000523
+      "seconds": 0.7064271489999956
     },
     {
       "writer": "themes:css",
@@ -438,7 +438,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 0.7034155510000419
+      "seconds": 0.6788888419999275
     },
     {
       "writer": "tools:viz",
@@ -448,27 +448,27 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 4.044581502999994
+      "seconds": 3.8965510789999973
     },
     {
       "writer": "uml:overview",
       "did": "ran",
-      "why": ". changed (+3299 more: cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/beans/workflows/crdm-detect-evaluation-r-3554a15543fc-54762ece6646.json, cat-harness-tools/libraries/remark-gfm.library.json, cat-harness-tools/libraries/remark-html.library.json, cat-harness-tools/libraries/remark.library.json, cat-harness-tools/libraries/zod.library.json, and 3292 others)",
+      "why": ". changed (+3302 more: cat-harness, cat-harness-tools/beans/defs, cat-harness-tools/beans/workflows/crdm-detect-evaluation-r-3554a15543fc-54762ece6646.json, cat-harness-tools/libraries, cat-harness-tools/libraries/remark-gfm.library.json, cat-harness-tools/libraries/remark-html.library.json, cat-harness-tools/libraries/remark.library.json, and 3295 others)",
       "cause": {
         "kind": "path",
         "path": ""
       },
-      "seconds": 284.941542431
+      "seconds": 287.25608558600004
     },
     {
       "writer": "uploads:viz",
       "did": "ran",
-      "why": "cat-harness changed (+117 more: cat-harness-tools/package.json, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/kg/cat-harness.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/schemas/kg/harness-config.ts, cat-harness-tools/schemas/kg/kind-validator.ts, cat-harness-tools/schemas/kg/memory-record.ts, and 110 others)",
+      "why": "cat-harness changed (+118 more: cat-harness-tools/libraries, cat-harness-tools/package.json, cat-harness-tools/schemas/content/avatars.ts, cat-harness-tools/schemas/kg/cat-harness.ts, cat-harness-tools/schemas/kg/graph-typology-registry.ts, cat-harness-tools/schemas/kg/harness-config.ts, cat-harness-tools/schemas/kg/kind-validator.ts, and 111 others)",
       "cause": {
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 3.4167814589999614
+      "seconds": 3.1434208329999818
     },
     {
       "writer": "voices:viz",
@@ -478,7 +478,7 @@
         "kind": "path",
         "path": "cat-harness"
       },
-      "seconds": 1.0983206850000424
+      "seconds": 1.0170956439999863
     }
   ]
 }

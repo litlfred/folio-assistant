@@ -48023,6 +48023,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#ExampleKey",
+      "name": "ExampleKey",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-scalar",
+      "doc": "An example key, `Type/id`, as `examples` and an artifact index spell it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#Experience",
       "name": "Experience",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
@@ -48082,6 +48096,86 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#FhirChange",
+      "name": "FhirChange",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#FhirChangeSchema",
+      "name": "FhirChangeSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "One FHIR resource a step creates or changes, told for a room: what changes,",
+      "fields": [
+        {
+          "name": "resource",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "As the room says it: \"Immunization ×2\", \"Group (household)\"."
+        },
+        {
+          "name": "change",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "What happens to it: \"Created as primarySource = false\"."
+        },
+        {
+          "name": "why",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "profile",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The StructureDefinition id the record conforms to."
+        },
+        {
+          "name": "profileOf",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Whose profile it is, as a chip beside it (\"Lao PDR\")."
+        },
+        {
+          "name": "examples",
+          "type": "z.array(ExampleKey).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "spec",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The base standard's page."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#ExampleKey",
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
       "name": "HandoffSchema",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
@@ -48095,15 +48189,17 @@
         },
         {
           "name": "from",
-          "type": "Id.optional()",
+          "type": "Text.optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "Who or what it leaves: an actor id (drawn with the persona's name), or a place or system in words (\"Thai hospital\")."
         },
         {
           "name": "to",
-          "type": "Id.optional()",
+          "type": "Text.optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "Who or what it reaches, as `from`."
         },
         {
           "name": "offline",
@@ -48129,7 +48225,6 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness-tools/schemas/process/user-scenario.ts#Id",
         "cat-harness-tools/schemas/process/user-scenario.ts#Text"
       ],
       "unresolved": [],
@@ -48258,6 +48353,32 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyGlyph",
+      "name": "JourneyGlyph",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyGlyphSchema",
+      "name": "JourneyGlyphSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersona",
       "name": "JourneyPersona",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
@@ -48326,11 +48447,19 @@
           "optional": true,
           "array": false,
           "doc": "A CSS colour for the persona's lane and curve; assigned in order when absent."
+        },
+        {
+          "name": "icon",
+          "type": "JourneyGlyphSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A glyph drawn in the avatar instead of the initials (a baby, who has none)."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#JourneyGlyphSchema",
         "cat-harness-tools/schemas/process/user-scenario.ts#Text"
       ],
       "unresolved": [],
@@ -48534,6 +48663,36 @@
       "exported": false
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#SceneSchema",
+      "name": "SceneSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "One part of a journey's small picture: a glyph and what it stands for.",
+      "fields": [
+        {
+          "name": "icon",
+          "type": "JourneyGlyphSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#JourneyGlyphSchema",
+        "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#StepV01",
       "name": "StepV01",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
@@ -48552,7 +48711,7 @@
       "name": "StepV02",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
       "kind": "undetermined",
-      "note": "{ ...StepV01, /** What the specification does not yet cover for this step: each a finding, not a failure. */ gaps: z.array(Text).optional(), references: z.arra…",
+      "note": "{ ...StepV01, /** The FHIR resources the step creates or changes, told for a room; its `examples` stay the plain list. */ fhirChanges: z.array(FhirChangeSchema…",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -49269,6 +49428,41 @@
           "optional": true,
           "array": true,
           "doc": "Links out (the IG, its source, its journeys), drawn in the `about` band; one with `frame` is also on the app bar, under that label."
+        },
+        {
+          "name": "notes",
+          "type": "z .object({ map: Text.optional(), personas: Text.optional(), how: Text.optional(), discuss: Text.optional(), sheets: Te…",
+          "optional": true,
+          "array": false,
+          "doc": "The presenter's note on each of the other views; a view without one shows none."
+        },
+        {
+          "name": "views",
+          "type": "z.array(z.object({ model: Text, view: Text, label: Text.optional() }).strict()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The ArchiMate views How it works shows first (the systems, the journeys"
+        },
+        {
+          "name": "closingQuestion",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The line the Discussion view opens with (\"The technology works. What do countries need to agree on to make it real?\")."
+        },
+        {
+          "name": "ig",
+          "type": "z .object({ href: z.string(), example: Text.optional(), profile: Text.optional(), processes: Text.optional() }) .strict…",
+          "optional": true,
+          "array": false,
+          "doc": "Where the FHIR implementation guide the walkthrough demonstrates is"
+        },
+        {
+          "name": "deviceDemo",
+          "type": "z .object({ href: Text, /** The app's address for one screen, `{id}` filled in; `#/demo/{id}` when absent. */ route: Te…",
+          "optional": true,
+          "array": false,
+          "doc": "The instance's own device demo: an app that shows each moment's screen."
         }
       ],
       "extendsNames": [],
@@ -95646,17 +95840,49 @@
       "array": false
     },
     {
-      "from": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
-      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
-      "via": "from",
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#FhirChangeSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#ExampleKey",
+      "via": "examples",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#FhirChangeSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "change",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#FhirChangeSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "profile",
       "kind": "field",
       "optional": true,
       "array": false
     },
     {
-      "from": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
-      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
-      "via": "to",
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#FhirChangeSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "profileOf",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#FhirChangeSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "resource",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#FhirChangeSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "why",
       "kind": "field",
       "optional": true,
       "array": false
@@ -95665,6 +95891,14 @@
       "from": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
       "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
       "via": "carrier",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "from",
       "kind": "field",
       "optional": true,
       "array": false
@@ -95683,6 +95917,14 @@
       "via": "summary",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#HandoffSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "to",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -95739,6 +95981,14 @@
       "via": "prompt",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -95875,6 +96125,22 @@
       "via": "rel",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#SceneSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#SceneSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
@@ -96144,6 +96410,30 @@
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "closingQuestion",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "deviceDemo",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "ig",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
       "via": "lede",
       "kind": "field",
       "optional": true,
@@ -96161,6 +96451,14 @@
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
       "via": "name",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "notes",
       "kind": "field",
       "optional": true,
       "array": false
@@ -96220,6 +96518,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "views",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopResourceSchema",
