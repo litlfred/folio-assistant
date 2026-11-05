@@ -1,0 +1,41 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/smart-base/process/Process_DthAuthoring/node/GW_DraftJoin.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin.jsonld",
+  "staging": {
+    "branch": "claude/staging-publish-same-repo",
+    "sha": "d4b1c11a18650ba10e819715d7e91114c6645618",
+    "pr": "2973/merge",
+    "run": "42129476940"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_DraftJoin",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "GW_DraftJoin",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F26",
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F27",
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F28",
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F29",
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F30",
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F31",
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F32",
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F33"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F34"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/capability/plantuml.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-publish-same-repo",
+    "sha": "d4b1c11a18650ba10e819715d7e91114c6645618",
+    "pr": "2973/merge",
+    "run": "42129476940"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/capability/plantuml",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "plantuml",
+      "name": "PlantUML",
+      "description": "PlantUML diagram generator for UML, BPMN, and other diagram types.",
+      "detection": {
+        "method": "command",
+        "command": "plantuml -version"
+      },
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/capability/java-runtime",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/capability/graphviz"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/plantuml"
+    }
+  ]
+}

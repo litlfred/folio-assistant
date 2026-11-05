@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/skill/todo-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-publish-same-repo",
+    "sha": "d4b1c11a18650ba10e819715d7e91114c6645618",
+    "pr": "2973/merge",
+    "run": "42129476940"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/skill/todo-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "todo-manager",
+      "title": "Session Task Manager (`beans`)",
+      "description": "Maintain and display work-in-progress task lists using the `beans` CLI issue tracker. Track implementation progress, open tasks, missing artifacts, and blocked items across a session.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/todo-manager.md",
+      "instructionLines": 700,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/todo-manager"
+    }
+  ]
+}

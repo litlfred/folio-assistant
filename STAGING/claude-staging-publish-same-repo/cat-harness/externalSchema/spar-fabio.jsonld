@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/externalSchema/spar-fabio.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-publish-same-repo",
+    "sha": "d4b1c11a18650ba10e819715d7e91114c6645618",
+    "pr": "2973/merge",
+    "run": "42129476940"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/externalSchema/spar-fabio",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/ExternalSchema",
+      "name": "spar-fabio",
+      "title": "SPAR Ontologies: FaBiO, the FRBR-aligned Bibliographic Ontology",
+      "authority": "other",
+      "specVersion": "unpinned",
+      "specUse": "conforms",
+      "specUrl": "http://www.sparontologies.net/ontologies/fabio",
+      "namespace": [
+        "http://purl.org/spar/fabio/"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/spar-fabio"
+    }
+  ]
+}

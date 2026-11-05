@@ -1,0 +1,24 @@
+{
+  "$ref": "#/definitions/SignOffOutcome",
+  "definitions": {
+    "SignOffOutcome": {
+      "type": "string",
+      "enum": [
+        "approve",
+        "amend",
+        "reject",
+        "defer",
+        "cancel"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/bootstrap-tools/schema/zod/requirement-set/SignOffOutcomeSchema.schema.json",
+  "title": "SignOffOutcomeSchema",
+  "description": "Generated from `SignOffOutcomeSchema` in schemas/requirement-set.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/staging-publish-same-repo",
+    "sha": "d4b1c11a18650ba10e819715d7e91114c6645618",
+    "pr": "2973/merge",
+    "run": "42129476940"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/capability/graphviz.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/staging-publish-same-repo",
+    "sha": "d4b1c11a18650ba10e819715d7e91114c6645618",
+    "pr": "2973/merge",
+    "run": "42129476940"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/capability/graphviz",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "graphviz",
+      "name": "Graphviz",
+      "description": "Graph visualization tool for generating diagrams.",
+      "detection": {
+        "method": "command",
+        "command": "dot -V"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/graphviz"
+    }
+  ]
+}

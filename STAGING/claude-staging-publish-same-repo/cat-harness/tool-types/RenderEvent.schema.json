@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-staging-publish-same-repo/cat-harness/tool-types/RenderEvent.schema.json",
+  "title": "RenderEvent",
+  "type": "string",
+  "enum": [
+    "rendered",
+    "removed",
+    "restored",
+    "retained"
+  ],
+  "description": "A render-log event: rendered, removed, restored or retained.",
+  "staging": {
+    "branch": "claude/staging-publish-same-repo",
+    "sha": "d4b1c11a18650ba10e819715d7e91114c6645618",
+    "pr": "2973/merge",
+    "run": "42129476940"
+  }
+}
