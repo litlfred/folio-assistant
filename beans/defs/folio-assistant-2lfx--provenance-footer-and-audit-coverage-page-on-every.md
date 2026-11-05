@@ -2,10 +2,11 @@
 # folio-assistant-2lfx
 $schema: bean/1.0.0
 title: Provenance footer and audit-coverage page on every document page
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-11-05T12:59:26Z
-updated_at: 2026-11-05T12:59:26Z
+updated_at: 2026-11-05T16:35:36Z
 parent: folio-assistant-4j43
 ---
 
@@ -22,3 +23,5 @@ _2026-11-05T13:50:00Z_ — Audit-coverage (owner 3A, then '1: look into it here'
 _2026-11-05T14:20:00Z_ — Owner: 'map the bpmn and tool pages too'. Done on tools#1510: process pages (kg-export, inline from sourcePath; 41 pages), tools pages (gen-tools-viz, one collapsed row per tool; 35 tools / 52 entries on cat-harness's page), node-kind node pages (inline after fields). XML entities from .bpmn passages decoded. cat-harness#1051 adds the compact-row CSS.
 
 _2026-11-05T16:25:00Z_ — cat-harness#1051 (footer include + CSS) merged af63526 on green. tools#1510 still in CI (base-exact comparison shards).
+
+_2026-11-05T16:36:00Z_ — cat-harness-tools#1510 merged (202123a) on green; with cat-harness#1051 (af63526) the provenance footer is live for docs, skill, process, tool and node pages once the index re-pins (re-pin train, not this session). Done when: met. Closing.
