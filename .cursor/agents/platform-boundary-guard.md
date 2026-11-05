@@ -125,8 +125,8 @@ session-start hook and the work items store.
 
 ### STABLE — `gh-pages` keeps an append-only render log at `_render-log/`
 
-*What happened to `STAGING/<slug>`?* — `_render-log/<YYYY-MM-DD>.jsonl` at the
-branch ROOT, outside `STAGING/` so `rm -rf "STAGING/$SLUG"` cannot reach it.
+*What happened to `branches/<slug>`?* — `_render-log/<YYYY-MM-DD>.jsonl` at the
+branch ROOT, outside `branches/` so `rm -rf "branches/$SLUG"` cannot reach it.
 
 A full replace does NOT preserve it: `CARRIED_PREFIXES` in
 `restore-staging.ts` carries it across, and `--verify` checks the carry as well

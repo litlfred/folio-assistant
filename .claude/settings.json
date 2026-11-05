@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && { bash .github/mount-from-lock.sh --root . >/dev/null 2>&1; bun install --frozen-lockfile >/dev/null 2>&1; bash cat-harness-tools/scripts/session-start-coord-sweep.sh; }",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && { ml=$(bash .github/mount-from-lock.sh --root . 2>&1) || printf '⚠️ mount-from-lock did not lay down every pinned layer, so this session may run on tools older than index.lock.json: %s— run `bun run cat mount:lock` for the full report\\n' \"$(printf '%s\\n' \"$ml\" | grep -E '^ *(missing|could-not-determine) ' | head -3 | sed -E 's/  +/ /g' | tr '\\n' ';')\"; bun install --frozen-lockfile >/dev/null 2>&1; bash cat-harness-tools/scripts/session-start-coord-sweep.sh; }",
             "timeout": 900
           }
         ]
