@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:28:00Z
-updated_at: 2026-11-02T19:13:00Z
+updated_at: 2026-11-05T13:34:51Z
 parent: folio-assistant-4j43
 tags:
     - smart-ra
@@ -47,3 +47,5 @@ Resume prompt: "read bean folio-assistant-sbpn on branch cat/cat-harness/beans o
 _2026-11-02T18:28Z_ — bean created. Steps 1–3 pushed; step 4 coded, being tested.
 _2026-11-02T18:33Z_ — core#620 opened (issue #619). All four PRs (core#616, core#620, tools#1411, cat-harness#981) pushed and tested locally; CI queued. Next: merge on green, then step 5.
 _2026-11-02T19:13Z_ — merged core#616, core#620, cat-harness#981. Open: tools#1411 (c0b3191) + cat-harness#994, merge on green; then step 5 (re-pin via cascade thread, republish smart-ra ≥15 min apart, verify). dth-pc duplicated flattened-table blocks (p-ch04-page-041 etc. on claude/dth-pc-scaffold) handed to coordinator for the dth-pc thread. All work committed and pushed.
+
+_2026-11-05T13:34:51Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
