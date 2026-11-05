@@ -10,7 +10,7 @@ summary: >-
   recoverable.
 ---
 
-# Retired bean blocks, 2026-10-16
+# Retired work-item blocks, 2026-10-16
 
 Eleven `blocking:` / `blocked_by:` edges were removed from the bean store (`cat/cat-harness/beans`, in folio-assistant and cat-harness) on the owner's choice, in session https://claude.ai/code/session_01NUrhvvMEwU5MmPW4L2w9jP.
 
