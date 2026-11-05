@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness/schema/subgraph-source.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9",
+    "sha": "8f747140fce5079b04582db6c7ce53a5299b3592",
+    "pr": "2978/merge",
+    "run": "42108946090"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness/schema/subgraph-source",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "subgraph-source",
+      "title": "subgraph-source",
+      "summary": "WHERE A DECLARED SUBGRAPH GETS ITS CONTENT — one concept, several kinds.",
+      "module": "schemas/kg/subgraph-source.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/subgraph-source"
+    }
+  ]
+}

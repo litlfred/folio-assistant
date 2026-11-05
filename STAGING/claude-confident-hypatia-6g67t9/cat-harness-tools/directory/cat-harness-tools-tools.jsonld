@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness-tools/directory/cat-harness-tools-tools.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-tools.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9",
+    "sha": "8f747140fce5079b04582db6c7ce53a5299b3592",
+    "pr": "2978/merge",
+    "run": "42108946090"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-tools",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "cat-harness-tools-tools",
+      "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/tools",
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "`discover.ts`, the reader that finds every declared `tools` graph's Tool nodes by asking the declarations, and `index.ts`, this layer's own `tools` graph: the Tool nodes whose in-process module is code here (`bpmn-engine`), declared beside that code so the module path is instance-relative. Every other Tool node, the shell-invoked ones included, is declared in `cat-harness/tools/`. Declared as a named `code` subgraph, so a remote mount lays it down (the content core's `glossary-extract.ts` imports it) and it is exported by package name (`scripts/package-exports.ts`).",
+      "readmePath": "tools/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-tools"
+    }
+  ]
+}

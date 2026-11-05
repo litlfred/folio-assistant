@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness/schema/gates-report.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9",
+    "sha": "8f747140fce5079b04582db6c7ce53a5299b3592",
+    "pr": "2978/merge",
+    "run": "42108946090"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness/schema/gates-report",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "gates-report",
+      "title": "gates-report",
+      "summary": "The typed reports of `bun run cat gates` and `bun run cat check:merged`.",
+      "module": "schemas/sdlc/gates-report.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-confident-hypatia-6g67t9/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/gates-report"
+    }
+  ]
+}

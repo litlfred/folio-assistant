@@ -1,0 +1,72 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/feature-staging/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/feature-staging.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Publish a branch's built site to `branches/<slug>/` on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat site:workflow stage"
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "flag": "--branch"
+            },
+            "description": "The branch to stage; blank stages the current one. On a pull request the workflow fires by itself and needs none of these.",
+            "name": "branch",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch"
+          },
+          {
+            "arg": {
+              "flag": "--cleanup-slug"
+            },
+            "description": "DELETION: the `branches/<slug>` to remove, instead of staging anything. For an orphan preview the health sweep reports: its pull request is already closed, so the close event cannot remove it.",
+            "name": "cleanup_slug",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          },
+          {
+            "arg": {
+              "flag": "--cleanup-confirm"
+            },
+            "description": "The slug again, exactly. Anything else refuses, so a confirmation cannot carry over to a DIFFERENT preview, which a boolean would allow.",
+            "name": "cleanup_confirm",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Slug"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Where the preview is served.",
+            "name": "preview",
+            "render": {
+              "as": "url",
+              "reason": "a reviewer opens the preview; the scheme is checked before it reaches an href"
+            },
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Url"
+          }
+        ]
+      },
+      "name": "feature-staging",
+      "requirements": {
+        "network": true
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/feature-staging",
+      "title": "Stage a branch's preview"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/feature-staging",
+  "path": "tools/feature-staging/"
+}
