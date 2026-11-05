@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T11:59:58Z
+updated_at: 2026-11-05T14:38:58Z
 parent: folio-assistant-k3vv
 ---
 
@@ -23,3 +23,5 @@ _2026-11-05T08:40:00Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwK
 _2026-11-05T12:00:00Z_ — Status check by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk. cat-harness-tools#1487 (head 6583bad) is green on every required check, `mergeable_state: clean`, no review threads; its one comment (H6 timeout flake) is addressed by the included #1488. It waits on the owner's merge. folio-assistant#2954 re-pins tools to 23147a7, which does NOT contain #1487 (no `scripts/git-hooks/claude-pre-push.sh`), so a further re-pin is needed after #1487 merges. folio-assistant#2951 still applies cleanly to main (`.claude/settings.json` unchanged since its base); it stays draft until that re-pin.
 
 _2026-11-05T11:59:58Z_ — litlfred/cat-harness-tools#1487 merged as c1c1d539 (owner asked to merge, 2026-11-05). Next: a folio-assistant re-pin of cat-harness-tools to c1c1d539 or later (the next train, or after #2954), then folio-assistant#2951 comes out of draft. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-05T14:38:58Z_ — Check-in: main still pins cat-harness-tools c807dc9, which predates #1487. folio-assistant#2954 pins 35898db, 17 commits after c1c1d539, so it carries the hook. When #2954 lands, take #2951 out of draft. That is also on hold until the merge steward posts "landed: #2954". Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
