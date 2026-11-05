@@ -39,3 +39,5 @@ A separate work-plan node; renaming identifiers.
 _2026-11-05T13:00Z_ — Picked up after stalled session (weekly limit). Blocked: add_repo for litlfred/cat-harness-tools and litlfred/cat-harness (push) was denied by the session permission classifier, so cat-harness-tools#1484 and cat-harness#1038 cannot be read, finished, or merged from this session. Awaiting owner decision.
 
 _2026-11-05T13:08Z_ — Fixed both reds (mcp-project: workflow-start Tool node lacked `plan`; reference-direction in todo-manager). Added proposal link, "Its work items", "Work plans" filter, proposal search; renamed kind/page to "Plans and work" with schema+glossary regenerated. Verified in Chromium. Pushed cat-harness-tools#1484 f64f71d, cat-harness#1038 fae1c31c; awaiting CI, then lockstep merge.
+
+_2026-11-05T14:00Z_ — Owner asked for the glossary term; chose "narrower Work item". Added WorkPlanKind (schemas/sdlc/work-plan.ts) found by new node-kind name rule `process-tag`; ledger mints node-kind/work-plan "Work plan". Pushed #1484 355a7fb, #1038 a65e450d.
