@@ -7,14 +7,20 @@ name: Staging publish (batched gh-pages push)
 # waiting preview in ONE commit per Pages window, so N previews wait one window
 # rather than N. `.github/scripts/staging-publish.sh` explains the queue.
 #
-# The schedule is the safety net: a dispatch that failed, or a run that died,
-# leaves its artifacts queued, and the next tick publishes them. An empty
-# queue ends the run in its first step.
+# The safety net is the 15-minute tick of `sweeps.yml`: a dispatch that
+# failed, or a run that died, leaves its artifacts queued, and the tick
+# dispatches this workflow when (and only when) a `staging-site-*` artifact is
+# waiting. An empty queue therefore costs no runner here (runner-request cuts,
+# 2026-11-05: 90 scheduled runs a day, nearly all of them empty). A run that
+# finds an empty queue anyway still ends in its first step.
+#
+# TRIGGERS, ACTUAL: `workflow_dispatch` only — by each preview job, and by
+# `sweeps.yml`'s tick when a preview waits. The schedule moved there at the
+# owner's request of 2026-11-05 to cut runner requests; the owner's decision
+# Q-SPD-5c (a batched publisher with a safety net) is unchanged.
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/15 * * * *'
 
 permissions:
   contents: write       # push gh-pages

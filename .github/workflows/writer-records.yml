@@ -13,7 +13,25 @@
 # script 3-10x (bean 4rbc), so recording inside the deploy would delay every
 # publish. And docs-site keeps only the newest pending run, so a manual
 # record run there is cancelled by the next push (run 41196478832 was).
-# This one publishes nothing, pushes nothing, and skips nothing.
+# This one publishes nothing and pushes nothing.
+#
+# THE QA RECORDS ARE CARRIED FORWARD, AND RE-TRACED AT MOST DAILY
+# (runner-request cuts, 2026-11-05). Measured on run of 2026-11-05 00:11Z:
+# 90 min on the runner, of which the traced QA working copy was 64 min and
+# traced `derive:publish` 21 min; every merge that deploys pays it again.
+# Now the previous recording (the `writer-cone-` cache) is restored first, and
+# while its QA records are under 24 hours old the QA working copy is built in
+# SKIP mode — exactly as a preview builds it: a step whose recorded reads all
+# match is put back from its recorded outputs, any other step runs (untraced,
+# so it keeps its old record, which no longer matches and so is never trusted:
+# "any doubt runs it", `qa-cone.ts`). The writers are still traced on every
+# deploy. A full re-trace of the QA steps happens when the QA records are
+# missing or older than 24 h, or on a dispatch with `full_qa`.
+#
+# TRIGGERS, ACTUAL: `workflow_run` (a docs-site deploy on main succeeded) and
+# `workflow_dispatch`. No cron: the 24-hour age above is read from the
+# restored recording, not kept by a timer (owner's decision, bean `fwtz`
+# option B, records after each deploy).
 name: Writer records (bean fwtz)
 
 on:
@@ -22,6 +40,11 @@ on:
     types: [completed]
     branches: [main]
   workflow_dispatch:
+    inputs:
+      full_qa:
+        description: Re-trace every QA step too, whatever the age of the QA records
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -60,6 +83,30 @@ jobs:
         run: bun run cat ig-index:build
       - name: Build the mounted IG instances' pages
         run: bun run smart:pages
+      # The previous recording: the QA records carried forward, and each
+      # recorded step's outputs for skip mode to put back. One slot per writer
+      # (`derive-cache.ts` commitStaged), so the cache does not grow.
+      - name: Restore the previous recording
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/writer-cone
+          key: writer-cone-${{ github.event.workflow_run.head_sha || github.sha }}
+          restore-keys: writer-cone-
+      - name: Re-trace the QA steps this time?
+        id: qa
+        env:
+          FULL_QA: ${{ inputs.full_qa && 'true' || 'false' }}
+        run: |
+          f=build/writer-cone/qa-records.json; at=build/writer-cone/qa-recorded-at
+          now=$(date +%s); age=""
+          [ -f "$at" ] && age=$(( now - $(cat "$at") ))
+          if [ "$FULL_QA" = "true" ]; then why="asked for (full_qa)"; mode=record
+          elif [ ! -f "$f" ] || [ -z "$age" ]; then why="no QA records to carry forward"; mode=record
+          elif [ "$age" -ge 86400 ]; then why="the QA records are $(( age / 3600 )) h old (24 h at most)"; mode=record
+          else why="the QA records are $(( age / 3600 )) h old: carried forward, the QA copy built as a preview builds it"; mode=skip
+          fi
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "QA steps: $mode — $why" | tee -a "$GITHUB_STEP_SUMMARY"
       - name: strace
         run: |
           if command -v strace >/dev/null; then strace -V | head -1; exit 0; fi
@@ -68,13 +115,24 @@ jobs:
       # whose reads changed (owner card Q-CONE-2 B, 2026-11-01; records in
       # build/writer-cone/qa-records.json, kept by the cache below).
       - name: Produce the QA working copy, every step traced (some writers read it)
+        if: steps.qa.outputs.mode == 'record'
         env:
           CAT_WRITER_RECORD: '1'
           GITHUB_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
         run: |
           start=$(date +%s)
           bun run cat qa:working-copy
+          date +%s > build/writer-cone/qa-recorded-at
           echo "traced QA working copy took $(( $(date +%s) - start ))s" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Produce the QA working copy from the carried-forward QA records
+        if: steps.qa.outputs.mode == 'skip'
+        env:
+          CAT_WRITER_SKIP: '1'
+          GITHUB_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: |
+          start=$(date +%s)
+          bun run cat qa:working-copy
+          echo "QA working copy (skip mode, records carried forward) took $(( $(date +%s) - start ))s" | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Generate the mounted SMART IG instances' pages
         run: bun run smart:pages:publish
       - name: Java runtime the PlantUML release declares
