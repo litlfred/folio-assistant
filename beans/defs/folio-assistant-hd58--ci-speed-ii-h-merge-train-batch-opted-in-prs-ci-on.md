@@ -91,3 +91,5 @@ Supersedes the 2026-10-04 "stack cleanly" ruling **for generated paths only**. A
 ## Open, with the CI speed 7 owner
 
 #2962 scopes `bun test` on every `pull_request`. A `merge-train/*` (and `repin-train/*`) PR must run the full suite: it is the members' only CI, and after #2963 main refuses to reuse a scoped run. Proposed: #2962 treats those head refs as full runs.
+
+_2026-11-05T13:43Z_: owner, relayed by the analysis session, on the token: **"1. I merge when green"**. No new token; PRs that change `.github/workflows/` merge one at a time and the train skips them. The off switch stays OFF (variable unset), so the two answers agree; no code change.
