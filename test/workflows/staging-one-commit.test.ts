@@ -76,8 +76,8 @@ describe("a staging deploy is one commit — bean `bm6d`", () => {
     // Both paths in one `git add`, which is what makes it one commit. The
     // record must sit at the ROOT `_render-log/`, never inside the slug
     // directory a cleanup removes.
-    expect(writer).toMatch(/git -C pages add -A "STAGING\/\$STAGING_SLUG" _render-log/);
-    expect(writer).not.toMatch(/STAGING\/\$STAGING_SLUG\/_render-log/);
+    expect(writer).toMatch(/git -C pages add -A "\$PREVIEW_DIR\/\$STAGING_SLUG" _render-log/);
+    expect(writer).not.toMatch(/\$PREVIEW_DIR\/\$STAGING_SLUG\/_render-log/);
   });
 
   test("the peaceiris action is gone from the stage job — it cannot reach the root", () => {
@@ -118,7 +118,7 @@ describe("the paths bm6d warned might be load-bearing still work", () => {
     // `bm6d`: "The cleanup path still records a removal with its reason (it
     // has no payload to coalesce with, so it must keep working)."
     const cleanup = jobBlock("cleanup-dispatch");
-    expect(cleanup).toMatch(/git add -A "STAGING\/\$CLEANUP_SLUG" _render-log/);
+    expect(cleanup).toMatch(/git add -A "\$PD\/\$CLEANUP_SLUG" _render-log/);
     expect(cleanup).toMatch(/--event removed/);
     expect(cleanup).toMatch(/--reason /);
   });
