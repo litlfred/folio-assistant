@@ -17,5 +17,5 @@ Measured 2026-11-05 (session of bean x38u): in a fresh folio-assistant container
 
 ## Progress 2026-11-05
 - [x] mount-from-lock replaces a mount at an earlier pin of the lock (priorPins); edited mounts still refused — cat-harness-tools#1531
-- [ ] #1531 merged
+- [x] #1531 merged (2411735, 2026-11-05; one red proven main's own: regen-writers vs cat-harness@8cc73584)
 - [ ] SessionStart hook warns in one line on a problem (owner: "Warn on problems") — folio-assistant#2976
