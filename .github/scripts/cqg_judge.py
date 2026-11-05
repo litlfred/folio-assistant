@@ -44,7 +44,9 @@ by the `--begin` step, reads the note on the PR's head and HONOURS it only
 when all of these hold, else it says why not and every step runs:
 
 - the switch is on (`CQG_HONOUR_LOCAL_RECORDS=true`, the repository
-  variable), and the event is `pull_request`;
+  variable), the event is `pull_request`, and this is the run's first
+  attempt: the sweep verifies by re-running the run, and a re-run never
+  honours a record;
 - the record says pass, and its tree IS the tree this job tests (the
   checked-out merge commit's): the same files, so the same judgment;
 - it was made under this runner's Bun and platform.
@@ -450,6 +452,10 @@ def judge_local_record():
         return None, "honouring local records is switched off (CQG_HONOUR_LOCAL_RECORDS)"
     if os.environ.get("GITHUB_EVENT_NAME") != "pull_request":
         return None, f"a `{os.environ.get('GITHUB_EVENT_NAME', '')}` run judges every gate itself"
+    if os.environ.get("GITHUB_RUN_ATTEMPT", "1") != "1":
+        # The verification sweep re-runs a run that skipped steps: a re-run
+        # attempt never honours a record, so it judges every gate itself.
+        return None, f"attempt {os.environ.get('GITHUB_RUN_ATTEMPT')} is a re-run, which verifies every gate itself"
     try:
         with open(os.environ.get("GITHUB_EVENT_PATH", ""), encoding="utf-8") as f:
             head = json.load(f)["pull_request"]["head"]["sha"]

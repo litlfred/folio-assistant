@@ -433,6 +433,7 @@ describe("a local gate record on the PR head (bean fn8q) stands in for the gates
   for (const [what, rec, env, bun] of [
     ["the switch is off", pass(), { CQG_HONOUR_LOCAL_RECORDS: "false" }, undefined],
     ["a push run", pass(), { GITHUB_EVENT_NAME: "push" }, undefined],
+    ["a re-run attempt (the sweep's verification)", pass(), { GITHUB_RUN_ATTEMPT: "2" }, undefined],
     ["another tree", pass({ tree: "0".repeat(40) }), {}, undefined],
     ["another bun", pass(), {}, "1.9.9"],
     ["another platform", pass({ tools: { bun: "1.4.4", git: "2", platform: "darwin-arm64" } }), {}, undefined],
