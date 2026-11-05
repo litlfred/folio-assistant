@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T20:12:00Z
+updated_at: 2026-11-05T22:50:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -95,3 +95,11 @@ Still open under this bean: the folio-assistant-core materialized-fixity PR (ses
 _2026-11-05T19:40:00Z_ — Owner card "Next step" option 1: confirm it worked. Re-count of false cross-layer failures scheduled for ~22:10Z, after the next re-pin train brings cat-harness-tools past ee88ead (before: 22 cross-layer false failures across 4 repos; see the 16:45Z note). Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 
 _2026-11-05T20:12:00Z_ — Core fix opened by session_01VQDpPcbpLjEo8EuzFLVq5Z: https://github.com/litlfred/folio-assistant-core/pull/651 (materialized-fixity scope + re-pin of core's cat-harness-tools e09d815 → 8205c6a). Local: new test 2/2, typecheck and gate clean; that session merges on green. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-05T22:50:00Z_ — Re-count 1 (owner card "Next step" option 1): **nothing measurable yet in the layers.**
+- smart-immunizations' last PR run, 42091639142, used tools 42cc850, which is before ee88ead. who-iris has had no run since 17:02Z.
+- Both callers pin layer-pr-checks.yml to a SHA, not @main. So the new run-gates.py (the CAT_GATE_OWN_* env) reaches a layer only when that layer re-pins its workflow AND its cat-harness-tools to ≥ ee88ead.
+- fa re-pin trains past ee88ead:
+  - #2979 (pin 5639d93) had 2 NEW on scoped gates, neither cross-layer. reference-direction caught a real tools defect (state-mount.ts → who-iris, fixed in ee5f440 / tools#1551). bpmn:checklist had a cat-harness checklist out of step with the new tools, which is index-owned.
+  - #2980 (pin 55b1925) was pending.
+- Second re-count is scheduled for ~00:50Z. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
