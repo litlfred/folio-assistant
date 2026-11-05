@@ -19,3 +19,5 @@ parent: folio-assistant-x35i
 - [ ] the 142 gates are shown to use the input-hash cone (run cited)
 
 _2026-11-05T12:35:29Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk at the request of the analysis session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.
+
+*2026-11-05* — PR https://github.com/litlfred/cat-harness-tools/pull/1502 (stacked on #1499). The edge was not a static import: `node-kind-index.ts`'s validator `imports` input-site still claimed `src/**`/`*/src/**`. It now carries #1499's exact glob, and the input-sites test holds both annotations. Measured with a static closure walk over 209 `task-io.ts` tasks: 142 reach node-kind-index; those reaching `src/auth/gateway.ts` went from 142 to 0. Their shared core (node-kind-index's closure) went from 600 to 494 files, and `src/` files in their union from 96 to 23. They still share that core through the harness-config plugin tables (bean vgfp). The CI-run criterion is still open.
