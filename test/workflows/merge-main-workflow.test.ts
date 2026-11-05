@@ -65,6 +65,26 @@ describe("a draft gets no merge and no dispatch (bean dft1)", () => {
   });
 });
 
+describe("a sweep merges only a conflicted PR (2026-11-05)", () => {
+  // A clean PR's `pull_request` CI already tests `refs/pull/N/merge`; a bot
+  // merge into it only restarts that CI on every push to main.
+  const select = doc.jobs.select!.steps.map((s) => s.run ?? "").join("\n");
+
+  test("the names a person gave are kept apart from the swept list", () => {
+    expect(select).toMatch(/candidates_named="\$candidates"[\s\S]*?case "\$candidates" in/);
+  });
+
+  test("on a sweep, a PR that is not conflicted is skipped, after the behind check", () => {
+    expect(select).toMatch(
+      /already contains main[\s\S]*?if \[ -z "\$candidates_named" \]; then[\s\S]*?\.mergeable[\s\S]*?if \[ "\$mergeable" != false \]; then[\s\S]*?merges cleanly[\s\S]*?continue[\s\S]*?pick #\$n/,
+    );
+  });
+
+  test("an unknown mergeability is asked again once, never read as conflicted", () => {
+    expect(select).toMatch(/"\$mergeable" = null[\s\S]*?gh api "repos\/\$REPO\/pulls\/\$n" --jq '\.mergeable'/);
+  });
+});
+
 describe("the write token never meets a fork", () => {
   test("select keeps only same-repository heads", () => {
     const select = doc.jobs.select!.steps.map((s) => s.run ?? "").join("\n");

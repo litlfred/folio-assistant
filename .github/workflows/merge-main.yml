@@ -16,6 +16,11 @@
 #
 # ## What it will and will not do
 #
+#  - A sweep (a push to main, or a dispatch naming no PR) merges only a PR
+#    that CONFLICTS with main. A PR that merges cleanly is skipped: its
+#    `pull_request` CI already tests `refs/pull/N/merge`, so a bot merge would
+#    only restart that CI on every push to main (2026-11-05, see `select`).
+#    Adding the label, or a dispatch naming the PR, still merges a clean one.
 #  - Opt-in only: the PR must carry the `merge-main` label. A bot commit on an
 #    in-flight branch is a coordination event, so nobody gets one unasked.
 #  - Same-repository branches only; never a fork.
@@ -122,6 +127,8 @@ jobs:
             pull_request_target) candidates="$LABELLED_PR" ;;
             workflow_dispatch) candidates="$INPUT_PR" ;;
           esac
+          # Named by a label or a dispatch: a person asked for these.
+          candidates_named="$candidates"
           # An empty dispatch sweeps like a push does.
           case "$candidates" in
             "") candidates=$(gh api "repos/$REPO/pulls?state=open&base=main&per_page=100" --paginate \
@@ -143,6 +150,29 @@ jobs:
             fi
             behind=$(gh api "repos/$REPO/compare/$(jq -r .head.sha <<<"$pr")...main" --jq '.ahead_by')
             if [ "$behind" = "0" ]; then echo "skip #$n: already contains main"; continue; fi
+            # A SWEEP MERGES ONLY A CONFLICTED PR (2026-11-05). A PR's
+            # `pull_request` CI checks out `refs/pull/N/merge`: the head
+            # already merged with main as it was when the run started. A bot
+            # merge into a PR that merges cleanly therefore proves nothing
+            # that run did not, and it restarts every check on the PR, about
+            # 130 runner-minutes, on EVERY push to main. Measured over 21 h
+            # that churn was 18-90 % of a PR's runner time, and it queued
+            # everything else behind it. A conflicted PR has no merge ref and
+            # no `pull_request` run at all, so it is the one case a merge
+            # helps. The merged result is still judged: by the PR run on its
+            # next push, and by main's own run after it lands. A label or a
+            # dispatch naming one PR is a person asking, so it still merges.
+            if [ -z "$candidates_named" ]; then
+              mergeable=$(jq -r '.mergeable' <<<"$pr")
+              if [ "$mergeable" = null ]; then
+                # GitHub computes mergeability on request; ask once more.
+                sleep 5
+                mergeable=$(gh api "repos/$REPO/pulls/$n" --jq '.mergeable')
+              fi
+              if [ "$mergeable" != false ]; then
+                echo "skip #$n: $behind behind but merges cleanly (mergeable=$mergeable) — its CI already tests the merge ref"; continue
+              fi
+            fi
             echo "pick #$n: $behind commit(s) behind main"
             prs+=("$n")
           done
