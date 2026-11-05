@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T14:24:33Z
+updated_at: 2026-11-05T15:10:39Z
 parent: folio-assistant-rwmf
 ---
 
@@ -42,3 +42,5 @@ _2026-11-05T14:00:08Z_ — smart-immunizations#114 at 10c2bb2 (all 8 layers at m
 _2026-11-05T14:09:08Z_ — Owner card "1. Treat as known": a site re-pin may merge when its only reds besides main's are these 3 KNOWN lower-layer reds: (1) cat-harness-tools:translation:block-qa:check — translation-coverage drop after cat-harness 7c759481 ("Say work item, not bean") reworded docs/concepts/architecture.md (37/61 strings, 5 locales) and docs/guides/agent-onboarding.md (fr 57/73); needs translators. (2) check:process-index and (3) library:viz:check — red only because CI skips publish:derive:publish (gen-fsh-guts-viz: cat/cat-harness/fsh-guts state branch not mounted), so the gitignored docs/subgraph/** and docs/assets/library/ avatars are unbuilt; both pass once built (subgraph:jsonld, library:viz). Not covered by the ruling: branch:readme:check on cat/cat-harness-tools/health (fix: bun run cat branch:readme --push cat/cat-harness-tools/health). cat-harness#1054 stays at e318fb7.
 
 _2026-11-05T14:24:33Z_ — Glossary regen (bun run cat glossary:page, generated at cat-harness a03d6b3, tools 13366a5, bootstrap 12fa6d5, bootstrap-tools 3a406fb, core 21da85c, who-iris 68e3a89): folio-assistant-core#648 d21b9a3 (9 files), who-iris#183 8f25812 (2), cat-harness#1061 5f3792c (3 skos.jsonld core's glossary:page writes). Layer repos' own CI never sees stale glossaries: derive:publish rewrites them in prep; in site runs derive:publish exits 1 (gen-fsh-guts-viz: fsh-guts state branch unmounted), which is why sites see them. Also stale but not yet flagged by a site: fhir-harness 3, smart-base 3, folio-assistant-sci 2 glossary/generated files. Sites must re-pin to these merges + tools >= 13366a5, bootstrap-tools >= 3a406fb. Merge watchers on all 13 PRs.
+
+_2026-11-05T15:10:39Z_ — Owner card "1. Freeze one set": after the 7 fix PRs merge (cat-harness#1054, #1061; who-iris#181, #183; cat-harness-tools#1518; core#647, #648), pick ONE commit per layer and re-pin all 7 sites to that set; fix shared layer reds once in their repos; merge each site when its only reds are main's or the known 3; do not chase mains that move after the freeze. Site PR reds before the freeze are moot. dth-sc#18 a8a22ed preview of the next wave (18 new): corpus-gate (dth-sc's, owner OK Q-PIN-DTHSC-1 A), declared-dirs (smart-base templates/ absent; dpi-h-ra references/ absent), lockfile-pinning (stale baseline repin-train.yml), slice:sqlite (publish payloads), split:baseline (skills math-md-authoring etc. no longer resolve), subgraph-coverage (cat-harness sdlc-processes, sdlc-skills, work-plan* + smart-base-templates owe serialisations), who-iris command-paths (iris-oxigraph/iris-cdn scripts), core foreign-paths (back-matter-order.ts etc.). dth-pc#18 9f3809e also red (not yet read).
