@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-11-02T18:45:00Z
-updated_at: 2026-11-02T19:10:00Z
+updated_at: 2026-11-05T13:34:43Z
 parent: folio-assistant-yj32
 tags:
     - visualiser
@@ -44,3 +44,5 @@ Owner ask 2026-11-02 18:35Z (thread cmsg_017WNUkNK8kdDziPK58Pv6G9PqHijxfA1UbP1sL
 - [ ] optional short alias `/beans/processed-beans/`
 
 _2026-11-02T19:10Z_ — PR #1414 up, follow-up cat-harness#988 filed.
+
+_2026-11-05T13:34:43Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
