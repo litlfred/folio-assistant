@@ -38,3 +38,5 @@ _2026-11-05T17:02Z_ — Owner card "Re-pin #2975", option 1: owner merges folio-
 _2026-11-05T17:49Z_ — folio-assistant#2975 (re-pin train) not merged and red: "QA working copy" failed at qa:refresh (writer check:rendered-labels produced nothing / failed), and most jobs below it failed. Train is owned by the "Broken beans links" session; not touched. #1032 stays waiting for a tools pin >= 2cee88d on folio-assistant main.
 
 _2026-11-05T18:52Z_ — folio-assistant main still pins tools c807dc9 (re-pin train not merged). One last check-in at +90 min, then parked.
+
+_2026-11-05T20:24Z_ — PARKED. folio-assistant main still pins tools c807dc9 (no re-pin train merged since #1479). Resume: once main pins tools >= 2cee88d, re-run cat-harness#1032 PR checks (head c2a3ada6), judge (only graph:check-tools expected), ask owner before merging that red; then core#639 (branch merged with main at 1251428): re-pin cat-harness to #1032 merge and tools >= 2cee88d, mark ready, merge on green; then the agent-memory pair (tools branch claude/agent-memory-rebase-skill-links + cat-harness regen, one red merge allowed by owner).
