@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T13:38:58Z
+updated_at: 2026-11-05T13:48:22Z
 parent: folio-assistant-rwmf
 ---
 
@@ -34,3 +34,5 @@ _2026-11-05T13:18:15Z_ — Owner card (this session): "1. Attach repos"; all 7 s
 _2026-11-05T13:38:11Z_ — Owner card: "1. Attach 4" (cat-harness, tools, core, who-iris attached). Pushed, CI queued: smart-immunizations#114 10c2bb2; smart-ra#228 253718b (round 11 + dpi-h-ra.json archimate visualiser writer, fixes check:subgraph-coverage + smart-ra's 2 keywords.json); dth-sc#18 a8a22ed; dth-phc#29 35fe71b; smart-ips-pilgrimage#8 d388ddd and smart-immunizations-uganda#18 ccc2ade (merged main in: conflicts only in pin files, took main's, then re-pinned); dth-pc#18 9f3809e (workflow-pins also pinned a layer-pr-checks @main + tools-ref: main — owner to OK before merge). Upstream fix PRs for #228: cat-harness#1054 (generated: 2 bpmn checklists, 25 bootstrap .pot, translation obsolete/pot; adding 62 keywords.json); who-iris#181 (24 keywords.json); cat-harness-tools#1518 (qa-refresh claims root test/results/library-qa — uml:overview red). ihris digest already fixed on cat-harness main (#1044). Core command-paths/foreign-paths: agent working. Order: merge the 3-4 layer PRs, then re-pin #228 to them.
 
 _2026-11-05T13:38:58Z_ — Owner card: dth-pc#18 "1. OK, merge" — may merge on green with the layer-pr-checks @main call pinned to the lock (tools-ref: main dropped).
+
+_2026-11-05T13:48:22Z_ — Owner: "merge when green"; a merge watcher (merge on all-checks-passed, stop on red) runs over the 7 site PRs and the 4 fix PRs. Fix PRs for smart-ra#228: cat-harness#1054 e318fb7 (+62 cat-harness keywords.json), who-iris#181 84a0728, folio-assistant-core#647 89915b2 (21 foreign-path literals in 10 files through folioDir/storeDirOf/archimateConfigPath/referenceDirs; command-path-ok markers; NOTE behaviour change: glossary-validate skips an instance whose archimate config is in an undeclared dir), cat-harness-tools#1518 df7b772 (qa-refresh root library-qa + 3 tools foreign-paths literals). fhir-harness fhir-questionnaire-wireframe.md:96 dead command path is old (same at both pins) — not yet judged new or main's.
