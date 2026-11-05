@@ -495,6 +495,35 @@ jobs:
           key: writer-cone-${{ github.sha }}
           restore-keys: writer-cone-
 
+      # ── EXPERIMENT, bean tv20: the gates' QA working copy, restored here ──
+      # `uml:overview` builds its own QA working copy in this job: 511 s of the
+      # next step's 817 s (job 124708101507). The PR's `code-quality-gates`
+      # run built that copy for this same commit (`github.sha`, the test
+      # merge commit both check out) and records it as `tested-tree-<tree>`.
+      # This step waits a bounded time for that job, restores the copy
+      # byte-identical, and records what `qa:working-copy --status` then says.
+      # `current` means the build below skips the rebuild. Anything else means
+      # the build rebuilds over the restored copy, as it did without one. A
+      # draft has no gates copy (fast tier), so it builds as before.
+      # `continue-on-error`: an experiment never fails a preview. The one red
+      # it keeps is the script's own, a restore that broke after extracting,
+      # which then fails the next step's checks.
+      - name: Restore the gates' QA working copy for this commit (bean tv20, experiment)
+        id: qa_reuse
+        if: github.event_name == 'pull_request' && github.event.pull_request.draft != true
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          WAIT_SECONDS: '600'
+        run: |
+          bash .github/scripts/qa-copy-reuse.sh
+          status=$(bun run cat qa:working-copy -- --status 2>&1 | tail -1)
+          echo "after the restore: $status"
+          printf '\n**tv20 measurement:** `%s`\n' "$status" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Build the derived artefacts kept off the commit (bean 0b8c)
         env:
           CAT_WRITER_SKIP: ${{ vars.WRITER_SKIP != 'off' && '1' || '' }}
