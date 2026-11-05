@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T11:19:01Z
+updated_at: 2026-11-05T12:35:29Z
 parent: folio-assistant-k3vv
 ---
 
@@ -49,3 +49,5 @@ Per-job step times, CQG:
 
 
 _2026-11-05T11:18Z_ — #2952 merged: shards download ig-indexes (12–16 s → 1–3 s, run 42012637449 vs 41981133123). bun cache and smart:pages carrying closed as not worth it (measured above). Remaining: the state:mount re-fetch, with session_01VQDpPeA2N8L3orQCPPMAas in cat-harness-tools.
+
+_2026-11-05T12:35:29Z_ — litlfred/cat-harness-tools#1489 measured `state:mount` going from 48.5–58.8 s to 1.1–1.2 s per call, and Code-quality gates calls it in about 17 jobs. Reported by the analysis session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf; noted by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
