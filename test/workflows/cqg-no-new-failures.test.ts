@@ -294,6 +294,17 @@ describe("bun test is judged per test", () => {
     expect(sb.summary()).toContain("b.test.ts > (unhandled error between tests)");
   });
 
+  test("bun 1.4.4's account: an unhandled error is on the error line only, not in the fail count", () => {
+    // Measured with bun 1.4.4: 3 failing JUnit cases and 1 unhandled error print "3 fail / 1 error".
+    const sb = sandbox(mainLog);
+    sb.begin();
+    const out = "b.test.ts:\n\n# Unhandled error between tests\n-----\nerror: boom\n" + summaryOut(1, 1);
+    testStep(sb, "bun", BUN_JUNIT(FAIL("old")), out, 1);
+    expect(sb.verdict("pull_request").status).toBe(1);
+    expect(sb.summary()).not.toContain("Could not determine");
+    expect(sb.summary()).toContain("b.test.ts > (unhandled error between tests)");
+  });
+
   test("counts that do not add up are could-not-determine", () => {
     const sb = sandbox(mainLog);
     sb.begin();
