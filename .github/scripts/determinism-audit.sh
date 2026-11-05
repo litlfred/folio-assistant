@@ -37,19 +37,28 @@ kg-export|bun run cat kg:export
 render-bpmn|bun run cat render:bpmn
 EOF
 )
+# AUDIT_PRODUCERS (tests): the same `name|command` lines, replacing the table.
+[ -z "${AUDIT_PRODUCERS:-}" ] || PRODUCERS="$AUDIT_PRODUCERS"
 
 keep=false; force=false
 want=()
 for a in "$@"; do
   case "$a" in --keep) keep=true ;; --force) force=true ;; -*) echo "usage: $0 [--keep] [--force] [PRODUCER...]" >&2; exit 2 ;; *) want+=("$a") ;; esac
 done
-OUT="${OUT:-build/determinism-audit}"
+# OUTSIDE the checkout, so nothing the reset (`git clean -fdx`) or a producer
+# does inside the tree can touch the audit's own records. (First CI run,
+# 2026-11-05: every producer read "failed on run 1" with no log written — the
+# reset's PREPARE step had failed, silently; its output now goes to
+# $OUT/prepare.log and the report names which step failed.)
+OUT="${OUT:-${RUNNER_TEMP:-${TMPDIR:-/tmp}}/determinism-audit}"
 ROOT=$(git rev-parse --show-toplevel) || exit 3
 cd "$ROOT" || exit 3
+mkdir -p "$OUT" && OUT=$(cd "$OUT" && pwd) || exit 3
+case "$OUT/" in "$ROOT"/*) echo "determinism-audit: OUT ($OUT) must be outside the checkout; the reset would delete it" >&2; exit 2 ;; esac
 
 # Mounted instances are ignored directories the reset must not clean away.
 mounts=$(python3 -c 'import json; print("\n".join(i["name"] for i in json.load(open("index.config.json"))["instances"]))' 2>/dev/null || true)
-excl=(-e node_modules -e "/$OUT" -e .cache)
+excl=(-e node_modules -e .cache)
 while IFS= read -r m; do [ -n "$m" ] && excl+=(-e "/$m"); done <<< "$mounts"
 
 # The reset deletes every ignored file outside the mounts (build caches
@@ -67,14 +76,14 @@ fi
 # lay down what the reset removed and a producer reads (e.g. `state:mount`).
 reset_tree() {
   git checkout -q -- . && git clean -q -fdx "${excl[@]}" || return 1
-  [ -z "${PREPARE:-}" ] || bash -c "$PREPARE" > /dev/null 2>&1
+  [ -z "${PREPARE:-}" ] || bash -c "$PREPARE" > "$OUT/prepare.log" 2>&1 || { echo "determinism-audit: PREPARE failed; see $OUT/prepare.log" >&2; return 1; }
 }
 
 # Every file written since the marker, anywhere in the checkout (mounted
 # instances included), with its sha256. Measured by mtime, so nothing about a
 # producer's outputs is declared.
 snapshot() {
-  find . \( -name node_modules -o -name .git -o -path "./$OUT" -o -path ./.cache \) -prune -o \
+  find . \( -name node_modules -o -name .git -o -path ./.cache \) -prune -o \
     -type f -newer "$1" -print | sed 's#^\./##' | sort \
     | while IFS= read -r p; do printf '%s  %s\n' "$(sha256sum < "$p" | cut -c1-64)" "$p"; done
 }
@@ -89,11 +98,12 @@ while IFS='|' read -r name cmd; do
   if [ ${#want[@]} -gt 0 ] && [[ ! " ${want[*]} " == *" $name "* ]]; then continue; fi
   echo "== $name: $cmd" >&2
   d="$OUT/$name"; rm -rf "$d"; mkdir -p "$d"
-  ok=true
+  ok=true; failed=""
   for i in 1 2; do
-    reset_tree || { ok=false; break; }
+    reset_tree || { ok=false; failed="the reset or PREPARE before run $i (see \`$OUT/prepare.log\`)"; break; }
+    mkdir -p "$d"
     touch "$d/marker$i"; sleep 1   # mtime granularity: a write in this second is after the marker
-    if ! bash -c "$cmd" > "$d/run$i.log" 2>&1; then ok=false; break; fi
+    if ! bash -c "$cmd" > "$d/run$i.log" 2>&1; then ok=false; failed="\`$cmd\` on run $i (see \`$d/run$i.log\`)"; break; fi
     snapshot "$d/marker$i" > "$d/run$i.sha"
     if [ "$i" = 1 ]; then
       mkdir -p "$d/copy1"
@@ -101,7 +111,7 @@ while IFS='|' read -r name cmd; do
     fi
   done
   if [ "$ok" = false ]; then
-    printf '\n## `%s` — COULD NOT DETERMINE\n\n`%s` failed on run %s; see `%s`.\n' "$name" "$cmd" "$i" "$d/run$i.log" >> "$report"
+    printf '\n## `%s` — COULD NOT DETERMINE\n\nFailed: %s.\n' "$name" "$failed" >> "$report"
     status=3; reset_tree; continue
   fi
   # Every path either run wrote: run 1's bytes (copy1) against the tree after

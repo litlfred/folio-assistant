@@ -78,8 +78,9 @@ jobs:
         with:
           name: determinism-audit
           path: |
-            build/determinism-audit/report.md
-            build/determinism-audit/*/*.log
-            build/determinism-audit/*/*.sha
+            ${{ runner.temp }}/determinism-audit/report.md
+            ${{ runner.temp }}/determinism-audit/prepare.log
+            ${{ runner.temp }}/determinism-audit/*/*.log
+            ${{ runner.temp }}/determinism-audit/*/*.sha
           retention-days: 14
           if-no-files-found: ignore
