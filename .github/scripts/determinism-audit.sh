@@ -76,7 +76,7 @@ fi
 # lay down what the reset removed and a producer reads (e.g. `state:mount`).
 reset_tree() {
   git checkout -q -- . && git clean -q -fdx "${excl[@]}" || return 1
-  [ -z "${PREPARE:-}" ] || bash -c "$PREPARE" > "$OUT/prepare.log" 2>&1 || { echo "determinism-audit: PREPARE failed; see $OUT/prepare.log" >&2; return 1; }
+  [ -z "${PREPARE:-}" ] || bash -c "$PREPARE" > "$OUT/prepare.log" 2>&1 || { echo "determinism-audit: PREPARE failed; the end of $OUT/prepare.log:" >&2; tail -n 40 "$OUT/prepare.log" | sed 's/^/  prepare: /' >&2; return 1; }
 }
 
 # Every file written since the marker, anywhere in the checkout (mounted
@@ -112,6 +112,7 @@ while IFS='|' read -r name cmd; do
   done
   if [ "$ok" = false ]; then
     printf '\n## `%s` — COULD NOT DETERMINE\n\nFailed: %s.\n' "$name" "$failed" >> "$report"
+    case "$failed" in "the reset or PREPARE"*) [ -f "$OUT/prepare.log" ] && { printf '\n```\n'; tail -n 15 "$OUT/prepare.log"; printf '```\n'; } >> "$report" ;; esac
     status=3; reset_tree; continue
   fi
   # Every path either run wrote: run 1's bytes (copy1) against the tree after
