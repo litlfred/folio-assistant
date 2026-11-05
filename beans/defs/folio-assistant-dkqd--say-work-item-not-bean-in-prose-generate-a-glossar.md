@@ -2,14 +2,14 @@
 # folio-assistant-dkqd
 $schema: bean/1.0.0
 title: Say 'work item', not 'bean', in prose; generate a glossary of node kinds and harnesses
-status: in-progress
+status: completed
 type: feature
 priority: normal
 tags:
     - vocabulary
     - glossary
 created_at: 2026-11-04T06:55:38Z
-updated_at: 2026-11-04T21:08:39Z
+updated_at: 2026-11-05T06:32:47Z
 parent: folio-assistant-yj32
 ---
 
@@ -47,3 +47,8 @@ _2026-11-04T06:57:32Z_ — Claimed by claude/work-item-vocabulary — pushed to 
 - cat-harness-tools#1478 (merge first): glossary of graph kinds, node kinds (Work item narrower than Memory record) and harnesses; check:retired-prose-words.
 - cat-harness#1030: glossary data, 266 files of prose renamed, retired-prose-words code list, todo-manager/agent-memory say a work item is a memory record.
 - Not done: BPMN names/documentation; the work plan ↔ process instance model (owner decision pending).
+
+
+## Done (2026-11-05)
+
+Merged by the owner's go-ahead: litlfred/cat-harness#1030 (538b895) then litlfred/cat-harness-tools#1478 (ec4be2c). Follow-ups split out: BPMN names/documentation still say "bean"; the work plan model is folio-assistant work item opened below (owner chose "the epic is the plan").
