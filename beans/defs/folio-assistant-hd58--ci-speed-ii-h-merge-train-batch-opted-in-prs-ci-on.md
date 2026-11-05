@@ -75,3 +75,7 @@ The last 100 `Code-quality gates` runs, 2026-11-03T07:44Z → 2026-11-05T12:00Z,
 ## After (modelled; to be measured once trains run)
 
 Per merged PR in a train of k: its own pushes (unchanged, linear) + 1/k candidate run + 1/k main run that reuses the candidate's verdict (heavy jobs skipped) + 0 merge-main dispatches for train PRs, + ⌈log₂ k⌉/k on a red train. At k = 5: ≈ 0.4 shared runs per PR instead of 1.9, and no term that grows with N.
+
+## Owner ruling, 2026-11-05
+
+Asked in session https://claude.ai/code/session_01VQDpPdXwTy9PWgFEpEYCSM, answer **1. Declared only**: the train resolves conflicts that a declared pattern covers, mechanically at train time, and refuses (hands back) any authored conflict. This narrows the 2026-10-04 "members must stack cleanly" ruling for the automated train only; `merge-queue` should say so (cat-harness follow-up).
