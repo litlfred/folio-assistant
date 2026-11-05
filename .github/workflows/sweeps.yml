@@ -124,6 +124,8 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
+          # The same off switch merge-train.yml reads, so a workflow PR counts as ready only when the train may carry it.
+          MERGE_TRAIN_CARRIES_WORKFLOWS: ${{ vars.MERGE_TRAIN_CARRIES_WORKFLOWS == 'true' && (vars.HARNESS_BOT_ID != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '') }}
         run: |
           set -euo pipefail
           why=$(bun .github/scripts/merge-train.ts pending)

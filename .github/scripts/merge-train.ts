@@ -67,6 +67,17 @@ export const STATE_MARKER = /<!--\s*merge-train:state (\{.*?\})\s*-->/s;
 export const COMMENT_MARKER = "<!-- merge-train:verdict -->";
 /** Paths the train never carries: an Actions token cannot push a workflow file; `subscriptions/` are held copies. */
 export const PROTECTED = /^(\.github\/workflows\/|subscriptions\/)/;
+const WORKFLOWS = /^\.github\/workflows\//;
+
+/**
+ * Whether this train may carry PRs that change `.github/workflows/` (owner,
+ * 2026-11-05: "add an off switch"). Off unless the workflow sets
+ * `MERGE_TRAIN_CARRIES_WORKFLOWS=true`, which it does only when the repository
+ * variable of that name is `true` AND a bot token (the harness App, or
+ * `PUSH_BRANCH_TRIGGERING_CI`) is present: GITHUB_TOKEN can neither push nor
+ * merge a workflow file. `subscriptions/` is never carried.
+ */
+export const carriesWorkflows = (): boolean => process.env.MERGE_TRAIN_CARRIES_WORKFLOWS === "true";
 
 // ── The pure decisions ──────────────────────────────────────────────────────
 
@@ -142,7 +153,7 @@ export interface Candidate {
 }
 
 /** Why a PR is not in the next train, or undefined when it is ready. */
-export function notReady(c: Candidate, mainRuns: readonly CheckRun[]): string | undefined {
+export function notReady(c: Candidate, mainRuns: readonly CheckRun[], workflowsOk = carriesWorkflows()): string | undefined {
   if (c.labels.includes(BATCH_LABEL)) return "it is a train PR itself";
   const optedIn = (c.labels.includes(OPT_IN) && c.labelledBy === "User") || c.approved;
   if (!optedIn) {
@@ -153,7 +164,7 @@ export function notReady(c: Candidate, mainRuns: readonly CheckRun[]): string | 
   if (c.draft) return "a draft";
   if (c.baseRef !== "main") return `its base is ${c.baseRef}, not main`;
   if (!c.sameRepo) return "a fork";
-  const bad = c.files.filter((f) => PROTECTED.test(f));
+  const bad = c.files.filter((f) => PROTECTED.test(f) && !(workflowsOk && WORKFLOWS.test(f)));
   if (bad.length) return `touches a path the train never carries: ${bad.slice(0, 3).join(", ")}`;
   // Its own checks, compared with main job by job: a head whose checks have
   // not finished is not ready; a failure main does not share is the author's

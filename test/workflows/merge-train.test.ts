@@ -194,3 +194,20 @@ describe("a closed train carries the queue on", () => {
     expect(readState(withState("x", s))).toEqual(s);
   });
 });
+
+describe("the workflow-PR off switch (owner, 2026-11-05)", () => {
+  const main: CheckRun[] = [];
+  test("off: a PR changing .github/workflows/ is not carried", () => {
+    expect(notReady(cand({ files: [".github/workflows/x.yml"] }), main, false)).toContain("never carries");
+  });
+  test("on: it is carried; subscriptions/ never is", () => {
+    expect(notReady(cand({ files: [".github/workflows/x.yml", "src/a.ts"] }), main, true)).toBeUndefined();
+    expect(notReady(cand({ files: ["subscriptions/a/b.json"] }), main, true)).toContain("never carries");
+  });
+  test("both workflows gate the switch on the variable AND a bot token", () => {
+    for (const f of ["merge-train.yml", "sweeps.yml"]) {
+      const s = readFileSync(join(ROOT, ".github/workflows", f), "utf-8");
+      expect(s).toMatch(/MERGE_TRAIN_CARRIES_WORKFLOWS: \$\{\{ vars\.MERGE_TRAIN_CARRIES_WORKFLOWS == 'true' && \(/);
+    }
+  });
+});
