@@ -137,12 +137,12 @@ def judge_tests(kind, junit, log, exit_code):
         unhandled, fail_n, err_n = bun_log(log)
         if fail_n is None:
             return None, f"exit {exit_code} and no `N fail` summary in bun's output"
-        # bun 1.4.4 counts an unhandled error between tests on its `N error`
-        # line only, not in `N fail` (measured 2026-11-05: 3 failing JUnit
-        # cases + 1 unhandled error printed "3 fail / 1 error"); the fixture
-        # this was first written against counted it in both. Either is a
-        # consistent account; anything else is could-not-determine.
-        if fail_n not in (len(failing), len(failing) + len(unhandled)) or err_n != len(unhandled):
+        # bun 1.4.4's account, captured as fixtures in
+        # test/workflows/fixtures/bun-1.4.4-*: the JUnit report lists the
+        # failing test cases and no unhandled error; `N fail` counts exactly
+        # those cases; each `# Unhandled error between tests` is counted on
+        # the `N error` line alone. Anything else is could-not-determine.
+        if fail_n != len(failing) or err_n != len(unhandled):
             return None, (f"bun reported {fail_n} fail / {err_n} error, the JUnit report names "
                           f"{len(failing)} failing test(s) and the output {len(unhandled)} unhandled error(s)")
         failing += unhandled
