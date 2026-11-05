@@ -1559,6 +1559,23 @@ jobs:
       - name: Java runtime the PlantUML release declares (#2744)
         uses: ./.github/actions/plantuml-java
 
+      # The CI cone (bean 4rbc; CI speed 7): on a pull request a gate whose
+      # strace-derived read set and script are unchanged since main's last
+      # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
+      # a pass); on a push to main each gate is recorded. The records are
+      # restored from main's run on the PR's base sha (nearest older one
+      # otherwise) and saved by this action's post-job step, which saves only
+      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      - name: Restore the CI cone records (bean 4rbc)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-gates-kg-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          restore-keys: |
+            ci-cone-v1-gates-kg-
+      - name: Turn on the CI cone (bean 4rbc)
+        run: bash .github/scripts/ci-cone-prepare.sh
+
       - name: Judge each step from here against main's record (Q-PIPE-1)
         run: bash .github/scripts/cqg-step.sh --begin
 
@@ -2307,6 +2324,23 @@ jobs:
         env:
           EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
+
+      # The CI cone (bean 4rbc; CI speed 7): on a pull request a gate whose
+      # strace-derived read set and script are unchanged since main's last
+      # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
+      # a pass); on a push to main each gate is recorded. The records are
+      # restored from main's run on the PR's base sha (nearest older one
+      # otherwise) and saved by this action's post-job step, which saves only
+      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      - name: Restore the CI cone records (bean 4rbc)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-gates-docs-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          restore-keys: |
+            ci-cone-v1-gates-docs-
+      - name: Turn on the CI cone (bean 4rbc)
+        run: bash .github/scripts/ci-cone-prepare.sh
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
         run: bash .github/scripts/cqg-step.sh --begin
@@ -3458,6 +3492,23 @@ jobs:
 
       - name: Java runtime the PlantUML release declares (#2744)
         uses: ./.github/actions/plantuml-java
+
+      # The CI cone (bean 4rbc; CI speed 7): on a pull request a gate whose
+      # strace-derived read set and script are unchanged since main's last
+      # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
+      # a pass); on a push to main each gate is recorded. The records are
+      # restored from main's run on the PR's base sha (nearest older one
+      # otherwise) and saved by this action's post-job step, which saves only
+      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      - name: Restore the CI cone records (bean 4rbc)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-gates-unrun-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          restore-keys: |
+            ci-cone-v1-gates-unrun-
+      - name: Turn on the CI cone (bean 4rbc)
+        run: bash .github/scripts/ci-cone-prepare.sh
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
         run: bash .github/scripts/cqg-step.sh --begin
