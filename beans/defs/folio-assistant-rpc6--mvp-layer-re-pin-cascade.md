@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T18:37:32Z
+updated_at: 2026-11-05T18:39:56Z
 parent: folio-assistant-rwmf
 ---
 
@@ -85,3 +85,5 @@ _2026-11-05T18:32:00Z_ — cat-harness-tools#1537 1512679: 1 new test failure (s
 _2026-11-05T18:32:58Z_ — MERGED folio-assistant-core#649 as 705a2b8 (all green). Waiting: cat-harness#1069 (6a0a345), cat-harness-tools#1537 (0ccd352).
 
 _2026-11-05T18:37:32Z_ — smart-ra#228 f323d7d new: check:subgraphs, state:visualizer (known), translate-bpmn:bootstrap, translation:obsolete. uganda#18 fc689b9 same + check:index-ignores, index-config:inline, index-config:migrate — my error: the freeze script reverted uganda's regenerated .gitignore block (duplicate /who-iris/); index-config:migrate --write restores it, all 3 pass locally; goes in the final re-pin; script fixed. translation:obsolete already passes at cat-harness#1069's tree (main fixed the agentic-harness / beans-and-todos .po files). Final re-pin still waits on cat-harness#1069 and cat-harness-tools#1537.
+
+_2026-11-05T18:39:56Z_ — MERGED cat-harness#1069 as b7bbc8f (all green): 4 command paths, requirements-filing SVG link, docs/sage-mcp.md docker pull line, AGENTS.md skills index (256 / sdlc-core 72). Last layer fix open: cat-harness-tools#1537 (0ccd352).
