@@ -43,14 +43,16 @@ function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string
   writeFileSync(join(dir, "runs.json"), JSON.stringify({ workflow_runs: [{ id: 7, html_url: "https://example/runs/7" }] }));
   writeFileSync(join(dir, "jobs.json"), JSON.stringify({ jobs: [{ id: 70, name: jobName, conclusion: opts.conclusion ?? "failure" }] }));
   writeFileSync(join(dir, "job.log"), mainLog ?? "no record here\n");
+  // Every variant takes POSTs (statuses, reruns, issues), logs them, and fails them when GH_POST_FAIL is set.
+  const post = `if [ "$2" = "-X" ]; then echo "$*" >> '${dir}/posts.log'; [ -z "$GH_POST_FAIL" ]; exit $?; fi\n`;
   writeFileSync(
     join(bin, "gh"),
     opts.ghFails
       ? "#!/bin/sh\necho denied >&2\nexit 1\n"
       : opts.refusesEscapes
         ? // Newer gh refuses a body with terminal escapes unless it is passed --allow-escape-sequences.
-          `#!/bin/sh\nif [ "$2" = --allow-escape-sequences ]; then shift; elif case "$2" in *"/logs") true ;; *) false ;; esac; then echo "the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway" >&2; exit 1; fi\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`
-        : `#!/bin/sh\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`,
+          `#!/bin/sh\n${post}if [ "$2" = --allow-escape-sequences ]; then shift; elif case "$2" in *"/logs") true ;; *) false ;; esac; then echo "the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway" >&2; exit 1; fi\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`
+        : `#!/bin/sh\n${post}case "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`,
   );
   chmodSync(join(bin, "gh"), 0o755);
   const summary = join(dir, "summary.md");
@@ -73,7 +75,8 @@ function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string
   const begin = (extra: Record<string, string> = {}) => spawnSync("bash", [STEP, "--begin"], { env: env(extra), encoding: "utf8", cwd: opts.cwd });
   const verdict = (event: string, extra: Record<string, string> = {}) =>
     spawnSync("python3", [JUDGE, "verdict"], { env: env({ GITHUB_EVENT_NAME: event, ...extra }), encoding: "utf8", cwd: opts.cwd });
-  return { dir, state, step, begin, verdict, summary: () => readFileSync(summary, "utf8"), env };
+  const posts = () => (existsSync(join(dir, "posts.log")) ? readFileSync(join(dir, "posts.log"), "utf8") : "");
+  return { dir, state, step, begin, verdict, summary: () => readFileSync(summary, "utf8"), env, posts };
 }
 
 /** Main's job log holding the record a main run with these steps would print. */
@@ -387,8 +390,8 @@ describe("a local gate record on the PR head (bean fn8q) stands in for the gates
     const ran = join(work, "ran.log");
     writeFileSync(join(sb.dir, "bin", "bun"), `#!/bin/sh\nif [ "$1" = --version ]; then echo ${opts.bun ?? "1.4.4"}; exit 0; fi\necho "$*" >> '${ran}'\n`);
     chmodSync(join(sb.dir, "bin", "bun"), 0o755);
-    const on = { CQG_HONOUR_LOCAL_RECORDS: "true", GITHUB_EVENT_NAME: "pull_request", GITHUB_EVENT_PATH: event, CQG_PLATFORM: "linux-x64" };
-    return { sb, on, ran: () => (existsSync(ran) ? readFileSync(ran, "utf8") : ""), steps: () => readFileSync(join(sb.state, "steps.jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l)) };
+    const on = { CQG_HONOUR_LOCAL_RECORDS: "true", GITHUB_EVENT_NAME: "pull_request", GITHUB_EVENT_PATH: event, CQG_PLATFORM: "linux-x64", GITHUB_RUN_ID: "41" };
+    return { sb, on, head, ran: () => (existsSync(ran) ? readFileSync(ran, "utf8") : ""), steps: () => readFileSync(join(sb.state, "steps.jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l)) };
   }
   const pass = (extra: Record<string, unknown> = {}) => (tree: string) => ({
     $schema: "cat-local-gate-record/v1",
@@ -409,6 +412,10 @@ describe("a local gate record on the PR head (bean fn8q) stands in for the gates
   test("a step every command of which the record ran is SKIPPED, recorded as skipped; any other step runs", () => {
     const r = withRecord(pass());
     expect(r.sb.begin(r.on).stdout).toContain("honouring the local gate record");
+    // The pending status the sweep resolves was set first, on the PR head.
+    expect(r.sb.posts()).toContain(`repos/o/r/statuses/${r.head}`);
+    expect(r.sb.posts()).toContain("state=pending");
+    expect(r.sb.posts()).toContain("context=gates/verified");
     const skipped = r.sb.step("bun run cat check:a", r.on);
     expect(skipped.status).toBe(0);
     expect(skipped.stdout).toContain("SKIPPED");
@@ -438,6 +445,7 @@ describe("a local gate record on the PR head (bean fn8q) stands in for the gates
     ["another bun", pass(), {}, "1.9.9"],
     ["another platform", pass({ tools: { bun: "1.4.4", git: "2", platform: "darwin-arm64" } }), {}, undefined],
     ["a record that is not a pass", pass({ outcome: "fail" }), {}, undefined],
+    ["the pending status cannot be set (a fork's token)", pass(), { GH_POST_FAIL: "1" }, undefined],
   ] as const) {
     test(`not honoured: ${what}, so every step runs`, () => {
       const r = withRecord(rec, { bun });
@@ -467,9 +475,13 @@ describe("the workflow wires it as designed", () => {
     for (const id of JUDGED) {
       const job = wf.jobs[id]!;
       expect(job.defaults?.run?.shell).toBe("bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}");
-      expect(job.permissions).toEqual({ contents: "read", actions: "read" });
+      // statuses: write is the one widening fn8q needs: a local record is honoured only
+      // after its pending gates/verified status is set, so a skip is never unverified.
+      expect(job.permissions).toEqual({ contents: "read", actions: "read", statuses: "write" });
       expect(job.env?.CQG_JOB_NAME).toBe(job.name!);
-      expect(job.steps.filter((s) => s.run === "bash .github/scripts/cqg-step.sh --begin")).toHaveLength(1);
+      const begin = job.steps.filter((s) => s.run === "bash .github/scripts/cqg-step.sh --begin");
+      expect(begin).toHaveLength(1);
+      expect(begin[0]!.env?.CQG_HONOUR_LOCAL_RECORDS).toBe("${{ vars.CQG_HONOUR_LOCAL_RECORDS }}");
     }
   });
 

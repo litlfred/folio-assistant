@@ -285,6 +285,23 @@ def compare(head, main):
 # ---------------------------------------------------------------- the API
 
 
+def gh_post(path, fields):
+    args = ["gh", "api", "-X", "POST", path]
+    for k, v in fields.items():
+        args += ["-f", f"{k}={v}"]
+    r = subprocess.run(args, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(f"gh api -X POST {path}: {r.stderr.strip()[:300]}")
+    return r.stdout
+
+
+def set_status(repo, sha, state, description, url):
+    if not repo:
+        raise RuntimeError("GITHUB_REPOSITORY is unset")
+    gh_post(f"repos/{repo}/statuses/{sha}", {"state": state, "context": STATUS_CONTEXT,
+                                             "description": description[:139], "target_url": url})
+
+
 def gh(path, raw=False):
     r = subprocess.run(["gh", "api", path], capture_output=True, text=True)
     if r.returncode != 0 and "--allow-escape-sequences" in r.stderr:
@@ -418,6 +435,7 @@ def cmd_reuse_check(_args):
 
 
 LOCAL_RECORD_SCHEMA = "cat-local-gate-record/v1"
+STATUS_CONTEXT = "gates/verified"
 NOTES_REF = "refs/notes/cat-gates"
 ARCH = {"x86_64": "x64", "amd64": "x64", "aarch64": "arm64", "arm64": "arm64"}
 
@@ -484,6 +502,16 @@ def judge_local_record():
         return None, f"the record was made on {tools.get('platform')}, this runner is {this_platform()}"
     if not isinstance(rec.get("gates"), list) or not rec["gates"]:
         return None, "the record names no gate"
+    # The skip is only as good as its verification: the pending status the
+    # sweep resolves is set FIRST, and a record is not honoured without it
+    # (a fork's token cannot write statuses, so a fork PR runs every gate).
+    run_url = (f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/{os.environ.get('GITHUB_REPOSITORY', '')}"
+               f"/actions/runs/{os.environ.get('GITHUB_RUN_ID', '')}")
+    try:
+        set_status(os.environ.get("GITHUB_REPOSITORY", ""), head, "pending",
+                   f"gates skipped on a local record of tree {tree[:12]}; verification queued", run_url)
+    except RuntimeError as e:
+        return None, f"the pending `{STATUS_CONTEXT}` status could not be set, so nothing would verify a skip ({e})"
     return rec, None
 
 

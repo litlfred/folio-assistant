@@ -39,7 +39,7 @@ if [ "${1:-}" = "--begin" ]; then
   mkdir -p "$dir" && echo judge > "$dir/phase" || exit $?
   # Bean fn8q: whether the PR head's local gate record may stand in for gates
   # on this tree. It never fails the step; not honouring it is the default.
-  python3 "$here/cqg_judge.py" local-record
+  GH_TOKEN="${CQG_TOKEN:-}" python3 "$here/cqg_judge.py" local-record
   exit 0
 fi
 
