@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-02T19:35:00Z
+updated_at: 2026-11-05T13:35:00Z
 parent: folio-assistant-4j43
 tags:
     - smart-ra
@@ -38,3 +38,5 @@ _2026-11-02T18:29Z_ — Owner tapped A (merge as is) at 18:28:18Z. PR marked rea
 _2026-11-02T18:58Z_ — Full CI red only on cat-harness-tools:check:corpus-gate (54 edited blocks lack editing-hci-validation instances; store = smart-ra branch cat/dpi-h-ra/beans, beans/workflows/, mount with `bun run cat state:mount`, CI mounts it too). PR comment posted. Card 'How should I get past the corpus gate' (A record approval per block via `bun run cat workflow:start/complete` (rec), B merge red, C platform relax citation-only edits, D hold).
 _2026-11-02T19:03Z_ — Owner tapped B (merge with corpus gate red) 19:01Z. Merged smart-ra#232 as 140ddd1. Done. Follow-up: smart-ra site publish (workflow_dispatch/agent) to show it live; re-pin #228 brings core references:render.
 _2026-11-02T19:35Z_ — Regression: references/ made smart-base check:ig-citations strict, re-pin #228 red (3 IG references.md links). Fix smart-ra#233 (branch claude/smart-ra-ig-reference-nodes, 8fe268b) adds 9789241548960-eng, openhie-architecture-specification, smart-ig-starter-kit-references; local gate 0 findings. Ready, functional, merge on green (window to 00:40Z), then tell re-pin prep thread …FDPvN5ktTn4HS2iruRVeZj.
+
+_2026-11-05T13:35:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
