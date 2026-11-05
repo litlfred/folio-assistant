@@ -59,8 +59,10 @@
 #   bundle-cache.sh fetch NAME DIGEST OUTDIR # hit=, run_id=, manifest= to $GITHUB_OUTPUT
 #   bundle-cache.sh record NAME DIGEST OUTDIR # writes OUTDIR/bundle-cache.txt to upload
 #
-# Env: REPO (owner/name), SHA (the commit checked out), HEAD_SHA (the PR head
-# on a pull_request, else SHA), GITHUB_REF, GITHUB_RUN_ID, GH_TOKEN.
+# Env: REPO (owner/name), SHA (the commit checked out), GH_TOKEN, and the
+# runner's GITHUB_EVENT_NAME, GITHUB_REF, GITHUB_RUN_ID. The head is SHA, or
+# on a pull_request the second parent of the test merge commit SHA (the PR
+# head), read from the API, so no step depends on the pull_request payload.
 #
 # Exit: 0 in every fetch outcome · 2 usage.
 
@@ -73,6 +75,17 @@ output() { [ -n "${GITHUB_OUTPUT:-}" ] && echo "$1=$2" >> "$GITHUB_OUTPUT"; echo
 summary() { if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then printf '%s\n' "$@" >> "$GITHUB_STEP_SUMMARY"; fi; printf '%s\n' "$@" >&2; }
 
 ver() { "$@" 2>/dev/null | head -1 || true; }
+# This commit's parents, space-separated, from the API (a depth-1 checkout has none).
+parents_of() { gh api "repos/$REPO/commits/$1" --jq '[.parents[].sha] | join(" ")' 2>/dev/null; }
+# The head this run is for: SHA, or the PR head (second parent) on a pull_request.
+head_of() {
+  if [ "${GITHUB_EVENT_NAME:-}" = pull_request ]; then
+    local p; p=$(parents_of "$SHA") || return 1
+    set -- $p; [ $# -eq 2 ] || return 1; echo "$2"
+  else
+    echo "$SHA"
+  fi
+}
 
 case "$cmd" in
   digest)
@@ -101,7 +114,7 @@ case "$cmd" in
       echo "digest: $3"
       echo "run: ${GITHUB_RUN_ID:-}"
       echo "commit: ${SHA:-$(git rev-parse HEAD)}"
-      echo "head: ${HEAD_SHA:-${SHA:-}}"
+      echo "head: $( [ -n "${SHA:-}" ] && [ -n "${REPO:-}" ] && head_of || true)"
       echo "ref: ${GITHUB_REF:-}"
     } > "$4/bundle-cache.txt"
     cat "$4/bundle-cache.txt"
@@ -116,10 +129,10 @@ case "$cmd" in
       exit 0
     }
     : "${REPO:?}" "${SHA:?}"
-    head="${HEAD_SHA:-$SHA}"
     [[ "$digest" =~ ^[0-9a-f]{64}$ ]] || miss "The digest could not be computed."
     tree=$(git rev-parse 'HEAD^{tree}' 2>/dev/null) || miss "Could not read this tree."
-    parents=$(gh api "repos/$REPO/commits/$SHA" --jq '[.parents[].sha] | join(" ")' 2>/dev/null) || parents=""
+    head=$(head_of) || miss "Could not read the PR head (the second parent of \`$SHA\`)."
+    parents=$(parents_of "$SHA") || parents=""
 
     records=$(gh api "repos/$REPO/actions/artifacts?name=bundle-$name-$digest&per_page=30" \
       --jq '.artifacts | sort_by(.created_at) | reverse | .[] | select(.expired == false)

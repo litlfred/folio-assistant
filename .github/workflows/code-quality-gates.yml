@@ -766,7 +766,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: bash .github/scripts/bundle-cache.sh fetch qa-working-copy "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/qa-working-copy"
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
@@ -885,8 +884,9 @@ jobs:
       - name: Record this copy under its digest (bundle cache)
         # Last, so a record exists only when the copy above was uploaded.
         env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: bash .github/scripts/bundle-cache.sh record qa-working-copy "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/bundle-record"
 
       - name: Upload the digest record (bundle cache)
@@ -983,7 +983,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: bash .github/scripts/bundle-cache.sh fetch publish-pages "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/publish-pages"
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
@@ -1063,8 +1062,9 @@ jobs:
         # Last, so a record exists only when the pages above were uploaded.
         if: ${{ steps.digest.outputs.digest != '' }}
         env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: bash .github/scripts/bundle-cache.sh record publish-pages "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/bundle-record"
 
       - name: Upload the digest record (bundle cache)
