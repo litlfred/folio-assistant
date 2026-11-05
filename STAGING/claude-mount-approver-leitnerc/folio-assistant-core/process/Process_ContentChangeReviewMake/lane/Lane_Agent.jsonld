@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/folio-assistant-core/process/Process_ContentChangeReviewMake/lane/Lane_Agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/mount-approver-leitnerc",
+    "sha": "1f1c1301124ea0a41631dd9fe6c697565a37635b",
+    "pr": "2945/merge",
+    "run": "41981133306"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/folio-assistant-core/process/Process_ContentChangeReviewMake/lane/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Folio-Assistant Agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/folio-assistant-core/process/Process_ContentChangeReviewMake",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/folio-assistant-core/role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewMake/lane/Lane_Agent"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/smart-base/skill/ig-artifact-ingestion.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/ig-artifact-ingestion.jsonld",
+  "staging": {
+    "branch": "claude/mount-approver-leitnerc",
+    "sha": "1f1c1301124ea0a41631dd9fe6c697565a37635b",
+    "pr": "2945/merge",
+    "run": "41981133306"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/ig-artifact-ingestion",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "ig-artifact-ingestion",
+      "title": "ig-artifact-ingestion",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
+      "instructionLines": 176,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/externalSchema/w3c-hydra.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/mount-approver-leitnerc",
+    "sha": "1f1c1301124ea0a41631dd9fe6c697565a37635b",
+    "pr": "2945/merge",
+    "run": "41981133306"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/externalSchema/w3c-hydra",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/ExternalSchema",
+      "name": "w3c-hydra",
+      "title": "Hydra Core Vocabulary",
+      "authority": "W3C",
+      "specVersion": "unpinned",
+      "specUse": "conforms",
+      "specUrl": "https://www.hydra-cg.com/spec/latest/core/",
+      "namespace": [
+        "http://www.w3.org/ns/hydra/core#"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-hydra"
+    }
+  ]
+}

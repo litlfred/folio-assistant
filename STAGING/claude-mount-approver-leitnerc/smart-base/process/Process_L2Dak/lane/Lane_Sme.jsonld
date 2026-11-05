@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/smart-base/process/Process_L2Dak/lane/Lane_Sme.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Sme.jsonld",
+  "staging": {
+    "branch": "claude/mount-approver-leitnerc",
+    "sha": "1f1c1301124ea0a41631dd9fe6c697565a37635b",
+    "pr": "2945/merge",
+    "run": "41981133306"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Sme",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Clinical SME",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "bindsRole": "http://smart.who.int/base/role/clinical-sme",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

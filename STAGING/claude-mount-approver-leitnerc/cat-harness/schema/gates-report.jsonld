@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/schema/gates-report.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/mount-approver-leitnerc",
+    "sha": "1f1c1301124ea0a41631dd9fe6c697565a37635b",
+    "pr": "2945/merge",
+    "run": "41981133306"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/schema/gates-report",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "gates-report",
+      "title": "gates-report",
+      "summary": "The typed reports of `bun run cat gates` and `bun run cat check:merged`.",
+      "module": "schemas/sdlc/gates-report.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/gates-report"
+    }
+  ]
+}

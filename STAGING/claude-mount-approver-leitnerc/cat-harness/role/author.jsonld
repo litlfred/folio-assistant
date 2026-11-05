@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/role/author.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/mount-approver-leitnerc",
+    "sha": "1f1c1301124ea0a41631dd9fe6c697565a37635b",
+    "pr": "2945/merge",
+    "run": "41981133306"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/role/author",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Author",
+      "title": "Author",
+      "notation": "author",
+      "description": "Writes and revises folio content. The position, not the person: an editor and a guideline developer both act as author when they are changing a block.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/bpmn-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/content-author",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/content-plan",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/dmn-authoring",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/evidence-appraisal",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/kg-affordances",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/staging-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/todo-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-mount-approver-leitnerc/cat-harness/skill/voice-authoring-guidance"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/author"
+    }
+  ]
+}
