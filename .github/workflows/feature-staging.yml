@@ -183,10 +183,6 @@ permissions:
   # `preview/agent-build`, the verify status of an agent-built preview
   # (folio-assistant#2881).
   statuses: write
-  # Read-only: `stage` pulls the prepared CI image, private on GHCR (bean
-  # ay33). Granted at the top rather than on `stage` because a job-level block
-  # would have to restate every write above it.
-  packages: read
 
 concurrency:
   # `cleanup_slug` sits in the middle so two dispatched cleanups of
@@ -431,7 +427,6 @@ jobs:
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
         with:
-          registry-token: ${{ github.token }}
           chromium: with-deps
 
       - name: Mount bootstrap and bootstrap-tools from the lock

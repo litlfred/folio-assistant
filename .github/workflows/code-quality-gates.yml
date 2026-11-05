@@ -196,9 +196,6 @@ jobs:
     # NOT here: it never checks out, so this path does not exist for it, and it
     # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
     # the same, until bean `5p4m` removed them.)
-    permissions:
-      contents: read
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
@@ -211,8 +208,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
@@ -457,9 +452,6 @@ jobs:
     # NOT here: it never checks out, so this path does not exist for it, and it
     # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
     # the same, until bean `5p4m` removed them.)
-    permissions:
-      contents: read
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
@@ -472,8 +464,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -574,7 +564,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
       contents: read
       actions: read
       checks: read
@@ -596,8 +585,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       - name: Decide whether this tree's verdict already exists (bean qbco)
         id: decide
@@ -692,9 +679,6 @@ jobs:
       manifest: ${{ steps.pack.outputs.manifest }}
     # Every `run:` step goes through `gate-shell.sh`, for the reason the
     # `typescript-static` job gives (bean `yqc4`).
-    permissions:
-      contents: read
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
@@ -707,8 +691,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -858,9 +840,6 @@ jobs:
       manifest: ${{ steps.pack.outputs.manifest }}
     # Every `run:` step goes through `gate-shell.sh`, for the reason the
     # `typescript-static` job gives (bean `yqc4`).
-    permissions:
-      contents: read
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
@@ -875,7 +854,6 @@ jobs:
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
         with:
-          registry-token: ${{ github.token }}
           chromium: with-deps
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
@@ -988,7 +966,6 @@ jobs:
     if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
     env:
@@ -1033,8 +1010,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       # The same mount as the gates job, for the same reason one level down:
       # the test files that read the LIVE store (`bean-store-hygiene`,
@@ -1305,7 +1280,6 @@ jobs:
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
     env:
@@ -1350,8 +1324,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
@@ -2019,7 +1991,6 @@ jobs:
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
     env:
@@ -2064,8 +2035,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
@@ -3034,7 +3003,6 @@ jobs:
     if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
     env:
@@ -3079,8 +3047,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
@@ -3197,7 +3163,6 @@ jobs:
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
     env:
@@ -3242,8 +3207,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
@@ -4498,7 +4461,6 @@ jobs:
     if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true && needs.e2e-scope.outputs.affected != 'false' }}
     runs-on: ubuntu-latest
     permissions:
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
     env:
@@ -4550,7 +4512,6 @@ jobs:
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
         with:
-          registry-token: ${{ github.token }}
           chromium: with-deps
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
@@ -4753,9 +4714,6 @@ jobs:
     # NOT here: it never checks out, so this path does not exist for it, and it
     # writes its own summary inline. (The `typescript` and `e2e` roll-ups were
     # the same, until bean `5p4m` removed them.)
-    permissions:
-      contents: read
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
     defaults:
       run:
         shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
@@ -4768,8 +4726,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -4934,7 +4890,6 @@ jobs:
     if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
-      packages: read  # pull the prepared CI image, private on GHCR (bean ay33)
       contents: write
     concurrency:
       group: qa-publish-${{ github.event.pull_request.number || github.sha }}
@@ -4976,8 +4931,6 @@ jobs:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
-        with:
-          registry-token: ${{ github.token }}
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts

@@ -362,8 +362,7 @@ describe("the workflow wires it as designed", () => {
     for (const id of JUDGED) {
       const job = wf.jobs[id]!;
       expect(job.defaults?.run?.shell).toBe("bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}");
-      // `packages: read` pulls the prepared CI image (bean ay33); nothing else is added.
-      expect(job.permissions).toEqual({ contents: "read", actions: "read", packages: "read" });
+      expect(job.permissions).toEqual({ contents: "read", actions: "read" });
       expect(job.env?.CQG_JOB_NAME).toBe(job.name!);
       expect(job.steps.filter((s) => s.run === "bash .github/scripts/cqg-step.sh --begin")).toHaveLength(1);
     }
