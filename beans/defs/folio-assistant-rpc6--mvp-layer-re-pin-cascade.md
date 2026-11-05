@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T14:00:08Z
+updated_at: 2026-11-05T14:09:08Z
 parent: folio-assistant-rwmf
 ---
 
@@ -38,3 +38,5 @@ _2026-11-05T13:38:58Z_ — Owner card: dth-pc#18 "1. OK, merge" — may merge on
 _2026-11-05T13:48:22Z_ — Owner: "merge when green"; a merge watcher (merge on all-checks-passed, stop on red) runs over the 7 site PRs and the 4 fix PRs. Fix PRs for smart-ra#228: cat-harness#1054 e318fb7 (+62 cat-harness keywords.json), who-iris#181 84a0728, folio-assistant-core#647 89915b2 (21 foreign-path literals in 10 files through folioDir/storeDirOf/archimateConfigPath/referenceDirs; command-path-ok markers; NOTE behaviour change: glossary-validate skips an instance whose archimate config is in an undeclared dir), cat-harness-tools#1518 df7b772 (qa-refresh root library-qa + 3 tools foreign-paths literals). fhir-harness fhir-questionnaire-wireframe.md:96 dead command path is old (same at both pins) — not yet judged new or main's.
 
 _2026-11-05T14:00:08Z_ — smart-immunizations#114 at 10c2bb2 (all 8 layers at mains): 11 new reds, all from cat-harness 6e0dc31 (sdlc/ relocation) and the layers above it not yet regenerated: bpmn:checklist, translate-bpmn:bootstrap, translation obsolete/pot/block-qa, process-index (sdlc/processes/*.bpmn not in the published processes subgraph), library:viz (avatar kg-folio-asst-#-#-#.webp), kg:materialize + materialized-fixity (ihris; fixed on cat-harness main #1044), core check:glossary (core + who-iris generated glossaries), branch:readme (tools health state branch). Regen going onto cat-harness#1054 and a new core/who-iris glossary PR; #114 then re-pins onto them.
+
+_2026-11-05T14:09:08Z_ — Owner card "1. Treat as known": a site re-pin may merge when its only reds besides main's are these 3 KNOWN lower-layer reds: (1) cat-harness-tools:translation:block-qa:check — translation-coverage drop after cat-harness 7c759481 ("Say work item, not bean") reworded docs/concepts/architecture.md (37/61 strings, 5 locales) and docs/guides/agent-onboarding.md (fr 57/73); needs translators. (2) check:process-index and (3) library:viz:check — red only because CI skips publish:derive:publish (gen-fsh-guts-viz: cat/cat-harness/fsh-guts state branch not mounted), so the gitignored docs/subgraph/** and docs/assets/library/ avatars are unbuilt; both pass once built (subgraph:jsonld, library:viz). Not covered by the ruling: branch:readme:check on cat/cat-harness-tools/health (fix: bun run cat branch:readme --push cat/cat-harness-tools/health). cat-harness#1054 stays at e318fb7.
