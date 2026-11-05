@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T18:57:52Z
+updated_at: 2026-11-05T19:12:17Z
 parent: folio-assistant-rwmf
 ---
 
@@ -89,3 +89,5 @@ _2026-11-05T18:37:32Z_ — smart-ra#228 f323d7d new: check:subgraphs, state:visu
 _2026-11-05T18:39:56Z_ — MERGED cat-harness#1069 as b7bbc8f (all green): 4 command paths, requirements-filing SVG link, docs/sage-mcp.md docker pull line, AGENTS.md skills index (256 / sdlc-core 72). Last layer fix open: cat-harness-tools#1537 (0ccd352).
 
 _2026-11-05T18:57:52Z_ — MERGED cat-harness-tools#1537 as 42cc850 (all green): baselines scoped to the root they were recorded in (checkoutName), context-leak needs-input. All 10 fix PRs merged. FINAL FREEZE SET: cat-harness f5c9140, cat-harness-tools 42cc850, folio-assistant-core 705a2b8, who-iris 90bb3f5, smart-base 1e111a6, fhir-harness 299de78, bootstrap-tools 9f478d4, bootstrap 12fa6d5. Re-pinning the 6 open sites to it with site fixes (dth-sc overrides + AGENTS.md path, index-config:migrate, gen-block-jsonld).
+
+_2026-11-05T19:12:17Z_ — Final re-pin pushed (lock = final freeze set): smart-immunizations#114 90000d2, smart-ra#228 87151fd, dth-sc#18 5fbd9a9 (+ smart-base-templates / references overrides, AGENTS.md qa-sweep path), dth-phc#29 a81fc26, smart-immunizations-uganda#18 f26fc65 (+ .gitignore index block), dth-pc#18 6beedba (+ 128 block .jsonld from gen-block-jsonld). Watcher on all 6; reds judged by hand against the known-red list.
