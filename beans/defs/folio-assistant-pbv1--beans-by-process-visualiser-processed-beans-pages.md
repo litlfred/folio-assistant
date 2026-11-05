@@ -6,7 +6,7 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-11-02T18:45:00Z
-updated_at: 2026-11-05T13:45:30Z
+updated_at: 2026-11-05T14:04:00Z
 parent: folio-assistant-yj32
 tags:
     - visualiser
@@ -48,3 +48,5 @@ _2026-11-02T19:10Z_ — PR #1414 up, follow-up cat-harness#988 filed.
 _2026-11-05T13:34:43Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
 
 _2026-11-05T13:45:30Z_ — Completed on verified evidence: `litlfred/cat-harness-tools#1414` merged at `4431b7cf8f44df9ab2eccc40c1f9c9f50d96d8f1` (`2026-11-02T19:14:11Z`, closing `cat-harness-tools#1413`), follow-up commits `92d09253`, `9ce7ffca`, `eba6fd17`, `2921447f`, `de623753`, `1e3c1a12`, `bc4d213c` landed on `cat-harness-tools` `origin/main` (including the combined `/beans/beans-processed/` page), `workflow_start` / `workflow_next` / `workflow_complete` handlers verified on `origin/main` (`src/tools/workflow.ts`), and `bun test cat-harness-tools/scripts/tests/processed-beans.test.ts` passes all 24 tests (71 assertions). Follow-up `litlfred/cat-harness#988` tracks workflow instance recording.
+
+_2026-11-05T14:04:00Z_ — Follow-up `litlfred/cat-harness#988` delivered: opened `litlfred/cat-harness#1059` (skill + cold-start pointer requiring `workflow_start` / `workflow_complete` on process work items) and `litlfred/cat-harness-tools#1524` (`workflow:instances` `staleInstances` / `untrackedProcessBeans` warning check and `--sweep`), and swept the 9 non-completed workflow instances in `beans/workflows/*.json` on `cat/cat-harness/beans` (plus 1 in `cat-harness-tools/beans/workflows/`) whose work items are `completed` or moved to sibling stores.

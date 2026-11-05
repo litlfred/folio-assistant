@@ -5,9 +5,7 @@
   "source": "cat-harness/processes/code-change-review.bpmn",
   "subject": "issue-956-consolidate-the-stalled-work-plan",
   "bean": "folio-assistant-kpcl",
-  "tokens": [
-    "Task_PrepareMerge"
-  ],
+  "tokens": [],
   "arrivals": {},
   "history": [
     {
@@ -65,5 +63,7 @@
       "actor": "claude",
       "note": "Tried to pre-set #961's baseline to the final `[]` to save a round. check:stale-paths refused: on stream 3's branch p5wm is not yet repaired, so `[]` is only valid once both repairs are on one ref. Reverted and sequenced. Asserting a file's end state from two branches read separately, rather than from the ref the check runs against, is the same error class as the stale path."
     }
-  ]
+  ],
+  "status": "completed",
+  "updatedAt": "2026-09-22T20:35:00.000Z"
 }
