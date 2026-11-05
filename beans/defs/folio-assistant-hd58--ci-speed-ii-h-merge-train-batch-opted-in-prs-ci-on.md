@@ -83,3 +83,11 @@ Asked in session https://claude.ai/code/session_01VQDpPdXwTy9PWgFEpEYCSM, answer
 ## Owner ruling, 2026-11-05 (card, relayed by the analysis session): "Resolve generated only"
 
 Supersedes the 2026-10-04 "stack cleanly" ruling **for generated paths only**. At train time the train resolves conflicts in declared generated paths mechanically (declared patterns + one regen, judged by the candidate's CI). A conflict in any hand-written file EJECTS that PR with a comment (label removed); it waits for its author. Implemented: `merge-train.ts eject-refused`, run after each build.
+
+## Owner ruling, 2026-11-05: off switch for workflow PRs
+
+8 of 10 open ready PRs changed `.github/workflows/`, which GITHUB_TOKEN can neither push nor merge. Answer **1**: the train carries such PRs only when the repository variable `MERGE_TRAIN_CARRIES_WORKFLOWS` is `true` AND a bot token (harness App or `PUSH_BRANCH_TRIGGERING_CI`) is present; off until the owner grants that token the workflows permission and sets the variable. `subscriptions/` is never carried. Implemented in #2960 (4c4c045).
+
+## Open, with the CI speed 7 owner
+
+#2962 scopes `bun test` on every `pull_request`. A `merge-train/*` (and `repin-train/*`) PR must run the full suite: it is the members' only CI, and after #2963 main refuses to reuse a scoped run. Proposed: #2962 treats those head refs as full runs.
