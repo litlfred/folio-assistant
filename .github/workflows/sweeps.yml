@@ -1,0 +1,140 @@
+# ONE scheduled job for the 15-minute sweeps (runner-request cuts, 2026-11-05).
+#
+# Measured over 21 h on 2026-11-04/05 (600 runs): half of all runs were
+# scheduled, and three workflows each started a runner every 15 minutes —
+# Staging publish (90/day), Preview verify sweep (93/day), Re-pin train verdict
+# (96/day) — nearly always to find nothing to do. During runner saturation each
+# of those tiny jobs still queued 10-25 minutes, in front of real work, because
+# the account-wide pool counts REQUESTS, not seconds.
+#
+# This job asks each question with API calls only, in seconds, and starts the
+# workflow concerned ONLY when there is work:
+#
+#   - Staging publish: a `staging-site-*` artifact is waiting
+#     (the queue `staging-publish.yml` drains; its safety net, Q-SPD-5c).
+#   - Preview verify: the sweep itself runs HERE, unchanged
+#     (`.github/scripts/preview-verify-sweep.sh`): it only dispatches.
+#   - Re-pin train verdict: an open train waits for a verdict
+#     (`repin-train.ts pending`, the same `trainsToJudge` the sweep judges).
+#   - Conflicted PR previews (owner, 2026-10-06: "preview can still run, just
+#     not merge ready"): GitHub delivers no `pull_request` event to a PR that
+#     conflicts with its base. Feature Staging's `push` trigger used to start a
+#     runner on EVERY branch push to cover that case (23/day, almost all
+#     deciding "not conflicted"). Here: an open PR of this repository whose
+#     `mergeable_state` is `dirty` (which licenses only "conflicts", bean yv4z)
+#     and whose head has no Feature Staging run is dispatched on its own branch
+#     (`--ref`), which is the run the push used to start. An `unknown` state
+#     means not computed yet (bean h2s9): the next tick asks again.
+#
+# Each workflow keeps its own `workflow_dispatch`, concurrency and semantics;
+# only who starts it changed. One runner per tick instead of three-plus.
+#
+# Every step is independent: one failing does not stop the others
+# (`continue-on-error`), and the job still goes red so it is seen.
+#
+# TRIGGERS, ACTUAL: `schedule` (every 15 minutes) and `workflow_dispatch`.
+# It reads open PRs, but no PR event starts it: the owner's decision for the
+# sweeps it took over (Q-SPD-5c, Q-SPD-9b A, Q-SPD-3 B — a sweep, off the
+# critical path) and the owner's request of 2026-11-05 ("all speed
+# improvements") to cut runner requests.
+name: Scheduled sweeps (one dispatcher)
+
+on:
+  schedule:
+    # Off the quarter-hours, where GitHub's scheduler queues heaviest.
+    - cron: '4,19,34,49 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+  statuses: read
+  checks: read
+  actions: write  # list artifacts and runs; dispatch the workflows
+
+# A tick that finds the previous one still running is not needed.
+concurrency:
+  group: sweeps
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          sparse-checkout: .github/scripts
+
+      - name: Staging publish — anything waiting?
+        id: publish
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          n=$(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
+            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")))] | length' | awk '{s+=$1} END{print s+0}')
+          echo "staging-publish: $n preview artifact(s) waiting"
+          [ "$n" -gt 0 ] || exit 0
+          # A publisher queued or running drains the whole queue already.
+          busy=0
+          for st in queued in_progress waiting pending; do
+            k=$(gh api "repos/$REPO/actions/workflows/staging-publish.yml/runs?status=$st&per_page=1" --jq '.total_count')
+            busy=$((busy + k))
+          done
+          if [ "$busy" -gt 0 ]; then echo "a publisher is already queued or running ($busy)"; exit 0; fi
+          gh workflow run staging-publish.yml -R "$REPO"
+          echo "dispatched staging-publish.yml"
+
+      - name: Preview verify sweep
+        id: verify
+        continue-on-error: true
+        run: bash .github/scripts/preview-verify-sweep.sh
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.4
+      - name: Re-pin train verdict — does an open train wait?
+        id: repin
+        continue-on-error: true
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          shas=$(bun .github/scripts/repin-train.ts pending)
+          if [ -z "$shas" ]; then echo "no open train waits for a verdict"; exit 0; fi
+          echo "trains waiting for a verdict:"; echo "$shas"
+          busy=0
+          for st in queued waiting pending; do
+            k=$(gh api "repos/$REPO/actions/workflows/repin-train-verdict.yml/runs?status=$st&per_page=1" --jq '.total_count')
+            busy=$((busy + k))
+          done
+          if [ "$busy" -gt 0 ]; then echo "a verdict run is already queued ($busy)"; exit 0; fi
+          gh workflow run repin-train-verdict.yml -R "$REPO"
+          echo "dispatched repin-train-verdict.yml (judges every open train)"
+
+      - name: Conflicted PRs — stage the ones whose head has no preview run
+        id: conflicted
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          while IFS=$'\t' read -r num ref sha; do
+            [ -n "$num" ] || continue
+            # `dirty` licenses only "conflicts" (bean yv4z); `unknown` is not computed yet (bean h2s9).
+            state=$(gh api "repos/$REPO/pulls/$num" --jq '.mergeable_state // "unknown"')
+            [ "$state" = "dirty" ] || continue
+            runs=$(gh api "repos/$REPO/actions/workflows/feature-staging.yml/runs?head_sha=$sha&per_page=1" --jq '.total_count')
+            if [ "$runs" -gt 0 ]; then echo "#$num ($ref) conflicts; its head ${sha:0:12} already has a Feature Staging run"; continue; fi
+            echo "#$num ($ref) conflicts and head ${sha:0:12} has no Feature Staging run: dispatching it on its branch"
+            gh workflow run feature-staging.yml -R "$REPO" --ref "$ref" || echo "::warning::could not dispatch Feature Staging for #$num ($ref)"
+          done < <(gh api --paginate "repos/$REPO/pulls?state=open&per_page=100" \
+            --jq '.[] | select(.head.repo.full_name == "'"$REPO"'") | [.number, .head.ref, .head.sha] | @tsv')
+
+      - name: Any sweep failed?
+        if: steps.publish.outcome == 'failure' || steps.verify.outcome == 'failure' || steps.repin.outcome == 'failure' || steps.conflicted.outcome == 'failure'
+        run: |
+          echo "::error::a sweep failed — publish=${{ steps.publish.outcome }} verify=${{ steps.verify.outcome }} repin=${{ steps.repin.outcome }} conflicted=${{ steps.conflicted.outcome }}"
+          exit 1

@@ -21,14 +21,15 @@
 #
 # Main and release builds never come here: they are CI-built, always.
 #
-# TRIGGERS, ACTUAL: schedule and workflow_dispatch only. It reads open PRs;
-# no PR event starts it, by the owner's decision (Q-SPD-9b A): one verify at a
-# time, off the critical path, which a per-PR trigger could not hold.
+# TRIGGERS, ACTUAL: workflow_dispatch only. The 15-minute tick is now
+# `sweeps.yml`, which runs the same script (`.github/scripts/preview-verify-sweep.sh`)
+# inside its one scheduled job, so the tick costs no runner of its own
+# (runner-request cuts, 2026-11-05). It reads open PRs; no PR event starts it,
+# by the owner's decision (Q-SPD-9b A): one verify at a time, off the critical
+# path, which a per-PR trigger could not hold.
 name: Preview verify sweep
 
 on:
-  schedule:
-    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -46,42 +47,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          sparse-checkout: .github/scripts
       - name: Dispatch the oldest pending verify, when none is running
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-        run: |
-          set -eu
-          # One verify at a time: a verify is a Feature Staging dispatch run.
-          # Any dispatch counts (a cleanup too): waiting a sweep costs nothing.
-          busy=0
-          for st in queued in_progress waiting pending; do
-            n=$(gh api "repos/$REPO/actions/workflows/feature-staging.yml/runs?event=workflow_dispatch&status=$st&per_page=20" \
-              --jq '.total_count')
-            busy=$((busy + n))
-          done
-          if [ "$busy" -gt 0 ]; then
-            echo "a Feature Staging dispatch is already queued or running ($busy): the next sweep tries again"
-            exit 0
-          fi
-          # The queue: open PRs whose head commit has `preview/agent-build`
-          # pending. Oldest head commit first.
-          best=""; best_at=""
-          while IFS=$'\t' read -r num ref sha; do
-            [ -n "$num" ] || continue
-            # Newest first, so [0] is the status as it stands.
-            line=$(gh api "repos/$REPO/commits/$sha/statuses?per_page=100" \
-              --jq '[.[] | select(.context == "preview/agent-build")][0] | "\(.state // "")\t\(.created_at // "")"')
-            state="${line%%$'\t'*}"; at="${line#*$'\t'}"
-            [ "$state" = "pending" ] || continue
-            echo "pending: #$num ($ref) since $at"
-            if [ -z "$best_at" ] || [[ "$at" < "$best_at" ]]; then best="$num"$'\t'"$ref"; best_at="$at"; fi
-          done < <(gh api --paginate "repos/$REPO/pulls?state=open&per_page=100" \
-            --jq '.[] | select(.head.repo.full_name == "'"$REPO"'") | [.number, .head.ref, .head.sha] | @tsv')
-          if [ -z "$best" ]; then
-            echo "no agent-built preview is waiting for a verify"
-            exit 0
-          fi
-          num="${best%%$'\t'*}"; ref="${best#*$'\t'}"
-          echo "dispatching the verify of #$num ($ref)"
-          gh workflow run feature-staging.yml -R "$REPO" -f branch="$ref" -f verify_pr="$num"
+        run: bash .github/scripts/preview-verify-sweep.sh

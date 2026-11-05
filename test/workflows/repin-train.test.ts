@@ -349,8 +349,18 @@ describe("the workflows", () => {
   });
 
   test("the verdict sweeps open trains on a short schedule, since token-started CI triggers no workflow_run", () => {
-    expect(verdict).toMatch(/schedule:\n\s+- cron: '[^']+'/);
+    // The tick lives in `sweeps.yml` (2026-11-05): it asks `pending` and
+    // dispatches the verdict, whose dispatched run with no sha sweeps.
+    const sweeps = readFileSync(join(import.meta.dir, "../../.github/workflows/sweeps.yml"), "utf-8");
+    expect(sweeps).toMatch(/schedule:\n\s+(#.*\n\s+)*- cron: '[^']+'/);
+    expect(sweeps).toContain("repin-train.ts pending");
+    expect(sweeps).toContain("gh workflow run repin-train-verdict.yml");
+    expect(verdict).toContain("workflow_dispatch:");
     expect(verdict).toContain("repin-train.ts verdict --open");
+  });
+
+  test("the verdict's workflow_run fires only for train branches, at the trigger", () => {
+    expect(verdict).toContain("branches: ['repin-train/**']");
   });
 
   test("the verdict merges with a token whose push starts main's workflows when one is set", () => {

@@ -87,11 +87,11 @@ describe("the dispatch cleanup exists and is reachable", () => {
   });
 
   it("gives a dispatched cleanup its own concurrency group, so two of them do not cancel each other", () => {
-    // The `push-` prefix (2026-10-06) keeps a push run out of the PR run's
-    // group; the cleanup slug still sits in the key either way.
+    // The `push-` prefix (2026-10-06) went with the `push` trigger
+    // (2026-11-05); the cleanup slug still sits in the key.
     // The `verify-` prefix and `inputs.branch` (folio-assistant#2881) keep an
     // agent-built preview's verify run out of the cleanup's group.
-    expect(text).toContain("group: staging-${{ github.event_name == 'push' && 'push-' || '' }}${{ inputs.verify_pr != '' && 'verify-' || '' }}${{ github.event.pull_request.head.ref || inputs.cleanup_slug || inputs.branch || github.ref_name }}");
+    expect(text).toContain("group: staging-${{ inputs.verify_pr != '' && 'verify-' || '' }}${{ github.event.pull_request.head.ref || inputs.cleanup_slug || inputs.branch || github.ref_name }}");
   });
 });
 
