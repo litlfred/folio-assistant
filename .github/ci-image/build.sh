@@ -21,4 +21,6 @@ bash "$here/prepare.sh" . "$tmp/pw" "$tmp/ctx"
 docker buildx create --name ci-image --driver docker-container --driver-opt network=host --use >/dev/null
 out="type=image,name=${ref},push=true,compression=zstd,compression-level=3,force-compression=true,oci-mediatypes=true"
 [ "$insecure" = insecure ] && out="${out},registry.insecure=true"
-docker buildx build --provenance=false --sbom=false --output "$out" "$tmp/ctx"
+docker buildx build --provenance=false --sbom=false \
+  --build-arg SOURCE="${GITHUB_SERVER_URL:-https://github.com}/${GITHUB_REPOSITORY:-unknown}" \
+  --output "$out" "$tmp/ctx"

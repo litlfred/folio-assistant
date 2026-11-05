@@ -1,7 +1,7 @@
 # CI image — build the prepared image every CI job restores its setup from
 # (bean folio-assistant-ay33).
 #
-# ghcr.io/litlfred/folio-assistant-ci:<key> holds the remote mounts
+# ghcr.io/<owner>/<repo>-ci:<key> (here ghcr.io/litlfred/folio-assistant-ci) holds the remote mounts
 # index.lock.json pins, node_modules and Playwright's Chromium, keyed by
 # .github/ci-image/key.sh. `.github/actions/ci-setup` streams it onto a job's
 # runner in place of mounting and installing; with no image for its key a job
@@ -73,6 +73,12 @@ jobs:
         run: bash .github/ci-image/build.sh localhost:5000/folio-assistant-ci:test insecure
       - name: Restore into a fresh checkout, as ci-setup does, and verify it
         run: |
+          # A job without a browser restores the workspace layers only, and the
+          # skipped layers must still pass the digest check.
+          ws_only="$RUNNER_TEMP/ws-only"
+          mkdir -p "$ws_only/ws" "$ws_only/pw"
+          CI_IMAGE_SCHEME=http bash .github/ci-image/fetch.sh localhost:5000/folio-assistant-ci test "$ws_only/ws" "$ws_only/pw" "ws"
+          [ -z "$(ls -A "$ws_only/pw")" ] || { echo "a workspace-only restore wrote browsers"; exit 1; }
           fresh="$RUNNER_TEMP/fresh"
           git worktree add -q --detach "$fresh" HEAD
           CI_IMAGE_SCHEME=http bash .github/ci-image/fetch.sh localhost:5000/folio-assistant-ci test "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw"
@@ -108,11 +114,13 @@ jobs:
           FORCE: ${{ inputs.force }}
         run: |
           key="$(bash .github/ci-image/key.sh .)"
+          image="ghcr.io/${GITHUB_REPOSITORY,,}-ci"
           echo "key=$key" >> "$GITHUB_OUTPUT"
+          echo "image=$image" >> "$GITHUB_OUTPUT"
           echo "$GH_TOKEN" | docker login ghcr.io -u "$ACTOR" --password-stdin
-          if [ "$FORCE" != true ] && docker manifest inspect "ghcr.io/litlfred/folio-assistant-ci:$key" >/dev/null 2>&1; then
+          if [ "$FORCE" != true ] && docker manifest inspect "$image:$key" >/dev/null 2>&1; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "::notice title=CI image::ghcr.io/litlfred/folio-assistant-ci:${key:0:12}… already exists"
+            echo "::notice title=CI image::$image:${key:0:12}… already exists"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
@@ -120,18 +128,20 @@ jobs:
         if: steps.key.outputs.exists != 'true'
         env:
           KEY: ${{ steps.key.outputs.key }}
-        run: bash .github/ci-image/build.sh "ghcr.io/litlfred/folio-assistant-ci:$KEY"
+          IMAGE: ${{ steps.key.outputs.image }}
+        run: bash .github/ci-image/build.sh "$IMAGE:$KEY"
       - name: Restore it the way a job will, and time it
         env:
           KEY: ${{ steps.key.outputs.key }}
+          IMAGE: ${{ steps.key.outputs.image }}
           GH_TOKEN: ${{ github.token }}
         run: |
           fresh="$RUNNER_TEMP/fresh"
           git worktree add -q --detach "$fresh" HEAD
           status=0
-          bash .github/ci-image/fetch.sh ghcr.io/litlfred/folio-assistant-ci "$KEY" "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw" || status=$?
+          bash .github/ci-image/fetch.sh "$IMAGE" "$KEY" "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw" || status=$?
           if [ "$status" -eq 3 ]; then
             echo "::warning title=CI image::anonymous pull refused — the package is not public yet, so jobs will need packages:read (or the owner sets it public); timing with the job token"
-            REGISTRY_TOKEN="$GH_TOKEN" bash .github/ci-image/fetch.sh ghcr.io/litlfred/folio-assistant-ci "$KEY" "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw"
+            REGISTRY_TOKEN="$GH_TOKEN" bash .github/ci-image/fetch.sh "$IMAGE" "$KEY" "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw"
           elif [ "$status" -ne 0 ]; then exit "$status"; fi
           cd "$fresh" && bun run cat mount:lock:check
