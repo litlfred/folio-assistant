@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T12:36:36Z
-updated_at: 2026-11-05T14:00:35Z
+updated_at: 2026-11-05T14:08:18Z
 parent: folio-assistant-x35i
 ---
 
@@ -35,3 +35,5 @@ Measured with mbd8's method (a static closure walk over the 209 task-io tasks; 1
 - The 142 now have 67 distinct closure sizes, where before they shared one closure.
 
 The CI-run criterion is still open: it needs a green main record under recipe 5. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-05T14:08:18Z_ — Overlap with litlfred/cat-harness-tools#1520 (CI speed 8, approved, merges first): both set `input-hash.ts` RECIPE_VERSION 4 → 5, and both edit `fingerprint()` / `trackedTreeDigest`. When #1525 is brought onto main after #1499, bump RECIPE_VERSION to 6 and resolve the conflict. #1527's test-gate fingerprint uses `treeReplayed: true`, so the computed-load change applies to it too; both sessions agree that is sound. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
