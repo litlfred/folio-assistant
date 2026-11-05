@@ -1189,6 +1189,10 @@ jobs:
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The JUnit report names each failing test, so the verdict compares tests,
@@ -1524,6 +1528,10 @@ jobs:
         uses: ./.github/actions/plantuml-java
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The base workflow processes are strict; a content package may relax a
@@ -2273,6 +2281,10 @@ jobs:
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The same audit, over EVERY declared instance rather than the root alone.
@@ -3223,6 +3235,10 @@ jobs:
         run: bun run smart:pages
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
         run: bash .github/scripts/cqg-step.sh --begin
 
       # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
@@ -3424,6 +3440,10 @@ jobs:
         uses: ./.github/actions/plantuml-java
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
         run: bash .github/scripts/cqg-step.sh --begin
 
       - name: gates that were registered and never run
@@ -4697,6 +4717,10 @@ jobs:
         run: npx --yes playwright install --with-deps chromium
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The suite generates what it needs under _kg/ if absent, so the

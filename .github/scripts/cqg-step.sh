@@ -18,6 +18,9 @@
 # its own command; the two jobs that end in a gate which must stay last
 # (`check:red-gate-is-last`) do that.
 #
+# A step the PR head's local gate record covers (bean fn8q, `cqg_judge.py
+# covered`) is skipped and recorded as SKIPPED, never as passed.
+#
 # Nothing is masked: a recorded failure is either the verdict's failure or
 # listed in its summary as failing on main too. If the record cannot be
 # written, the step fails.
@@ -30,13 +33,17 @@
 
 dir="${CQG_DIR:-${RUNNER_TEMP:?RUNNER_TEMP is unset}/cqg}"
 
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 if [ "${1:-}" = "--begin" ]; then
-  mkdir -p "$dir" && echo judge > "$dir/phase"
-  exit $?
+  mkdir -p "$dir" && echo judge > "$dir/phase" || exit $?
+  # Bean fn8q: whether the PR head's local gate record may stand in for gates
+  # on this tree. It never fails the step; not honouring it is the default.
+  python3 "$here/cqg_judge.py" local-record
+  exit 0
 fi
 
 script="$1"
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 gate_shell="${CQG_GATE_SHELL:-$here/../../cat-harness-tools/scripts/gate-shell.sh}"
 # The verdict's token, kept out of the step's own environment.
 token="${CQG_TOKEN:-}"
@@ -46,6 +53,19 @@ token="${CQG_TOKEN:-}"
 if [ ! -f "$dir/phase" ] || [ "${CQG_UNJUDGED:-}" = "true" ]; then
   env -u CQG_TOKEN bash "$gate_shell" "$script"
   exit $?
+fi
+
+# A step every command of which the honoured local record already ran is
+# SKIPPED, and recorded as skipped, never as passed. Not a test step: the
+# whole-suite tests are never in a local record.
+if [ -z "${CQG_TESTS:-}" ] && why="$(python3 "$here/cqg_judge.py" covered "$script")"; then
+  echo "cqg-step: SKIPPED — $why"
+  python3 "$here/cqg_judge.py" record --skipped "$script" "$why" || exit 2
+  if [ "${CQG_VERDICT:-}" = "true" ]; then
+    GH_TOKEN="$token" python3 "$here/cqg_judge.py" verdict
+    exit $?
+  fi
+  exit 0
 fi
 
 [ -n "${CQG_JUNIT:-}" ] && rm -f "$CQG_JUNIT"
