@@ -1,4 +1,4 @@
-# bpmn: cat-harness/processes/sdlc/feature-staging.bpmn
+# bpmn: cat-harness/sdlc/processes/feature-staging.bpmn
 name: Feature Staging (GitHub Pages)
 
 # Deploy feature-branch rendered content to gh-pages under STAGING/<branch>/
@@ -110,15 +110,16 @@ on:
   # A CONFLICTED PR STILL GETS ITS PREVIEW (owner, 2026-10-06: "preview can
   # still run, just not merge ready"). GitHub delivers no `pull_request` event
   # while a PR conflicts with its base, because it cannot build the test merge
-  # ref, so until this trigger a conflicted PR's preview silently froze at the
-  # last clean push (#2282 sat at its first commit for hours). A branch push
-  # reaches `conflict-gate` below, which lets `stage` run ONLY when the branch
-  # has an open PR whose merge state is `dirty`: a clean PR is already staged
-  # by `pull_request`, and a branch with no PR must not grow a preview that
-  # nothing will ever clean up (the `plj1` shape). Merging is still refused by
+  # ref. That case used to be a `push` trigger on every non-main branch, whose
+  # gate job started a runner on EVERY push only to answer "not conflicted"
+  # almost every time (23 runs a day, 2026-11-04). It is now asked by
+  # `sweeps.yml` every 15 minutes, with API calls and no runner of its own: an
+  # open PR of this repository that is `dirty` and whose head has no run of
+  # this workflow is dispatched here on its own branch (`--ref`), so the run
+  # stages the branch head exactly as the push run did. A branch with no PR
+  # still grows no preview (the `plj1` shape), and merging is still refused by
   # merge-guard check 8 (`mergeable`), so the preview is not merge-ready.
-  push:
-    branches-ignore: [main, gh-pages, qa-reports, 'gh-readonly-queue/**']
+  # (runner-request cuts, 2026-11-05)
   workflow_dispatch:
     inputs:
       branch:
@@ -188,63 +189,34 @@ concurrency:
   # DIFFERENT previews do not cancel each other: without it they would both
   # land in `staging-main` and `cancel-in-progress` would drop the first.
   #
-  # A `push` run has a group of its OWN. It usually decides to do nothing
-  # (the PR is clean), and in the shared group its arrival would cancel the
-  # `pull_request` run building the same commit, losing the preview.
-  #
   # A VERIFY run (`verify_pr`) has a group of its own too: a newer push to the
   # branch must not be cancelled by a check of an older agent build, nor the
   # check by it. The deploy re-reads the record before replacing anything.
-  group: staging-${{ github.event_name == 'push' && 'push-' || '' }}${{ inputs.verify_pr != '' && 'verify-' || '' }}${{ github.event.pull_request.head.ref || inputs.cleanup_slug || inputs.branch || github.ref_name }}
+  group: staging-${{ inputs.verify_pr != '' && 'verify-' || '' }}${{ github.event.pull_request.head.ref || inputs.cleanup_slug || inputs.branch || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
-  # ── Decide whether a branch push should stage ─────────────────
-  # Every event but `push` passes straight through. On `push`, stage only
-  # when the branch has an open PR from this repository that conflicts with
-  # its base (`mergeable_state: dirty`, which licenses only "conflicts", bean yv4z), the one case `pull_request` cannot
-  # reach. `mergeable` is computed lazily, so an unknown answer is asked again
-  # a few times; still unknown, it stages, because a duplicate preview of the
-  # same commit costs a build and a missing one costs the reviewer.
+  # ── Defer to an agent's build of this exact tree ──────────────
+  # Runs on `pull_request` only: the one step left here (`defer`) reads the
+  # PR's test merge commit. Every other event skips this job, and `stage`
+  # treats a skipped gate as "go" — a dispatch, cleanup or close no longer
+  # starts a runner just to be told to go on (runner-request cuts,
+  # 2026-11-05). The conflicted-PR half of this gate, which answered `push`
+  # runs, moved to `sweeps.yml` with the `push` trigger (see `on:`).
   conflict-gate:
     # bpmn-node: Start_PR
-    # The start event's guard: a push stands in for the pull_request event GitHub withholds while the PR conflicts.
+    # The start event's guard: a pull_request whose exact tree an agent already built defers its build to the verify sweep.
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
       contents: read
       statuses: write
     outputs:
-      go: ${{ steps.decide.outputs.go }}
       deferred: ${{ steps.defer.outputs.deferred }}
+      unchanged: ${{ steps.own-diff.outputs.unchanged }}
+      patch_id: ${{ steps.own-diff.outputs.patch_id }}
     steps:
-      - id: decide
-        env:
-          GH_TOKEN: ${{ github.token }}
-          EVENT: ${{ github.event_name }}
-          REPO: ${{ github.repository }}
-          BRANCH: ${{ github.ref_name }}
-        run: |
-          if [ "$EVENT" != "push" ]; then echo "go=true" >> "$GITHUB_OUTPUT"; exit 0; fi
-          owner="${REPO%%/*}"
-          pr=$(gh api "repos/$REPO/pulls?state=open&head=$owner:$BRANCH" --jq '.[0].number // empty')
-          if [ -z "$pr" ]; then
-            echo "no open PR for $BRANCH: no preview"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0
-          fi
-          state=unknown
-          # `unknown` means not computed yet (bean h2s9), so it is asked again.
-          for i in 1 2 3 4 5; do
-            state=$(gh api "repos/$REPO/pulls/$pr" --jq '.mergeable_state // "unknown"')
-            [ "$state" != "unknown" ] && break
-            sleep 6
-          done
-          echo "PR #$pr is $state"
-          if [ "$state" = "dirty" ] || [ "$state" = "unknown" ]; then
-            echo "go=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "PR #$pr is not conflicted: its pull_request run stages it"; echo "go=false" >> "$GITHUB_OUTPUT"
-          fi
-
       # ── An agent already built this exact tree (folio-assistant#2881) ──
       # Owner, 2026-11-01, Q-SPD-9 B and Q-SPD-9b A: a preview may go live from
       # the agent's own build, and CI then rebuilds the same tree IN FULL, off
@@ -291,6 +263,64 @@ jobs:
           gh api "repos/$REPO/issues/$PR/comments" -f body="$body" >/dev/null || true
           echo "deferred=true" >> "$GITHUB_OUTPUT"
 
+      # ── Only main moved: the PR's own change is the one already previewed ──
+      # Measured 2026-11-05: a PR push costs ~25 runner-min here, and merge-
+      # from-main commits are 18-90 % of a PR's runner time. Such a push leaves
+      # the PR's OWN change — the diff from its merge base to its head — as it
+      # was, and that change is what a reviewer opens the preview for. So this
+      # step computes that diff's `git patch-id --stable` (line numbers and
+      # whitespace do not count, so the same hunks re-based onto a newer main
+      # give the same id) and `stage` records it beside the build record, as
+      # `_build-patch.json`. A `synchronize` whose id equals the one recorded
+      # for the live CI-built preview of this PR skips `stage`.
+      #
+      # What the skip costs: the live preview stays built on the older main.
+      # The comparison against main is main's own site; a rebuild is one
+      # dispatch away. Only `synchronize` can skip: `opened`, `reopened` and
+      # `ready_for_review` always build, and any failure to compute or read an
+      # id builds, because a missing preview costs the reviewer.
+      #
+      # The diff is GitHub's own PR diff (merge base to head), read through the
+      # API: nothing of the PR is fetched, checked out or run here. A binary
+      # file shows in it only as its `index` line (blob ids), which
+      # `patch-id` ignores, so those lines are hashed in beside the id and a
+      # changed binary still changes the key. A diff too large for the API is
+      # an error, and the preview builds.
+      - id: own-diff
+        if: github.event_name == 'pull_request' && steps.defer.outputs.deferred != 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          ACTION: ${{ github.event.action }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -u
+          diff="$RUNNER_TEMP/own-diff.patch"
+          gh api "repos/$REPO/pulls/$PR" -H 'Accept: application/vnd.github.diff' > "$diff" \
+            || { echo "could not read the PR's diff: the preview builds"; exit 0; }
+          pid=$(git patch-id --stable < "$diff" | cut -d' ' -f1)
+          [ -n "$pid" ] || { echo "no patch id (an empty diff?): the preview builds"; exit 0; }
+          bin=$(awk '/^index /{i=$0} /^Binary files /{print i}' "$diff")
+          pid=$(printf '%s\n%s\n' "$pid" "$bin" | sha256sum | cut -c1-40)
+          echo "patch_id=$pid" >> "$GITHUB_OUTPUT"
+          echo "the PR's own change (to head ${HEAD_SHA:0:12}) has key ${pid:0:12}"
+          [ "$ACTION" = "synchronize" ] || { echo "$ACTION: the preview always builds"; exit 0; }
+          SLUG=$(echo "$HEAD_REF" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
+          case "$SLUG" in ""|.|..|_retired) exit 0 ;; esac
+          raw() { gh api "repos/$REPO/contents/STAGING/$SLUG/$1?ref=gh-pages" -H 'Accept: application/vnd.github.raw' 2>/dev/null || true; }
+          live=$(raw _build-patch.json | jq -r '.patch_id // empty' 2>/dev/null || true)
+          builder=$(raw _build-record.json | jq -r '.builder // empty' 2>/dev/null || true)
+          if [ "$builder" != "ci" ] || [ "$live" != "$pid" ]; then
+            echo "live preview at STAGING/$SLUG: builder ${builder:-none}, patch id ${live:0:12}: the preview builds"; exit 0
+          fi
+          echo "unchanged=true" >> "$GITHUB_OUTPUT"
+          echo "### Preview not rebuilt: the PR's own change is unchanged (patch id \`${pid:0:12}\`) since the live CI preview at \`STAGING/$SLUG\`; only its base moved." >> "$GITHUB_STEP_SUMMARY"
+          gh api "repos/$REPO/statuses/$HEAD_SHA" -f state=success -f context=preview/own-diff-unchanged \
+            -f description="PR's own change unchanged since the live preview; not rebuilt (dispatch to rebuild)" >/dev/null || true
+
   # ── Deploy feature branch to STAGING/ ─────────────────────────
   stage:
     needs: conflict-gate
@@ -315,9 +345,16 @@ jobs:
     # queue gets its verdict without a deployment.
     #
     # A DRAFT PR IS a staging request (owner, 2026-10-31; see `on:`).
+    #
+    # `!cancelled()` because `conflict-gate` is SKIPPED on every event but
+    # `pull_request`, and a skipped need skips this job unless its `if` asks a
+    # status function. A gate that FAILED still stops it, as before.
     if: >-
-      needs.conflict-gate.outputs.go == 'true'
-      && needs.conflict-gate.outputs.deferred != 'true'
+      !cancelled()
+      && (needs.conflict-gate.result == 'skipped'
+          || (needs.conflict-gate.result == 'success'
+              && needs.conflict-gate.outputs.deferred != 'true'
+              && needs.conflict-gate.outputs.unchanged != 'true'))
       && github.event.action != 'closed'
       && (github.event_name != 'workflow_dispatch' || inputs.cleanup_slug == '')
       && github.event_name != 'merge_group'
@@ -1905,6 +1942,18 @@ jobs:
             ${HEAD_SHA:+--head "$HEAD_SHA"} --out "$RUNNER_TEMP/ci-record.json"
           cp "$RUNNER_TEMP/ci-record.json" ./_site/_build-record.json
           echo "tree=$(jq -r .tree "$RUNNER_TEMP/ci-record.json")" >> "$GITHUB_OUTPUT"
+
+      # Beside the record: the patch id of the PR's own change this preview
+      # shows, which lets a later push that only moved the base skip the
+      # rebuild (`own-diff` in `conflict-gate`). Absent on any other event, so
+      # the next PR push after a push or dispatch build rebuilds.
+      - name: Record the PR's own change this preview shows
+        if: needs.conflict-gate.outputs.patch_id != ''
+        env:
+          PATCH_ID: ${{ needs.conflict-gate.outputs.patch_id }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          jq -n --arg p "$PATCH_ID" --arg h "$HEAD_SHA" '{patch_id: $p, head: $h}' > ./_site/_build-patch.json
 
       # Contention with the OTHER workflows that push to `gh-pages` —
       # docs-site, discoverability-docs, publish, and a folio's blueprint and

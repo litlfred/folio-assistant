@@ -186,7 +186,9 @@ describe("workflow triggers match what their headers claim", () => {
       "jsonld-gen-check.yml": ["pull_request", "push"],
       // `push` (2026-10-06): a conflicted PR gets no `pull_request` event, so
       // without it the preview freezes at the last clean push.
-      "feature-staging.yml": ["pull_request", "push"],
+      // `push` dropped 2026-11-05: `sweeps.yml` dispatches a conflicted PR's preview.
+      "feature-staging.yml": ["pull_request"],
+      "sweeps.yml": ["schedule"],
       "health-check.yml": ["schedule"],
       "pr-checks-present.yml": ["schedule"],
       "upstream-pins.yml": ["schedule"],
@@ -289,6 +291,12 @@ describe("workflow triggers match what their headers claim", () => {
       const src = readFileSync(join(DIR, f), "utf-8");
       const m = /^  workflow_run:\s*\n(?:[ \t]+#.*\n|\s*\n)*[ \t]+workflows:\s*\[(.+?)\]/m.exec(src);
       if (m === null) continue;
+      // A `workflow_run` filtered to branches that exclude the default branch
+      // waits on no default-branch run, so the premise does not apply
+      // (`repin-train-verdict.yml`: `repin-train/**` only).
+      const block = src.slice(src.indexOf("  workflow_run:")).split(/\n  [a-z_]+:/)[0]!;
+      const br = /^\s+branches:\s*\[(.+?)\]/m.exec(block);
+      if (br && !br[1]!.split(",").some((b) => /^['"]?(main|\*\*?)['"]?$/.test(b.trim()))) continue;
       for (const raw of m[1]!.split(",")) {
         const name = raw.trim().replace(/^["']|["']$/g, "");
         const file = byName.get(name);

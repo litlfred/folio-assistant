@@ -23,21 +23,35 @@
 # PUSH_BRANCH_TRIGGERING_CI when set, so main's push workflows run on the merge;
 # with only GITHUB_TOKEN, the gates are dispatched on main instead.
 #
-# WHY A SCHEDULE. The train's CI is dispatched with GITHUB_TOKEN when no bot
+# WHY A SWEEP. The train's CI is dispatched with GITHUB_TOKEN when no bot
 # token is set, and a run started by that token triggers no `workflow_run`, so
 # the `workflow_run` trigger never fired for a train. repin-train.yml judged
-# open trains only at its own 2-hour tick. The 15-minute sweep below judges
+# open trains only at its own 2-hour tick. The 15-minute sweep judges
 # every open train whose head has no final verdict yet, so a train is judged,
 # and merged, within 15 minutes of its checks finishing. A sweep, not a wait
 # inside repin-train.yml: it holds no runner while the checks run (~35 min,
 # past that job's 30-minute cap), it survives a re-run of a failed check, and
-# it retries a merge that GitHub refused. With no open train, a sweep is a
-# sparse checkout and one API call.
+# it retries a merge that GitHub refused.
+#
+# THE TICK LIVES IN `sweeps.yml` (runner-request cuts, 2026-11-05). This
+# workflow's own schedule started a runner 96 times a day, nearly always to
+# find no open train. `sweeps.yml` asks `repin-train.ts pending` (the same
+# `trainsToJudge` this sweep judges) inside its one scheduled job and
+# dispatches this workflow only when a train waits; the dispatched run, with
+# no `sha`, is the sweep it always was.
+#
+# THE `workflow_run` FAN-OUT IS FILTERED BY BRANCH AT THE TRIGGER. Every
+# completed gates or staging run on ANY branch used to start a run here whose
+# job then skipped (45 a day, all skipped): `branches: ['repin-train/**']`
+# matches the triggering run's head branch, so other branches start nothing.
+# The job's `if` still checks the head repository, since a fork can name a
+# branch `repin-train/…` too.
 
 #
 # TRIGGERS, ACTUAL (the owner's decision, card Q-SPD-3 B; schedule added
-# 2026-11-03): `workflow_run` (a check workflow completed), `schedule` (every
-# 15 minutes, open trains only) and `workflow_dispatch`. It judges and merges
+# 2026-11-03; tick moved to `sweeps.yml` 2026-11-05): `workflow_run` (a check
+# workflow completed on a `repin-train/` branch) and `workflow_dispatch` (by
+# `sweeps.yml` every 15 minutes while an open train waits, or by hand). It judges and merges
 # train PRs; no PR or push to main triggers it.
 
 name: Re-pin train verdict
@@ -46,8 +60,7 @@ on:
   workflow_run:
     workflows: ["Code-quality gates", "Feature Staging (GitHub Pages)"]
     types: [completed]
-  schedule:
-    - cron: '4,19,34,49 * * * *'
+    branches: ['repin-train/**']
   workflow_dispatch:
     inputs:
       sha:
@@ -71,7 +84,7 @@ jobs:
     # contents write (security audit V2, 2026-11-01). A sweep and the script
     # check the same for every PR they touch (`isOwnTrain`), and the merge
     # refuses any other.
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' || (startsWith(github.event.workflow_run.head_branch, 'repin-train/') && github.event.workflow_run.head_repository.full_name == github.repository) }}
+    if: ${{ github.event_name == 'workflow_dispatch' || (startsWith(github.event.workflow_run.head_branch, 'repin-train/') && github.event.workflow_run.head_repository.full_name == github.repository) }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

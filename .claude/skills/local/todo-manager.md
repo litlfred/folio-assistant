@@ -1,10 +1,10 @@
-# todo-manager — see `skills/sdlc/sdlc-core/`
+# todo-manager — see `cat-harness/work-plan/skills/work-plan/`
 
 **This is a stub. The skill lives in the `kg` graph, not here.**
 
 `skill_fetch("todo-manager")` serves
-[`skills/sdlc/sdlc-core/todo-manager.md`](../../../skills/sdlc/sdlc-core/todo-manager.md)
-— `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` holds `skills/sdlc/sdlc-core` and
+[`work-plan/skills/work-plan/todo-manager.md`](../../../cat-harness/work-plan/skills/work-plan/todo-manager.md)
+— `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` holds `sdlc/skills/sdlc-core` and
 no `.claude/skills/local` entry — so that file is what an agent asking for this
 skill by name has always received.
 
@@ -21,9 +21,9 @@ The skill is now three, because the one file had grown to 396 lines against a
 
 | skill | what it governs |
 |---|---|
-| [`todo-manager`](../../../skills/sdlc/sdlc-core/todo-manager.md) | bean mechanics: the CLI, the STRICT check before `beans create`, the fallback when the CLI is absent, the status vocabulary, coordination |
-| [`opening-brief`](../../../skills/sdlc/sdlc-core/opening-brief.md) | what you say **before** starting a bean or a topic |
-| [`turn-reporting`](../../../skills/sdlc/sdlc-core/turn-reporting.md) | what you say **during and after** each turn, including the STRICT "next"-line rule |
+| [`todo-manager`](../../../cat-harness/work-plan/skills/work-plan/todo-manager.md) | bean mechanics: the CLI, the STRICT check before `beans create`, the fallback when the CLI is absent, the status vocabulary, coordination |
+| [`opening-brief`](../../../cat-harness/sdlc/skills/sdlc-core/opening-brief.md) | what you say **before** starting a bean or a topic |
+| [`turn-reporting`](../../../cat-harness/sdlc/skills/sdlc-core/turn-reporting.md) | what you say **during and after** each turn, including the STRICT "next"-line rule |
 
 Same discipline as `CLAUDE.md` and `GEMINI.md`: one source of truth, thin
 pointers to it. Do not re-add content here — edit the skill.

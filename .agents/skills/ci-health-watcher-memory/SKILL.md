@@ -36,7 +36,7 @@ already look.
 
 ## STABLE — the complement
 
-`ynu8` complements bean `5rfy`, which fixed workflows that never *fire*. This
+`ynu8` complements work item `5rfy`, which fixed workflows that never *fire*. This
 is the opposite defect: one that fires constantly and fails every time. When
 triaging, decide which of the two you are looking at first — the remedies are
 unrelated.
@@ -67,7 +67,7 @@ Not incidental; do not simplify either away.
 
 `docs-site.yml` fired on every push to `main` and **failed all 30 times over
 two months**. The trigger was fine; the *outcome* was invisible, so the
-published site sat stale and nothing in the repo said so. Bean `xom7`.
+published site sat stale and nothing in the repo said so. Work item `xom7`.
 
 **A report is only read by someone in the room.** The session-start sweep
 covers every day somebody is working; the failure being guarded against is a
@@ -76,7 +76,7 @@ session starts either. So `.github/workflows/ci-health.yml` runs the same
 check **weekly** and maintains **one** tracking issue labelled `ci-health`:
 opened when the default branch has a live failure, **edited in place** while
 it persists (an edit does not notify, so a long outage stays one unread
-item), and closed automatically when `main` is clean. Bean `ynu8`.
+item), and closed automatically when `main` is clean. Work item `ynu8`.
 
 It deliberately does **not** send another email. GitHub sent 30, and the
 premise of `xom7` is that nobody reads them. The three live badges at the top
@@ -177,7 +177,7 @@ does not reach the site, so a composed URL 404s on a page that is there.
 `pending, total_count 0` on a green PR. Check its `head_sha` against the PR's
 current head.
 
-Skill: `skills/sdlc/sdlc-core/github-state-inspection.md`.
+Skill: `sdlc/skills/sdlc-core/github-state-inspection.md`.
 
 More: `detail/read-the-ref-not-the-url.md`
 
@@ -188,10 +188,10 @@ which is why GitHub ran them on `push` despite both being
 `workflow_dispatch`-only, and why their runs are named by path rather than by
 `name:`. They were fixed the next day. They only run on dispatch and the
 report only reads the default branch, so nothing will ever run them here
-again. Bean `lq7e`.
+again. Work item `lq7e`.
 
 The platform carries no folio: `witness-refresh` needs `computations/`, and
-`qa-sweep` is no longer a workflow here — since bean `52dz` it is a
+`qa-sweep` is no longer a workflow here — since work item `52dz` it is a
 `folio_init` template (`cat-harness/templates/`), so its red runs predate that.
 
 Without rule 3 these two would be red forever. That is what rule 3 is for.

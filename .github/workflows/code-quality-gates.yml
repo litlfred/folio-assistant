@@ -1,4 +1,4 @@
-# bpmn: cat-harness/processes/sdlc/code-quality-gates.bpmn
+# bpmn: cat-harness/sdlc/processes/code-quality-gates.bpmn
 # Code-quality gates — cheap, fast static checks that protect compute infra.
 #
 # Four jobs (the first three per
@@ -127,19 +127,23 @@ permissions:
 # verdict of its own and no `main/<sha>` entry on `qa-reports` (the docs
 # build already falls back to the newest `main` entry, labelled).
 #
-# A `workflow_dispatch` is NOT grouped with them and is never cancelled:
-# merge-main dispatches this workflow on a PR BRANCH to judge the merge
-# commit it pushed there (`merge-main.yml`, "Have CI judge the merge
-# commit"), which is a different question from main's, on a different ref.
+# A `workflow_dispatch` is NOT grouped with them: merge-main dispatches this
+# workflow on a PR BRANCH to judge the merge commit it pushed there
+# (`merge-main.yml`, "Have CI judge the merge commit"), which is a different
+# question from main's, on a different ref. Dispatches share a group PER REF
+# (2026-11-05): a newer dispatch on a branch judges a newer head, and the
+# older one judges a head nobody will merge, exactly as a superseded PR push
+# — it was grouped by sha and never cancelled, and ran to the end. On `main`
+# a dispatch follows main's rule below: a started run is not cancelled.
 # `merge_group` stays per sha.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || (github.event_name == 'push' && github.ref) || github.sha }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.event.pull_request.number || (github.event_name == 'push' && github.ref) || (github.event_name == 'workflow_dispatch' && format('dispatch-{0}', github.ref)) || github.sha }}
   # A started main run is never cancelled (owner, 2026-11-01, card Q-CIS-1 A):
   # with merges landing faster than one run, cancelling on push left main with
   # no finished run all day (0 green of 10 pushes from 10:00Z). A newer push
   # still waits in the group, and a newer one replaces it there, so the newest
   # main is the next judged; only the commits in between get no verdict.
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main') }}
 
 jobs:
   hygiene:
@@ -564,7 +568,31 @@ jobs:
     # record or mismatch is `reuse=false`, and the script exits 0 in every
     # state, so a crash leaves the output empty and every job runs. It runs
     # only on `push`; on a PR it is skipped and nothing waits for it.
-    if: ${{ github.event_name == 'push' }}
+    #
+    # ## PR and dispatch runs too, by the same tree rule
+    #
+    # A run on a PR or a dispatch can ask a question already answered as well:
+    # a `ready_for_review` or `reopened` run, or a `synchronize` pushed by
+    # merge-main's bot after its own dispatch, on a head and base that did not
+    # move; a dispatch on a head a `pull_request` or earlier dispatch run
+    # already judged. Measured 2026-11-05: merge-from-main commits are 18-90 %
+    # of a PR's runner time. The rule is the one above, unchanged, read by the
+    # same script:
+    #
+    #   - `pull_request`: the checkout is the PR's test merge commit, whose
+    #     second parent is the PR head, so the script looks up the runs on that
+    #     head and keeps one only if its recorded tested tree is this one.
+    #   - `workflow_dispatch`: the dispatched commit is the head. A local,
+    #     never-pushed commit with the same tree and the head as its second
+    #     parent hands the script that head (`HEAD_REF`), so the candidates are
+    #     the runs on it, and the tree must still match exactly.
+    #
+    # A reusing run skips the same eight jobs, which is also why one never
+    # stands in further: the script requires all eight to have concluded
+    # `success`, so a later lookup passes over it to the run that asked. The
+    # Q-PIPE-1 check below is kept for every event. Skipped on a draft, whose
+    # run skips those eight jobs anyway.
+    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -602,7 +630,21 @@ jobs:
           REPO: ${{ github.repository }}
           WORKFLOW: code-quality-gates.yml
           PRODUCER_JOB: QA working copy, built once for this run (not a gate)
-        run: bash cat-harness-tools/scripts/verdict-reuse.sh
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            # See "PR and dispatch runs too" above: a local commit, tree
+            # unchanged, second parent the dispatched head. Never pushed.
+            # The first parent is an empty root commit: git drops a repeated
+            # parent, and the script reads a one-parent commit as a squash merge.
+            id=(-c user.name=verdict-reuse -c user.email=verdict-reuse@invalid)
+            root=$(git "${id[@]}" commit-tree "$(git mktree </dev/null)" -m 'verdict-reuse: root') \
+              && HEAD_REF=$(git "${id[@]}" commit-tree 'HEAD^{tree}' -p "$root" -p HEAD -m 'verdict-reuse: look up runs on HEAD') \
+              || HEAD_REF=
+            [ -n "$HEAD_REF" ] || { echo "reuse=false" >> "$GITHUB_OUTPUT"; echo "could not form the lookup commit: nothing reused"; exit 0; }
+            export HEAD_REF
+          fi
+          bash cat-harness-tools/scripts/verdict-reuse.sh
 
       # Q-PIPE-1 (#2899): a PR's shards pass when every failure is main's too.
       # Such a run concluded `success`, but it is not a green verdict on this
@@ -839,7 +881,7 @@ jobs:
     # because `typescript-test` runs `if: !cancelled()` and goes red at its
     # first step that reads this job's result.
     needs: [qa-working-copy, verdict-reuse]
-    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
+    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
@@ -973,8 +1015,12 @@ jobs:
     # Skipped on a push to `main` whose tree an earlier run already judged
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, verdict-reuse, publish-pages]
-    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
+    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -1048,15 +1094,17 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
-      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
-        # The IG instances commit no artefact index (fhir-harness#124 step 3):
-        # `ig-index:build` writes each one's index, menu, releases and package
-        # from the IG's cached AST. It takes about 15 seconds, so this job builds
-        # its own rather than waiting on qa-working-copy for the `ig-indexes`
-        # artifact.
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: bun run cat ig-index:build
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies. This job
+        # used to build its own (12-16 s) "rather than waiting on
+        # qa-working-copy", but it has `needs: qa-working-copy` for the QA
+        # working copy anyway, so the artifact is always there first: measured
+        # on run 41981133123, the download is 1-3 s.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -1241,7 +1289,7 @@ jobs:
           # `true` only on a push to `main` whose tree an earlier run already
           # judged green, which is the one case the standalone ratchet is
           # skipped by design (bean `qbco`); its verdict is that run's.
-          REUSED: ${{ github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true' }}
+          REUSED: ${{ needs.verdict-reuse.outputs.reuse == 'true' }}
           REUSED_RUN: ${{ needs.verdict-reuse.outputs.run_id }}
           # A draft PR runs the fast tier only (bean `dft1`, see `on:`): every
           # part is skipped by design, and the full tier runs when it is
@@ -1296,6 +1344,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -2017,6 +2069,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -3040,7 +3096,7 @@ jobs:
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
     needs: verdict-reuse
-    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true }}
+    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -3209,6 +3265,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
@@ -4369,10 +4429,18 @@ jobs:
     # ## What always runs everything
     #
     # This job runs only on a non-draft `pull_request` push that is not
-    # `ready_for_review`. A `ready_for_review` run, a push to `main`, a
-    # `workflow_dispatch` and a `merge_group` skip this job, its output is
-    # empty, and the shards run (`!= 'false'` in their `if:`), so marking a PR
-    # ready always runs the full tier once. A PR run that skipped the shards
+    # `ready_for_review`, and on a `workflow_dispatch` of a branch other than
+    # `main`. A `ready_for_review` run, a push to `main`, a dispatch on `main`
+    # and a `merge_group` skip this job, its output is empty, and the shards
+    # run (`!= 'false'` in their `if:`), so marking a PR ready always runs the
+    # full tier once.
+    #
+    # A dispatch on a branch is merge-main's (and repin-train's) way to judge a
+    # commit it pushed with a token that starts no `pull_request` run. It used
+    # to run all three shards whatever the branch changed (measured
+    # 2026-11-05: every dispatch run ran them). Now its changed files are the
+    # branch's diff against `main`'s merge base, read from git, and judged by
+    # the same `INERT` / `ALWAYS` rule. A PR run that skipped the shards
     # never lets `main` reuse its verdict: `verdict-reuse.sh` requires all three
     # shards to have concluded `success`, so the merge's push to `main` runs
     # them.
@@ -4380,24 +4448,58 @@ jobs:
     # The changed files are the PR's whole diff against its base, not the last
     # push's, so a later push that touches only `INERT` files still runs the
     # shards when an earlier commit of the PR changed a pin.
-    if: ${{ github.event_name == 'pull_request' && github.event.action != 'ready_for_review' && github.event.pull_request.draft != true }}
+    if: ${{ (github.event_name == 'pull_request' && github.event.action != 'ready_for_review' && github.event.pull_request.draft != true) || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main') }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
       contents: read
       pull-requests: read
     outputs:
-      affected: ${{ steps.scope.outputs.affected }}
+      affected: ${{ steps.dispatch-scope.outputs.affected || steps.scope.outputs.affected }}
+    # One rule for both steps below.
+    env:
+      INERT: '^(\.github/workflows/[^/]+\.ya?ml|\.github/(scripts|actions|pages-jekyll)/.+|\.github/dependabot\.yml|\.github/lake-packages\.json|test/workflows/[^/]+|\.mcp\.json)$'
+      ALWAYS: '^\.github/workflows/code-quality-gates\.yml$'
     steps:
+      # A dispatch: the history without file contents (a tree diff needs no
+      # blobs), so the merge base with `main` can be found.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - name: Decide from the dispatched branch's diff against main
+        id: dispatch-scope
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          decide() {
+            echo "affected=$1" >> "$GITHUB_OUTPUT"
+            printf '### End-to-end scope: affected=%s\n\n%s\n' "$1" "$2" >> "$GITHUB_STEP_SUMMARY"
+            echo "e2e-scope: affected=$1 — $2"
+            exit 0
+          }
+          base=$(git merge-base origin/main HEAD 2>/dev/null) || decide true "Could not find the merge base with \`main\`, so the e2e shards run."
+          # `--no-renames`: a renamed file is listed as its old path deleted and
+          # its new path added, so both paths are judged, as on a PR.
+          if ! listing=$(git diff --name-only --no-renames "$base" HEAD); then
+            decide true "Could not list the branch's changed files, so the e2e shards run."
+          fi
+          files=$(printf '%s\n' "$listing" | awk 'NF' | wc -l)
+          [ "$files" -gt 0 ] || decide true "The branch changes nothing against \`main\`, so the e2e shards run."
+          affecting=$(printf '%s\n' "$listing" | awk 'NF && ($0 !~ ENVIRON["INERT"] || $0 ~ ENVIRON["ALWAYS"])')
+          if [ -n "$affecting" ]; then
+            n=$(printf '%s\n' "$affecting" | wc -l)
+            decide true "$n of $files changed file(s) can change what the e2e shards test, so they run. First: \`$(printf '%s\n' "$affecting" | head -1)\`."
+          fi
+          decide false "All $files changed file(s) against \`main\` are outside what the e2e shards read (\`INERT\` in this job), so the shards are skipped on this dispatch."
       - name: Decide from the PR's changed files
         id: scope
+        if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           PR: ${{ github.event.pull_request.number }}
           CHANGED: ${{ github.event.pull_request.changed_files }}
-          INERT: '^(\.github/workflows/[^/]+\.ya?ml|\.github/(scripts|actions|pages-jekyll)/.+|\.github/dependabot\.yml|\.github/lake-packages\.json|test/workflows/[^/]+|\.mcp\.json)$'
-          ALWAYS: '^\.github/workflows/code-quality-gates\.yml$'
         run: |
           decide() {
             echo "affected=$1" >> "$GITHUB_OUTPUT"
@@ -4471,8 +4573,12 @@ jobs:
     # build them itself in `e2e-global-setup.ts` (`derive:publish`, which runs
     # `qa:refresh` for `uml:overview`): about 9 of a shard's ~13 minutes, three
     # times over, for the bytes `publish-pages` already uploads.
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [verdict-reuse, e2e-scope, qa-working-copy, publish-pages]
-    if: ${{ !cancelled() && !(github.event_name == 'push' && needs.verdict-reuse.outputs.reuse == 'true') && github.event.pull_request.draft != true && needs.e2e-scope.outputs.affected != 'false' }}
+    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true && needs.e2e-scope.outputs.affected != 'false' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -4546,15 +4652,17 @@ jobs:
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
 
-      - name: Build the IG artefact indexes the pages read (fhir-harness#124)
-        # The IG instances commit no artefact index (fhir-harness#124 step 3):
-        # `ig-index:build` writes each one's index, menu, releases and package
-        # from the IG's cached AST. It takes about 15 seconds, so this job builds
-        # its own rather than waiting on qa-working-copy for the `ig-indexes`
-        # artifact.
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: bun run cat ig-index:build
+      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
+        # Built once by `qa-working-copy` (`ig-index:build`); without them
+        # `smart:pages` would read the IG instances' committed copies. This job
+        # used to build its own (12-16 s) "rather than waiting on
+        # qa-working-copy", but it has `needs: qa-working-copy` for the QA
+        # working copy anyway, so the artifact is always there first: measured
+        # on run 41981133123, the download is 1-3 s.
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: ig-indexes
+          path: .
 
       - name: Build the mounted IG instances' pages (bean hupw)
         # smart-base, smart-trust and smart-immunizations are REMOTE MOUNTS
@@ -4727,6 +4835,10 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
+    # Both producers in `needs`, each READ (bean 9set): a job may read only its
+    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
+    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
+    # restores either bundle. `publish-pages` alone would order it, not reach them.
     needs: [qa-working-copy, publish-pages]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest

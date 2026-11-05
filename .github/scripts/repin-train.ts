@@ -574,6 +574,12 @@ async function main(argv: string[]): Promise<number> {
     console.log(`close=${d.close.join(" ")}`);
     return 0;
   }
+  // The trains a sweep would judge, one head sha per line, judging nothing:
+  // `sweeps.yml` asks this to decide whether to dispatch the verdict workflow.
+  if (cmd === "pending") {
+    for (const sha of await trainsToJudge(api, repo)) console.log(sha);
+    return 0;
+  }
   if (cmd === "verdict" && argv.includes("--open")) {
     const shas = await trainsToJudge(api, repo);
     if (shas.length === 0) console.log("no open train waits for a verdict");
@@ -584,7 +590,7 @@ async function main(argv: string[]): Promise<number> {
     console.log(await judgeTrain(api, repo, arg(argv, "--sha"), opts));
     return 0;
   }
-  console.error("usage: repin-train.ts decide --tree <sha> | verdict (--sha <sha> | --open) [--no-merge]");
+  console.error("usage: repin-train.ts decide --tree <sha> | pending | verdict (--sha <sha> | --open) [--no-merge]");
   return 2;
 }
 

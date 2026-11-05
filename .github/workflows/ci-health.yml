@@ -1,4 +1,4 @@
-# bpmn: cat-harness/processes/sdlc/ci-health-watch.bpmn
+# bpmn: cat-harness/sdlc/processes/ci-health-watch.bpmn
 # CI health watchdog — the backstop for the report nobody is in the room to read.
 #
 # `docs-site.yml` was triggered by all 30 `main` pushes between 2026-06-29 and
@@ -78,14 +78,21 @@ permissions:
   contents: read
   issues: write
 
-concurrency:
-  group: ci-health
-  cancel-in-progress: false
-
 jobs:
   report:
     # bpmn-node: Start_Sweep
     name: Report CI health on the default branch
+    # THE GROUP SITS ON THE JOB, NOT THE WORKFLOW (runner-request cuts,
+    # 2026-11-05). At workflow level every `workflow_run` delivery joined the
+    # group BEFORE its `if` was read, so a green trigger that was about to
+    # skip could replace a pending RED one, and half the runs ended
+    # `cancelled` (5 of 10 on 2026-11-04) — a red report among them is a
+    # watchdog that lost its bark. On the job, a run whose `if` skips never
+    # joins the group; only sweeps that will run queue here, and a running
+    # sweep is never cancelled. (`writer-records.yml` measured the same.)
+    concurrency:
+      group: ci-health
+      cancel-in-progress: false
     # On a `workflow_run` trigger, only a RED triggering run is worth a sweep;
     # the schedule and a manual dispatch always sweep. Written as "not
     # workflow_run OR red" rather than as a list of allowed events, so adding a
