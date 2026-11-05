@@ -24,9 +24,11 @@
 #      judge it once.
 #
 # Conflicts are resolved here, once, never per main move: `merge-main.yml`
-# skips a PR labelled `merge-train`. A member with an authored conflict is
-# refused by `merge:train` and left out, back to its owner (merge-queue,
-# "A train admits only members that STACK cleanly").
+# skips a PR labelled `merge-train`. Owner, 2026-11-05 ("Resolve generated
+# only"; supersedes the 2026-10-04 "stack cleanly" ruling for generated paths
+# only): conflicts in declared generated paths are resolved mechanically; a
+# conflict in a hand-written file is refused by `merge:train`, and that PR is
+# ejected with a comment and waits for its author.
 #
 # Nothing here waits for CI: a run takes one step and ends. `sweeps.yml` asks
 # `merge-train.ts pending` every 15 minutes and dispatches this workflow only
@@ -115,6 +117,7 @@ jobs:
         if: steps.tick.outputs.action == 'build'
         env:
           SPECS: ${{ steps.tick.outputs.build }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -uo pipefail
           git config user.name "merge-train[bot]"
@@ -129,6 +132,10 @@ jobs:
             --out "$RUNNER_TEMP/report.json" $SPECS > /dev/null
           code=$?
           if [ "$code" -ge 2 ]; then echo "::error::merge:train could not build (exit $code)"; exit 1; fi
+          # A member refused for a hand-written conflict is ejected with a
+          # comment (owner, 2026-11-05, "Resolve generated only").
+          bun .github/scripts/merge-train.ts eject-refused --plan "$RUNNER_TEMP/plan.json" --report "$RUNNER_TEMP/report.json" \
+            || echo "::warning::could not eject the refused members; they are named in the train PR"
           tree=$(git rev-parse 'HEAD^{tree}')
           if bun .github/scripts/merge-train.ts body --plan "$RUNNER_TEMP/plan.json" \
               --report "$RUNNER_TEMP/report.json" --tree "$tree" > "$RUNNER_TEMP/body.md"; then

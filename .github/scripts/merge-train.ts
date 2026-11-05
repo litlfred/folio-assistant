@@ -325,6 +325,16 @@ async function upsertComment(api: Api, repo: string, number: number, body: strin
 const comment = (api: Api, repo: string, number: number, body: string) =>
   api.send("POST", `/repos/${repo}/issues/${number}/comments`, { body: `${body}\n\n---\n_Written by \`merge-train.yml\` (bean \`folio-assistant-hd58\`)._` });
 
+/** Take a PR out of the train: remove its opt-in label, and say why. */
+async function eject(api: Api, repo: string, number: number, why: string): Promise<void> {
+  try {
+    await api.send("DELETE", `/repos/${repo}/issues/${number}/labels/${OPT_IN}`, undefined);
+  } catch {
+    // already gone
+  }
+  await comment(api, repo, number, why);
+}
+
 /** Merge a green train: a merge commit, expected sha = the judged head. */
 async function land(api: Api, repo: string, t: TrainPr): Promise<{ merged: boolean; why: string }> {
   let pr: PullJson | undefined;
@@ -419,12 +429,7 @@ export async function tick(api: Api, repo: string, opts: TickOptions = {}): Prom
     await api.send("PATCH", `/repos/${repo}/pulls/${t.number}`, { state: "closed", body });
     const fails = judged ? [...judged.v.newFailures, ...judged.v.undetermined] : [];
     if (step0.eject !== undefined) {
-      try {
-        await api.send("DELETE", `/repos/${repo}/issues/${step0.eject}/labels/${OPT_IN}`, undefined);
-      } catch {
-        // already gone
-      }
-      await comment(api, repo, step0.eject, [
+      await eject(api, repo, step0.eject, [
         `Ejected from the merge train: on its own on top of main (train #${t.number}) it fails checks that pass on main.`,
         "", list(fails), "",
         "Fix it on this branch, then add the `merge-train` label again.",
@@ -543,7 +548,23 @@ async function main(argv: string[]): Promise<number> {
     console.log(trainBody(state, refused, arg(argv, "--tree")));
     return members.length > 0 ? 0 : 3;
   }
-  console.error("usage: merge-train.ts pending | tick --out <dir> | body --plan <f> --report <f> --tree <sha>");
+  // Owner, 2026-11-05 ("Resolve generated only"): a member the build refused
+  // (a conflict in a hand-written file) is EJECTED with a comment, and waits
+  // for its author; it does not ride the next train refused again.
+  if (cmd === "eject-refused") {
+    const plan = JSON.parse(readFileSync(arg(argv, "--plan"), "utf-8")) as TrainState;
+    const report = JSON.parse(readFileSync(arg(argv, "--report"), "utf-8")) as TrainReport;
+    for (const r of builtMembers(plan, report).refused) {
+      await eject(api, repo, r.number, [
+        "Ejected from the merge train: it does not stack on main plus the PRs before it.",
+        "", `- ${r.reason}`, "",
+        "The train resolves conflicts in declared generated paths only (owner, 2026-11-05). Merge main into this branch, resolve the hand-written conflict, then add the `merge-train` label again.",
+      ].join("\n"));
+      console.log(`ejected #${r.number}: ${r.reason}`);
+    }
+    return 0;
+  }
+  console.error("usage: merge-train.ts pending | tick --out <dir> | body --plan <f> --report <f> --tree <sha> | eject-refused --plan <f> --report <f>");
   return 2;
 }
 

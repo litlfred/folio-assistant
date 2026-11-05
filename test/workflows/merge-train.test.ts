@@ -178,6 +178,8 @@ describe("the workflows are wired", () => {
     expect(s).toContain("bun run cat merge:train -- --base origin/main");
     expect(s).toContain("merge-train.ts tick");
     expect(s).toContain("gh workflow run code-quality-gates.yml");
+    // Owner, 2026-11-05: a hand-written conflict ejects the PR with a comment.
+    expect(s).toContain("merge-train.ts eject-refused");
   });
   test("a dispatch on main after a train merge is looked up by its second parent", () => {
     expect(wf("code-quality-gates.yml")).toContain(`git rev-parse -q --verify 'HEAD^2'`);
