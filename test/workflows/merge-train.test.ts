@@ -237,3 +237,67 @@ describe("the sweep starts a runner only when a tick has something to do", () =>
     expect(await pending(stub([{ status: "completed", conclusion: "failure" }]), "o/r")).toContain("judge it");
   });
 });
+
+describe("one whole tick, against a stub GitHub", () => {
+  const R = "o/r";
+  const C = "c".repeat(40), M1 = "1".repeat(40), M2 = "2".repeat(40), MAIN = "f".repeat(40);
+  const pull = (n: number, sha: string, labels: string[], ref = `b${n}`, extra: object = {}) => ({
+    number: n, state: "open", draft: false, body: "", head: { sha, ref, repo: { full_name: R } }, base: { ref: "main" },
+    labels: labels.map((name) => ({ name })), mergeable: true, mergeable_state: "clean", ...extra,
+  });
+  function world() {
+    const sent: Array<{ method: string; path: string; body: any }> = [];
+    const green = { check_runs: [{ id: 9, name: "lint (hard)", status: "completed", conclusion: "success" }] };
+    const train = pull(80, C, ["merge-train-batch"], "merge-train/x", {
+      body: writeState({ members: [{ number: 11, sha: M1 }], queue: [] }),
+    });
+    const api = {
+      async get<T>(p: string): Promise<T> {
+        if (p.startsWith(`/repos/${R}/pulls?state=all`)) return [train] as T;
+        if (p.startsWith(`/repos/${R}/commits?sha=main`)) return [{ sha: MAIN }] as T;
+        if (p.includes("/check-runs")) return green as T;
+        if (p === `/repos/${R}/pulls/80`) return train as T;
+        if (p === `/repos/${R}/pulls/11`) return pull(11, M1, ["merge-train"]) as T;
+        if (p.startsWith(`/repos/${R}/issues/80/comments`)) return [] as T;
+        // GitHub has not caught up yet: #11 still reads open and labelled.
+        if (p.startsWith(`/repos/${R}/pulls?state=open`)) return [pull(11, M1, ["merge-train"]), pull(12, M2, ["merge-train"])] as T;
+        if (p.startsWith("/search/issues")) return { items: [] } as T;
+        if (/\/issues\/1[12]\/events/.test(p)) return [{ event: "labeled", label: { name: "merge-train" }, actor: { type: "User" } }] as T;
+        if (/\/pulls\/1[12]\/reviews/.test(p)) return [] as T;
+        if (/\/pulls\/1[12]\/files/.test(p)) return [{ filename: "src/a.ts" }] as T;
+        throw new Error(`unexpected GET ${p}`);
+      },
+      async send<T>(method: string, path: string, body: unknown): Promise<T> {
+        sent.push({ method, path, body });
+        return undefined as T;
+      },
+      async text(): Promise<string> { return ""; },
+    };
+    return { api, sent };
+  }
+
+  test("a green train lands, its member is told, and the next plan does not take it again", async () => {
+    const { tick } = await import("../../.github/scripts/merge-train.ts");
+    const { api, sent } = world();
+    const r = await tick(api as never, R, { mergeTriggersCi: false });
+    // judged, then merged with the judged head as the expected sha
+    expect(sent.find((s) => s.path === `/repos/${R}/statuses/${C}`)?.body.state).toBe("success");
+    const merge = sent.find((s) => s.method === "PUT" && s.path === `/repos/${R}/pulls/80/merge`);
+    expect(merge?.body).toMatchObject({ merge_method: "merge", sha: C });
+    // a GITHUB_TOKEN merge starts no push run, so the gates are dispatched on main
+    expect(sent.some((s) => s.path.endsWith("/code-quality-gates.yml/dispatches") && s.body.ref === "main")).toBe(true);
+    // the member is told
+    expect(sent.some((s) => s.path === `/repos/${R}/issues/11/comments`)).toBe(true);
+    // #11 still reads open and labelled, but landed this tick: only #12 rides next
+    expect(r.step).toEqual({ action: "build", batch: [12], queue: [] });
+    expect(r.plan?.members).toEqual([{ number: 12, sha: M2 }]);
+  });
+});
+
+describe("a member already on main is neither carried nor ejected", () => {
+  test("builtMembers skips already-contained", () => {
+    const plan = { members: [{ number: 1, sha: "d".repeat(40) }], queue: [] };
+    const report = { head: "e".repeat(40), verdict: "built", members: [{ spec: `1:${"d".repeat(40)}`, sha: "d".repeat(40), status: "already-contained" }] };
+    expect(builtMembers(plan, report)).toEqual({ members: [], refused: [] });
+  });
+});

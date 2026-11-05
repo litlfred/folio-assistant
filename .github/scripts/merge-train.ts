@@ -378,6 +378,11 @@ export interface TickOptions {
 /** One tick. Returns the decision taken, and lines for `$GITHUB_OUTPUT`. */
 export async function tick(api: Api, repo: string, opts: TickOptions = {}): Promise<{ step: Step; log: string[]; plan?: TrainState }> {
   const log: string[] = [];
+  // Members landed by THIS tick, at the heads that landed. GitHub marks them
+  // merged a moment later, so the pool read below can still list them open
+  // and labelled; they must not ride the next train. A member whose head
+  // moved since has new commits, and may.
+  const landed = new Map<number, string>();
   const trains = await trainPrs(api, repo);
   const open = trains.find((t) => t.state === "open");
   let verdict: Verdict["state"] | undefined;
@@ -426,6 +431,7 @@ export async function tick(api: Api, repo: string, opts: TickOptions = {}): Prom
         }
       }
       for (const mem of readState(t.body)?.members ?? []) {
+        landed.set(mem.number, mem.sha);
         const p = await api.get<PullJson>(`/repos/${repo}/pulls/${mem.number}`);
         const moved = p.head.sha !== mem.sha;
         await comment(api, repo, mem.number, moved
@@ -457,7 +463,7 @@ export async function tick(api: Api, repo: string, opts: TickOptions = {}): Prom
   const base = await mainBaseline(api, repo);
   const all = await pool(api, repo, base?.runs ?? []);
   for (const { c, why } of all) if (why && (c.labels.includes(OPT_IN) || c.approved)) log.push(`#${c.number} waits: ${why}`);
-  const ready = all.filter((x) => !x.why).map((x) => x.c);
+  const ready = all.filter((x) => !x.why && landed.get(x.c.number) !== x.c.headSha).map((x) => x.c);
   const step = decideStep(trains.filter((t) => t.state !== "open"), undefined, ready.map((c) => c.number));
   if (step.action !== "build") return { step, log };
   const sha = new Map(ready.map((c) => [c.number, c.headSha]));
@@ -502,7 +508,10 @@ export function builtMembers(plan: TrainState, report: TrainReport): { members: 
   const refused: Array<{ number: number; reason: string }> = [];
   for (const m of plan.members) {
     const r = report.members.find((x) => x.spec.split(":")[0] === String(m.number));
-    if (r && (r.status === "merged" || r.status === "already-contained")) members.push(m);
+    if (r?.status === "merged") members.push(m);
+    // Already on main (it landed, or another merge brought it in): nothing to
+    // carry and nothing to eject.
+    else if (r?.status === "already-contained") continue;
     else refused.push({ number: m.number, reason: r?.reason ?? r?.status ?? "not in the report" });
   }
   return { members, refused };
