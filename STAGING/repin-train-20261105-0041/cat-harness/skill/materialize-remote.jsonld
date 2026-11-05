@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/cat-harness/skill/materialize-remote.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-0041",
+    "sha": "51d0d85086f547d7914db7f7cf08a9df19470883",
+    "pr": "repin-train/20261105-0041",
+    "run": "41943258317"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/cat-harness/skill/materialize-remote",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "materialize-remote",
+      "title": "Materializing remote content",
+      "description": "Landing remote content locally — the five gates, the three states, and the two purposes. One process, shared by catalogue import and harness bootstrap, plus the refresh that is not a re-import.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/cat-harness/package/large-datasets"
+      ],
+      "instructionsPath": "skills/library/large-datasets/materialize-remote.md",
+      "instructionLines": 90,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/materialize-remote"
+    }
+  ]
+}

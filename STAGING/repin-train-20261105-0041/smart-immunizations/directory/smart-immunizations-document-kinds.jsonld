@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/smart-immunizations/smart-immunizations.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/smart-immunizations/directory/smart-immunizations-document-kinds.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/smart-immunizations/smart-immunizations.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-0041",
+    "sha": "51d0d85086f547d7914db7f7cf08a9df19470883",
+    "pr": "repin-train/20261105-0041",
+    "run": "41943258317"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/smart-immunizations/directory/smart-immunizations-document-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-immunizations-document-kinds",
+      "path": "document-kinds/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/document-kinds"
+      ],
+      "description": "How this IG realises the document kinds of the layers it needs: `dak.coverage.smart-immunizations.json`, the DAK view of the IG's artefact index, which places each artefact in one of the ten DAK components by its FHIR resource type and lists what no rule places. Written by smart-base's `gen-document-kinds.ts` (`bun run cat smart-base:document-kinds`). The artefact index it was computed from (`from`) is not in this repository, so the generator cannot re-derive the report here and its `--check` does not cover it.",
+      "readmePath": "document-kinds/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/smart-immunizations/directory/smart-immunizations-document-kinds",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/smart-immunizations-document-kinds"
+    }
+  ]
+}

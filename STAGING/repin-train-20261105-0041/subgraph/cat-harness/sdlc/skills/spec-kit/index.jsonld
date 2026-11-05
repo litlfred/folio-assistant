@@ -1,0 +1,51 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/sdlc/skills/spec-kit/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit",
+      "@type": "cat-harness:SkillPackage",
+      "name": "spec-kit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/change-size",
+      "@type": "bootstrap:Skill",
+      "name": "change-size",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cf9beadc7e17fc3195e3823894991c5fa4cf1ded0dc8678580d6cccd0c29decc",
+        "bytes": 4981,
+        "sha256": "cf9beadc7e17fc3195e3823894991c5fa4cf1ded0dc8678580d6cccd0c29decc"
+      },
+      "title": "Change Size Rule — Threshold, Basis, and Complexity Weighting"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-kit",
+      "@type": "bootstrap:Skill",
+      "name": "spec-kit",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1d9a59958a4182bf49f463af6229d992a93f7f4da5424fc68159732cf2d580ff",
+        "bytes": 14733,
+        "sha256": "1d9a59958a4182bf49f463af6229d992a93f7f4da5424fc68159732cf2d580ff"
+      },
+      "title": "Spec Kit — spec-driven development"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-template",
+      "@type": "bootstrap:Skill",
+      "name": "spec-template",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7552bfa693c7cce0643ce7d1df9aae1a9ce7f2e15f9ae4a0ec7839f029509e48",
+        "bytes": 3707,
+        "sha256": "7552bfa693c7cce0643ce7d1df9aae1a9ce7f2e15f9ae4a0ec7839f029509e48"
+      },
+      "title": "Feature Specification: [Feature Name]"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "sdlc/skills/spec-kit",
+  "path": "sdlc/skills/spec-kit/"
+}

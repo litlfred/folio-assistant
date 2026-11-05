@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/smart-trust-phw/directory/smart-trust-phw-ast.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-0041",
+    "sha": "51d0d85086f547d7914db7f7cf08a9df19470883",
+    "pr": "repin-train/20261105-0041",
+    "run": "41943258317"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/smart-trust-phw/directory/smart-trust-phw-ast",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-trust-phw-ast",
+      "path": "fhir-ast/",
+      "contentSource": {
+        "kind": "family",
+        "branch": "cat/fhir-harness/fhir-ast/",
+        "keyFrom": "the IG's package id",
+        "familyRepository": "litlfred/smart-trust-phw",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/ig-ast"
+      ],
+      "description": "The Personal Health Wallet IG's IG Publisher AST, ingested although the IG source is not. Read from the branch family cat/fhir-harness/fhir-ast/ on litlfred/smart-trust-phw, one branch per IG package id; this IG's branch is cat/fhir-harness/fhir-ast/smart.who.int.trust-phw. Restored by fhir-harness/scripts/ig-cache.sh; absent from the checkout.",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0041/smart-trust-phw/directory/smart-trust-phw-ast",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-ast"
+    }
+  ]
+}
