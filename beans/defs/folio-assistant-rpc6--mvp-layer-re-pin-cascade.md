@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T16:33:28Z
+updated_at: 2026-11-05T16:40:03Z
 parent: folio-assistant-rwmf
 ---
 
@@ -54,3 +54,5 @@ _2026-11-05T16:18:07Z_ — MERGED folio-assistant-core#647 as ba172dd (all green
 _2026-11-05T16:28:10Z_ — cat-harness-tools#1518 df7b772: 1 new test failure, its own: qa-refresh.test.ts "every family is under a declared qa directory" did not exempt the root test/results/ the new glob names. Pushed c6566f6 widening the exemption to the root instance (30/30 pass locally in smart-ra's tree).
 
 _2026-11-05T16:33:28Z_ — MERGED who-iris#183 as 54af134 (all green: 17 passed, 2 skipped; 2 regenerated glossary files). Merged so far: who-iris#181, #183; core#647. Open: cat-harness#1054 (fc16a9e), #1061; tools#1518 (c6566f6); core#648.
+
+_2026-11-05T16:40:03Z_ — core#648 went green at d21b9a3 but then conflicted with main (main regenerated cat-harness and core kg-bpmn-activities glossaries after #644). Merged main in, kept main's two copies: 9570a32; CI re-running. Disk was full (scratch trees of finished agents, ~7G); deleted them, survey agent's freeze/ tree kept.
