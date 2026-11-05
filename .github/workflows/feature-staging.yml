@@ -1105,13 +1105,39 @@ jobs:
           bundler-cache: true
           working-directory: ./.github/pages-jekyll
 
+      # Jekyll 4's disk cache (`<source>/.jekyll-cache`) holds converter
+      # output keyed by the content and the converter's configuration, so a
+      # hit is the same bytes a fresh conversion would give. This is unlike
+      # `--incremental`, whose dependency tracking misses site-wide Liquid
+      # (`site.pages` loops in the nav) and would serve stale pages. Restored
+      # from this PR's last build, else main's, and saved after the build. The
+      # gem set is in the key, so a Jekyll or kramdown bump starts cold.
+      # Measured before: "Build Jekyll site" 111 s (job 127218440011).
+      # `--profile` prints where the build spends its time, so the next cut
+      # is chosen from a measurement.
+      - name: Restore Jekyll's content-keyed cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: _docs/.jekyll-cache
+          key: jekyll-cache-v1-${{ hashFiles('.github/pages-jekyll/Gemfile.lock') }}-${{ github.run_id }}
+          restore-keys: |
+            jekyll-cache-v1-${{ hashFiles('.github/pages-jekyll/Gemfile.lock') }}-
+
       - name: Build Jekyll site
         # ~3x the healthy 11-15 min, so a hang fails here rather than at 6 h.
         timeout-minutes: 45
         env:
           BUNDLE_GEMFILE: ${{ github.workspace }}/.github/pages-jekyll/Gemfile
           JEKYLL_ENV: production
-        run: bundle exec jekyll build --source ./_docs --destination ./_site
+        run: bundle exec jekyll build --source ./_docs --destination ./_site --profile
+
+      - name: Save Jekyll's content-keyed cache
+        if: success() && hashFiles('_docs/.jekyll-cache/**') != ''
+        continue-on-error: true
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: _docs/.jekyll-cache
+          key: jekyll-cache-v1-${{ hashFiles('.github/pages-jekyll/Gemfile.lock') }}-${{ github.run_id }}
 
       # An IG's source can repeat an anchor, as the Publisher's output does.
       # Keep the first copy, rename the rest, and report each — per IG.
