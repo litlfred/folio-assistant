@@ -2,11 +2,11 @@
 # folio-assistant-nikw
 $schema: bean/1.0.0
 title: regen-writers.test.ts reads cat-harness/docs/assets/img/workflows, which cat-harness main no longer commits
-status: in-progress
+status: todo
 type: bug
 priority: normal
 created_at: 2026-11-05T17:31:39Z
-updated_at: 2026-11-05T17:37:26Z
+updated_at: 2026-11-05T17:50:21Z
 parent: folio-assistant-4j43
 ---
 
@@ -17,3 +17,4 @@ Every cat-harness-tools PR tested against cat-harness main now fails `test/coord
 
 ## Progress 2026-11-05
 - Blocked on cat-harness-tools#1504 (bean akiq, CI-speed session_01VQDpPfJKxVERPVKKWBTY8z): without it render:bpmn never redraws cat-harness's beside-source SVGs, so no valid fixture exists on main alone. Patch (firstBesideSource over cat-harness/processes) sent to that session to fold into #1504 or stack on it.
+- Folded into cat-harness-tools#1504 as commit 18105180 by the CI-speed 6 session (firstBesideSource verbatim; unused firstCommittedIn removed). Checked: the render:bpmn case passes with cat-harness#1047 + #1504. To be pushed after folio-assistant#2954 lands; nikw closes when #1504 merges (owned there).
