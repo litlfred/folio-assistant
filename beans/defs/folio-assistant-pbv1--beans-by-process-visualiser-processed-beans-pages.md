@@ -2,11 +2,11 @@
 # folio-assistant-pbv1
 $schema: bean/1.0.0
 title: 'BEANS BY PROCESS: processed-beans and processed-bean visualiser pages (BPMN with bean markers, filters, stalled search)'
-status: in-progress
+status: completed
 type: feature
 priority: normal
 created_at: 2026-11-02T18:45:00Z
-updated_at: 2026-11-05T13:34:43Z
+updated_at: 2026-11-05T13:45:30Z
 parent: folio-assistant-yj32
 tags:
     - visualiser
@@ -40,9 +40,11 @@ Owner ask 2026-11-02 18:35Z (thread cmsg_017WNUkNK8kdDziPK58Pv6G9PqHijxfA1UbP1sL
 - [x] wired into state-visualizer `drawWorkflows`; orphans pruned with the store's others
 - [x] smoke test with real data: badges, filters, lazy diagrams OK
 - [x] Q-PBV-1 = A (build + follow-up cat-harness#988); Q-PBV-2 = A (harness route; owner wants IRIs)
-- [ ] CI green on #1414, then owner review
-- [ ] optional short alias `/beans/processed-beans/`
+- [x] CI green on #1414, then owner review (`litlfred/cat-harness-tools#1414` merged at `4431b7cf8f44df9ab2eccc40c1f9c9f50d96d8f1` on `2026-11-02T19:14:11Z`, closing `#1413`)
+- [x] optional short alias `/beans/processed-beans/` (`de623753` / `1e3c1a12` combined page across stores at `…/beans/beans-processed/`)
 
 _2026-11-02T19:10Z_ — PR #1414 up, follow-up cat-harness#988 filed.
 
 _2026-11-05T13:34:43Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
+
+_2026-11-05T13:45:30Z_ — Completed on verified evidence: `litlfred/cat-harness-tools#1414` merged at `4431b7cf8f44df9ab2eccc40c1f9c9f50d96d8f1` (`2026-11-02T19:14:11Z`, closing `cat-harness-tools#1413`), follow-up commits `92d09253`, `9ce7ffca`, `eba6fd17`, `2921447f`, `de623753`, `1e3c1a12`, `bc4d213c` landed on `cat-harness-tools` `origin/main` (including the combined `/beans/beans-processed/` page), `workflow_start` / `workflow_next` / `workflow_complete` handlers verified on `origin/main` (`src/tools/workflow.ts`), and `bun test cat-harness-tools/scripts/tests/processed-beans.test.ts` passes all 24 tests (71 assertions). Follow-up `litlfred/cat-harness#988` tracks workflow instance recording.
