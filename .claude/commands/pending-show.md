@@ -1,5 +1,5 @@
 ---
-description: "Show the current session's pending work — beans list + ledger intent. Read-only."
+description: "Show the current session's pending work — work items list + ledger intent. Read-only."
 argument-hint: "[what to run it on]"
 generated: cat-harness-tools/scripts/gen-skill-commands.ts
 ---
