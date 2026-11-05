@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T14:40:00Z
+updated_at: 2026-11-05T14:45:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -42,3 +42,5 @@ _2026-11-05T13:50:00Z_ — Owner allowed push (card "Tools push", option 1: merg
 _2026-11-05T14:05:00Z_ — Owner: "start on the other gate-own checks". Batch 2 = https://github.com/litlfred/cat-harness-tools/pull/1521 (stacked on #1508): shared `gateDirectoriesForGraph` in lib/gate-own.ts; scopes the SUBJECTS of check:methodology-evidence (citations still resolve corpus-wide; scoped run skips the committed QA doc), check:tabular-stubs, check:translation-officiality, check:waivers. Remaining: command-paths, subgraphs, concern-groups (need more than a call swap); generator --check halves need a separate decision. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 
 _2026-11-05T14:40:00Z_ — Batch 3 = https://github.com/litlfred/cat-harness-tools/pull/1529 (stacked on #1508, #1521): gateOwnsFile + CAT_GATE_OWN_PATHS/FOREIGN_PATHS; scopes check:command-paths, check:subgraphs, check:concern-groups. Measured: check:subgraphs --check red unscoped and for own=cat-harness (dangling links in cat-harness), green for core/smart-trust. Merge order #1508 → #1521 → #1529. Open: generator --check halves need an owner call. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-05T14:45:00Z_ — Owner card "Generators", option 1 (measure first). Measured over 13 fa re-pin train verdicts (#2925–#2968) and a gate-name search of all 32 trains since 2026-10-29: of the 16 generator/other candidates only `upload-step:docs:check` was NEW from a lower layer, once (fa#2935, job 126587875492: `cat-harness/docs/reference/upload-step/index.md is stale`, gone by #2937). The likely shape is a lower layer's generator changing its output (tools 7a9371a), not an unconfirmed diff. 15 gates at zero. Not visible: the layer PR-check compare tables (they run only in smart-ra, smart-base, smart-immunizations, who-iris…, outside this session's scope), so this undercounts. Also NEW in trains, not on the list: kg:materialize:check, agent-memory:check, bpmn:checklist:check, kind:register:check, check:prov-qaqc, committed-output tests; their shapes are unsorted. Recommendation: no change to generator checks for now.
