@@ -8,15 +8,15 @@ serves everything it exports. GitHub Pages only previews.**
 
 ## The pieces
 
-| Piece | Service | Holds | Decided |
-|---|---|---|---|
-| Runner | GitHub Actions in `litlfred/who-iris` (`.github/workflows/iris-cdn.yml`) | nothing between runs | owner, Q8 |
-| Release history | git repository on **Cloudflare Artifacts** (owner, Q11: history only) | BagIt tag files, `tagmanifest-sha256.txt.jws`, `state/cursor.json`, `state/initial-load.json`, run reports | owner: git on Cloudflare, not GitHub |
-| Bytes | **Cloudflare R2** bucket | PDFs, item records, graph partitions (`.nq.gz`), each under `sha256/<aa>/<digest>` | owner, Q7 → R2 |
-| CDN | Cloudflare, in front of R2 on a custom domain | cached copies only, with an immutable cache policy | owner: Cloudflare CDN |
-| DID document | served from the CDN domain | `did.json` with the public key(s) | owner: `did:web` |
-| Signing key | GitHub **environment secret** | the P-256 private JWK | owner, Q9 |
-| Previews | GitHub Pages of `litlfred/who-iris` and `WHO/who-iris` | the site, reading exported data from the CDN; three materialized items for testing | owner |
+| Piece | Service | Holds |
+|---|---|---|
+| Runner | GitHub Actions in `litlfred/who-iris` (`.github/workflows/iris-cdn.yml`) | nothing between runs; each run's report goes to the workflow log |
+| Release history | git repository on **Cloudflare Artifacts** | BagIt tag files, `tagmanifest-sha256.txt.jws`, and `state/*.json` (cursor, initial-load checkpoint, sizes, md5, uuids, metadata hashes, withdrawals) |
+| Bytes | **Cloudflare R2** bucket | PDFs, item records, item manifests and their JWSs, graph partitions (`.nq.gz`), each under `sha256/<aa>/<digest>` |
+| CDN | Cloudflare, in front of R2 on a custom domain | cached copies only, with an immutable cache policy |
+| DID document | served from the CDN domain | `did.json` with the public key(s), a `did:web` document |
+| Signing key | GitHub **environment secret** | the P-256 private JWK |
+| Previews | GitHub Pages of `litlfred/who-iris` and `WHO/who-iris` | the site, reading exported data from the CDN; three materialized items for testing |
 
 ## Cloudflare: what to set up
 
@@ -46,46 +46,47 @@ and name it `iris-cdn-release`.
 
 - **Deployment branches:** `main` only. A job on any other branch cannot read
   these secrets.
-- **Required reviewers:** none for the nightly run, so it stays unattended.
-  The initial-load workflow uses a second environment,
-  `iris-cdn-initial-load`, which does require the owner's approval.
+- **Required reviewers:** none, so the scheduled runs stay unattended.
 
 | Name | Kind | Where | What |
 |---|---|---|---|
 | `IRIS_CDN_SIGNING_JWK` | secret | environment `iris-cdn-release` | the P-256 private JWK: `{"kty":"EC","crv":"P-256","x":…,"y":…,"d":…}` |
-| `IRIS_CDN_TRUST_ANCHOR_JWK` | variable | repository | WHO's signing-DID public key (JWK), so verification checks the `x5c` chain. It is not secret |
 | `CLOUDFLARE_API_TOKEN` | secret | environment `iris-cdn-release` | the API token from step 5 |
 | `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` | secret | environment `iris-cdn-release` | R2's S3-compatible credentials, for uploads |
+| `IRIS_CDN_TRUST_ANCHOR_JWK` | variable | repository | WHO's signing-DID public key (JWK), so verification checks the `x5c` chain. Verification refuses to run without it |
+| `IRIS_CDN_DID` | variable | repository | the DID that publishes the signing key, e.g. `did:web:<cdn-domain>` |
+| `IRIS_CDN_KEY_ID` | variable | repository | the key's fragment in that DID document (default `release-1`) |
 | `CLOUDFLARE_ACCOUNT_ID` | variable | repository | not secret |
-| `IRIS_CDN_DID` | variable | repository | e.g. `did:web:<cdn-domain>` |
-| `IRIS_CDN_ENABLED` | variable | repository | `true` turns the schedule on; anything else leaves it off |
+| `IRIS_CDN_ARTIFACTS_NAMESPACE`, `IRIS_CDN_ARTIFACTS_REPO` | variable | repository | the Artifacts namespace and repository from step 2 |
+| `IRIS_CDN_R2_BUCKET` | variable | repository | the bucket from step 3 |
+| `IRIS_CDN_ENABLED` | variable | repository | `true` turns the workflow on (on `main` only); anything else leaves it off |
 
 The workflow never stores the Artifacts git token. Each run mints a write
 token that lasts an hour
 (`wrangler artifacts repos issue-token … --ttl 3600`) and passes it to git
 as a `Bearer` header. It never goes in the remote URL.
 
-**Given, not modelled here.** The subordinate signing key is already
-published in a DID document, with `publicKeyJwk.x5c` chaining to WHO's signing
-DID, and its private JWK is already in the GitHub environment secret
-`IRIS_CDN_SIGNING_JWK`. How that key was created and certified happens
-offline and outside these processes (owner, 2026-10-30). The exporter only
-uses the key.
-
-`IRIS_CDN_DID` is the DID that publishes that key, and `IRIS_CDN_KEY_ID` is the
-key's fragment.
+How the signing key was created and published is outside this deployment; see
+[key custody](../skills/iris-cdn-signing.md#key-custody-and-rotation).
 
 ## What runs when
 
 | Workflow trigger | Process | Environment |
 |---|---|---|
 | `schedule: 0 2 * * *` | nightly change ingest | `iris-cdn-release` |
-| `schedule: 0 4 * * 0` | weekly reconciliation | `iris-cdn-release` |
-| `workflow_dispatch` with `mode: initial-load` | initial load, one batch chain | `iris-cdn-initial-load` (reviewed) |
+| `schedule: 0 4 * * 0` | weekly reconciliation (Sunday) | `iris-cdn-release` |
+| `workflow_dispatch` with `mode: nightly` or `reconcile` | the same, on demand | `iris-cdn-release` |
 
-A job can run for at most 6 hours. The initial load therefore runs as a chain
-of batch jobs. Each one commits its checkpoint to Cloudflare git, and the next
-one resumes from that checkpoint.
+Runs never overlap (one concurrency group), and a job times out after 350
+minutes. Each run clones the release history, runs
+`bun scripts/iris-cdn/run.ts <mode> --release release`, commits and pushes
+only if something changed, then verifies the published release.
+
+The initial load is **not** a workflow mode. It is run by hand:
+`bun scripts/iris-cdn/run.ts initial-load --release <checkout> --budget <json-or-file>`.
+The budget's `maxBatchesPerRun` bounds one run, and the next run resumes from
+the checkpoint in `state/initial-load.json`; the caller commits and pushes the
+checkout after each run.
 
 ## Previews on GitHub Pages
 
@@ -96,9 +97,6 @@ small, and a preview always shows what the CDN actually serves.
 
 ## Still open
 
-- **Q10, the domain.** The DID is tied to the domain, so this has to be
-  settled before the first signed release. The recommendation is a domain the
-  owner adds to Cloudflare.
-- **The live DSpace REST shapes** were confirmed against
-  `https://iris.who.int/server/api` on 2026-10-31 (#104); see
-  `skills/iris-rest-feed.md`.
+- **The domain.** The DID is tied to the domain, so this has to be settled
+  before the first signed release. The recommendation is a domain the owner
+  adds to Cloudflare.

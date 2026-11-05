@@ -1,85 +1,116 @@
 # Oxigraph Static Pipeline & Search Requirements
 
-This document defines where **Oxigraph (WASM & CLI)** fits into the `folio-assistant` and `who-iris` publication pipelines, specifying how multi-graph metadata is compiled, verified, distributed via CDN, and queried at the edge.
+How the IRIS catalogue is compiled into named graphs with **Oxigraph**,
+checked, published, and queried. How to build and query it is in the
+[`iris-oxigraph`](../skills/iris-oxigraph.md) skill.
 
 > [!IMPORTANT]
-> **Binary Asset Exclusion Rule**: Binary assets (scanned PDF documents, image bitstreams, page covers) are **never embedded in the named graph**. The RDF graph holds only typed entity descriptors, Dublin Core attributes, containment hierarchies, fixity digests (SHA-256), byte sizes, and HTTP/relative URLs. The binary bytes reside exclusively on static object storage/CDN.
+> **Binary assets are never embedded in the graph.** PDFs, image bitstreams and
+> covers stay on the CDN. The graph holds typed entities, Dublin Core values,
+> containment, and each bitstream's file name, media type, byte size and
+> copyright verdict.
 
 ---
 
 ## 1. Pipeline Architecture & Placement
 
-This pipeline is modelled in BPMN on the platform, not drawn here. The
-diagrams below are rendered from the cat-harness process files, which are the
+The pipeline is modelled in the cat-harness BPMN process files, which are the
 source of truth:
 
 - **Package and distribute partitioned N-Quads** (spine, community partitions,
   manifest, prepared queries):
   [`processes/kg/nquads-distribution.bpmn`](https://github.com/litlfred/cat-harness/blob/main/processes/kg/nquads-distribution.bpmn)
 
-  <img src="https://cdn.jsdelivr.net/gh/litlfred/cat-harness@main/docs/assets/img/workflows/nquads-distribution.svg" alt="BPMN: package and distribute partitioned N-Quads and named queries" style="max-width:100%">
+  ![BPMN: package and distribute partitioned N-Quads and named queries](https://cdn.jsdelivr.net/gh/litlfred/cat-harness@main/docs/assets/img/workflows/nquads-distribution.svg)
 
 - **Run a prepared SPARQL query in Oxigraph** (browser WASM or local engine):
   [`processes/kg/named-query-execution.bpmn`](https://github.com/litlfred/cat-harness/blob/main/processes/kg/named-query-execution.bpmn)
 
-  <img src="https://cdn.jsdelivr.net/gh/litlfred/cat-harness@main/docs/assets/img/workflows/named-query-execution.svg" alt="BPMN: named query execution" style="max-width:100%">
+  ![BPMN: named query execution](https://cdn.jsdelivr.net/gh/litlfred/cat-harness@main/docs/assets/img/workflows/named-query-execution.svg)
 
-How this instance feeds that pipeline from IRIS, and publishes the result to
-Cloudflare, is in [IRIS CDN Exporter: processes](iris-cdn-export.md). That
-process calls `nquads-distribution` for its nightly full rebuild.
-
-The stages, in short: (1) ingest and skolemize, (2) partition into a spine plus
-one graph per community, (3) compress and write the manifest and prepared
-queries, (4) run SPARQL QA gates, (5) publish to the CDN with an immutable
-cache policy, (6) load the spine in the browser and mount community partitions
-on demand.
+How this instance feeds the pipeline from IRIS and publishes to Cloudflare is
+in [IRIS CDN Exporter: processes](iris-cdn-export.md); its nightly full
+rebuild calls `nquads-distribution`.
 
 ---
 
 ## 2. Pipeline Integration Stages
 
 ### Stage 1: Build-Time Ingestion, Skolemization & 2-Tier Partitioning
-- **Input:** 
-  - `catalogue/nodes/*.json`: Communities, collections, item records, and bitstream manifests.
-  - `site/dublin-core/*.dc.jsonld`: Qualified Dublin Core records conforming to `dublin-core.ts`.
-- **Tool:** `folio-assistant/who-iris/scripts/build-iris-oxigraph.ts`
+- **Input**, either:
+  - `catalogue/nodes/*.json` (communities, collections, items, bitstreams) and
+    `site/dublin-core/*.dc.jsonld` (Qualified Dublin Core records conforming to
+    `dublin-core.ts`); or
+  - `--records <dir>`: DSpace records exported by `scripts/iris-cdn/run.ts`.
+- **Tool:** `scripts/build-iris-oxigraph.ts` (`--out <dir>`, default
+  `dist/oxigraph/`).
 - **Actions:**
-  1. **Solution A Skolemization:** Mint deterministic, globally unique URIs (`https://iris.who.int/entity/item/{handle}#{prop}_{idx}`) for all anonymous compound Dublin Core objects (creators, subjects, bitstreams). Asserts strictly 0 blank nodes (`_:`).
-  2. **2-Tier Multi-Graph Partitioning:**
-     - **Tier 1 (Spine)**: `<https://iris.who.int/graph/spine>` containing global hierarchy, item handles, title, primary creator, year, and bitstream copyright gate verdicts. Output as `who-iris-spine.nq` and `who-iris-spine.nq.gz`.
-     - **Tier 2 (Partitions)**: `<https://iris.who.int/graph/community/{id}>` containing deep Qualified Dublin Core metadata (MeSH taxonomy authorities, abstracts, spatial tags, govdoc, ISBN). Output per community as `iris_who_int_graph_community_{id}.nq` and `.gz`.
-     - **Monolithic Reference**: Complete merged dataset emitted as `who-iris-dataset.nq` and `.gz`.
-  3. **Manifest & Prepared Queries:** Export `subgraph-manifest.json` (partition registry) and `queries.json` (pre-compiled SPARQL queries).
+  1. **Skolemization:** mint deterministic URIs
+     (`https://iris.who.int/entity/item/{handle}#{prop}_{idx}`) for every
+     anonymous compound Dublin Core object. The build fails if any blank node
+     (`_:`) remains.
+  2. **Partitioning:**
+     - **Tier 1 (Spine)**: `<https://iris.who.int/graph/spine>` — hierarchy,
+       item Handles, title, first creator, issued date, and bitstream
+       descriptors with copyright verdicts. `who-iris-spine.nq` and `.nq.gz`.
+     - **Tier 2 (Partitions)**: `<https://iris.who.int/graph/community/{id}>` —
+       the full Dublin Core of each community's items (MeSH authorities,
+       abstracts, spatial tags, govdoc, ISBN).
+       `iris_who_int_graph_community_{id}.nq` and `.nq.gz`.
+     - **Catalogue and metadata graphs**:
+       `iris_who_int_graph_catalogue.nq(.gz)` and
+       `iris_who_int_graph_metadata.nq(.gz)`, merged in `who-iris-dataset.nq`
+       and `.nq.gz`.
+  3. **Manifest & prepared queries:** `subgraph-manifest.json` (partition
+     registry) and `queries.json` (prepared SPARQL).
+  4. Every file is sorted and de-duplicated, so unchanged partitions are
+     byte-identical across rebuilds.
 
-### Stage 2: Build-Time SPARQL QA Gates
-- Before any preview or release site is built, Oxigraph runs natively in Bun to execute semantic integrity checks:
-  ```bash
-  bun run who-iris/scripts/build-iris-oxigraph.ts
-  bun test who-iris/scripts/tests/iris-oxigraph.test.ts
-  ```
-- **Integrity Criteria:**
-  - *No orphan items:* Every item in the catalogue must declare at least one parent collection and community path.
-  - *No unresolvable bitstreams:* Every bitstream node must declare fixity algorithm, digest, bytes, and mediaType.
-  - *Authoritative handles:* Every item must declare an authoritative Handle (`10665/...`).
+### Stage 2: Build-Time Tests
+```bash
+bun run scripts/build-iris-oxigraph.ts
+bun test scripts/tests/iris-oxigraph.test.ts
+```
+The test builds the dataset and checks: zero blank nodes; multi-condition
+search, date-range search and facet counts; additive community mounting; the
+`discoverySearch` prepared query; that the manifest's partition files exist;
+and that a rebuild over exported records leaves unchanged partitions
+byte-identical.
 
-### Stage 3: Static CDN Distribution
+Not yet checked by any test: every item declares a collection and community
+path; every bitstream declares bytes and media type; every item has a
+`10665/...` Handle.
 
-> **Owner, 2026-10-30:** exported data is published to **Cloudflare** (R2 behind the Cloudflare CDN, with the release history in a git repository on Cloudflare Artifacts), not to GitHub Pages. The `_site/` paths below are the **preview** build, which keeps only the three items held today. See [IRIS CDN Exporter: deployment](iris-cdn-deployment.md).
-- The generated assets are copied to `_site/who-iris/dist/oxigraph/` alongside the HTML replica:
-  - `who-iris-spine.nq.gz` (Tier 1: Global Routing Spine backbone)
-  - `subgraph-manifest.json` (Dynamic partition manifest & topology index)
-  - `iris_who_int_graph_community_{id}.nq.gz` (Tier 2: Partitioned regional subgraphs)
-  - `who-iris-dataset.nq.gz` (Monolithic merged graph)
-  - `queries.json` (Prepared queries catalog)
-- **Cache Policy:** `Cache-Control: public, max-age=31536000, immutable`. Content changes produce a new git commit hash or content-addressable filename.
+### Stage 3: CDN Distribution
 
-### Stage 4: Client-Side Edge Execution (Browser WASM)
-- In the frontend viewer:
-  1. Browser initializes in-memory store: `const store = new oxigraph.Store();`
-  2. Browser fetches Tier 1 spine (`who-iris-spine.nq.gz`, `< 20 KB`) and `subgraph-manifest.json`.
-  3. Browser streams decompressed N-Quads directly into WASM memory via `store.load(decompressedNq, { format: 'application/n-quads' })`.
-  4. User UI interactions (title search, year filter, open-access copyright gates) execute prepared SPARQL queries locally in < 5ms.
-  5. If the user browses into or selects specific regional communities to search across, the application lazily fetches those communities' `.nq.gz` partitions from `subgraph-manifest.json` and mounts them into the live store with `store.load()` additively without wiping existing state.
+Exported data is published to **Cloudflare**: R2 behind the Cloudflare CDN,
+with release history in a git repository on Cloudflare Artifacts (see
+[IRIS CDN Exporter: deployment](iris-cdn-deployment.md)).
+- `scripts/iris-cdn/run.ts` rebuilds the dataset over the exported records and
+  lists each output file in the release manifest as `graph/<file>`:
+  - `who-iris-spine.nq.gz` (Tier 1 spine)
+  - `subgraph-manifest.json` (partition registry)
+  - `iris_who_int_graph_community_{id}.nq.gz` (Tier 2 partitions)
+  - `who-iris-dataset.nq.gz` (merged graph)
+  - `queries.json` (prepared queries)
+- The bytes are stored in R2 under `sha256/<aa>/<digest>`.
+- **Cache Policy:** `Cache-Control: public, max-age=31536000, immutable` on
+  `sha256/*`. A changed file has a new digest, so a cached object never goes
+  stale.
+
+### Stage 4: Client-Side Execution (Browser WASM)
+
+The intended client pattern (no page in this repository loads Oxigraph yet;
+the replica's home page filters an index embedded in the page with plain
+JavaScript):
+  1. Create an in-memory store: `const store = new oxigraph.Store();`
+  2. Fetch the spine (`who-iris-spine.nq.gz`) and `subgraph-manifest.json`.
+  3. Decompress and load:
+     `store.load(decompressedNq, { format: 'application/n-quads' })`.
+  4. Run prepared SPARQL locally for title search, year filters and
+     open-access gates.
+  5. When the user selects a community, fetch its `.nq.gz` partition from the
+     manifest and `store.load()` it; existing quads are kept.
 
 ---
 
@@ -87,21 +118,24 @@ on demand.
 
 | ID | Requirement | Verification Method |
 | :--- | :--- | :--- |
-| **SR-1** | **No Binary Embeddings in Graph**: No RDF object literal or URI may represent raw file binary bytes (base64 or blob data). Bitstreams must be modelled as nodes carrying `dspace:hasBitstream`, with `fileName`, `fileBytes` (integer), `mediaType`, and `fixity`. | Automated script checks: assert no literal length exceeds 8,192 characters (abstract ceiling). |
-| **SR-2** | **Upstream Skolemization at the Extractor (Zero Blank Nodes)**: Extractors and ingestion pipelines must assign globally unique, deterministic URIs (`https://iris.who.int/entity/item/{handle}#{prop}_{idx}`) directly at record extraction time for all compound nodes (creators, subjects, dates). Zero anonymous compound structures or blank nodes (`_:`) may be emitted. | Assert 0 blank node identifiers in emitted `.nq` dataset (`grep '_:' dataset.nq` yields 0). |
-| **SR-3** | **Multi-Graph Isolation**: Catalogue containment and rights gates must reside in `<https://iris.who.int/graph/catalogue>`; bibliographic records must reside in `<https://iris.who.int/graph/metadata>`. | SPARQL verification: `GRAPH <catalogue>` must contain only `dspace:` predicates; `GRAPH <metadata>` must contain `dcterms:` predicates. |
-| **SR-4** | **Sub-50ms Query Execution**: Standard discovery and complex search queries over the materialized dataset must complete in under 50 milliseconds in WASM. | Measured in Bun/Playwright benchmarks in `iris-oxigraph.test.ts`. |
-| **SR-5** | **Additive Subgraph Mounting**: Calling `store.load()` for an additional named subgraph must not clobber, mutate, or duplicate previously loaded quads. | Test verified: initial query returns N items; loading community slice returns N + M items without reload. |
-| **SR-6** | **Handle Authority**: All item primary subject URIs must resolve using the canonical Handle system: `https://hdl.handle.net/10665/{id}`. | Graph check: all `a dspace:Item` subjects must start with `https://hdl.handle.net/`. |
-| **SR-7** | **Compressed Transport Ceiling**: For the current 3-item library, the full gzipped multi-graph payload must not exceed 10 KB. For scale (300,000 items), regional community partitions must not exceed 25 MB compressed. | Measured build artifact size check in CI. |
-| **SR-8** | **Prepared Query Equivalence**: Every entry in `queries.json` must be syntactically valid SPARQL 1.1 and execute against the dataset with 0 errors. | Automated test parses and dry-runs all queries in `queries.json`. |
-| **SR-9** | **Append-Only Streaming Partitioning**: The build and extraction toolchains must support streaming append-only output to partition files (`who-iris-spine.nq`, `community_{id}.nq`). Ingestion memory consumption must remain bounded O(1) regardless of repository catalog size (300,000 items). | Memory benchmark: heap usage under 250 MB during compilation of entire corpus. |
+| **SR-1** | **No Binary Embeddings in Graph**: No RDF literal or URI may represent raw file bytes (base64 or blob data). Bitstreams are nodes reached by `dspace:hasBitstream`, with `fileName`, `fileBytes` (integer) and `mediaType`. | Not automated. |
+| **SR-2** | **Upstream Skolemization at the Extractor (Zero Blank Nodes)**: Extractors and ingestion pipelines assign deterministic URIs (`https://iris.who.int/entity/item/{handle}#{prop}_{idx}`) at extraction for all compound nodes (creators, subjects, dates). No blank node (`_:`) may be emitted. | The build throws on any residual blank node; `iris-oxigraph.test.ts` asserts none in the dataset. |
+| **SR-3** | **Multi-Graph Isolation**: Catalogue containment and rights gates reside in `<https://iris.who.int/graph/catalogue>`; bibliographic records in `<https://iris.who.int/graph/metadata>`. | Not automated. The catalogue graph also carries `rdf:type`, `rdfs:label` and `dcterms:title`. |
+| **SR-4** | **Sub-50ms Query Execution**: Standard discovery and complex search queries over the materialized dataset complete in under 50 milliseconds in WASM. | Not measured by any test. |
+| **SR-5** | **Additive Subgraph Mounting**: `store.load()` of an additional named subgraph must not clobber, mutate, or duplicate loaded quads. | `iris-oxigraph.test.ts`: a query before mounting returns N items; after mounting a community, N + M. |
+| **SR-6** | **Handle Authority**: Every item subject URI uses the Handle system: `https://hdl.handle.net/10665/{id}`. | Graph check: every `a dspace:Item` subject starts with `https://hdl.handle.net/`. |
+| **SR-7** | **Compressed Transport Ceiling**: At full scale (300,000 items), a community partition must not exceed 25 MB compressed. | Not measured in CI. |
+| **SR-8** | **Prepared Query Equivalence**: Every entry in `queries.json` is valid SPARQL 1.1 and runs against the dataset with 0 errors. | `iris-oxigraph.test.ts` runs `discoverySearch` only. |
+| **SR-9** | **Append-Only Streaming Partitioning**: The build writes partitions as an append-only stream, with memory bounded regardless of corpus size (300,000 items). | **Not met:** `buildIrisDataset` holds and sorts every quad in memory; `StreamingPartitionWriter` is unused. Target: heap under 250 MB for the whole corpus. |
 
 ---
 
 ## 4. Scale Modeling & Corpus Sizing (300,000 Items)
 
-The WHO IRIS upstream repository contains **1,057,223 files** representing approximately **300,000 catalogued items** totaling **~361.55 GB to 0.7 TB** of scanned PDFs, reports, and image assets.
+WHO IRIS holds **273,559 items** across **1,057,223 files**, about
+**361.55 GiB** of PDFs, reports and images (see
+[`iris-dspace`](../skills/iris-dspace.md) §Scale). The figures below are
+estimates for about 300,000 items.
 
 ### Sizing Comparison: Raw Full-Text vs. Pure KG Extract in Oxigraph
 
@@ -118,25 +152,32 @@ The WHO IRIS upstream repository contains **1,057,223 files** representing appro
 | **Query Latency** | Slow regex/filter scans (> 5,000 ms) | **< 15 ms** index-backed graph pattern matching |
 
 ### Architectural Recommendation
-1. **Never load full text into Oxigraph.** SPARQL is a graph pattern matching engine; evaluating substring filters on millions of text literals is inefficient and exceeds browser memory boundaries.
-2. **Hybrid Search Pipeline:**
-   - Use a static inverted index (e.g. Pagefind, MiniSearch, or a sharded SQLite FTS5 WASM slice) for tokenized full-text keyword lookup.
-   - The inverted index yields candidate item IRIs.
-   - The candidate IRIs are passed into Oxigraph WASM via `VALUES ?item { ... }` to evaluate faceted filters, MeSH taxonomy hierarchies, collection constraints, and bitstream copyright clearance gates.
+1. **Never load full text into Oxigraph.** Substring filters over millions of
+   text literals are slow and exceed browser memory.
+2. **Hybrid search:**
+   - A static inverted index (e.g. Pagefind, MiniSearch, or a sharded SQLite
+     FTS5 WASM slice) handles full-text lookup and yields candidate item IRIs.
+   - The candidates go into Oxigraph as `VALUES ?item { ... }` for facets, MeSH
+     hierarchies, collection constraints and copyright gates.
 
 ---
 
 ## 5. Registered Tools, Skills & Verification
 
 ### Executable Scripts & Tools
-- `who-iris/scripts/build-iris-oxigraph.ts`: Multi-graph N-Quads compiler, blank node disambiguator, and Gzip compressor.
-- `who-iris/scripts/iris-oxigraph-search.ts`: Search client supporting complex boolean SPARQL queries, faceted aggregations, and incremental subgraph mounting.
-- `who-iris/scripts/gen-iris-pages.ts`: Static site generator incorporating structured KG metadata and faceted filtering controls into the landing page.
+- `scripts/build-iris-oxigraph.ts`: N-Quads compiler, skolemizer and gzip
+  writer.
+- `scripts/iris-oxigraph-search.ts`: `IrisOxigraphEngine` — boolean search,
+  facet counts and incremental subgraph mounting.
+- `scripts/gen-iris-pages.ts`: static site generator; the home page's facet
+  chips and filters run over an index embedded in the page, not Oxigraph.
 
 ### Test Suites
-- Unit test suite: `bun test who-iris/scripts/tests/iris-oxigraph.test.ts` (Validates graph build, quad integrity, SPARQL queries, and lazy mounting).
-- End-to-end suite: `bunx playwright test cat-harness-tools/test/who-iris-search.e2e.ts` (Validates browser search, facet chips, open-access gate filters, and multilingual UI).
+- Unit: `bun test scripts/tests/iris-oxigraph.test.ts`.
+- End-to-end: `bunx playwright test cat-harness-tools/test/who-iris-search.e2e.ts`
+  (browser search, facet chips, open-access filters, multilingual UI).
 
 ### Formal Skills & Specifications
-- `who-iris/skills/iris-oxigraph.md`: Registered in `who-iris/skills/package-manifest.json` under rules `OX-1` through `OX-8`.
-- `who-iris/docs/oxigraph-pipeline-requirements.md`: System requirements `SR-1` through `SR-8`.
+- `skills/iris-oxigraph.md`: requirements `OX-1` through `OX-9`.
+- `docs/oxigraph-pipeline-requirements.md`: system requirements `SR-1` through
+  `SR-9`.

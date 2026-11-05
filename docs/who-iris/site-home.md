@@ -26,8 +26,8 @@ its items are held.
 
 - **[The IRIS-style home]({{ '/' | relative_url }})** — IRIS's home page,
   rendered from this repository's catalogue and themed as IRIS, at this
-  site's root (owner, 2026-10-30). Each held item links to its library entry
-  page, its one page; communities and collections go to the catalogue page.
+  site's root. Each held item links to its library entry page; communities
+  and collections go to the catalogue page.
   It is an **ingested copy**: not WHO, and not live.
 - **[The catalogue]({{ '/docs/who-iris/' | relative_url }})** — what the
   catalogue knows, and what it records that it does not know. Every node

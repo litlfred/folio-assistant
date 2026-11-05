@@ -15,7 +15,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "Files `folio_init` WRITES INTO a new folio, kept as real files rather than strings inside `scripts/init-folio.ts`. Moved here from `cat-harness/templates/` by bean `70lx`; the id is kept, because `init-folio.ts` looks the directory up by it (`TEMPLATES_ID`).",
+      "description": "Files `folio_init` WRITES INTO a new folio, kept as real files rather than strings inside `scripts/init-folio.ts`. `init-folio.ts` looks the directory up by this id (`TEMPLATES_ID`), so the id must not change.",
       "readmePath": "templates/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/folio-templates"

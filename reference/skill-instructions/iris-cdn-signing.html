@@ -111,23 +111,25 @@
 process is <code class="language-plaintext highlighter-rouge">processes/iris-cdn-sign-publish.bpmn</code>.</p><h2 id="standards-used-and-nothing-else"><a href="#standards-used-and-nothing-else" class="anchor-heading" aria-labelledby="standards-used-and-nothing-else"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Standards used, and nothing else
   
   
-</h2><div class="table-wrapper"><table><thead><tr><th>Piece</th><th>Standard</th></tr></thead><tbody><tr><td>Package and digests</td><td>BagIt 1.0, <strong>RFC 8493</strong>: <code class="language-plaintext highlighter-rouge">bagit.txt</code>, <code class="language-plaintext highlighter-rouge">bag-info.txt</code>, <code class="language-plaintext highlighter-rouge">manifest-sha256.txt</code>, <code class="language-plaintext highlighter-rouge">tagmanifest-sha256.txt</code></td></tr><tr><td>Signature</td><td>JWS compact serialization with a <strong>detached payload</strong>, <strong>RFC 7515</strong> Appendix F</td></tr><tr><td>Algorithm</td><td><code class="language-plaintext highlighter-rouge">ES256</code>, ECDSA on P-256 with SHA-256, <strong>RFC 7518</strong> §3.4. It is the same curve as WHO’s signing DID key. <code class="language-plaintext highlighter-rouge">EdDSA</code> (RFC 8037) is accepted when verifying</td></tr><tr><td>Public key</td><td>JWK, <strong>RFC 7517</strong>, as <code class="language-plaintext highlighter-rouge">publicKeyJwk</code></td></tr><tr><td>Trust chain</td><td><code class="language-plaintext highlighter-rouge">x5c</code> in the JWK (<strong>RFC 7517</strong> §4.7): X.509 certificates, leaf first, ending at one issued by WHO’s signing key</td></tr><tr><td>Key publication</td><td>W3C <strong>DID Core 1.0</strong> document, <code class="language-plaintext highlighter-rouge">verificationMethod</code> of type <code class="language-plaintext highlighter-rouge">JsonWebKey</code> (W3C <strong>Controlled Identifiers 1.0</strong>) or <code class="language-plaintext highlighter-rouge">JsonWebKey2020</code>, which is the form WHO’s own DID uses. Both are accepted</td></tr><tr><td>DID method</td><td><strong><code class="language-plaintext highlighter-rouge">did:web</code></strong>, approved by the owner</td></tr></tbody></table></div><p>No draft standards are used. A new one needs the owner’s explicit approval.</p><h2 id="what-is-signed"><a href="#what-is-signed" class="anchor-heading" aria-labelledby="what-is-signed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is signed
+</h2><div class="table-wrapper"><table><thead><tr><th>Piece</th><th>Standard</th></tr></thead><tbody><tr><td>Package and digests</td><td>BagIt 1.0, <strong>RFC 8493</strong>: <code class="language-plaintext highlighter-rouge">bagit.txt</code>, <code class="language-plaintext highlighter-rouge">bag-info.txt</code>, <code class="language-plaintext highlighter-rouge">manifest-sha256.txt</code>, <code class="language-plaintext highlighter-rouge">tagmanifest-sha256.txt</code></td></tr><tr><td>Signature</td><td>JWS compact serialization with a <strong>detached payload</strong>, <strong>RFC 7515</strong> Appendix F</td></tr><tr><td>Algorithm</td><td><code class="language-plaintext highlighter-rouge">ES256</code>, ECDSA on P-256 with SHA-256, <strong>RFC 7518</strong> §3.4. It is the same curve as WHO’s signing DID key. <code class="language-plaintext highlighter-rouge">EdDSA</code> (RFC 8037) is accepted when verifying</td></tr><tr><td>Public key</td><td>JWK, <strong>RFC 7517</strong>, as <code class="language-plaintext highlighter-rouge">publicKeyJwk</code></td></tr><tr><td>Trust chain</td><td><code class="language-plaintext highlighter-rouge">x5c</code> in the JWK (<strong>RFC 7517</strong> §4.7): X.509 certificates, leaf first, ending at one issued by WHO’s signing key</td></tr><tr><td>Key publication</td><td>W3C <strong>DID Core 1.0</strong> document, <code class="language-plaintext highlighter-rouge">verificationMethod</code> of type <code class="language-plaintext highlighter-rouge">JsonWebKey</code> (W3C <strong>Controlled Identifiers 1.0</strong>) or <code class="language-plaintext highlighter-rouge">JsonWebKey2020</code>, which is the form WHO’s own DID uses. Both are accepted</td></tr><tr><td>DID method</td><td><strong><code class="language-plaintext highlighter-rouge">did:web</code></strong></td></tr></tbody></table></div><p>No draft standards are used. A new one needs the owner’s explicit approval.</p><h2 id="what-is-signed"><a href="#what-is-signed" class="anchor-heading" aria-labelledby="what-is-signed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What is signed
   
   
 </h2><p>There is <strong>one release signature</strong>, over the bytes of
-<code class="language-plaintext highlighter-rouge">tagmanifest-sha256.txt</code>, plus one signature per changed library item (below). That file pins the SHA-256 of every other tag file,
-and <code class="language-plaintext highlighter-rouge">manifest-sha256.txt</code> pins the SHA-256 of every payload file. Signing the
-tag manifest therefore covers the whole bag.</p><p>The signature is stored beside the tag manifest as
+<code class="language-plaintext highlighter-rouge">tagmanifest-sha256.txt</code>, plus one signature per changed library item (below).
+The tag manifest pins the SHA-256 of every other tag file, and
+<code class="language-plaintext highlighter-rouge">manifest-sha256.txt</code> pins the SHA-256 of every payload file. Signing the tag
+manifest therefore covers the whole bag. The tag files live in the release git
+repository; the payload files live in R2 under <code class="language-plaintext highlighter-rouge">sha256/&lt;aa&gt;/&lt;digest&gt;</code>.</p><p>The signature is stored beside the tag manifest as
 <code class="language-plaintext highlighter-rouge">tagmanifest-sha256.txt.jws</code>, in the form <code class="language-plaintext highlighter-rouge">&lt;header&gt;..&lt;signature&gt;</code>. The empty
 middle segment is the detached payload. The protected header is
 <code class="language-plaintext highlighter-rouge">{"alg":"ES256","kid":"did:web:…#&lt;key&gt;"}</code>.</p><p>ECDSA signatures are randomized. Signing the same bytes twice gives two
-different signatures, so unchanged content is <strong>never re-signed</strong>. Only what
-the manifest diff reports as changed gets a new signature.</p><h2 id="a-signature-on-each-library-item"><a href="#a-signature-on-each-library-item" class="anchor-heading" aria-labelledby="a-signature-on-each-library-item"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A signature on each library item
+different signatures, so unchanged content is <strong>never re-signed</strong>: an
+unchanged night produces the same tag manifest and gets no new signature.</p><h2 id="a-signature-on-each-library-item"><a href="#a-signature-on-each-library-item" class="anchor-heading" aria-labelledby="a-signature-on-each-library-item"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A signature on each library item
   
   
-</h2><p>The owner chose this on 2026-10-30 (Q4, option A). Every library item has its
-own manifest at <code class="language-plaintext highlighter-rouge">items/&lt;handle&gt;/manifest-sha256.txt</code>, in the same line format
-as the BagIt payload manifest. It lists the item’s record,
+</h2><p>Every library item has its own manifest at
+<code class="language-plaintext highlighter-rouge">items/&lt;handle&gt;/manifest-sha256.txt</code>, in the same line format as the BagIt
+payload manifest. It lists the item’s record,
 <code class="language-plaintext highlighter-rouge">records/&lt;handle&gt;.json</code>, and every file under <code class="language-plaintext highlighter-rouge">bitstreams/&lt;handle&gt;/</code>. The
 item’s detached JWS is stored beside it as <code class="language-plaintext highlighter-rouge">manifest-sha256.txt.jws</code>.</p><ul><li><strong>An item verifies on its own.</strong> Fetch its manifest and JWS, verify the JWS
 against the DID document and its <code class="language-plaintext highlighter-rouge">x5c</code> chain, then check each digest.</li><li><strong>The release signature proves completeness.</strong> The item manifests and their
@@ -135,32 +137,32 @@ JWSs are payload files, so the release tag manifest pins them all. Nothing
 can be added or removed without breaking the release signature.</li><li><strong>Only changed items are signed.</strong> If an item’s manifest bytes did not
 change, its existing JWS is kept (<code class="language-plaintext highlighter-rouge">signItems</code> in <code class="language-plaintext highlighter-rouge">scripts/iris-cdn/run.ts</code>).
 A metadata-only edit changes the record digest, so that item is re-signed
-while its PDF digest stays the same.</li></ul><p>An unchanged night produces the same tag manifest, so it gets no new
-signature.</p><h2 id="where-the-key-comes-from"><a href="#where-the-key-comes-from" class="anchor-heading" aria-labelledby="where-the-key-comes-from"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the key comes from
+while its PDF digest stays the same.</li></ul><h2 id="where-the-key-comes-from"><a href="#where-the-key-comes-from" class="anchor-heading" aria-labelledby="where-the-key-comes-from"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where the key comes from
   
   
 </h2><p>The verifier resolves the <code class="language-plaintext highlighter-rouge">kid</code>’s DID <strong>from the web</strong>, never from the
 package:</p><ul><li><code class="language-plaintext highlighter-rouge">did:web:&lt;cdn-domain&gt;</code> resolves to <code class="language-plaintext highlighter-rouge">https://&lt;cdn-domain&gt;/.well-known/did.json</code>,
 and <code class="language-plaintext highlighter-rouge">did:web:&lt;cdn-domain&gt;:iris</code> resolves to <code class="language-plaintext highlighter-rouge">https://&lt;cdn-domain&gt;/iris/did.json</code>.
-The DID is the one that already publishes the subordinate key. It must be stable, because the DID <em>is</em> the
-signer’s identity.</li><li>The key must be listed under <code class="language-plaintext highlighter-rouge">assertionMethod</code>. A retired key stays in
-<code class="language-plaintext highlighter-rouge">verificationMethod</code> so that old releases still verify, but it is removed
-from <code class="language-plaintext highlighter-rouge">assertionMethod</code>. A signature by that retired key on a <em>new</em> release
-then fails.</li></ul><p>If the DID document cannot be fetched, the verdict is <strong><code class="language-plaintext highlighter-rouge">unknown</code></strong>, not
+The DID must be stable, because the DID <em>is</em> the signer’s identity.</li><li>When the DID document lists <code class="language-plaintext highlighter-rouge">assertionMethod</code>, the key must be in it. A
+retired key stays in <code class="language-plaintext highlighter-rouge">verificationMethod</code> so that old releases still
+verify, but it is removed from <code class="language-plaintext highlighter-rouge">assertionMethod</code>. A signature by that
+retired key on a <em>new</em> release then fails.</li></ul><p>If the DID document cannot be fetched, the verdict is <strong><code class="language-plaintext highlighter-rouge">unknown</code></strong>, not
 <code class="language-plaintext highlighter-rouge">failed</code> and not <code class="language-plaintext highlighter-rouge">verified</code>. A portal that cannot check says so.</p><p><strong>The trust chain.</strong> Our key’s <code class="language-plaintext highlighter-rouge">publicKeyJwk.x5c</code> holds the certificates
 that end at one issued by the key in WHO’s signing DID,
 <code class="language-plaintext highlighter-rouge">did:web:raw.githubusercontent.com:WorldHealthOrganization:tng-participants-prod:main:WHO:signing:DID</code>.
 The verifier is given WHO’s public key as its anchor, as the variable
-<code class="language-plaintext highlighter-rouge">IRIS_CDN_TRUST_ANCHOR_JWK</code> in CI. Without an anchor, the chain is reported
-as <code class="language-plaintext highlighter-rouge">not-checked</code>, never as verified.</p><p>Trust anchors other than this are not assumed. If the owner later wants a
-trust list, such as GDHCN via WHO SMART Trust, it would be an <em>additional</em>
-route to the same DID document, never a replacement for it.</p><h2 id="key-custody-and-rotation"><a href="#key-custody-and-rotation" class="anchor-heading" aria-labelledby="key-custody-and-rotation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Key custody and rotation
+<code class="language-plaintext highlighter-rouge">IRIS_CDN_TRUST_ANCHOR_JWK</code> in CI. With an anchor, a key with no <code class="language-plaintext highlighter-rouge">x5c</code> fails.
+<code class="language-plaintext highlighter-rouge">run.ts verify</code> refuses without the anchor or <code class="language-plaintext highlighter-rouge">IRIS_CDN_DID</code>: the verdict is
+<code class="language-plaintext highlighter-rouge">unknown</code> and it exits non-zero. Called without anchors, <code class="language-plaintext highlighter-rouge">verifyDetached</code>
+reports the chain as <code class="language-plaintext highlighter-rouge">not-checked</code>, never as verified.</p><p>No other trust anchor is assumed. A trust list, such as GDHCN via WHO SMART
+Trust, could only be an <em>additional</em> route to the same DID document, never a
+replacement for it.</p><h2 id="key-custody-and-rotation"><a href="#key-custody-and-rotation" class="anchor-heading" aria-labelledby="key-custody-and-rotation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Key custody and rotation
   
   
 </h2><ul><li>The private key is a JWK (<code class="language-plaintext highlighter-rouge">kty: EC</code>, <code class="language-plaintext highlighter-rouge">crv: P-256</code>, <code class="language-plaintext highlighter-rouge">x</code>, <code class="language-plaintext highlighter-rouge">y</code>, <code class="language-plaintext highlighter-rouge">d</code>). It never
 goes into git, a log or a bean. It is the GitHub <strong>environment</strong> secret
 <code class="language-plaintext highlighter-rouge">IRIS_CDN_SIGNING_JWK</code> in environment <code class="language-plaintext highlighter-rouge">iris-cdn-release</code>, which only jobs on
-<code class="language-plaintext highlighter-rouge">main</code> can read (owner, Q9).</li><li><strong>The key already exists.</strong> The subordinate key is already published in a
+<code class="language-plaintext highlighter-rouge">main</code> can read.</li><li><strong>The key already exists.</strong> The subordinate key is already published in a
 DID document, with <code class="language-plaintext highlighter-rouge">x5c</code> up to WHO’s signing DID, before the exporter runs.
 That publication is offline and outside these processes. No CI job issues
 certificates or edits the DID document.</li><li>To rotate:
@@ -169,11 +171,13 @@ certificates or edits the DID document.</li><li>To rotate:
 same keys writes the same bytes.</li></ul><h2 id="verifying-by-hand"><a href="#verifying-by-hand" class="anchor-heading" aria-labelledby="verifying-by-hand"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verifying by hand
   
   
-</h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. digests</span>
-<span class="nb">cd </span>bag <span class="o">&amp;&amp;</span> <span class="nb">sha256sum</span> <span class="nt">-c</span> manifest-sha256.txt <span class="o">&amp;&amp;</span> <span class="nb">sha256sum</span> <span class="nt">-c</span> tagmanifest-sha256.txt
-<span class="c"># 2. signature</span>
-bun <span class="nt">-e</span> <span class="s1">'import {verifyDetached} from "./scripts/iris-cdn/signing.ts"; …'</span>
-</code></pre></div></div><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+</h2><p>In a checkout of the release git repository:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 1. tag files against the tag manifest</span>
+<span class="nb">sha256sum</span> <span class="nt">-c</span> tagmanifest-sha256.txt
+<span class="c"># 2. the release signature, with the key resolved from did:web</span>
+<span class="nv">IRIS_CDN_DID</span><span class="o">=</span>did:web:&lt;cdn-domain&gt; <span class="nv">IRIS_CDN_TRUST_ANCHOR_JWK</span><span class="o">=</span><span class="s1">'&lt;WHO public JWK&gt;'</span> <span class="se">\</span>
+  bun scripts/iris-cdn/run.ts verify <span class="nt">--release</span> &lt;checkout&gt; <span class="nt">--no-revert</span>
+</code></pre></div></div><p>Payload digests in <code class="language-plaintext highlighter-rouge">manifest-sha256.txt</code> are checked against the objects at
+<code class="language-plaintext highlighter-rouge">https://&lt;cdn-domain&gt;/sha256/&lt;aa&gt;/&lt;digest&gt;</code>, not against files in the checkout.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/iris-cdn-initial-load.html">IRIS CDN initial load</a></td><td>Sign and publish the release (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/iris-cdn-nightly.html">IRIS CDN nightly change ingest</a></td><td>Sign and publish the release (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/iris-cdn-reconcile.html">IRIS CDN weekly reconciliation</a></td><td>Sign and publish the release (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/iris-cdn-sign-publish.html">Sign and publish an IRIS CDN release</a></td><td>Write the BagIt tag files (sorted, no dates); Diff against the published manifest; Sign each changed item manifest (ES256); Sign the release tag manifest (ES256); Commit tag files and signature, last; Resolve did:web; verify JWS and digests; Revert to the previous release</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">

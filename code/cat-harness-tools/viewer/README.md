@@ -7,7 +7,7 @@ generated: "scripts/subgraph-readmes.ts of the bootstrap toolset (https://github
 
 # cat-harness-tools-viewer
 
-The content viewer the MCP server serves at `/viewer/` (`adapters/mcp-server/server.ts`, `VIEWER_DIR`): one HTML page carrying the whole single-page app, which reads `/api/folio` and opens the first paper the folio lists. A platform viewer, not folio content: it names no folio, and `test/test-server.e2e.ts` and `scripts/tests/ui/viewer-script.test.ts` assert it. Declared 2026-10-24 under bean `0uu2` (owner, card "A. Declare and keep"), when its last hardcoded folio name (`quantum-observable-universe`, the `qou-viewer` package name, now `folio-content-viewer`, because `folio-viewer` is already the folio graph's registered viewer Tool) was removed.
+The content viewer the MCP server serves at `/viewer/` (`adapters/mcp-server/server.ts`, `VIEWER_DIR`): one HTML page carrying the whole single-page app, which reads `/api/folio` and opens the first paper the folio lists. A platform viewer, not folio content: it names no folio, and `test/tools/test-server.e2e.ts` and `scripts/tests/ui/viewer-script.test.ts` assert it.
 
 Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-viewer`, holding `code`.
 

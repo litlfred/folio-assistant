@@ -121,7 +121,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "One batch per collection (large collections split by page). The plan and its progress are a checkpoint file in the Cloudflare git repository (state/initial-load.json); restarting reads it and skips finished batches."
+          "@value": "One batch per collection (large collections split by page)."
         }
       ],
       "skos:notation": "Task_PlanBatches",
@@ -291,7 +291,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Discovery search sorted by lastModified, newest first, paged until a page reaches the cursor (scripts/iris-cdn/rest-feed.ts changedSince). Inclusive of the cursor second, de-duplicated."
+          "@value": "scripts/iris-cdn/rest-feed.ts changedSince: a Discovery search for lastModified at or after the cursor, sorted by dc.date.accessioned (IRIS rejects a lastModified sort), paged until an item is older than the cursor. Inclusive of the cursor second, de-duplicated by uuid, returned oldest first."
         }
       ],
       "skos:notation": "Task_ListChanged",
@@ -311,7 +311,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "state/cursor.json in the Cloudflare git repository: the lastModified of the newest item in the last VERIFIED release. Advanced only after a publish verifies."
+          "@value": "state/cursor.json in the Cloudflare git repository: the lastModified of the newest item in the last VERIFIED release."
         }
       ],
       "skos:notation": "Task_ReadCursor",
@@ -571,7 +571,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Owner, Q4 A: a signature on each library item. items/<handle>/manifest-sha256.txt lists the item record and its files; its detached JWS sits beside it. Only items whose manifest bytes changed are signed: ES256 is randomised, so re-signing an unchanged item would be churn. The item manifests and their signatures join the payload, so the tag files are refreshed to cover them before the release is signed."
+          "@value": "A signature on each library item: items/<handle>/manifest-sha256.txt lists the item record and its files; its detached JWS sits beside it. Only items whose manifest bytes changed are signed: ES256 is randomised, so re-signing an unchanged item would be churn. The item manifests and their signatures join the payload, so the tag files are refreshed to cover them before the release is signed."
         }
       ],
       "skos:notation": "Task_SignItems",
@@ -611,7 +611,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "scripts/iris-cdn/signing.ts verifyDetached against the DID document fetched from its did:web URL, then a sample of payload digests."
+          "@value": "scripts/iris-cdn/run.ts checkRelease: every tag file against tagmanifest-sha256.txt, then scripts/iris-cdn/signing.ts verifyDetached against the DID document fetched from its did:web URL."
         }
       ],
       "skos:notation": "Task_Verify",

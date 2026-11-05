@@ -403,6 +403,13 @@
           },
           "additionalProperties": false
         },
+        "enableSubgraphs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*\\.[^\\s]+$"
+          }
+        },
         "gateExemptions": {
           "type": "object",
           "properties": {

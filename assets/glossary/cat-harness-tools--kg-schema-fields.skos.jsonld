@@ -20648,6 +20648,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigschema.enablesubgraphs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexConfigSchema.enableSubgraphs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The opt-in named sub-graphs switched on for THIS checkout, each `<instance>.<directory id>` (cat-harness#991 step 23.4). An index root declares no instance, so this is where it says what a layer's declaration says in its own `enableSubgraphs` (`schemas/kg/opt-in-subgraphs.ts`). Not inherited by any layer."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexConfigSchema.enableSubgraphs",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexconfigschema.gateexemptions",
       "@type": "skos:Concept",
       "skos:inScheme": {

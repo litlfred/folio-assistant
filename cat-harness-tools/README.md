@@ -7,7 +7,7 @@ generated: "scripts/subgraph-readmes.ts of the bootstrap toolset (https://github
 
 # cat-harness-tools-ui
 
-The standalone tool pages the MCP server serves at `/ui/` (`adapters/mcp-server/server.ts`): the bibliography QA, glossary curator and source-relevance pages, their index and shared stylesheet. Static HTML with no build step. Declared 2026-10-24 under bean `0uu2` (owner, card "A. Declare and keep"): every top-level directory is a declared subgraph, and before this nothing named it, so a consumer scanning the declaration could not see it.
+The standalone tool pages the MCP server serves at `/ui/` (`adapters/mcp-server/server.ts`): the bibliography QA, glossary curator and source-relevance pages, their index and shared stylesheet. Static HTML with no build step.
 
 Part of [C@T Harness Tools](../README.md) 0.1.0, declared as `cat-harness-tools-ui`, holding `code`.
 

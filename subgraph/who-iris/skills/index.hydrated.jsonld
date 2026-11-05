@@ -11,7 +11,7 @@
         "declaredIn": "default",
         "kind": "directory"
       },
-      "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill package: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool. Since 2026-10-01 it also holds the WHO STYLE GUIDE's three house voices under `voices/`, declared from within by `skills.json` (bean `cmsl`) -- they were the separate staged instance `who-style-guide` until the owner's 2026-09-30 ruling, 'who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs.' (bean `qsx4`).",
+      "description": "The IRIS skills: `iris-dspace` (how IRIS uses DSpace and qualified Dublin Core, stated as checkable requirements R1–R22), `iris-rest-feed`, `iris-cdn-exporter`, `iris-cdn-signing` and `iris-oxigraph`; and, under `voices/`, the WHO style guide's three house voices, declared from within by `skills.json`. Kept thin: the Dublin Core type lives in folio-assistant-core, enumeration and subsetting in large-datasets, and OCR is a cat-harness platform tool.",
       "fileCount": 0,
       "holdsGraph": [
         "bootstrap:graphTypology/skills"
@@ -29,13 +29,13 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills",
-      "instructionLines": 98,
+      "instructionLines": 73,
       "instructionsPath": "skills/iris-cdn-exporter.md",
       "name": "iris-cdn-exporter",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7162da646ea82784d178dc924d7c039771c2350405635638880938b01b29d980",
-        "bytes": 4759,
-        "sha256": "7162da646ea82784d178dc924d7c039771c2350405635638880938b01b29d980"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5285095c4fa44d8c9daf6884272dd6bc7050b81c82d05ee3b60768b7da5f509b",
+        "bytes": 3343,
+        "sha256": "5285095c4fa44d8c9daf6884272dd6bc7050b81c82d05ee3b60768b7da5f509b"
       },
       "title": "The IRIS CDN Exporter"
     },
@@ -47,13 +47,13 @@
       "hasIOContract": false,
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills",
-      "instructionLines": 124,
+      "instructionLines": 130,
       "instructionsPath": "skills/iris-cdn-signing.md",
       "name": "iris-cdn-signing",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d0f1df56875252961a0769bd80bf4402bea1e480569b205e917cf431dd87195a",
-        "bytes": 6002,
-        "sha256": "d0f1df56875252961a0769bd80bf4402bea1e480569b205e917cf431dd87195a"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/48fb289a27427bc7109bc187739eae24b9d7f36a4d5f5d059af29f5655a0123d",
+        "bytes": 6364,
+        "sha256": "48fb289a27427bc7109bc187739eae24b9d7f36a4d5f5d059af29f5655a0123d"
       },
       "title": "Signing and verifying an IRIS CDN release"
     },
@@ -61,17 +61,17 @@
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path. What a later tool needs from a record, stated as requirements it can be checked against.",
+      "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path — and the requirements a tool reading a record must meet.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills",
-      "instructionLines": 260,
+      "instructionLines": 211,
       "instructionsPath": "skills/iris-dspace.md",
       "name": "iris-dspace",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0de69fac8e6f7a33938a512c15f682ea9a4a35f20b769761754248137d168c4b",
-        "bytes": 15306,
-        "sha256": "0de69fac8e6f7a33938a512c15f682ea9a4a35f20b769761754248137d168c4b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/aa65c19aa7c5520975ac25db6c73c4dcc17c834633bea43e474778e9013369ab",
+        "bytes": 11594,
+        "sha256": "aa65c19aa7c5520975ac25db6c73c4dcc17c834633bea43e474778e9013369ab"
       },
       "title": "IRIS, DSpace and Dublin Core"
     },
@@ -79,25 +79,25 @@
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "How to compile, validate, distribute, and query WHO IRIS catalogue and Qualified Dublin Core metadata using Oxigraph in-memory WebAssembly and CLI pipelines. Enables combined complex queries, multi-dimensional faceted rollups, and lazy-loaded named subgraphs on the static edge.",
+      "description": "How to build WHO IRIS catalogue and Qualified Dublin Core metadata into partitioned N-Quads, and query it with Oxigraph — in Bun on the build side, in WebAssembly in the browser — including cross-graph joins and facet counts.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills",
-      "instructionLines": 177,
+      "instructionLines": 204,
       "instructionsPath": "skills/iris-oxigraph.md",
       "name": "iris-oxigraph",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4c828a2ec3661febb1550ceb5b5e28b6652c41cb95b58fc7a67ed5d9e4698b31",
-        "bytes": 8512,
-        "sha256": "4c828a2ec3661febb1550ceb5b5e28b6652c41cb95b58fc7a67ed5d9e4698b31"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/93cfe828ccbe0431196eade9f1b1d9cca13d94bffa63bf4aff60ddc75f1992c0",
+        "bytes": 8063,
+        "sha256": "93cfe828ccbe0431196eade9f1b1d9cca13d94bffa63bf4aff60ddc75f1992c0"
       },
-      "title": "Oxigraph Multi-Graph Search & Discovery for WHO IRIS"
+      "title": "Oxigraph multi-graph search for WHO IRIS"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-rest-feed",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "How to read changes from the WHO IRIS DSpace 7 REST API: the nightly \"changed since\" walk over Discovery sorted by lastModified, the weekly reconciliation that stands in for the deletions REST does not report, and the guard that stops a short listing from reading as a mass withdrawal.",
+      "description": "How to read changes from the WHO IRIS DSpace 7 REST API: the nightly \"changed since\" walk over Discovery, the weekly reconciliation that stands in for the deletions REST does not report, and the guard that stops a short listing from reading as a mass withdrawal.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-skills",
@@ -105,9 +105,9 @@
       "instructionsPath": "skills/iris-rest-feed.md",
       "name": "iris-rest-feed",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a3ff7df5064b9c17ee8b1da8b5b2988e9bf409d1ad61b5c44aaef211f7178766",
-        "bytes": 4564,
-        "sha256": "a3ff7df5064b9c17ee8b1da8b5b2988e9bf409d1ad61b5c44aaef211f7178766"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4fe489e33be8daa2fc4eff8006fe519db4b4bb2c831a2c95b49c397b3f789f87",
+        "bytes": 4237,
+        "sha256": "4fe489e33be8daa2fc4eff8006fe519db4b4bb2c831a2c95b49c397b3f789f87"
       },
       "title": "Reading IRIS changes over DSpace REST"
     }
