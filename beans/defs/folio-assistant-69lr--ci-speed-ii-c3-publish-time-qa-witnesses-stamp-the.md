@@ -24,3 +24,11 @@ Find the writer(s) under `derive:publish` that stamp the commit (or run id / `<n
 - [ ] the stamping writer(s) named, with the field
 - [ ] they stamp the tree (or the bean records why the commit is required)
 - [ ] a main push after merge reuses the PR's publish-time pages (run id cited)
+
+## Owner ruling 2026-11-05 (card Q4, option 1): the tree is the identity
+
+Found (session https://claude.ai/code/session_01VQDpPd7y4nwxjHFm66CMKF): `reviewed_sha: gitHeadSha()` in `cat-harness-tools/pipeline/translation-block-qa.ts`, and the same stamp in `qa-agent-entry.ts`, `script-sweep.ts`, `qa-merge-findings.ts`, `untainted-verification.ts`, `translation-roundtrip.ts`, `src/qa-agent-write.ts`. Read by `pipeline/qa-witness.ts` (panel `sha`) and described in `schemas/sdlc/run-context.ts`.
+
+Why the tree, not the commit: on a PR, HEAD is `refs/pull/<n>/merge`, a commit GitHub replaces when main moves and may garbage-collect. So a reused `reviewed_sha` on main would address a commit that can vanish, which breaks the 2026-09-22 rule ("A CI verdict is reproducible from the `reviewed_sha` it records"). Main's merge commit has the same tree, so the tree id stays reachable and names exactly the inputs. `sameScriptVerdict` already treats the verdict as a function of its inputs, not of the commit.
+
+Ruling: witnesses carry `reviewed_tree` (HEAD^{tree}) as the address; `reviewed_sha` leaves the witnesses; the QA panel resolves a commit on main carrying that tree for its link; the commit that ran stays in the per-run record. `script_commit_sha` is kept unless the reuse runs show it differs between the PR and main (`script_hash` already identifies the code).
