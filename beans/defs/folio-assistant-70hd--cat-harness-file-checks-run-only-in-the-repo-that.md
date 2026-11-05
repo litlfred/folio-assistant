@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T19:04:00Z
+updated_at: 2026-11-05T19:06:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -79,3 +79,5 @@ _2026-11-05T18:15:00Z_ — #1529 had never re-run CI since 15:50: it conflicted 
 _2026-11-05T18:42:00Z_ — #1529 went all-green (incl. all three no-new-failures verdicts) but the merge was refused: main moved (#1535, #1536, #1538, #1540) and conflicted in check-command-paths.ts (main added `moved` to the report). Merged main in (5304398), kept both; 75 tests pass, tsc 0 errors. #1533 846de32, #1534 8885482 carry it, clean vs main. CI re-running. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 
 _2026-11-05T19:04:00Z_ — **Merged** litlfred/cat-harness-tools#1529 (fc768f6) on all-green verdicts; told session_01VQDpPcbpLjEo8EuzFLVq5Z (core fix) it can go once core re-pins past fc768f6. Next #1533 → #1534. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-05T19:06:00Z_ — **Merged** litlfred/cat-harness-tools#1533 (711e078) on all-green verdicts. Last: #1534 (8885482), head test shards 4/4 green, verdicts pending. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
