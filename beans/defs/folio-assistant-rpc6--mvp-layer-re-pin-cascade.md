@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T17:23:10Z
+updated_at: 2026-11-05T17:34:39Z
 parent: folio-assistant-rwmf
 ---
 
@@ -64,3 +64,5 @@ _2026-11-05T17:16:00Z_ — MERGED cat-harness-tools#1518 as 78a982e (all green):
 _2026-11-05T17:21:38Z_ — MERGED cat-harness#1054 as a2da2ed (all green): 25 bootstrap .pot, translation obsolete/pot, 62 keywords.json (main's 2 checklists kept). Fix PRs: 6 of 7 merged; core#648 (9570a32) left.
 
 _2026-11-05T17:23:10Z_ — All 7 fix PRs MERGED: who-iris#181 0237087, #183 54af134; core#647 ba172dd, #648 4f18e66 (after merging main, 9570a32); cat-harness#1061 e0e27ee, #1054 a2da2ed; cat-harness-tools#1518 78a982e. FREEZE SET (owner: freeze one set): cat-harness a2da2ed, cat-harness-tools 78a982e, folio-assistant-core 4f18e66, who-iris 90bb3f5, smart-base 1e111a6, fhir-harness 299de78, bootstrap-tools 9f478d4, bootstrap c90ef45 (index pin). Re-pinning all 7 site PRs to it now (script /tmp/claude-0/s/freeze.sh).
+
+_2026-11-05T17:34:39Z_ — All 7 site PRs re-pinned to the freeze set (lock verified equal to it): smart-immunizations#114 77137db, smart-ra#228 f323d7d, dth-sc#18 69b6fac, dth-phc#29 ebb7106, smart-ips-pilgrimage#8 759ed30, smart-immunizations-uganda#18 fc689b9, dth-pc#18 e8c908f. Workflow edits: lock-following uses: pins only. Watcher on all 7; reds judged by hand vs main's + the 3 known.
