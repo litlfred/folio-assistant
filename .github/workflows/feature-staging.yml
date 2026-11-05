@@ -495,20 +495,23 @@ jobs:
           key: writer-cone-${{ github.sha }}
           restore-keys: writer-cone-
 
-      # ── EXPERIMENT, bean tv20: the gates' QA working copy, restored here ──
+      # ── Bean tv20: the gates' QA working copy, restored when it is ready ──
       # `uml:overview` builds its own QA working copy in this job: 511 s of the
       # next step's 817 s (job 124708101507). The PR's `code-quality-gates`
       # run built that copy for this same commit (`github.sha`, the test
       # merge commit both check out) and records it as `tested-tree-<tree>`.
-      # This step waits a bounded time for that job, restores the copy
-      # byte-identical, and records what `qa:working-copy --status` then says.
-      # `current` means the build below skips the rebuild. Anything else means
-      # the build rebuilds over the restored copy, as it did without one. A
-      # draft has no gates copy (fast tier), so it builds as before.
-      # `continue-on-error`: an experiment never fails a preview. The one red
-      # it keeps is the script's own, a restore that broke after extracting,
-      # which then fails the next step's checks.
-      - name: Restore the gates' QA working copy for this commit (bean tv20, experiment)
+      # When that job has ALREADY finished, this step restores the copy
+      # byte-identical and records what `qa:working-copy --status` then says.
+      # It does not wait: measured on #2953 (owner, 2026-11-05: "1. No wait"),
+      # the copy read `current` and cut `uml:overview` from 189 s to 10 s, but
+      # `stage` gets here ~2 min after the event while the producer finishes
+      # ~6 min after it, so the 255 s wait cost more than it saved. Without a
+      # wait it pays off when `stage` starts late (a runner queue), and costs a
+      # few API calls otherwise. Not finished yet, `current` not read, or a
+      # draft (fast tier, no gates copy): the build below runs as before.
+      # `continue-on-error`: this never fails a preview. The one red it keeps
+      # is the script's own, a restore that broke after extracting.
+      - name: Restore the gates' QA working copy for this commit (bean tv20)
         id: qa_reuse
         if: github.event_name == 'pull_request' && github.event.pull_request.draft != true
         continue-on-error: true
@@ -517,7 +520,7 @@ jobs:
           REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
           PR_HEAD: ${{ github.event.pull_request.head.sha }}
-          WAIT_SECONDS: '600'
+          WAIT_SECONDS: '0'
         run: |
           bash .github/scripts/qa-copy-reuse.sh
           status=$(bun run cat qa:working-copy -- --status 2>&1 | tail -1)
