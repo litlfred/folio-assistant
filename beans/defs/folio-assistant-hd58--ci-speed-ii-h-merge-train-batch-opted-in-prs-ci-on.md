@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T11:54:45Z
-updated_at: 2026-11-05T11:54:45Z
+updated_at: 2026-11-05T12:01:28Z
 parent: folio-assistant-k3vv
 ---
 
@@ -59,3 +59,19 @@ The quadratic term c·N·R is gone (the train never re-merges per main push); ma
 - [ ] code-quality-gates: a dispatch on main whose HEAD is a two-parent merge is looked up by its second parent (so a GITHUB_TOKEN merge still reuses C's run)
 - [ ] measured compute per merged PR before and after, recorded here
 - [ ] the skill `merge-queue` or `saturation-meta-merge` points at the automated train (cat-harness, separate PR)
+
+## Measured before (2026-11-05)
+
+The last 100 `Code-quality gates` runs, 2026-11-03T07:44Z → 2026-11-05T12:00Z, against the 15 PRs merged in that window (#2924 … #2955):
+
+| event | runs | conclusions | run-wall-minutes |
+|---|---|---|---|
+| `pull_request` | 72 | 18 success, 28 failure, **21 cancelled**, 4 running, 1 action_required | 3791 |
+| `push` to main | 15 (= one per merge) | 11 failure, 2 cancelled, 2 running | 426 |
+| `workflow_dispatch` on a branch (merge-main) | 13 | 13 failure | 467 |
+
+**6.7 gates runs per merged PR** (100 / 15), about 312 run-wall-minutes each (wall time of runs, not runner time; at the ~130 runner-minutes of one full run, `k3vv`, about 870 runner-minutes per merged PR as an upper bound). The part that grows with N: the 13 merge-main dispatches and 15 main runs (1.9 runs per merged PR), the 21 late-cancelled PR runs, and the PR runs caused by main moving (18-90 % of a PR's runner time, `k3vv`).
+
+## After (modelled; to be measured once trains run)
+
+Per merged PR in a train of k: its own pushes (unchanged, linear) + 1/k candidate run + 1/k main run that reuses the candidate's verdict (heavy jobs skipped) + 0 merge-main dispatches for train PRs, + ⌈log₂ k⌉/k on a red train. At k = 5: ≈ 0.4 shared runs per PR instead of 1.9, and no term that grows with N.
