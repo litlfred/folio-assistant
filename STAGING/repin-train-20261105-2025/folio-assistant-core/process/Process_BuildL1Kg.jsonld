@@ -1,0 +1,94 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-2025",
+    "sha": "75e275be2e2524afb345ef5a50f92faa4c3a2e9f",
+    "pr": "repin-train/20261105-2025",
+    "run": "42103293232"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Ingestion subprocess — build the L1 knowledge graph",
+      "summary": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links.",
+      "description": "Build the L1 knowledge graph from what ingestion derived: Dublin Core, the manifest, the assets, their binding and their links.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/library/ingest-build-l1-kg.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/ingest-build-l1-kg.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/assets/img/workflows/ingest-build-l1-kg.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/StartEvent_Derived2"
+      ],
+      "nodeCount": 8,
+      "flowCount": 7,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/StartEvent_Derived2",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Dublin",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Dublin",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Manifest",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Manifest",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Assets",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Assets",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Bind",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Bind",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Glossary",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Glossary",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Link",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k5b"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Link",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/process/Process_BuildL1Kg/node/EndEvent_KgBuilt",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-2025/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg#flow/Flow_k6"
+    }
+  ]
+}
