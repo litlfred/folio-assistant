@@ -35,3 +35,5 @@ Card answered: **"Epic is the plan"**: an epic or milestone work item IS the wor
 ## Not doing
 
 A separate work-plan node; renaming identifiers.
+
+_2026-11-05T13:00Z_ — Picked up after stalled session (weekly limit). Blocked: add_repo for litlfred/cat-harness-tools and litlfred/cat-harness (push) was denied by the session permission classifier, so cat-harness-tools#1484 and cat-harness#1038 cannot be read, finished, or merged from this session. Awaiting owner decision.
