@@ -49,3 +49,5 @@ _2026-11-05T17:58Z_ — MERGED in lockstep: cat-harness#1038 (dddd1695) then cat
 _2026-11-05T18:03Z_ — Owner chose "Proposal seeds plan". Built `proposal:approve` (creates or tags the epic, writes status/approvedOn/plan into the proposal; --dry-run; --check): cat-harness-tools#1539 + todo-manager text cat-harness#1070. Remaining: plan step 3 (a process declares whether it starts from a plan).
 
 _2026-11-05T19:04Z_ — Merged on green: cat-harness-tools#1539 (proposal:approve) and cat-harness#1070 (todo-manager text). Plan step 4 done. Remaining: step 3 (a process declares whether it starts from a plan) and the proposal link on the page pointing at the store repository rather than the proposal's own.
+
+_2026-11-05T19:15Z_ — Owner chose "Fix proposal link": index gains plan.proposalHref resolved to the declaring repository (cat-harness-tools#1545), page uses it (cat-harness#1077). Verified in Chromium.
