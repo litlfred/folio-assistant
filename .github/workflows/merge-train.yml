@@ -127,10 +127,10 @@ jobs:
           # Exit 1 is "built, but something needs a person" (a refused member,
           # a failed check): the members that merged still go to CI. Exit 2
           # could not build at all.
+          code=0
           # shellcheck disable=SC2086
           bun run cat merge:train -- --base origin/main --branch "$branch" --no-main \
-            --out "$RUNNER_TEMP/report.json" $SPECS > /dev/null
-          code=$?
+            --out "$RUNNER_TEMP/report.json" $SPECS > /dev/null || code=$?
           if [ "$code" -ge 2 ]; then echo "::error::merge:train could not build (exit $code)"; exit 1; fi
           # A member refused for a hand-written conflict is ejected with a
           # comment (owner, 2026-11-05, "Resolve generated only").
