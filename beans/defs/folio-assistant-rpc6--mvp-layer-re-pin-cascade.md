@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-02T19:15:00Z
+updated_at: 2026-11-05T12:58:17Z
 parent: folio-assistant-rwmf
 ---
 
@@ -26,3 +26,5 @@ Thread "Prepare the layer re-pin cascade" (cmsg_017WNUkNK8kdDziPK58Pv6G9FDPvN5kt
 - Residual: uganda bpmn:checklist, foreign-paths (tools tool-release.ts:88-89), glossary-ledger; libraries:check zod skew clears with the train.
 - Hand fa's final re-pin to the train thread; Phase 4b render bottom-up (smart-ra >= 15 min apart).
 - Scripts: /tmp/claude-0/r8.sh pattern (seed via remote-mount --seed, keep key order, workflow-pins --write). Memory: repin-cascade-mvp-2026-11-01.md.
+
+_2026-11-05T12:58:17Z_ — Picked up by session https://claude.ai/code/session_01VQDpPcVohXoCeZb3TEMGfp (stalled-pickup D: smart-ra#228, smart-immunizations#114, dth-sc#18, dth-phc#29, smart-ips-pilgrimage#8, smart-immunizations-uganda#18, dth-pc#18). check:bean-parents is green now (44 open beans; rpc6 hangs from milestone rwmf, bmat from npuo). Blocked: add_repo for smart-ra and smart-immunizations was refused by the permission check in this session, so no site repo is reachable yet; asked the owner.
