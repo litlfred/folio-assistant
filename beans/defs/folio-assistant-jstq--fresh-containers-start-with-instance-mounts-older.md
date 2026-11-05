@@ -14,3 +14,8 @@ Measured 2026-11-05 (session of bean x38u): in a fresh folio-assistant container
 
 ## Done when
 - [ ] a fresh container's mounts match index.lock.json after the session-start hook, or the hook says loudly that they do not
+
+## Progress 2026-11-05
+- [x] mount-from-lock replaces a mount at an earlier pin of the lock (priorPins); edited mounts still refused — cat-harness-tools#1531
+- [ ] #1531 merged
+- [ ] SessionStart hook in folio-assistant stops discarding mount-from-lock output (separate change, owner's call)
