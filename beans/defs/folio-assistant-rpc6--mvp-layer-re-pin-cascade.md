@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T17:34:39Z
+updated_at: 2026-11-05T17:38:53Z
 parent: folio-assistant-rwmf
 ---
 
@@ -66,3 +66,5 @@ _2026-11-05T17:21:38Z_ — MERGED cat-harness#1054 as a2da2ed (all green): 25 bo
 _2026-11-05T17:23:10Z_ — All 7 fix PRs MERGED: who-iris#181 0237087, #183 54af134; core#647 ba172dd, #648 4f18e66 (after merging main, 9570a32); cat-harness#1061 e0e27ee, #1054 a2da2ed; cat-harness-tools#1518 78a982e. FREEZE SET (owner: freeze one set): cat-harness a2da2ed, cat-harness-tools 78a982e, folio-assistant-core 4f18e66, who-iris 90bb3f5, smart-base 1e111a6, fhir-harness 299de78, bootstrap-tools 9f478d4, bootstrap c90ef45 (index pin). Re-pinning all 7 site PRs to it now (script /tmp/claude-0/s/freeze.sh).
 
 _2026-11-05T17:34:39Z_ — All 7 site PRs re-pinned to the freeze set (lock verified equal to it): smart-immunizations#114 77137db, smart-ra#228 f323d7d, dth-sc#18 69b6fac, dth-phc#29 ebb7106, smart-ips-pilgrimage#8 759ed30, smart-immunizations-uganda#18 fc689b9, dth-pc#18 e8c908f. Workflow edits: lock-following uses: pins only. Watcher on all 7; reds judged by hand vs main's + the 3 known.
+
+_2026-11-05T17:38:53Z_ — Survey of the freeze set (dth-sc + smart-immunizations, ~310 gates vs site main) done. Owner card, all option 1: (Q1) freeze bootstrap = 12fa6d5 (bootstrap main), not c90ef45 — at c90ef45 sites get 25 stale bootstrap .pot; the 2 cat-harness bpmn checklists are a KNOWN red until the folio-assistant index re-pins bootstrap (cat-harness CI judges them at the index pin). (Q2) KNOWN reds extended to the publish-skipped family: rendered-labels, state:visualizer, slice:sqlite. (Q3) tools: scope lockfile-pinning and split:baseline baselines to the folio-assistant root. (Q4) content calls become work items, known reds meanwhile: who-iris command paths to removed iris-oxigraph/iris-cdn scripts; cat-harness CRDM links to an absent library entry (methodologies/crdm.md, sdlc/skills/crdm/crdm-requirements-template.md); subgraph-coverage serialisations/visualiser for cat-harness sdlc*, work-plan*, smart-base-templates, smart-ra references, who-iris attestations; core review-sheet-script.md:221 example path. Mechanical fixes next: cat-harness (4 command paths, requirements-filing SVG link), core (back-matter-order.ts literal), tools (2 baselines, context-leak in NEEDS_INPUT_SCRIPTS), sites (dth-sc AGENTS.md:106, dth-sc overrides smart-base-templates + references, gen-block-jsonld ns# -> ns/, tools-ref: main).
