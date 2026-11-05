@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T18:01:31Z
+updated_at: 2026-11-05T18:16:06Z
 parent: folio-assistant-rwmf
 ---
 
@@ -74,3 +74,6 @@ _2026-11-05T17:40:17Z_ — Filed folio-assistant-y4pw (the 4 content calls, pare
 _2026-11-05T17:41:50Z_ — Opened: cat-harness#1069 4637737 (4 command paths repointed; docs/sage-mcp.md now names docker pull sagemath/sagemath:latest, since setup-sage.sh moved to qou; requirements-filing SVG -> published URL); cat-harness-tools#1537 1512679 (lockfile-pinning + split:baseline record root "folio-assistant" and are not judged elsewhere, exit 0 with a note; context-leak in NEEDS_INPUT_SCRIPTS; 18/18 tests). Watchers on #1069, #1537, core#649. After they merge: final re-pin of all 7 sites (freeze set + these merges, bootstrap 12fa6d5) with the site-owned fixes.
 
 _2026-11-05T18:01:31Z_ — smart-immunizations#114 at freeze head 77137db: 4 new reds. check:subgraphs (7 CRDM links, known via y4pw, + requirements-filing SVG, fixed in cat-harness#1069); translate-bpmn:bootstrap (bootstrap c90ef45; final re-pin uses 12fa6d5); kind:register + readme:sync = cat-harness/AGENTS.md skills:index stale (255 skills / sdlc-core 71 vs 256 / 72; stale on cat-harness main too) — regenerated onto #1069 (merged main in: 3313ac3, then 6a0a345); readme:sync:check passes with that tree. Other reds were known ones (process-index, library:viz, translation:block-qa, bpmn:checklist) + branch:readme + core check:glossary (to re-check after the final re-pin).
+
+_2026-11-05T18:16:06Z_ — Owner card "1. Known red": a gate that exited 0 on main and exits 78 (NOT APPLICABLE in this root) at the re-pin counts as a KNOWN red on site re-pins (first seen: dth-phc#29 ebb7106, check:qa-reviewer-permission, content root with no QA corpus; this settles drnh's open exit-78 question for site re-pins). dth-phc#29 other new reds: check:subgraphs, translate-bpmn:bootstrap (both covered by the final re-pin).
+KNOWN reds now: translation:block-qa, check:process-index, library:viz, rendered-labels, state:visualizer, slice:sqlite, bpmn:checklist (until the index re-pins bootstrap), 0->78 not-applicable, y4pw content items; dth-sc also corpus-gate.
