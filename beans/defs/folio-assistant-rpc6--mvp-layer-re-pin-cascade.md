@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T15:18:29Z
+updated_at: 2026-11-05T16:14:06Z
 parent: folio-assistant-rwmf
 ---
 
@@ -46,3 +46,5 @@ _2026-11-05T14:24:33Z_ — Glossary regen (bun run cat glossary:page, generated 
 _2026-11-05T15:10:39Z_ — Owner card "1. Freeze one set": after the 7 fix PRs merge (cat-harness#1054, #1061; who-iris#181, #183; cat-harness-tools#1518; core#647, #648), pick ONE commit per layer and re-pin all 7 sites to that set; fix shared layer reds once in their repos; merge each site when its only reds are main's or the known 3; do not chase mains that move after the freeze. Site PR reds before the freeze are moot. dth-sc#18 a8a22ed preview of the next wave (18 new): corpus-gate (dth-sc's, owner OK Q-PIN-DTHSC-1 A), declared-dirs (smart-base templates/ absent; dpi-h-ra references/ absent), lockfile-pinning (stale baseline repin-train.yml), slice:sqlite (publish payloads), split:baseline (skills math-md-authoring etc. no longer resolve), subgraph-coverage (cat-harness sdlc-processes, sdlc-skills, work-plan* + smart-base-templates owe serialisations), who-iris command-paths (iris-oxigraph/iris-cdn scripts), core foreign-paths (back-matter-order.ts etc.). dth-pc#18 9f3809e also red (not yet read).
 
 _2026-11-05T15:18:29Z_ — MERGED who-iris#181 as 0237087 (24 keywords.json). Its only new failure was translation:block-qa:check (cat-harness agent-onboarding.fr gap, a known red per the owner ruling); comment on the PR. Watcher (merge on all-green only, stop on red after all checks finish) runs over cat-harness#1054, #1061, who-iris#183, tools#1518, core#647, #648; known-red cases are judged by hand.
+
+_2026-11-05T16:14:06Z_ — cat-harness#1054 e318fb7: 1 new red, bpmn:checklist:check: the 2 regenerated checklists followed bootstrap 12fa6d5, but cat-harness CI mounts bootstrap at the index pin c90ef45. Pushed fc16a9e keeping main's two checklists. FREEZE SET: bootstrap = c90ef45 (index pin), not bootstrap main, so the sites agree with cat-harness's committed bootstrap-derived artefacts.
