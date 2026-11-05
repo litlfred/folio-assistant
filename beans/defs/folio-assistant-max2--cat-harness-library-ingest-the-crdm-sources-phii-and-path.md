@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-31T01:56:00Z
-updated_at: 2026-10-31T06:42:00Z
+updated_at: 2026-11-05T13:34:10Z
 parent: folio-assistant-dthl
 ---
 
@@ -44,3 +44,5 @@ _2026-10-31T02:11:00Z_ — Fetched by `agy` and committed to `litlfred/cat-harne
   - `uploads/crdm/CRDM-Columns-with-white-margins.png` (457,599 bytes, 2300×1840) — `sha256: 0380ddf45a1a7d0a6857ca36cb9dbc0c84d106774e77ab7b086e414d948be808`
   - `uploads/crdm/Defining-and-Validating-Requirements-Guide_0.pdf` (675,122 bytes, 6 pages) — `sha256: d79258a2b2bb70155d37d707ac241f7432f7e55804ad40dd11abe7f0d1e93df4`
   - `uploads/crdm/SHA256SUMS` (657 bytes) — `sha256: d3f993be6ee53214807c67312e5fd61329f012bc15238e0bc88f590024604618`
+
+_2026-11-05T13:34:10Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
