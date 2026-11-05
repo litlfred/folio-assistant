@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T13:02:05Z
+updated_at: 2026-11-05T13:40:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -29,3 +29,10 @@ parent: folio-assistant-4j43
 - [ ] a downstream root lists `check:schema-nodes` as skipped `other-layer`
 
 Parent: 4j43. Related: tsh9 (two-phase move rule), k3vv (CI speed II).
+
+_2026-11-05T13:40:00Z_ — Fix written and tested; **not yet pushed**: this session's `add_repo` for litlfred/cat-harness-tools (push) was refused by the permission classifier, so the owner must allow it. Commit 0bc6057 on branch `claude/own-files-checks` (off tools main c1c1d53), local to session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk.
+- Finding: `check:schema-nodes` is not cat-harness-only. It walks every declared `schemas/` in the root, the caller's own included (core, smart-base, fhir-harness, sci commit `schemas/*.ts`). Skipping it outright in other layers would stop judging theirs. So the move is a SCOPE, not a skip: `run-gates.py` sets `CAT_GATE_OWN_INSTANCES` to the caller's own instances; the check audits only their `schemas/`; a caller with no `schemas/*.ts` exits 0 ("nothing of its own"), never 2 or 78, which `compare-gates.py` would count as new against a base that passed.
+- cat-harness's own `schemas/` holds no `.ts` since bean 8lcl, so cat-harness CI needs no new gate.
+- Measured on this checkout: own=cat-harness-tools reproduces the #1478 red (mount pinned before #1483); own=core/smart-base/fhir-harness/sci green; others "nothing of its own".
+- 23 tests pass (new `test/gate-own-files.test.ts` + `layer-pr-checks-gate-inputs`); eslint and tsc clean on the changed files.
+- Not changed: `compare-gates.py` still counts head 78 vs base 0 as NEW; `repin-train.ts` counts any non-zero item. Other checks of lower-layer files can adopt `lib/gate-own.ts` one by one.
