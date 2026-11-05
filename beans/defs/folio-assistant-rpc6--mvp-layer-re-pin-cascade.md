@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T12:58:17Z
+updated_at: 2026-11-05T13:18:15Z
 parent: folio-assistant-rwmf
 ---
 
@@ -28,3 +28,5 @@ Thread "Prepare the layer re-pin cascade" (cmsg_017WNUkNK8kdDziPK58Pv6G9FDPvN5kt
 - Scripts: /tmp/claude-0/r8.sh pattern (seed via remote-mount --seed, keep key order, workflow-pins --write). Memory: repin-cascade-mvp-2026-11-01.md.
 
 _2026-11-05T12:58:17Z_ — Picked up by session https://claude.ai/code/session_01VQDpPcVohXoCeZb3TEMGfp (stalled-pickup D: smart-ra#228, smart-immunizations#114, dth-sc#18, dth-phc#29, smart-ips-pilgrimage#8, smart-immunizations-uganda#18, dth-pc#18). check:bean-parents is green now (44 open beans; rpc6 hangs from milestone rwmf, bmat from npuo). Blocked: add_repo for smart-ra and smart-immunizations was refused by the permission check in this session, so no site repo is reachable yet; asked the owner.
+
+_2026-11-05T13:18:15Z_ — Owner card (this session): "1. Attach repos"; all 7 site repos attached. smart-immunizations#114 → 10c2bb2: all 8 layers re-pinned to mains (cat-harness 6e0dc31 has the sdlc/ layout that smart-base/fhir-harness link to); check:subgraphs passes locally (the PR's only new red). smart-ra#228 → 82268b1 (round 11: cat-harness 6e0dc31, tools c1c1d53, core 3822d57). Locally still red: who-iris 88 stale keywords.json; core check:command-paths (3) and foreign-paths ("folio" literals in public-comment.ts, review-anchors-from-folio.ts); cat-harness 2 stale bpmn checklists and an ihris/subgraphs/skills digest mismatch; smart-ra's own archimate visualiser path (check:subgraph-coverage). Waiting on CI to split new from main's. Re-pinning dth-sc#18, dth-phc#29, smart-ips-pilgrimage#8, smart-immunizations-uganda#18, dth-pc#18 by script (merge main in, seed each declared layer to main).
