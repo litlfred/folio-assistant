@@ -416,6 +416,41 @@ describe("verdict reuse refuses a run that passed by inheriting main's failures"
   });
 });
 
+describe("a PR run of only the affected tests (CI speed 7, #2962) is said so, and never reused for main", () => {
+  /** A test step that ran a selection of `n` files, recorded as the selection step records it. */
+  function scoped(n: number, exit = 0) {
+    const sb = sandbox(undefined, { jobName: "TypeScript — bun test, shard 1/4", conclusion: "success" });
+    const scope = join(sb.dir, "scope.json");
+    writeFileSync(scope, JSON.stringify({ kind: "some", files: Array.from({ length: n }, (_, i) => `t${i}.test.ts`) }));
+    sb.begin();
+    sb.step(`bash .github/scripts/pr-bun-test.sh 1 4 || exit ${exit}`, { CQG_TESTS: "bun", CQG_TEST_SCOPE: scope, CQG_JUNIT: join(sb.dir, "none.xml") });
+    return sb;
+  }
+  test("the verdict says only the affected files were judged, never a plain pass", () => {
+    const sb = scoped(3);
+    expect(sb.verdict("pull_request").status).toBe(0);
+    expect(sb.summary()).toContain("Only the 3 affected test file(s) were judged");
+  });
+  test("reuse-check refuses a run that judged only a selection", () => {
+    const line = /CQG-REPORT-V1 \S+/.exec(scoped(2).verdict("pull_request").stdout)![0];
+    const sb = sandbox(`2026-11-01T00:00:01.0000000Z ${line}\n`, { jobName: "TypeScript — bun test, shard 1/4", conclusion: "success" });
+    const out = join(sb.dir, "out");
+    writeFileSync(out, "");
+    spawnSync("python3", [JUDGE, "reuse-check"], { env: sb.env({ REPO: "o/r", RUN_ID: "7", GITHUB_OUTPUT: out }), encoding: "utf8" });
+    expect(readFileSync(out, "utf8").trim()).toBe("reuse=false");
+    expect(sb.summary()).toContain("ran only the PR's affected tests");
+  });
+  test("a whole-suite run (kind all) is not scoped", () => {
+    const sb = sandbox();
+    const scope = join(sb.dir, "scope.json");
+    writeFileSync(scope, JSON.stringify({ kind: "all", why: "bun.lock changed" }));
+    sb.begin();
+    sb.step("true", { CQG_TESTS: "bun", CQG_TEST_SCOPE: scope });
+    sb.verdict("pull_request");
+    expect(sb.summary()).not.toContain("affected test file");
+  });
+});
+
 describe("the workflow wires it as designed", () => {
   test("every judged job uses the wrapper, has actions: read, and names itself for main's lookup", () => {
     for (const id of JUDGED) {
