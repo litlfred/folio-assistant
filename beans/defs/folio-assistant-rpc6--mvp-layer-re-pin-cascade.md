@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T16:18:07Z
+updated_at: 2026-11-05T16:28:10Z
 parent: folio-assistant-rwmf
 ---
 
@@ -50,3 +50,5 @@ _2026-11-05T15:18:29Z_ — MERGED who-iris#181 as 0237087 (24 keywords.json). It
 _2026-11-05T16:14:06Z_ — cat-harness#1054 e318fb7: 1 new red, bpmn:checklist:check: the 2 regenerated checklists followed bootstrap 12fa6d5, but cat-harness CI mounts bootstrap at the index pin c90ef45. Pushed fc16a9e keeping main's two checklists. FREEZE SET: bootstrap = c90ef45 (index pin), not bootstrap main, so the sites agree with cat-harness's committed bootstrap-derived artefacts.
 
 _2026-11-05T16:18:07Z_ — MERGED folio-assistant-core#647 as ba172dd (all green: 18 passed, 2 skipped): 21 foreign-path literals through declarations, command-path-ok markers.
+
+_2026-11-05T16:28:10Z_ — cat-harness-tools#1518 df7b772: 1 new test failure, its own: qa-refresh.test.ts "every family is under a declared qa directory" did not exempt the root test/results/ the new glob names. Pushed c6566f6 widening the exemption to the root instance (30/30 pass locally in smart-ra's tree).
