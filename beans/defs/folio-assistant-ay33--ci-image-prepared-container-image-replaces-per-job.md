@@ -37,7 +37,7 @@ These need the siblings that own `if:` and work steps (CI speed 2/3/7/10).
 ## Cache-First CI alignment (2026-11-05, integrator CI speed 14, decision 2a)
 
 - The image is a Class A cache. `key.sh` stays the mount-free implementation of its key, because the key must be computable before anything is mounted.
-- [ ] Once cat-harness-tools ships the `cache` node kind: declare the image's `cache` node (inputs index.lock.json, bun.lock, package.json, .github/ci-image/*, .github/actions/ci-setup/*, bun version, ImageOS; trust class A; location ghcr.io/<owner>/<repo>-ci) so that `cache:key --check image` agrees with key.sh.
+- [x] (sent to CI speed 14 for cat-harness-tools#1519, placement (c): instance cat-harness-tools) Once cat-harness-tools ships the `cache` node kind: declare the image's `cache` node (inputs index.lock.json, bun.lock, package.json, .github/ci-image/*, .github/actions/ci-setup/*, bun version, ImageOS; trust class A; location ghcr.io/<owner>/<repo>-ci) so that `cache:key --check image` agrees with key.sh.
 - [ ] After #2961 merges, CI speed 14 copies ci-setup and the ci-image scripts into cat-harness-tools as a shared action and repoints them. This repo's copy then calls the shared one.
 - Done: the image name is derived from the repo, hit/miss/why goes to the step summary, and the workspace-only restore bug is fixed (52670b8).
 - The layers ref (CI speed 13, cat-harness-tools#1506 / #2971) is picked up through mount-from-lock with no edit here.
