@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T19:20:00Z
+updated_at: 2026-11-05T19:35:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -83,3 +83,11 @@ _2026-11-05T19:04:00Z_ — **Merged** litlfred/cat-harness-tools#1529 (fc768f6) 
 _2026-11-05T19:06:00Z_ — **Merged** litlfred/cat-harness-tools#1533 (711e078) on all-green verdicts. Last: #1534 (8885482), head test shards 4/4 green, verdicts pending. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 
 _2026-11-05T19:20:00Z_ — #1534: Tests and Index gates green; Standalone red on src/tools/degradation.test.ts "the real join" (machine capability probe, 30 s; untouched by the diff; 17/17 locally). Re-ran run 42086434439 once; comment on the PR. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-05T19:35:00Z_ — **All five cat-harness-tools PRs merged**, each on all-green verdicts (Tests, Index gates, Standalone (no new failures)):
+- #1508 a094099: check:schema-nodes
+- #1521 6f373ef: methodology-evidence, tabular-stubs, translation-officiality, waivers
+- #1529 fc768f6: command-paths, subgraphs, concern-groups
+- #1533 711e078: reference-direction, process-index, ci-invocations, translate-bpmn --check
+- #1534 ee88ead: generator checks (publish-check, bpmn:checklist, library:viz, branch:readme); Standalone needed one re-run, its first run failed on src/tools/degradation.test.ts, a machine capability probe the diff does not touch.
+Still open under this bean: the folio-assistant-core materialized-fixity PR (session_01VQDpPcbpLjEo8EuzFLVq5Z, after core re-pins tools past fc768f6); not started: core kg:materialize / glossary:pot, who-iris dc:render, bootstrap-tools iri:sync. The effect on downstream false failures shows once each layer re-pins cat-harness-tools past ee88ead. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
