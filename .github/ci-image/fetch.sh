@@ -48,7 +48,7 @@ if jq -e '.manifests' >/dev/null <<<"$m"; then
 fi
 cfg="$(jq -r '.config.digest' <<<"$m")"
 roles="$(curl -fsSL --retry 3 "${H[@]}" "${scheme}://${host}/v2/${name}/blobs/${cfg}" |
-  jq -r '.config.Labels["io.github.litlfred.ci-image.layers"] // empty')" || exit 4
+  jq -r '.config.Labels["ci-image.layers"] // empty')" || exit 4
 mapfile -t digests < <(jq -r '.layers[].digest' <<<"$m")
 mapfile -t types < <(jq -r '.layers[].mediaType' <<<"$m")
 read -r -a role <<<"$roles"
@@ -58,7 +58,7 @@ echo "ci-image: ${image}:${key} — ${#digests[@]} layers, $(jq '[.layers[].size
 mkdir -p "$ws" "$pw"
 pids=()
 for i in "${!digests[@]}"; do
-  case "$want" in *" ${role[$i]} "*) ;; *) echo "${digests[$i]}" > "$scratch/$i.sum"; continue ;; esac
+  case "$want" in *" ${role[$i]} "*) ;; *) echo "${digests[$i]#sha256:}" > "$scratch/$i.sum"; continue ;; esac
   dig="${digests[$i]}"; dest="$ws"; [ "${role[$i]}" = pw ] && dest="$pw"
   case "${types[$i]}" in *zstd) dec=(zstd -dc) ;; *gzip) dec=(gzip -dc) ;; *) dec=(cat) ;; esac
   mkfifo "$scratch/$i.fifo"

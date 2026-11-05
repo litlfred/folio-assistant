@@ -4,7 +4,7 @@ description: |
   mounts index.lock.json pins, node_modules, and — when asked — Playwright's
   Chromium. Bean folio-assistant-ay33.
 
-  FAST PATH: the prepared image ghcr.io/litlfred/folio-assistant-ci:<key>
+  FAST PATH: the prepared image ghcr.io/<owner>/<repo>-ci:<key>
   (key: .github/ci-image/key.sh, built by .github/workflows/ci-image.yml).
   Its layers are streamed straight onto the runner (.github/ci-image/fetch.sh),
   each checked against its manifest digest as it arrives, and then
@@ -30,6 +30,12 @@ inputs:
       (Chromium and the system libraries it needs, as
       `playwright install --with-deps chromium`).
     default: none
+  image:
+    description: |
+      The image to restore, without its tag. Default: ghcr.io/<owner>/<repo>-ci
+      for the calling repository, so any harness repo that builds its own with
+      ci-image.yml uses this action unchanged.
+    default: ""
   registry-token:
     description: |
       Optional token with packages:read, for when the image is not public.
@@ -61,23 +67,33 @@ runs:
         KEY: ${{ steps.key.outputs.key }}
         CHROMIUM: ${{ inputs.chromium }}
         REGISTRY_TOKEN: ${{ inputs.registry-token }}
+        IMAGE: ${{ inputs.image }}
       run: |
+        t0=$(date +%s)
+        image="${IMAGE:-ghcr.io/${GITHUB_REPOSITORY,,}-ci}"
         roles="ws"; [ "$CHROMIUM" = none ] || roles="ws pw"
         pw="${PLAYWRIGHT_BROWSERS_PATH:-$HOME/.cache/ms-playwright}"
         status=0
-        REGISTRY_TOKEN="" bash .github/ci-image/fetch.sh ghcr.io/litlfred/folio-assistant-ci "$KEY" "$GITHUB_WORKSPACE" "$pw" "$roles" || status=$?
+        REGISTRY_TOKEN="" bash .github/ci-image/fetch.sh "$image" "$KEY" "$GITHUB_WORKSPACE" "$pw" "$roles" || status=$?
         if [ "$status" -eq 3 ] && [ -n "$REGISTRY_TOKEN" ]; then
           status=0
-          bash .github/ci-image/fetch.sh ghcr.io/litlfred/folio-assistant-ci "$KEY" "$GITHUB_WORKSPACE" "$pw" "$roles" || status=$?
+          bash .github/ci-image/fetch.sh "$image" "$KEY" "$GITHUB_WORKSPACE" "$pw" "$roles" || status=$?
         fi
         if [ "$status" -eq 0 ] && bun run cat mount:lock:check; then
           echo "hit=true" >> "$GITHUB_OUTPUT"
+          echo "| ci-setup | ${image}:${KEY:0:12} | **hit** | restored and verified in $(( $(date +%s) - t0 )) s |" >> "$GITHUB_STEP_SUMMARY"
           exit 0
         fi
+        case "$status" in
+          0) why="restored, but mount:lock:check refused it" ;;
+          3) why="no image for this key, or the registry refused the pull" ;;
+          *) why="restore failed (exit $status)" ;;
+        esac
+        echo "| ci-setup | ${image}:${KEY:0:12} | miss | ${why}; mounting and installing |" >> "$GITHUB_STEP_SUMMARY"
         # Clear anything half-written, so the fallback mounts onto a clean tree.
         for d in $(jq -r '.instances[].instance' index.lock.json) node_modules; do rm -rf "${GITHUB_WORKSPACE:?}/$d"; done
         echo "hit=false" >> "$GITHUB_OUTPUT"
-        echo "::notice title=CI image::no usable image for key ${KEY:0:12} (exit ${status}); mounting and installing instead"
+        echo "::notice title=CI image::${why} (${image}:${KEY:0:12}); mounting and installing instead"
 
     # ── Fallback: the steps every job ran before (bean cis1, nn8e) ──────────
     # Saved on main only; a pull request restores and never saves. Every PR
